@@ -8,9 +8,9 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/stainless-sdks/polar-go/internal/apijson"
-	"github.com/stainless-sdks/polar-go/internal/requestconfig"
-	"github.com/stainless-sdks/polar-go/option"
+	"github.com/polarsource/polar-go/internal/apijson"
+	"github.com/polarsource/polar-go/internal/requestconfig"
+	"github.com/polarsource/polar-go/option"
 )
 
 // OrderInvoiceService contains methods and other services that help with

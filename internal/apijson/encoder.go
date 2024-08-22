@@ -12,7 +12,7 @@ import (
 
 	"github.com/tidwall/sjson"
 
-	"github.com/stainless-sdks/polar-go/internal/param"
+	"github.com/polarsource/polar-go/internal/param"
 )
 
 var encoders sync.Map // map[encoderEntry]encoderFunc

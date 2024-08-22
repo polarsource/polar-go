@@ -4,7 +4,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/stainless-sdks/polar-go/internal/param"
+	"github.com/polarsource/polar-go/internal/param"
 )
 
 type Struct struct {

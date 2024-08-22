@@ -7,8 +7,8 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/stainless-sdks/polar-go/internal/requestconfig"
-	"github.com/stainless-sdks/polar-go/option"
+	"github.com/polarsource/polar-go/internal/requestconfig"
+	"github.com/polarsource/polar-go/option"
 )
 
 // Client creates a struct with services and top level methods that help with
