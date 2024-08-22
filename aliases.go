@@ -3,7 +3,7 @@
 package polar
 
 import (
-	"github.com/stainless-sdks/polar-go/internal/apierror"
+	"github.com/polarsource/polar-go/internal/apierror"
 )
 
 type Error = apierror.Error

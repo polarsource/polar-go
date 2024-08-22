@@ -11,7 +11,7 @@ import (
 	"net/url"
 	"time"
 
-	"github.com/stainless-sdks/polar-go/internal/requestconfig"
+	"github.com/polarsource/polar-go/internal/requestconfig"
 	"github.com/tidwall/sjson"
 )
 
@@ -19,7 +19,7 @@ import (
 // which can be supplied to clients, services, and methods. You can read more about this functional
 // options pattern in our [README].
 //
-// [README]: https://pkg.go.dev/github.com/stainless-sdks/polar-go#readme-requestoptions
+// [README]: https://pkg.go.dev/github.com/polarsource/polar-go#readme-requestoptions
 type RequestOption = func(*requestconfig.RequestConfig) error
 
 // WithBaseURL returns a RequestOption that sets the BaseURL for the client.

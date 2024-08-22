@@ -9,9 +9,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/stainless-sdks/polar-go"
-	"github.com/stainless-sdks/polar-go/internal"
-	"github.com/stainless-sdks/polar-go/option"
+	"github.com/polarsource/polar-go"
+	"github.com/polarsource/polar-go/internal"
+	"github.com/polarsource/polar-go/option"
 )
 
 type closureTransport struct {

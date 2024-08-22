@@ -8,8 +8,8 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/stainless-sdks/polar-go/internal/requestconfig"
-	"github.com/stainless-sdks/polar-go/option"
+	"github.com/polarsource/polar-go/internal/requestconfig"
+	"github.com/polarsource/polar-go/option"
 )
 
 // ArticleReceiverService contains methods and other services that help with

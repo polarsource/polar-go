@@ -1,4 +1,4 @@
-module github.com/stainless-sdks/polar-go
+module github.com/polarsource/polar-go
 
 go 1.21
 
