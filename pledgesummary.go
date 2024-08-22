@@ -7,11 +7,11 @@ import (
 	"net/http"
 	"net/url"
 
-	"github.com/stainless-sdks/polar-go/internal/apijson"
-	"github.com/stainless-sdks/polar-go/internal/apiquery"
-	"github.com/stainless-sdks/polar-go/internal/param"
-	"github.com/stainless-sdks/polar-go/internal/requestconfig"
-	"github.com/stainless-sdks/polar-go/option"
+	"github.com/polarsource/polar-go/internal/apijson"
+	"github.com/polarsource/polar-go/internal/apiquery"
+	"github.com/polarsource/polar-go/internal/param"
+	"github.com/polarsource/polar-go/internal/requestconfig"
+	"github.com/polarsource/polar-go/option"
 )
 
 // PledgeSummaryService contains methods and other services that help with

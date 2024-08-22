@@ -3,7 +3,7 @@
 package polar
 
 import (
-	"github.com/stainless-sdks/polar-go/option"
+	"github.com/polarsource/polar-go/option"
 )
 
 // WebhookService contains methods and other services that help with interacting

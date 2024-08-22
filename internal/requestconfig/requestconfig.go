@@ -17,10 +17,10 @@ import (
 	"strings"
 	"time"
 
-	"github.com/stainless-sdks/polar-go/internal"
-	"github.com/stainless-sdks/polar-go/internal/apierror"
-	"github.com/stainless-sdks/polar-go/internal/apiform"
-	"github.com/stainless-sdks/polar-go/internal/apiquery"
+	"github.com/polarsource/polar-go/internal"
+	"github.com/polarsource/polar-go/internal/apierror"
+	"github.com/polarsource/polar-go/internal/apiform"
+	"github.com/polarsource/polar-go/internal/apiquery"
 )
 
 func getDefaultHeaders() map[string]string {
