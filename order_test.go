@@ -8,10 +8,10 @@ import (
 	"os"
 	"testing"
 
-	"github.com/stainless-sdks/polar-go"
-	"github.com/stainless-sdks/polar-go/internal/testutil"
-	"github.com/stainless-sdks/polar-go/option"
-	"github.com/stainless-sdks/polar-go/shared"
+	"github.com/polarsource/polar-go"
+	"github.com/polarsource/polar-go/internal/testutil"
+	"github.com/polarsource/polar-go/option"
+	"github.com/polarsource/polar-go/shared"
 )
 
 func TestOrderGet(t *testing.T) {
