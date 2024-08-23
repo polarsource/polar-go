@@ -55,9 +55,9 @@ func (r *DonationPaymentIntentService) Update(ctx context.Context, id string, bo
 
 type DonationStripePaymentIntentMutationResponse struct {
 	Amount          int64                                           `json:"amount,required"`
+	ClientSecret    string                                          `json:"client_secret,required,nullable"`
 	Currency        string                                          `json:"currency,required"`
 	PaymentIntentID string                                          `json:"payment_intent_id,required"`
-	ClientSecret    string                                          `json:"client_secret,nullable"`
 	JSON            donationStripePaymentIntentMutationResponseJSON `json:"-"`
 }
 
@@ -65,9 +65,9 @@ type DonationStripePaymentIntentMutationResponse struct {
 // the struct [DonationStripePaymentIntentMutationResponse]
 type donationStripePaymentIntentMutationResponseJSON struct {
 	Amount          apijson.Field
+	ClientSecret    apijson.Field
 	Currency        apijson.Field
 	PaymentIntentID apijson.Field
-	ClientSecret    apijson.Field
 	raw             string
 	ExtraFields     map[string]apijson.Field
 }

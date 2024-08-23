@@ -145,10 +145,10 @@ type WebhookEndpoint struct {
 	Events []WebhookEndpointEvent `json:"events,required"`
 	// The format of the webhook payload.
 	Format WebhookEndpointFormat `json:"format,required"`
+	// Last modification timestamp of the object.
+	ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
 	// The URL where the webhook events will be sent.
 	URL string `json:"url,required"`
-	// Last modification timestamp of the object.
-	ModifiedAt time.Time `json:"modified_at,nullable" format:"date-time"`
 	// The organization ID associated with the webhook endpoint.
 	OrganizationID string `json:"organization_id,nullable" format:"uuid4"`
 	// The user ID associated with the webhook endpoint.
@@ -162,8 +162,8 @@ type webhookEndpointJSON struct {
 	CreatedAt      apijson.Field
 	Events         apijson.Field
 	Format         apijson.Field
-	URL            apijson.Field
 	ModifiedAt     apijson.Field
+	URL            apijson.Field
 	OrganizationID apijson.Field
 	UserID         apijson.Field
 	raw            string

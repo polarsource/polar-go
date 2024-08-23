@@ -119,22 +119,22 @@ type Article struct {
 	ID                        string              `json:"id,required" format:"uuid4"`
 	Body                      string              `json:"body,required"`
 	Byline                    ArticleByline       `json:"byline,required"`
+	EmailSentToCount          int64               `json:"email_sent_to_count,required,nullable"`
 	IsPinned                  bool                `json:"is_pinned,required"`
 	IsPreview                 bool                `json:"is_preview,required"`
+	NotificationsSentAt       time.Time           `json:"notifications_sent_at,required,nullable" format:"date-time"`
+	NotifySubscribers         bool                `json:"notify_subscribers,required,nullable"`
+	OgDescription             string              `json:"og_description,required,nullable"`
+	OgImageURL                string              `json:"og_image_url,required,nullable"`
 	Organization              ArticleOrganization `json:"organization,required"`
 	OrganizationID            string              `json:"organization_id,required" format:"uuid4"`
+	PaidSubscribersOnly       bool                `json:"paid_subscribers_only,required,nullable"`
+	PaidSubscribersOnlyEndsAt time.Time           `json:"paid_subscribers_only_ends_at,required,nullable" format:"date-time"`
+	PublishedAt               time.Time           `json:"published_at,required,nullable" format:"date-time"`
 	Slug                      string              `json:"slug,required"`
 	Title                     string              `json:"title,required"`
+	UserID                    string              `json:"user_id,required,nullable" format:"uuid4"`
 	Visibility                ArticleVisibility   `json:"visibility,required"`
-	EmailSentToCount          int64               `json:"email_sent_to_count,nullable"`
-	NotificationsSentAt       time.Time           `json:"notifications_sent_at,nullable" format:"date-time"`
-	NotifySubscribers         bool                `json:"notify_subscribers,nullable"`
-	OgDescription             string              `json:"og_description,nullable"`
-	OgImageURL                string              `json:"og_image_url,nullable"`
-	PaidSubscribersOnly       bool                `json:"paid_subscribers_only,nullable"`
-	PaidSubscribersOnlyEndsAt time.Time           `json:"paid_subscribers_only_ends_at,nullable" format:"date-time"`
-	PublishedAt               time.Time           `json:"published_at,nullable" format:"date-time"`
-	UserID                    string              `json:"user_id,nullable" format:"uuid4"`
 	JSON                      articleJSON         `json:"-"`
 }
 
@@ -143,22 +143,22 @@ type articleJSON struct {
 	ID                        apijson.Field
 	Body                      apijson.Field
 	Byline                    apijson.Field
+	EmailSentToCount          apijson.Field
 	IsPinned                  apijson.Field
 	IsPreview                 apijson.Field
-	Organization              apijson.Field
-	OrganizationID            apijson.Field
-	Slug                      apijson.Field
-	Title                     apijson.Field
-	Visibility                apijson.Field
-	EmailSentToCount          apijson.Field
 	NotificationsSentAt       apijson.Field
 	NotifySubscribers         apijson.Field
 	OgDescription             apijson.Field
 	OgImageURL                apijson.Field
+	Organization              apijson.Field
+	OrganizationID            apijson.Field
 	PaidSubscribersOnly       apijson.Field
 	PaidSubscribersOnlyEndsAt apijson.Field
 	PublishedAt               apijson.Field
+	Slug                      apijson.Field
+	Title                     apijson.Field
 	UserID                    apijson.Field
+	Visibility                apijson.Field
 	raw                       string
 	ExtraFields               map[string]apijson.Field
 }
@@ -172,15 +172,15 @@ func (r articleJSON) RawJSON() string {
 }
 
 type ArticleByline struct {
+	AvatarURL string            `json:"avatar_url,required,nullable"`
 	Name      string            `json:"name,required"`
-	AvatarURL string            `json:"avatar_url,nullable"`
 	JSON      articleBylineJSON `json:"-"`
 }
 
 // articleBylineJSON contains the JSON metadata for the struct [ArticleByline]
 type articleBylineJSON struct {
-	Name        apijson.Field
 	AvatarURL   apijson.Field
+	Name        apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
 }
@@ -195,52 +195,52 @@ func (r articleBylineJSON) RawJSON() string {
 
 type ArticleOrganization struct {
 	// The organization ID.
-	ID string `json:"id,required" format:"uuid4"`
+	ID        string `json:"id,required" format:"uuid4"`
+	AvatarURL string `json:"avatar_url,required,nullable"`
+	Bio       string `json:"bio,required,nullable"`
+	Blog      string `json:"blog,required,nullable"`
+	Company   string `json:"company,required,nullable"`
 	// Creation timestamp of the object.
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	CreatedAt                         time.Time `json:"created_at,required" format:"date-time"`
+	DefaultUpfrontSplitToContributors int64     `json:"default_upfront_split_to_contributors,required,nullable"`
 	// If this organizations accepts donations
-	DonationsEnabled bool `json:"donations_enabled,required"`
+	DonationsEnabled bool   `json:"donations_enabled,required"`
+	Email            string `json:"email,required,nullable"`
 	// Settings for the organization features
-	FeatureSettings       ArticleOrganizationFeatureSettings `json:"feature_settings,required,nullable"`
-	Name                  string                             `json:"name,required"`
-	PledgeBadgeShowAmount bool                               `json:"pledge_badge_show_amount,required"`
-	PledgeMinimumAmount   int64                              `json:"pledge_minimum_amount,required"`
-	// Settings for the organization profile
-	ProfileSettings                   ArticleOrganizationProfileSettings `json:"profile_settings,required,nullable"`
-	Slug                              string                             `json:"slug,required"`
-	AvatarURL                         string                             `json:"avatar_url,nullable"`
-	Bio                               string                             `json:"bio,nullable"`
-	Blog                              string                             `json:"blog,nullable"`
-	Company                           string                             `json:"company,nullable"`
-	DefaultUpfrontSplitToContributors int64                              `json:"default_upfront_split_to_contributors,nullable"`
-	Email                             string                             `json:"email,nullable"`
-	Location                          string                             `json:"location,nullable"`
+	FeatureSettings ArticleOrganizationFeatureSettings `json:"feature_settings,required,nullable"`
+	Location        string                             `json:"location,required,nullable"`
 	// Last modification timestamp of the object.
-	ModifiedAt      time.Time               `json:"modified_at,nullable" format:"date-time"`
-	TwitterUsername string                  `json:"twitter_username,nullable"`
-	JSON            articleOrganizationJSON `json:"-"`
+	ModifiedAt            time.Time `json:"modified_at,required,nullable" format:"date-time"`
+	Name                  string    `json:"name,required"`
+	PledgeBadgeShowAmount bool      `json:"pledge_badge_show_amount,required"`
+	PledgeMinimumAmount   int64     `json:"pledge_minimum_amount,required"`
+	// Settings for the organization profile
+	ProfileSettings ArticleOrganizationProfileSettings `json:"profile_settings,required,nullable"`
+	Slug            string                             `json:"slug,required"`
+	TwitterUsername string                             `json:"twitter_username,required,nullable"`
+	JSON            articleOrganizationJSON            `json:"-"`
 }
 
 // articleOrganizationJSON contains the JSON metadata for the struct
 // [ArticleOrganization]
 type articleOrganizationJSON struct {
 	ID                                apijson.Field
+	AvatarURL                         apijson.Field
+	Bio                               apijson.Field
+	Blog                              apijson.Field
+	Company                           apijson.Field
 	CreatedAt                         apijson.Field
+	DefaultUpfrontSplitToContributors apijson.Field
 	DonationsEnabled                  apijson.Field
+	Email                             apijson.Field
 	FeatureSettings                   apijson.Field
+	Location                          apijson.Field
+	ModifiedAt                        apijson.Field
 	Name                              apijson.Field
 	PledgeBadgeShowAmount             apijson.Field
 	PledgeMinimumAmount               apijson.Field
 	ProfileSettings                   apijson.Field
 	Slug                              apijson.Field
-	AvatarURL                         apijson.Field
-	Bio                               apijson.Field
-	Blog                              apijson.Field
-	Company                           apijson.Field
-	DefaultUpfrontSplitToContributors apijson.Field
-	Email                             apijson.Field
-	Location                          apijson.Field
-	ModifiedAt                        apijson.Field
 	TwitterUsername                   apijson.Field
 	raw                               string
 	ExtraFields                       map[string]apijson.Field

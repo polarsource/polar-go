@@ -108,23 +108,23 @@ type ListResourceBenefitGrantItem struct {
 	IsGranted bool `json:"is_granted,required"`
 	// Whether the benefit is revoked.
 	IsRevoked bool `json:"is_revoked,required"`
+	// Last modification timestamp of the object.
+	ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
+	// The ID of the order that granted this benefit.
+	OrderID string `json:"order_id,required,nullable" format:"uuid4"`
 	// Properties for a benefit grant.
 	Properties interface{} `json:"properties,required"`
+	// The ID of the subscription that granted this benefit.
+	SubscriptionID string `json:"subscription_id,required,nullable" format:"uuid4"`
 	// The ID of the user concerned by this grant.
 	UserID string `json:"user_id,required" format:"uuid4"`
 	// The timestamp when the benefit was granted. If `None`, the benefit is not
 	// granted.
 	GrantedAt time.Time `json:"granted_at,nullable" format:"date-time"`
-	// Last modification timestamp of the object.
-	ModifiedAt time.Time `json:"modified_at,nullable" format:"date-time"`
-	// The ID of the order that granted this benefit.
-	OrderID string `json:"order_id,nullable" format:"uuid4"`
 	// The timestamp when the benefit was revoked. If `None`, the benefit is not
 	// revoked.
-	RevokedAt time.Time `json:"revoked_at,nullable" format:"date-time"`
-	// The ID of the subscription that granted this benefit.
-	SubscriptionID string                           `json:"subscription_id,nullable" format:"uuid4"`
-	JSON           listResourceBenefitGrantItemJSON `json:"-"`
+	RevokedAt time.Time                        `json:"revoked_at,nullable" format:"date-time"`
+	JSON      listResourceBenefitGrantItemJSON `json:"-"`
 }
 
 // listResourceBenefitGrantItemJSON contains the JSON metadata for the struct
@@ -135,13 +135,13 @@ type listResourceBenefitGrantItemJSON struct {
 	CreatedAt      apijson.Field
 	IsGranted      apijson.Field
 	IsRevoked      apijson.Field
-	Properties     apijson.Field
-	UserID         apijson.Field
-	GrantedAt      apijson.Field
 	ModifiedAt     apijson.Field
 	OrderID        apijson.Field
-	RevokedAt      apijson.Field
+	Properties     apijson.Field
 	SubscriptionID apijson.Field
+	UserID         apijson.Field
+	GrantedAt      apijson.Field
+	RevokedAt      apijson.Field
 	raw            string
 	ExtraFields    map[string]apijson.Field
 }

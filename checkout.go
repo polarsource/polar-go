@@ -59,13 +59,13 @@ func (r *CheckoutService) Get(ctx context.Context, id string, opts ...option.Req
 // A checkout session.
 type Checkout struct {
 	// The ID of the checkout.
-	ID string `json:"id,required"`
+	ID            string `json:"id,required"`
+	CustomerEmail string `json:"customer_email,required,nullable"`
+	CustomerName  string `json:"customer_name,required,nullable"`
 	// A product.
 	Product ProductOutput `json:"product,required"`
 	// A recurring price for a product, i.e. a subscription.
-	ProductPrice  CheckoutProductPrice `json:"product_price,required"`
-	CustomerEmail string               `json:"customer_email,nullable"`
-	CustomerName  string               `json:"customer_name,nullable"`
+	ProductPrice CheckoutProductPrice `json:"product_price,required"`
 	// URL the customer should be redirected to complete the purchase.
 	URL  string       `json:"url,nullable"`
 	JSON checkoutJSON `json:"-"`
@@ -74,10 +74,10 @@ type Checkout struct {
 // checkoutJSON contains the JSON metadata for the struct [Checkout]
 type checkoutJSON struct {
 	ID            apijson.Field
-	Product       apijson.Field
-	ProductPrice  apijson.Field
 	CustomerEmail apijson.Field
 	CustomerName  apijson.Field
+	Product       apijson.Field
+	ProductPrice  apijson.Field
 	URL           apijson.Field
 	raw           string
 	ExtraFields   map[string]apijson.Field
@@ -96,7 +96,7 @@ type CheckoutProductPrice struct {
 	// Creation timestamp of the object.
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
 	// Last modification timestamp of the object.
-	ModifiedAt time.Time `json:"modified_at,nullable" format:"date-time"`
+	ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
 	// The ID of the price.
 	ID string `json:"id,required" format:"uuid4"`
 	// The price in cents.
@@ -184,17 +184,17 @@ type CheckoutProductPriceProductPriceRecurring struct {
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
 	// Whether the price is archived and no longer available.
 	IsArchived bool `json:"is_archived,required"`
+	// Last modification timestamp of the object.
+	ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
 	// The price in cents.
 	PriceAmount int64 `json:"price_amount,required"`
 	// The currency.
 	PriceCurrency string `json:"price_currency,required"`
+	// The recurring interval of the price, if type is `recurring`.
+	RecurringInterval CheckoutProductPriceProductPriceRecurringRecurringInterval `json:"recurring_interval,required,nullable"`
 	// The type of the price.
 	Type CheckoutProductPriceProductPriceRecurringType `json:"type,required"`
-	// Last modification timestamp of the object.
-	ModifiedAt time.Time `json:"modified_at,nullable" format:"date-time"`
-	// The recurring interval of the price, if type is `recurring`.
-	RecurringInterval CheckoutProductPriceProductPriceRecurringRecurringInterval `json:"recurring_interval,nullable"`
-	JSON              checkoutProductPriceProductPriceRecurringJSON              `json:"-"`
+	JSON checkoutProductPriceProductPriceRecurringJSON `json:"-"`
 }
 
 // checkoutProductPriceProductPriceRecurringJSON contains the JSON metadata for the
@@ -203,11 +203,11 @@ type checkoutProductPriceProductPriceRecurringJSON struct {
 	ID                apijson.Field
 	CreatedAt         apijson.Field
 	IsArchived        apijson.Field
+	ModifiedAt        apijson.Field
 	PriceAmount       apijson.Field
 	PriceCurrency     apijson.Field
-	Type              apijson.Field
-	ModifiedAt        apijson.Field
 	RecurringInterval apijson.Field
+	Type              apijson.Field
 	raw               string
 	ExtraFields       map[string]apijson.Field
 }
@@ -221,21 +221,6 @@ func (r checkoutProductPriceProductPriceRecurringJSON) RawJSON() string {
 }
 
 func (r CheckoutProductPriceProductPriceRecurring) implementsCheckoutProductPrice() {}
-
-// The type of the price.
-type CheckoutProductPriceProductPriceRecurringType string
-
-const (
-	CheckoutProductPriceProductPriceRecurringTypeRecurring CheckoutProductPriceProductPriceRecurringType = "recurring"
-)
-
-func (r CheckoutProductPriceProductPriceRecurringType) IsKnown() bool {
-	switch r {
-	case CheckoutProductPriceProductPriceRecurringTypeRecurring:
-		return true
-	}
-	return false
-}
 
 // The recurring interval of the price, if type is `recurring`.
 type CheckoutProductPriceProductPriceRecurringRecurringInterval string
@@ -253,6 +238,21 @@ func (r CheckoutProductPriceProductPriceRecurringRecurringInterval) IsKnown() bo
 	return false
 }
 
+// The type of the price.
+type CheckoutProductPriceProductPriceRecurringType string
+
+const (
+	CheckoutProductPriceProductPriceRecurringTypeRecurring CheckoutProductPriceProductPriceRecurringType = "recurring"
+)
+
+func (r CheckoutProductPriceProductPriceRecurringType) IsKnown() bool {
+	switch r {
+	case CheckoutProductPriceProductPriceRecurringTypeRecurring:
+		return true
+	}
+	return false
+}
+
 // A one-time price for a product.
 type CheckoutProductPriceProductPriceOneTime struct {
 	// The ID of the price.
@@ -261,15 +261,15 @@ type CheckoutProductPriceProductPriceOneTime struct {
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
 	// Whether the price is archived and no longer available.
 	IsArchived bool `json:"is_archived,required"`
+	// Last modification timestamp of the object.
+	ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
 	// The price in cents.
 	PriceAmount int64 `json:"price_amount,required"`
 	// The currency.
 	PriceCurrency string `json:"price_currency,required"`
 	// The type of the price.
 	Type CheckoutProductPriceProductPriceOneTimeType `json:"type,required"`
-	// Last modification timestamp of the object.
-	ModifiedAt time.Time                                   `json:"modified_at,nullable" format:"date-time"`
-	JSON       checkoutProductPriceProductPriceOneTimeJSON `json:"-"`
+	JSON checkoutProductPriceProductPriceOneTimeJSON `json:"-"`
 }
 
 // checkoutProductPriceProductPriceOneTimeJSON contains the JSON metadata for the
@@ -278,10 +278,10 @@ type checkoutProductPriceProductPriceOneTimeJSON struct {
 	ID            apijson.Field
 	CreatedAt     apijson.Field
 	IsArchived    apijson.Field
+	ModifiedAt    apijson.Field
 	PriceAmount   apijson.Field
 	PriceCurrency apijson.Field
 	Type          apijson.Field
-	ModifiedAt    apijson.Field
 	raw           string
 	ExtraFields   map[string]apijson.Field
 }

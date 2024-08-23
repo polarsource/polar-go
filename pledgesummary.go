@@ -142,17 +142,17 @@ func (r pledgeSummaryGetResponseFundingPledgesSumJSON) RawJSON() string {
 }
 
 type PledgeSummaryGetResponsePledge struct {
+	Pledger PledgeSummaryGetResponsePledgesPledger `json:"pledger,required,nullable"`
 	// Type of pledge
-	Type    PledgeSummaryGetResponsePledgesType    `json:"type,required"`
-	Pledger PledgeSummaryGetResponsePledgesPledger `json:"pledger,nullable"`
-	JSON    pledgeSummaryGetResponsePledgeJSON     `json:"-"`
+	Type PledgeSummaryGetResponsePledgesType `json:"type,required"`
+	JSON pledgeSummaryGetResponsePledgeJSON  `json:"-"`
 }
 
 // pledgeSummaryGetResponsePledgeJSON contains the JSON metadata for the struct
 // [PledgeSummaryGetResponsePledge]
 type pledgeSummaryGetResponsePledgeJSON struct {
-	Type        apijson.Field
 	Pledger     apijson.Field
+	Type        apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
 }
@@ -162,6 +162,31 @@ func (r *PledgeSummaryGetResponsePledge) UnmarshalJSON(data []byte) (err error) 
 }
 
 func (r pledgeSummaryGetResponsePledgeJSON) RawJSON() string {
+	return r.raw
+}
+
+type PledgeSummaryGetResponsePledgesPledger struct {
+	AvatarURL      string                                     `json:"avatar_url,required,nullable"`
+	GitHubUsername string                                     `json:"github_username,required,nullable"`
+	Name           string                                     `json:"name,required"`
+	JSON           pledgeSummaryGetResponsePledgesPledgerJSON `json:"-"`
+}
+
+// pledgeSummaryGetResponsePledgesPledgerJSON contains the JSON metadata for the
+// struct [PledgeSummaryGetResponsePledgesPledger]
+type pledgeSummaryGetResponsePledgesPledgerJSON struct {
+	AvatarURL      apijson.Field
+	GitHubUsername apijson.Field
+	Name           apijson.Field
+	raw            string
+	ExtraFields    map[string]apijson.Field
+}
+
+func (r *PledgeSummaryGetResponsePledgesPledger) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r pledgeSummaryGetResponsePledgesPledgerJSON) RawJSON() string {
 	return r.raw
 }
 
@@ -180,31 +205,6 @@ func (r PledgeSummaryGetResponsePledgesType) IsKnown() bool {
 		return true
 	}
 	return false
-}
-
-type PledgeSummaryGetResponsePledgesPledger struct {
-	Name           string                                     `json:"name,required"`
-	AvatarURL      string                                     `json:"avatar_url,nullable"`
-	GitHubUsername string                                     `json:"github_username,nullable"`
-	JSON           pledgeSummaryGetResponsePledgesPledgerJSON `json:"-"`
-}
-
-// pledgeSummaryGetResponsePledgesPledgerJSON contains the JSON metadata for the
-// struct [PledgeSummaryGetResponsePledgesPledger]
-type pledgeSummaryGetResponsePledgesPledgerJSON struct {
-	Name           apijson.Field
-	AvatarURL      apijson.Field
-	GitHubUsername apijson.Field
-	raw            string
-	ExtraFields    map[string]apijson.Field
-}
-
-func (r *PledgeSummaryGetResponsePledgesPledger) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-func (r pledgeSummaryGetResponsePledgesPledgerJSON) RawJSON() string {
-	return r.raw
 }
 
 type PledgeSummaryGetParams struct {

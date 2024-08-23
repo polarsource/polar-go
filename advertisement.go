@@ -61,11 +61,11 @@ type AdvertisementCampaign struct {
 	// Creation timestamp of the object.
 	CreatedAt    time.Time `json:"created_at,required" format:"date-time"`
 	ImageURL     string    `json:"image_url,required" format:"uri"`
+	ImageURLDark string    `json:"image_url_dark,required,nullable" format:"uri"`
 	LinkURL      string    `json:"link_url,required" format:"uri"`
-	Text         string    `json:"text,required"`
-	ImageURLDark string    `json:"image_url_dark,nullable" format:"uri"`
 	// Last modification timestamp of the object.
-	ModifiedAt time.Time                 `json:"modified_at,nullable" format:"date-time"`
+	ModifiedAt time.Time                 `json:"modified_at,required,nullable" format:"date-time"`
+	Text       string                    `json:"text,required"`
 	JSON       advertisementCampaignJSON `json:"-"`
 }
 
@@ -75,10 +75,10 @@ type advertisementCampaignJSON struct {
 	ID           apijson.Field
 	CreatedAt    apijson.Field
 	ImageURL     apijson.Field
-	LinkURL      apijson.Field
-	Text         apijson.Field
 	ImageURLDark apijson.Field
+	LinkURL      apijson.Field
 	ModifiedAt   apijson.Field
+	Text         apijson.Field
 	raw          string
 	ExtraFields  map[string]apijson.Field
 }

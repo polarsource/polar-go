@@ -51,20 +51,20 @@ func (r *FundingService) Search(ctx context.Context, query FundingSearchParams, 
 }
 
 type FundingLookupResponse struct {
+	FundingGoal      FundingLookupResponseFundingGoal      `json:"funding_goal,required,nullable"`
 	Issue            FundingLookupResponseIssue            `json:"issue,required"`
 	PledgesSummaries FundingLookupResponsePledgesSummaries `json:"pledges_summaries,required"`
 	Total            FundingLookupResponseTotal            `json:"total,required"`
-	FundingGoal      FundingLookupResponseFundingGoal      `json:"funding_goal,nullable"`
 	JSON             fundingLookupResponseJSON             `json:"-"`
 }
 
 // fundingLookupResponseJSON contains the JSON metadata for the struct
 // [FundingLookupResponse]
 type fundingLookupResponseJSON struct {
+	FundingGoal      apijson.Field
 	Issue            apijson.Field
 	PledgesSummaries apijson.Field
 	Total            apijson.Field
-	FundingGoal      apijson.Field
 	raw              string
 	ExtraFields      map[string]apijson.Field
 }
@@ -74,6 +74,31 @@ func (r *FundingLookupResponse) UnmarshalJSON(data []byte) (err error) {
 }
 
 func (r fundingLookupResponseJSON) RawJSON() string {
+	return r.raw
+}
+
+type FundingLookupResponseFundingGoal struct {
+	// Amount in the currencies smallest unit (cents if currency is USD)
+	Amount int64 `json:"amount,required"`
+	// Three letter currency code (eg: USD)
+	Currency string                               `json:"currency,required"`
+	JSON     fundingLookupResponseFundingGoalJSON `json:"-"`
+}
+
+// fundingLookupResponseFundingGoalJSON contains the JSON metadata for the struct
+// [FundingLookupResponseFundingGoal]
+type fundingLookupResponseFundingGoalJSON struct {
+	Amount      apijson.Field
+	Currency    apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *FundingLookupResponseFundingGoal) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r fundingLookupResponseFundingGoalJSON) RawJSON() string {
 	return r.raw
 }
 
@@ -248,16 +273,16 @@ func (r FundingLookupResponseIssuePlatform) IsKnown() bool {
 // The repository that the issue is in
 type FundingLookupResponseIssueRepository struct {
 	ID           string                                           `json:"id,required" format:"uuid"`
+	Description  string                                           `json:"description,required,nullable"`
+	Homepage     string                                           `json:"homepage,required,nullable"`
 	IsPrivate    bool                                             `json:"is_private,required"`
+	License      string                                           `json:"license,required,nullable"`
 	Name         string                                           `json:"name,required"`
 	Organization FundingLookupResponseIssueRepositoryOrganization `json:"organization,required"`
 	Platform     FundingLookupResponseIssueRepositoryPlatform     `json:"platform,required"`
 	// Settings for the repository profile
 	ProfileSettings FundingLookupResponseIssueRepositoryProfileSettings `json:"profile_settings,required,nullable"`
-	Description     string                                              `json:"description,nullable"`
-	Homepage        string                                              `json:"homepage,nullable"`
-	License         string                                              `json:"license,nullable"`
-	Stars           int64                                               `json:"stars,nullable"`
+	Stars           int64                                               `json:"stars,required,nullable"`
 	JSON            fundingLookupResponseIssueRepositoryJSON            `json:"-"`
 }
 
@@ -265,14 +290,14 @@ type FundingLookupResponseIssueRepository struct {
 // struct [FundingLookupResponseIssueRepository]
 type fundingLookupResponseIssueRepositoryJSON struct {
 	ID              apijson.Field
+	Description     apijson.Field
+	Homepage        apijson.Field
 	IsPrivate       apijson.Field
+	License         apijson.Field
 	Name            apijson.Field
 	Organization    apijson.Field
 	Platform        apijson.Field
 	ProfileSettings apijson.Field
-	Description     apijson.Field
-	Homepage        apijson.Field
-	License         apijson.Field
 	Stars           apijson.Field
 	raw             string
 	ExtraFields     map[string]apijson.Field
@@ -287,21 +312,21 @@ func (r fundingLookupResponseIssueRepositoryJSON) RawJSON() string {
 }
 
 type FundingLookupResponseIssueRepositoryOrganization struct {
-	ID         string                                                   `json:"id,required" format:"uuid"`
-	AvatarURL  string                                                   `json:"avatar_url,required"`
-	IsPersonal bool                                                     `json:"is_personal,required"`
-	Name       string                                                   `json:"name,required"`
-	Platform   FundingLookupResponseIssueRepositoryOrganizationPlatform `json:"platform,required"`
-	Bio        string                                                   `json:"bio,nullable"`
-	Blog       string                                                   `json:"blog,nullable"`
-	Company    string                                                   `json:"company,nullable"`
-	Email      string                                                   `json:"email,nullable"`
-	Location   string                                                   `json:"location,nullable"`
+	ID         string `json:"id,required" format:"uuid"`
+	AvatarURL  string `json:"avatar_url,required"`
+	Bio        string `json:"bio,required,nullable"`
+	Blog       string `json:"blog,required,nullable"`
+	Company    string `json:"company,required,nullable"`
+	Email      string `json:"email,required,nullable"`
+	IsPersonal bool   `json:"is_personal,required"`
+	Location   string `json:"location,required,nullable"`
+	Name       string `json:"name,required"`
 	// The organization ID.
-	OrganizationID  string                                               `json:"organization_id,nullable" format:"uuid4"`
-	PrettyName      string                                               `json:"pretty_name,nullable"`
-	TwitterUsername string                                               `json:"twitter_username,nullable"`
-	JSON            fundingLookupResponseIssueRepositoryOrganizationJSON `json:"-"`
+	OrganizationID  string                                                   `json:"organization_id,required,nullable" format:"uuid4"`
+	Platform        FundingLookupResponseIssueRepositoryOrganizationPlatform `json:"platform,required"`
+	PrettyName      string                                                   `json:"pretty_name,required,nullable"`
+	TwitterUsername string                                                   `json:"twitter_username,required,nullable"`
+	JSON            fundingLookupResponseIssueRepositoryOrganizationJSON     `json:"-"`
 }
 
 // fundingLookupResponseIssueRepositoryOrganizationJSON contains the JSON metadata
@@ -309,15 +334,15 @@ type FundingLookupResponseIssueRepositoryOrganization struct {
 type fundingLookupResponseIssueRepositoryOrganizationJSON struct {
 	ID              apijson.Field
 	AvatarURL       apijson.Field
-	IsPersonal      apijson.Field
-	Name            apijson.Field
-	Platform        apijson.Field
 	Bio             apijson.Field
 	Blog            apijson.Field
 	Company         apijson.Field
 	Email           apijson.Field
+	IsPersonal      apijson.Field
 	Location        apijson.Field
+	Name            apijson.Field
 	OrganizationID  apijson.Field
+	Platform        apijson.Field
 	PrettyName      apijson.Field
 	TwitterUsername apijson.Field
 	raw             string
@@ -575,9 +600,9 @@ func (r fundingLookupResponsePledgesSummariesPayDirectlyJSON) RawJSON() string {
 }
 
 type FundingLookupResponsePledgesSummariesPayDirectlyPledger struct {
+	AvatarURL      string                                                      `json:"avatar_url,required,nullable"`
+	GitHubUsername string                                                      `json:"github_username,required,nullable"`
 	Name           string                                                      `json:"name,required"`
-	AvatarURL      string                                                      `json:"avatar_url,nullable"`
-	GitHubUsername string                                                      `json:"github_username,nullable"`
 	JSON           fundingLookupResponsePledgesSummariesPayDirectlyPledgerJSON `json:"-"`
 }
 
@@ -585,9 +610,9 @@ type FundingLookupResponsePledgesSummariesPayDirectlyPledger struct {
 // metadata for the struct
 // [FundingLookupResponsePledgesSummariesPayDirectlyPledger]
 type fundingLookupResponsePledgesSummariesPayDirectlyPledgerJSON struct {
-	Name           apijson.Field
 	AvatarURL      apijson.Field
 	GitHubUsername apijson.Field
+	Name           apijson.Field
 	raw            string
 	ExtraFields    map[string]apijson.Field
 }
@@ -649,9 +674,9 @@ func (r fundingLookupResponsePledgesSummariesPayOnCompletionJSON) RawJSON() stri
 }
 
 type FundingLookupResponsePledgesSummariesPayOnCompletionPledger struct {
+	AvatarURL      string                                                          `json:"avatar_url,required,nullable"`
+	GitHubUsername string                                                          `json:"github_username,required,nullable"`
 	Name           string                                                          `json:"name,required"`
-	AvatarURL      string                                                          `json:"avatar_url,nullable"`
-	GitHubUsername string                                                          `json:"github_username,nullable"`
 	JSON           fundingLookupResponsePledgesSummariesPayOnCompletionPledgerJSON `json:"-"`
 }
 
@@ -659,9 +684,9 @@ type FundingLookupResponsePledgesSummariesPayOnCompletionPledger struct {
 // JSON metadata for the struct
 // [FundingLookupResponsePledgesSummariesPayOnCompletionPledger]
 type fundingLookupResponsePledgesSummariesPayOnCompletionPledgerJSON struct {
-	Name           apijson.Field
 	AvatarURL      apijson.Field
 	GitHubUsername apijson.Field
+	Name           apijson.Field
 	raw            string
 	ExtraFields    map[string]apijson.Field
 }
@@ -724,18 +749,18 @@ func (r fundingLookupResponsePledgesSummariesPayUpfrontJSON) RawJSON() string {
 }
 
 type FundingLookupResponsePledgesSummariesPayUpfrontPledger struct {
+	AvatarURL      string                                                     `json:"avatar_url,required,nullable"`
+	GitHubUsername string                                                     `json:"github_username,required,nullable"`
 	Name           string                                                     `json:"name,required"`
-	AvatarURL      string                                                     `json:"avatar_url,nullable"`
-	GitHubUsername string                                                     `json:"github_username,nullable"`
 	JSON           fundingLookupResponsePledgesSummariesPayUpfrontPledgerJSON `json:"-"`
 }
 
 // fundingLookupResponsePledgesSummariesPayUpfrontPledgerJSON contains the JSON
 // metadata for the struct [FundingLookupResponsePledgesSummariesPayUpfrontPledger]
 type fundingLookupResponsePledgesSummariesPayUpfrontPledgerJSON struct {
-	Name           apijson.Field
 	AvatarURL      apijson.Field
 	GitHubUsername apijson.Field
+	Name           apijson.Field
 	raw            string
 	ExtraFields    map[string]apijson.Field
 }
@@ -798,31 +823,6 @@ func (r fundingLookupResponseTotalJSON) RawJSON() string {
 	return r.raw
 }
 
-type FundingLookupResponseFundingGoal struct {
-	// Amount in the currencies smallest unit (cents if currency is USD)
-	Amount int64 `json:"amount,required"`
-	// Three letter currency code (eg: USD)
-	Currency string                               `json:"currency,required"`
-	JSON     fundingLookupResponseFundingGoalJSON `json:"-"`
-}
-
-// fundingLookupResponseFundingGoalJSON contains the JSON metadata for the struct
-// [FundingLookupResponseFundingGoal]
-type fundingLookupResponseFundingGoalJSON struct {
-	Amount      apijson.Field
-	Currency    apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *FundingLookupResponseFundingGoal) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-func (r fundingLookupResponseFundingGoalJSON) RawJSON() string {
-	return r.raw
-}
-
 type FundingSearchResponse struct {
 	Pagination FundingSearchResponsePagination `json:"pagination,required"`
 	Items      []FundingSearchResponseItem     `json:"items"`
@@ -870,20 +870,20 @@ func (r fundingSearchResponsePaginationJSON) RawJSON() string {
 }
 
 type FundingSearchResponseItem struct {
+	FundingGoal      FundingSearchResponseItemsFundingGoal      `json:"funding_goal,required,nullable"`
 	Issue            FundingSearchResponseItemsIssue            `json:"issue,required"`
 	PledgesSummaries FundingSearchResponseItemsPledgesSummaries `json:"pledges_summaries,required"`
 	Total            FundingSearchResponseItemsTotal            `json:"total,required"`
-	FundingGoal      FundingSearchResponseItemsFundingGoal      `json:"funding_goal,nullable"`
 	JSON             fundingSearchResponseItemJSON              `json:"-"`
 }
 
 // fundingSearchResponseItemJSON contains the JSON metadata for the struct
 // [FundingSearchResponseItem]
 type fundingSearchResponseItemJSON struct {
+	FundingGoal      apijson.Field
 	Issue            apijson.Field
 	PledgesSummaries apijson.Field
 	Total            apijson.Field
-	FundingGoal      apijson.Field
 	raw              string
 	ExtraFields      map[string]apijson.Field
 }
@@ -893,6 +893,31 @@ func (r *FundingSearchResponseItem) UnmarshalJSON(data []byte) (err error) {
 }
 
 func (r fundingSearchResponseItemJSON) RawJSON() string {
+	return r.raw
+}
+
+type FundingSearchResponseItemsFundingGoal struct {
+	// Amount in the currencies smallest unit (cents if currency is USD)
+	Amount int64 `json:"amount,required"`
+	// Three letter currency code (eg: USD)
+	Currency string                                    `json:"currency,required"`
+	JSON     fundingSearchResponseItemsFundingGoalJSON `json:"-"`
+}
+
+// fundingSearchResponseItemsFundingGoalJSON contains the JSON metadata for the
+// struct [FundingSearchResponseItemsFundingGoal]
+type fundingSearchResponseItemsFundingGoalJSON struct {
+	Amount      apijson.Field
+	Currency    apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *FundingSearchResponseItemsFundingGoal) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r fundingSearchResponseItemsFundingGoalJSON) RawJSON() string {
 	return r.raw
 }
 
@@ -1067,16 +1092,16 @@ func (r FundingSearchResponseItemsIssuePlatform) IsKnown() bool {
 // The repository that the issue is in
 type FundingSearchResponseItemsIssueRepository struct {
 	ID           string                                                `json:"id,required" format:"uuid"`
+	Description  string                                                `json:"description,required,nullable"`
+	Homepage     string                                                `json:"homepage,required,nullable"`
 	IsPrivate    bool                                                  `json:"is_private,required"`
+	License      string                                                `json:"license,required,nullable"`
 	Name         string                                                `json:"name,required"`
 	Organization FundingSearchResponseItemsIssueRepositoryOrganization `json:"organization,required"`
 	Platform     FundingSearchResponseItemsIssueRepositoryPlatform     `json:"platform,required"`
 	// Settings for the repository profile
 	ProfileSettings FundingSearchResponseItemsIssueRepositoryProfileSettings `json:"profile_settings,required,nullable"`
-	Description     string                                                   `json:"description,nullable"`
-	Homepage        string                                                   `json:"homepage,nullable"`
-	License         string                                                   `json:"license,nullable"`
-	Stars           int64                                                    `json:"stars,nullable"`
+	Stars           int64                                                    `json:"stars,required,nullable"`
 	JSON            fundingSearchResponseItemsIssueRepositoryJSON            `json:"-"`
 }
 
@@ -1084,14 +1109,14 @@ type FundingSearchResponseItemsIssueRepository struct {
 // struct [FundingSearchResponseItemsIssueRepository]
 type fundingSearchResponseItemsIssueRepositoryJSON struct {
 	ID              apijson.Field
+	Description     apijson.Field
+	Homepage        apijson.Field
 	IsPrivate       apijson.Field
+	License         apijson.Field
 	Name            apijson.Field
 	Organization    apijson.Field
 	Platform        apijson.Field
 	ProfileSettings apijson.Field
-	Description     apijson.Field
-	Homepage        apijson.Field
-	License         apijson.Field
 	Stars           apijson.Field
 	raw             string
 	ExtraFields     map[string]apijson.Field
@@ -1106,21 +1131,21 @@ func (r fundingSearchResponseItemsIssueRepositoryJSON) RawJSON() string {
 }
 
 type FundingSearchResponseItemsIssueRepositoryOrganization struct {
-	ID         string                                                        `json:"id,required" format:"uuid"`
-	AvatarURL  string                                                        `json:"avatar_url,required"`
-	IsPersonal bool                                                          `json:"is_personal,required"`
-	Name       string                                                        `json:"name,required"`
-	Platform   FundingSearchResponseItemsIssueRepositoryOrganizationPlatform `json:"platform,required"`
-	Bio        string                                                        `json:"bio,nullable"`
-	Blog       string                                                        `json:"blog,nullable"`
-	Company    string                                                        `json:"company,nullable"`
-	Email      string                                                        `json:"email,nullable"`
-	Location   string                                                        `json:"location,nullable"`
+	ID         string `json:"id,required" format:"uuid"`
+	AvatarURL  string `json:"avatar_url,required"`
+	Bio        string `json:"bio,required,nullable"`
+	Blog       string `json:"blog,required,nullable"`
+	Company    string `json:"company,required,nullable"`
+	Email      string `json:"email,required,nullable"`
+	IsPersonal bool   `json:"is_personal,required"`
+	Location   string `json:"location,required,nullable"`
+	Name       string `json:"name,required"`
 	// The organization ID.
-	OrganizationID  string                                                    `json:"organization_id,nullable" format:"uuid4"`
-	PrettyName      string                                                    `json:"pretty_name,nullable"`
-	TwitterUsername string                                                    `json:"twitter_username,nullable"`
-	JSON            fundingSearchResponseItemsIssueRepositoryOrganizationJSON `json:"-"`
+	OrganizationID  string                                                        `json:"organization_id,required,nullable" format:"uuid4"`
+	Platform        FundingSearchResponseItemsIssueRepositoryOrganizationPlatform `json:"platform,required"`
+	PrettyName      string                                                        `json:"pretty_name,required,nullable"`
+	TwitterUsername string                                                        `json:"twitter_username,required,nullable"`
+	JSON            fundingSearchResponseItemsIssueRepositoryOrganizationJSON     `json:"-"`
 }
 
 // fundingSearchResponseItemsIssueRepositoryOrganizationJSON contains the JSON
@@ -1128,15 +1153,15 @@ type FundingSearchResponseItemsIssueRepositoryOrganization struct {
 type fundingSearchResponseItemsIssueRepositoryOrganizationJSON struct {
 	ID              apijson.Field
 	AvatarURL       apijson.Field
-	IsPersonal      apijson.Field
-	Name            apijson.Field
-	Platform        apijson.Field
 	Bio             apijson.Field
 	Blog            apijson.Field
 	Company         apijson.Field
 	Email           apijson.Field
+	IsPersonal      apijson.Field
 	Location        apijson.Field
+	Name            apijson.Field
 	OrganizationID  apijson.Field
+	Platform        apijson.Field
 	PrettyName      apijson.Field
 	TwitterUsername apijson.Field
 	raw             string
@@ -1395,9 +1420,9 @@ func (r fundingSearchResponseItemsPledgesSummariesPayDirectlyJSON) RawJSON() str
 }
 
 type FundingSearchResponseItemsPledgesSummariesPayDirectlyPledger struct {
+	AvatarURL      string                                                           `json:"avatar_url,required,nullable"`
+	GitHubUsername string                                                           `json:"github_username,required,nullable"`
 	Name           string                                                           `json:"name,required"`
-	AvatarURL      string                                                           `json:"avatar_url,nullable"`
-	GitHubUsername string                                                           `json:"github_username,nullable"`
 	JSON           fundingSearchResponseItemsPledgesSummariesPayDirectlyPledgerJSON `json:"-"`
 }
 
@@ -1405,9 +1430,9 @@ type FundingSearchResponseItemsPledgesSummariesPayDirectlyPledger struct {
 // JSON metadata for the struct
 // [FundingSearchResponseItemsPledgesSummariesPayDirectlyPledger]
 type fundingSearchResponseItemsPledgesSummariesPayDirectlyPledgerJSON struct {
-	Name           apijson.Field
 	AvatarURL      apijson.Field
 	GitHubUsername apijson.Field
+	Name           apijson.Field
 	raw            string
 	ExtraFields    map[string]apijson.Field
 }
@@ -1471,9 +1496,9 @@ func (r fundingSearchResponseItemsPledgesSummariesPayOnCompletionJSON) RawJSON()
 }
 
 type FundingSearchResponseItemsPledgesSummariesPayOnCompletionPledger struct {
+	AvatarURL      string                                                               `json:"avatar_url,required,nullable"`
+	GitHubUsername string                                                               `json:"github_username,required,nullable"`
 	Name           string                                                               `json:"name,required"`
-	AvatarURL      string                                                               `json:"avatar_url,nullable"`
-	GitHubUsername string                                                               `json:"github_username,nullable"`
 	JSON           fundingSearchResponseItemsPledgesSummariesPayOnCompletionPledgerJSON `json:"-"`
 }
 
@@ -1481,9 +1506,9 @@ type FundingSearchResponseItemsPledgesSummariesPayOnCompletionPledger struct {
 // the JSON metadata for the struct
 // [FundingSearchResponseItemsPledgesSummariesPayOnCompletionPledger]
 type fundingSearchResponseItemsPledgesSummariesPayOnCompletionPledgerJSON struct {
-	Name           apijson.Field
 	AvatarURL      apijson.Field
 	GitHubUsername apijson.Field
+	Name           apijson.Field
 	raw            string
 	ExtraFields    map[string]apijson.Field
 }
@@ -1546,9 +1571,9 @@ func (r fundingSearchResponseItemsPledgesSummariesPayUpfrontJSON) RawJSON() stri
 }
 
 type FundingSearchResponseItemsPledgesSummariesPayUpfrontPledger struct {
+	AvatarURL      string                                                          `json:"avatar_url,required,nullable"`
+	GitHubUsername string                                                          `json:"github_username,required,nullable"`
 	Name           string                                                          `json:"name,required"`
-	AvatarURL      string                                                          `json:"avatar_url,nullable"`
-	GitHubUsername string                                                          `json:"github_username,nullable"`
 	JSON           fundingSearchResponseItemsPledgesSummariesPayUpfrontPledgerJSON `json:"-"`
 }
 
@@ -1556,9 +1581,9 @@ type FundingSearchResponseItemsPledgesSummariesPayUpfrontPledger struct {
 // JSON metadata for the struct
 // [FundingSearchResponseItemsPledgesSummariesPayUpfrontPledger]
 type fundingSearchResponseItemsPledgesSummariesPayUpfrontPledgerJSON struct {
-	Name           apijson.Field
 	AvatarURL      apijson.Field
 	GitHubUsername apijson.Field
+	Name           apijson.Field
 	raw            string
 	ExtraFields    map[string]apijson.Field
 }
@@ -1619,31 +1644,6 @@ func (r *FundingSearchResponseItemsTotal) UnmarshalJSON(data []byte) (err error)
 }
 
 func (r fundingSearchResponseItemsTotalJSON) RawJSON() string {
-	return r.raw
-}
-
-type FundingSearchResponseItemsFundingGoal struct {
-	// Amount in the currencies smallest unit (cents if currency is USD)
-	Amount int64 `json:"amount,required"`
-	// Three letter currency code (eg: USD)
-	Currency string                                    `json:"currency,required"`
-	JSON     fundingSearchResponseItemsFundingGoalJSON `json:"-"`
-}
-
-// fundingSearchResponseItemsFundingGoalJSON contains the JSON metadata for the
-// struct [FundingSearchResponseItemsFundingGoal]
-type fundingSearchResponseItemsFundingGoalJSON struct {
-	Amount      apijson.Field
-	Currency    apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *FundingSearchResponseItemsFundingGoal) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-func (r fundingSearchResponseItemsFundingGoalJSON) RawJSON() string {
 	return r.raw
 }
 

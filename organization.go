@@ -80,52 +80,52 @@ func (r *OrganizationService) List(ctx context.Context, query OrganizationListPa
 
 type OrganizationNewResponse struct {
 	// The organization ID.
-	ID string `json:"id,required" format:"uuid4"`
+	ID        string `json:"id,required" format:"uuid4"`
+	AvatarURL string `json:"avatar_url,required,nullable"`
+	Bio       string `json:"bio,required,nullable"`
+	Blog      string `json:"blog,required,nullable"`
+	Company   string `json:"company,required,nullable"`
 	// Creation timestamp of the object.
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	CreatedAt                         time.Time `json:"created_at,required" format:"date-time"`
+	DefaultUpfrontSplitToContributors int64     `json:"default_upfront_split_to_contributors,required,nullable"`
 	// If this organizations accepts donations
-	DonationsEnabled bool `json:"donations_enabled,required"`
+	DonationsEnabled bool   `json:"donations_enabled,required"`
+	Email            string `json:"email,required,nullable"`
 	// Settings for the organization features
-	FeatureSettings       OrganizationNewResponseFeatureSettings `json:"feature_settings,required,nullable"`
-	Name                  string                                 `json:"name,required"`
-	PledgeBadgeShowAmount bool                                   `json:"pledge_badge_show_amount,required"`
-	PledgeMinimumAmount   int64                                  `json:"pledge_minimum_amount,required"`
-	// Settings for the organization profile
-	ProfileSettings                   OrganizationNewResponseProfileSettings `json:"profile_settings,required,nullable"`
-	Slug                              string                                 `json:"slug,required"`
-	AvatarURL                         string                                 `json:"avatar_url,nullable"`
-	Bio                               string                                 `json:"bio,nullable"`
-	Blog                              string                                 `json:"blog,nullable"`
-	Company                           string                                 `json:"company,nullable"`
-	DefaultUpfrontSplitToContributors int64                                  `json:"default_upfront_split_to_contributors,nullable"`
-	Email                             string                                 `json:"email,nullable"`
-	Location                          string                                 `json:"location,nullable"`
+	FeatureSettings OrganizationNewResponseFeatureSettings `json:"feature_settings,required,nullable"`
+	Location        string                                 `json:"location,required,nullable"`
 	// Last modification timestamp of the object.
-	ModifiedAt      time.Time                   `json:"modified_at,nullable" format:"date-time"`
-	TwitterUsername string                      `json:"twitter_username,nullable"`
-	JSON            organizationNewResponseJSON `json:"-"`
+	ModifiedAt            time.Time `json:"modified_at,required,nullable" format:"date-time"`
+	Name                  string    `json:"name,required"`
+	PledgeBadgeShowAmount bool      `json:"pledge_badge_show_amount,required"`
+	PledgeMinimumAmount   int64     `json:"pledge_minimum_amount,required"`
+	// Settings for the organization profile
+	ProfileSettings OrganizationNewResponseProfileSettings `json:"profile_settings,required,nullable"`
+	Slug            string                                 `json:"slug,required"`
+	TwitterUsername string                                 `json:"twitter_username,required,nullable"`
+	JSON            organizationNewResponseJSON            `json:"-"`
 }
 
 // organizationNewResponseJSON contains the JSON metadata for the struct
 // [OrganizationNewResponse]
 type organizationNewResponseJSON struct {
 	ID                                apijson.Field
+	AvatarURL                         apijson.Field
+	Bio                               apijson.Field
+	Blog                              apijson.Field
+	Company                           apijson.Field
 	CreatedAt                         apijson.Field
+	DefaultUpfrontSplitToContributors apijson.Field
 	DonationsEnabled                  apijson.Field
+	Email                             apijson.Field
 	FeatureSettings                   apijson.Field
+	Location                          apijson.Field
+	ModifiedAt                        apijson.Field
 	Name                              apijson.Field
 	PledgeBadgeShowAmount             apijson.Field
 	PledgeMinimumAmount               apijson.Field
 	ProfileSettings                   apijson.Field
 	Slug                              apijson.Field
-	AvatarURL                         apijson.Field
-	Bio                               apijson.Field
-	Blog                              apijson.Field
-	Company                           apijson.Field
-	DefaultUpfrontSplitToContributors apijson.Field
-	Email                             apijson.Field
-	Location                          apijson.Field
-	ModifiedAt                        apijson.Field
 	TwitterUsername                   apijson.Field
 	raw                               string
 	ExtraFields                       map[string]apijson.Field
@@ -234,52 +234,52 @@ func (r organizationNewResponseProfileSettingsSubscribeJSON) RawJSON() string {
 
 type OrganizationGetResponse struct {
 	// The organization ID.
-	ID string `json:"id,required" format:"uuid4"`
+	ID        string `json:"id,required" format:"uuid4"`
+	AvatarURL string `json:"avatar_url,required,nullable"`
+	Bio       string `json:"bio,required,nullable"`
+	Blog      string `json:"blog,required,nullable"`
+	Company   string `json:"company,required,nullable"`
 	// Creation timestamp of the object.
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	CreatedAt                         time.Time `json:"created_at,required" format:"date-time"`
+	DefaultUpfrontSplitToContributors int64     `json:"default_upfront_split_to_contributors,required,nullable"`
 	// If this organizations accepts donations
-	DonationsEnabled bool `json:"donations_enabled,required"`
+	DonationsEnabled bool   `json:"donations_enabled,required"`
+	Email            string `json:"email,required,nullable"`
 	// Settings for the organization features
-	FeatureSettings       OrganizationGetResponseFeatureSettings `json:"feature_settings,required,nullable"`
-	Name                  string                                 `json:"name,required"`
-	PledgeBadgeShowAmount bool                                   `json:"pledge_badge_show_amount,required"`
-	PledgeMinimumAmount   int64                                  `json:"pledge_minimum_amount,required"`
-	// Settings for the organization profile
-	ProfileSettings                   OrganizationGetResponseProfileSettings `json:"profile_settings,required,nullable"`
-	Slug                              string                                 `json:"slug,required"`
-	AvatarURL                         string                                 `json:"avatar_url,nullable"`
-	Bio                               string                                 `json:"bio,nullable"`
-	Blog                              string                                 `json:"blog,nullable"`
-	Company                           string                                 `json:"company,nullable"`
-	DefaultUpfrontSplitToContributors int64                                  `json:"default_upfront_split_to_contributors,nullable"`
-	Email                             string                                 `json:"email,nullable"`
-	Location                          string                                 `json:"location,nullable"`
+	FeatureSettings OrganizationGetResponseFeatureSettings `json:"feature_settings,required,nullable"`
+	Location        string                                 `json:"location,required,nullable"`
 	// Last modification timestamp of the object.
-	ModifiedAt      time.Time                   `json:"modified_at,nullable" format:"date-time"`
-	TwitterUsername string                      `json:"twitter_username,nullable"`
-	JSON            organizationGetResponseJSON `json:"-"`
+	ModifiedAt            time.Time `json:"modified_at,required,nullable" format:"date-time"`
+	Name                  string    `json:"name,required"`
+	PledgeBadgeShowAmount bool      `json:"pledge_badge_show_amount,required"`
+	PledgeMinimumAmount   int64     `json:"pledge_minimum_amount,required"`
+	// Settings for the organization profile
+	ProfileSettings OrganizationGetResponseProfileSettings `json:"profile_settings,required,nullable"`
+	Slug            string                                 `json:"slug,required"`
+	TwitterUsername string                                 `json:"twitter_username,required,nullable"`
+	JSON            organizationGetResponseJSON            `json:"-"`
 }
 
 // organizationGetResponseJSON contains the JSON metadata for the struct
 // [OrganizationGetResponse]
 type organizationGetResponseJSON struct {
 	ID                                apijson.Field
+	AvatarURL                         apijson.Field
+	Bio                               apijson.Field
+	Blog                              apijson.Field
+	Company                           apijson.Field
 	CreatedAt                         apijson.Field
+	DefaultUpfrontSplitToContributors apijson.Field
 	DonationsEnabled                  apijson.Field
+	Email                             apijson.Field
 	FeatureSettings                   apijson.Field
+	Location                          apijson.Field
+	ModifiedAt                        apijson.Field
 	Name                              apijson.Field
 	PledgeBadgeShowAmount             apijson.Field
 	PledgeMinimumAmount               apijson.Field
 	ProfileSettings                   apijson.Field
 	Slug                              apijson.Field
-	AvatarURL                         apijson.Field
-	Bio                               apijson.Field
-	Blog                              apijson.Field
-	Company                           apijson.Field
-	DefaultUpfrontSplitToContributors apijson.Field
-	Email                             apijson.Field
-	Location                          apijson.Field
-	ModifiedAt                        apijson.Field
 	TwitterUsername                   apijson.Field
 	raw                               string
 	ExtraFields                       map[string]apijson.Field
@@ -388,52 +388,52 @@ func (r organizationGetResponseProfileSettingsSubscribeJSON) RawJSON() string {
 
 type OrganizationUpdateResponse struct {
 	// The organization ID.
-	ID string `json:"id,required" format:"uuid4"`
+	ID        string `json:"id,required" format:"uuid4"`
+	AvatarURL string `json:"avatar_url,required,nullable"`
+	Bio       string `json:"bio,required,nullable"`
+	Blog      string `json:"blog,required,nullable"`
+	Company   string `json:"company,required,nullable"`
 	// Creation timestamp of the object.
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	CreatedAt                         time.Time `json:"created_at,required" format:"date-time"`
+	DefaultUpfrontSplitToContributors int64     `json:"default_upfront_split_to_contributors,required,nullable"`
 	// If this organizations accepts donations
-	DonationsEnabled bool `json:"donations_enabled,required"`
+	DonationsEnabled bool   `json:"donations_enabled,required"`
+	Email            string `json:"email,required,nullable"`
 	// Settings for the organization features
-	FeatureSettings       OrganizationUpdateResponseFeatureSettings `json:"feature_settings,required,nullable"`
-	Name                  string                                    `json:"name,required"`
-	PledgeBadgeShowAmount bool                                      `json:"pledge_badge_show_amount,required"`
-	PledgeMinimumAmount   int64                                     `json:"pledge_minimum_amount,required"`
-	// Settings for the organization profile
-	ProfileSettings                   OrganizationUpdateResponseProfileSettings `json:"profile_settings,required,nullable"`
-	Slug                              string                                    `json:"slug,required"`
-	AvatarURL                         string                                    `json:"avatar_url,nullable"`
-	Bio                               string                                    `json:"bio,nullable"`
-	Blog                              string                                    `json:"blog,nullable"`
-	Company                           string                                    `json:"company,nullable"`
-	DefaultUpfrontSplitToContributors int64                                     `json:"default_upfront_split_to_contributors,nullable"`
-	Email                             string                                    `json:"email,nullable"`
-	Location                          string                                    `json:"location,nullable"`
+	FeatureSettings OrganizationUpdateResponseFeatureSettings `json:"feature_settings,required,nullable"`
+	Location        string                                    `json:"location,required,nullable"`
 	// Last modification timestamp of the object.
-	ModifiedAt      time.Time                      `json:"modified_at,nullable" format:"date-time"`
-	TwitterUsername string                         `json:"twitter_username,nullable"`
-	JSON            organizationUpdateResponseJSON `json:"-"`
+	ModifiedAt            time.Time `json:"modified_at,required,nullable" format:"date-time"`
+	Name                  string    `json:"name,required"`
+	PledgeBadgeShowAmount bool      `json:"pledge_badge_show_amount,required"`
+	PledgeMinimumAmount   int64     `json:"pledge_minimum_amount,required"`
+	// Settings for the organization profile
+	ProfileSettings OrganizationUpdateResponseProfileSettings `json:"profile_settings,required,nullable"`
+	Slug            string                                    `json:"slug,required"`
+	TwitterUsername string                                    `json:"twitter_username,required,nullable"`
+	JSON            organizationUpdateResponseJSON            `json:"-"`
 }
 
 // organizationUpdateResponseJSON contains the JSON metadata for the struct
 // [OrganizationUpdateResponse]
 type organizationUpdateResponseJSON struct {
 	ID                                apijson.Field
+	AvatarURL                         apijson.Field
+	Bio                               apijson.Field
+	Blog                              apijson.Field
+	Company                           apijson.Field
 	CreatedAt                         apijson.Field
+	DefaultUpfrontSplitToContributors apijson.Field
 	DonationsEnabled                  apijson.Field
+	Email                             apijson.Field
 	FeatureSettings                   apijson.Field
+	Location                          apijson.Field
+	ModifiedAt                        apijson.Field
 	Name                              apijson.Field
 	PledgeBadgeShowAmount             apijson.Field
 	PledgeMinimumAmount               apijson.Field
 	ProfileSettings                   apijson.Field
 	Slug                              apijson.Field
-	AvatarURL                         apijson.Field
-	Bio                               apijson.Field
-	Blog                              apijson.Field
-	Company                           apijson.Field
-	DefaultUpfrontSplitToContributors apijson.Field
-	Email                             apijson.Field
-	Location                          apijson.Field
-	ModifiedAt                        apijson.Field
 	TwitterUsername                   apijson.Field
 	raw                               string
 	ExtraFields                       map[string]apijson.Field
@@ -588,52 +588,52 @@ func (r organizationListResponsePaginationJSON) RawJSON() string {
 
 type OrganizationListResponseItem struct {
 	// The organization ID.
-	ID string `json:"id,required" format:"uuid4"`
+	ID        string `json:"id,required" format:"uuid4"`
+	AvatarURL string `json:"avatar_url,required,nullable"`
+	Bio       string `json:"bio,required,nullable"`
+	Blog      string `json:"blog,required,nullable"`
+	Company   string `json:"company,required,nullable"`
 	// Creation timestamp of the object.
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	CreatedAt                         time.Time `json:"created_at,required" format:"date-time"`
+	DefaultUpfrontSplitToContributors int64     `json:"default_upfront_split_to_contributors,required,nullable"`
 	// If this organizations accepts donations
-	DonationsEnabled bool `json:"donations_enabled,required"`
+	DonationsEnabled bool   `json:"donations_enabled,required"`
+	Email            string `json:"email,required,nullable"`
 	// Settings for the organization features
-	FeatureSettings       OrganizationListResponseItemsFeatureSettings `json:"feature_settings,required,nullable"`
-	Name                  string                                       `json:"name,required"`
-	PledgeBadgeShowAmount bool                                         `json:"pledge_badge_show_amount,required"`
-	PledgeMinimumAmount   int64                                        `json:"pledge_minimum_amount,required"`
-	// Settings for the organization profile
-	ProfileSettings                   OrganizationListResponseItemsProfileSettings `json:"profile_settings,required,nullable"`
-	Slug                              string                                       `json:"slug,required"`
-	AvatarURL                         string                                       `json:"avatar_url,nullable"`
-	Bio                               string                                       `json:"bio,nullable"`
-	Blog                              string                                       `json:"blog,nullable"`
-	Company                           string                                       `json:"company,nullable"`
-	DefaultUpfrontSplitToContributors int64                                        `json:"default_upfront_split_to_contributors,nullable"`
-	Email                             string                                       `json:"email,nullable"`
-	Location                          string                                       `json:"location,nullable"`
+	FeatureSettings OrganizationListResponseItemsFeatureSettings `json:"feature_settings,required,nullable"`
+	Location        string                                       `json:"location,required,nullable"`
 	// Last modification timestamp of the object.
-	ModifiedAt      time.Time                        `json:"modified_at,nullable" format:"date-time"`
-	TwitterUsername string                           `json:"twitter_username,nullable"`
-	JSON            organizationListResponseItemJSON `json:"-"`
+	ModifiedAt            time.Time `json:"modified_at,required,nullable" format:"date-time"`
+	Name                  string    `json:"name,required"`
+	PledgeBadgeShowAmount bool      `json:"pledge_badge_show_amount,required"`
+	PledgeMinimumAmount   int64     `json:"pledge_minimum_amount,required"`
+	// Settings for the organization profile
+	ProfileSettings OrganizationListResponseItemsProfileSettings `json:"profile_settings,required,nullable"`
+	Slug            string                                       `json:"slug,required"`
+	TwitterUsername string                                       `json:"twitter_username,required,nullable"`
+	JSON            organizationListResponseItemJSON             `json:"-"`
 }
 
 // organizationListResponseItemJSON contains the JSON metadata for the struct
 // [OrganizationListResponseItem]
 type organizationListResponseItemJSON struct {
 	ID                                apijson.Field
+	AvatarURL                         apijson.Field
+	Bio                               apijson.Field
+	Blog                              apijson.Field
+	Company                           apijson.Field
 	CreatedAt                         apijson.Field
+	DefaultUpfrontSplitToContributors apijson.Field
 	DonationsEnabled                  apijson.Field
+	Email                             apijson.Field
 	FeatureSettings                   apijson.Field
+	Location                          apijson.Field
+	ModifiedAt                        apijson.Field
 	Name                              apijson.Field
 	PledgeBadgeShowAmount             apijson.Field
 	PledgeMinimumAmount               apijson.Field
 	ProfileSettings                   apijson.Field
 	Slug                              apijson.Field
-	AvatarURL                         apijson.Field
-	Bio                               apijson.Field
-	Blog                              apijson.Field
-	Company                           apijson.Field
-	DefaultUpfrontSplitToContributors apijson.Field
-	Email                             apijson.Field
-	Location                          apijson.Field
-	ModifiedAt                        apijson.Field
 	TwitterUsername                   apijson.Field
 	raw                               string
 	ExtraFields                       map[string]apijson.Field

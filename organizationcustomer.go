@@ -94,18 +94,18 @@ func (r organizationCustomerListResponsePaginationJSON) RawJSON() string {
 }
 
 type OrganizationCustomerListResponseItem struct {
+	AvatarURL      string                                   `json:"avatar_url,required,nullable"`
+	GitHubUsername string                                   `json:"github_username,required,nullable"`
 	PublicName     string                                   `json:"public_name,required"`
-	AvatarURL      string                                   `json:"avatar_url,nullable"`
-	GitHubUsername string                                   `json:"github_username,nullable"`
 	JSON           organizationCustomerListResponseItemJSON `json:"-"`
 }
 
 // organizationCustomerListResponseItemJSON contains the JSON metadata for the
 // struct [OrganizationCustomerListResponseItem]
 type organizationCustomerListResponseItemJSON struct {
-	PublicName     apijson.Field
 	AvatarURL      apijson.Field
 	GitHubUsername apijson.Field
+	PublicName     apijson.Field
 	raw            string
 	ExtraFields    map[string]apijson.Field
 }

@@ -49,16 +49,16 @@ func (r *Oauth2UserinfoService) Get(ctx context.Context, opts ...option.RequestO
 }
 
 type UserInfoOrganization struct {
+	Name string                   `json:"name,required,nullable"`
 	Sub  string                   `json:"sub,required"`
-	Name string                   `json:"name,nullable"`
 	JSON userInfoOrganizationJSON `json:"-"`
 }
 
 // userInfoOrganizationJSON contains the JSON metadata for the struct
 // [UserInfoOrganization]
 type userInfoOrganizationJSON struct {
-	Sub         apijson.Field
 	Name        apijson.Field
+	Sub         apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
 }
@@ -76,19 +76,19 @@ func (r UserInfoOrganization) implementsOauth2UserinfoNewResponse() {}
 func (r UserInfoOrganization) implementsOauth2UserinfoGetResponse() {}
 
 type UserInfoUser struct {
+	Email         string           `json:"email,required,nullable"`
+	EmailVerified bool             `json:"email_verified,required,nullable"`
+	Name          string           `json:"name,required,nullable"`
 	Sub           string           `json:"sub,required"`
-	Email         string           `json:"email,nullable"`
-	EmailVerified bool             `json:"email_verified,nullable"`
-	Name          string           `json:"name,nullable"`
 	JSON          userInfoUserJSON `json:"-"`
 }
 
 // userInfoUserJSON contains the JSON metadata for the struct [UserInfoUser]
 type userInfoUserJSON struct {
-	Sub           apijson.Field
 	Email         apijson.Field
 	EmailVerified apijson.Field
 	Name          apijson.Field
+	Sub           apijson.Field
 	raw           string
 	ExtraFields   map[string]apijson.Field
 }
@@ -107,7 +107,7 @@ func (r UserInfoUser) implementsOauth2UserinfoGetResponse() {}
 
 type Oauth2UserinfoNewResponse struct {
 	Sub           string                        `json:"sub,required"`
-	Name          string                        `json:"name,nullable"`
+	Name          string                        `json:"name,required,nullable"`
 	Email         string                        `json:"email,nullable"`
 	EmailVerified bool                          `json:"email_verified,nullable"`
 	JSON          oauth2UserinfoNewResponseJSON `json:"-"`
@@ -168,7 +168,7 @@ func init() {
 
 type Oauth2UserinfoGetResponse struct {
 	Sub           string                        `json:"sub,required"`
-	Name          string                        `json:"name,nullable"`
+	Name          string                        `json:"name,required,nullable"`
 	Email         string                        `json:"email,nullable"`
 	EmailVerified bool                          `json:"email_verified,nullable"`
 	JSON          oauth2UserinfoGetResponseJSON `json:"-"`

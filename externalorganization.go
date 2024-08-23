@@ -88,21 +88,21 @@ func (r externalOrganizationListResponsePaginationJSON) RawJSON() string {
 }
 
 type ExternalOrganizationListResponseItem struct {
-	ID         string                                        `json:"id,required" format:"uuid"`
-	AvatarURL  string                                        `json:"avatar_url,required"`
-	IsPersonal bool                                          `json:"is_personal,required"`
-	Name       string                                        `json:"name,required"`
-	Platform   ExternalOrganizationListResponseItemsPlatform `json:"platform,required"`
-	Bio        string                                        `json:"bio,nullable"`
-	Blog       string                                        `json:"blog,nullable"`
-	Company    string                                        `json:"company,nullable"`
-	Email      string                                        `json:"email,nullable"`
-	Location   string                                        `json:"location,nullable"`
+	ID         string `json:"id,required" format:"uuid"`
+	AvatarURL  string `json:"avatar_url,required"`
+	Bio        string `json:"bio,required,nullable"`
+	Blog       string `json:"blog,required,nullable"`
+	Company    string `json:"company,required,nullable"`
+	Email      string `json:"email,required,nullable"`
+	IsPersonal bool   `json:"is_personal,required"`
+	Location   string `json:"location,required,nullable"`
+	Name       string `json:"name,required"`
 	// The organization ID.
-	OrganizationID  string                                   `json:"organization_id,nullable" format:"uuid4"`
-	PrettyName      string                                   `json:"pretty_name,nullable"`
-	TwitterUsername string                                   `json:"twitter_username,nullable"`
-	JSON            externalOrganizationListResponseItemJSON `json:"-"`
+	OrganizationID  string                                        `json:"organization_id,required,nullable" format:"uuid4"`
+	Platform        ExternalOrganizationListResponseItemsPlatform `json:"platform,required"`
+	PrettyName      string                                        `json:"pretty_name,required,nullable"`
+	TwitterUsername string                                        `json:"twitter_username,required,nullable"`
+	JSON            externalOrganizationListResponseItemJSON      `json:"-"`
 }
 
 // externalOrganizationListResponseItemJSON contains the JSON metadata for the
@@ -110,15 +110,15 @@ type ExternalOrganizationListResponseItem struct {
 type externalOrganizationListResponseItemJSON struct {
 	ID              apijson.Field
 	AvatarURL       apijson.Field
-	IsPersonal      apijson.Field
-	Name            apijson.Field
-	Platform        apijson.Field
 	Bio             apijson.Field
 	Blog            apijson.Field
 	Company         apijson.Field
 	Email           apijson.Field
+	IsPersonal      apijson.Field
 	Location        apijson.Field
+	Name            apijson.Field
 	OrganizationID  apijson.Field
+	Platform        apijson.Field
 	PrettyName      apijson.Field
 	TwitterUsername apijson.Field
 	raw             string
