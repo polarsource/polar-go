@@ -158,16 +158,16 @@ func TestFileUploaded(t *testing.T) {
 		BodyID: polar.F("id"),
 		Parts: polar.F([]polar.FileUploadedParamsPart{{
 			ChecksumEtag:         polar.F("checksum_etag"),
-			Number:               polar.F(int64(0)),
 			ChecksumSha256Base64: polar.F("checksum_sha256_base64"),
+			Number:               polar.F(int64(0)),
 		}, {
 			ChecksumEtag:         polar.F("checksum_etag"),
-			Number:               polar.F(int64(0)),
 			ChecksumSha256Base64: polar.F("checksum_sha256_base64"),
+			Number:               polar.F(int64(0)),
 		}, {
 			ChecksumEtag:         polar.F("checksum_etag"),
-			Number:               polar.F(int64(0)),
 			ChecksumSha256Base64: polar.F("checksum_sha256_base64"),
+			Number:               polar.F(int64(0)),
 		}}),
 		Path: polar.F("path"),
 	})

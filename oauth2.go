@@ -84,8 +84,8 @@ type AuthorizeResponseOrganization struct {
 	Client        AuthorizeResponseOrganizationClient         `json:"client,required"`
 	Organizations []AuthorizeResponseOrganizationOrganization `json:"organizations,required"`
 	Scopes        []AuthorizeResponseOrganizationScope        `json:"scopes,required"`
+	Sub           AuthorizeResponseOrganizationSub            `json:"sub,required,nullable"`
 	SubType       AuthorizeResponseOrganizationSubType        `json:"sub_type,required"`
-	Sub           AuthorizeResponseOrganizationSub            `json:"sub,nullable"`
 	JSON          authorizeResponseOrganizationJSON           `json:"-"`
 }
 
@@ -95,8 +95,8 @@ type authorizeResponseOrganizationJSON struct {
 	Client        apijson.Field
 	Organizations apijson.Field
 	Scopes        apijson.Field
-	SubType       apijson.Field
 	Sub           apijson.Field
+	SubType       apijson.Field
 	raw           string
 	ExtraFields   map[string]apijson.Field
 }
@@ -112,16 +112,16 @@ func (r authorizeResponseOrganizationJSON) RawJSON() string {
 func (r AuthorizeResponseOrganization) implementsOauth2AuthorizeResponse() {}
 
 type AuthorizeResponseOrganizationClient struct {
-	ClientID string `json:"client_id,required"`
+	ClientID   string `json:"client_id,required"`
+	ClientName string `json:"client_name,required,nullable"`
+	ClientUri  string `json:"client_uri,required,nullable"`
 	// Creation timestamp of the object.
-	CreatedAt  time.Time `json:"created_at,required" format:"date-time"`
-	ClientName string    `json:"client_name,nullable"`
-	ClientUri  string    `json:"client_uri,nullable"`
-	LogoUri    string    `json:"logo_uri,nullable"`
+	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	LogoUri   string    `json:"logo_uri,required,nullable"`
 	// Last modification timestamp of the object.
-	ModifiedAt time.Time                               `json:"modified_at,nullable" format:"date-time"`
-	PolicyUri  string                                  `json:"policy_uri,nullable"`
-	TosUri     string                                  `json:"tos_uri,nullable"`
+	ModifiedAt time.Time                               `json:"modified_at,required,nullable" format:"date-time"`
+	PolicyUri  string                                  `json:"policy_uri,required,nullable"`
+	TosUri     string                                  `json:"tos_uri,required,nullable"`
 	JSON       authorizeResponseOrganizationClientJSON `json:"-"`
 }
 
@@ -129,9 +129,9 @@ type AuthorizeResponseOrganizationClient struct {
 // struct [AuthorizeResponseOrganizationClient]
 type authorizeResponseOrganizationClientJSON struct {
 	ClientID    apijson.Field
-	CreatedAt   apijson.Field
 	ClientName  apijson.Field
 	ClientUri   apijson.Field
+	CreatedAt   apijson.Field
 	LogoUri     apijson.Field
 	ModifiedAt  apijson.Field
 	PolicyUri   apijson.Field
@@ -150,8 +150,8 @@ func (r authorizeResponseOrganizationClientJSON) RawJSON() string {
 
 type AuthorizeResponseOrganizationOrganization struct {
 	ID        string                                        `json:"id,required" format:"uuid4"`
+	AvatarURL string                                        `json:"avatar_url,required,nullable"`
 	Slug      string                                        `json:"slug,required"`
-	AvatarURL string                                        `json:"avatar_url,nullable"`
 	JSON      authorizeResponseOrganizationOrganizationJSON `json:"-"`
 }
 
@@ -159,8 +159,8 @@ type AuthorizeResponseOrganizationOrganization struct {
 // struct [AuthorizeResponseOrganizationOrganization]
 type authorizeResponseOrganizationOrganizationJSON struct {
 	ID          apijson.Field
-	Slug        apijson.Field
 	AvatarURL   apijson.Field
+	Slug        apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
 }
@@ -220,6 +220,31 @@ func (r AuthorizeResponseOrganizationScope) IsKnown() bool {
 	return false
 }
 
+type AuthorizeResponseOrganizationSub struct {
+	ID        string                               `json:"id,required" format:"uuid4"`
+	AvatarURL string                               `json:"avatar_url,required,nullable"`
+	Slug      string                               `json:"slug,required"`
+	JSON      authorizeResponseOrganizationSubJSON `json:"-"`
+}
+
+// authorizeResponseOrganizationSubJSON contains the JSON metadata for the struct
+// [AuthorizeResponseOrganizationSub]
+type authorizeResponseOrganizationSubJSON struct {
+	ID          apijson.Field
+	AvatarURL   apijson.Field
+	Slug        apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *AuthorizeResponseOrganizationSub) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r authorizeResponseOrganizationSubJSON) RawJSON() string {
+	return r.raw
+}
+
 type AuthorizeResponseOrganizationSubType string
 
 const (
@@ -234,36 +259,11 @@ func (r AuthorizeResponseOrganizationSubType) IsKnown() bool {
 	return false
 }
 
-type AuthorizeResponseOrganizationSub struct {
-	ID        string                               `json:"id,required" format:"uuid4"`
-	Slug      string                               `json:"slug,required"`
-	AvatarURL string                               `json:"avatar_url,nullable"`
-	JSON      authorizeResponseOrganizationSubJSON `json:"-"`
-}
-
-// authorizeResponseOrganizationSubJSON contains the JSON metadata for the struct
-// [AuthorizeResponseOrganizationSub]
-type authorizeResponseOrganizationSubJSON struct {
-	ID          apijson.Field
-	Slug        apijson.Field
-	AvatarURL   apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *AuthorizeResponseOrganizationSub) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-func (r authorizeResponseOrganizationSubJSON) RawJSON() string {
-	return r.raw
-}
-
 type AuthorizeResponseUser struct {
 	Client  AuthorizeResponseUserClient  `json:"client,required"`
 	Scopes  []AuthorizeResponseUserScope `json:"scopes,required"`
+	Sub     AuthorizeResponseUserSub     `json:"sub,required,nullable"`
 	SubType AuthorizeResponseUserSubType `json:"sub_type,required"`
-	Sub     AuthorizeResponseUserSub     `json:"sub,nullable"`
 	JSON    authorizeResponseUserJSON    `json:"-"`
 }
 
@@ -272,8 +272,8 @@ type AuthorizeResponseUser struct {
 type authorizeResponseUserJSON struct {
 	Client      apijson.Field
 	Scopes      apijson.Field
-	SubType     apijson.Field
 	Sub         apijson.Field
+	SubType     apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
 }
@@ -289,16 +289,16 @@ func (r authorizeResponseUserJSON) RawJSON() string {
 func (r AuthorizeResponseUser) implementsOauth2AuthorizeResponse() {}
 
 type AuthorizeResponseUserClient struct {
-	ClientID string `json:"client_id,required"`
+	ClientID   string `json:"client_id,required"`
+	ClientName string `json:"client_name,required,nullable"`
+	ClientUri  string `json:"client_uri,required,nullable"`
 	// Creation timestamp of the object.
-	CreatedAt  time.Time `json:"created_at,required" format:"date-time"`
-	ClientName string    `json:"client_name,nullable"`
-	ClientUri  string    `json:"client_uri,nullable"`
-	LogoUri    string    `json:"logo_uri,nullable"`
+	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	LogoUri   string    `json:"logo_uri,required,nullable"`
 	// Last modification timestamp of the object.
-	ModifiedAt time.Time                       `json:"modified_at,nullable" format:"date-time"`
-	PolicyUri  string                          `json:"policy_uri,nullable"`
-	TosUri     string                          `json:"tos_uri,nullable"`
+	ModifiedAt time.Time                       `json:"modified_at,required,nullable" format:"date-time"`
+	PolicyUri  string                          `json:"policy_uri,required,nullable"`
+	TosUri     string                          `json:"tos_uri,required,nullable"`
 	JSON       authorizeResponseUserClientJSON `json:"-"`
 }
 
@@ -306,9 +306,9 @@ type AuthorizeResponseUserClient struct {
 // [AuthorizeResponseUserClient]
 type authorizeResponseUserClientJSON struct {
 	ClientID    apijson.Field
-	CreatedAt   apijson.Field
 	ClientName  apijson.Field
 	ClientUri   apijson.Field
+	CreatedAt   apijson.Field
 	LogoUri     apijson.Field
 	ModifiedAt  apijson.Field
 	PolicyUri   apijson.Field
@@ -372,6 +372,33 @@ func (r AuthorizeResponseUserScope) IsKnown() bool {
 	return false
 }
 
+type AuthorizeResponseUserSub struct {
+	ID        string                       `json:"id,required" format:"uuid4"`
+	AvatarURL string                       `json:"avatar_url,required,nullable"`
+	Email     string                       `json:"email,required" format:"email"`
+	Username  string                       `json:"username,required"`
+	JSON      authorizeResponseUserSubJSON `json:"-"`
+}
+
+// authorizeResponseUserSubJSON contains the JSON metadata for the struct
+// [AuthorizeResponseUserSub]
+type authorizeResponseUserSubJSON struct {
+	ID          apijson.Field
+	AvatarURL   apijson.Field
+	Email       apijson.Field
+	Username    apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *AuthorizeResponseUserSub) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r authorizeResponseUserSubJSON) RawJSON() string {
+	return r.raw
+}
+
 type AuthorizeResponseUserSubType string
 
 const (
@@ -384,33 +411,6 @@ func (r AuthorizeResponseUserSubType) IsKnown() bool {
 		return true
 	}
 	return false
-}
-
-type AuthorizeResponseUserSub struct {
-	ID        string                       `json:"id,required" format:"uuid4"`
-	Email     string                       `json:"email,required" format:"email"`
-	Username  string                       `json:"username,required"`
-	AvatarURL string                       `json:"avatar_url,nullable"`
-	JSON      authorizeResponseUserSubJSON `json:"-"`
-}
-
-// authorizeResponseUserSubJSON contains the JSON metadata for the struct
-// [AuthorizeResponseUserSub]
-type authorizeResponseUserSubJSON struct {
-	ID          apijson.Field
-	Email       apijson.Field
-	Username    apijson.Field
-	AvatarURL   apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *AuthorizeResponseUserSub) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-func (r authorizeResponseUserSubJSON) RawJSON() string {
-	return r.raw
 }
 
 type IntrospectTokenResponse struct {
@@ -488,9 +488,9 @@ type TokenResponse struct {
 	AccessToken  string                 `json:"access_token,required"`
 	ExpiresIn    int64                  `json:"expires_in,required"`
 	IDToken      string                 `json:"id_token,required"`
+	RefreshToken string                 `json:"refresh_token,required,nullable"`
 	Scope        string                 `json:"scope,required"`
 	TokenType    TokenResponseTokenType `json:"token_type,required"`
-	RefreshToken string                 `json:"refresh_token,nullable"`
 	JSON         tokenResponseJSON      `json:"-"`
 }
 
@@ -499,9 +499,9 @@ type tokenResponseJSON struct {
 	AccessToken  apijson.Field
 	ExpiresIn    apijson.Field
 	IDToken      apijson.Field
+	RefreshToken apijson.Field
 	Scope        apijson.Field
 	TokenType    apijson.Field
-	RefreshToken apijson.Field
 	raw          string
 	ExtraFields  map[string]apijson.Field
 }
@@ -581,13 +581,13 @@ type Oauth2ListResponseItem struct {
 	ClientSecret          string `json:"client_secret,required"`
 	ClientSecretExpiresAt int64  `json:"client_secret_expires_at,required"`
 	// Creation timestamp of the object.
-	CreatedAt    time.Time                          `json:"created_at,required" format:"date-time"`
-	RedirectUris []string                           `json:"redirect_uris,required" format:"uri"`
-	ClientUri    string                             `json:"client_uri,nullable"`
-	GrantTypes   []Oauth2ListResponseItemsGrantType `json:"grant_types"`
-	LogoUri      string                             `json:"logo_uri,nullable" format:"uri"`
+	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
 	// Last modification timestamp of the object.
-	ModifiedAt              time.Time                                      `json:"modified_at,nullable" format:"date-time"`
+	ModifiedAt              time.Time                                      `json:"modified_at,required,nullable" format:"date-time"`
+	RedirectUris            []string                                       `json:"redirect_uris,required" format:"uri"`
+	ClientUri               string                                         `json:"client_uri,nullable"`
+	GrantTypes              []Oauth2ListResponseItemsGrantType             `json:"grant_types"`
+	LogoUri                 string                                         `json:"logo_uri,nullable" format:"uri"`
 	PolicyUri               string                                         `json:"policy_uri,nullable" format:"uri"`
 	ResponseTypes           []Oauth2ListResponseItemsResponseType          `json:"response_types"`
 	Scope                   string                                         `json:"scope"`
@@ -605,11 +605,11 @@ type oauth2ListResponseItemJSON struct {
 	ClientSecret            apijson.Field
 	ClientSecretExpiresAt   apijson.Field
 	CreatedAt               apijson.Field
+	ModifiedAt              apijson.Field
 	RedirectUris            apijson.Field
 	ClientUri               apijson.Field
 	GrantTypes              apijson.Field
 	LogoUri                 apijson.Field
-	ModifiedAt              apijson.Field
 	PolicyUri               apijson.Field
 	ResponseTypes           apijson.Field
 	Scope                   apijson.Field
@@ -679,7 +679,7 @@ type Oauth2AuthorizeResponse struct {
 	SubType Oauth2AuthorizeResponseSubType `json:"sub_type,required"`
 	// This field can have the runtime type of [AuthorizeResponseUserSub],
 	// [AuthorizeResponseOrganizationSub].
-	Sub interface{} `json:"sub,required"`
+	Sub interface{} `json:"sub"`
 	// This field can have the runtime type of [[]AuthorizeResponseUserScope],
 	// [[]AuthorizeResponseOrganizationScope].
 	Scopes interface{} `json:"scopes"`

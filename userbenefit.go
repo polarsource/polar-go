@@ -62,7 +62,7 @@ type UserBenefitGetResponse struct {
 	// Creation timestamp of the object.
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
 	// Last modification timestamp of the object.
-	ModifiedAt time.Time `json:"modified_at,nullable" format:"date-time"`
+	ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
 	// The ID of the benefit.
 	ID   string                     `json:"id,required" format:"uuid4"`
 	Type UserBenefitGetResponseType `json:"type,required"`
@@ -190,6 +190,8 @@ type UserBenefitGetResponseBenefitArticlesSubscriber struct {
 	Deletable bool `json:"deletable,required"`
 	// The description of the benefit.
 	Description string `json:"description,required"`
+	// Last modification timestamp of the object.
+	ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
 	// The ID of the organization owning the benefit.
 	OrganizationID string `json:"organization_id,required" format:"uuid4"`
 	// Properties available to subscribers for a benefit of type `articles`.
@@ -197,8 +199,6 @@ type UserBenefitGetResponseBenefitArticlesSubscriber struct {
 	// Whether the benefit is selectable when creating a product.
 	Selectable bool                                                `json:"selectable,required"`
 	Type       UserBenefitGetResponseBenefitArticlesSubscriberType `json:"type,required"`
-	// Last modification timestamp of the object.
-	ModifiedAt time.Time                                           `json:"modified_at,nullable" format:"date-time"`
 	JSON       userBenefitGetResponseBenefitArticlesSubscriberJSON `json:"-"`
 }
 
@@ -209,11 +209,11 @@ type userBenefitGetResponseBenefitArticlesSubscriberJSON struct {
 	CreatedAt      apijson.Field
 	Deletable      apijson.Field
 	Description    apijson.Field
+	ModifiedAt     apijson.Field
 	OrganizationID apijson.Field
 	Properties     apijson.Field
 	Selectable     apijson.Field
 	Type           apijson.Field
-	ModifiedAt     apijson.Field
 	raw            string
 	ExtraFields    map[string]apijson.Field
 }
@@ -276,6 +276,8 @@ type UserBenefitGetResponseBenefitAdsSubscriber struct {
 	// The description of the benefit.
 	Description string                                            `json:"description,required"`
 	Grants      []UserBenefitGetResponseBenefitAdsSubscriberGrant `json:"grants,required"`
+	// Last modification timestamp of the object.
+	ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
 	// The ID of the organization owning the benefit.
 	OrganizationID string `json:"organization_id,required" format:"uuid4"`
 	// Properties for a benefit of type `ads`.
@@ -283,8 +285,6 @@ type UserBenefitGetResponseBenefitAdsSubscriber struct {
 	// Whether the benefit is selectable when creating a product.
 	Selectable bool                                           `json:"selectable,required"`
 	Type       UserBenefitGetResponseBenefitAdsSubscriberType `json:"type,required"`
-	// Last modification timestamp of the object.
-	ModifiedAt time.Time                                      `json:"modified_at,nullable" format:"date-time"`
 	JSON       userBenefitGetResponseBenefitAdsSubscriberJSON `json:"-"`
 }
 
@@ -296,11 +296,11 @@ type userBenefitGetResponseBenefitAdsSubscriberJSON struct {
 	Deletable      apijson.Field
 	Description    apijson.Field
 	Grants         apijson.Field
+	ModifiedAt     apijson.Field
 	OrganizationID apijson.Field
 	Properties     apijson.Field
 	Selectable     apijson.Field
 	Type           apijson.Field
-	ModifiedAt     apijson.Field
 	raw            string
 	ExtraFields    map[string]apijson.Field
 }
@@ -325,23 +325,23 @@ type UserBenefitGetResponseBenefitAdsSubscriberGrant struct {
 	// Whether the benefit is granted.
 	IsGranted bool `json:"is_granted,required"`
 	// Whether the benefit is revoked.
-	IsRevoked  bool                                                       `json:"is_revoked,required"`
+	IsRevoked bool `json:"is_revoked,required"`
+	// Last modification timestamp of the object.
+	ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
+	// The ID of the order that granted this benefit.
+	OrderID    string                                                     `json:"order_id,required,nullable" format:"uuid4"`
 	Properties UserBenefitGetResponseBenefitAdsSubscriberGrantsProperties `json:"properties,required"`
+	// The ID of the subscription that granted this benefit.
+	SubscriptionID string `json:"subscription_id,required,nullable" format:"uuid4"`
 	// The ID of the user concerned by this grant.
 	UserID string `json:"user_id,required" format:"uuid4"`
 	// The timestamp when the benefit was granted. If `None`, the benefit is not
 	// granted.
 	GrantedAt time.Time `json:"granted_at,nullable" format:"date-time"`
-	// Last modification timestamp of the object.
-	ModifiedAt time.Time `json:"modified_at,nullable" format:"date-time"`
-	// The ID of the order that granted this benefit.
-	OrderID string `json:"order_id,nullable" format:"uuid4"`
 	// The timestamp when the benefit was revoked. If `None`, the benefit is not
 	// revoked.
-	RevokedAt time.Time `json:"revoked_at,nullable" format:"date-time"`
-	// The ID of the subscription that granted this benefit.
-	SubscriptionID string                                              `json:"subscription_id,nullable" format:"uuid4"`
-	JSON           userBenefitGetResponseBenefitAdsSubscriberGrantJSON `json:"-"`
+	RevokedAt time.Time                                           `json:"revoked_at,nullable" format:"date-time"`
+	JSON      userBenefitGetResponseBenefitAdsSubscriberGrantJSON `json:"-"`
 }
 
 // userBenefitGetResponseBenefitAdsSubscriberGrantJSON contains the JSON metadata
@@ -352,13 +352,13 @@ type userBenefitGetResponseBenefitAdsSubscriberGrantJSON struct {
 	CreatedAt      apijson.Field
 	IsGranted      apijson.Field
 	IsRevoked      apijson.Field
-	Properties     apijson.Field
-	UserID         apijson.Field
-	GrantedAt      apijson.Field
 	ModifiedAt     apijson.Field
 	OrderID        apijson.Field
-	RevokedAt      apijson.Field
+	Properties     apijson.Field
 	SubscriptionID apijson.Field
+	UserID         apijson.Field
+	GrantedAt      apijson.Field
+	RevokedAt      apijson.Field
 	raw            string
 	ExtraFields    map[string]apijson.Field
 }
@@ -443,6 +443,8 @@ type UserBenefitGetResponseBenefitDiscordSubscriber struct {
 	Deletable bool `json:"deletable,required"`
 	// The description of the benefit.
 	Description string `json:"description,required"`
+	// Last modification timestamp of the object.
+	ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
 	// The ID of the organization owning the benefit.
 	OrganizationID string `json:"organization_id,required" format:"uuid4"`
 	// Properties available to subscribers for a benefit of type `discord`.
@@ -450,8 +452,6 @@ type UserBenefitGetResponseBenefitDiscordSubscriber struct {
 	// Whether the benefit is selectable when creating a product.
 	Selectable bool                                               `json:"selectable,required"`
 	Type       UserBenefitGetResponseBenefitDiscordSubscriberType `json:"type,required"`
-	// Last modification timestamp of the object.
-	ModifiedAt time.Time                                          `json:"modified_at,nullable" format:"date-time"`
 	JSON       userBenefitGetResponseBenefitDiscordSubscriberJSON `json:"-"`
 }
 
@@ -462,11 +462,11 @@ type userBenefitGetResponseBenefitDiscordSubscriberJSON struct {
 	CreatedAt      apijson.Field
 	Deletable      apijson.Field
 	Description    apijson.Field
+	ModifiedAt     apijson.Field
 	OrganizationID apijson.Field
 	Properties     apijson.Field
 	Selectable     apijson.Field
 	Type           apijson.Field
-	ModifiedAt     apijson.Field
 	raw            string
 	ExtraFields    map[string]apijson.Field
 }
@@ -529,6 +529,8 @@ type UserBenefitGetResponseBenefitCustomSubscriber struct {
 	// The description of the benefit.
 	Description string                                               `json:"description,required"`
 	Grants      []UserBenefitGetResponseBenefitCustomSubscriberGrant `json:"grants,required"`
+	// Last modification timestamp of the object.
+	ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
 	// The ID of the organization owning the benefit.
 	OrganizationID string `json:"organization_id,required" format:"uuid4"`
 	// Properties available to subscribers for a benefit of type `custom`.
@@ -536,8 +538,6 @@ type UserBenefitGetResponseBenefitCustomSubscriber struct {
 	// Whether the benefit is selectable when creating a product.
 	Selectable bool                                              `json:"selectable,required"`
 	Type       UserBenefitGetResponseBenefitCustomSubscriberType `json:"type,required"`
-	// Last modification timestamp of the object.
-	ModifiedAt time.Time                                         `json:"modified_at,nullable" format:"date-time"`
 	JSON       userBenefitGetResponseBenefitCustomSubscriberJSON `json:"-"`
 }
 
@@ -549,11 +549,11 @@ type userBenefitGetResponseBenefitCustomSubscriberJSON struct {
 	Deletable      apijson.Field
 	Description    apijson.Field
 	Grants         apijson.Field
+	ModifiedAt     apijson.Field
 	OrganizationID apijson.Field
 	Properties     apijson.Field
 	Selectable     apijson.Field
 	Type           apijson.Field
-	ModifiedAt     apijson.Field
 	raw            string
 	ExtraFields    map[string]apijson.Field
 }
@@ -580,23 +580,23 @@ type UserBenefitGetResponseBenefitCustomSubscriberGrant struct {
 	IsGranted bool `json:"is_granted,required"`
 	// Whether the benefit is revoked.
 	IsRevoked bool `json:"is_revoked,required"`
+	// Last modification timestamp of the object.
+	ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
+	// The ID of the order that granted this benefit.
+	OrderID string `json:"order_id,required,nullable" format:"uuid4"`
 	// Properties for a benefit grant.
 	Properties interface{} `json:"properties,required"`
+	// The ID of the subscription that granted this benefit.
+	SubscriptionID string `json:"subscription_id,required,nullable" format:"uuid4"`
 	// The ID of the user concerned by this grant.
 	UserID string `json:"user_id,required" format:"uuid4"`
 	// The timestamp when the benefit was granted. If `None`, the benefit is not
 	// granted.
 	GrantedAt time.Time `json:"granted_at,nullable" format:"date-time"`
-	// Last modification timestamp of the object.
-	ModifiedAt time.Time `json:"modified_at,nullable" format:"date-time"`
-	// The ID of the order that granted this benefit.
-	OrderID string `json:"order_id,nullable" format:"uuid4"`
 	// The timestamp when the benefit was revoked. If `None`, the benefit is not
 	// revoked.
-	RevokedAt time.Time `json:"revoked_at,nullable" format:"date-time"`
-	// The ID of the subscription that granted this benefit.
-	SubscriptionID string                                                 `json:"subscription_id,nullable" format:"uuid4"`
-	JSON           userBenefitGetResponseBenefitCustomSubscriberGrantJSON `json:"-"`
+	RevokedAt time.Time                                              `json:"revoked_at,nullable" format:"date-time"`
+	JSON      userBenefitGetResponseBenefitCustomSubscriberGrantJSON `json:"-"`
 }
 
 // userBenefitGetResponseBenefitCustomSubscriberGrantJSON contains the JSON
@@ -607,13 +607,13 @@ type userBenefitGetResponseBenefitCustomSubscriberGrantJSON struct {
 	CreatedAt      apijson.Field
 	IsGranted      apijson.Field
 	IsRevoked      apijson.Field
-	Properties     apijson.Field
-	UserID         apijson.Field
-	GrantedAt      apijson.Field
 	ModifiedAt     apijson.Field
 	OrderID        apijson.Field
-	RevokedAt      apijson.Field
+	Properties     apijson.Field
 	SubscriptionID apijson.Field
+	UserID         apijson.Field
+	GrantedAt      apijson.Field
+	RevokedAt      apijson.Field
 	raw            string
 	ExtraFields    map[string]apijson.Field
 }
@@ -629,7 +629,7 @@ func (r userBenefitGetResponseBenefitCustomSubscriberGrantJSON) RawJSON() string
 // Properties available to subscribers for a benefit of type `custom`.
 type UserBenefitGetResponseBenefitCustomSubscriberProperties struct {
 	// Private note to be shared with users who have this benefit granted.
-	Note string                                                      `json:"note,nullable"`
+	Note string                                                      `json:"note,required,nullable"`
 	JSON userBenefitGetResponseBenefitCustomSubscriberPropertiesJSON `json:"-"`
 }
 
@@ -673,6 +673,8 @@ type UserBenefitGetResponseBenefitGitHubRepositorySubscriber struct {
 	Deletable bool `json:"deletable,required"`
 	// The description of the benefit.
 	Description string `json:"description,required"`
+	// Last modification timestamp of the object.
+	ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
 	// The ID of the organization owning the benefit.
 	OrganizationID string `json:"organization_id,required" format:"uuid4"`
 	// Properties available to subscribers for a benefit of type `github_repository`.
@@ -680,8 +682,6 @@ type UserBenefitGetResponseBenefitGitHubRepositorySubscriber struct {
 	// Whether the benefit is selectable when creating a product.
 	Selectable bool                                                        `json:"selectable,required"`
 	Type       UserBenefitGetResponseBenefitGitHubRepositorySubscriberType `json:"type,required"`
-	// Last modification timestamp of the object.
-	ModifiedAt time.Time                                                   `json:"modified_at,nullable" format:"date-time"`
 	JSON       userBenefitGetResponseBenefitGitHubRepositorySubscriberJSON `json:"-"`
 }
 
@@ -693,11 +693,11 @@ type userBenefitGetResponseBenefitGitHubRepositorySubscriberJSON struct {
 	CreatedAt      apijson.Field
 	Deletable      apijson.Field
 	Description    apijson.Field
+	ModifiedAt     apijson.Field
 	OrganizationID apijson.Field
 	Properties     apijson.Field
 	Selectable     apijson.Field
 	Type           apijson.Field
-	ModifiedAt     apijson.Field
 	raw            string
 	ExtraFields    map[string]apijson.Field
 }
@@ -762,14 +762,14 @@ type UserBenefitGetResponseBenefitDownloadablesSubscriber struct {
 	Deletable bool `json:"deletable,required"`
 	// The description of the benefit.
 	Description string `json:"description,required"`
+	// Last modification timestamp of the object.
+	ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
 	// The ID of the organization owning the benefit.
 	OrganizationID string                                                         `json:"organization_id,required" format:"uuid4"`
 	Properties     UserBenefitGetResponseBenefitDownloadablesSubscriberProperties `json:"properties,required"`
 	// Whether the benefit is selectable when creating a product.
 	Selectable bool                                                     `json:"selectable,required"`
 	Type       UserBenefitGetResponseBenefitDownloadablesSubscriberType `json:"type,required"`
-	// Last modification timestamp of the object.
-	ModifiedAt time.Time                                                `json:"modified_at,nullable" format:"date-time"`
 	JSON       userBenefitGetResponseBenefitDownloadablesSubscriberJSON `json:"-"`
 }
 
@@ -780,11 +780,11 @@ type userBenefitGetResponseBenefitDownloadablesSubscriberJSON struct {
 	CreatedAt      apijson.Field
 	Deletable      apijson.Field
 	Description    apijson.Field
+	ModifiedAt     apijson.Field
 	OrganizationID apijson.Field
 	Properties     apijson.Field
 	Selectable     apijson.Field
 	Type           apijson.Field
-	ModifiedAt     apijson.Field
 	raw            string
 	ExtraFields    map[string]apijson.Field
 }
@@ -904,7 +904,7 @@ type UserBenefitListResponseItem struct {
 	// Creation timestamp of the object.
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
 	// Last modification timestamp of the object.
-	ModifiedAt time.Time `json:"modified_at,nullable" format:"date-time"`
+	ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
 	// The ID of the benefit.
 	ID   string                           `json:"id,required" format:"uuid4"`
 	Type UserBenefitListResponseItemsType `json:"type,required"`
@@ -1032,6 +1032,8 @@ type UserBenefitListResponseItemsBenefitArticlesSubscriber struct {
 	Deletable bool `json:"deletable,required"`
 	// The description of the benefit.
 	Description string `json:"description,required"`
+	// Last modification timestamp of the object.
+	ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
 	// The ID of the organization owning the benefit.
 	OrganizationID string `json:"organization_id,required" format:"uuid4"`
 	// Properties available to subscribers for a benefit of type `articles`.
@@ -1039,8 +1041,6 @@ type UserBenefitListResponseItemsBenefitArticlesSubscriber struct {
 	// Whether the benefit is selectable when creating a product.
 	Selectable bool                                                      `json:"selectable,required"`
 	Type       UserBenefitListResponseItemsBenefitArticlesSubscriberType `json:"type,required"`
-	// Last modification timestamp of the object.
-	ModifiedAt time.Time                                                 `json:"modified_at,nullable" format:"date-time"`
 	JSON       userBenefitListResponseItemsBenefitArticlesSubscriberJSON `json:"-"`
 }
 
@@ -1051,11 +1051,11 @@ type userBenefitListResponseItemsBenefitArticlesSubscriberJSON struct {
 	CreatedAt      apijson.Field
 	Deletable      apijson.Field
 	Description    apijson.Field
+	ModifiedAt     apijson.Field
 	OrganizationID apijson.Field
 	Properties     apijson.Field
 	Selectable     apijson.Field
 	Type           apijson.Field
-	ModifiedAt     apijson.Field
 	raw            string
 	ExtraFields    map[string]apijson.Field
 }
@@ -1119,6 +1119,8 @@ type UserBenefitListResponseItemsBenefitAdsSubscriber struct {
 	// The description of the benefit.
 	Description string                                                  `json:"description,required"`
 	Grants      []UserBenefitListResponseItemsBenefitAdsSubscriberGrant `json:"grants,required"`
+	// Last modification timestamp of the object.
+	ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
 	// The ID of the organization owning the benefit.
 	OrganizationID string `json:"organization_id,required" format:"uuid4"`
 	// Properties for a benefit of type `ads`.
@@ -1126,8 +1128,6 @@ type UserBenefitListResponseItemsBenefitAdsSubscriber struct {
 	// Whether the benefit is selectable when creating a product.
 	Selectable bool                                                 `json:"selectable,required"`
 	Type       UserBenefitListResponseItemsBenefitAdsSubscriberType `json:"type,required"`
-	// Last modification timestamp of the object.
-	ModifiedAt time.Time                                            `json:"modified_at,nullable" format:"date-time"`
 	JSON       userBenefitListResponseItemsBenefitAdsSubscriberJSON `json:"-"`
 }
 
@@ -1139,11 +1139,11 @@ type userBenefitListResponseItemsBenefitAdsSubscriberJSON struct {
 	Deletable      apijson.Field
 	Description    apijson.Field
 	Grants         apijson.Field
+	ModifiedAt     apijson.Field
 	OrganizationID apijson.Field
 	Properties     apijson.Field
 	Selectable     apijson.Field
 	Type           apijson.Field
-	ModifiedAt     apijson.Field
 	raw            string
 	ExtraFields    map[string]apijson.Field
 }
@@ -1168,23 +1168,23 @@ type UserBenefitListResponseItemsBenefitAdsSubscriberGrant struct {
 	// Whether the benefit is granted.
 	IsGranted bool `json:"is_granted,required"`
 	// Whether the benefit is revoked.
-	IsRevoked  bool                                                             `json:"is_revoked,required"`
+	IsRevoked bool `json:"is_revoked,required"`
+	// Last modification timestamp of the object.
+	ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
+	// The ID of the order that granted this benefit.
+	OrderID    string                                                           `json:"order_id,required,nullable" format:"uuid4"`
 	Properties UserBenefitListResponseItemsBenefitAdsSubscriberGrantsProperties `json:"properties,required"`
+	// The ID of the subscription that granted this benefit.
+	SubscriptionID string `json:"subscription_id,required,nullable" format:"uuid4"`
 	// The ID of the user concerned by this grant.
 	UserID string `json:"user_id,required" format:"uuid4"`
 	// The timestamp when the benefit was granted. If `None`, the benefit is not
 	// granted.
 	GrantedAt time.Time `json:"granted_at,nullable" format:"date-time"`
-	// Last modification timestamp of the object.
-	ModifiedAt time.Time `json:"modified_at,nullable" format:"date-time"`
-	// The ID of the order that granted this benefit.
-	OrderID string `json:"order_id,nullable" format:"uuid4"`
 	// The timestamp when the benefit was revoked. If `None`, the benefit is not
 	// revoked.
-	RevokedAt time.Time `json:"revoked_at,nullable" format:"date-time"`
-	// The ID of the subscription that granted this benefit.
-	SubscriptionID string                                                    `json:"subscription_id,nullable" format:"uuid4"`
-	JSON           userBenefitListResponseItemsBenefitAdsSubscriberGrantJSON `json:"-"`
+	RevokedAt time.Time                                                 `json:"revoked_at,nullable" format:"date-time"`
+	JSON      userBenefitListResponseItemsBenefitAdsSubscriberGrantJSON `json:"-"`
 }
 
 // userBenefitListResponseItemsBenefitAdsSubscriberGrantJSON contains the JSON
@@ -1195,13 +1195,13 @@ type userBenefitListResponseItemsBenefitAdsSubscriberGrantJSON struct {
 	CreatedAt      apijson.Field
 	IsGranted      apijson.Field
 	IsRevoked      apijson.Field
-	Properties     apijson.Field
-	UserID         apijson.Field
-	GrantedAt      apijson.Field
 	ModifiedAt     apijson.Field
 	OrderID        apijson.Field
-	RevokedAt      apijson.Field
+	Properties     apijson.Field
 	SubscriptionID apijson.Field
+	UserID         apijson.Field
+	GrantedAt      apijson.Field
+	RevokedAt      apijson.Field
 	raw            string
 	ExtraFields    map[string]apijson.Field
 }
@@ -1287,6 +1287,8 @@ type UserBenefitListResponseItemsBenefitDiscordSubscriber struct {
 	Deletable bool `json:"deletable,required"`
 	// The description of the benefit.
 	Description string `json:"description,required"`
+	// Last modification timestamp of the object.
+	ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
 	// The ID of the organization owning the benefit.
 	OrganizationID string `json:"organization_id,required" format:"uuid4"`
 	// Properties available to subscribers for a benefit of type `discord`.
@@ -1294,8 +1296,6 @@ type UserBenefitListResponseItemsBenefitDiscordSubscriber struct {
 	// Whether the benefit is selectable when creating a product.
 	Selectable bool                                                     `json:"selectable,required"`
 	Type       UserBenefitListResponseItemsBenefitDiscordSubscriberType `json:"type,required"`
-	// Last modification timestamp of the object.
-	ModifiedAt time.Time                                                `json:"modified_at,nullable" format:"date-time"`
 	JSON       userBenefitListResponseItemsBenefitDiscordSubscriberJSON `json:"-"`
 }
 
@@ -1306,11 +1306,11 @@ type userBenefitListResponseItemsBenefitDiscordSubscriberJSON struct {
 	CreatedAt      apijson.Field
 	Deletable      apijson.Field
 	Description    apijson.Field
+	ModifiedAt     apijson.Field
 	OrganizationID apijson.Field
 	Properties     apijson.Field
 	Selectable     apijson.Field
 	Type           apijson.Field
-	ModifiedAt     apijson.Field
 	raw            string
 	ExtraFields    map[string]apijson.Field
 }
@@ -1374,6 +1374,8 @@ type UserBenefitListResponseItemsBenefitCustomSubscriber struct {
 	// The description of the benefit.
 	Description string                                                     `json:"description,required"`
 	Grants      []UserBenefitListResponseItemsBenefitCustomSubscriberGrant `json:"grants,required"`
+	// Last modification timestamp of the object.
+	ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
 	// The ID of the organization owning the benefit.
 	OrganizationID string `json:"organization_id,required" format:"uuid4"`
 	// Properties available to subscribers for a benefit of type `custom`.
@@ -1381,8 +1383,6 @@ type UserBenefitListResponseItemsBenefitCustomSubscriber struct {
 	// Whether the benefit is selectable when creating a product.
 	Selectable bool                                                    `json:"selectable,required"`
 	Type       UserBenefitListResponseItemsBenefitCustomSubscriberType `json:"type,required"`
-	// Last modification timestamp of the object.
-	ModifiedAt time.Time                                               `json:"modified_at,nullable" format:"date-time"`
 	JSON       userBenefitListResponseItemsBenefitCustomSubscriberJSON `json:"-"`
 }
 
@@ -1394,11 +1394,11 @@ type userBenefitListResponseItemsBenefitCustomSubscriberJSON struct {
 	Deletable      apijson.Field
 	Description    apijson.Field
 	Grants         apijson.Field
+	ModifiedAt     apijson.Field
 	OrganizationID apijson.Field
 	Properties     apijson.Field
 	Selectable     apijson.Field
 	Type           apijson.Field
-	ModifiedAt     apijson.Field
 	raw            string
 	ExtraFields    map[string]apijson.Field
 }
@@ -1426,23 +1426,23 @@ type UserBenefitListResponseItemsBenefitCustomSubscriberGrant struct {
 	IsGranted bool `json:"is_granted,required"`
 	// Whether the benefit is revoked.
 	IsRevoked bool `json:"is_revoked,required"`
+	// Last modification timestamp of the object.
+	ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
+	// The ID of the order that granted this benefit.
+	OrderID string `json:"order_id,required,nullable" format:"uuid4"`
 	// Properties for a benefit grant.
 	Properties interface{} `json:"properties,required"`
+	// The ID of the subscription that granted this benefit.
+	SubscriptionID string `json:"subscription_id,required,nullable" format:"uuid4"`
 	// The ID of the user concerned by this grant.
 	UserID string `json:"user_id,required" format:"uuid4"`
 	// The timestamp when the benefit was granted. If `None`, the benefit is not
 	// granted.
 	GrantedAt time.Time `json:"granted_at,nullable" format:"date-time"`
-	// Last modification timestamp of the object.
-	ModifiedAt time.Time `json:"modified_at,nullable" format:"date-time"`
-	// The ID of the order that granted this benefit.
-	OrderID string `json:"order_id,nullable" format:"uuid4"`
 	// The timestamp when the benefit was revoked. If `None`, the benefit is not
 	// revoked.
-	RevokedAt time.Time `json:"revoked_at,nullable" format:"date-time"`
-	// The ID of the subscription that granted this benefit.
-	SubscriptionID string                                                       `json:"subscription_id,nullable" format:"uuid4"`
-	JSON           userBenefitListResponseItemsBenefitCustomSubscriberGrantJSON `json:"-"`
+	RevokedAt time.Time                                                    `json:"revoked_at,nullable" format:"date-time"`
+	JSON      userBenefitListResponseItemsBenefitCustomSubscriberGrantJSON `json:"-"`
 }
 
 // userBenefitListResponseItemsBenefitCustomSubscriberGrantJSON contains the JSON
@@ -1454,13 +1454,13 @@ type userBenefitListResponseItemsBenefitCustomSubscriberGrantJSON struct {
 	CreatedAt      apijson.Field
 	IsGranted      apijson.Field
 	IsRevoked      apijson.Field
-	Properties     apijson.Field
-	UserID         apijson.Field
-	GrantedAt      apijson.Field
 	ModifiedAt     apijson.Field
 	OrderID        apijson.Field
-	RevokedAt      apijson.Field
+	Properties     apijson.Field
 	SubscriptionID apijson.Field
+	UserID         apijson.Field
+	GrantedAt      apijson.Field
+	RevokedAt      apijson.Field
 	raw            string
 	ExtraFields    map[string]apijson.Field
 }
@@ -1476,7 +1476,7 @@ func (r userBenefitListResponseItemsBenefitCustomSubscriberGrantJSON) RawJSON() 
 // Properties available to subscribers for a benefit of type `custom`.
 type UserBenefitListResponseItemsBenefitCustomSubscriberProperties struct {
 	// Private note to be shared with users who have this benefit granted.
-	Note string                                                            `json:"note,nullable"`
+	Note string                                                            `json:"note,required,nullable"`
 	JSON userBenefitListResponseItemsBenefitCustomSubscriberPropertiesJSON `json:"-"`
 }
 
@@ -1520,6 +1520,8 @@ type UserBenefitListResponseItemsBenefitGitHubRepositorySubscriber struct {
 	Deletable bool `json:"deletable,required"`
 	// The description of the benefit.
 	Description string `json:"description,required"`
+	// Last modification timestamp of the object.
+	ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
 	// The ID of the organization owning the benefit.
 	OrganizationID string `json:"organization_id,required" format:"uuid4"`
 	// Properties available to subscribers for a benefit of type `github_repository`.
@@ -1527,8 +1529,6 @@ type UserBenefitListResponseItemsBenefitGitHubRepositorySubscriber struct {
 	// Whether the benefit is selectable when creating a product.
 	Selectable bool                                                              `json:"selectable,required"`
 	Type       UserBenefitListResponseItemsBenefitGitHubRepositorySubscriberType `json:"type,required"`
-	// Last modification timestamp of the object.
-	ModifiedAt time.Time                                                         `json:"modified_at,nullable" format:"date-time"`
 	JSON       userBenefitListResponseItemsBenefitGitHubRepositorySubscriberJSON `json:"-"`
 }
 
@@ -1540,11 +1540,11 @@ type userBenefitListResponseItemsBenefitGitHubRepositorySubscriberJSON struct {
 	CreatedAt      apijson.Field
 	Deletable      apijson.Field
 	Description    apijson.Field
+	ModifiedAt     apijson.Field
 	OrganizationID apijson.Field
 	Properties     apijson.Field
 	Selectable     apijson.Field
 	Type           apijson.Field
-	ModifiedAt     apijson.Field
 	raw            string
 	ExtraFields    map[string]apijson.Field
 }
@@ -1610,14 +1610,14 @@ type UserBenefitListResponseItemsBenefitDownloadablesSubscriber struct {
 	Deletable bool `json:"deletable,required"`
 	// The description of the benefit.
 	Description string `json:"description,required"`
+	// Last modification timestamp of the object.
+	ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
 	// The ID of the organization owning the benefit.
 	OrganizationID string                                                               `json:"organization_id,required" format:"uuid4"`
 	Properties     UserBenefitListResponseItemsBenefitDownloadablesSubscriberProperties `json:"properties,required"`
 	// Whether the benefit is selectable when creating a product.
 	Selectable bool                                                           `json:"selectable,required"`
 	Type       UserBenefitListResponseItemsBenefitDownloadablesSubscriberType `json:"type,required"`
-	// Last modification timestamp of the object.
-	ModifiedAt time.Time                                                      `json:"modified_at,nullable" format:"date-time"`
 	JSON       userBenefitListResponseItemsBenefitDownloadablesSubscriberJSON `json:"-"`
 }
 
@@ -1629,11 +1629,11 @@ type userBenefitListResponseItemsBenefitDownloadablesSubscriberJSON struct {
 	CreatedAt      apijson.Field
 	Deletable      apijson.Field
 	Description    apijson.Field
+	ModifiedAt     apijson.Field
 	OrganizationID apijson.Field
 	Properties     apijson.Field
 	Selectable     apijson.Field
 	Type           apijson.Field
-	ModifiedAt     apijson.Field
 	raw            string
 	ExtraFields    map[string]apijson.Field
 }

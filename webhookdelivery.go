@@ -96,6 +96,8 @@ type ListResourceWebhookDeliveryItem struct {
 	ID string `json:"id,required" format:"uuid4"`
 	// Creation timestamp of the object.
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	// Last modification timestamp of the object.
+	ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
 	// Whether the delivery was successful.
 	Succeeded bool `json:"succeeded,required"`
 	// A webhook event.
@@ -107,10 +109,8 @@ type ListResourceWebhookDeliveryItem struct {
 	// creating a new delivery.
 	WebhookEvent ListResourceWebhookDeliveryItemsWebhookEvent `json:"webhook_event,required"`
 	// The HTTP code returned by the URL. `null` if the endpoint was unreachable.
-	HTTPCode int64 `json:"http_code,nullable"`
-	// Last modification timestamp of the object.
-	ModifiedAt time.Time                           `json:"modified_at,nullable" format:"date-time"`
-	JSON       listResourceWebhookDeliveryItemJSON `json:"-"`
+	HTTPCode int64                               `json:"http_code,nullable"`
+	JSON     listResourceWebhookDeliveryItemJSON `json:"-"`
 }
 
 // listResourceWebhookDeliveryItemJSON contains the JSON metadata for the struct
@@ -118,10 +118,10 @@ type ListResourceWebhookDeliveryItem struct {
 type listResourceWebhookDeliveryItemJSON struct {
 	ID           apijson.Field
 	CreatedAt    apijson.Field
+	ModifiedAt   apijson.Field
 	Succeeded    apijson.Field
 	WebhookEvent apijson.Field
 	HTTPCode     apijson.Field
-	ModifiedAt   apijson.Field
 	raw          string
 	ExtraFields  map[string]apijson.Field
 }
@@ -146,13 +146,13 @@ type ListResourceWebhookDeliveryItemsWebhookEvent struct {
 	ID string `json:"id,required" format:"uuid4"`
 	// Creation timestamp of the object.
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	// Last modification timestamp of the object.
+	ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
 	// The payload of the webhook event.
 	Payload string `json:"payload,required"`
 	// Last HTTP code returned by the URL. `null` if no delviery has been attempted or
 	// if the endpoint was unreachable.
 	LastHTTPCode int64 `json:"last_http_code,nullable"`
-	// Last modification timestamp of the object.
-	ModifiedAt time.Time `json:"modified_at,nullable" format:"date-time"`
 	// Whether this event was successfully delivered. `null` if no delivery has been
 	// attempted.
 	Succeeded bool                                             `json:"succeeded,nullable"`
@@ -164,9 +164,9 @@ type ListResourceWebhookDeliveryItemsWebhookEvent struct {
 type listResourceWebhookDeliveryItemsWebhookEventJSON struct {
 	ID           apijson.Field
 	CreatedAt    apijson.Field
+	ModifiedAt   apijson.Field
 	Payload      apijson.Field
 	LastHTTPCode apijson.Field
-	ModifiedAt   apijson.Field
 	Succeeded    apijson.Field
 	raw          string
 	ExtraFields  map[string]apijson.Field

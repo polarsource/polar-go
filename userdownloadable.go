@@ -131,8 +131,12 @@ func (r userDownloadableListResponseItemJSON) RawJSON() string {
 
 type UserDownloadableListResponseItemsFile struct {
 	ID                   string                                        `json:"id,required" format:"uuid4"`
+	ChecksumEtag         string                                        `json:"checksum_etag,required,nullable"`
+	ChecksumSha256Base64 string                                        `json:"checksum_sha256_base64,required,nullable"`
+	ChecksumSha256Hex    string                                        `json:"checksum_sha256_hex,required,nullable"`
 	Download             UserDownloadableListResponseItemsFileDownload `json:"download,required"`
 	IsUploaded           bool                                          `json:"is_uploaded,required"`
+	LastModifiedAt       time.Time                                     `json:"last_modified_at,required,nullable" format:"date-time"`
 	MimeType             string                                        `json:"mime_type,required"`
 	Name                 string                                        `json:"name,required"`
 	OrganizationID       string                                        `json:"organization_id,required" format:"uuid4"`
@@ -140,12 +144,8 @@ type UserDownloadableListResponseItemsFile struct {
 	Service              UserDownloadableListResponseItemsFileService  `json:"service,required"`
 	Size                 int64                                         `json:"size,required"`
 	SizeReadable         string                                        `json:"size_readable,required"`
+	StorageVersion       string                                        `json:"storage_version,required,nullable"`
 	Version              string                                        `json:"version,required,nullable"`
-	ChecksumEtag         string                                        `json:"checksum_etag,nullable"`
-	ChecksumSha256Base64 string                                        `json:"checksum_sha256_base64,nullable"`
-	ChecksumSha256Hex    string                                        `json:"checksum_sha256_hex,nullable"`
-	LastModifiedAt       time.Time                                     `json:"last_modified_at,nullable" format:"date-time"`
-	StorageVersion       string                                        `json:"storage_version,nullable"`
 	JSON                 userDownloadableListResponseItemsFileJSON     `json:"-"`
 }
 
@@ -153,8 +153,12 @@ type UserDownloadableListResponseItemsFile struct {
 // struct [UserDownloadableListResponseItemsFile]
 type userDownloadableListResponseItemsFileJSON struct {
 	ID                   apijson.Field
+	ChecksumEtag         apijson.Field
+	ChecksumSha256Base64 apijson.Field
+	ChecksumSha256Hex    apijson.Field
 	Download             apijson.Field
 	IsUploaded           apijson.Field
+	LastModifiedAt       apijson.Field
 	MimeType             apijson.Field
 	Name                 apijson.Field
 	OrganizationID       apijson.Field
@@ -162,12 +166,8 @@ type userDownloadableListResponseItemsFileJSON struct {
 	Service              apijson.Field
 	Size                 apijson.Field
 	SizeReadable         apijson.Field
-	Version              apijson.Field
-	ChecksumEtag         apijson.Field
-	ChecksumSha256Base64 apijson.Field
-	ChecksumSha256Hex    apijson.Field
-	LastModifiedAt       apijson.Field
 	StorageVersion       apijson.Field
+	Version              apijson.Field
 	raw                  string
 	ExtraFields          map[string]apijson.Field
 }

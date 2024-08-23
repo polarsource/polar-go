@@ -167,6 +167,8 @@ type RewardSearchResponseItemsPledge struct {
 	Currency  string    `json:"currency,required"`
 	// The issue that the pledge was made towards
 	Issue RewardSearchResponseItemsPledgeIssue `json:"issue,required"`
+	// Last modification timestamp of the object.
+	ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
 	// Current state of the pledge
 	State RewardSearchResponseItemsPledgeState `json:"state,required"`
 	// Type of pledge
@@ -182,8 +184,6 @@ type RewardSearchResponseItemsPledge struct {
 	CreatedBy RewardSearchResponseItemsPledgeCreatedBy `json:"created_by,nullable"`
 	// URL of invoice for this pledge
 	HostedInvoiceURL string `json:"hosted_invoice_url,nullable"`
-	// Last modification timestamp of the object.
-	ModifiedAt time.Time `json:"modified_at,nullable" format:"date-time"`
 	// The user or organization that made this pledge
 	Pledger RewardSearchResponseItemsPledgePledger `json:"pledger,nullable"`
 	// If and when the pledge was refunded to the pledger
@@ -202,13 +202,13 @@ type rewardSearchResponseItemsPledgeJSON struct {
 	CreatedAt              apijson.Field
 	Currency               apijson.Field
 	Issue                  apijson.Field
+	ModifiedAt             apijson.Field
 	State                  apijson.Field
 	Type                   apijson.Field
 	AuthedCanAdminReceived apijson.Field
 	AuthedCanAdminSender   apijson.Field
 	CreatedBy              apijson.Field
 	HostedInvoiceURL       apijson.Field
-	ModifiedAt             apijson.Field
 	Pledger                apijson.Field
 	RefundedAt             apijson.Field
 	ScheduledPayoutAt      apijson.Field
@@ -396,16 +396,16 @@ func (r RewardSearchResponseItemsPledgeIssuePlatform) IsKnown() bool {
 // The repository that the issue is in
 type RewardSearchResponseItemsPledgeIssueRepository struct {
 	ID           string                                                     `json:"id,required" format:"uuid"`
+	Description  string                                                     `json:"description,required,nullable"`
+	Homepage     string                                                     `json:"homepage,required,nullable"`
 	IsPrivate    bool                                                       `json:"is_private,required"`
+	License      string                                                     `json:"license,required,nullable"`
 	Name         string                                                     `json:"name,required"`
 	Organization RewardSearchResponseItemsPledgeIssueRepositoryOrganization `json:"organization,required"`
 	Platform     RewardSearchResponseItemsPledgeIssueRepositoryPlatform     `json:"platform,required"`
 	// Settings for the repository profile
 	ProfileSettings RewardSearchResponseItemsPledgeIssueRepositoryProfileSettings `json:"profile_settings,required,nullable"`
-	Description     string                                                        `json:"description,nullable"`
-	Homepage        string                                                        `json:"homepage,nullable"`
-	License         string                                                        `json:"license,nullable"`
-	Stars           int64                                                         `json:"stars,nullable"`
+	Stars           int64                                                         `json:"stars,required,nullable"`
 	JSON            rewardSearchResponseItemsPledgeIssueRepositoryJSON            `json:"-"`
 }
 
@@ -413,14 +413,14 @@ type RewardSearchResponseItemsPledgeIssueRepository struct {
 // for the struct [RewardSearchResponseItemsPledgeIssueRepository]
 type rewardSearchResponseItemsPledgeIssueRepositoryJSON struct {
 	ID              apijson.Field
+	Description     apijson.Field
+	Homepage        apijson.Field
 	IsPrivate       apijson.Field
+	License         apijson.Field
 	Name            apijson.Field
 	Organization    apijson.Field
 	Platform        apijson.Field
 	ProfileSettings apijson.Field
-	Description     apijson.Field
-	Homepage        apijson.Field
-	License         apijson.Field
 	Stars           apijson.Field
 	raw             string
 	ExtraFields     map[string]apijson.Field
@@ -435,21 +435,21 @@ func (r rewardSearchResponseItemsPledgeIssueRepositoryJSON) RawJSON() string {
 }
 
 type RewardSearchResponseItemsPledgeIssueRepositoryOrganization struct {
-	ID         string                                                             `json:"id,required" format:"uuid"`
-	AvatarURL  string                                                             `json:"avatar_url,required"`
-	IsPersonal bool                                                               `json:"is_personal,required"`
-	Name       string                                                             `json:"name,required"`
-	Platform   RewardSearchResponseItemsPledgeIssueRepositoryOrganizationPlatform `json:"platform,required"`
-	Bio        string                                                             `json:"bio,nullable"`
-	Blog       string                                                             `json:"blog,nullable"`
-	Company    string                                                             `json:"company,nullable"`
-	Email      string                                                             `json:"email,nullable"`
-	Location   string                                                             `json:"location,nullable"`
+	ID         string `json:"id,required" format:"uuid"`
+	AvatarURL  string `json:"avatar_url,required"`
+	Bio        string `json:"bio,required,nullable"`
+	Blog       string `json:"blog,required,nullable"`
+	Company    string `json:"company,required,nullable"`
+	Email      string `json:"email,required,nullable"`
+	IsPersonal bool   `json:"is_personal,required"`
+	Location   string `json:"location,required,nullable"`
+	Name       string `json:"name,required"`
 	// The organization ID.
-	OrganizationID  string                                                         `json:"organization_id,nullable" format:"uuid4"`
-	PrettyName      string                                                         `json:"pretty_name,nullable"`
-	TwitterUsername string                                                         `json:"twitter_username,nullable"`
-	JSON            rewardSearchResponseItemsPledgeIssueRepositoryOrganizationJSON `json:"-"`
+	OrganizationID  string                                                             `json:"organization_id,required,nullable" format:"uuid4"`
+	Platform        RewardSearchResponseItemsPledgeIssueRepositoryOrganizationPlatform `json:"platform,required"`
+	PrettyName      string                                                             `json:"pretty_name,required,nullable"`
+	TwitterUsername string                                                             `json:"twitter_username,required,nullable"`
+	JSON            rewardSearchResponseItemsPledgeIssueRepositoryOrganizationJSON     `json:"-"`
 }
 
 // rewardSearchResponseItemsPledgeIssueRepositoryOrganizationJSON contains the JSON
@@ -458,15 +458,15 @@ type RewardSearchResponseItemsPledgeIssueRepositoryOrganization struct {
 type rewardSearchResponseItemsPledgeIssueRepositoryOrganizationJSON struct {
 	ID              apijson.Field
 	AvatarURL       apijson.Field
-	IsPersonal      apijson.Field
-	Name            apijson.Field
-	Platform        apijson.Field
 	Bio             apijson.Field
 	Blog            apijson.Field
 	Company         apijson.Field
 	Email           apijson.Field
+	IsPersonal      apijson.Field
 	Location        apijson.Field
+	Name            apijson.Field
 	OrganizationID  apijson.Field
+	Platform        apijson.Field
 	PrettyName      apijson.Field
 	TwitterUsername apijson.Field
 	raw             string
@@ -717,18 +717,18 @@ func (r RewardSearchResponseItemsPledgeType) IsKnown() bool {
 // For pledges made by an organization, or on behalf of an organization. This is
 // the user that made the pledge. Only visible for members of said organization.
 type RewardSearchResponseItemsPledgeCreatedBy struct {
+	AvatarURL      string                                       `json:"avatar_url,required,nullable"`
+	GitHubUsername string                                       `json:"github_username,required,nullable"`
 	Name           string                                       `json:"name,required"`
-	AvatarURL      string                                       `json:"avatar_url,nullable"`
-	GitHubUsername string                                       `json:"github_username,nullable"`
 	JSON           rewardSearchResponseItemsPledgeCreatedByJSON `json:"-"`
 }
 
 // rewardSearchResponseItemsPledgeCreatedByJSON contains the JSON metadata for the
 // struct [RewardSearchResponseItemsPledgeCreatedBy]
 type rewardSearchResponseItemsPledgeCreatedByJSON struct {
-	Name           apijson.Field
 	AvatarURL      apijson.Field
 	GitHubUsername apijson.Field
+	Name           apijson.Field
 	raw            string
 	ExtraFields    map[string]apijson.Field
 }
@@ -743,18 +743,18 @@ func (r rewardSearchResponseItemsPledgeCreatedByJSON) RawJSON() string {
 
 // The user or organization that made this pledge
 type RewardSearchResponseItemsPledgePledger struct {
+	AvatarURL      string                                     `json:"avatar_url,required,nullable"`
+	GitHubUsername string                                     `json:"github_username,required,nullable"`
 	Name           string                                     `json:"name,required"`
-	AvatarURL      string                                     `json:"avatar_url,nullable"`
-	GitHubUsername string                                     `json:"github_username,nullable"`
 	JSON           rewardSearchResponseItemsPledgePledgerJSON `json:"-"`
 }
 
 // rewardSearchResponseItemsPledgePledgerJSON contains the JSON metadata for the
 // struct [RewardSearchResponseItemsPledgePledger]
 type rewardSearchResponseItemsPledgePledgerJSON struct {
-	Name           apijson.Field
 	AvatarURL      apijson.Field
 	GitHubUsername apijson.Field
+	Name           apijson.Field
 	raw            string
 	ExtraFields    map[string]apijson.Field
 }
@@ -785,52 +785,52 @@ func (r RewardSearchResponseItemsState) IsKnown() bool {
 // The organization that received the reward (if any)
 type RewardSearchResponseItemsOrganization struct {
 	// The organization ID.
-	ID string `json:"id,required" format:"uuid4"`
+	ID        string `json:"id,required" format:"uuid4"`
+	AvatarURL string `json:"avatar_url,required,nullable"`
+	Bio       string `json:"bio,required,nullable"`
+	Blog      string `json:"blog,required,nullable"`
+	Company   string `json:"company,required,nullable"`
 	// Creation timestamp of the object.
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	CreatedAt                         time.Time `json:"created_at,required" format:"date-time"`
+	DefaultUpfrontSplitToContributors int64     `json:"default_upfront_split_to_contributors,required,nullable"`
 	// If this organizations accepts donations
-	DonationsEnabled bool `json:"donations_enabled,required"`
+	DonationsEnabled bool   `json:"donations_enabled,required"`
+	Email            string `json:"email,required,nullable"`
 	// Settings for the organization features
-	FeatureSettings       RewardSearchResponseItemsOrganizationFeatureSettings `json:"feature_settings,required,nullable"`
-	Name                  string                                               `json:"name,required"`
-	PledgeBadgeShowAmount bool                                                 `json:"pledge_badge_show_amount,required"`
-	PledgeMinimumAmount   int64                                                `json:"pledge_minimum_amount,required"`
-	// Settings for the organization profile
-	ProfileSettings                   RewardSearchResponseItemsOrganizationProfileSettings `json:"profile_settings,required,nullable"`
-	Slug                              string                                               `json:"slug,required"`
-	AvatarURL                         string                                               `json:"avatar_url,nullable"`
-	Bio                               string                                               `json:"bio,nullable"`
-	Blog                              string                                               `json:"blog,nullable"`
-	Company                           string                                               `json:"company,nullable"`
-	DefaultUpfrontSplitToContributors int64                                                `json:"default_upfront_split_to_contributors,nullable"`
-	Email                             string                                               `json:"email,nullable"`
-	Location                          string                                               `json:"location,nullable"`
+	FeatureSettings RewardSearchResponseItemsOrganizationFeatureSettings `json:"feature_settings,required,nullable"`
+	Location        string                                               `json:"location,required,nullable"`
 	// Last modification timestamp of the object.
-	ModifiedAt      time.Time                                 `json:"modified_at,nullable" format:"date-time"`
-	TwitterUsername string                                    `json:"twitter_username,nullable"`
-	JSON            rewardSearchResponseItemsOrganizationJSON `json:"-"`
+	ModifiedAt            time.Time `json:"modified_at,required,nullable" format:"date-time"`
+	Name                  string    `json:"name,required"`
+	PledgeBadgeShowAmount bool      `json:"pledge_badge_show_amount,required"`
+	PledgeMinimumAmount   int64     `json:"pledge_minimum_amount,required"`
+	// Settings for the organization profile
+	ProfileSettings RewardSearchResponseItemsOrganizationProfileSettings `json:"profile_settings,required,nullable"`
+	Slug            string                                               `json:"slug,required"`
+	TwitterUsername string                                               `json:"twitter_username,required,nullable"`
+	JSON            rewardSearchResponseItemsOrganizationJSON            `json:"-"`
 }
 
 // rewardSearchResponseItemsOrganizationJSON contains the JSON metadata for the
 // struct [RewardSearchResponseItemsOrganization]
 type rewardSearchResponseItemsOrganizationJSON struct {
 	ID                                apijson.Field
+	AvatarURL                         apijson.Field
+	Bio                               apijson.Field
+	Blog                              apijson.Field
+	Company                           apijson.Field
 	CreatedAt                         apijson.Field
+	DefaultUpfrontSplitToContributors apijson.Field
 	DonationsEnabled                  apijson.Field
+	Email                             apijson.Field
 	FeatureSettings                   apijson.Field
+	Location                          apijson.Field
+	ModifiedAt                        apijson.Field
 	Name                              apijson.Field
 	PledgeBadgeShowAmount             apijson.Field
 	PledgeMinimumAmount               apijson.Field
 	ProfileSettings                   apijson.Field
 	Slug                              apijson.Field
-	AvatarURL                         apijson.Field
-	Bio                               apijson.Field
-	Blog                              apijson.Field
-	Company                           apijson.Field
-	DefaultUpfrontSplitToContributors apijson.Field
-	Email                             apijson.Field
-	Location                          apijson.Field
-	ModifiedAt                        apijson.Field
 	TwitterUsername                   apijson.Field
 	raw                               string
 	ExtraFields                       map[string]apijson.Field
@@ -984,16 +984,16 @@ func (r rewardSummaryResponseJSON) RawJSON() string {
 }
 
 type RewardSummaryResponseReceiver struct {
+	AvatarURL string                            `json:"avatar_url,required,nullable"`
 	Name      string                            `json:"name,required"`
-	AvatarURL string                            `json:"avatar_url,nullable"`
 	JSON      rewardSummaryResponseReceiverJSON `json:"-"`
 }
 
 // rewardSummaryResponseReceiverJSON contains the JSON metadata for the struct
 // [RewardSummaryResponseReceiver]
 type rewardSummaryResponseReceiverJSON struct {
-	Name        apijson.Field
 	AvatarURL   apijson.Field
+	Name        apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
 }

@@ -109,13 +109,13 @@ type UserAdvertisementNewResponse struct {
 	// Creation timestamp of the object.
 	CreatedAt    time.Time `json:"created_at,required" format:"date-time"`
 	ImageURL     string    `json:"image_url,required" format:"uri"`
+	ImageURLDark string    `json:"image_url_dark,required,nullable" format:"uri"`
 	LinkURL      string    `json:"link_url,required" format:"uri"`
-	Text         string    `json:"text,required"`
-	UserID       string    `json:"user_id,required" format:"uuid4"`
-	Views        int64     `json:"views,required"`
-	ImageURLDark string    `json:"image_url_dark,nullable" format:"uri"`
 	// Last modification timestamp of the object.
-	ModifiedAt time.Time                        `json:"modified_at,nullable" format:"date-time"`
+	ModifiedAt time.Time                        `json:"modified_at,required,nullable" format:"date-time"`
+	Text       string                           `json:"text,required"`
+	UserID     string                           `json:"user_id,required" format:"uuid4"`
+	Views      int64                            `json:"views,required"`
 	JSON       userAdvertisementNewResponseJSON `json:"-"`
 }
 
@@ -126,12 +126,12 @@ type userAdvertisementNewResponseJSON struct {
 	Clicks       apijson.Field
 	CreatedAt    apijson.Field
 	ImageURL     apijson.Field
+	ImageURLDark apijson.Field
 	LinkURL      apijson.Field
+	ModifiedAt   apijson.Field
 	Text         apijson.Field
 	UserID       apijson.Field
 	Views        apijson.Field
-	ImageURLDark apijson.Field
-	ModifiedAt   apijson.Field
 	raw          string
 	ExtraFields  map[string]apijson.Field
 }
@@ -150,13 +150,13 @@ type UserAdvertisementGetResponse struct {
 	// Creation timestamp of the object.
 	CreatedAt    time.Time `json:"created_at,required" format:"date-time"`
 	ImageURL     string    `json:"image_url,required" format:"uri"`
+	ImageURLDark string    `json:"image_url_dark,required,nullable" format:"uri"`
 	LinkURL      string    `json:"link_url,required" format:"uri"`
-	Text         string    `json:"text,required"`
-	UserID       string    `json:"user_id,required" format:"uuid4"`
-	Views        int64     `json:"views,required"`
-	ImageURLDark string    `json:"image_url_dark,nullable" format:"uri"`
 	// Last modification timestamp of the object.
-	ModifiedAt time.Time                        `json:"modified_at,nullable" format:"date-time"`
+	ModifiedAt time.Time                        `json:"modified_at,required,nullable" format:"date-time"`
+	Text       string                           `json:"text,required"`
+	UserID     string                           `json:"user_id,required" format:"uuid4"`
+	Views      int64                            `json:"views,required"`
 	JSON       userAdvertisementGetResponseJSON `json:"-"`
 }
 
@@ -167,12 +167,12 @@ type userAdvertisementGetResponseJSON struct {
 	Clicks       apijson.Field
 	CreatedAt    apijson.Field
 	ImageURL     apijson.Field
+	ImageURLDark apijson.Field
 	LinkURL      apijson.Field
+	ModifiedAt   apijson.Field
 	Text         apijson.Field
 	UserID       apijson.Field
 	Views        apijson.Field
-	ImageURLDark apijson.Field
-	ModifiedAt   apijson.Field
 	raw          string
 	ExtraFields  map[string]apijson.Field
 }
@@ -191,13 +191,13 @@ type UserAdvertisementUpdateResponse struct {
 	// Creation timestamp of the object.
 	CreatedAt    time.Time `json:"created_at,required" format:"date-time"`
 	ImageURL     string    `json:"image_url,required" format:"uri"`
+	ImageURLDark string    `json:"image_url_dark,required,nullable" format:"uri"`
 	LinkURL      string    `json:"link_url,required" format:"uri"`
-	Text         string    `json:"text,required"`
-	UserID       string    `json:"user_id,required" format:"uuid4"`
-	Views        int64     `json:"views,required"`
-	ImageURLDark string    `json:"image_url_dark,nullable" format:"uri"`
 	// Last modification timestamp of the object.
-	ModifiedAt time.Time                           `json:"modified_at,nullable" format:"date-time"`
+	ModifiedAt time.Time                           `json:"modified_at,required,nullable" format:"date-time"`
+	Text       string                              `json:"text,required"`
+	UserID     string                              `json:"user_id,required" format:"uuid4"`
+	Views      int64                               `json:"views,required"`
 	JSON       userAdvertisementUpdateResponseJSON `json:"-"`
 }
 
@@ -208,12 +208,12 @@ type userAdvertisementUpdateResponseJSON struct {
 	Clicks       apijson.Field
 	CreatedAt    apijson.Field
 	ImageURL     apijson.Field
+	ImageURLDark apijson.Field
 	LinkURL      apijson.Field
+	ModifiedAt   apijson.Field
 	Text         apijson.Field
 	UserID       apijson.Field
 	Views        apijson.Field
-	ImageURLDark apijson.Field
-	ModifiedAt   apijson.Field
 	raw          string
 	ExtraFields  map[string]apijson.Field
 }
@@ -278,13 +278,13 @@ type UserAdvertisementListResponseItem struct {
 	// Creation timestamp of the object.
 	CreatedAt    time.Time `json:"created_at,required" format:"date-time"`
 	ImageURL     string    `json:"image_url,required" format:"uri"`
+	ImageURLDark string    `json:"image_url_dark,required,nullable" format:"uri"`
 	LinkURL      string    `json:"link_url,required" format:"uri"`
-	Text         string    `json:"text,required"`
-	UserID       string    `json:"user_id,required" format:"uuid4"`
-	Views        int64     `json:"views,required"`
-	ImageURLDark string    `json:"image_url_dark,nullable" format:"uri"`
 	// Last modification timestamp of the object.
-	ModifiedAt time.Time                             `json:"modified_at,nullable" format:"date-time"`
+	ModifiedAt time.Time                             `json:"modified_at,required,nullable" format:"date-time"`
+	Text       string                                `json:"text,required"`
+	UserID     string                                `json:"user_id,required" format:"uuid4"`
+	Views      int64                                 `json:"views,required"`
 	JSON       userAdvertisementListResponseItemJSON `json:"-"`
 }
 
@@ -295,12 +295,12 @@ type userAdvertisementListResponseItemJSON struct {
 	Clicks       apijson.Field
 	CreatedAt    apijson.Field
 	ImageURL     apijson.Field
+	ImageURLDark apijson.Field
 	LinkURL      apijson.Field
+	ModifiedAt   apijson.Field
 	Text         apijson.Field
 	UserID       apijson.Field
 	Views        apijson.Field
-	ImageURLDark apijson.Field
-	ModifiedAt   apijson.Field
 	raw          string
 	ExtraFields  map[string]apijson.Field
 }

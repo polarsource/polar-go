@@ -111,20 +111,20 @@ type OrderOutput struct {
 	ID     string `json:"id,required" format:"uuid4"`
 	Amount int64  `json:"amount,required"`
 	// Creation timestamp of the object.
-	CreatedAt time.Time          `json:"created_at,required" format:"date-time"`
-	Currency  string             `json:"currency,required"`
-	Product   OrderOutputProduct `json:"product,required"`
-	ProductID string             `json:"product_id,required" format:"uuid4"`
+	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	Currency  string    `json:"currency,required"`
+	// Last modification timestamp of the object.
+	ModifiedAt time.Time          `json:"modified_at,required,nullable" format:"date-time"`
+	Product    OrderOutputProduct `json:"product,required"`
+	ProductID  string             `json:"product_id,required" format:"uuid4"`
 	// A recurring price for a product, i.e. a subscription.
 	ProductPrice   OrderOutputProductPrice `json:"product_price,required"`
 	ProductPriceID string                  `json:"product_price_id,required" format:"uuid4"`
+	Subscription   OrderOutputSubscription `json:"subscription,required,nullable"`
+	SubscriptionID string                  `json:"subscription_id,required,nullable" format:"uuid4"`
 	TaxAmount      int64                   `json:"tax_amount,required"`
 	User           OrderOutputUser         `json:"user,required"`
 	UserID         string                  `json:"user_id,required" format:"uuid4"`
-	// Last modification timestamp of the object.
-	ModifiedAt     time.Time               `json:"modified_at,nullable" format:"date-time"`
-	Subscription   OrderOutputSubscription `json:"subscription,nullable"`
-	SubscriptionID string                  `json:"subscription_id,nullable" format:"uuid4"`
 	JSON           orderOutputJSON         `json:"-"`
 }
 
@@ -134,16 +134,16 @@ type orderOutputJSON struct {
 	Amount         apijson.Field
 	CreatedAt      apijson.Field
 	Currency       apijson.Field
+	ModifiedAt     apijson.Field
 	Product        apijson.Field
 	ProductID      apijson.Field
 	ProductPrice   apijson.Field
 	ProductPriceID apijson.Field
+	Subscription   apijson.Field
+	SubscriptionID apijson.Field
 	TaxAmount      apijson.Field
 	User           apijson.Field
 	UserID         apijson.Field
-	ModifiedAt     apijson.Field
-	Subscription   apijson.Field
-	SubscriptionID apijson.Field
 	raw            string
 	ExtraFields    map[string]apijson.Field
 }
@@ -161,21 +161,21 @@ type OrderOutputProduct struct {
 	ID string `json:"id,required" format:"uuid4"`
 	// Creation timestamp of the object.
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	// The description of the product.
+	Description string `json:"description,required,nullable"`
 	// Whether the product is archived and no longer available.
-	IsArchived bool `json:"is_archived,required"`
+	IsArchived    bool `json:"is_archived,required"`
+	IsHighlighted bool `json:"is_highlighted,required,nullable"`
 	// Whether the product is a subscription tier.
 	IsRecurring bool `json:"is_recurring,required"`
+	// Last modification timestamp of the object.
+	ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
 	// The name of the product.
 	Name string `json:"name,required"`
 	// The ID of the organization owning the product.
-	OrganizationID string `json:"organization_id,required" format:"uuid4"`
-	// The description of the product.
-	Description   string `json:"description,nullable"`
-	IsHighlighted bool   `json:"is_highlighted,nullable"`
-	// Last modification timestamp of the object.
-	ModifiedAt time.Time              `json:"modified_at,nullable" format:"date-time"`
-	Type       OrderOutputProductType `json:"type,nullable"`
-	JSON       orderOutputProductJSON `json:"-"`
+	OrganizationID string                 `json:"organization_id,required" format:"uuid4"`
+	Type           OrderOutputProductType `json:"type,required,nullable"`
+	JSON           orderOutputProductJSON `json:"-"`
 }
 
 // orderOutputProductJSON contains the JSON metadata for the struct
@@ -183,13 +183,13 @@ type OrderOutputProduct struct {
 type orderOutputProductJSON struct {
 	ID             apijson.Field
 	CreatedAt      apijson.Field
+	Description    apijson.Field
 	IsArchived     apijson.Field
+	IsHighlighted  apijson.Field
 	IsRecurring    apijson.Field
+	ModifiedAt     apijson.Field
 	Name           apijson.Field
 	OrganizationID apijson.Field
-	Description    apijson.Field
-	IsHighlighted  apijson.Field
-	ModifiedAt     apijson.Field
 	Type           apijson.Field
 	raw            string
 	ExtraFields    map[string]apijson.Field
@@ -224,7 +224,7 @@ type OrderOutputProductPrice struct {
 	// Creation timestamp of the object.
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
 	// Last modification timestamp of the object.
-	ModifiedAt time.Time `json:"modified_at,nullable" format:"date-time"`
+	ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
 	// The ID of the price.
 	ID string `json:"id,required" format:"uuid4"`
 	// The price in cents.
@@ -312,17 +312,17 @@ type OrderOutputProductPriceProductPriceRecurring struct {
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
 	// Whether the price is archived and no longer available.
 	IsArchived bool `json:"is_archived,required"`
+	// Last modification timestamp of the object.
+	ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
 	// The price in cents.
 	PriceAmount int64 `json:"price_amount,required"`
 	// The currency.
 	PriceCurrency string `json:"price_currency,required"`
+	// The recurring interval of the price, if type is `recurring`.
+	RecurringInterval OrderOutputProductPriceProductPriceRecurringRecurringInterval `json:"recurring_interval,required,nullable"`
 	// The type of the price.
 	Type OrderOutputProductPriceProductPriceRecurringType `json:"type,required"`
-	// Last modification timestamp of the object.
-	ModifiedAt time.Time `json:"modified_at,nullable" format:"date-time"`
-	// The recurring interval of the price, if type is `recurring`.
-	RecurringInterval OrderOutputProductPriceProductPriceRecurringRecurringInterval `json:"recurring_interval,nullable"`
-	JSON              orderOutputProductPriceProductPriceRecurringJSON              `json:"-"`
+	JSON orderOutputProductPriceProductPriceRecurringJSON `json:"-"`
 }
 
 // orderOutputProductPriceProductPriceRecurringJSON contains the JSON metadata for
@@ -331,11 +331,11 @@ type orderOutputProductPriceProductPriceRecurringJSON struct {
 	ID                apijson.Field
 	CreatedAt         apijson.Field
 	IsArchived        apijson.Field
+	ModifiedAt        apijson.Field
 	PriceAmount       apijson.Field
 	PriceCurrency     apijson.Field
-	Type              apijson.Field
-	ModifiedAt        apijson.Field
 	RecurringInterval apijson.Field
+	Type              apijson.Field
 	raw               string
 	ExtraFields       map[string]apijson.Field
 }
@@ -349,21 +349,6 @@ func (r orderOutputProductPriceProductPriceRecurringJSON) RawJSON() string {
 }
 
 func (r OrderOutputProductPriceProductPriceRecurring) implementsOrderOutputProductPrice() {}
-
-// The type of the price.
-type OrderOutputProductPriceProductPriceRecurringType string
-
-const (
-	OrderOutputProductPriceProductPriceRecurringTypeRecurring OrderOutputProductPriceProductPriceRecurringType = "recurring"
-)
-
-func (r OrderOutputProductPriceProductPriceRecurringType) IsKnown() bool {
-	switch r {
-	case OrderOutputProductPriceProductPriceRecurringTypeRecurring:
-		return true
-	}
-	return false
-}
 
 // The recurring interval of the price, if type is `recurring`.
 type OrderOutputProductPriceProductPriceRecurringRecurringInterval string
@@ -381,6 +366,21 @@ func (r OrderOutputProductPriceProductPriceRecurringRecurringInterval) IsKnown()
 	return false
 }
 
+// The type of the price.
+type OrderOutputProductPriceProductPriceRecurringType string
+
+const (
+	OrderOutputProductPriceProductPriceRecurringTypeRecurring OrderOutputProductPriceProductPriceRecurringType = "recurring"
+)
+
+func (r OrderOutputProductPriceProductPriceRecurringType) IsKnown() bool {
+	switch r {
+	case OrderOutputProductPriceProductPriceRecurringTypeRecurring:
+		return true
+	}
+	return false
+}
+
 // A one-time price for a product.
 type OrderOutputProductPriceProductPriceOneTime struct {
 	// The ID of the price.
@@ -389,15 +389,15 @@ type OrderOutputProductPriceProductPriceOneTime struct {
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
 	// Whether the price is archived and no longer available.
 	IsArchived bool `json:"is_archived,required"`
+	// Last modification timestamp of the object.
+	ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
 	// The price in cents.
 	PriceAmount int64 `json:"price_amount,required"`
 	// The currency.
 	PriceCurrency string `json:"price_currency,required"`
 	// The type of the price.
 	Type OrderOutputProductPriceProductPriceOneTimeType `json:"type,required"`
-	// Last modification timestamp of the object.
-	ModifiedAt time.Time                                      `json:"modified_at,nullable" format:"date-time"`
-	JSON       orderOutputProductPriceProductPriceOneTimeJSON `json:"-"`
+	JSON orderOutputProductPriceProductPriceOneTimeJSON `json:"-"`
 }
 
 // orderOutputProductPriceProductPriceOneTimeJSON contains the JSON metadata for
@@ -406,10 +406,10 @@ type orderOutputProductPriceProductPriceOneTimeJSON struct {
 	ID            apijson.Field
 	CreatedAt     apijson.Field
 	IsArchived    apijson.Field
+	ModifiedAt    apijson.Field
 	PriceAmount   apijson.Field
 	PriceCurrency apijson.Field
 	Type          apijson.Field
-	ModifiedAt    apijson.Field
 	raw           string
 	ExtraFields   map[string]apijson.Field
 }
@@ -471,51 +471,23 @@ func (r OrderOutputProductPriceRecurringInterval) IsKnown() bool {
 	return false
 }
 
-type OrderOutputUser struct {
-	ID             string              `json:"id,required" format:"uuid4"`
-	Email          string              `json:"email,required"`
-	PublicName     string              `json:"public_name,required"`
-	AvatarURL      string              `json:"avatar_url,nullable"`
-	GitHubUsername string              `json:"github_username,nullable"`
-	JSON           orderOutputUserJSON `json:"-"`
-}
-
-// orderOutputUserJSON contains the JSON metadata for the struct [OrderOutputUser]
-type orderOutputUserJSON struct {
-	ID             apijson.Field
-	Email          apijson.Field
-	PublicName     apijson.Field
-	AvatarURL      apijson.Field
-	GitHubUsername apijson.Field
-	raw            string
-	ExtraFields    map[string]apijson.Field
-}
-
-func (r *OrderOutputUser) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-func (r orderOutputUserJSON) RawJSON() string {
-	return r.raw
-}
-
 type OrderOutputSubscription struct {
 	// The ID of the object.
 	ID                string `json:"id,required" format:"uuid4"`
 	CancelAtPeriodEnd bool   `json:"cancel_at_period_end,required"`
 	// Creation timestamp of the object.
-	CreatedAt          time.Time                     `json:"created_at,required" format:"date-time"`
-	CurrentPeriodStart time.Time                     `json:"current_period_start,required" format:"date-time"`
-	ProductID          string                        `json:"product_id,required" format:"uuid4"`
-	Status             OrderOutputSubscriptionStatus `json:"status,required"`
-	UserID             string                        `json:"user_id,required" format:"uuid4"`
-	CurrentPeriodEnd   time.Time                     `json:"current_period_end,nullable" format:"date-time"`
-	EndedAt            time.Time                     `json:"ended_at,nullable" format:"date-time"`
+	CreatedAt          time.Time `json:"created_at,required" format:"date-time"`
+	CurrentPeriodEnd   time.Time `json:"current_period_end,required,nullable" format:"date-time"`
+	CurrentPeriodStart time.Time `json:"current_period_start,required" format:"date-time"`
+	EndedAt            time.Time `json:"ended_at,required,nullable" format:"date-time"`
 	// Last modification timestamp of the object.
-	ModifiedAt time.Time                   `json:"modified_at,nullable" format:"date-time"`
-	PriceID    string                      `json:"price_id,nullable" format:"uuid4"`
-	StartedAt  time.Time                   `json:"started_at,nullable" format:"date-time"`
-	JSON       orderOutputSubscriptionJSON `json:"-"`
+	ModifiedAt time.Time                     `json:"modified_at,required,nullable" format:"date-time"`
+	PriceID    string                        `json:"price_id,required,nullable" format:"uuid4"`
+	ProductID  string                        `json:"product_id,required" format:"uuid4"`
+	StartedAt  time.Time                     `json:"started_at,required,nullable" format:"date-time"`
+	Status     OrderOutputSubscriptionStatus `json:"status,required"`
+	UserID     string                        `json:"user_id,required" format:"uuid4"`
+	JSON       orderOutputSubscriptionJSON   `json:"-"`
 }
 
 // orderOutputSubscriptionJSON contains the JSON metadata for the struct
@@ -524,15 +496,15 @@ type orderOutputSubscriptionJSON struct {
 	ID                 apijson.Field
 	CancelAtPeriodEnd  apijson.Field
 	CreatedAt          apijson.Field
-	CurrentPeriodStart apijson.Field
-	ProductID          apijson.Field
-	Status             apijson.Field
-	UserID             apijson.Field
 	CurrentPeriodEnd   apijson.Field
+	CurrentPeriodStart apijson.Field
 	EndedAt            apijson.Field
 	ModifiedAt         apijson.Field
 	PriceID            apijson.Field
+	ProductID          apijson.Field
 	StartedAt          apijson.Field
+	Status             apijson.Field
+	UserID             apijson.Field
 	raw                string
 	ExtraFields        map[string]apijson.Field
 }
@@ -563,6 +535,34 @@ func (r OrderOutputSubscriptionStatus) IsKnown() bool {
 		return true
 	}
 	return false
+}
+
+type OrderOutputUser struct {
+	ID             string              `json:"id,required" format:"uuid4"`
+	AvatarURL      string              `json:"avatar_url,required,nullable"`
+	Email          string              `json:"email,required"`
+	GitHubUsername string              `json:"github_username,required,nullable"`
+	PublicName     string              `json:"public_name,required"`
+	JSON           orderOutputUserJSON `json:"-"`
+}
+
+// orderOutputUserJSON contains the JSON metadata for the struct [OrderOutputUser]
+type orderOutputUserJSON struct {
+	ID             apijson.Field
+	AvatarURL      apijson.Field
+	Email          apijson.Field
+	GitHubUsername apijson.Field
+	PublicName     apijson.Field
+	raw            string
+	ExtraFields    map[string]apijson.Field
+}
+
+func (r *OrderOutputUser) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r orderOutputUserJSON) RawJSON() string {
+	return r.raw
 }
 
 type OrderListParams struct {
