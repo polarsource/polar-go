@@ -33,14 +33,6 @@ func NewOauth2UserinfoService(opts ...option.RequestOption) (r *Oauth2UserinfoSe
 }
 
 // Get information about the authenticated user.
-func (r *Oauth2UserinfoService) New(ctx context.Context, opts ...option.RequestOption) (res *Oauth2UserinfoNewResponse, err error) {
-	opts = append(r.Options[:], opts...)
-	path := "v1/oauth2/userinfo"
-	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, nil, &res, opts...)
-	return
-}
-
-// Get information about the authenticated user.
 func (r *Oauth2UserinfoService) Get(ctx context.Context, opts ...option.RequestOption) (res *Oauth2UserinfoGetResponse, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "v1/oauth2/userinfo"
@@ -71,8 +63,6 @@ func (r userInfoOrganizationJSON) RawJSON() string {
 	return r.raw
 }
 
-func (r UserInfoOrganization) implementsOauth2UserinfoNewResponse() {}
-
 func (r UserInfoOrganization) implementsOauth2UserinfoGetResponse() {}
 
 type UserInfoUser struct {
@@ -101,70 +91,7 @@ func (r userInfoUserJSON) RawJSON() string {
 	return r.raw
 }
 
-func (r UserInfoUser) implementsOauth2UserinfoNewResponse() {}
-
 func (r UserInfoUser) implementsOauth2UserinfoGetResponse() {}
-
-type Oauth2UserinfoNewResponse struct {
-	Sub           string                        `json:"sub,required"`
-	Name          string                        `json:"name,required,nullable"`
-	Email         string                        `json:"email,nullable"`
-	EmailVerified bool                          `json:"email_verified,nullable"`
-	JSON          oauth2UserinfoNewResponseJSON `json:"-"`
-	union         Oauth2UserinfoNewResponseUnion
-}
-
-// oauth2UserinfoNewResponseJSON contains the JSON metadata for the struct
-// [Oauth2UserinfoNewResponse]
-type oauth2UserinfoNewResponseJSON struct {
-	Sub           apijson.Field
-	Name          apijson.Field
-	Email         apijson.Field
-	EmailVerified apijson.Field
-	raw           string
-	ExtraFields   map[string]apijson.Field
-}
-
-func (r oauth2UserinfoNewResponseJSON) RawJSON() string {
-	return r.raw
-}
-
-func (r *Oauth2UserinfoNewResponse) UnmarshalJSON(data []byte) (err error) {
-	*r = Oauth2UserinfoNewResponse{}
-	err = apijson.UnmarshalRoot(data, &r.union)
-	if err != nil {
-		return err
-	}
-	return apijson.Port(r.union, &r)
-}
-
-// AsUnion returns a [Oauth2UserinfoNewResponseUnion] interface which you can cast
-// to the specific types for more type safety.
-//
-// Possible runtime types of the union are [UserInfoUser], [UserInfoOrganization].
-func (r Oauth2UserinfoNewResponse) AsUnion() Oauth2UserinfoNewResponseUnion {
-	return r.union
-}
-
-// Union satisfied by [UserInfoUser] or [UserInfoOrganization].
-type Oauth2UserinfoNewResponseUnion interface {
-	implementsOauth2UserinfoNewResponse()
-}
-
-func init() {
-	apijson.RegisterUnion(
-		reflect.TypeOf((*Oauth2UserinfoNewResponseUnion)(nil)).Elem(),
-		"",
-		apijson.UnionVariant{
-			TypeFilter: gjson.JSON,
-			Type:       reflect.TypeOf(UserInfoUser{}),
-		},
-		apijson.UnionVariant{
-			TypeFilter: gjson.JSON,
-			Type:       reflect.TypeOf(UserInfoOrganization{}),
-		},
-	)
-}
 
 type Oauth2UserinfoGetResponse struct {
 	Sub           string                        `json:"sub,required"`
