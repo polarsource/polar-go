@@ -394,12 +394,10 @@ Response Types:
 
 - <a href="https://pkg.go.dev/github.com/polarsource/polar-go">polar</a>.<a href="https://pkg.go.dev/github.com/polarsource/polar-go#UserInfoOrganization">UserInfoOrganization</a>
 - <a href="https://pkg.go.dev/github.com/polarsource/polar-go">polar</a>.<a href="https://pkg.go.dev/github.com/polarsource/polar-go#UserInfoUser">UserInfoUser</a>
-- <a href="https://pkg.go.dev/github.com/polarsource/polar-go">polar</a>.<a href="https://pkg.go.dev/github.com/polarsource/polar-go#Oauth2UserinfoNewResponse">Oauth2UserinfoNewResponse</a>
 - <a href="https://pkg.go.dev/github.com/polarsource/polar-go">polar</a>.<a href="https://pkg.go.dev/github.com/polarsource/polar-go#Oauth2UserinfoGetResponse">Oauth2UserinfoGetResponse</a>
 
 Methods:
 
-- <code title="post /v1/oauth2/userinfo">client.Oauth2.Userinfo.<a href="https://pkg.go.dev/github.com/polarsource/polar-go#Oauth2UserinfoService.New">New</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>) (<a href="https://pkg.go.dev/github.com/polarsource/polar-go">polar</a>.<a href="https://pkg.go.dev/github.com/polarsource/polar-go#Oauth2UserinfoNewResponse">Oauth2UserinfoNewResponse</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
 - <code title="get /v1/oauth2/userinfo">client.Oauth2.Userinfo.<a href="https://pkg.go.dev/github.com/polarsource/polar-go#Oauth2UserinfoService.Get">Get</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>) (<a href="https://pkg.go.dev/github.com/polarsource/polar-go">polar</a>.<a href="https://pkg.go.dev/github.com/polarsource/polar-go#Oauth2UserinfoGetResponse">Oauth2UserinfoGetResponse</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
 
 # Benefits
