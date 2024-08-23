@@ -151,7 +151,7 @@ type ListResourceUnionBenefitArticlesBenefitAdsBenefitCustomBenefitDiscordBenefi
 	// Creation timestamp of the object.
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
 	// Last modification timestamp of the object.
-	ModifiedAt time.Time `json:"modified_at,nullable" format:"date-time"`
+	ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
 	// The ID of the benefit.
 	ID   string                                                                                                                    `json:"id,required" format:"uuid4"`
 	Type ListResourceUnionBenefitArticlesBenefitAdsBenefitCustomBenefitDiscordBenefitGitHubRepositoryBenefitDownloadablesItemsType `json:"type,required"`
@@ -282,6 +282,8 @@ type ListResourceUnionBenefitArticlesBenefitAdsBenefitCustomBenefitDiscordBenefi
 	Deletable bool `json:"deletable,required"`
 	// The description of the benefit.
 	Description string `json:"description,required"`
+	// Last modification timestamp of the object.
+	ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
 	// The ID of the organization owning the benefit.
 	OrganizationID string `json:"organization_id,required" format:"uuid4"`
 	// Properties for a benefit of type `articles`.
@@ -289,8 +291,6 @@ type ListResourceUnionBenefitArticlesBenefitAdsBenefitCustomBenefitDiscordBenefi
 	// Whether the benefit is selectable when creating a product.
 	Selectable bool                                                                                                                                     `json:"selectable,required"`
 	Type       ListResourceUnionBenefitArticlesBenefitAdsBenefitCustomBenefitDiscordBenefitGitHubRepositoryBenefitDownloadablesItemsBenefitArticlesType `json:"type,required"`
-	// Last modification timestamp of the object.
-	ModifiedAt time.Time                                                                                                                                `json:"modified_at,nullable" format:"date-time"`
 	JSON       listResourceUnionBenefitArticlesBenefitAdsBenefitCustomBenefitDiscordBenefitGitHubRepositoryBenefitDownloadablesItemsBenefitArticlesJSON `json:"-"`
 }
 
@@ -302,11 +302,11 @@ type listResourceUnionBenefitArticlesBenefitAdsBenefitCustomBenefitDiscordBenefi
 	CreatedAt      apijson.Field
 	Deletable      apijson.Field
 	Description    apijson.Field
+	ModifiedAt     apijson.Field
 	OrganizationID apijson.Field
 	Properties     apijson.Field
 	Selectable     apijson.Field
 	Type           apijson.Field
-	ModifiedAt     apijson.Field
 	raw            string
 	ExtraFields    map[string]apijson.Field
 }
@@ -372,6 +372,8 @@ type ListResourceUnionBenefitArticlesBenefitAdsBenefitCustomBenefitDiscordBenefi
 	Deletable bool `json:"deletable,required"`
 	// The description of the benefit.
 	Description string `json:"description,required"`
+	// Last modification timestamp of the object.
+	ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
 	// The ID of the organization owning the benefit.
 	OrganizationID string `json:"organization_id,required" format:"uuid4"`
 	// Properties for a benefit of type `ads`.
@@ -379,8 +381,6 @@ type ListResourceUnionBenefitArticlesBenefitAdsBenefitCustomBenefitDiscordBenefi
 	// Whether the benefit is selectable when creating a product.
 	Selectable bool                                                                                                                                `json:"selectable,required"`
 	Type       ListResourceUnionBenefitArticlesBenefitAdsBenefitCustomBenefitDiscordBenefitGitHubRepositoryBenefitDownloadablesItemsBenefitAdsType `json:"type,required"`
-	// Last modification timestamp of the object.
-	ModifiedAt time.Time                                                                                                                           `json:"modified_at,nullable" format:"date-time"`
 	JSON       listResourceUnionBenefitArticlesBenefitAdsBenefitCustomBenefitDiscordBenefitGitHubRepositoryBenefitDownloadablesItemsBenefitAdsJSON `json:"-"`
 }
 
@@ -392,11 +392,11 @@ type listResourceUnionBenefitArticlesBenefitAdsBenefitCustomBenefitDiscordBenefi
 	CreatedAt      apijson.Field
 	Deletable      apijson.Field
 	Description    apijson.Field
+	ModifiedAt     apijson.Field
 	OrganizationID apijson.Field
 	Properties     apijson.Field
 	Selectable     apijson.Field
 	Type           apijson.Field
-	ModifiedAt     apijson.Field
 	raw            string
 	ExtraFields    map[string]apijson.Field
 }
@@ -467,6 +467,8 @@ type ListResourceUnionBenefitArticlesBenefitAdsBenefitCustomBenefitDiscordBenefi
 	Description string `json:"description,required"`
 	// Whether the benefit is taxable.
 	IsTaxApplicable bool `json:"is_tax_applicable,required"`
+	// Last modification timestamp of the object.
+	ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
 	// The ID of the organization owning the benefit.
 	OrganizationID string `json:"organization_id,required" format:"uuid4"`
 	// Properties for a benefit of type `custom`.
@@ -474,8 +476,6 @@ type ListResourceUnionBenefitArticlesBenefitAdsBenefitCustomBenefitDiscordBenefi
 	// Whether the benefit is selectable when creating a product.
 	Selectable bool                                                                                                                                   `json:"selectable,required"`
 	Type       ListResourceUnionBenefitArticlesBenefitAdsBenefitCustomBenefitDiscordBenefitGitHubRepositoryBenefitDownloadablesItemsBenefitCustomType `json:"type,required"`
-	// Last modification timestamp of the object.
-	ModifiedAt time.Time                                                                                                                              `json:"modified_at,nullable" format:"date-time"`
 	JSON       listResourceUnionBenefitArticlesBenefitAdsBenefitCustomBenefitDiscordBenefitGitHubRepositoryBenefitDownloadablesItemsBenefitCustomJSON `json:"-"`
 }
 
@@ -488,11 +488,11 @@ type listResourceUnionBenefitArticlesBenefitAdsBenefitCustomBenefitDiscordBenefi
 	Deletable       apijson.Field
 	Description     apijson.Field
 	IsTaxApplicable apijson.Field
+	ModifiedAt      apijson.Field
 	OrganizationID  apijson.Field
 	Properties      apijson.Field
 	Selectable      apijson.Field
 	Type            apijson.Field
-	ModifiedAt      apijson.Field
 	raw             string
 	ExtraFields     map[string]apijson.Field
 }
@@ -511,7 +511,7 @@ func (r ListResourceUnionBenefitArticlesBenefitAdsBenefitCustomBenefitDiscordBen
 // Properties for a benefit of type `custom`.
 type ListResourceUnionBenefitArticlesBenefitAdsBenefitCustomBenefitDiscordBenefitGitHubRepositoryBenefitDownloadablesItemsBenefitCustomProperties struct {
 	// Private note to be shared with users who have this benefit granted.
-	Note string                                                                                                                                           `json:"note,nullable"`
+	Note string                                                                                                                                           `json:"note,required,nullable"`
 	JSON listResourceUnionBenefitArticlesBenefitAdsBenefitCustomBenefitDiscordBenefitGitHubRepositoryBenefitDownloadablesItemsBenefitCustomPropertiesJSON `json:"-"`
 }
 
@@ -558,6 +558,8 @@ type ListResourceUnionBenefitArticlesBenefitAdsBenefitCustomBenefitDiscordBenefi
 	Deletable bool `json:"deletable,required"`
 	// The description of the benefit.
 	Description string `json:"description,required"`
+	// Last modification timestamp of the object.
+	ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
 	// The ID of the organization owning the benefit.
 	OrganizationID string `json:"organization_id,required" format:"uuid4"`
 	// Properties for a benefit of type `discord`.
@@ -565,8 +567,6 @@ type ListResourceUnionBenefitArticlesBenefitAdsBenefitCustomBenefitDiscordBenefi
 	// Whether the benefit is selectable when creating a product.
 	Selectable bool                                                                                                                                          `json:"selectable,required"`
 	Type       ListResourceUnionBenefitArticlesBenefitAdsBenefitCustomBenefitDiscordBenefitGitHubRepositoryBenefitDownloadablesItemsBenefitDiscordOutputType `json:"type,required"`
-	// Last modification timestamp of the object.
-	ModifiedAt time.Time                                                                                                                                     `json:"modified_at,nullable" format:"date-time"`
 	JSON       listResourceUnionBenefitArticlesBenefitAdsBenefitCustomBenefitDiscordBenefitGitHubRepositoryBenefitDownloadablesItemsBenefitDiscordOutputJSON `json:"-"`
 }
 
@@ -578,11 +578,11 @@ type listResourceUnionBenefitArticlesBenefitAdsBenefitCustomBenefitDiscordBenefi
 	CreatedAt      apijson.Field
 	Deletable      apijson.Field
 	Description    apijson.Field
+	ModifiedAt     apijson.Field
 	OrganizationID apijson.Field
 	Properties     apijson.Field
 	Selectable     apijson.Field
 	Type           apijson.Field
-	ModifiedAt     apijson.Field
 	raw            string
 	ExtraFields    map[string]apijson.Field
 }
@@ -653,6 +653,8 @@ type ListResourceUnionBenefitArticlesBenefitAdsBenefitCustomBenefitDiscordBenefi
 	Deletable bool `json:"deletable,required"`
 	// The description of the benefit.
 	Description string `json:"description,required"`
+	// Last modification timestamp of the object.
+	ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
 	// The ID of the organization owning the benefit.
 	OrganizationID string `json:"organization_id,required" format:"uuid4"`
 	// Properties for a benefit of type `github_repository`.
@@ -660,8 +662,6 @@ type ListResourceUnionBenefitArticlesBenefitAdsBenefitCustomBenefitDiscordBenefi
 	// Whether the benefit is selectable when creating a product.
 	Selectable bool                                                                                                                                             `json:"selectable,required"`
 	Type       ListResourceUnionBenefitArticlesBenefitAdsBenefitCustomBenefitDiscordBenefitGitHubRepositoryBenefitDownloadablesItemsBenefitGitHubRepositoryType `json:"type,required"`
-	// Last modification timestamp of the object.
-	ModifiedAt time.Time                                                                                                                                        `json:"modified_at,nullable" format:"date-time"`
 	JSON       listResourceUnionBenefitArticlesBenefitAdsBenefitCustomBenefitDiscordBenefitGitHubRepositoryBenefitDownloadablesItemsBenefitGitHubRepositoryJSON `json:"-"`
 }
 
@@ -673,11 +673,11 @@ type listResourceUnionBenefitArticlesBenefitAdsBenefitCustomBenefitDiscordBenefi
 	CreatedAt      apijson.Field
 	Deletable      apijson.Field
 	Description    apijson.Field
+	ModifiedAt     apijson.Field
 	OrganizationID apijson.Field
 	Properties     apijson.Field
 	Selectable     apijson.Field
 	Type           apijson.Field
-	ModifiedAt     apijson.Field
 	raw            string
 	ExtraFields    map[string]apijson.Field
 }
@@ -697,12 +697,12 @@ func (r ListResourceUnionBenefitArticlesBenefitAdsBenefitCustomBenefitDiscordBen
 type ListResourceUnionBenefitArticlesBenefitAdsBenefitCustomBenefitDiscordBenefitGitHubRepositoryBenefitDownloadablesItemsBenefitGitHubRepositoryProperties struct {
 	// The permission level to grant. Read more about roles and their permissions on
 	// [GitHub documentation](https://docs.github.com/en/organizations/managing-user-access-to-your-organizations-repositories/managing-repository-roles/repository-roles-for-an-organization#permissions-for-each-role).
-	Permission ListResourceUnionBenefitArticlesBenefitAdsBenefitCustomBenefitDiscordBenefitGitHubRepositoryBenefitDownloadablesItemsBenefitGitHubRepositoryPropertiesPermission `json:"permission,required"`
+	Permission   ListResourceUnionBenefitArticlesBenefitAdsBenefitCustomBenefitDiscordBenefitGitHubRepositoryBenefitDownloadablesItemsBenefitGitHubRepositoryPropertiesPermission `json:"permission,required"`
+	RepositoryID string                                                                                                                                                           `json:"repository_id,required,nullable" format:"uuid4"`
 	// The name of the repository.
 	RepositoryName string `json:"repository_name,required"`
 	// The owner of the repository.
 	RepositoryOwner string                                                                                                                                                     `json:"repository_owner,required"`
-	RepositoryID    string                                                                                                                                                     `json:"repository_id,nullable" format:"uuid4"`
 	JSON            listResourceUnionBenefitArticlesBenefitAdsBenefitCustomBenefitDiscordBenefitGitHubRepositoryBenefitDownloadablesItemsBenefitGitHubRepositoryPropertiesJSON `json:"-"`
 }
 
@@ -711,9 +711,9 @@ type ListResourceUnionBenefitArticlesBenefitAdsBenefitCustomBenefitDiscordBenefi
 // [ListResourceUnionBenefitArticlesBenefitAdsBenefitCustomBenefitDiscordBenefitGitHubRepositoryBenefitDownloadablesItemsBenefitGitHubRepositoryProperties]
 type listResourceUnionBenefitArticlesBenefitAdsBenefitCustomBenefitDiscordBenefitGitHubRepositoryBenefitDownloadablesItemsBenefitGitHubRepositoryPropertiesJSON struct {
 	Permission      apijson.Field
+	RepositoryID    apijson.Field
 	RepositoryName  apijson.Field
 	RepositoryOwner apijson.Field
-	RepositoryID    apijson.Field
 	raw             string
 	ExtraFields     map[string]apijson.Field
 }
@@ -769,14 +769,14 @@ type ListResourceUnionBenefitArticlesBenefitAdsBenefitCustomBenefitDiscordBenefi
 	Deletable bool `json:"deletable,required"`
 	// The description of the benefit.
 	Description string `json:"description,required"`
+	// Last modification timestamp of the object.
+	ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
 	// The ID of the organization owning the benefit.
 	OrganizationID string                                                                                                                                              `json:"organization_id,required" format:"uuid4"`
 	Properties     ListResourceUnionBenefitArticlesBenefitAdsBenefitCustomBenefitDiscordBenefitGitHubRepositoryBenefitDownloadablesItemsBenefitDownloadablesProperties `json:"properties,required"`
 	// Whether the benefit is selectable when creating a product.
 	Selectable bool                                                                                                                                          `json:"selectable,required"`
 	Type       ListResourceUnionBenefitArticlesBenefitAdsBenefitCustomBenefitDiscordBenefitGitHubRepositoryBenefitDownloadablesItemsBenefitDownloadablesType `json:"type,required"`
-	// Last modification timestamp of the object.
-	ModifiedAt time.Time                                                                                                                                     `json:"modified_at,nullable" format:"date-time"`
 	JSON       listResourceUnionBenefitArticlesBenefitAdsBenefitCustomBenefitDiscordBenefitGitHubRepositoryBenefitDownloadablesItemsBenefitDownloadablesJSON `json:"-"`
 }
 
@@ -788,11 +788,11 @@ type listResourceUnionBenefitArticlesBenefitAdsBenefitCustomBenefitDiscordBenefi
 	CreatedAt      apijson.Field
 	Deletable      apijson.Field
 	Description    apijson.Field
+	ModifiedAt     apijson.Field
 	OrganizationID apijson.Field
 	Properties     apijson.Field
 	Selectable     apijson.Field
 	Type           apijson.Field
-	ModifiedAt     apijson.Field
 	raw            string
 	ExtraFields    map[string]apijson.Field
 }
@@ -872,7 +872,7 @@ type BenefitNewResponse struct {
 	// Creation timestamp of the object.
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
 	// Last modification timestamp of the object.
-	ModifiedAt time.Time `json:"modified_at,nullable" format:"date-time"`
+	ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
 	// The ID of the benefit.
 	ID   string                 `json:"id,required" format:"uuid4"`
 	Type BenefitNewResponseType `json:"type,required"`
@@ -996,6 +996,8 @@ type BenefitNewResponseBenefitArticles struct {
 	Deletable bool `json:"deletable,required"`
 	// The description of the benefit.
 	Description string `json:"description,required"`
+	// Last modification timestamp of the object.
+	ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
 	// The ID of the organization owning the benefit.
 	OrganizationID string `json:"organization_id,required" format:"uuid4"`
 	// Properties for a benefit of type `articles`.
@@ -1003,8 +1005,6 @@ type BenefitNewResponseBenefitArticles struct {
 	// Whether the benefit is selectable when creating a product.
 	Selectable bool                                  `json:"selectable,required"`
 	Type       BenefitNewResponseBenefitArticlesType `json:"type,required"`
-	// Last modification timestamp of the object.
-	ModifiedAt time.Time                             `json:"modified_at,nullable" format:"date-time"`
 	JSON       benefitNewResponseBenefitArticlesJSON `json:"-"`
 }
 
@@ -1015,11 +1015,11 @@ type benefitNewResponseBenefitArticlesJSON struct {
 	CreatedAt      apijson.Field
 	Deletable      apijson.Field
 	Description    apijson.Field
+	ModifiedAt     apijson.Field
 	OrganizationID apijson.Field
 	Properties     apijson.Field
 	Selectable     apijson.Field
 	Type           apijson.Field
-	ModifiedAt     apijson.Field
 	raw            string
 	ExtraFields    map[string]apijson.Field
 }
@@ -1083,6 +1083,8 @@ type BenefitNewResponseBenefitAds struct {
 	Deletable bool `json:"deletable,required"`
 	// The description of the benefit.
 	Description string `json:"description,required"`
+	// Last modification timestamp of the object.
+	ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
 	// The ID of the organization owning the benefit.
 	OrganizationID string `json:"organization_id,required" format:"uuid4"`
 	// Properties for a benefit of type `ads`.
@@ -1090,8 +1092,6 @@ type BenefitNewResponseBenefitAds struct {
 	// Whether the benefit is selectable when creating a product.
 	Selectable bool                             `json:"selectable,required"`
 	Type       BenefitNewResponseBenefitAdsType `json:"type,required"`
-	// Last modification timestamp of the object.
-	ModifiedAt time.Time                        `json:"modified_at,nullable" format:"date-time"`
 	JSON       benefitNewResponseBenefitAdsJSON `json:"-"`
 }
 
@@ -1102,11 +1102,11 @@ type benefitNewResponseBenefitAdsJSON struct {
 	CreatedAt      apijson.Field
 	Deletable      apijson.Field
 	Description    apijson.Field
+	ModifiedAt     apijson.Field
 	OrganizationID apijson.Field
 	Properties     apijson.Field
 	Selectable     apijson.Field
 	Type           apijson.Field
-	ModifiedAt     apijson.Field
 	raw            string
 	ExtraFields    map[string]apijson.Field
 }
@@ -1175,6 +1175,8 @@ type BenefitNewResponseBenefitCustom struct {
 	Description string `json:"description,required"`
 	// Whether the benefit is taxable.
 	IsTaxApplicable bool `json:"is_tax_applicable,required"`
+	// Last modification timestamp of the object.
+	ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
 	// The ID of the organization owning the benefit.
 	OrganizationID string `json:"organization_id,required" format:"uuid4"`
 	// Properties for a benefit of type `custom`.
@@ -1182,8 +1184,6 @@ type BenefitNewResponseBenefitCustom struct {
 	// Whether the benefit is selectable when creating a product.
 	Selectable bool                                `json:"selectable,required"`
 	Type       BenefitNewResponseBenefitCustomType `json:"type,required"`
-	// Last modification timestamp of the object.
-	ModifiedAt time.Time                           `json:"modified_at,nullable" format:"date-time"`
 	JSON       benefitNewResponseBenefitCustomJSON `json:"-"`
 }
 
@@ -1195,11 +1195,11 @@ type benefitNewResponseBenefitCustomJSON struct {
 	Deletable       apijson.Field
 	Description     apijson.Field
 	IsTaxApplicable apijson.Field
+	ModifiedAt      apijson.Field
 	OrganizationID  apijson.Field
 	Properties      apijson.Field
 	Selectable      apijson.Field
 	Type            apijson.Field
-	ModifiedAt      apijson.Field
 	raw             string
 	ExtraFields     map[string]apijson.Field
 }
@@ -1217,7 +1217,7 @@ func (r BenefitNewResponseBenefitCustom) implementsBenefitNewResponse() {}
 // Properties for a benefit of type `custom`.
 type BenefitNewResponseBenefitCustomProperties struct {
 	// Private note to be shared with users who have this benefit granted.
-	Note string                                        `json:"note,nullable"`
+	Note string                                        `json:"note,required,nullable"`
 	JSON benefitNewResponseBenefitCustomPropertiesJSON `json:"-"`
 }
 
@@ -1263,6 +1263,8 @@ type BenefitNewResponseBenefitDiscordOutput struct {
 	Deletable bool `json:"deletable,required"`
 	// The description of the benefit.
 	Description string `json:"description,required"`
+	// Last modification timestamp of the object.
+	ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
 	// The ID of the organization owning the benefit.
 	OrganizationID string `json:"organization_id,required" format:"uuid4"`
 	// Properties for a benefit of type `discord`.
@@ -1270,8 +1272,6 @@ type BenefitNewResponseBenefitDiscordOutput struct {
 	// Whether the benefit is selectable when creating a product.
 	Selectable bool                                       `json:"selectable,required"`
 	Type       BenefitNewResponseBenefitDiscordOutputType `json:"type,required"`
-	// Last modification timestamp of the object.
-	ModifiedAt time.Time                                  `json:"modified_at,nullable" format:"date-time"`
 	JSON       benefitNewResponseBenefitDiscordOutputJSON `json:"-"`
 }
 
@@ -1282,11 +1282,11 @@ type benefitNewResponseBenefitDiscordOutputJSON struct {
 	CreatedAt      apijson.Field
 	Deletable      apijson.Field
 	Description    apijson.Field
+	ModifiedAt     apijson.Field
 	OrganizationID apijson.Field
 	Properties     apijson.Field
 	Selectable     apijson.Field
 	Type           apijson.Field
-	ModifiedAt     apijson.Field
 	raw            string
 	ExtraFields    map[string]apijson.Field
 }
@@ -1355,6 +1355,8 @@ type BenefitNewResponseBenefitGitHubRepository struct {
 	Deletable bool `json:"deletable,required"`
 	// The description of the benefit.
 	Description string `json:"description,required"`
+	// Last modification timestamp of the object.
+	ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
 	// The ID of the organization owning the benefit.
 	OrganizationID string `json:"organization_id,required" format:"uuid4"`
 	// Properties for a benefit of type `github_repository`.
@@ -1362,8 +1364,6 @@ type BenefitNewResponseBenefitGitHubRepository struct {
 	// Whether the benefit is selectable when creating a product.
 	Selectable bool                                          `json:"selectable,required"`
 	Type       BenefitNewResponseBenefitGitHubRepositoryType `json:"type,required"`
-	// Last modification timestamp of the object.
-	ModifiedAt time.Time                                     `json:"modified_at,nullable" format:"date-time"`
 	JSON       benefitNewResponseBenefitGitHubRepositoryJSON `json:"-"`
 }
 
@@ -1374,11 +1374,11 @@ type benefitNewResponseBenefitGitHubRepositoryJSON struct {
 	CreatedAt      apijson.Field
 	Deletable      apijson.Field
 	Description    apijson.Field
+	ModifiedAt     apijson.Field
 	OrganizationID apijson.Field
 	Properties     apijson.Field
 	Selectable     apijson.Field
 	Type           apijson.Field
-	ModifiedAt     apijson.Field
 	raw            string
 	ExtraFields    map[string]apijson.Field
 }
@@ -1397,12 +1397,12 @@ func (r BenefitNewResponseBenefitGitHubRepository) implementsBenefitNewResponse(
 type BenefitNewResponseBenefitGitHubRepositoryProperties struct {
 	// The permission level to grant. Read more about roles and their permissions on
 	// [GitHub documentation](https://docs.github.com/en/organizations/managing-user-access-to-your-organizations-repositories/managing-repository-roles/repository-roles-for-an-organization#permissions-for-each-role).
-	Permission BenefitNewResponseBenefitGitHubRepositoryPropertiesPermission `json:"permission,required"`
+	Permission   BenefitNewResponseBenefitGitHubRepositoryPropertiesPermission `json:"permission,required"`
+	RepositoryID string                                                        `json:"repository_id,required,nullable" format:"uuid4"`
 	// The name of the repository.
 	RepositoryName string `json:"repository_name,required"`
 	// The owner of the repository.
 	RepositoryOwner string                                                  `json:"repository_owner,required"`
-	RepositoryID    string                                                  `json:"repository_id,nullable" format:"uuid4"`
 	JSON            benefitNewResponseBenefitGitHubRepositoryPropertiesJSON `json:"-"`
 }
 
@@ -1410,9 +1410,9 @@ type BenefitNewResponseBenefitGitHubRepositoryProperties struct {
 // metadata for the struct [BenefitNewResponseBenefitGitHubRepositoryProperties]
 type benefitNewResponseBenefitGitHubRepositoryPropertiesJSON struct {
 	Permission      apijson.Field
+	RepositoryID    apijson.Field
 	RepositoryName  apijson.Field
 	RepositoryOwner apijson.Field
-	RepositoryID    apijson.Field
 	raw             string
 	ExtraFields     map[string]apijson.Field
 }
@@ -1468,14 +1468,14 @@ type BenefitNewResponseBenefitDownloadables struct {
 	Deletable bool `json:"deletable,required"`
 	// The description of the benefit.
 	Description string `json:"description,required"`
+	// Last modification timestamp of the object.
+	ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
 	// The ID of the organization owning the benefit.
 	OrganizationID string                                           `json:"organization_id,required" format:"uuid4"`
 	Properties     BenefitNewResponseBenefitDownloadablesProperties `json:"properties,required"`
 	// Whether the benefit is selectable when creating a product.
 	Selectable bool                                       `json:"selectable,required"`
 	Type       BenefitNewResponseBenefitDownloadablesType `json:"type,required"`
-	// Last modification timestamp of the object.
-	ModifiedAt time.Time                                  `json:"modified_at,nullable" format:"date-time"`
 	JSON       benefitNewResponseBenefitDownloadablesJSON `json:"-"`
 }
 
@@ -1486,11 +1486,11 @@ type benefitNewResponseBenefitDownloadablesJSON struct {
 	CreatedAt      apijson.Field
 	Deletable      apijson.Field
 	Description    apijson.Field
+	ModifiedAt     apijson.Field
 	OrganizationID apijson.Field
 	Properties     apijson.Field
 	Selectable     apijson.Field
 	Type           apijson.Field
-	ModifiedAt     apijson.Field
 	raw            string
 	ExtraFields    map[string]apijson.Field
 }
@@ -1568,7 +1568,7 @@ type BenefitGetResponse struct {
 	// Creation timestamp of the object.
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
 	// Last modification timestamp of the object.
-	ModifiedAt time.Time `json:"modified_at,nullable" format:"date-time"`
+	ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
 	// The ID of the benefit.
 	ID   string                 `json:"id,required" format:"uuid4"`
 	Type BenefitGetResponseType `json:"type,required"`
@@ -1692,6 +1692,8 @@ type BenefitGetResponseBenefitArticles struct {
 	Deletable bool `json:"deletable,required"`
 	// The description of the benefit.
 	Description string `json:"description,required"`
+	// Last modification timestamp of the object.
+	ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
 	// The ID of the organization owning the benefit.
 	OrganizationID string `json:"organization_id,required" format:"uuid4"`
 	// Properties for a benefit of type `articles`.
@@ -1699,8 +1701,6 @@ type BenefitGetResponseBenefitArticles struct {
 	// Whether the benefit is selectable when creating a product.
 	Selectable bool                                  `json:"selectable,required"`
 	Type       BenefitGetResponseBenefitArticlesType `json:"type,required"`
-	// Last modification timestamp of the object.
-	ModifiedAt time.Time                             `json:"modified_at,nullable" format:"date-time"`
 	JSON       benefitGetResponseBenefitArticlesJSON `json:"-"`
 }
 
@@ -1711,11 +1711,11 @@ type benefitGetResponseBenefitArticlesJSON struct {
 	CreatedAt      apijson.Field
 	Deletable      apijson.Field
 	Description    apijson.Field
+	ModifiedAt     apijson.Field
 	OrganizationID apijson.Field
 	Properties     apijson.Field
 	Selectable     apijson.Field
 	Type           apijson.Field
-	ModifiedAt     apijson.Field
 	raw            string
 	ExtraFields    map[string]apijson.Field
 }
@@ -1779,6 +1779,8 @@ type BenefitGetResponseBenefitAds struct {
 	Deletable bool `json:"deletable,required"`
 	// The description of the benefit.
 	Description string `json:"description,required"`
+	// Last modification timestamp of the object.
+	ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
 	// The ID of the organization owning the benefit.
 	OrganizationID string `json:"organization_id,required" format:"uuid4"`
 	// Properties for a benefit of type `ads`.
@@ -1786,8 +1788,6 @@ type BenefitGetResponseBenefitAds struct {
 	// Whether the benefit is selectable when creating a product.
 	Selectable bool                             `json:"selectable,required"`
 	Type       BenefitGetResponseBenefitAdsType `json:"type,required"`
-	// Last modification timestamp of the object.
-	ModifiedAt time.Time                        `json:"modified_at,nullable" format:"date-time"`
 	JSON       benefitGetResponseBenefitAdsJSON `json:"-"`
 }
 
@@ -1798,11 +1798,11 @@ type benefitGetResponseBenefitAdsJSON struct {
 	CreatedAt      apijson.Field
 	Deletable      apijson.Field
 	Description    apijson.Field
+	ModifiedAt     apijson.Field
 	OrganizationID apijson.Field
 	Properties     apijson.Field
 	Selectable     apijson.Field
 	Type           apijson.Field
-	ModifiedAt     apijson.Field
 	raw            string
 	ExtraFields    map[string]apijson.Field
 }
@@ -1871,6 +1871,8 @@ type BenefitGetResponseBenefitCustom struct {
 	Description string `json:"description,required"`
 	// Whether the benefit is taxable.
 	IsTaxApplicable bool `json:"is_tax_applicable,required"`
+	// Last modification timestamp of the object.
+	ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
 	// The ID of the organization owning the benefit.
 	OrganizationID string `json:"organization_id,required" format:"uuid4"`
 	// Properties for a benefit of type `custom`.
@@ -1878,8 +1880,6 @@ type BenefitGetResponseBenefitCustom struct {
 	// Whether the benefit is selectable when creating a product.
 	Selectable bool                                `json:"selectable,required"`
 	Type       BenefitGetResponseBenefitCustomType `json:"type,required"`
-	// Last modification timestamp of the object.
-	ModifiedAt time.Time                           `json:"modified_at,nullable" format:"date-time"`
 	JSON       benefitGetResponseBenefitCustomJSON `json:"-"`
 }
 
@@ -1891,11 +1891,11 @@ type benefitGetResponseBenefitCustomJSON struct {
 	Deletable       apijson.Field
 	Description     apijson.Field
 	IsTaxApplicable apijson.Field
+	ModifiedAt      apijson.Field
 	OrganizationID  apijson.Field
 	Properties      apijson.Field
 	Selectable      apijson.Field
 	Type            apijson.Field
-	ModifiedAt      apijson.Field
 	raw             string
 	ExtraFields     map[string]apijson.Field
 }
@@ -1913,7 +1913,7 @@ func (r BenefitGetResponseBenefitCustom) implementsBenefitGetResponse() {}
 // Properties for a benefit of type `custom`.
 type BenefitGetResponseBenefitCustomProperties struct {
 	// Private note to be shared with users who have this benefit granted.
-	Note string                                        `json:"note,nullable"`
+	Note string                                        `json:"note,required,nullable"`
 	JSON benefitGetResponseBenefitCustomPropertiesJSON `json:"-"`
 }
 
@@ -1959,6 +1959,8 @@ type BenefitGetResponseBenefitDiscordOutput struct {
 	Deletable bool `json:"deletable,required"`
 	// The description of the benefit.
 	Description string `json:"description,required"`
+	// Last modification timestamp of the object.
+	ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
 	// The ID of the organization owning the benefit.
 	OrganizationID string `json:"organization_id,required" format:"uuid4"`
 	// Properties for a benefit of type `discord`.
@@ -1966,8 +1968,6 @@ type BenefitGetResponseBenefitDiscordOutput struct {
 	// Whether the benefit is selectable when creating a product.
 	Selectable bool                                       `json:"selectable,required"`
 	Type       BenefitGetResponseBenefitDiscordOutputType `json:"type,required"`
-	// Last modification timestamp of the object.
-	ModifiedAt time.Time                                  `json:"modified_at,nullable" format:"date-time"`
 	JSON       benefitGetResponseBenefitDiscordOutputJSON `json:"-"`
 }
 
@@ -1978,11 +1978,11 @@ type benefitGetResponseBenefitDiscordOutputJSON struct {
 	CreatedAt      apijson.Field
 	Deletable      apijson.Field
 	Description    apijson.Field
+	ModifiedAt     apijson.Field
 	OrganizationID apijson.Field
 	Properties     apijson.Field
 	Selectable     apijson.Field
 	Type           apijson.Field
-	ModifiedAt     apijson.Field
 	raw            string
 	ExtraFields    map[string]apijson.Field
 }
@@ -2051,6 +2051,8 @@ type BenefitGetResponseBenefitGitHubRepository struct {
 	Deletable bool `json:"deletable,required"`
 	// The description of the benefit.
 	Description string `json:"description,required"`
+	// Last modification timestamp of the object.
+	ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
 	// The ID of the organization owning the benefit.
 	OrganizationID string `json:"organization_id,required" format:"uuid4"`
 	// Properties for a benefit of type `github_repository`.
@@ -2058,8 +2060,6 @@ type BenefitGetResponseBenefitGitHubRepository struct {
 	// Whether the benefit is selectable when creating a product.
 	Selectable bool                                          `json:"selectable,required"`
 	Type       BenefitGetResponseBenefitGitHubRepositoryType `json:"type,required"`
-	// Last modification timestamp of the object.
-	ModifiedAt time.Time                                     `json:"modified_at,nullable" format:"date-time"`
 	JSON       benefitGetResponseBenefitGitHubRepositoryJSON `json:"-"`
 }
 
@@ -2070,11 +2070,11 @@ type benefitGetResponseBenefitGitHubRepositoryJSON struct {
 	CreatedAt      apijson.Field
 	Deletable      apijson.Field
 	Description    apijson.Field
+	ModifiedAt     apijson.Field
 	OrganizationID apijson.Field
 	Properties     apijson.Field
 	Selectable     apijson.Field
 	Type           apijson.Field
-	ModifiedAt     apijson.Field
 	raw            string
 	ExtraFields    map[string]apijson.Field
 }
@@ -2093,12 +2093,12 @@ func (r BenefitGetResponseBenefitGitHubRepository) implementsBenefitGetResponse(
 type BenefitGetResponseBenefitGitHubRepositoryProperties struct {
 	// The permission level to grant. Read more about roles and their permissions on
 	// [GitHub documentation](https://docs.github.com/en/organizations/managing-user-access-to-your-organizations-repositories/managing-repository-roles/repository-roles-for-an-organization#permissions-for-each-role).
-	Permission BenefitGetResponseBenefitGitHubRepositoryPropertiesPermission `json:"permission,required"`
+	Permission   BenefitGetResponseBenefitGitHubRepositoryPropertiesPermission `json:"permission,required"`
+	RepositoryID string                                                        `json:"repository_id,required,nullable" format:"uuid4"`
 	// The name of the repository.
 	RepositoryName string `json:"repository_name,required"`
 	// The owner of the repository.
 	RepositoryOwner string                                                  `json:"repository_owner,required"`
-	RepositoryID    string                                                  `json:"repository_id,nullable" format:"uuid4"`
 	JSON            benefitGetResponseBenefitGitHubRepositoryPropertiesJSON `json:"-"`
 }
 
@@ -2106,9 +2106,9 @@ type BenefitGetResponseBenefitGitHubRepositoryProperties struct {
 // metadata for the struct [BenefitGetResponseBenefitGitHubRepositoryProperties]
 type benefitGetResponseBenefitGitHubRepositoryPropertiesJSON struct {
 	Permission      apijson.Field
+	RepositoryID    apijson.Field
 	RepositoryName  apijson.Field
 	RepositoryOwner apijson.Field
-	RepositoryID    apijson.Field
 	raw             string
 	ExtraFields     map[string]apijson.Field
 }
@@ -2164,14 +2164,14 @@ type BenefitGetResponseBenefitDownloadables struct {
 	Deletable bool `json:"deletable,required"`
 	// The description of the benefit.
 	Description string `json:"description,required"`
+	// Last modification timestamp of the object.
+	ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
 	// The ID of the organization owning the benefit.
 	OrganizationID string                                           `json:"organization_id,required" format:"uuid4"`
 	Properties     BenefitGetResponseBenefitDownloadablesProperties `json:"properties,required"`
 	// Whether the benefit is selectable when creating a product.
 	Selectable bool                                       `json:"selectable,required"`
 	Type       BenefitGetResponseBenefitDownloadablesType `json:"type,required"`
-	// Last modification timestamp of the object.
-	ModifiedAt time.Time                                  `json:"modified_at,nullable" format:"date-time"`
 	JSON       benefitGetResponseBenefitDownloadablesJSON `json:"-"`
 }
 
@@ -2182,11 +2182,11 @@ type benefitGetResponseBenefitDownloadablesJSON struct {
 	CreatedAt      apijson.Field
 	Deletable      apijson.Field
 	Description    apijson.Field
+	ModifiedAt     apijson.Field
 	OrganizationID apijson.Field
 	Properties     apijson.Field
 	Selectable     apijson.Field
 	Type           apijson.Field
-	ModifiedAt     apijson.Field
 	raw            string
 	ExtraFields    map[string]apijson.Field
 }
@@ -2264,7 +2264,7 @@ type BenefitUpdateResponse struct {
 	// Creation timestamp of the object.
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
 	// Last modification timestamp of the object.
-	ModifiedAt time.Time `json:"modified_at,nullable" format:"date-time"`
+	ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
 	// The ID of the benefit.
 	ID   string                    `json:"id,required" format:"uuid4"`
 	Type BenefitUpdateResponseType `json:"type,required"`
@@ -2388,6 +2388,8 @@ type BenefitUpdateResponseBenefitArticles struct {
 	Deletable bool `json:"deletable,required"`
 	// The description of the benefit.
 	Description string `json:"description,required"`
+	// Last modification timestamp of the object.
+	ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
 	// The ID of the organization owning the benefit.
 	OrganizationID string `json:"organization_id,required" format:"uuid4"`
 	// Properties for a benefit of type `articles`.
@@ -2395,8 +2397,6 @@ type BenefitUpdateResponseBenefitArticles struct {
 	// Whether the benefit is selectable when creating a product.
 	Selectable bool                                     `json:"selectable,required"`
 	Type       BenefitUpdateResponseBenefitArticlesType `json:"type,required"`
-	// Last modification timestamp of the object.
-	ModifiedAt time.Time                                `json:"modified_at,nullable" format:"date-time"`
 	JSON       benefitUpdateResponseBenefitArticlesJSON `json:"-"`
 }
 
@@ -2407,11 +2407,11 @@ type benefitUpdateResponseBenefitArticlesJSON struct {
 	CreatedAt      apijson.Field
 	Deletable      apijson.Field
 	Description    apijson.Field
+	ModifiedAt     apijson.Field
 	OrganizationID apijson.Field
 	Properties     apijson.Field
 	Selectable     apijson.Field
 	Type           apijson.Field
-	ModifiedAt     apijson.Field
 	raw            string
 	ExtraFields    map[string]apijson.Field
 }
@@ -2475,6 +2475,8 @@ type BenefitUpdateResponseBenefitAds struct {
 	Deletable bool `json:"deletable,required"`
 	// The description of the benefit.
 	Description string `json:"description,required"`
+	// Last modification timestamp of the object.
+	ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
 	// The ID of the organization owning the benefit.
 	OrganizationID string `json:"organization_id,required" format:"uuid4"`
 	// Properties for a benefit of type `ads`.
@@ -2482,8 +2484,6 @@ type BenefitUpdateResponseBenefitAds struct {
 	// Whether the benefit is selectable when creating a product.
 	Selectable bool                                `json:"selectable,required"`
 	Type       BenefitUpdateResponseBenefitAdsType `json:"type,required"`
-	// Last modification timestamp of the object.
-	ModifiedAt time.Time                           `json:"modified_at,nullable" format:"date-time"`
 	JSON       benefitUpdateResponseBenefitAdsJSON `json:"-"`
 }
 
@@ -2494,11 +2494,11 @@ type benefitUpdateResponseBenefitAdsJSON struct {
 	CreatedAt      apijson.Field
 	Deletable      apijson.Field
 	Description    apijson.Field
+	ModifiedAt     apijson.Field
 	OrganizationID apijson.Field
 	Properties     apijson.Field
 	Selectable     apijson.Field
 	Type           apijson.Field
-	ModifiedAt     apijson.Field
 	raw            string
 	ExtraFields    map[string]apijson.Field
 }
@@ -2567,6 +2567,8 @@ type BenefitUpdateResponseBenefitCustom struct {
 	Description string `json:"description,required"`
 	// Whether the benefit is taxable.
 	IsTaxApplicable bool `json:"is_tax_applicable,required"`
+	// Last modification timestamp of the object.
+	ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
 	// The ID of the organization owning the benefit.
 	OrganizationID string `json:"organization_id,required" format:"uuid4"`
 	// Properties for a benefit of type `custom`.
@@ -2574,8 +2576,6 @@ type BenefitUpdateResponseBenefitCustom struct {
 	// Whether the benefit is selectable when creating a product.
 	Selectable bool                                   `json:"selectable,required"`
 	Type       BenefitUpdateResponseBenefitCustomType `json:"type,required"`
-	// Last modification timestamp of the object.
-	ModifiedAt time.Time                              `json:"modified_at,nullable" format:"date-time"`
 	JSON       benefitUpdateResponseBenefitCustomJSON `json:"-"`
 }
 
@@ -2587,11 +2587,11 @@ type benefitUpdateResponseBenefitCustomJSON struct {
 	Deletable       apijson.Field
 	Description     apijson.Field
 	IsTaxApplicable apijson.Field
+	ModifiedAt      apijson.Field
 	OrganizationID  apijson.Field
 	Properties      apijson.Field
 	Selectable      apijson.Field
 	Type            apijson.Field
-	ModifiedAt      apijson.Field
 	raw             string
 	ExtraFields     map[string]apijson.Field
 }
@@ -2609,7 +2609,7 @@ func (r BenefitUpdateResponseBenefitCustom) implementsBenefitUpdateResponse() {}
 // Properties for a benefit of type `custom`.
 type BenefitUpdateResponseBenefitCustomProperties struct {
 	// Private note to be shared with users who have this benefit granted.
-	Note string                                           `json:"note,nullable"`
+	Note string                                           `json:"note,required,nullable"`
 	JSON benefitUpdateResponseBenefitCustomPropertiesJSON `json:"-"`
 }
 
@@ -2655,6 +2655,8 @@ type BenefitUpdateResponseBenefitDiscordOutput struct {
 	Deletable bool `json:"deletable,required"`
 	// The description of the benefit.
 	Description string `json:"description,required"`
+	// Last modification timestamp of the object.
+	ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
 	// The ID of the organization owning the benefit.
 	OrganizationID string `json:"organization_id,required" format:"uuid4"`
 	// Properties for a benefit of type `discord`.
@@ -2662,8 +2664,6 @@ type BenefitUpdateResponseBenefitDiscordOutput struct {
 	// Whether the benefit is selectable when creating a product.
 	Selectable bool                                          `json:"selectable,required"`
 	Type       BenefitUpdateResponseBenefitDiscordOutputType `json:"type,required"`
-	// Last modification timestamp of the object.
-	ModifiedAt time.Time                                     `json:"modified_at,nullable" format:"date-time"`
 	JSON       benefitUpdateResponseBenefitDiscordOutputJSON `json:"-"`
 }
 
@@ -2674,11 +2674,11 @@ type benefitUpdateResponseBenefitDiscordOutputJSON struct {
 	CreatedAt      apijson.Field
 	Deletable      apijson.Field
 	Description    apijson.Field
+	ModifiedAt     apijson.Field
 	OrganizationID apijson.Field
 	Properties     apijson.Field
 	Selectable     apijson.Field
 	Type           apijson.Field
-	ModifiedAt     apijson.Field
 	raw            string
 	ExtraFields    map[string]apijson.Field
 }
@@ -2747,6 +2747,8 @@ type BenefitUpdateResponseBenefitGitHubRepository struct {
 	Deletable bool `json:"deletable,required"`
 	// The description of the benefit.
 	Description string `json:"description,required"`
+	// Last modification timestamp of the object.
+	ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
 	// The ID of the organization owning the benefit.
 	OrganizationID string `json:"organization_id,required" format:"uuid4"`
 	// Properties for a benefit of type `github_repository`.
@@ -2754,8 +2756,6 @@ type BenefitUpdateResponseBenefitGitHubRepository struct {
 	// Whether the benefit is selectable when creating a product.
 	Selectable bool                                             `json:"selectable,required"`
 	Type       BenefitUpdateResponseBenefitGitHubRepositoryType `json:"type,required"`
-	// Last modification timestamp of the object.
-	ModifiedAt time.Time                                        `json:"modified_at,nullable" format:"date-time"`
 	JSON       benefitUpdateResponseBenefitGitHubRepositoryJSON `json:"-"`
 }
 
@@ -2766,11 +2766,11 @@ type benefitUpdateResponseBenefitGitHubRepositoryJSON struct {
 	CreatedAt      apijson.Field
 	Deletable      apijson.Field
 	Description    apijson.Field
+	ModifiedAt     apijson.Field
 	OrganizationID apijson.Field
 	Properties     apijson.Field
 	Selectable     apijson.Field
 	Type           apijson.Field
-	ModifiedAt     apijson.Field
 	raw            string
 	ExtraFields    map[string]apijson.Field
 }
@@ -2789,12 +2789,12 @@ func (r BenefitUpdateResponseBenefitGitHubRepository) implementsBenefitUpdateRes
 type BenefitUpdateResponseBenefitGitHubRepositoryProperties struct {
 	// The permission level to grant. Read more about roles and their permissions on
 	// [GitHub documentation](https://docs.github.com/en/organizations/managing-user-access-to-your-organizations-repositories/managing-repository-roles/repository-roles-for-an-organization#permissions-for-each-role).
-	Permission BenefitUpdateResponseBenefitGitHubRepositoryPropertiesPermission `json:"permission,required"`
+	Permission   BenefitUpdateResponseBenefitGitHubRepositoryPropertiesPermission `json:"permission,required"`
+	RepositoryID string                                                           `json:"repository_id,required,nullable" format:"uuid4"`
 	// The name of the repository.
 	RepositoryName string `json:"repository_name,required"`
 	// The owner of the repository.
 	RepositoryOwner string                                                     `json:"repository_owner,required"`
-	RepositoryID    string                                                     `json:"repository_id,nullable" format:"uuid4"`
 	JSON            benefitUpdateResponseBenefitGitHubRepositoryPropertiesJSON `json:"-"`
 }
 
@@ -2802,9 +2802,9 @@ type BenefitUpdateResponseBenefitGitHubRepositoryProperties struct {
 // metadata for the struct [BenefitUpdateResponseBenefitGitHubRepositoryProperties]
 type benefitUpdateResponseBenefitGitHubRepositoryPropertiesJSON struct {
 	Permission      apijson.Field
+	RepositoryID    apijson.Field
 	RepositoryName  apijson.Field
 	RepositoryOwner apijson.Field
-	RepositoryID    apijson.Field
 	raw             string
 	ExtraFields     map[string]apijson.Field
 }
@@ -2860,14 +2860,14 @@ type BenefitUpdateResponseBenefitDownloadables struct {
 	Deletable bool `json:"deletable,required"`
 	// The description of the benefit.
 	Description string `json:"description,required"`
+	// Last modification timestamp of the object.
+	ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
 	// The ID of the organization owning the benefit.
 	OrganizationID string                                              `json:"organization_id,required" format:"uuid4"`
 	Properties     BenefitUpdateResponseBenefitDownloadablesProperties `json:"properties,required"`
 	// Whether the benefit is selectable when creating a product.
 	Selectable bool                                          `json:"selectable,required"`
 	Type       BenefitUpdateResponseBenefitDownloadablesType `json:"type,required"`
-	// Last modification timestamp of the object.
-	ModifiedAt time.Time                                     `json:"modified_at,nullable" format:"date-time"`
 	JSON       benefitUpdateResponseBenefitDownloadablesJSON `json:"-"`
 }
 
@@ -2878,11 +2878,11 @@ type benefitUpdateResponseBenefitDownloadablesJSON struct {
 	CreatedAt      apijson.Field
 	Deletable      apijson.Field
 	Description    apijson.Field
+	ModifiedAt     apijson.Field
 	OrganizationID apijson.Field
 	Properties     apijson.Field
 	Selectable     apijson.Field
 	Type           apijson.Field
-	ModifiedAt     apijson.Field
 	raw            string
 	ExtraFields    map[string]apijson.Field
 }
@@ -3015,7 +3015,7 @@ func (r BenefitNewParamsBodyBenefitCustomCreate) implementsBenefitNewParamsBodyU
 // Properties for a benefit of type `custom`.
 type BenefitNewParamsBodyBenefitCustomCreateProperties struct {
 	// Private note to be shared with users who have this benefit granted.
-	Note param.Field[string] `json:"note"`
+	Note param.Field[string] `json:"note,required"`
 }
 
 func (r BenefitNewParamsBodyBenefitCustomCreateProperties) MarshalJSON() (data []byte, err error) {
@@ -3377,7 +3377,7 @@ func (r BenefitUpdateParamsBodyBenefitCustomUpdateType) IsKnown() bool {
 // Properties for a benefit of type `custom`.
 type BenefitUpdateParamsBodyBenefitCustomUpdateProperties struct {
 	// Private note to be shared with users who have this benefit granted.
-	Note param.Field[string] `json:"note"`
+	Note param.Field[string] `json:"note,required"`
 }
 
 func (r BenefitUpdateParamsBodyBenefitCustomUpdateProperties) MarshalJSON() (data []byte, err error) {

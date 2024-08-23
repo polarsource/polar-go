@@ -134,25 +134,25 @@ type ProductOutput struct {
 	Benefits []ProductOutputBenefit `json:"benefits,required"`
 	// Creation timestamp of the object.
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	// The description of the product.
+	Description string `json:"description,required,nullable"`
 	// Whether the product is archived and no longer available.
-	IsArchived bool `json:"is_archived,required"`
+	IsArchived    bool `json:"is_archived,required"`
+	IsHighlighted bool `json:"is_highlighted,required,nullable"`
 	// Whether the product is a subscription tier.
 	IsRecurring bool `json:"is_recurring,required"`
 	// The medias associated to the product.
 	Medias []ProductMediaFileReadOutput `json:"medias,required"`
+	// Last modification timestamp of the object.
+	ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
 	// The name of the product.
 	Name string `json:"name,required"`
 	// The ID of the organization owning the product.
 	OrganizationID string `json:"organization_id,required" format:"uuid4"`
 	// List of available prices for this product.
 	Prices []ProductOutputPrice `json:"prices,required"`
-	// The description of the product.
-	Description   string `json:"description,nullable"`
-	IsHighlighted bool   `json:"is_highlighted,nullable"`
-	// Last modification timestamp of the object.
-	ModifiedAt time.Time         `json:"modified_at,nullable" format:"date-time"`
-	Type       ProductOutputType `json:"type,nullable"`
-	JSON       productOutputJSON `json:"-"`
+	Type   ProductOutputType    `json:"type,required,nullable"`
+	JSON   productOutputJSON    `json:"-"`
 }
 
 // productOutputJSON contains the JSON metadata for the struct [ProductOutput]
@@ -160,15 +160,15 @@ type productOutputJSON struct {
 	ID             apijson.Field
 	Benefits       apijson.Field
 	CreatedAt      apijson.Field
+	Description    apijson.Field
 	IsArchived     apijson.Field
+	IsHighlighted  apijson.Field
 	IsRecurring    apijson.Field
 	Medias         apijson.Field
+	ModifiedAt     apijson.Field
 	Name           apijson.Field
 	OrganizationID apijson.Field
 	Prices         apijson.Field
-	Description    apijson.Field
-	IsHighlighted  apijson.Field
-	ModifiedAt     apijson.Field
 	Type           apijson.Field
 	raw            string
 	ExtraFields    map[string]apijson.Field
@@ -189,7 +189,7 @@ type ProductOutputBenefit struct {
 	// Creation timestamp of the object.
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
 	// Last modification timestamp of the object.
-	ModifiedAt time.Time `json:"modified_at,nullable" format:"date-time"`
+	ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
 	// The ID of the benefit.
 	ID string `json:"id,required" format:"uuid4"`
 	// The type of the benefit.
@@ -281,15 +281,15 @@ type ProductOutputBenefitsBenefitBase struct {
 	Deletable bool `json:"deletable,required"`
 	// The description of the benefit.
 	Description string `json:"description,required"`
+	// Last modification timestamp of the object.
+	ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
 	// The ID of the organization owning the benefit.
 	OrganizationID string `json:"organization_id,required" format:"uuid4"`
 	// Whether the benefit is selectable when creating a product.
 	Selectable bool `json:"selectable,required"`
 	// The type of the benefit.
 	Type ProductOutputBenefitsBenefitBaseType `json:"type,required"`
-	// Last modification timestamp of the object.
-	ModifiedAt time.Time                            `json:"modified_at,nullable" format:"date-time"`
-	JSON       productOutputBenefitsBenefitBaseJSON `json:"-"`
+	JSON productOutputBenefitsBenefitBaseJSON `json:"-"`
 }
 
 // productOutputBenefitsBenefitBaseJSON contains the JSON metadata for the struct
@@ -299,10 +299,10 @@ type productOutputBenefitsBenefitBaseJSON struct {
 	CreatedAt      apijson.Field
 	Deletable      apijson.Field
 	Description    apijson.Field
+	ModifiedAt     apijson.Field
 	OrganizationID apijson.Field
 	Selectable     apijson.Field
 	Type           apijson.Field
-	ModifiedAt     apijson.Field
 	raw            string
 	ExtraFields    map[string]apijson.Field
 }
@@ -349,6 +349,8 @@ type ProductOutputBenefitsBenefitArticles struct {
 	Deletable bool `json:"deletable,required"`
 	// The description of the benefit.
 	Description string `json:"description,required"`
+	// Last modification timestamp of the object.
+	ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
 	// The ID of the organization owning the benefit.
 	OrganizationID string `json:"organization_id,required" format:"uuid4"`
 	// Properties for a benefit of type `articles`.
@@ -356,8 +358,6 @@ type ProductOutputBenefitsBenefitArticles struct {
 	// Whether the benefit is selectable when creating a product.
 	Selectable bool                                     `json:"selectable,required"`
 	Type       ProductOutputBenefitsBenefitArticlesType `json:"type,required"`
-	// Last modification timestamp of the object.
-	ModifiedAt time.Time                                `json:"modified_at,nullable" format:"date-time"`
 	JSON       productOutputBenefitsBenefitArticlesJSON `json:"-"`
 }
 
@@ -368,11 +368,11 @@ type productOutputBenefitsBenefitArticlesJSON struct {
 	CreatedAt      apijson.Field
 	Deletable      apijson.Field
 	Description    apijson.Field
+	ModifiedAt     apijson.Field
 	OrganizationID apijson.Field
 	Properties     apijson.Field
 	Selectable     apijson.Field
 	Type           apijson.Field
-	ModifiedAt     apijson.Field
 	raw            string
 	ExtraFields    map[string]apijson.Field
 }
@@ -449,7 +449,7 @@ type ProductOutputPrice struct {
 	// Creation timestamp of the object.
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
 	// Last modification timestamp of the object.
-	ModifiedAt time.Time `json:"modified_at,nullable" format:"date-time"`
+	ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
 	// The ID of the price.
 	ID string `json:"id,required" format:"uuid4"`
 	// The price in cents.
@@ -537,17 +537,17 @@ type ProductOutputPricesProductPriceRecurring struct {
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
 	// Whether the price is archived and no longer available.
 	IsArchived bool `json:"is_archived,required"`
+	// Last modification timestamp of the object.
+	ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
 	// The price in cents.
 	PriceAmount int64 `json:"price_amount,required"`
 	// The currency.
 	PriceCurrency string `json:"price_currency,required"`
+	// The recurring interval of the price, if type is `recurring`.
+	RecurringInterval ProductOutputPricesProductPriceRecurringRecurringInterval `json:"recurring_interval,required,nullable"`
 	// The type of the price.
 	Type ProductOutputPricesProductPriceRecurringType `json:"type,required"`
-	// Last modification timestamp of the object.
-	ModifiedAt time.Time `json:"modified_at,nullable" format:"date-time"`
-	// The recurring interval of the price, if type is `recurring`.
-	RecurringInterval ProductOutputPricesProductPriceRecurringRecurringInterval `json:"recurring_interval,nullable"`
-	JSON              productOutputPricesProductPriceRecurringJSON              `json:"-"`
+	JSON productOutputPricesProductPriceRecurringJSON `json:"-"`
 }
 
 // productOutputPricesProductPriceRecurringJSON contains the JSON metadata for the
@@ -556,11 +556,11 @@ type productOutputPricesProductPriceRecurringJSON struct {
 	ID                apijson.Field
 	CreatedAt         apijson.Field
 	IsArchived        apijson.Field
+	ModifiedAt        apijson.Field
 	PriceAmount       apijson.Field
 	PriceCurrency     apijson.Field
-	Type              apijson.Field
-	ModifiedAt        apijson.Field
 	RecurringInterval apijson.Field
+	Type              apijson.Field
 	raw               string
 	ExtraFields       map[string]apijson.Field
 }
@@ -574,21 +574,6 @@ func (r productOutputPricesProductPriceRecurringJSON) RawJSON() string {
 }
 
 func (r ProductOutputPricesProductPriceRecurring) implementsProductOutputPrice() {}
-
-// The type of the price.
-type ProductOutputPricesProductPriceRecurringType string
-
-const (
-	ProductOutputPricesProductPriceRecurringTypeRecurring ProductOutputPricesProductPriceRecurringType = "recurring"
-)
-
-func (r ProductOutputPricesProductPriceRecurringType) IsKnown() bool {
-	switch r {
-	case ProductOutputPricesProductPriceRecurringTypeRecurring:
-		return true
-	}
-	return false
-}
 
 // The recurring interval of the price, if type is `recurring`.
 type ProductOutputPricesProductPriceRecurringRecurringInterval string
@@ -606,6 +591,21 @@ func (r ProductOutputPricesProductPriceRecurringRecurringInterval) IsKnown() boo
 	return false
 }
 
+// The type of the price.
+type ProductOutputPricesProductPriceRecurringType string
+
+const (
+	ProductOutputPricesProductPriceRecurringTypeRecurring ProductOutputPricesProductPriceRecurringType = "recurring"
+)
+
+func (r ProductOutputPricesProductPriceRecurringType) IsKnown() bool {
+	switch r {
+	case ProductOutputPricesProductPriceRecurringTypeRecurring:
+		return true
+	}
+	return false
+}
+
 // A one-time price for a product.
 type ProductOutputPricesProductPriceOneTime struct {
 	// The ID of the price.
@@ -614,15 +614,15 @@ type ProductOutputPricesProductPriceOneTime struct {
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
 	// Whether the price is archived and no longer available.
 	IsArchived bool `json:"is_archived,required"`
+	// Last modification timestamp of the object.
+	ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
 	// The price in cents.
 	PriceAmount int64 `json:"price_amount,required"`
 	// The currency.
 	PriceCurrency string `json:"price_currency,required"`
 	// The type of the price.
 	Type ProductOutputPricesProductPriceOneTimeType `json:"type,required"`
-	// Last modification timestamp of the object.
-	ModifiedAt time.Time                                  `json:"modified_at,nullable" format:"date-time"`
-	JSON       productOutputPricesProductPriceOneTimeJSON `json:"-"`
+	JSON productOutputPricesProductPriceOneTimeJSON `json:"-"`
 }
 
 // productOutputPricesProductPriceOneTimeJSON contains the JSON metadata for the
@@ -631,10 +631,10 @@ type productOutputPricesProductPriceOneTimeJSON struct {
 	ID            apijson.Field
 	CreatedAt     apijson.Field
 	IsArchived    apijson.Field
+	ModifiedAt    apijson.Field
 	PriceAmount   apijson.Field
 	PriceCurrency apijson.Field
 	Type          apijson.Field
-	ModifiedAt    apijson.Field
 	raw           string
 	ExtraFields   map[string]apijson.Field
 }

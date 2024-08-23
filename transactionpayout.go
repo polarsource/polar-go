@@ -99,30 +99,30 @@ type Transaction struct {
 	AccountIncurredTransactions []TransactionAccountIncurredTransaction `json:"account_incurred_transactions,required"`
 	Amount                      int64                                   `json:"amount,required"`
 	// Creation timestamp of the object.
-	CreatedAt      time.Time `json:"created_at,required" format:"date-time"`
-	Currency       string    `json:"currency,required"`
-	GrossAmount    int64     `json:"gross_amount,required"`
-	IncurredAmount int64     `json:"incurred_amount,required"`
-	NetAmount      int64     `json:"net_amount,required"`
-	// Type of transactions.
-	Type                    TransactionType        `json:"type,required"`
-	Donation                TransactionDonation    `json:"donation,nullable"`
-	IncurredByTransactionID string                 `json:"incurred_by_transaction_id,nullable" format:"uuid4"`
-	IssueReward             TransactionIssueReward `json:"issue_reward,nullable"`
-	IssueRewardID           string                 `json:"issue_reward_id,nullable" format:"uuid4"`
+	CreatedAt               time.Time              `json:"created_at,required" format:"date-time"`
+	Currency                string                 `json:"currency,required"`
+	Donation                TransactionDonation    `json:"donation,required,nullable"`
+	DonationID              string                 `json:"donation_id,required,nullable" format:"uuid4"`
+	GrossAmount             int64                  `json:"gross_amount,required"`
+	IncurredAmount          int64                  `json:"incurred_amount,required"`
+	IncurredByTransactionID string                 `json:"incurred_by_transaction_id,required,nullable" format:"uuid4"`
+	IssueReward             TransactionIssueReward `json:"issue_reward,required,nullable"`
+	IssueRewardID           string                 `json:"issue_reward_id,required,nullable" format:"uuid4"`
 	// Last modification timestamp of the object.
-	ModifiedAt          time.Time        `json:"modified_at,nullable" format:"date-time"`
-	Order               TransactionOrder `json:"order,nullable"`
-	PayoutTransactionID string           `json:"payout_transaction_id,nullable" format:"uuid4"`
+	ModifiedAt          time.Time        `json:"modified_at,required,nullable" format:"date-time"`
+	NetAmount           int64            `json:"net_amount,required"`
+	Order               TransactionOrder `json:"order,required,nullable"`
+	OrderID             string           `json:"order_id,required,nullable" format:"uuid4"`
+	PayoutTransactionID string           `json:"payout_transaction_id,required,nullable" format:"uuid4"`
 	// Type of fees applied by Polar, and billed to the users.
-	PlatformFeeType TransactionPlatformFeeType `json:"platform_fee_type,nullable"`
-	Pledge          TransactionPledge          `json:"pledge,nullable"`
-	PledgeID        string                     `json:"pledge_id,nullable" format:"uuid4"`
+	PlatformFeeType TransactionPlatformFeeType `json:"platform_fee_type,required,nullable"`
+	Pledge          TransactionPledge          `json:"pledge,required,nullable"`
+	PledgeID        string                     `json:"pledge_id,required,nullable" format:"uuid4"`
 	// Supported payment processors.
-	Processor      TransactionProcessor `json:"processor,nullable"`
-	ProductPriceID string               `json:"product_price_id,nullable" format:"uuid4"`
-	SubscriptionID string               `json:"subscription_id,nullable" format:"uuid4"`
-	JSON           transactionJSON      `json:"-"`
+	Processor TransactionProcessor `json:"processor,required,nullable"`
+	// Type of transactions.
+	Type TransactionType `json:"type,required"`
+	JSON transactionJSON `json:"-"`
 }
 
 // transactionJSON contains the JSON metadata for the struct [Transaction]
@@ -134,23 +134,23 @@ type transactionJSON struct {
 	Amount                      apijson.Field
 	CreatedAt                   apijson.Field
 	Currency                    apijson.Field
+	Donation                    apijson.Field
+	DonationID                  apijson.Field
 	GrossAmount                 apijson.Field
 	IncurredAmount              apijson.Field
-	NetAmount                   apijson.Field
-	Type                        apijson.Field
-	Donation                    apijson.Field
 	IncurredByTransactionID     apijson.Field
 	IssueReward                 apijson.Field
 	IssueRewardID               apijson.Field
 	ModifiedAt                  apijson.Field
+	NetAmount                   apijson.Field
 	Order                       apijson.Field
+	OrderID                     apijson.Field
 	PayoutTransactionID         apijson.Field
 	PlatformFeeType             apijson.Field
 	Pledge                      apijson.Field
 	PledgeID                    apijson.Field
 	Processor                   apijson.Field
-	ProductPriceID              apijson.Field
-	SubscriptionID              apijson.Field
+	Type                        apijson.Field
 	raw                         string
 	ExtraFields                 map[string]apijson.Field
 }
@@ -169,23 +169,23 @@ type TransactionAccountIncurredTransaction struct {
 	AccountCurrency string `json:"account_currency,required"`
 	Amount          int64  `json:"amount,required"`
 	// Creation timestamp of the object.
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
-	Currency  string    `json:"currency,required"`
-	// Type of transactions.
-	Type                    TransactionAccountIncurredTransactionsType `json:"type,required"`
-	IncurredByTransactionID string                                     `json:"incurred_by_transaction_id,nullable" format:"uuid4"`
-	IssueRewardID           string                                     `json:"issue_reward_id,nullable" format:"uuid4"`
+	CreatedAt               time.Time `json:"created_at,required" format:"date-time"`
+	Currency                string    `json:"currency,required"`
+	DonationID              string    `json:"donation_id,required,nullable" format:"uuid4"`
+	IncurredByTransactionID string    `json:"incurred_by_transaction_id,required,nullable" format:"uuid4"`
+	IssueRewardID           string    `json:"issue_reward_id,required,nullable" format:"uuid4"`
 	// Last modification timestamp of the object.
-	ModifiedAt          time.Time `json:"modified_at,nullable" format:"date-time"`
-	PayoutTransactionID string    `json:"payout_transaction_id,nullable" format:"uuid4"`
+	ModifiedAt          time.Time `json:"modified_at,required,nullable" format:"date-time"`
+	OrderID             string    `json:"order_id,required,nullable" format:"uuid4"`
+	PayoutTransactionID string    `json:"payout_transaction_id,required,nullable" format:"uuid4"`
 	// Type of fees applied by Polar, and billed to the users.
-	PlatformFeeType TransactionAccountIncurredTransactionsPlatformFeeType `json:"platform_fee_type,nullable"`
-	PledgeID        string                                                `json:"pledge_id,nullable" format:"uuid4"`
+	PlatformFeeType TransactionAccountIncurredTransactionsPlatformFeeType `json:"platform_fee_type,required,nullable"`
+	PledgeID        string                                                `json:"pledge_id,required,nullable" format:"uuid4"`
 	// Supported payment processors.
-	Processor      TransactionAccountIncurredTransactionsProcessor `json:"processor,nullable"`
-	ProductPriceID string                                          `json:"product_price_id,nullable" format:"uuid4"`
-	SubscriptionID string                                          `json:"subscription_id,nullable" format:"uuid4"`
-	JSON           transactionAccountIncurredTransactionJSON       `json:"-"`
+	Processor TransactionAccountIncurredTransactionsProcessor `json:"processor,required,nullable"`
+	// Type of transactions.
+	Type TransactionAccountIncurredTransactionsType `json:"type,required"`
+	JSON transactionAccountIncurredTransactionJSON  `json:"-"`
 }
 
 // transactionAccountIncurredTransactionJSON contains the JSON metadata for the
@@ -197,16 +197,16 @@ type transactionAccountIncurredTransactionJSON struct {
 	Amount                  apijson.Field
 	CreatedAt               apijson.Field
 	Currency                apijson.Field
-	Type                    apijson.Field
+	DonationID              apijson.Field
 	IncurredByTransactionID apijson.Field
 	IssueRewardID           apijson.Field
 	ModifiedAt              apijson.Field
+	OrderID                 apijson.Field
 	PayoutTransactionID     apijson.Field
 	PlatformFeeType         apijson.Field
 	PledgeID                apijson.Field
 	Processor               apijson.Field
-	ProductPriceID          apijson.Field
-	SubscriptionID          apijson.Field
+	Type                    apijson.Field
 	raw                     string
 	ExtraFields             map[string]apijson.Field
 }
@@ -217,27 +217,6 @@ func (r *TransactionAccountIncurredTransaction) UnmarshalJSON(data []byte) (err 
 
 func (r transactionAccountIncurredTransactionJSON) RawJSON() string {
 	return r.raw
-}
-
-// Type of transactions.
-type TransactionAccountIncurredTransactionsType string
-
-const (
-	TransactionAccountIncurredTransactionsTypePayment         TransactionAccountIncurredTransactionsType = "payment"
-	TransactionAccountIncurredTransactionsTypeProcessorFee    TransactionAccountIncurredTransactionsType = "processor_fee"
-	TransactionAccountIncurredTransactionsTypeRefund          TransactionAccountIncurredTransactionsType = "refund"
-	TransactionAccountIncurredTransactionsTypeDispute         TransactionAccountIncurredTransactionsType = "dispute"
-	TransactionAccountIncurredTransactionsTypeDisputeReversal TransactionAccountIncurredTransactionsType = "dispute_reversal"
-	TransactionAccountIncurredTransactionsTypeBalance         TransactionAccountIncurredTransactionsType = "balance"
-	TransactionAccountIncurredTransactionsTypePayout          TransactionAccountIncurredTransactionsType = "payout"
-)
-
-func (r TransactionAccountIncurredTransactionsType) IsKnown() bool {
-	switch r {
-	case TransactionAccountIncurredTransactionsTypePayment, TransactionAccountIncurredTransactionsTypeProcessorFee, TransactionAccountIncurredTransactionsTypeRefund, TransactionAccountIncurredTransactionsTypeDispute, TransactionAccountIncurredTransactionsTypeDisputeReversal, TransactionAccountIncurredTransactionsTypeBalance, TransactionAccountIncurredTransactionsTypePayout:
-		return true
-	}
-	return false
 }
 
 // Type of fees applied by Polar, and billed to the users.
@@ -278,21 +257,21 @@ func (r TransactionAccountIncurredTransactionsProcessor) IsKnown() bool {
 }
 
 // Type of transactions.
-type TransactionType string
+type TransactionAccountIncurredTransactionsType string
 
 const (
-	TransactionTypePayment         TransactionType = "payment"
-	TransactionTypeProcessorFee    TransactionType = "processor_fee"
-	TransactionTypeRefund          TransactionType = "refund"
-	TransactionTypeDispute         TransactionType = "dispute"
-	TransactionTypeDisputeReversal TransactionType = "dispute_reversal"
-	TransactionTypeBalance         TransactionType = "balance"
-	TransactionTypePayout          TransactionType = "payout"
+	TransactionAccountIncurredTransactionsTypePayment         TransactionAccountIncurredTransactionsType = "payment"
+	TransactionAccountIncurredTransactionsTypeProcessorFee    TransactionAccountIncurredTransactionsType = "processor_fee"
+	TransactionAccountIncurredTransactionsTypeRefund          TransactionAccountIncurredTransactionsType = "refund"
+	TransactionAccountIncurredTransactionsTypeDispute         TransactionAccountIncurredTransactionsType = "dispute"
+	TransactionAccountIncurredTransactionsTypeDisputeReversal TransactionAccountIncurredTransactionsType = "dispute_reversal"
+	TransactionAccountIncurredTransactionsTypeBalance         TransactionAccountIncurredTransactionsType = "balance"
+	TransactionAccountIncurredTransactionsTypePayout          TransactionAccountIncurredTransactionsType = "payout"
 )
 
-func (r TransactionType) IsKnown() bool {
+func (r TransactionAccountIncurredTransactionsType) IsKnown() bool {
 	switch r {
-	case TransactionTypePayment, TransactionTypeProcessorFee, TransactionTypeRefund, TransactionTypeDispute, TransactionTypeDisputeReversal, TransactionTypeBalance, TransactionTypePayout:
+	case TransactionAccountIncurredTransactionsTypePayment, TransactionAccountIncurredTransactionsTypeProcessorFee, TransactionAccountIncurredTransactionsTypeRefund, TransactionAccountIncurredTransactionsTypeDispute, TransactionAccountIncurredTransactionsTypeDisputeReversal, TransactionAccountIncurredTransactionsTypeBalance, TransactionAccountIncurredTransactionsTypePayout:
 		return true
 	}
 	return false
@@ -303,8 +282,8 @@ type TransactionDonation struct {
 	// Creation timestamp of the object.
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
 	// Last modification timestamp of the object.
-	ModifiedAt     time.Time                         `json:"modified_at,nullable" format:"date-time"`
-	ToOrganization TransactionDonationToOrganization `json:"to_organization,nullable"`
+	ModifiedAt     time.Time                         `json:"modified_at,required,nullable" format:"date-time"`
+	ToOrganization TransactionDonationToOrganization `json:"to_organization,required,nullable"`
 	JSON           transactionDonationJSON           `json:"-"`
 }
 
@@ -328,14 +307,14 @@ func (r transactionDonationJSON) RawJSON() string {
 }
 
 type TransactionDonationToOrganization struct {
-	ID string `json:"id,required" format:"uuid4"`
+	ID        string `json:"id,required" format:"uuid4"`
+	AvatarURL string `json:"avatar_url,required,nullable"`
 	// Creation timestamp of the object.
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
-	Name      string    `json:"name,required"`
-	Slug      string    `json:"slug,required"`
-	AvatarURL string    `json:"avatar_url,nullable"`
 	// Last modification timestamp of the object.
-	ModifiedAt time.Time                             `json:"modified_at,nullable" format:"date-time"`
+	ModifiedAt time.Time                             `json:"modified_at,required,nullable" format:"date-time"`
+	Name       string                                `json:"name,required"`
+	Slug       string                                `json:"slug,required"`
 	JSON       transactionDonationToOrganizationJSON `json:"-"`
 }
 
@@ -343,11 +322,11 @@ type TransactionDonationToOrganization struct {
 // [TransactionDonationToOrganization]
 type transactionDonationToOrganizationJSON struct {
 	ID          apijson.Field
+	AvatarURL   apijson.Field
 	CreatedAt   apijson.Field
+	ModifiedAt  apijson.Field
 	Name        apijson.Field
 	Slug        apijson.Field
-	AvatarURL   apijson.Field
-	ModifiedAt  apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
 }
@@ -363,12 +342,12 @@ func (r transactionDonationToOrganizationJSON) RawJSON() string {
 type TransactionIssueReward struct {
 	ID string `json:"id,required" format:"uuid4"`
 	// Creation timestamp of the object.
-	CreatedAt      time.Time `json:"created_at,required" format:"date-time"`
-	IssueID        string    `json:"issue_id,required" format:"uuid4"`
-	ShareThousands int64     `json:"share_thousands,required"`
+	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	IssueID   string    `json:"issue_id,required" format:"uuid4"`
 	// Last modification timestamp of the object.
-	ModifiedAt time.Time                  `json:"modified_at,nullable" format:"date-time"`
-	JSON       transactionIssueRewardJSON `json:"-"`
+	ModifiedAt     time.Time                  `json:"modified_at,required,nullable" format:"date-time"`
+	ShareThousands int64                      `json:"share_thousands,required"`
+	JSON           transactionIssueRewardJSON `json:"-"`
 }
 
 // transactionIssueRewardJSON contains the JSON metadata for the struct
@@ -377,8 +356,8 @@ type transactionIssueRewardJSON struct {
 	ID             apijson.Field
 	CreatedAt      apijson.Field
 	IssueID        apijson.Field
-	ShareThousands apijson.Field
 	ModifiedAt     apijson.Field
+	ShareThousands apijson.Field
 	raw            string
 	ExtraFields    map[string]apijson.Field
 }
@@ -394,14 +373,14 @@ func (r transactionIssueRewardJSON) RawJSON() string {
 type TransactionOrder struct {
 	ID string `json:"id,required" format:"uuid4"`
 	// Creation timestamp of the object.
-	CreatedAt time.Time               `json:"created_at,required" format:"date-time"`
-	Product   TransactionOrderProduct `json:"product,required"`
-	// A recurring price for a product, i.e. a subscription.
-	ProductPrice TransactionOrderProductPrice `json:"product_price,required"`
+	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
 	// Last modification timestamp of the object.
-	ModifiedAt     time.Time            `json:"modified_at,nullable" format:"date-time"`
-	SubscriptionID string               `json:"subscription_id,nullable" format:"uuid4"`
-	JSON           transactionOrderJSON `json:"-"`
+	ModifiedAt time.Time               `json:"modified_at,required,nullable" format:"date-time"`
+	Product    TransactionOrderProduct `json:"product,required"`
+	// A recurring price for a product, i.e. a subscription.
+	ProductPrice   TransactionOrderProductPrice `json:"product_price,required"`
+	SubscriptionID string                       `json:"subscription_id,required,nullable" format:"uuid4"`
+	JSON           transactionOrderJSON         `json:"-"`
 }
 
 // transactionOrderJSON contains the JSON metadata for the struct
@@ -409,9 +388,9 @@ type TransactionOrder struct {
 type transactionOrderJSON struct {
 	ID             apijson.Field
 	CreatedAt      apijson.Field
+	ModifiedAt     apijson.Field
 	Product        apijson.Field
 	ProductPrice   apijson.Field
-	ModifiedAt     apijson.Field
 	SubscriptionID apijson.Field
 	raw            string
 	ExtraFields    map[string]apijson.Field
@@ -429,12 +408,12 @@ type TransactionOrderProduct struct {
 	ID string `json:"id,required" format:"uuid4"`
 	// Creation timestamp of the object.
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
-	Name      string    `json:"name,required"`
 	// Last modification timestamp of the object.
-	ModifiedAt     time.Time                           `json:"modified_at,nullable" format:"date-time"`
-	Organization   TransactionOrderProductOrganization `json:"organization,nullable"`
-	OrganizationID string                              `json:"organization_id,nullable" format:"uuid4"`
-	Type           TransactionOrderProductType         `json:"type,nullable"`
+	ModifiedAt     time.Time                           `json:"modified_at,required,nullable" format:"date-time"`
+	Name           string                              `json:"name,required"`
+	Organization   TransactionOrderProductOrganization `json:"organization,required,nullable"`
+	OrganizationID string                              `json:"organization_id,required,nullable" format:"uuid4"`
+	Type           TransactionOrderProductType         `json:"type,required,nullable"`
 	JSON           transactionOrderProductJSON         `json:"-"`
 }
 
@@ -443,8 +422,8 @@ type TransactionOrderProduct struct {
 type transactionOrderProductJSON struct {
 	ID             apijson.Field
 	CreatedAt      apijson.Field
-	Name           apijson.Field
 	ModifiedAt     apijson.Field
+	Name           apijson.Field
 	Organization   apijson.Field
 	OrganizationID apijson.Field
 	Type           apijson.Field
@@ -461,14 +440,14 @@ func (r transactionOrderProductJSON) RawJSON() string {
 }
 
 type TransactionOrderProductOrganization struct {
-	ID string `json:"id,required" format:"uuid4"`
+	ID        string `json:"id,required" format:"uuid4"`
+	AvatarURL string `json:"avatar_url,required,nullable"`
 	// Creation timestamp of the object.
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
-	Name      string    `json:"name,required"`
-	Slug      string    `json:"slug,required"`
-	AvatarURL string    `json:"avatar_url,nullable"`
 	// Last modification timestamp of the object.
-	ModifiedAt time.Time                               `json:"modified_at,nullable" format:"date-time"`
+	ModifiedAt time.Time                               `json:"modified_at,required,nullable" format:"date-time"`
+	Name       string                                  `json:"name,required"`
+	Slug       string                                  `json:"slug,required"`
 	JSON       transactionOrderProductOrganizationJSON `json:"-"`
 }
 
@@ -476,11 +455,11 @@ type TransactionOrderProductOrganization struct {
 // struct [TransactionOrderProductOrganization]
 type transactionOrderProductOrganizationJSON struct {
 	ID          apijson.Field
+	AvatarURL   apijson.Field
 	CreatedAt   apijson.Field
+	ModifiedAt  apijson.Field
 	Name        apijson.Field
 	Slug        apijson.Field
-	AvatarURL   apijson.Field
-	ModifiedAt  apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
 }
@@ -514,7 +493,7 @@ type TransactionOrderProductPrice struct {
 	// Creation timestamp of the object.
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
 	// Last modification timestamp of the object.
-	ModifiedAt time.Time `json:"modified_at,nullable" format:"date-time"`
+	ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
 	// The ID of the price.
 	ID string `json:"id,required" format:"uuid4"`
 	// The price in cents.
@@ -602,17 +581,17 @@ type TransactionOrderProductPriceProductPriceRecurring struct {
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
 	// Whether the price is archived and no longer available.
 	IsArchived bool `json:"is_archived,required"`
+	// Last modification timestamp of the object.
+	ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
 	// The price in cents.
 	PriceAmount int64 `json:"price_amount,required"`
 	// The currency.
 	PriceCurrency string `json:"price_currency,required"`
+	// The recurring interval of the price, if type is `recurring`.
+	RecurringInterval TransactionOrderProductPriceProductPriceRecurringRecurringInterval `json:"recurring_interval,required,nullable"`
 	// The type of the price.
 	Type TransactionOrderProductPriceProductPriceRecurringType `json:"type,required"`
-	// Last modification timestamp of the object.
-	ModifiedAt time.Time `json:"modified_at,nullable" format:"date-time"`
-	// The recurring interval of the price, if type is `recurring`.
-	RecurringInterval TransactionOrderProductPriceProductPriceRecurringRecurringInterval `json:"recurring_interval,nullable"`
-	JSON              transactionOrderProductPriceProductPriceRecurringJSON              `json:"-"`
+	JSON transactionOrderProductPriceProductPriceRecurringJSON `json:"-"`
 }
 
 // transactionOrderProductPriceProductPriceRecurringJSON contains the JSON metadata
@@ -621,11 +600,11 @@ type transactionOrderProductPriceProductPriceRecurringJSON struct {
 	ID                apijson.Field
 	CreatedAt         apijson.Field
 	IsArchived        apijson.Field
+	ModifiedAt        apijson.Field
 	PriceAmount       apijson.Field
 	PriceCurrency     apijson.Field
-	Type              apijson.Field
-	ModifiedAt        apijson.Field
 	RecurringInterval apijson.Field
+	Type              apijson.Field
 	raw               string
 	ExtraFields       map[string]apijson.Field
 }
@@ -639,21 +618,6 @@ func (r transactionOrderProductPriceProductPriceRecurringJSON) RawJSON() string 
 }
 
 func (r TransactionOrderProductPriceProductPriceRecurring) implementsTransactionOrderProductPrice() {}
-
-// The type of the price.
-type TransactionOrderProductPriceProductPriceRecurringType string
-
-const (
-	TransactionOrderProductPriceProductPriceRecurringTypeRecurring TransactionOrderProductPriceProductPriceRecurringType = "recurring"
-)
-
-func (r TransactionOrderProductPriceProductPriceRecurringType) IsKnown() bool {
-	switch r {
-	case TransactionOrderProductPriceProductPriceRecurringTypeRecurring:
-		return true
-	}
-	return false
-}
 
 // The recurring interval of the price, if type is `recurring`.
 type TransactionOrderProductPriceProductPriceRecurringRecurringInterval string
@@ -671,6 +635,21 @@ func (r TransactionOrderProductPriceProductPriceRecurringRecurringInterval) IsKn
 	return false
 }
 
+// The type of the price.
+type TransactionOrderProductPriceProductPriceRecurringType string
+
+const (
+	TransactionOrderProductPriceProductPriceRecurringTypeRecurring TransactionOrderProductPriceProductPriceRecurringType = "recurring"
+)
+
+func (r TransactionOrderProductPriceProductPriceRecurringType) IsKnown() bool {
+	switch r {
+	case TransactionOrderProductPriceProductPriceRecurringTypeRecurring:
+		return true
+	}
+	return false
+}
+
 // A one-time price for a product.
 type TransactionOrderProductPriceProductPriceOneTime struct {
 	// The ID of the price.
@@ -679,15 +658,15 @@ type TransactionOrderProductPriceProductPriceOneTime struct {
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
 	// Whether the price is archived and no longer available.
 	IsArchived bool `json:"is_archived,required"`
+	// Last modification timestamp of the object.
+	ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
 	// The price in cents.
 	PriceAmount int64 `json:"price_amount,required"`
 	// The currency.
 	PriceCurrency string `json:"price_currency,required"`
 	// The type of the price.
 	Type TransactionOrderProductPriceProductPriceOneTimeType `json:"type,required"`
-	// Last modification timestamp of the object.
-	ModifiedAt time.Time                                           `json:"modified_at,nullable" format:"date-time"`
-	JSON       transactionOrderProductPriceProductPriceOneTimeJSON `json:"-"`
+	JSON transactionOrderProductPriceProductPriceOneTimeJSON `json:"-"`
 }
 
 // transactionOrderProductPriceProductPriceOneTimeJSON contains the JSON metadata
@@ -696,10 +675,10 @@ type transactionOrderProductPriceProductPriceOneTimeJSON struct {
 	ID            apijson.Field
 	CreatedAt     apijson.Field
 	IsArchived    apijson.Field
+	ModifiedAt    apijson.Field
 	PriceAmount   apijson.Field
 	PriceCurrency apijson.Field
 	Type          apijson.Field
-	ModifiedAt    apijson.Field
 	raw           string
 	ExtraFields   map[string]apijson.Field
 }
@@ -787,10 +766,10 @@ type TransactionPledge struct {
 	// Creation timestamp of the object.
 	CreatedAt time.Time              `json:"created_at,required" format:"date-time"`
 	Issue     TransactionPledgeIssue `json:"issue,required"`
-	State     TransactionPledgeState `json:"state,required"`
 	// Last modification timestamp of the object.
-	ModifiedAt time.Time             `json:"modified_at,nullable" format:"date-time"`
-	JSON       transactionPledgeJSON `json:"-"`
+	ModifiedAt time.Time              `json:"modified_at,required,nullable" format:"date-time"`
+	State      TransactionPledgeState `json:"state,required"`
+	JSON       transactionPledgeJSON  `json:"-"`
 }
 
 // transactionPledgeJSON contains the JSON metadata for the struct
@@ -799,8 +778,8 @@ type transactionPledgeJSON struct {
 	ID          apijson.Field
 	CreatedAt   apijson.Field
 	Issue       apijson.Field
-	State       apijson.Field
 	ModifiedAt  apijson.Field
+	State       apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
 }
@@ -816,7 +795,9 @@ func (r transactionPledgeJSON) RawJSON() string {
 type TransactionPledgeIssue struct {
 	ID string `json:"id,required" format:"uuid4"`
 	// Creation timestamp of the object.
-	CreatedAt      time.Time                          `json:"created_at,required" format:"date-time"`
+	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	// Last modification timestamp of the object.
+	ModifiedAt     time.Time                          `json:"modified_at,required,nullable" format:"date-time"`
 	Number         int64                              `json:"number,required"`
 	Organization   TransactionPledgeIssueOrganization `json:"organization,required"`
 	OrganizationID string                             `json:"organization_id,required" format:"uuid4"`
@@ -824,9 +805,7 @@ type TransactionPledgeIssue struct {
 	Repository     TransactionPledgeIssueRepository   `json:"repository,required"`
 	RepositoryID   string                             `json:"repository_id,required" format:"uuid4"`
 	Title          string                             `json:"title,required"`
-	// Last modification timestamp of the object.
-	ModifiedAt time.Time                  `json:"modified_at,nullable" format:"date-time"`
-	JSON       transactionPledgeIssueJSON `json:"-"`
+	JSON           transactionPledgeIssueJSON         `json:"-"`
 }
 
 // transactionPledgeIssueJSON contains the JSON metadata for the struct
@@ -834,6 +813,7 @@ type TransactionPledgeIssue struct {
 type transactionPledgeIssueJSON struct {
 	ID             apijson.Field
 	CreatedAt      apijson.Field
+	ModifiedAt     apijson.Field
 	Number         apijson.Field
 	Organization   apijson.Field
 	OrganizationID apijson.Field
@@ -841,7 +821,6 @@ type transactionPledgeIssueJSON struct {
 	Repository     apijson.Field
 	RepositoryID   apijson.Field
 	Title          apijson.Field
-	ModifiedAt     apijson.Field
 	raw            string
 	ExtraFields    map[string]apijson.Field
 }
@@ -858,13 +837,13 @@ type TransactionPledgeIssueOrganization struct {
 	ID        string `json:"id,required" format:"uuid4"`
 	AvatarURL string `json:"avatar_url,required"`
 	// Creation timestamp of the object.
-	CreatedAt  time.Time                                  `json:"created_at,required" format:"date-time"`
-	IsPersonal bool                                       `json:"is_personal,required"`
+	CreatedAt  time.Time `json:"created_at,required" format:"date-time"`
+	IsPersonal bool      `json:"is_personal,required"`
+	// Last modification timestamp of the object.
+	ModifiedAt time.Time                                  `json:"modified_at,required,nullable" format:"date-time"`
 	Name       string                                     `json:"name,required"`
 	Platform   TransactionPledgeIssueOrganizationPlatform `json:"platform,required"`
-	// Last modification timestamp of the object.
-	ModifiedAt time.Time                              `json:"modified_at,nullable" format:"date-time"`
-	JSON       transactionPledgeIssueOrganizationJSON `json:"-"`
+	JSON       transactionPledgeIssueOrganizationJSON     `json:"-"`
 }
 
 // transactionPledgeIssueOrganizationJSON contains the JSON metadata for the struct
@@ -874,9 +853,9 @@ type transactionPledgeIssueOrganizationJSON struct {
 	AvatarURL   apijson.Field
 	CreatedAt   apijson.Field
 	IsPersonal  apijson.Field
+	ModifiedAt  apijson.Field
 	Name        apijson.Field
 	Platform    apijson.Field
-	ModifiedAt  apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
 }
@@ -920,13 +899,13 @@ func (r TransactionPledgeIssuePlatform) IsKnown() bool {
 type TransactionPledgeIssueRepository struct {
 	ID string `json:"id,required" format:"uuid4"`
 	// Creation timestamp of the object.
-	CreatedAt      time.Time                                `json:"created_at,required" format:"date-time"`
+	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	// Last modification timestamp of the object.
+	ModifiedAt     time.Time                                `json:"modified_at,required,nullable" format:"date-time"`
 	Name           string                                   `json:"name,required"`
 	OrganizationID string                                   `json:"organization_id,required" format:"uuid4"`
 	Platform       TransactionPledgeIssueRepositoryPlatform `json:"platform,required"`
-	// Last modification timestamp of the object.
-	ModifiedAt time.Time                            `json:"modified_at,nullable" format:"date-time"`
-	JSON       transactionPledgeIssueRepositoryJSON `json:"-"`
+	JSON           transactionPledgeIssueRepositoryJSON     `json:"-"`
 }
 
 // transactionPledgeIssueRepositoryJSON contains the JSON metadata for the struct
@@ -934,10 +913,10 @@ type TransactionPledgeIssueRepository struct {
 type transactionPledgeIssueRepositoryJSON struct {
 	ID             apijson.Field
 	CreatedAt      apijson.Field
+	ModifiedAt     apijson.Field
 	Name           apijson.Field
 	OrganizationID apijson.Field
 	Platform       apijson.Field
-	ModifiedAt     apijson.Field
 	raw            string
 	ExtraFields    map[string]apijson.Field
 }
@@ -995,6 +974,27 @@ const (
 func (r TransactionProcessor) IsKnown() bool {
 	switch r {
 	case TransactionProcessorStripe, TransactionProcessorOpenCollective:
+		return true
+	}
+	return false
+}
+
+// Type of transactions.
+type TransactionType string
+
+const (
+	TransactionTypePayment         TransactionType = "payment"
+	TransactionTypeProcessorFee    TransactionType = "processor_fee"
+	TransactionTypeRefund          TransactionType = "refund"
+	TransactionTypeDispute         TransactionType = "dispute"
+	TransactionTypeDisputeReversal TransactionType = "dispute_reversal"
+	TransactionTypeBalance         TransactionType = "balance"
+	TransactionTypePayout          TransactionType = "payout"
+)
+
+func (r TransactionType) IsKnown() bool {
+	switch r {
+	case TransactionTypePayment, TransactionTypeProcessorFee, TransactionTypeRefund, TransactionTypeDispute, TransactionTypeDisputeReversal, TransactionTypeBalance, TransactionTypePayout:
 		return true
 	}
 	return false

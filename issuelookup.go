@@ -213,16 +213,16 @@ func (r IssueLookupGetResponsePlatform) IsKnown() bool {
 // The repository that the issue is in
 type IssueLookupGetResponseRepository struct {
 	ID           string                                       `json:"id,required" format:"uuid"`
+	Description  string                                       `json:"description,required,nullable"`
+	Homepage     string                                       `json:"homepage,required,nullable"`
 	IsPrivate    bool                                         `json:"is_private,required"`
+	License      string                                       `json:"license,required,nullable"`
 	Name         string                                       `json:"name,required"`
 	Organization IssueLookupGetResponseRepositoryOrganization `json:"organization,required"`
 	Platform     IssueLookupGetResponseRepositoryPlatform     `json:"platform,required"`
 	// Settings for the repository profile
 	ProfileSettings IssueLookupGetResponseRepositoryProfileSettings `json:"profile_settings,required,nullable"`
-	Description     string                                          `json:"description,nullable"`
-	Homepage        string                                          `json:"homepage,nullable"`
-	License         string                                          `json:"license,nullable"`
-	Stars           int64                                           `json:"stars,nullable"`
+	Stars           int64                                           `json:"stars,required,nullable"`
 	JSON            issueLookupGetResponseRepositoryJSON            `json:"-"`
 }
 
@@ -230,14 +230,14 @@ type IssueLookupGetResponseRepository struct {
 // [IssueLookupGetResponseRepository]
 type issueLookupGetResponseRepositoryJSON struct {
 	ID              apijson.Field
+	Description     apijson.Field
+	Homepage        apijson.Field
 	IsPrivate       apijson.Field
+	License         apijson.Field
 	Name            apijson.Field
 	Organization    apijson.Field
 	Platform        apijson.Field
 	ProfileSettings apijson.Field
-	Description     apijson.Field
-	Homepage        apijson.Field
-	License         apijson.Field
 	Stars           apijson.Field
 	raw             string
 	ExtraFields     map[string]apijson.Field
@@ -252,21 +252,21 @@ func (r issueLookupGetResponseRepositoryJSON) RawJSON() string {
 }
 
 type IssueLookupGetResponseRepositoryOrganization struct {
-	ID         string                                               `json:"id,required" format:"uuid"`
-	AvatarURL  string                                               `json:"avatar_url,required"`
-	IsPersonal bool                                                 `json:"is_personal,required"`
-	Name       string                                               `json:"name,required"`
-	Platform   IssueLookupGetResponseRepositoryOrganizationPlatform `json:"platform,required"`
-	Bio        string                                               `json:"bio,nullable"`
-	Blog       string                                               `json:"blog,nullable"`
-	Company    string                                               `json:"company,nullable"`
-	Email      string                                               `json:"email,nullable"`
-	Location   string                                               `json:"location,nullable"`
+	ID         string `json:"id,required" format:"uuid"`
+	AvatarURL  string `json:"avatar_url,required"`
+	Bio        string `json:"bio,required,nullable"`
+	Blog       string `json:"blog,required,nullable"`
+	Company    string `json:"company,required,nullable"`
+	Email      string `json:"email,required,nullable"`
+	IsPersonal bool   `json:"is_personal,required"`
+	Location   string `json:"location,required,nullable"`
+	Name       string `json:"name,required"`
 	// The organization ID.
-	OrganizationID  string                                           `json:"organization_id,nullable" format:"uuid4"`
-	PrettyName      string                                           `json:"pretty_name,nullable"`
-	TwitterUsername string                                           `json:"twitter_username,nullable"`
-	JSON            issueLookupGetResponseRepositoryOrganizationJSON `json:"-"`
+	OrganizationID  string                                               `json:"organization_id,required,nullable" format:"uuid4"`
+	Platform        IssueLookupGetResponseRepositoryOrganizationPlatform `json:"platform,required"`
+	PrettyName      string                                               `json:"pretty_name,required,nullable"`
+	TwitterUsername string                                               `json:"twitter_username,required,nullable"`
+	JSON            issueLookupGetResponseRepositoryOrganizationJSON     `json:"-"`
 }
 
 // issueLookupGetResponseRepositoryOrganizationJSON contains the JSON metadata for
@@ -274,15 +274,15 @@ type IssueLookupGetResponseRepositoryOrganization struct {
 type issueLookupGetResponseRepositoryOrganizationJSON struct {
 	ID              apijson.Field
 	AvatarURL       apijson.Field
-	IsPersonal      apijson.Field
-	Name            apijson.Field
-	Platform        apijson.Field
 	Bio             apijson.Field
 	Blog            apijson.Field
 	Company         apijson.Field
 	Email           apijson.Field
+	IsPersonal      apijson.Field
 	Location        apijson.Field
+	Name            apijson.Field
 	OrganizationID  apijson.Field
+	Platform        apijson.Field
 	PrettyName      apijson.Field
 	TwitterUsername apijson.Field
 	raw             string

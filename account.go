@@ -95,11 +95,11 @@ type AccountNewResponse struct {
 	IsChargesEnabled   bool                             `json:"is_charges_enabled,required"`
 	IsDetailsSubmitted bool                             `json:"is_details_submitted,required"`
 	IsPayoutsEnabled   bool                             `json:"is_payouts_enabled,required"`
+	OpenCollectiveSlug string                           `json:"open_collective_slug,required,nullable"`
 	Organizations      []AccountNewResponseOrganization `json:"organizations,required"`
 	Status             AccountNewResponseStatus         `json:"status,required"`
+	StripeID           string                           `json:"stripe_id,required,nullable"`
 	Users              []AccountNewResponseUser         `json:"users,required"`
-	OpenCollectiveSlug string                           `json:"open_collective_slug,nullable"`
-	StripeID           string                           `json:"stripe_id,nullable"`
 	JSON               accountNewResponseJSON           `json:"-"`
 }
 
@@ -112,11 +112,11 @@ type accountNewResponseJSON struct {
 	IsChargesEnabled   apijson.Field
 	IsDetailsSubmitted apijson.Field
 	IsPayoutsEnabled   apijson.Field
+	OpenCollectiveSlug apijson.Field
 	Organizations      apijson.Field
 	Status             apijson.Field
-	Users              apijson.Field
-	OpenCollectiveSlug apijson.Field
 	StripeID           apijson.Field
+	Users              apijson.Field
 	raw                string
 	ExtraFields        map[string]apijson.Field
 }
@@ -146,52 +146,52 @@ func (r AccountNewResponseAccountType) IsKnown() bool {
 
 type AccountNewResponseOrganization struct {
 	// The organization ID.
-	ID string `json:"id,required" format:"uuid4"`
+	ID        string `json:"id,required" format:"uuid4"`
+	AvatarURL string `json:"avatar_url,required,nullable"`
+	Bio       string `json:"bio,required,nullable"`
+	Blog      string `json:"blog,required,nullable"`
+	Company   string `json:"company,required,nullable"`
 	// Creation timestamp of the object.
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	CreatedAt                         time.Time `json:"created_at,required" format:"date-time"`
+	DefaultUpfrontSplitToContributors int64     `json:"default_upfront_split_to_contributors,required,nullable"`
 	// If this organizations accepts donations
-	DonationsEnabled bool `json:"donations_enabled,required"`
+	DonationsEnabled bool   `json:"donations_enabled,required"`
+	Email            string `json:"email,required,nullable"`
 	// Settings for the organization features
-	FeatureSettings       AccountNewResponseOrganizationsFeatureSettings `json:"feature_settings,required,nullable"`
-	Name                  string                                         `json:"name,required"`
-	PledgeBadgeShowAmount bool                                           `json:"pledge_badge_show_amount,required"`
-	PledgeMinimumAmount   int64                                          `json:"pledge_minimum_amount,required"`
-	// Settings for the organization profile
-	ProfileSettings                   AccountNewResponseOrganizationsProfileSettings `json:"profile_settings,required,nullable"`
-	Slug                              string                                         `json:"slug,required"`
-	AvatarURL                         string                                         `json:"avatar_url,nullable"`
-	Bio                               string                                         `json:"bio,nullable"`
-	Blog                              string                                         `json:"blog,nullable"`
-	Company                           string                                         `json:"company,nullable"`
-	DefaultUpfrontSplitToContributors int64                                          `json:"default_upfront_split_to_contributors,nullable"`
-	Email                             string                                         `json:"email,nullable"`
-	Location                          string                                         `json:"location,nullable"`
+	FeatureSettings AccountNewResponseOrganizationsFeatureSettings `json:"feature_settings,required,nullable"`
+	Location        string                                         `json:"location,required,nullable"`
 	// Last modification timestamp of the object.
-	ModifiedAt      time.Time                          `json:"modified_at,nullable" format:"date-time"`
-	TwitterUsername string                             `json:"twitter_username,nullable"`
-	JSON            accountNewResponseOrganizationJSON `json:"-"`
+	ModifiedAt            time.Time `json:"modified_at,required,nullable" format:"date-time"`
+	Name                  string    `json:"name,required"`
+	PledgeBadgeShowAmount bool      `json:"pledge_badge_show_amount,required"`
+	PledgeMinimumAmount   int64     `json:"pledge_minimum_amount,required"`
+	// Settings for the organization profile
+	ProfileSettings AccountNewResponseOrganizationsProfileSettings `json:"profile_settings,required,nullable"`
+	Slug            string                                         `json:"slug,required"`
+	TwitterUsername string                                         `json:"twitter_username,required,nullable"`
+	JSON            accountNewResponseOrganizationJSON             `json:"-"`
 }
 
 // accountNewResponseOrganizationJSON contains the JSON metadata for the struct
 // [AccountNewResponseOrganization]
 type accountNewResponseOrganizationJSON struct {
 	ID                                apijson.Field
+	AvatarURL                         apijson.Field
+	Bio                               apijson.Field
+	Blog                              apijson.Field
+	Company                           apijson.Field
 	CreatedAt                         apijson.Field
+	DefaultUpfrontSplitToContributors apijson.Field
 	DonationsEnabled                  apijson.Field
+	Email                             apijson.Field
 	FeatureSettings                   apijson.Field
+	Location                          apijson.Field
+	ModifiedAt                        apijson.Field
 	Name                              apijson.Field
 	PledgeBadgeShowAmount             apijson.Field
 	PledgeMinimumAmount               apijson.Field
 	ProfileSettings                   apijson.Field
 	Slug                              apijson.Field
-	AvatarURL                         apijson.Field
-	Bio                               apijson.Field
-	Blog                              apijson.Field
-	Company                           apijson.Field
-	DefaultUpfrontSplitToContributors apijson.Field
-	Email                             apijson.Field
-	Location                          apijson.Field
-	ModifiedAt                        apijson.Field
 	TwitterUsername                   apijson.Field
 	raw                               string
 	ExtraFields                       map[string]apijson.Field
@@ -317,20 +317,20 @@ func (r AccountNewResponseStatus) IsKnown() bool {
 }
 
 type AccountNewResponseUser struct {
+	AccountID string                     `json:"account_id,required,nullable" format:"uuid4"`
+	AvatarURL string                     `json:"avatar_url,required,nullable"`
 	Email     string                     `json:"email,required" format:"email"`
 	Username  string                     `json:"username,required"`
-	AccountID string                     `json:"account_id,nullable" format:"uuid4"`
-	AvatarURL string                     `json:"avatar_url,nullable"`
 	JSON      accountNewResponseUserJSON `json:"-"`
 }
 
 // accountNewResponseUserJSON contains the JSON metadata for the struct
 // [AccountNewResponseUser]
 type accountNewResponseUserJSON struct {
-	Email       apijson.Field
-	Username    apijson.Field
 	AccountID   apijson.Field
 	AvatarURL   apijson.Field
+	Email       apijson.Field
+	Username    apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
 }
@@ -350,11 +350,11 @@ type AccountGetResponse struct {
 	IsChargesEnabled   bool                             `json:"is_charges_enabled,required"`
 	IsDetailsSubmitted bool                             `json:"is_details_submitted,required"`
 	IsPayoutsEnabled   bool                             `json:"is_payouts_enabled,required"`
+	OpenCollectiveSlug string                           `json:"open_collective_slug,required,nullable"`
 	Organizations      []AccountGetResponseOrganization `json:"organizations,required"`
 	Status             AccountGetResponseStatus         `json:"status,required"`
+	StripeID           string                           `json:"stripe_id,required,nullable"`
 	Users              []AccountGetResponseUser         `json:"users,required"`
-	OpenCollectiveSlug string                           `json:"open_collective_slug,nullable"`
-	StripeID           string                           `json:"stripe_id,nullable"`
 	JSON               accountGetResponseJSON           `json:"-"`
 }
 
@@ -367,11 +367,11 @@ type accountGetResponseJSON struct {
 	IsChargesEnabled   apijson.Field
 	IsDetailsSubmitted apijson.Field
 	IsPayoutsEnabled   apijson.Field
+	OpenCollectiveSlug apijson.Field
 	Organizations      apijson.Field
 	Status             apijson.Field
-	Users              apijson.Field
-	OpenCollectiveSlug apijson.Field
 	StripeID           apijson.Field
+	Users              apijson.Field
 	raw                string
 	ExtraFields        map[string]apijson.Field
 }
@@ -401,52 +401,52 @@ func (r AccountGetResponseAccountType) IsKnown() bool {
 
 type AccountGetResponseOrganization struct {
 	// The organization ID.
-	ID string `json:"id,required" format:"uuid4"`
+	ID        string `json:"id,required" format:"uuid4"`
+	AvatarURL string `json:"avatar_url,required,nullable"`
+	Bio       string `json:"bio,required,nullable"`
+	Blog      string `json:"blog,required,nullable"`
+	Company   string `json:"company,required,nullable"`
 	// Creation timestamp of the object.
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	CreatedAt                         time.Time `json:"created_at,required" format:"date-time"`
+	DefaultUpfrontSplitToContributors int64     `json:"default_upfront_split_to_contributors,required,nullable"`
 	// If this organizations accepts donations
-	DonationsEnabled bool `json:"donations_enabled,required"`
+	DonationsEnabled bool   `json:"donations_enabled,required"`
+	Email            string `json:"email,required,nullable"`
 	// Settings for the organization features
-	FeatureSettings       AccountGetResponseOrganizationsFeatureSettings `json:"feature_settings,required,nullable"`
-	Name                  string                                         `json:"name,required"`
-	PledgeBadgeShowAmount bool                                           `json:"pledge_badge_show_amount,required"`
-	PledgeMinimumAmount   int64                                          `json:"pledge_minimum_amount,required"`
-	// Settings for the organization profile
-	ProfileSettings                   AccountGetResponseOrganizationsProfileSettings `json:"profile_settings,required,nullable"`
-	Slug                              string                                         `json:"slug,required"`
-	AvatarURL                         string                                         `json:"avatar_url,nullable"`
-	Bio                               string                                         `json:"bio,nullable"`
-	Blog                              string                                         `json:"blog,nullable"`
-	Company                           string                                         `json:"company,nullable"`
-	DefaultUpfrontSplitToContributors int64                                          `json:"default_upfront_split_to_contributors,nullable"`
-	Email                             string                                         `json:"email,nullable"`
-	Location                          string                                         `json:"location,nullable"`
+	FeatureSettings AccountGetResponseOrganizationsFeatureSettings `json:"feature_settings,required,nullable"`
+	Location        string                                         `json:"location,required,nullable"`
 	// Last modification timestamp of the object.
-	ModifiedAt      time.Time                          `json:"modified_at,nullable" format:"date-time"`
-	TwitterUsername string                             `json:"twitter_username,nullable"`
-	JSON            accountGetResponseOrganizationJSON `json:"-"`
+	ModifiedAt            time.Time `json:"modified_at,required,nullable" format:"date-time"`
+	Name                  string    `json:"name,required"`
+	PledgeBadgeShowAmount bool      `json:"pledge_badge_show_amount,required"`
+	PledgeMinimumAmount   int64     `json:"pledge_minimum_amount,required"`
+	// Settings for the organization profile
+	ProfileSettings AccountGetResponseOrganizationsProfileSettings `json:"profile_settings,required,nullable"`
+	Slug            string                                         `json:"slug,required"`
+	TwitterUsername string                                         `json:"twitter_username,required,nullable"`
+	JSON            accountGetResponseOrganizationJSON             `json:"-"`
 }
 
 // accountGetResponseOrganizationJSON contains the JSON metadata for the struct
 // [AccountGetResponseOrganization]
 type accountGetResponseOrganizationJSON struct {
 	ID                                apijson.Field
+	AvatarURL                         apijson.Field
+	Bio                               apijson.Field
+	Blog                              apijson.Field
+	Company                           apijson.Field
 	CreatedAt                         apijson.Field
+	DefaultUpfrontSplitToContributors apijson.Field
 	DonationsEnabled                  apijson.Field
+	Email                             apijson.Field
 	FeatureSettings                   apijson.Field
+	Location                          apijson.Field
+	ModifiedAt                        apijson.Field
 	Name                              apijson.Field
 	PledgeBadgeShowAmount             apijson.Field
 	PledgeMinimumAmount               apijson.Field
 	ProfileSettings                   apijson.Field
 	Slug                              apijson.Field
-	AvatarURL                         apijson.Field
-	Bio                               apijson.Field
-	Blog                              apijson.Field
-	Company                           apijson.Field
-	DefaultUpfrontSplitToContributors apijson.Field
-	Email                             apijson.Field
-	Location                          apijson.Field
-	ModifiedAt                        apijson.Field
 	TwitterUsername                   apijson.Field
 	raw                               string
 	ExtraFields                       map[string]apijson.Field
@@ -572,20 +572,20 @@ func (r AccountGetResponseStatus) IsKnown() bool {
 }
 
 type AccountGetResponseUser struct {
+	AccountID string                     `json:"account_id,required,nullable" format:"uuid4"`
+	AvatarURL string                     `json:"avatar_url,required,nullable"`
 	Email     string                     `json:"email,required" format:"email"`
 	Username  string                     `json:"username,required"`
-	AccountID string                     `json:"account_id,nullable" format:"uuid4"`
-	AvatarURL string                     `json:"avatar_url,nullable"`
 	JSON      accountGetResponseUserJSON `json:"-"`
 }
 
 // accountGetResponseUserJSON contains the JSON metadata for the struct
 // [AccountGetResponseUser]
 type accountGetResponseUserJSON struct {
-	Email       apijson.Field
-	Username    apijson.Field
 	AccountID   apijson.Field
 	AvatarURL   apijson.Field
+	Email       apijson.Field
+	Username    apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
 }
@@ -693,11 +693,11 @@ type AccountSearchResponseItem struct {
 	IsChargesEnabled   bool                                     `json:"is_charges_enabled,required"`
 	IsDetailsSubmitted bool                                     `json:"is_details_submitted,required"`
 	IsPayoutsEnabled   bool                                     `json:"is_payouts_enabled,required"`
+	OpenCollectiveSlug string                                   `json:"open_collective_slug,required,nullable"`
 	Organizations      []AccountSearchResponseItemsOrganization `json:"organizations,required"`
 	Status             AccountSearchResponseItemsStatus         `json:"status,required"`
+	StripeID           string                                   `json:"stripe_id,required,nullable"`
 	Users              []AccountSearchResponseItemsUser         `json:"users,required"`
-	OpenCollectiveSlug string                                   `json:"open_collective_slug,nullable"`
-	StripeID           string                                   `json:"stripe_id,nullable"`
 	JSON               accountSearchResponseItemJSON            `json:"-"`
 }
 
@@ -710,11 +710,11 @@ type accountSearchResponseItemJSON struct {
 	IsChargesEnabled   apijson.Field
 	IsDetailsSubmitted apijson.Field
 	IsPayoutsEnabled   apijson.Field
+	OpenCollectiveSlug apijson.Field
 	Organizations      apijson.Field
 	Status             apijson.Field
-	Users              apijson.Field
-	OpenCollectiveSlug apijson.Field
 	StripeID           apijson.Field
+	Users              apijson.Field
 	raw                string
 	ExtraFields        map[string]apijson.Field
 }
@@ -744,52 +744,52 @@ func (r AccountSearchResponseItemsAccountType) IsKnown() bool {
 
 type AccountSearchResponseItemsOrganization struct {
 	// The organization ID.
-	ID string `json:"id,required" format:"uuid4"`
+	ID        string `json:"id,required" format:"uuid4"`
+	AvatarURL string `json:"avatar_url,required,nullable"`
+	Bio       string `json:"bio,required,nullable"`
+	Blog      string `json:"blog,required,nullable"`
+	Company   string `json:"company,required,nullable"`
 	// Creation timestamp of the object.
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	CreatedAt                         time.Time `json:"created_at,required" format:"date-time"`
+	DefaultUpfrontSplitToContributors int64     `json:"default_upfront_split_to_contributors,required,nullable"`
 	// If this organizations accepts donations
-	DonationsEnabled bool `json:"donations_enabled,required"`
+	DonationsEnabled bool   `json:"donations_enabled,required"`
+	Email            string `json:"email,required,nullable"`
 	// Settings for the organization features
-	FeatureSettings       AccountSearchResponseItemsOrganizationsFeatureSettings `json:"feature_settings,required,nullable"`
-	Name                  string                                                 `json:"name,required"`
-	PledgeBadgeShowAmount bool                                                   `json:"pledge_badge_show_amount,required"`
-	PledgeMinimumAmount   int64                                                  `json:"pledge_minimum_amount,required"`
-	// Settings for the organization profile
-	ProfileSettings                   AccountSearchResponseItemsOrganizationsProfileSettings `json:"profile_settings,required,nullable"`
-	Slug                              string                                                 `json:"slug,required"`
-	AvatarURL                         string                                                 `json:"avatar_url,nullable"`
-	Bio                               string                                                 `json:"bio,nullable"`
-	Blog                              string                                                 `json:"blog,nullable"`
-	Company                           string                                                 `json:"company,nullable"`
-	DefaultUpfrontSplitToContributors int64                                                  `json:"default_upfront_split_to_contributors,nullable"`
-	Email                             string                                                 `json:"email,nullable"`
-	Location                          string                                                 `json:"location,nullable"`
+	FeatureSettings AccountSearchResponseItemsOrganizationsFeatureSettings `json:"feature_settings,required,nullable"`
+	Location        string                                                 `json:"location,required,nullable"`
 	// Last modification timestamp of the object.
-	ModifiedAt      time.Time                                  `json:"modified_at,nullable" format:"date-time"`
-	TwitterUsername string                                     `json:"twitter_username,nullable"`
-	JSON            accountSearchResponseItemsOrganizationJSON `json:"-"`
+	ModifiedAt            time.Time `json:"modified_at,required,nullable" format:"date-time"`
+	Name                  string    `json:"name,required"`
+	PledgeBadgeShowAmount bool      `json:"pledge_badge_show_amount,required"`
+	PledgeMinimumAmount   int64     `json:"pledge_minimum_amount,required"`
+	// Settings for the organization profile
+	ProfileSettings AccountSearchResponseItemsOrganizationsProfileSettings `json:"profile_settings,required,nullable"`
+	Slug            string                                                 `json:"slug,required"`
+	TwitterUsername string                                                 `json:"twitter_username,required,nullable"`
+	JSON            accountSearchResponseItemsOrganizationJSON             `json:"-"`
 }
 
 // accountSearchResponseItemsOrganizationJSON contains the JSON metadata for the
 // struct [AccountSearchResponseItemsOrganization]
 type accountSearchResponseItemsOrganizationJSON struct {
 	ID                                apijson.Field
+	AvatarURL                         apijson.Field
+	Bio                               apijson.Field
+	Blog                              apijson.Field
+	Company                           apijson.Field
 	CreatedAt                         apijson.Field
+	DefaultUpfrontSplitToContributors apijson.Field
 	DonationsEnabled                  apijson.Field
+	Email                             apijson.Field
 	FeatureSettings                   apijson.Field
+	Location                          apijson.Field
+	ModifiedAt                        apijson.Field
 	Name                              apijson.Field
 	PledgeBadgeShowAmount             apijson.Field
 	PledgeMinimumAmount               apijson.Field
 	ProfileSettings                   apijson.Field
 	Slug                              apijson.Field
-	AvatarURL                         apijson.Field
-	Bio                               apijson.Field
-	Blog                              apijson.Field
-	Company                           apijson.Field
-	DefaultUpfrontSplitToContributors apijson.Field
-	Email                             apijson.Field
-	Location                          apijson.Field
-	ModifiedAt                        apijson.Field
 	TwitterUsername                   apijson.Field
 	raw                               string
 	ExtraFields                       map[string]apijson.Field
@@ -915,20 +915,20 @@ func (r AccountSearchResponseItemsStatus) IsKnown() bool {
 }
 
 type AccountSearchResponseItemsUser struct {
+	AccountID string                             `json:"account_id,required,nullable" format:"uuid4"`
+	AvatarURL string                             `json:"avatar_url,required,nullable"`
 	Email     string                             `json:"email,required" format:"email"`
 	Username  string                             `json:"username,required"`
-	AccountID string                             `json:"account_id,nullable" format:"uuid4"`
-	AvatarURL string                             `json:"avatar_url,nullable"`
 	JSON      accountSearchResponseItemsUserJSON `json:"-"`
 }
 
 // accountSearchResponseItemsUserJSON contains the JSON metadata for the struct
 // [AccountSearchResponseItemsUser]
 type accountSearchResponseItemsUserJSON struct {
-	Email       apijson.Field
-	Username    apijson.Field
 	AccountID   apijson.Field
 	AvatarURL   apijson.Field
+	Email       apijson.Field
+	Username    apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
 }
