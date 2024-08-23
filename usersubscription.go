@@ -101,8 +101,7 @@ type UserSubscriptionNewResponse struct {
 	CurrentPeriodStart time.Time `json:"current_period_start,required" format:"date-time"`
 	EndedAt            time.Time `json:"ended_at,required,nullable" format:"date-time"`
 	// Last modification timestamp of the object.
-	ModifiedAt     time.Time `json:"modified_at,required,nullable" format:"date-time"`
-	OrganizationID string    `json:"organization_id,required,nullable" format:"uuid4"`
+	ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
 	// A recurring price for a product, i.e. a subscription.
 	Price     UserSubscriptionNewResponsePrice   `json:"price,required,nullable"`
 	PriceID   string                             `json:"price_id,required,nullable" format:"uuid4"`
@@ -124,7 +123,6 @@ type userSubscriptionNewResponseJSON struct {
 	CurrentPeriodStart apijson.Field
 	EndedAt            apijson.Field
 	ModifiedAt         apijson.Field
-	OrganizationID     apijson.Field
 	Price              apijson.Field
 	PriceID            apijson.Field
 	Product            apijson.Field
@@ -1023,8 +1021,7 @@ type UserSubscriptionGetResponse struct {
 	CurrentPeriodStart time.Time `json:"current_period_start,required" format:"date-time"`
 	EndedAt            time.Time `json:"ended_at,required,nullable" format:"date-time"`
 	// Last modification timestamp of the object.
-	ModifiedAt     time.Time `json:"modified_at,required,nullable" format:"date-time"`
-	OrganizationID string    `json:"organization_id,required,nullable" format:"uuid4"`
+	ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
 	// A recurring price for a product, i.e. a subscription.
 	Price     UserSubscriptionGetResponsePrice   `json:"price,required,nullable"`
 	PriceID   string                             `json:"price_id,required,nullable" format:"uuid4"`
@@ -1046,7 +1043,6 @@ type userSubscriptionGetResponseJSON struct {
 	CurrentPeriodStart apijson.Field
 	EndedAt            apijson.Field
 	ModifiedAt         apijson.Field
-	OrganizationID     apijson.Field
 	Price              apijson.Field
 	PriceID            apijson.Field
 	Product            apijson.Field
@@ -1945,8 +1941,7 @@ type UserSubscriptionUpdateResponse struct {
 	CurrentPeriodStart time.Time `json:"current_period_start,required" format:"date-time"`
 	EndedAt            time.Time `json:"ended_at,required,nullable" format:"date-time"`
 	// Last modification timestamp of the object.
-	ModifiedAt     time.Time `json:"modified_at,required,nullable" format:"date-time"`
-	OrganizationID string    `json:"organization_id,required,nullable" format:"uuid4"`
+	ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
 	// A recurring price for a product, i.e. a subscription.
 	Price     UserSubscriptionUpdateResponsePrice   `json:"price,required,nullable"`
 	PriceID   string                                `json:"price_id,required,nullable" format:"uuid4"`
@@ -1968,7 +1963,6 @@ type userSubscriptionUpdateResponseJSON struct {
 	CurrentPeriodStart apijson.Field
 	EndedAt            apijson.Field
 	ModifiedAt         apijson.Field
-	OrganizationID     apijson.Field
 	Price              apijson.Field
 	PriceID            apijson.Field
 	Product            apijson.Field
@@ -2915,8 +2909,7 @@ type UserSubscriptionListResponseItem struct {
 	CurrentPeriodStart time.Time `json:"current_period_start,required" format:"date-time"`
 	EndedAt            time.Time `json:"ended_at,required,nullable" format:"date-time"`
 	// Last modification timestamp of the object.
-	ModifiedAt     time.Time `json:"modified_at,required,nullable" format:"date-time"`
-	OrganizationID string    `json:"organization_id,required,nullable" format:"uuid4"`
+	ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
 	// A recurring price for a product, i.e. a subscription.
 	Price     UserSubscriptionListResponseItemsPrice   `json:"price,required,nullable"`
 	PriceID   string                                   `json:"price_id,required,nullable" format:"uuid4"`
@@ -2938,7 +2931,6 @@ type userSubscriptionListResponseItemJSON struct {
 	CurrentPeriodStart apijson.Field
 	EndedAt            apijson.Field
 	ModifiedAt         apijson.Field
-	OrganizationID     apijson.Field
 	Price              apijson.Field
 	PriceID            apijson.Field
 	Product            apijson.Field
@@ -3840,8 +3832,7 @@ type UserSubscriptionDeleteResponse struct {
 	CurrentPeriodStart time.Time `json:"current_period_start,required" format:"date-time"`
 	EndedAt            time.Time `json:"ended_at,required,nullable" format:"date-time"`
 	// Last modification timestamp of the object.
-	ModifiedAt     time.Time `json:"modified_at,required,nullable" format:"date-time"`
-	OrganizationID string    `json:"organization_id,required,nullable" format:"uuid4"`
+	ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
 	// A recurring price for a product, i.e. a subscription.
 	Price     UserSubscriptionDeleteResponsePrice   `json:"price,required,nullable"`
 	PriceID   string                                `json:"price_id,required,nullable" format:"uuid4"`
@@ -3863,7 +3854,6 @@ type userSubscriptionDeleteResponseJSON struct {
 	CurrentPeriodStart apijson.Field
 	EndedAt            apijson.Field
 	ModifiedAt         apijson.Field
-	OrganizationID     apijson.Field
 	Price              apijson.Field
 	PriceID            apijson.Field
 	Product            apijson.Field
