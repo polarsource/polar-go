@@ -12,6 +12,7 @@ import (
 
 	"github.com/polarsource/polar-go/internal/apijson"
 	"github.com/polarsource/polar-go/internal/apiquery"
+	"github.com/polarsource/polar-go/internal/pagination"
 	"github.com/polarsource/polar-go/internal/param"
 	"github.com/polarsource/polar-go/internal/requestconfig"
 	"github.com/polarsource/polar-go/option"
@@ -71,11 +72,26 @@ func (r *ArticleService) Update(ctx context.Context, id string, body ArticleUpda
 }
 
 // List articles.
-func (r *ArticleService) List(ctx context.Context, query ArticleListParams, opts ...option.RequestOption) (res *ListResourceArticle, err error) {
+func (r *ArticleService) List(ctx context.Context, query ArticleListParams, opts ...option.RequestOption) (res *pagination.PolarPagination[Article], err error) {
+	var raw *http.Response
 	opts = append(r.Options[:], opts...)
+	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "v1/articles/"
-	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
-	return
+	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
+	if err != nil {
+		return nil, err
+	}
+	err = cfg.Execute()
+	if err != nil {
+		return nil, err
+	}
+	res.SetPageConfig(cfg, raw)
+	return res, nil
+}
+
+// List articles.
+func (r *ArticleService) ListAutoPaging(ctx context.Context, query ArticleListParams, opts ...option.RequestOption) *pagination.PolarPaginationAutoPager[Article] {
+	return pagination.NewPolarPaginationAutoPager(r.List(ctx, query, opts...))
 }
 
 // Delete an article.

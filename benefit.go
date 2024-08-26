@@ -13,6 +13,7 @@ import (
 
 	"github.com/polarsource/polar-go/internal/apijson"
 	"github.com/polarsource/polar-go/internal/apiquery"
+	"github.com/polarsource/polar-go/internal/pagination"
 	"github.com/polarsource/polar-go/internal/param"
 	"github.com/polarsource/polar-go/internal/requestconfig"
 	"github.com/polarsource/polar-go/option"
@@ -73,11 +74,26 @@ func (r *BenefitService) Update(ctx context.Context, id string, body BenefitUpda
 }
 
 // List benefits.
-func (r *BenefitService) List(ctx context.Context, query BenefitListParams, opts ...option.RequestOption) (res *ListResourceUnionBenefitArticlesBenefitAdsBenefitCustomBenefitDiscordBenefitGitHubRepositoryBenefitDownloadables, err error) {
+func (r *BenefitService) List(ctx context.Context, query BenefitListParams, opts ...option.RequestOption) (res *pagination.PolarPagination[BenefitListResponse], err error) {
+	var raw *http.Response
 	opts = append(r.Options[:], opts...)
+	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "v1/benefits/"
-	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
-	return
+	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
+	if err != nil {
+		return nil, err
+	}
+	err = cfg.Execute()
+	if err != nil {
+		return nil, err
+	}
+	res.SetPageConfig(cfg, raw)
+	return res, nil
+}
+
+// List benefits.
+func (r *BenefitService) ListAutoPaging(ctx context.Context, query BenefitListParams, opts ...option.RequestOption) *pagination.PolarPaginationAutoPager[BenefitListResponse] {
+	return pagination.NewPolarPaginationAutoPager(r.List(ctx, query, opts...))
 }
 
 // Delete a benefit.
@@ -2948,6 +2964,702 @@ const (
 func (r BenefitUpdateResponseType) IsKnown() bool {
 	switch r {
 	case BenefitUpdateResponseTypeArticles, BenefitUpdateResponseTypeAds, BenefitUpdateResponseTypeCustom, BenefitUpdateResponseTypeDiscord, BenefitUpdateResponseTypeGitHubRepository, BenefitUpdateResponseTypeDownloadables:
+		return true
+	}
+	return false
+}
+
+// A benefit of type `articles`.
+//
+// Use it to grant access to posts.
+type BenefitListResponse struct {
+	// Creation timestamp of the object.
+	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	// Last modification timestamp of the object.
+	ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
+	// The ID of the benefit.
+	ID   string                  `json:"id,required" format:"uuid4"`
+	Type BenefitListResponseType `json:"type,required"`
+	// The description of the benefit.
+	Description string `json:"description,required"`
+	// Whether the benefit is selectable when creating a product.
+	Selectable bool `json:"selectable,required"`
+	// Whether the benefit is deletable.
+	Deletable bool `json:"deletable,required"`
+	// The ID of the organization owning the benefit.
+	OrganizationID string `json:"organization_id,required" format:"uuid4"`
+	// This field can have the runtime type of
+	// [BenefitListResponseBenefitArticlesProperties],
+	// [BenefitListResponseBenefitAdsProperties],
+	// [BenefitListResponseBenefitCustomProperties],
+	// [BenefitListResponseBenefitDiscordOutputProperties],
+	// [BenefitListResponseBenefitGitHubRepositoryProperties],
+	// [BenefitListResponseBenefitDownloadablesProperties].
+	Properties interface{} `json:"properties"`
+	// Whether the benefit is taxable.
+	IsTaxApplicable bool                    `json:"is_tax_applicable"`
+	JSON            benefitListResponseJSON `json:"-"`
+	union           BenefitListResponseUnion
+}
+
+// benefitListResponseJSON contains the JSON metadata for the struct
+// [BenefitListResponse]
+type benefitListResponseJSON struct {
+	CreatedAt       apijson.Field
+	ModifiedAt      apijson.Field
+	ID              apijson.Field
+	Type            apijson.Field
+	Description     apijson.Field
+	Selectable      apijson.Field
+	Deletable       apijson.Field
+	OrganizationID  apijson.Field
+	Properties      apijson.Field
+	IsTaxApplicable apijson.Field
+	raw             string
+	ExtraFields     map[string]apijson.Field
+}
+
+func (r benefitListResponseJSON) RawJSON() string {
+	return r.raw
+}
+
+func (r *BenefitListResponse) UnmarshalJSON(data []byte) (err error) {
+	*r = BenefitListResponse{}
+	err = apijson.UnmarshalRoot(data, &r.union)
+	if err != nil {
+		return err
+	}
+	return apijson.Port(r.union, &r)
+}
+
+// AsUnion returns a [BenefitListResponseUnion] interface which you can cast to the
+// specific types for more type safety.
+//
+// Possible runtime types of the union are [BenefitListResponseBenefitArticles],
+// [BenefitListResponseBenefitAds], [BenefitListResponseBenefitCustom],
+// [BenefitListResponseBenefitDiscordOutput],
+// [BenefitListResponseBenefitGitHubRepository],
+// [BenefitListResponseBenefitDownloadables].
+func (r BenefitListResponse) AsUnion() BenefitListResponseUnion {
+	return r.union
+}
+
+// A benefit of type `articles`.
+//
+// Use it to grant access to posts.
+//
+// Union satisfied by [BenefitListResponseBenefitArticles],
+// [BenefitListResponseBenefitAds], [BenefitListResponseBenefitCustom],
+// [BenefitListResponseBenefitDiscordOutput],
+// [BenefitListResponseBenefitGitHubRepository] or
+// [BenefitListResponseBenefitDownloadables].
+type BenefitListResponseUnion interface {
+	implementsBenefitListResponse()
+}
+
+func init() {
+	apijson.RegisterUnion(
+		reflect.TypeOf((*BenefitListResponseUnion)(nil)).Elem(),
+		"",
+		apijson.UnionVariant{
+			TypeFilter: gjson.JSON,
+			Type:       reflect.TypeOf(BenefitListResponseBenefitArticles{}),
+		},
+		apijson.UnionVariant{
+			TypeFilter: gjson.JSON,
+			Type:       reflect.TypeOf(BenefitListResponseBenefitAds{}),
+		},
+		apijson.UnionVariant{
+			TypeFilter: gjson.JSON,
+			Type:       reflect.TypeOf(BenefitListResponseBenefitCustom{}),
+		},
+		apijson.UnionVariant{
+			TypeFilter: gjson.JSON,
+			Type:       reflect.TypeOf(BenefitListResponseBenefitDiscordOutput{}),
+		},
+		apijson.UnionVariant{
+			TypeFilter: gjson.JSON,
+			Type:       reflect.TypeOf(BenefitListResponseBenefitGitHubRepository{}),
+		},
+		apijson.UnionVariant{
+			TypeFilter: gjson.JSON,
+			Type:       reflect.TypeOf(BenefitListResponseBenefitDownloadables{}),
+		},
+	)
+}
+
+// A benefit of type `articles`.
+//
+// Use it to grant access to posts.
+type BenefitListResponseBenefitArticles struct {
+	// The ID of the benefit.
+	ID string `json:"id,required" format:"uuid4"`
+	// Creation timestamp of the object.
+	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	// Whether the benefit is deletable.
+	Deletable bool `json:"deletable,required"`
+	// The description of the benefit.
+	Description string `json:"description,required"`
+	// Last modification timestamp of the object.
+	ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
+	// The ID of the organization owning the benefit.
+	OrganizationID string `json:"organization_id,required" format:"uuid4"`
+	// Properties for a benefit of type `articles`.
+	Properties BenefitListResponseBenefitArticlesProperties `json:"properties,required"`
+	// Whether the benefit is selectable when creating a product.
+	Selectable bool                                   `json:"selectable,required"`
+	Type       BenefitListResponseBenefitArticlesType `json:"type,required"`
+	JSON       benefitListResponseBenefitArticlesJSON `json:"-"`
+}
+
+// benefitListResponseBenefitArticlesJSON contains the JSON metadata for the struct
+// [BenefitListResponseBenefitArticles]
+type benefitListResponseBenefitArticlesJSON struct {
+	ID             apijson.Field
+	CreatedAt      apijson.Field
+	Deletable      apijson.Field
+	Description    apijson.Field
+	ModifiedAt     apijson.Field
+	OrganizationID apijson.Field
+	Properties     apijson.Field
+	Selectable     apijson.Field
+	Type           apijson.Field
+	raw            string
+	ExtraFields    map[string]apijson.Field
+}
+
+func (r *BenefitListResponseBenefitArticles) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r benefitListResponseBenefitArticlesJSON) RawJSON() string {
+	return r.raw
+}
+
+func (r BenefitListResponseBenefitArticles) implementsBenefitListResponse() {}
+
+// Properties for a benefit of type `articles`.
+type BenefitListResponseBenefitArticlesProperties struct {
+	// Whether the user can access paid articles.
+	PaidArticles bool                                             `json:"paid_articles,required"`
+	JSON         benefitListResponseBenefitArticlesPropertiesJSON `json:"-"`
+}
+
+// benefitListResponseBenefitArticlesPropertiesJSON contains the JSON metadata for
+// the struct [BenefitListResponseBenefitArticlesProperties]
+type benefitListResponseBenefitArticlesPropertiesJSON struct {
+	PaidArticles apijson.Field
+	raw          string
+	ExtraFields  map[string]apijson.Field
+}
+
+func (r *BenefitListResponseBenefitArticlesProperties) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r benefitListResponseBenefitArticlesPropertiesJSON) RawJSON() string {
+	return r.raw
+}
+
+type BenefitListResponseBenefitArticlesType string
+
+const (
+	BenefitListResponseBenefitArticlesTypeArticles BenefitListResponseBenefitArticlesType = "articles"
+)
+
+func (r BenefitListResponseBenefitArticlesType) IsKnown() bool {
+	switch r {
+	case BenefitListResponseBenefitArticlesTypeArticles:
+		return true
+	}
+	return false
+}
+
+// A benefit of type `ads`.
+//
+// Use it so your backers can display ads on your README, website, etc.
+type BenefitListResponseBenefitAds struct {
+	// The ID of the benefit.
+	ID string `json:"id,required" format:"uuid4"`
+	// Creation timestamp of the object.
+	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	// Whether the benefit is deletable.
+	Deletable bool `json:"deletable,required"`
+	// The description of the benefit.
+	Description string `json:"description,required"`
+	// Last modification timestamp of the object.
+	ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
+	// The ID of the organization owning the benefit.
+	OrganizationID string `json:"organization_id,required" format:"uuid4"`
+	// Properties for a benefit of type `ads`.
+	Properties BenefitListResponseBenefitAdsProperties `json:"properties,required"`
+	// Whether the benefit is selectable when creating a product.
+	Selectable bool                              `json:"selectable,required"`
+	Type       BenefitListResponseBenefitAdsType `json:"type,required"`
+	JSON       benefitListResponseBenefitAdsJSON `json:"-"`
+}
+
+// benefitListResponseBenefitAdsJSON contains the JSON metadata for the struct
+// [BenefitListResponseBenefitAds]
+type benefitListResponseBenefitAdsJSON struct {
+	ID             apijson.Field
+	CreatedAt      apijson.Field
+	Deletable      apijson.Field
+	Description    apijson.Field
+	ModifiedAt     apijson.Field
+	OrganizationID apijson.Field
+	Properties     apijson.Field
+	Selectable     apijson.Field
+	Type           apijson.Field
+	raw            string
+	ExtraFields    map[string]apijson.Field
+}
+
+func (r *BenefitListResponseBenefitAds) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r benefitListResponseBenefitAdsJSON) RawJSON() string {
+	return r.raw
+}
+
+func (r BenefitListResponseBenefitAds) implementsBenefitListResponse() {}
+
+// Properties for a benefit of type `ads`.
+type BenefitListResponseBenefitAdsProperties struct {
+	// The height of the displayed ad.
+	ImageHeight int64 `json:"image_height"`
+	// The width of the displayed ad.
+	ImageWidth int64                                       `json:"image_width"`
+	JSON       benefitListResponseBenefitAdsPropertiesJSON `json:"-"`
+}
+
+// benefitListResponseBenefitAdsPropertiesJSON contains the JSON metadata for the
+// struct [BenefitListResponseBenefitAdsProperties]
+type benefitListResponseBenefitAdsPropertiesJSON struct {
+	ImageHeight apijson.Field
+	ImageWidth  apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *BenefitListResponseBenefitAdsProperties) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r benefitListResponseBenefitAdsPropertiesJSON) RawJSON() string {
+	return r.raw
+}
+
+type BenefitListResponseBenefitAdsType string
+
+const (
+	BenefitListResponseBenefitAdsTypeAds BenefitListResponseBenefitAdsType = "ads"
+)
+
+func (r BenefitListResponseBenefitAdsType) IsKnown() bool {
+	switch r {
+	case BenefitListResponseBenefitAdsTypeAds:
+		return true
+	}
+	return false
+}
+
+// A benefit of type `custom`.
+//
+// Use it to grant any kind of benefit that doesn't fit in the other types.
+type BenefitListResponseBenefitCustom struct {
+	// The ID of the benefit.
+	ID string `json:"id,required" format:"uuid4"`
+	// Creation timestamp of the object.
+	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	// Whether the benefit is deletable.
+	Deletable bool `json:"deletable,required"`
+	// The description of the benefit.
+	Description string `json:"description,required"`
+	// Whether the benefit is taxable.
+	IsTaxApplicable bool `json:"is_tax_applicable,required"`
+	// Last modification timestamp of the object.
+	ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
+	// The ID of the organization owning the benefit.
+	OrganizationID string `json:"organization_id,required" format:"uuid4"`
+	// Properties for a benefit of type `custom`.
+	Properties BenefitListResponseBenefitCustomProperties `json:"properties,required"`
+	// Whether the benefit is selectable when creating a product.
+	Selectable bool                                 `json:"selectable,required"`
+	Type       BenefitListResponseBenefitCustomType `json:"type,required"`
+	JSON       benefitListResponseBenefitCustomJSON `json:"-"`
+}
+
+// benefitListResponseBenefitCustomJSON contains the JSON metadata for the struct
+// [BenefitListResponseBenefitCustom]
+type benefitListResponseBenefitCustomJSON struct {
+	ID              apijson.Field
+	CreatedAt       apijson.Field
+	Deletable       apijson.Field
+	Description     apijson.Field
+	IsTaxApplicable apijson.Field
+	ModifiedAt      apijson.Field
+	OrganizationID  apijson.Field
+	Properties      apijson.Field
+	Selectable      apijson.Field
+	Type            apijson.Field
+	raw             string
+	ExtraFields     map[string]apijson.Field
+}
+
+func (r *BenefitListResponseBenefitCustom) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r benefitListResponseBenefitCustomJSON) RawJSON() string {
+	return r.raw
+}
+
+func (r BenefitListResponseBenefitCustom) implementsBenefitListResponse() {}
+
+// Properties for a benefit of type `custom`.
+type BenefitListResponseBenefitCustomProperties struct {
+	// Private note to be shared with users who have this benefit granted.
+	Note string                                         `json:"note,required,nullable"`
+	JSON benefitListResponseBenefitCustomPropertiesJSON `json:"-"`
+}
+
+// benefitListResponseBenefitCustomPropertiesJSON contains the JSON metadata for
+// the struct [BenefitListResponseBenefitCustomProperties]
+type benefitListResponseBenefitCustomPropertiesJSON struct {
+	Note        apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *BenefitListResponseBenefitCustomProperties) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r benefitListResponseBenefitCustomPropertiesJSON) RawJSON() string {
+	return r.raw
+}
+
+type BenefitListResponseBenefitCustomType string
+
+const (
+	BenefitListResponseBenefitCustomTypeCustom BenefitListResponseBenefitCustomType = "custom"
+)
+
+func (r BenefitListResponseBenefitCustomType) IsKnown() bool {
+	switch r {
+	case BenefitListResponseBenefitCustomTypeCustom:
+		return true
+	}
+	return false
+}
+
+// A benefit of type `discord`.
+//
+// Use it to automatically invite your backers to a Discord server.
+type BenefitListResponseBenefitDiscordOutput struct {
+	// The ID of the benefit.
+	ID string `json:"id,required" format:"uuid4"`
+	// Creation timestamp of the object.
+	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	// Whether the benefit is deletable.
+	Deletable bool `json:"deletable,required"`
+	// The description of the benefit.
+	Description string `json:"description,required"`
+	// Last modification timestamp of the object.
+	ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
+	// The ID of the organization owning the benefit.
+	OrganizationID string `json:"organization_id,required" format:"uuid4"`
+	// Properties for a benefit of type `discord`.
+	Properties BenefitListResponseBenefitDiscordOutputProperties `json:"properties,required"`
+	// Whether the benefit is selectable when creating a product.
+	Selectable bool                                        `json:"selectable,required"`
+	Type       BenefitListResponseBenefitDiscordOutputType `json:"type,required"`
+	JSON       benefitListResponseBenefitDiscordOutputJSON `json:"-"`
+}
+
+// benefitListResponseBenefitDiscordOutputJSON contains the JSON metadata for the
+// struct [BenefitListResponseBenefitDiscordOutput]
+type benefitListResponseBenefitDiscordOutputJSON struct {
+	ID             apijson.Field
+	CreatedAt      apijson.Field
+	Deletable      apijson.Field
+	Description    apijson.Field
+	ModifiedAt     apijson.Field
+	OrganizationID apijson.Field
+	Properties     apijson.Field
+	Selectable     apijson.Field
+	Type           apijson.Field
+	raw            string
+	ExtraFields    map[string]apijson.Field
+}
+
+func (r *BenefitListResponseBenefitDiscordOutput) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r benefitListResponseBenefitDiscordOutputJSON) RawJSON() string {
+	return r.raw
+}
+
+func (r BenefitListResponseBenefitDiscordOutput) implementsBenefitListResponse() {}
+
+// Properties for a benefit of type `discord`.
+type BenefitListResponseBenefitDiscordOutputProperties struct {
+	// The ID of the Discord server.
+	GuildID    string `json:"guild_id,required"`
+	GuildToken string `json:"guild_token,required"`
+	// The ID of the Discord role to grant.
+	RoleID string                                                `json:"role_id,required"`
+	JSON   benefitListResponseBenefitDiscordOutputPropertiesJSON `json:"-"`
+}
+
+// benefitListResponseBenefitDiscordOutputPropertiesJSON contains the JSON metadata
+// for the struct [BenefitListResponseBenefitDiscordOutputProperties]
+type benefitListResponseBenefitDiscordOutputPropertiesJSON struct {
+	GuildID     apijson.Field
+	GuildToken  apijson.Field
+	RoleID      apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *BenefitListResponseBenefitDiscordOutputProperties) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r benefitListResponseBenefitDiscordOutputPropertiesJSON) RawJSON() string {
+	return r.raw
+}
+
+type BenefitListResponseBenefitDiscordOutputType string
+
+const (
+	BenefitListResponseBenefitDiscordOutputTypeDiscord BenefitListResponseBenefitDiscordOutputType = "discord"
+)
+
+func (r BenefitListResponseBenefitDiscordOutputType) IsKnown() bool {
+	switch r {
+	case BenefitListResponseBenefitDiscordOutputTypeDiscord:
+		return true
+	}
+	return false
+}
+
+// A benefit of type `github_repository`.
+//
+// Use it to automatically invite your backers to a private GitHub repository.
+type BenefitListResponseBenefitGitHubRepository struct {
+	// The ID of the benefit.
+	ID string `json:"id,required" format:"uuid4"`
+	// Creation timestamp of the object.
+	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	// Whether the benefit is deletable.
+	Deletable bool `json:"deletable,required"`
+	// The description of the benefit.
+	Description string `json:"description,required"`
+	// Last modification timestamp of the object.
+	ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
+	// The ID of the organization owning the benefit.
+	OrganizationID string `json:"organization_id,required" format:"uuid4"`
+	// Properties for a benefit of type `github_repository`.
+	Properties BenefitListResponseBenefitGitHubRepositoryProperties `json:"properties,required"`
+	// Whether the benefit is selectable when creating a product.
+	Selectable bool                                           `json:"selectable,required"`
+	Type       BenefitListResponseBenefitGitHubRepositoryType `json:"type,required"`
+	JSON       benefitListResponseBenefitGitHubRepositoryJSON `json:"-"`
+}
+
+// benefitListResponseBenefitGitHubRepositoryJSON contains the JSON metadata for
+// the struct [BenefitListResponseBenefitGitHubRepository]
+type benefitListResponseBenefitGitHubRepositoryJSON struct {
+	ID             apijson.Field
+	CreatedAt      apijson.Field
+	Deletable      apijson.Field
+	Description    apijson.Field
+	ModifiedAt     apijson.Field
+	OrganizationID apijson.Field
+	Properties     apijson.Field
+	Selectable     apijson.Field
+	Type           apijson.Field
+	raw            string
+	ExtraFields    map[string]apijson.Field
+}
+
+func (r *BenefitListResponseBenefitGitHubRepository) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r benefitListResponseBenefitGitHubRepositoryJSON) RawJSON() string {
+	return r.raw
+}
+
+func (r BenefitListResponseBenefitGitHubRepository) implementsBenefitListResponse() {}
+
+// Properties for a benefit of type `github_repository`.
+type BenefitListResponseBenefitGitHubRepositoryProperties struct {
+	// The permission level to grant. Read more about roles and their permissions on
+	// [GitHub documentation](https://docs.github.com/en/organizations/managing-user-access-to-your-organizations-repositories/managing-repository-roles/repository-roles-for-an-organization#permissions-for-each-role).
+	Permission   BenefitListResponseBenefitGitHubRepositoryPropertiesPermission `json:"permission,required"`
+	RepositoryID string                                                         `json:"repository_id,required,nullable" format:"uuid4"`
+	// The name of the repository.
+	RepositoryName string `json:"repository_name,required"`
+	// The owner of the repository.
+	RepositoryOwner string                                                   `json:"repository_owner,required"`
+	JSON            benefitListResponseBenefitGitHubRepositoryPropertiesJSON `json:"-"`
+}
+
+// benefitListResponseBenefitGitHubRepositoryPropertiesJSON contains the JSON
+// metadata for the struct [BenefitListResponseBenefitGitHubRepositoryProperties]
+type benefitListResponseBenefitGitHubRepositoryPropertiesJSON struct {
+	Permission      apijson.Field
+	RepositoryID    apijson.Field
+	RepositoryName  apijson.Field
+	RepositoryOwner apijson.Field
+	raw             string
+	ExtraFields     map[string]apijson.Field
+}
+
+func (r *BenefitListResponseBenefitGitHubRepositoryProperties) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r benefitListResponseBenefitGitHubRepositoryPropertiesJSON) RawJSON() string {
+	return r.raw
+}
+
+// The permission level to grant. Read more about roles and their permissions on
+// [GitHub documentation](https://docs.github.com/en/organizations/managing-user-access-to-your-organizations-repositories/managing-repository-roles/repository-roles-for-an-organization#permissions-for-each-role).
+type BenefitListResponseBenefitGitHubRepositoryPropertiesPermission string
+
+const (
+	BenefitListResponseBenefitGitHubRepositoryPropertiesPermissionPull     BenefitListResponseBenefitGitHubRepositoryPropertiesPermission = "pull"
+	BenefitListResponseBenefitGitHubRepositoryPropertiesPermissionTriage   BenefitListResponseBenefitGitHubRepositoryPropertiesPermission = "triage"
+	BenefitListResponseBenefitGitHubRepositoryPropertiesPermissionPush     BenefitListResponseBenefitGitHubRepositoryPropertiesPermission = "push"
+	BenefitListResponseBenefitGitHubRepositoryPropertiesPermissionMaintain BenefitListResponseBenefitGitHubRepositoryPropertiesPermission = "maintain"
+	BenefitListResponseBenefitGitHubRepositoryPropertiesPermissionAdmin    BenefitListResponseBenefitGitHubRepositoryPropertiesPermission = "admin"
+)
+
+func (r BenefitListResponseBenefitGitHubRepositoryPropertiesPermission) IsKnown() bool {
+	switch r {
+	case BenefitListResponseBenefitGitHubRepositoryPropertiesPermissionPull, BenefitListResponseBenefitGitHubRepositoryPropertiesPermissionTriage, BenefitListResponseBenefitGitHubRepositoryPropertiesPermissionPush, BenefitListResponseBenefitGitHubRepositoryPropertiesPermissionMaintain, BenefitListResponseBenefitGitHubRepositoryPropertiesPermissionAdmin:
+		return true
+	}
+	return false
+}
+
+type BenefitListResponseBenefitGitHubRepositoryType string
+
+const (
+	BenefitListResponseBenefitGitHubRepositoryTypeGitHubRepository BenefitListResponseBenefitGitHubRepositoryType = "github_repository"
+)
+
+func (r BenefitListResponseBenefitGitHubRepositoryType) IsKnown() bool {
+	switch r {
+	case BenefitListResponseBenefitGitHubRepositoryTypeGitHubRepository:
+		return true
+	}
+	return false
+}
+
+type BenefitListResponseBenefitDownloadables struct {
+	// The ID of the benefit.
+	ID string `json:"id,required" format:"uuid4"`
+	// Creation timestamp of the object.
+	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	// Whether the benefit is deletable.
+	Deletable bool `json:"deletable,required"`
+	// The description of the benefit.
+	Description string `json:"description,required"`
+	// Last modification timestamp of the object.
+	ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
+	// The ID of the organization owning the benefit.
+	OrganizationID string                                            `json:"organization_id,required" format:"uuid4"`
+	Properties     BenefitListResponseBenefitDownloadablesProperties `json:"properties,required"`
+	// Whether the benefit is selectable when creating a product.
+	Selectable bool                                        `json:"selectable,required"`
+	Type       BenefitListResponseBenefitDownloadablesType `json:"type,required"`
+	JSON       benefitListResponseBenefitDownloadablesJSON `json:"-"`
+}
+
+// benefitListResponseBenefitDownloadablesJSON contains the JSON metadata for the
+// struct [BenefitListResponseBenefitDownloadables]
+type benefitListResponseBenefitDownloadablesJSON struct {
+	ID             apijson.Field
+	CreatedAt      apijson.Field
+	Deletable      apijson.Field
+	Description    apijson.Field
+	ModifiedAt     apijson.Field
+	OrganizationID apijson.Field
+	Properties     apijson.Field
+	Selectable     apijson.Field
+	Type           apijson.Field
+	raw            string
+	ExtraFields    map[string]apijson.Field
+}
+
+func (r *BenefitListResponseBenefitDownloadables) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r benefitListResponseBenefitDownloadablesJSON) RawJSON() string {
+	return r.raw
+}
+
+func (r BenefitListResponseBenefitDownloadables) implementsBenefitListResponse() {}
+
+type BenefitListResponseBenefitDownloadablesProperties struct {
+	Archived map[string]bool                                       `json:"archived,required"`
+	Files    []string                                              `json:"files,required" format:"uuid4"`
+	JSON     benefitListResponseBenefitDownloadablesPropertiesJSON `json:"-"`
+}
+
+// benefitListResponseBenefitDownloadablesPropertiesJSON contains the JSON metadata
+// for the struct [BenefitListResponseBenefitDownloadablesProperties]
+type benefitListResponseBenefitDownloadablesPropertiesJSON struct {
+	Archived    apijson.Field
+	Files       apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *BenefitListResponseBenefitDownloadablesProperties) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r benefitListResponseBenefitDownloadablesPropertiesJSON) RawJSON() string {
+	return r.raw
+}
+
+type BenefitListResponseBenefitDownloadablesType string
+
+const (
+	BenefitListResponseBenefitDownloadablesTypeDownloadables BenefitListResponseBenefitDownloadablesType = "downloadables"
+)
+
+func (r BenefitListResponseBenefitDownloadablesType) IsKnown() bool {
+	switch r {
+	case BenefitListResponseBenefitDownloadablesTypeDownloadables:
+		return true
+	}
+	return false
+}
+
+type BenefitListResponseType string
+
+const (
+	BenefitListResponseTypeArticles         BenefitListResponseType = "articles"
+	BenefitListResponseTypeAds              BenefitListResponseType = "ads"
+	BenefitListResponseTypeCustom           BenefitListResponseType = "custom"
+	BenefitListResponseTypeDiscord          BenefitListResponseType = "discord"
+	BenefitListResponseTypeGitHubRepository BenefitListResponseType = "github_repository"
+	BenefitListResponseTypeDownloadables    BenefitListResponseType = "downloadables"
+)
+
+func (r BenefitListResponseType) IsKnown() bool {
+	switch r {
+	case BenefitListResponseTypeArticles, BenefitListResponseTypeAds, BenefitListResponseTypeCustom, BenefitListResponseTypeDiscord, BenefitListResponseTypeGitHubRepository, BenefitListResponseTypeDownloadables:
 		return true
 	}
 	return false

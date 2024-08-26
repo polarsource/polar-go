@@ -12,6 +12,7 @@ import (
 
 	"github.com/polarsource/polar-go/internal/apijson"
 	"github.com/polarsource/polar-go/internal/apiquery"
+	"github.com/polarsource/polar-go/internal/pagination"
 	"github.com/polarsource/polar-go/internal/param"
 	"github.com/polarsource/polar-go/internal/requestconfig"
 	"github.com/polarsource/polar-go/option"
@@ -49,11 +50,26 @@ func (r *AdvertisementService) Get(ctx context.Context, id string, opts ...optio
 }
 
 // List active advertisement campaigns for a benefit.
-func (r *AdvertisementService) List(ctx context.Context, query AdvertisementListParams, opts ...option.RequestOption) (res *AdvertisementCampaignListResource, err error) {
+func (r *AdvertisementService) List(ctx context.Context, query AdvertisementListParams, opts ...option.RequestOption) (res *pagination.PolarPagination[AdvertisementCampaign], err error) {
+	var raw *http.Response
 	opts = append(r.Options[:], opts...)
+	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "v1/advertisements/"
-	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
-	return
+	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
+	if err != nil {
+		return nil, err
+	}
+	err = cfg.Execute()
+	if err != nil {
+		return nil, err
+	}
+	res.SetPageConfig(cfg, raw)
+	return res, nil
+}
+
+// List active advertisement campaigns for a benefit.
+func (r *AdvertisementService) ListAutoPaging(ctx context.Context, query AdvertisementListParams, opts ...option.RequestOption) *pagination.PolarPaginationAutoPager[AdvertisementCampaign] {
+	return pagination.NewPolarPaginationAutoPager(r.List(ctx, query, opts...))
 }
 
 type AdvertisementCampaign struct {

@@ -3,7 +3,7 @@
 <a href="https://pkg.go.dev/github.com/polarsource/polar-go"><img src="https://pkg.go.dev/badge/github.com/polarsource/polar-go.svg" alt="Go Reference"></a>
 
 The Polar Go library provides convenient access to [the Polar REST
-API](https://docs.polar.com) from applications written in Go. The full API of this library can be found in [api.md](api.md).
+API](https://docs.polar.sh) from applications written in Go. The full API of this library can be found in [api.md](api.md).
 
 It is generated with [Stainless](https://www.stainlessapi.com/).
 
@@ -52,14 +52,14 @@ func main() {
 	client := polar.NewClient(
 		option.WithBearerToken("My Bearer Token"), // defaults to os.LookupEnv("POLAR_BEARER_TOKEN")
 	)
-	accountNewResponse, err := client.Accounts.New(context.TODO(), polar.AccountNewParams{
-		AccountType: polar.F(polar.AccountNewParamsAccountTypeStripe),
-		Country:     polar.F("xx"),
+	checkout, err := client.Checkouts.New(context.TODO(), polar.CheckoutNewParams{
+		ProductPriceID: polar.F("product_price_id"),
+		SuccessURL:     polar.F("https://example.com"),
 	})
 	if err != nil {
 		panic(err.Error())
 	}
-	fmt.Printf("%+v\n", accountNewResponse.ID)
+	fmt.Printf("%+v\n", checkout.ID)
 }
 
 ```
@@ -148,7 +148,7 @@ client := polar.NewClient(
 	option.WithHeader("X-Some-Header", "custom_header_info"),
 )
 
-client.Accounts.New(context.TODO(), ...,
+client.Checkouts.New(context.TODO(), ...,
 	// Override the header
 	option.WithHeader("X-Some-Header", "some_other_custom_header_info"),
 	// Add an undocumented field to the request body, using sjson syntax
@@ -164,8 +164,33 @@ This library provides some conveniences for working with paginated list endpoint
 
 You can use `.ListAutoPaging()` methods to iterate through items across all pages:
 
+```go
+iter := client.Products.ListAutoPaging(context.TODO(), polar.ProductListParams{})
+// Automatically fetches more pages as needed.
+for iter.Next() {
+	productOutput := iter.Current()
+	fmt.Printf("%+v\n", productOutput)
+}
+if err := iter.Err(); err != nil {
+	panic(err.Error())
+}
+```
+
 Or you can use simple `.List()` methods to fetch a single page and receive a standard response object
 with additional helper methods like `.GetNextPage()`, e.g.:
+
+```go
+page, err := client.Products.List(context.TODO(), polar.ProductListParams{})
+for page != nil {
+	for _, product := range page.Items {
+		fmt.Printf("%+v\n", product)
+	}
+	page, err = page.GetNextPage()
+}
+if err != nil {
+	panic(err.Error())
+}
+```
 
 ### Errors
 
@@ -177,9 +202,9 @@ When the API returns a non-success status code, we return an error with type
 To handle errors, we recommend that you use the `errors.As` pattern:
 
 ```go
-_, err := client.Accounts.New(context.TODO(), polar.AccountNewParams{
-	AccountType: polar.F(polar.AccountNewParamsAccountTypeStripe),
-	Country:     polar.F("xx"),
+_, err := client.Checkouts.New(context.TODO(), polar.CheckoutNewParams{
+	ProductPriceID: polar.F("product_price_id"),
+	SuccessURL:     polar.F("https://example.com"),
 })
 if err != nil {
 	var apierr *polar.Error
@@ -187,7 +212,7 @@ if err != nil {
 		println(string(apierr.DumpRequest(true)))  // Prints the serialized HTTP request
 		println(string(apierr.DumpResponse(true))) // Prints the serialized HTTP response
 	}
-	panic(err.Error()) // GET "/v1/accounts": 400 Bad Request { ... }
+	panic(err.Error()) // GET "/v1/checkouts/": 400 Bad Request { ... }
 }
 ```
 
@@ -205,11 +230,11 @@ To set a per-retry timeout, use `option.WithRequestTimeout()`.
 // This sets the timeout for the request, including all the retries.
 ctx, cancel := context.WithTimeout(context.Background(), 5*time.Minute)
 defer cancel()
-client.Accounts.New(
+client.Checkouts.New(
 	ctx,
-	polar.AccountNewParams{
-		AccountType: polar.F(polar.AccountNewParamsAccountTypeStripe),
-		Country:     polar.F("xx"),
+	polar.CheckoutNewParams{
+		ProductPriceID: polar.F("product_price_id"),
+		SuccessURL:     polar.F("https://example.com"),
 	},
 	// This sets the per-retry timeout
 	option.WithRequestTimeout(20*time.Second),
@@ -244,11 +269,11 @@ client := polar.NewClient(
 )
 
 // Override per-request:
-client.Accounts.New(
+client.Checkouts.New(
 	context.TODO(),
-	polar.AccountNewParams{
-		AccountType: polar.F(polar.AccountNewParamsAccountTypeStripe),
-		Country:     polar.F("xx"),
+	polar.CheckoutNewParams{
+		ProductPriceID: polar.F("product_price_id"),
+		SuccessURL:     polar.F("https://example.com"),
 	},
 	option.WithMaxRetries(5),
 )

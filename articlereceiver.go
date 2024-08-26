@@ -32,7 +32,7 @@ func NewArticleReceiverService(opts ...option.RequestOption) (r *ArticleReceiver
 }
 
 // Get number of potential receivers for an article.
-func (r *ArticleReceiverService) List(ctx context.Context, id string, opts ...option.RequestOption) (res *ArticleReceivers, err error) {
+func (r *ArticleReceiverService) Get(ctx context.Context, id string, opts ...option.RequestOption) (res *ArticleReceivers, err error) {
 	opts = append(r.Options[:], opts...)
 	if id == "" {
 		err = errors.New("missing required id parameter")

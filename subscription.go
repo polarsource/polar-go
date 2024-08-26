@@ -15,6 +15,7 @@ import (
 	"github.com/polarsource/polar-go/internal/apiform"
 	"github.com/polarsource/polar-go/internal/apijson"
 	"github.com/polarsource/polar-go/internal/apiquery"
+	"github.com/polarsource/polar-go/internal/pagination"
 	"github.com/polarsource/polar-go/internal/param"
 	"github.com/polarsource/polar-go/internal/requestconfig"
 	"github.com/polarsource/polar-go/option"
@@ -49,11 +50,26 @@ func (r *SubscriptionService) New(ctx context.Context, body SubscriptionNewParam
 }
 
 // List subscriptions.
-func (r *SubscriptionService) List(ctx context.Context, query SubscriptionListParams, opts ...option.RequestOption) (res *SubscriptionListResponse, err error) {
+func (r *SubscriptionService) List(ctx context.Context, query SubscriptionListParams, opts ...option.RequestOption) (res *pagination.PolarPagination[SubscriptionListResponse], err error) {
+	var raw *http.Response
 	opts = append(r.Options[:], opts...)
+	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "v1/subscriptions/"
-	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
-	return
+	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
+	if err != nil {
+		return nil, err
+	}
+	err = cfg.Execute()
+	if err != nil {
+		return nil, err
+	}
+	res.SetPageConfig(cfg, raw)
+	return res, nil
+}
+
+// List subscriptions.
+func (r *SubscriptionService) ListAutoPaging(ctx context.Context, query SubscriptionListParams, opts ...option.RequestOption) *pagination.PolarPaginationAutoPager[SubscriptionListResponse] {
+	return pagination.NewPolarPaginationAutoPager(r.List(ctx, query, opts...))
 }
 
 // Export subscriptions as a CSV file.
@@ -426,52 +442,6 @@ func (r subscriptionNewResponseUserJSON) RawJSON() string {
 }
 
 type SubscriptionListResponse struct {
-	Pagination SubscriptionListResponsePagination `json:"pagination,required"`
-	Items      []SubscriptionListResponseItem     `json:"items"`
-	JSON       subscriptionListResponseJSON       `json:"-"`
-}
-
-// subscriptionListResponseJSON contains the JSON metadata for the struct
-// [SubscriptionListResponse]
-type subscriptionListResponseJSON struct {
-	Pagination  apijson.Field
-	Items       apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *SubscriptionListResponse) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-func (r subscriptionListResponseJSON) RawJSON() string {
-	return r.raw
-}
-
-type SubscriptionListResponsePagination struct {
-	MaxPage    int64                                  `json:"max_page,required"`
-	TotalCount int64                                  `json:"total_count,required"`
-	JSON       subscriptionListResponsePaginationJSON `json:"-"`
-}
-
-// subscriptionListResponsePaginationJSON contains the JSON metadata for the struct
-// [SubscriptionListResponsePagination]
-type subscriptionListResponsePaginationJSON struct {
-	MaxPage     apijson.Field
-	TotalCount  apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *SubscriptionListResponsePagination) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-func (r subscriptionListResponsePaginationJSON) RawJSON() string {
-	return r.raw
-}
-
-type SubscriptionListResponseItem struct {
 	// The ID of the object.
 	ID                string `json:"id,required" format:"uuid4"`
 	CancelAtPeriodEnd bool   `json:"cancel_at_period_end,required"`
@@ -483,21 +453,21 @@ type SubscriptionListResponseItem struct {
 	// Last modification timestamp of the object.
 	ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
 	// A recurring price for a product, i.e. a subscription.
-	Price   SubscriptionListResponseItemsPrice `json:"price,required,nullable"`
-	PriceID string                             `json:"price_id,required,nullable" format:"uuid4"`
+	Price   SubscriptionListResponsePrice `json:"price,required,nullable"`
+	PriceID string                        `json:"price_id,required,nullable" format:"uuid4"`
 	// A product.
-	Product   ProductOutput                       `json:"product,required"`
-	ProductID string                              `json:"product_id,required" format:"uuid4"`
-	StartedAt time.Time                           `json:"started_at,required,nullable" format:"date-time"`
-	Status    SubscriptionListResponseItemsStatus `json:"status,required"`
-	User      SubscriptionListResponseItemsUser   `json:"user,required"`
-	UserID    string                              `json:"user_id,required" format:"uuid4"`
-	JSON      subscriptionListResponseItemJSON    `json:"-"`
+	Product   ProductOutput                  `json:"product,required"`
+	ProductID string                         `json:"product_id,required" format:"uuid4"`
+	StartedAt time.Time                      `json:"started_at,required,nullable" format:"date-time"`
+	Status    SubscriptionListResponseStatus `json:"status,required"`
+	User      SubscriptionListResponseUser   `json:"user,required"`
+	UserID    string                         `json:"user_id,required" format:"uuid4"`
+	JSON      subscriptionListResponseJSON   `json:"-"`
 }
 
-// subscriptionListResponseItemJSON contains the JSON metadata for the struct
-// [SubscriptionListResponseItem]
-type subscriptionListResponseItemJSON struct {
+// subscriptionListResponseJSON contains the JSON metadata for the struct
+// [SubscriptionListResponse]
+type subscriptionListResponseJSON struct {
 	ID                 apijson.Field
 	CancelAtPeriodEnd  apijson.Field
 	CreatedAt          apijson.Field
@@ -517,16 +487,16 @@ type subscriptionListResponseItemJSON struct {
 	ExtraFields        map[string]apijson.Field
 }
 
-func (r *SubscriptionListResponseItem) UnmarshalJSON(data []byte) (err error) {
+func (r *SubscriptionListResponse) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-func (r subscriptionListResponseItemJSON) RawJSON() string {
+func (r subscriptionListResponseJSON) RawJSON() string {
 	return r.raw
 }
 
 // A recurring price for a product, i.e. a subscription.
-type SubscriptionListResponseItemsPrice struct {
+type SubscriptionListResponsePrice struct {
 	// Creation timestamp of the object.
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
 	// Last modification timestamp of the object.
@@ -540,16 +510,16 @@ type SubscriptionListResponseItemsPrice struct {
 	// Whether the price is archived and no longer available.
 	IsArchived bool `json:"is_archived,required"`
 	// The type of the price.
-	Type SubscriptionListResponseItemsPriceType `json:"type,required"`
+	Type SubscriptionListResponsePriceType `json:"type,required"`
 	// The recurring interval of the price, if type is `recurring`.
-	RecurringInterval SubscriptionListResponseItemsPriceRecurringInterval `json:"recurring_interval,nullable"`
-	JSON              subscriptionListResponseItemsPriceJSON              `json:"-"`
-	union             SubscriptionListResponseItemsPriceUnion
+	RecurringInterval SubscriptionListResponsePriceRecurringInterval `json:"recurring_interval,nullable"`
+	JSON              subscriptionListResponsePriceJSON              `json:"-"`
+	union             SubscriptionListResponsePriceUnion
 }
 
-// subscriptionListResponseItemsPriceJSON contains the JSON metadata for the struct
-// [SubscriptionListResponseItemsPrice]
-type subscriptionListResponseItemsPriceJSON struct {
+// subscriptionListResponsePriceJSON contains the JSON metadata for the struct
+// [SubscriptionListResponsePrice]
+type subscriptionListResponsePriceJSON struct {
 	CreatedAt         apijson.Field
 	ModifiedAt        apijson.Field
 	ID                apijson.Field
@@ -562,12 +532,12 @@ type subscriptionListResponseItemsPriceJSON struct {
 	ExtraFields       map[string]apijson.Field
 }
 
-func (r subscriptionListResponseItemsPriceJSON) RawJSON() string {
+func (r subscriptionListResponsePriceJSON) RawJSON() string {
 	return r.raw
 }
 
-func (r *SubscriptionListResponseItemsPrice) UnmarshalJSON(data []byte) (err error) {
-	*r = SubscriptionListResponseItemsPrice{}
+func (r *SubscriptionListResponsePrice) UnmarshalJSON(data []byte) (err error) {
+	*r = SubscriptionListResponsePrice{}
 	err = apijson.UnmarshalRoot(data, &r.union)
 	if err != nil {
 		return err
@@ -575,43 +545,43 @@ func (r *SubscriptionListResponseItemsPrice) UnmarshalJSON(data []byte) (err err
 	return apijson.Port(r.union, &r)
 }
 
-// AsUnion returns a [SubscriptionListResponseItemsPriceUnion] interface which you
-// can cast to the specific types for more type safety.
+// AsUnion returns a [SubscriptionListResponsePriceUnion] interface which you can
+// cast to the specific types for more type safety.
 //
 // Possible runtime types of the union are
-// [SubscriptionListResponseItemsPriceProductPriceRecurring],
-// [SubscriptionListResponseItemsPriceProductPriceOneTime].
-func (r SubscriptionListResponseItemsPrice) AsUnion() SubscriptionListResponseItemsPriceUnion {
+// [SubscriptionListResponsePriceProductPriceRecurring],
+// [SubscriptionListResponsePriceProductPriceOneTime].
+func (r SubscriptionListResponsePrice) AsUnion() SubscriptionListResponsePriceUnion {
 	return r.union
 }
 
 // A recurring price for a product, i.e. a subscription.
 //
-// Union satisfied by [SubscriptionListResponseItemsPriceProductPriceRecurring] or
-// [SubscriptionListResponseItemsPriceProductPriceOneTime].
-type SubscriptionListResponseItemsPriceUnion interface {
-	implementsSubscriptionListResponseItemsPrice()
+// Union satisfied by [SubscriptionListResponsePriceProductPriceRecurring] or
+// [SubscriptionListResponsePriceProductPriceOneTime].
+type SubscriptionListResponsePriceUnion interface {
+	implementsSubscriptionListResponsePrice()
 }
 
 func init() {
 	apijson.RegisterUnion(
-		reflect.TypeOf((*SubscriptionListResponseItemsPriceUnion)(nil)).Elem(),
+		reflect.TypeOf((*SubscriptionListResponsePriceUnion)(nil)).Elem(),
 		"type",
 		apijson.UnionVariant{
 			TypeFilter:         gjson.JSON,
-			Type:               reflect.TypeOf(SubscriptionListResponseItemsPriceProductPriceRecurring{}),
+			Type:               reflect.TypeOf(SubscriptionListResponsePriceProductPriceRecurring{}),
 			DiscriminatorValue: "recurring",
 		},
 		apijson.UnionVariant{
 			TypeFilter:         gjson.JSON,
-			Type:               reflect.TypeOf(SubscriptionListResponseItemsPriceProductPriceOneTime{}),
+			Type:               reflect.TypeOf(SubscriptionListResponsePriceProductPriceOneTime{}),
 			DiscriminatorValue: "one_time",
 		},
 	)
 }
 
 // A recurring price for a product, i.e. a subscription.
-type SubscriptionListResponseItemsPriceProductPriceRecurring struct {
+type SubscriptionListResponsePriceProductPriceRecurring struct {
 	// The ID of the price.
 	ID string `json:"id,required" format:"uuid4"`
 	// Creation timestamp of the object.
@@ -625,16 +595,15 @@ type SubscriptionListResponseItemsPriceProductPriceRecurring struct {
 	// The currency.
 	PriceCurrency string `json:"price_currency,required"`
 	// The recurring interval of the price, if type is `recurring`.
-	RecurringInterval SubscriptionListResponseItemsPriceProductPriceRecurringRecurringInterval `json:"recurring_interval,required,nullable"`
+	RecurringInterval SubscriptionListResponsePriceProductPriceRecurringRecurringInterval `json:"recurring_interval,required,nullable"`
 	// The type of the price.
-	Type SubscriptionListResponseItemsPriceProductPriceRecurringType `json:"type,required"`
-	JSON subscriptionListResponseItemsPriceProductPriceRecurringJSON `json:"-"`
+	Type SubscriptionListResponsePriceProductPriceRecurringType `json:"type,required"`
+	JSON subscriptionListResponsePriceProductPriceRecurringJSON `json:"-"`
 }
 
-// subscriptionListResponseItemsPriceProductPriceRecurringJSON contains the JSON
-// metadata for the struct
-// [SubscriptionListResponseItemsPriceProductPriceRecurring]
-type subscriptionListResponseItemsPriceProductPriceRecurringJSON struct {
+// subscriptionListResponsePriceProductPriceRecurringJSON contains the JSON
+// metadata for the struct [SubscriptionListResponsePriceProductPriceRecurring]
+type subscriptionListResponsePriceProductPriceRecurringJSON struct {
 	ID                apijson.Field
 	CreatedAt         apijson.Field
 	IsArchived        apijson.Field
@@ -647,50 +616,50 @@ type subscriptionListResponseItemsPriceProductPriceRecurringJSON struct {
 	ExtraFields       map[string]apijson.Field
 }
 
-func (r *SubscriptionListResponseItemsPriceProductPriceRecurring) UnmarshalJSON(data []byte) (err error) {
+func (r *SubscriptionListResponsePriceProductPriceRecurring) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-func (r subscriptionListResponseItemsPriceProductPriceRecurringJSON) RawJSON() string {
+func (r subscriptionListResponsePriceProductPriceRecurringJSON) RawJSON() string {
 	return r.raw
 }
 
-func (r SubscriptionListResponseItemsPriceProductPriceRecurring) implementsSubscriptionListResponseItemsPrice() {
+func (r SubscriptionListResponsePriceProductPriceRecurring) implementsSubscriptionListResponsePrice() {
 }
 
 // The recurring interval of the price, if type is `recurring`.
-type SubscriptionListResponseItemsPriceProductPriceRecurringRecurringInterval string
+type SubscriptionListResponsePriceProductPriceRecurringRecurringInterval string
 
 const (
-	SubscriptionListResponseItemsPriceProductPriceRecurringRecurringIntervalMonth SubscriptionListResponseItemsPriceProductPriceRecurringRecurringInterval = "month"
-	SubscriptionListResponseItemsPriceProductPriceRecurringRecurringIntervalYear  SubscriptionListResponseItemsPriceProductPriceRecurringRecurringInterval = "year"
+	SubscriptionListResponsePriceProductPriceRecurringRecurringIntervalMonth SubscriptionListResponsePriceProductPriceRecurringRecurringInterval = "month"
+	SubscriptionListResponsePriceProductPriceRecurringRecurringIntervalYear  SubscriptionListResponsePriceProductPriceRecurringRecurringInterval = "year"
 )
 
-func (r SubscriptionListResponseItemsPriceProductPriceRecurringRecurringInterval) IsKnown() bool {
+func (r SubscriptionListResponsePriceProductPriceRecurringRecurringInterval) IsKnown() bool {
 	switch r {
-	case SubscriptionListResponseItemsPriceProductPriceRecurringRecurringIntervalMonth, SubscriptionListResponseItemsPriceProductPriceRecurringRecurringIntervalYear:
+	case SubscriptionListResponsePriceProductPriceRecurringRecurringIntervalMonth, SubscriptionListResponsePriceProductPriceRecurringRecurringIntervalYear:
 		return true
 	}
 	return false
 }
 
 // The type of the price.
-type SubscriptionListResponseItemsPriceProductPriceRecurringType string
+type SubscriptionListResponsePriceProductPriceRecurringType string
 
 const (
-	SubscriptionListResponseItemsPriceProductPriceRecurringTypeRecurring SubscriptionListResponseItemsPriceProductPriceRecurringType = "recurring"
+	SubscriptionListResponsePriceProductPriceRecurringTypeRecurring SubscriptionListResponsePriceProductPriceRecurringType = "recurring"
 )
 
-func (r SubscriptionListResponseItemsPriceProductPriceRecurringType) IsKnown() bool {
+func (r SubscriptionListResponsePriceProductPriceRecurringType) IsKnown() bool {
 	switch r {
-	case SubscriptionListResponseItemsPriceProductPriceRecurringTypeRecurring:
+	case SubscriptionListResponsePriceProductPriceRecurringTypeRecurring:
 		return true
 	}
 	return false
 }
 
 // A one-time price for a product.
-type SubscriptionListResponseItemsPriceProductPriceOneTime struct {
+type SubscriptionListResponsePriceProductPriceOneTime struct {
 	// The ID of the price.
 	ID string `json:"id,required" format:"uuid4"`
 	// Creation timestamp of the object.
@@ -704,13 +673,13 @@ type SubscriptionListResponseItemsPriceProductPriceOneTime struct {
 	// The currency.
 	PriceCurrency string `json:"price_currency,required"`
 	// The type of the price.
-	Type SubscriptionListResponseItemsPriceProductPriceOneTimeType `json:"type,required"`
-	JSON subscriptionListResponseItemsPriceProductPriceOneTimeJSON `json:"-"`
+	Type SubscriptionListResponsePriceProductPriceOneTimeType `json:"type,required"`
+	JSON subscriptionListResponsePriceProductPriceOneTimeJSON `json:"-"`
 }
 
-// subscriptionListResponseItemsPriceProductPriceOneTimeJSON contains the JSON
-// metadata for the struct [SubscriptionListResponseItemsPriceProductPriceOneTime]
-type subscriptionListResponseItemsPriceProductPriceOneTimeJSON struct {
+// subscriptionListResponsePriceProductPriceOneTimeJSON contains the JSON metadata
+// for the struct [SubscriptionListResponsePriceProductPriceOneTime]
+type subscriptionListResponsePriceProductPriceOneTimeJSON struct {
 	ID            apijson.Field
 	CreatedAt     apijson.Field
 	IsArchived    apijson.Field
@@ -722,95 +691,94 @@ type subscriptionListResponseItemsPriceProductPriceOneTimeJSON struct {
 	ExtraFields   map[string]apijson.Field
 }
 
-func (r *SubscriptionListResponseItemsPriceProductPriceOneTime) UnmarshalJSON(data []byte) (err error) {
+func (r *SubscriptionListResponsePriceProductPriceOneTime) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-func (r subscriptionListResponseItemsPriceProductPriceOneTimeJSON) RawJSON() string {
+func (r subscriptionListResponsePriceProductPriceOneTimeJSON) RawJSON() string {
 	return r.raw
 }
 
-func (r SubscriptionListResponseItemsPriceProductPriceOneTime) implementsSubscriptionListResponseItemsPrice() {
-}
+func (r SubscriptionListResponsePriceProductPriceOneTime) implementsSubscriptionListResponsePrice() {}
 
 // The type of the price.
-type SubscriptionListResponseItemsPriceProductPriceOneTimeType string
+type SubscriptionListResponsePriceProductPriceOneTimeType string
 
 const (
-	SubscriptionListResponseItemsPriceProductPriceOneTimeTypeOneTime SubscriptionListResponseItemsPriceProductPriceOneTimeType = "one_time"
+	SubscriptionListResponsePriceProductPriceOneTimeTypeOneTime SubscriptionListResponsePriceProductPriceOneTimeType = "one_time"
 )
 
-func (r SubscriptionListResponseItemsPriceProductPriceOneTimeType) IsKnown() bool {
+func (r SubscriptionListResponsePriceProductPriceOneTimeType) IsKnown() bool {
 	switch r {
-	case SubscriptionListResponseItemsPriceProductPriceOneTimeTypeOneTime:
+	case SubscriptionListResponsePriceProductPriceOneTimeTypeOneTime:
 		return true
 	}
 	return false
 }
 
 // The type of the price.
-type SubscriptionListResponseItemsPriceType string
+type SubscriptionListResponsePriceType string
 
 const (
-	SubscriptionListResponseItemsPriceTypeRecurring SubscriptionListResponseItemsPriceType = "recurring"
-	SubscriptionListResponseItemsPriceTypeOneTime   SubscriptionListResponseItemsPriceType = "one_time"
+	SubscriptionListResponsePriceTypeRecurring SubscriptionListResponsePriceType = "recurring"
+	SubscriptionListResponsePriceTypeOneTime   SubscriptionListResponsePriceType = "one_time"
 )
 
-func (r SubscriptionListResponseItemsPriceType) IsKnown() bool {
+func (r SubscriptionListResponsePriceType) IsKnown() bool {
 	switch r {
-	case SubscriptionListResponseItemsPriceTypeRecurring, SubscriptionListResponseItemsPriceTypeOneTime:
+	case SubscriptionListResponsePriceTypeRecurring, SubscriptionListResponsePriceTypeOneTime:
 		return true
 	}
 	return false
 }
 
 // The recurring interval of the price, if type is `recurring`.
-type SubscriptionListResponseItemsPriceRecurringInterval string
+type SubscriptionListResponsePriceRecurringInterval string
 
 const (
-	SubscriptionListResponseItemsPriceRecurringIntervalMonth SubscriptionListResponseItemsPriceRecurringInterval = "month"
-	SubscriptionListResponseItemsPriceRecurringIntervalYear  SubscriptionListResponseItemsPriceRecurringInterval = "year"
+	SubscriptionListResponsePriceRecurringIntervalMonth SubscriptionListResponsePriceRecurringInterval = "month"
+	SubscriptionListResponsePriceRecurringIntervalYear  SubscriptionListResponsePriceRecurringInterval = "year"
 )
 
-func (r SubscriptionListResponseItemsPriceRecurringInterval) IsKnown() bool {
+func (r SubscriptionListResponsePriceRecurringInterval) IsKnown() bool {
 	switch r {
-	case SubscriptionListResponseItemsPriceRecurringIntervalMonth, SubscriptionListResponseItemsPriceRecurringIntervalYear:
+	case SubscriptionListResponsePriceRecurringIntervalMonth, SubscriptionListResponsePriceRecurringIntervalYear:
 		return true
 	}
 	return false
 }
 
-type SubscriptionListResponseItemsStatus string
+type SubscriptionListResponseStatus string
 
 const (
-	SubscriptionListResponseItemsStatusIncomplete        SubscriptionListResponseItemsStatus = "incomplete"
-	SubscriptionListResponseItemsStatusIncompleteExpired SubscriptionListResponseItemsStatus = "incomplete_expired"
-	SubscriptionListResponseItemsStatusTrialing          SubscriptionListResponseItemsStatus = "trialing"
-	SubscriptionListResponseItemsStatusActive            SubscriptionListResponseItemsStatus = "active"
-	SubscriptionListResponseItemsStatusPastDue           SubscriptionListResponseItemsStatus = "past_due"
-	SubscriptionListResponseItemsStatusCanceled          SubscriptionListResponseItemsStatus = "canceled"
-	SubscriptionListResponseItemsStatusUnpaid            SubscriptionListResponseItemsStatus = "unpaid"
+	SubscriptionListResponseStatusIncomplete        SubscriptionListResponseStatus = "incomplete"
+	SubscriptionListResponseStatusIncompleteExpired SubscriptionListResponseStatus = "incomplete_expired"
+	SubscriptionListResponseStatusTrialing          SubscriptionListResponseStatus = "trialing"
+	SubscriptionListResponseStatusActive            SubscriptionListResponseStatus = "active"
+	SubscriptionListResponseStatusPastDue           SubscriptionListResponseStatus = "past_due"
+	SubscriptionListResponseStatusCanceled          SubscriptionListResponseStatus = "canceled"
+	SubscriptionListResponseStatusUnpaid            SubscriptionListResponseStatus = "unpaid"
 )
 
-func (r SubscriptionListResponseItemsStatus) IsKnown() bool {
+func (r SubscriptionListResponseStatus) IsKnown() bool {
 	switch r {
-	case SubscriptionListResponseItemsStatusIncomplete, SubscriptionListResponseItemsStatusIncompleteExpired, SubscriptionListResponseItemsStatusTrialing, SubscriptionListResponseItemsStatusActive, SubscriptionListResponseItemsStatusPastDue, SubscriptionListResponseItemsStatusCanceled, SubscriptionListResponseItemsStatusUnpaid:
+	case SubscriptionListResponseStatusIncomplete, SubscriptionListResponseStatusIncompleteExpired, SubscriptionListResponseStatusTrialing, SubscriptionListResponseStatusActive, SubscriptionListResponseStatusPastDue, SubscriptionListResponseStatusCanceled, SubscriptionListResponseStatusUnpaid:
 		return true
 	}
 	return false
 }
 
-type SubscriptionListResponseItemsUser struct {
-	AvatarURL      string                                `json:"avatar_url,required,nullable"`
-	Email          string                                `json:"email,required"`
-	GitHubUsername string                                `json:"github_username,required,nullable"`
-	PublicName     string                                `json:"public_name,required"`
-	JSON           subscriptionListResponseItemsUserJSON `json:"-"`
+type SubscriptionListResponseUser struct {
+	AvatarURL      string                           `json:"avatar_url,required,nullable"`
+	Email          string                           `json:"email,required"`
+	GitHubUsername string                           `json:"github_username,required,nullable"`
+	PublicName     string                           `json:"public_name,required"`
+	JSON           subscriptionListResponseUserJSON `json:"-"`
 }
 
-// subscriptionListResponseItemsUserJSON contains the JSON metadata for the struct
-// [SubscriptionListResponseItemsUser]
-type subscriptionListResponseItemsUserJSON struct {
+// subscriptionListResponseUserJSON contains the JSON metadata for the struct
+// [SubscriptionListResponseUser]
+type subscriptionListResponseUserJSON struct {
 	AvatarURL      apijson.Field
 	Email          apijson.Field
 	GitHubUsername apijson.Field
@@ -819,11 +787,11 @@ type subscriptionListResponseItemsUserJSON struct {
 	ExtraFields    map[string]apijson.Field
 }
 
-func (r *SubscriptionListResponseItemsUser) UnmarshalJSON(data []byte) (err error) {
+func (r *SubscriptionListResponseUser) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-func (r subscriptionListResponseItemsUserJSON) RawJSON() string {
+func (r subscriptionListResponseUserJSON) RawJSON() string {
 	return r.raw
 }
 

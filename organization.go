@@ -12,6 +12,7 @@ import (
 
 	"github.com/polarsource/polar-go/internal/apijson"
 	"github.com/polarsource/polar-go/internal/apiquery"
+	"github.com/polarsource/polar-go/internal/pagination"
 	"github.com/polarsource/polar-go/internal/param"
 	"github.com/polarsource/polar-go/internal/requestconfig"
 	"github.com/polarsource/polar-go/option"
@@ -71,11 +72,26 @@ func (r *OrganizationService) Update(ctx context.Context, id string, body Organi
 }
 
 // List organizations.
-func (r *OrganizationService) List(ctx context.Context, query OrganizationListParams, opts ...option.RequestOption) (res *OrganizationListResponse, err error) {
+func (r *OrganizationService) List(ctx context.Context, query OrganizationListParams, opts ...option.RequestOption) (res *pagination.PolarPagination[OrganizationListResponse], err error) {
+	var raw *http.Response
 	opts = append(r.Options[:], opts...)
+	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "v1/organizations/"
-	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
-	return
+	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
+	if err != nil {
+		return nil, err
+	}
+	err = cfg.Execute()
+	if err != nil {
+		return nil, err
+	}
+	res.SetPageConfig(cfg, raw)
+	return res, nil
+}
+
+// List organizations.
+func (r *OrganizationService) ListAutoPaging(ctx context.Context, query OrganizationListParams, opts ...option.RequestOption) *pagination.PolarPaginationAutoPager[OrganizationListResponse] {
+	return pagination.NewPolarPaginationAutoPager(r.List(ctx, query, opts...))
 }
 
 type OrganizationNewResponse struct {
@@ -541,52 +557,6 @@ func (r organizationUpdateResponseProfileSettingsSubscribeJSON) RawJSON() string
 }
 
 type OrganizationListResponse struct {
-	Pagination OrganizationListResponsePagination `json:"pagination,required"`
-	Items      []OrganizationListResponseItem     `json:"items"`
-	JSON       organizationListResponseJSON       `json:"-"`
-}
-
-// organizationListResponseJSON contains the JSON metadata for the struct
-// [OrganizationListResponse]
-type organizationListResponseJSON struct {
-	Pagination  apijson.Field
-	Items       apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *OrganizationListResponse) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-func (r organizationListResponseJSON) RawJSON() string {
-	return r.raw
-}
-
-type OrganizationListResponsePagination struct {
-	MaxPage    int64                                  `json:"max_page,required"`
-	TotalCount int64                                  `json:"total_count,required"`
-	JSON       organizationListResponsePaginationJSON `json:"-"`
-}
-
-// organizationListResponsePaginationJSON contains the JSON metadata for the struct
-// [OrganizationListResponsePagination]
-type organizationListResponsePaginationJSON struct {
-	MaxPage     apijson.Field
-	TotalCount  apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *OrganizationListResponsePagination) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-func (r organizationListResponsePaginationJSON) RawJSON() string {
-	return r.raw
-}
-
-type OrganizationListResponseItem struct {
 	// The organization ID.
 	ID        string `json:"id,required" format:"uuid4"`
 	AvatarURL string `json:"avatar_url,required,nullable"`
@@ -600,23 +570,23 @@ type OrganizationListResponseItem struct {
 	DonationsEnabled bool   `json:"donations_enabled,required"`
 	Email            string `json:"email,required,nullable"`
 	// Settings for the organization features
-	FeatureSettings OrganizationListResponseItemsFeatureSettings `json:"feature_settings,required,nullable"`
-	Location        string                                       `json:"location,required,nullable"`
+	FeatureSettings OrganizationListResponseFeatureSettings `json:"feature_settings,required,nullable"`
+	Location        string                                  `json:"location,required,nullable"`
 	// Last modification timestamp of the object.
 	ModifiedAt            time.Time `json:"modified_at,required,nullable" format:"date-time"`
 	Name                  string    `json:"name,required"`
 	PledgeBadgeShowAmount bool      `json:"pledge_badge_show_amount,required"`
 	PledgeMinimumAmount   int64     `json:"pledge_minimum_amount,required"`
 	// Settings for the organization profile
-	ProfileSettings OrganizationListResponseItemsProfileSettings `json:"profile_settings,required,nullable"`
-	Slug            string                                       `json:"slug,required"`
-	TwitterUsername string                                       `json:"twitter_username,required,nullable"`
-	JSON            organizationListResponseItemJSON             `json:"-"`
+	ProfileSettings OrganizationListResponseProfileSettings `json:"profile_settings,required,nullable"`
+	Slug            string                                  `json:"slug,required"`
+	TwitterUsername string                                  `json:"twitter_username,required,nullable"`
+	JSON            organizationListResponseJSON            `json:"-"`
 }
 
-// organizationListResponseItemJSON contains the JSON metadata for the struct
-// [OrganizationListResponseItem]
-type organizationListResponseItemJSON struct {
+// organizationListResponseJSON contains the JSON metadata for the struct
+// [OrganizationListResponse]
+type organizationListResponseJSON struct {
 	ID                                apijson.Field
 	AvatarURL                         apijson.Field
 	Bio                               apijson.Field
@@ -639,28 +609,28 @@ type organizationListResponseItemJSON struct {
 	ExtraFields                       map[string]apijson.Field
 }
 
-func (r *OrganizationListResponseItem) UnmarshalJSON(data []byte) (err error) {
+func (r *OrganizationListResponse) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-func (r organizationListResponseItemJSON) RawJSON() string {
+func (r organizationListResponseJSON) RawJSON() string {
 	return r.raw
 }
 
 // Settings for the organization features
-type OrganizationListResponseItemsFeatureSettings struct {
+type OrganizationListResponseFeatureSettings struct {
 	// If this organization has articles enabled
 	ArticlesEnabled bool `json:"articles_enabled"`
 	// If this organization has issue funding enabled
 	IssueFundingEnabled bool `json:"issue_funding_enabled"`
 	// If this organization has subscriptions enabled
-	SubscriptionsEnabled bool                                             `json:"subscriptions_enabled"`
-	JSON                 organizationListResponseItemsFeatureSettingsJSON `json:"-"`
+	SubscriptionsEnabled bool                                        `json:"subscriptions_enabled"`
+	JSON                 organizationListResponseFeatureSettingsJSON `json:"-"`
 }
 
-// organizationListResponseItemsFeatureSettingsJSON contains the JSON metadata for
-// the struct [OrganizationListResponseItemsFeatureSettings]
-type organizationListResponseItemsFeatureSettingsJSON struct {
+// organizationListResponseFeatureSettingsJSON contains the JSON metadata for the
+// struct [OrganizationListResponseFeatureSettings]
+type organizationListResponseFeatureSettingsJSON struct {
 	ArticlesEnabled      apijson.Field
 	IssueFundingEnabled  apijson.Field
 	SubscriptionsEnabled apijson.Field
@@ -668,16 +638,16 @@ type organizationListResponseItemsFeatureSettingsJSON struct {
 	ExtraFields          map[string]apijson.Field
 }
 
-func (r *OrganizationListResponseItemsFeatureSettings) UnmarshalJSON(data []byte) (err error) {
+func (r *OrganizationListResponseFeatureSettings) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-func (r organizationListResponseItemsFeatureSettingsJSON) RawJSON() string {
+func (r organizationListResponseFeatureSettingsJSON) RawJSON() string {
 	return r.raw
 }
 
 // Settings for the organization profile
-type OrganizationListResponseItemsProfileSettings struct {
+type OrganizationListResponseProfileSettings struct {
 	// A description of the organization
 	Description string `json:"description,nullable"`
 	// A list of featured organizations
@@ -687,13 +657,13 @@ type OrganizationListResponseItemsProfileSettings struct {
 	// A list of links associated with the organization
 	Links []string `json:"links,nullable" format:"uri"`
 	// Subscription promotion settings
-	Subscribe OrganizationListResponseItemsProfileSettingsSubscribe `json:"subscribe,nullable"`
-	JSON      organizationListResponseItemsProfileSettingsJSON      `json:"-"`
+	Subscribe OrganizationListResponseProfileSettingsSubscribe `json:"subscribe,nullable"`
+	JSON      organizationListResponseProfileSettingsJSON      `json:"-"`
 }
 
-// organizationListResponseItemsProfileSettingsJSON contains the JSON metadata for
-// the struct [OrganizationListResponseItemsProfileSettings]
-type organizationListResponseItemsProfileSettingsJSON struct {
+// organizationListResponseProfileSettingsJSON contains the JSON metadata for the
+// struct [OrganizationListResponseProfileSettings]
+type organizationListResponseProfileSettingsJSON struct {
 	Description           apijson.Field
 	FeaturedOrganizations apijson.Field
 	FeaturedProjects      apijson.Field
@@ -703,28 +673,28 @@ type organizationListResponseItemsProfileSettingsJSON struct {
 	ExtraFields           map[string]apijson.Field
 }
 
-func (r *OrganizationListResponseItemsProfileSettings) UnmarshalJSON(data []byte) (err error) {
+func (r *OrganizationListResponseProfileSettings) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-func (r organizationListResponseItemsProfileSettingsJSON) RawJSON() string {
+func (r organizationListResponseProfileSettingsJSON) RawJSON() string {
 	return r.raw
 }
 
 // Subscription promotion settings
-type OrganizationListResponseItemsProfileSettingsSubscribe struct {
+type OrganizationListResponseProfileSettingsSubscribe struct {
 	// Include free subscribers in total count
 	CountFree bool `json:"count_free"`
 	// Promote email subscription (free)
 	Promote bool `json:"promote"`
 	// Show subscription count publicly
-	ShowCount bool                                                      `json:"show_count"`
-	JSON      organizationListResponseItemsProfileSettingsSubscribeJSON `json:"-"`
+	ShowCount bool                                                 `json:"show_count"`
+	JSON      organizationListResponseProfileSettingsSubscribeJSON `json:"-"`
 }
 
-// organizationListResponseItemsProfileSettingsSubscribeJSON contains the JSON
-// metadata for the struct [OrganizationListResponseItemsProfileSettingsSubscribe]
-type organizationListResponseItemsProfileSettingsSubscribeJSON struct {
+// organizationListResponseProfileSettingsSubscribeJSON contains the JSON metadata
+// for the struct [OrganizationListResponseProfileSettingsSubscribe]
+type organizationListResponseProfileSettingsSubscribeJSON struct {
 	CountFree   apijson.Field
 	Promote     apijson.Field
 	ShowCount   apijson.Field
@@ -732,11 +702,11 @@ type organizationListResponseItemsProfileSettingsSubscribeJSON struct {
 	ExtraFields map[string]apijson.Field
 }
 
-func (r *OrganizationListResponseItemsProfileSettingsSubscribe) UnmarshalJSON(data []byte) (err error) {
+func (r *OrganizationListResponseProfileSettingsSubscribe) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-func (r organizationListResponseItemsProfileSettingsSubscribeJSON) RawJSON() string {
+func (r organizationListResponseProfileSettingsSubscribeJSON) RawJSON() string {
 	return r.raw
 }
 

@@ -37,7 +37,7 @@ func NewMetricService(opts ...option.RequestOption) (r *MetricService) {
 }
 
 // Get metrics about your orders and subscriptions.
-func (r *MetricService) List(ctx context.Context, query MetricListParams, opts ...option.RequestOption) (res *MetricsResponse, err error) {
+func (r *MetricService) Get(ctx context.Context, query MetricGetParams, opts ...option.RequestOption) (res *MetricsResponse, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "v1/metrics/"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
@@ -661,25 +661,25 @@ func (r metricsResponsePeriodJSON) RawJSON() string {
 	return r.raw
 }
 
-type MetricListParams struct {
+type MetricGetParams struct {
 	// End date.
 	EndDate param.Field[time.Time] `query:"end_date,required" format:"date"`
 	// Interval between two timestamps.
-	Interval param.Field[MetricListParamsInterval] `query:"interval,required"`
+	Interval param.Field[MetricGetParamsInterval] `query:"interval,required"`
 	// Start date.
 	StartDate param.Field[time.Time] `query:"start_date,required" format:"date"`
 	// Filter by organization ID.
-	OrganizationID param.Field[MetricListParamsOrganizationIDUnion] `query:"organization_id" format:"uuid4"`
+	OrganizationID param.Field[MetricGetParamsOrganizationIDUnion] `query:"organization_id" format:"uuid4"`
 	// Filter by product ID.
-	ProductID param.Field[MetricListParamsProductIDUnion] `query:"product_id" format:"uuid4"`
+	ProductID param.Field[MetricGetParamsProductIDUnion] `query:"product_id" format:"uuid4"`
 	// Filter by product price type. `recurring` will filter data corresponding to
 	// subscriptions creations or renewals. `one_time` will filter data corresponding
 	// to one-time purchases.
-	ProductPriceType param.Field[MetricListParamsProductPriceTypeUnion] `query:"product_price_type"`
+	ProductPriceType param.Field[MetricGetParamsProductPriceTypeUnion] `query:"product_price_type"`
 }
 
-// URLQuery serializes [MetricListParams]'s query parameters as `url.Values`.
-func (r MetricListParams) URLQuery() (v url.Values) {
+// URLQuery serializes [MetricGetParams]'s query parameters as `url.Values`.
+func (r MetricGetParams) URLQuery() (v url.Values) {
 	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
 		ArrayFormat:  apiquery.ArrayQueryFormatComma,
 		NestedFormat: apiquery.NestedQueryFormatBrackets,
@@ -687,19 +687,19 @@ func (r MetricListParams) URLQuery() (v url.Values) {
 }
 
 // Interval between two timestamps.
-type MetricListParamsInterval string
+type MetricGetParamsInterval string
 
 const (
-	MetricListParamsIntervalYear  MetricListParamsInterval = "year"
-	MetricListParamsIntervalMonth MetricListParamsInterval = "month"
-	MetricListParamsIntervalWeek  MetricListParamsInterval = "week"
-	MetricListParamsIntervalDay   MetricListParamsInterval = "day"
-	MetricListParamsIntervalHour  MetricListParamsInterval = "hour"
+	MetricGetParamsIntervalYear  MetricGetParamsInterval = "year"
+	MetricGetParamsIntervalMonth MetricGetParamsInterval = "month"
+	MetricGetParamsIntervalWeek  MetricGetParamsInterval = "week"
+	MetricGetParamsIntervalDay   MetricGetParamsInterval = "day"
+	MetricGetParamsIntervalHour  MetricGetParamsInterval = "hour"
 )
 
-func (r MetricListParamsInterval) IsKnown() bool {
+func (r MetricGetParamsInterval) IsKnown() bool {
 	switch r {
-	case MetricListParamsIntervalYear, MetricListParamsIntervalMonth, MetricListParamsIntervalWeek, MetricListParamsIntervalDay, MetricListParamsIntervalHour:
+	case MetricGetParamsIntervalYear, MetricGetParamsIntervalMonth, MetricGetParamsIntervalWeek, MetricGetParamsIntervalDay, MetricGetParamsIntervalHour:
 		return true
 	}
 	return false
@@ -707,54 +707,54 @@ func (r MetricListParamsInterval) IsKnown() bool {
 
 // Filter by organization ID.
 //
-// Satisfied by [shared.UnionString], [MetricListParamsOrganizationIDArray].
-type MetricListParamsOrganizationIDUnion interface {
-	ImplementsMetricListParamsOrganizationIDUnion()
+// Satisfied by [shared.UnionString], [MetricGetParamsOrganizationIDArray].
+type MetricGetParamsOrganizationIDUnion interface {
+	ImplementsMetricGetParamsOrganizationIDUnion()
 }
 
-type MetricListParamsOrganizationIDArray []string
+type MetricGetParamsOrganizationIDArray []string
 
-func (r MetricListParamsOrganizationIDArray) ImplementsMetricListParamsOrganizationIDUnion() {}
+func (r MetricGetParamsOrganizationIDArray) ImplementsMetricGetParamsOrganizationIDUnion() {}
 
 // Filter by product ID.
 //
-// Satisfied by [shared.UnionString], [MetricListParamsProductIDArray].
-type MetricListParamsProductIDUnion interface {
-	ImplementsMetricListParamsProductIDUnion()
+// Satisfied by [shared.UnionString], [MetricGetParamsProductIDArray].
+type MetricGetParamsProductIDUnion interface {
+	ImplementsMetricGetParamsProductIDUnion()
 }
 
-type MetricListParamsProductIDArray []string
+type MetricGetParamsProductIDArray []string
 
-func (r MetricListParamsProductIDArray) ImplementsMetricListParamsProductIDUnion() {}
+func (r MetricGetParamsProductIDArray) ImplementsMetricGetParamsProductIDUnion() {}
 
 // Filter by product price type. `recurring` will filter data corresponding to
 // subscriptions creations or renewals. `one_time` will filter data corresponding
 // to one-time purchases.
 //
-// Satisfied by [MetricListParamsProductPriceTypeProductPriceType],
-// [MetricListParamsProductPriceTypeArray].
-type MetricListParamsProductPriceTypeUnion interface {
-	implementsMetricListParamsProductPriceTypeUnion()
+// Satisfied by [MetricGetParamsProductPriceTypeProductPriceType],
+// [MetricGetParamsProductPriceTypeArray].
+type MetricGetParamsProductPriceTypeUnion interface {
+	implementsMetricGetParamsProductPriceTypeUnion()
 }
 
-type MetricListParamsProductPriceTypeProductPriceType string
+type MetricGetParamsProductPriceTypeProductPriceType string
 
 const (
-	MetricListParamsProductPriceTypeProductPriceTypeOneTime   MetricListParamsProductPriceTypeProductPriceType = "one_time"
-	MetricListParamsProductPriceTypeProductPriceTypeRecurring MetricListParamsProductPriceTypeProductPriceType = "recurring"
+	MetricGetParamsProductPriceTypeProductPriceTypeOneTime   MetricGetParamsProductPriceTypeProductPriceType = "one_time"
+	MetricGetParamsProductPriceTypeProductPriceTypeRecurring MetricGetParamsProductPriceTypeProductPriceType = "recurring"
 )
 
-func (r MetricListParamsProductPriceTypeProductPriceType) IsKnown() bool {
+func (r MetricGetParamsProductPriceTypeProductPriceType) IsKnown() bool {
 	switch r {
-	case MetricListParamsProductPriceTypeProductPriceTypeOneTime, MetricListParamsProductPriceTypeProductPriceTypeRecurring:
+	case MetricGetParamsProductPriceTypeProductPriceTypeOneTime, MetricGetParamsProductPriceTypeProductPriceTypeRecurring:
 		return true
 	}
 	return false
 }
 
-func (r MetricListParamsProductPriceTypeProductPriceType) implementsMetricListParamsProductPriceTypeUnion() {
+func (r MetricGetParamsProductPriceTypeProductPriceType) implementsMetricGetParamsProductPriceTypeUnion() {
 }
 
-type MetricListParamsProductPriceTypeArray []MetricListParamsProductPriceTypeArray
+type MetricGetParamsProductPriceTypeArray []MetricGetParamsProductPriceTypeArray
 
-func (r MetricListParamsProductPriceTypeArray) implementsMetricListParamsProductPriceTypeUnion() {}
+func (r MetricGetParamsProductPriceTypeArray) implementsMetricGetParamsProductPriceTypeUnion() {}

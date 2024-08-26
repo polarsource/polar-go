@@ -12,6 +12,7 @@ import (
 
 	"github.com/polarsource/polar-go/internal/apijson"
 	"github.com/polarsource/polar-go/internal/apiquery"
+	"github.com/polarsource/polar-go/internal/pagination"
 	"github.com/polarsource/polar-go/internal/param"
 	"github.com/polarsource/polar-go/internal/requestconfig"
 	"github.com/polarsource/polar-go/option"
@@ -69,11 +70,26 @@ func (r *UserAdvertisementService) Update(ctx context.Context, id string, body U
 }
 
 // List advertisement campaigns.
-func (r *UserAdvertisementService) List(ctx context.Context, query UserAdvertisementListParams, opts ...option.RequestOption) (res *UserAdvertisementListResponse, err error) {
+func (r *UserAdvertisementService) List(ctx context.Context, query UserAdvertisementListParams, opts ...option.RequestOption) (res *pagination.PolarPagination[UserAdvertisementListResponse], err error) {
+	var raw *http.Response
 	opts = append(r.Options[:], opts...)
+	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "v1/users/advertisements/"
-	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
-	return
+	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
+	if err != nil {
+		return nil, err
+	}
+	err = cfg.Execute()
+	if err != nil {
+		return nil, err
+	}
+	res.SetPageConfig(cfg, raw)
+	return res, nil
+}
+
+// List advertisement campaigns.
+func (r *UserAdvertisementService) ListAutoPaging(ctx context.Context, query UserAdvertisementListParams, opts ...option.RequestOption) *pagination.PolarPaginationAutoPager[UserAdvertisementListResponse] {
+	return pagination.NewPolarPaginationAutoPager(r.List(ctx, query, opts...))
 }
 
 // Delete an advertisement campaign.
@@ -227,52 +243,6 @@ func (r userAdvertisementUpdateResponseJSON) RawJSON() string {
 }
 
 type UserAdvertisementListResponse struct {
-	Pagination UserAdvertisementListResponsePagination `json:"pagination,required"`
-	Items      []UserAdvertisementListResponseItem     `json:"items"`
-	JSON       userAdvertisementListResponseJSON       `json:"-"`
-}
-
-// userAdvertisementListResponseJSON contains the JSON metadata for the struct
-// [UserAdvertisementListResponse]
-type userAdvertisementListResponseJSON struct {
-	Pagination  apijson.Field
-	Items       apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *UserAdvertisementListResponse) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-func (r userAdvertisementListResponseJSON) RawJSON() string {
-	return r.raw
-}
-
-type UserAdvertisementListResponsePagination struct {
-	MaxPage    int64                                       `json:"max_page,required"`
-	TotalCount int64                                       `json:"total_count,required"`
-	JSON       userAdvertisementListResponsePaginationJSON `json:"-"`
-}
-
-// userAdvertisementListResponsePaginationJSON contains the JSON metadata for the
-// struct [UserAdvertisementListResponsePagination]
-type userAdvertisementListResponsePaginationJSON struct {
-	MaxPage     apijson.Field
-	TotalCount  apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *UserAdvertisementListResponsePagination) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-func (r userAdvertisementListResponsePaginationJSON) RawJSON() string {
-	return r.raw
-}
-
-type UserAdvertisementListResponseItem struct {
 	ID     string `json:"id,required" format:"uuid4"`
 	Clicks int64  `json:"clicks,required"`
 	// Creation timestamp of the object.
@@ -281,16 +251,16 @@ type UserAdvertisementListResponseItem struct {
 	ImageURLDark string    `json:"image_url_dark,required,nullable" format:"uri"`
 	LinkURL      string    `json:"link_url,required" format:"uri"`
 	// Last modification timestamp of the object.
-	ModifiedAt time.Time                             `json:"modified_at,required,nullable" format:"date-time"`
-	Text       string                                `json:"text,required"`
-	UserID     string                                `json:"user_id,required" format:"uuid4"`
-	Views      int64                                 `json:"views,required"`
-	JSON       userAdvertisementListResponseItemJSON `json:"-"`
+	ModifiedAt time.Time                         `json:"modified_at,required,nullable" format:"date-time"`
+	Text       string                            `json:"text,required"`
+	UserID     string                            `json:"user_id,required" format:"uuid4"`
+	Views      int64                             `json:"views,required"`
+	JSON       userAdvertisementListResponseJSON `json:"-"`
 }
 
-// userAdvertisementListResponseItemJSON contains the JSON metadata for the struct
-// [UserAdvertisementListResponseItem]
-type userAdvertisementListResponseItemJSON struct {
+// userAdvertisementListResponseJSON contains the JSON metadata for the struct
+// [UserAdvertisementListResponse]
+type userAdvertisementListResponseJSON struct {
 	ID           apijson.Field
 	Clicks       apijson.Field
 	CreatedAt    apijson.Field
@@ -305,11 +275,11 @@ type userAdvertisementListResponseItemJSON struct {
 	ExtraFields  map[string]apijson.Field
 }
 
-func (r *UserAdvertisementListResponseItem) UnmarshalJSON(data []byte) (err error) {
+func (r *UserAdvertisementListResponse) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-func (r userAdvertisementListResponseItemJSON) RawJSON() string {
+func (r userAdvertisementListResponseJSON) RawJSON() string {
 	return r.raw
 }
 
