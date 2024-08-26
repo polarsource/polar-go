@@ -13,6 +13,7 @@ import (
 
 	"github.com/polarsource/polar-go/internal/apijson"
 	"github.com/polarsource/polar-go/internal/apiquery"
+	"github.com/polarsource/polar-go/internal/pagination"
 	"github.com/polarsource/polar-go/internal/param"
 	"github.com/polarsource/polar-go/internal/requestconfig"
 	"github.com/polarsource/polar-go/option"
@@ -53,11 +54,26 @@ func (r *OrderService) Get(ctx context.Context, id string, opts ...option.Reques
 }
 
 // List orders.
-func (r *OrderService) List(ctx context.Context, query OrderListParams, opts ...option.RequestOption) (res *ListResourceOrder, err error) {
+func (r *OrderService) List(ctx context.Context, query OrderListParams, opts ...option.RequestOption) (res *pagination.PolarPagination[OrderOutput], err error) {
+	var raw *http.Response
 	opts = append(r.Options[:], opts...)
+	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "v1/orders/"
-	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
-	return
+	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
+	if err != nil {
+		return nil, err
+	}
+	err = cfg.Execute()
+	if err != nil {
+		return nil, err
+	}
+	res.SetPageConfig(cfg, raw)
+	return res, nil
+}
+
+// List orders.
+func (r *OrderService) ListAutoPaging(ctx context.Context, query OrderListParams, opts ...option.RequestOption) *pagination.PolarPaginationAutoPager[OrderOutput] {
+	return pagination.NewPolarPaginationAutoPager(r.List(ctx, query, opts...))
 }
 
 type ListResourceOrder struct {

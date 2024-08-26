@@ -11,6 +11,7 @@ import (
 
 	"github.com/polarsource/polar-go/internal/apijson"
 	"github.com/polarsource/polar-go/internal/apiquery"
+	"github.com/polarsource/polar-go/internal/pagination"
 	"github.com/polarsource/polar-go/internal/param"
 	"github.com/polarsource/polar-go/internal/requestconfig"
 	"github.com/polarsource/polar-go/option"
@@ -60,11 +61,26 @@ func (r *RepositoryService) Update(ctx context.Context, id string, body Reposito
 }
 
 // List repositories.
-func (r *RepositoryService) List(ctx context.Context, query RepositoryListParams, opts ...option.RequestOption) (res *RepositoryListResponse, err error) {
+func (r *RepositoryService) List(ctx context.Context, query RepositoryListParams, opts ...option.RequestOption) (res *pagination.PolarPagination[RepositoryListResponse], err error) {
+	var raw *http.Response
 	opts = append(r.Options[:], opts...)
+	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "v1/repositories/"
-	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
-	return
+	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
+	if err != nil {
+		return nil, err
+	}
+	err = cfg.Execute()
+	if err != nil {
+		return nil, err
+	}
+	res.SetPageConfig(cfg, raw)
+	return res, nil
+}
+
+// List repositories.
+func (r *RepositoryService) ListAutoPaging(ctx context.Context, query RepositoryListParams, opts ...option.RequestOption) *pagination.PolarPaginationAutoPager[RepositoryListResponse] {
+	return pagination.NewPolarPaginationAutoPager(r.List(ctx, query, opts...))
 }
 
 type RepositoryGetResponse struct {
@@ -366,69 +382,23 @@ func (r repositoryUpdateResponseProfileSettingsJSON) RawJSON() string {
 }
 
 type RepositoryListResponse struct {
-	Pagination RepositoryListResponsePagination `json:"pagination,required"`
-	Items      []RepositoryListResponseItem     `json:"items"`
-	JSON       repositoryListResponseJSON       `json:"-"`
+	ID           string                             `json:"id,required" format:"uuid"`
+	Description  string                             `json:"description,required,nullable"`
+	Homepage     string                             `json:"homepage,required,nullable"`
+	IsPrivate    bool                               `json:"is_private,required"`
+	License      string                             `json:"license,required,nullable"`
+	Name         string                             `json:"name,required"`
+	Organization RepositoryListResponseOrganization `json:"organization,required"`
+	Platform     RepositoryListResponsePlatform     `json:"platform,required"`
+	// Settings for the repository profile
+	ProfileSettings RepositoryListResponseProfileSettings `json:"profile_settings,required,nullable"`
+	Stars           int64                                 `json:"stars,required,nullable"`
+	JSON            repositoryListResponseJSON            `json:"-"`
 }
 
 // repositoryListResponseJSON contains the JSON metadata for the struct
 // [RepositoryListResponse]
 type repositoryListResponseJSON struct {
-	Pagination  apijson.Field
-	Items       apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *RepositoryListResponse) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-func (r repositoryListResponseJSON) RawJSON() string {
-	return r.raw
-}
-
-type RepositoryListResponsePagination struct {
-	MaxPage    int64                                `json:"max_page,required"`
-	TotalCount int64                                `json:"total_count,required"`
-	JSON       repositoryListResponsePaginationJSON `json:"-"`
-}
-
-// repositoryListResponsePaginationJSON contains the JSON metadata for the struct
-// [RepositoryListResponsePagination]
-type repositoryListResponsePaginationJSON struct {
-	MaxPage     apijson.Field
-	TotalCount  apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *RepositoryListResponsePagination) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-func (r repositoryListResponsePaginationJSON) RawJSON() string {
-	return r.raw
-}
-
-type RepositoryListResponseItem struct {
-	ID           string                                  `json:"id,required" format:"uuid"`
-	Description  string                                  `json:"description,required,nullable"`
-	Homepage     string                                  `json:"homepage,required,nullable"`
-	IsPrivate    bool                                    `json:"is_private,required"`
-	License      string                                  `json:"license,required,nullable"`
-	Name         string                                  `json:"name,required"`
-	Organization RepositoryListResponseItemsOrganization `json:"organization,required"`
-	Platform     RepositoryListResponseItemsPlatform     `json:"platform,required"`
-	// Settings for the repository profile
-	ProfileSettings RepositoryListResponseItemsProfileSettings `json:"profile_settings,required,nullable"`
-	Stars           int64                                      `json:"stars,required,nullable"`
-	JSON            repositoryListResponseItemJSON             `json:"-"`
-}
-
-// repositoryListResponseItemJSON contains the JSON metadata for the struct
-// [RepositoryListResponseItem]
-type repositoryListResponseItemJSON struct {
 	ID              apijson.Field
 	Description     apijson.Field
 	Homepage        apijson.Field
@@ -443,15 +413,15 @@ type repositoryListResponseItemJSON struct {
 	ExtraFields     map[string]apijson.Field
 }
 
-func (r *RepositoryListResponseItem) UnmarshalJSON(data []byte) (err error) {
+func (r *RepositoryListResponse) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-func (r repositoryListResponseItemJSON) RawJSON() string {
+func (r repositoryListResponseJSON) RawJSON() string {
 	return r.raw
 }
 
-type RepositoryListResponseItemsOrganization struct {
+type RepositoryListResponseOrganization struct {
 	ID         string `json:"id,required" format:"uuid"`
 	AvatarURL  string `json:"avatar_url,required"`
 	Bio        string `json:"bio,required,nullable"`
@@ -462,16 +432,16 @@ type RepositoryListResponseItemsOrganization struct {
 	Location   string `json:"location,required,nullable"`
 	Name       string `json:"name,required"`
 	// The organization ID.
-	OrganizationID  string                                          `json:"organization_id,required,nullable" format:"uuid4"`
-	Platform        RepositoryListResponseItemsOrganizationPlatform `json:"platform,required"`
-	PrettyName      string                                          `json:"pretty_name,required,nullable"`
-	TwitterUsername string                                          `json:"twitter_username,required,nullable"`
-	JSON            repositoryListResponseItemsOrganizationJSON     `json:"-"`
+	OrganizationID  string                                     `json:"organization_id,required,nullable" format:"uuid4"`
+	Platform        RepositoryListResponseOrganizationPlatform `json:"platform,required"`
+	PrettyName      string                                     `json:"pretty_name,required,nullable"`
+	TwitterUsername string                                     `json:"twitter_username,required,nullable"`
+	JSON            repositoryListResponseOrganizationJSON     `json:"-"`
 }
 
-// repositoryListResponseItemsOrganizationJSON contains the JSON metadata for the
-// struct [RepositoryListResponseItemsOrganization]
-type repositoryListResponseItemsOrganizationJSON struct {
+// repositoryListResponseOrganizationJSON contains the JSON metadata for the struct
+// [RepositoryListResponseOrganization]
+type repositoryListResponseOrganizationJSON struct {
 	ID              apijson.Field
 	AvatarURL       apijson.Field
 	Bio             apijson.Field
@@ -489,44 +459,44 @@ type repositoryListResponseItemsOrganizationJSON struct {
 	ExtraFields     map[string]apijson.Field
 }
 
-func (r *RepositoryListResponseItemsOrganization) UnmarshalJSON(data []byte) (err error) {
+func (r *RepositoryListResponseOrganization) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-func (r repositoryListResponseItemsOrganizationJSON) RawJSON() string {
+func (r repositoryListResponseOrganizationJSON) RawJSON() string {
 	return r.raw
 }
 
-type RepositoryListResponseItemsOrganizationPlatform string
+type RepositoryListResponseOrganizationPlatform string
 
 const (
-	RepositoryListResponseItemsOrganizationPlatformGitHub RepositoryListResponseItemsOrganizationPlatform = "github"
+	RepositoryListResponseOrganizationPlatformGitHub RepositoryListResponseOrganizationPlatform = "github"
 )
 
-func (r RepositoryListResponseItemsOrganizationPlatform) IsKnown() bool {
+func (r RepositoryListResponseOrganizationPlatform) IsKnown() bool {
 	switch r {
-	case RepositoryListResponseItemsOrganizationPlatformGitHub:
+	case RepositoryListResponseOrganizationPlatformGitHub:
 		return true
 	}
 	return false
 }
 
-type RepositoryListResponseItemsPlatform string
+type RepositoryListResponsePlatform string
 
 const (
-	RepositoryListResponseItemsPlatformGitHub RepositoryListResponseItemsPlatform = "github"
+	RepositoryListResponsePlatformGitHub RepositoryListResponsePlatform = "github"
 )
 
-func (r RepositoryListResponseItemsPlatform) IsKnown() bool {
+func (r RepositoryListResponsePlatform) IsKnown() bool {
 	switch r {
-	case RepositoryListResponseItemsPlatformGitHub:
+	case RepositoryListResponsePlatformGitHub:
 		return true
 	}
 	return false
 }
 
 // Settings for the repository profile
-type RepositoryListResponseItemsProfileSettings struct {
+type RepositoryListResponseProfileSettings struct {
 	// A URL to a cover image
 	CoverImageURL string `json:"cover_image_url,nullable"`
 	// A description of the repository
@@ -536,13 +506,13 @@ type RepositoryListResponseItemsProfileSettings struct {
 	// A list of highlighted subscription tiers
 	HighlightedSubscriptionTiers []string `json:"highlighted_subscription_tiers,nullable" format:"uuid4"`
 	// A list of links related to the repository
-	Links []string                                       `json:"links,nullable" format:"uri"`
-	JSON  repositoryListResponseItemsProfileSettingsJSON `json:"-"`
+	Links []string                                  `json:"links,nullable" format:"uri"`
+	JSON  repositoryListResponseProfileSettingsJSON `json:"-"`
 }
 
-// repositoryListResponseItemsProfileSettingsJSON contains the JSON metadata for
-// the struct [RepositoryListResponseItemsProfileSettings]
-type repositoryListResponseItemsProfileSettingsJSON struct {
+// repositoryListResponseProfileSettingsJSON contains the JSON metadata for the
+// struct [RepositoryListResponseProfileSettings]
+type repositoryListResponseProfileSettingsJSON struct {
 	CoverImageURL                apijson.Field
 	Description                  apijson.Field
 	FeaturedOrganizations        apijson.Field
@@ -552,11 +522,11 @@ type repositoryListResponseItemsProfileSettingsJSON struct {
 	ExtraFields                  map[string]apijson.Field
 }
 
-func (r *RepositoryListResponseItemsProfileSettings) UnmarshalJSON(data []byte) (err error) {
+func (r *RepositoryListResponseProfileSettings) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-func (r repositoryListResponseItemsProfileSettingsJSON) RawJSON() string {
+func (r repositoryListResponseProfileSettingsJSON) RawJSON() string {
 	return r.raw
 }
 

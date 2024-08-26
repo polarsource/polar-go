@@ -13,6 +13,7 @@ import (
 
 	"github.com/polarsource/polar-go/internal/apijson"
 	"github.com/polarsource/polar-go/internal/apiquery"
+	"github.com/polarsource/polar-go/internal/pagination"
 	"github.com/polarsource/polar-go/internal/param"
 	"github.com/polarsource/polar-go/internal/requestconfig"
 	"github.com/polarsource/polar-go/option"
@@ -59,11 +60,26 @@ func (r *FileService) Update(ctx context.Context, id string, body FileUpdatePara
 }
 
 // List files.
-func (r *FileService) List(ctx context.Context, query FileListParams, opts ...option.RequestOption) (res *ListResourceAnnotatedUnion, err error) {
+func (r *FileService) List(ctx context.Context, query FileListParams, opts ...option.RequestOption) (res *pagination.PolarPagination[FileListResponse], err error) {
+	var raw *http.Response
 	opts = append(r.Options[:], opts...)
+	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "v1/files/"
-	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
-	return
+	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
+	if err != nil {
+		return nil, err
+	}
+	err = cfg.Execute()
+	if err != nil {
+		return nil, err
+	}
+	res.SetPageConfig(cfg, raw)
+	return res, nil
+}
+
+// List files.
+func (r *FileService) ListAutoPaging(ctx context.Context, query FileListParams, opts ...option.RequestOption) *pagination.PolarPaginationAutoPager[FileListResponse] {
+	return pagination.NewPolarPaginationAutoPager(r.List(ctx, query, opts...))
 }
 
 // Delete a file.
@@ -146,6 +162,8 @@ func (r downloadableFileReadJSON) RawJSON() string {
 func (r DownloadableFileRead) implementsListResourceAnnotatedUnionItem() {}
 
 func (r DownloadableFileRead) implementsFileUpdateResponse() {}
+
+func (r DownloadableFileRead) implementsFileListResponse() {}
 
 func (r DownloadableFileRead) implementsFileUploadedResponse() {}
 
@@ -506,6 +524,8 @@ func (r OrganizationAvatarFileRead) implementsListResourceAnnotatedUnionItem() {
 
 func (r OrganizationAvatarFileRead) implementsFileUpdateResponse() {}
 
+func (r OrganizationAvatarFileRead) implementsFileListResponse() {}
+
 func (r OrganizationAvatarFileRead) implementsFileUploadedResponse() {}
 
 type OrganizationAvatarFileReadService string
@@ -579,6 +599,8 @@ func (r productMediaFileReadOutputJSON) RawJSON() string {
 func (r ProductMediaFileReadOutput) implementsListResourceAnnotatedUnionItem() {}
 
 func (r ProductMediaFileReadOutput) implementsFileUpdateResponse() {}
+
+func (r ProductMediaFileReadOutput) implementsFileListResponse() {}
 
 func (r ProductMediaFileReadOutput) implementsFileUploadedResponse() {}
 
@@ -706,6 +728,121 @@ const (
 func (r FileUpdateResponseService) IsKnown() bool {
 	switch r {
 	case FileUpdateResponseServiceDownloadable, FileUpdateResponseServiceProductMedia, FileUpdateResponseServiceOrganizationAvatar:
+		return true
+	}
+	return false
+}
+
+// File to be associated with the downloadables benefit.
+type FileListResponse struct {
+	ID                   string                  `json:"id,required" format:"uuid4"`
+	OrganizationID       string                  `json:"organization_id,required" format:"uuid4"`
+	Name                 string                  `json:"name,required"`
+	Path                 string                  `json:"path,required"`
+	MimeType             string                  `json:"mime_type,required"`
+	Size                 int64                   `json:"size,required"`
+	StorageVersion       string                  `json:"storage_version,required,nullable"`
+	ChecksumEtag         string                  `json:"checksum_etag,required,nullable"`
+	ChecksumSha256Base64 string                  `json:"checksum_sha256_base64,required,nullable"`
+	ChecksumSha256Hex    string                  `json:"checksum_sha256_hex,required,nullable"`
+	LastModifiedAt       time.Time               `json:"last_modified_at,required,nullable" format:"date-time"`
+	Version              string                  `json:"version,required,nullable"`
+	Service              FileListResponseService `json:"service,required"`
+	IsUploaded           bool                    `json:"is_uploaded,required"`
+	CreatedAt            time.Time               `json:"created_at,required" format:"date-time"`
+	SizeReadable         string                  `json:"size_readable,required"`
+	PublicURL            string                  `json:"public_url"`
+	JSON                 fileListResponseJSON    `json:"-"`
+	union                FileListResponseUnion
+}
+
+// fileListResponseJSON contains the JSON metadata for the struct
+// [FileListResponse]
+type fileListResponseJSON struct {
+	ID                   apijson.Field
+	OrganizationID       apijson.Field
+	Name                 apijson.Field
+	Path                 apijson.Field
+	MimeType             apijson.Field
+	Size                 apijson.Field
+	StorageVersion       apijson.Field
+	ChecksumEtag         apijson.Field
+	ChecksumSha256Base64 apijson.Field
+	ChecksumSha256Hex    apijson.Field
+	LastModifiedAt       apijson.Field
+	Version              apijson.Field
+	Service              apijson.Field
+	IsUploaded           apijson.Field
+	CreatedAt            apijson.Field
+	SizeReadable         apijson.Field
+	PublicURL            apijson.Field
+	raw                  string
+	ExtraFields          map[string]apijson.Field
+}
+
+func (r fileListResponseJSON) RawJSON() string {
+	return r.raw
+}
+
+func (r *FileListResponse) UnmarshalJSON(data []byte) (err error) {
+	*r = FileListResponse{}
+	err = apijson.UnmarshalRoot(data, &r.union)
+	if err != nil {
+		return err
+	}
+	return apijson.Port(r.union, &r)
+}
+
+// AsUnion returns a [FileListResponseUnion] interface which you can cast to the
+// specific types for more type safety.
+//
+// Possible runtime types of the union are [DownloadableFileRead],
+// [ProductMediaFileReadOutput], [OrganizationAvatarFileRead].
+func (r FileListResponse) AsUnion() FileListResponseUnion {
+	return r.union
+}
+
+// File to be associated with the downloadables benefit.
+//
+// Union satisfied by [DownloadableFileRead], [ProductMediaFileReadOutput] or
+// [OrganizationAvatarFileRead].
+type FileListResponseUnion interface {
+	implementsFileListResponse()
+}
+
+func init() {
+	apijson.RegisterUnion(
+		reflect.TypeOf((*FileListResponseUnion)(nil)).Elem(),
+		"service",
+		apijson.UnionVariant{
+			TypeFilter:         gjson.JSON,
+			Type:               reflect.TypeOf(DownloadableFileRead{}),
+			DiscriminatorValue: "downloadable",
+		},
+		apijson.UnionVariant{
+			TypeFilter:         gjson.JSON,
+			Type:               reflect.TypeOf(ProductMediaFileReadOutput{}),
+			DiscriminatorValue: "product_media",
+		},
+		apijson.UnionVariant{
+			TypeFilter:         gjson.JSON,
+			Type:               reflect.TypeOf(OrganizationAvatarFileRead{}),
+			DiscriminatorValue: "organization_avatar",
+		},
+	)
+}
+
+type FileListResponseService string
+
+const (
+	FileListResponseServiceDownloadable       FileListResponseService = "downloadable"
+	FileListResponseServiceProductMedia       FileListResponseService = "product_media"
+	FileListResponseServiceOrganizationAvatar FileListResponseService = "organization_avatar"
+)
+
+func (r FileListResponseService) IsKnown() bool {
+	switch r {
+	case FileListResponseServiceDownloadable, FileListResponseServiceProductMedia, FileListResponseServiceOrganizationAvatar:
 		return true
 	}
 	return false

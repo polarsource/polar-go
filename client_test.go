@@ -36,9 +36,9 @@ func TestUserAgentHeader(t *testing.T) {
 			},
 		}),
 	)
-	client.Accounts.New(context.Background(), polar.AccountNewParams{
-		AccountType: polar.F(polar.AccountNewParamsAccountTypeStripe),
-		Country:     polar.F("xx"),
+	client.Checkouts.New(context.Background(), polar.CheckoutNewParams{
+		ProductPriceID: polar.F("product_price_id"),
+		SuccessURL:     polar.F("https://example.com"),
 	})
 	if userAgent != fmt.Sprintf("Polar/Go %s", internal.PackageVersion) {
 		t.Errorf("Expected User-Agent to be correct, but got: %#v", userAgent)
@@ -62,9 +62,9 @@ func TestRetryAfter(t *testing.T) {
 			},
 		}),
 	)
-	res, err := client.Accounts.New(context.Background(), polar.AccountNewParams{
-		AccountType: polar.F(polar.AccountNewParamsAccountTypeStripe),
-		Country:     polar.F("xx"),
+	res, err := client.Checkouts.New(context.Background(), polar.CheckoutNewParams{
+		ProductPriceID: polar.F("product_price_id"),
+		SuccessURL:     polar.F("https://example.com"),
 	})
 	if err == nil || res != nil {
 		t.Error("Expected there to be a cancel error and for the response to be nil")
@@ -91,9 +91,9 @@ func TestRetryAfterMs(t *testing.T) {
 			},
 		}),
 	)
-	res, err := client.Accounts.New(context.Background(), polar.AccountNewParams{
-		AccountType: polar.F(polar.AccountNewParamsAccountTypeStripe),
-		Country:     polar.F("xx"),
+	res, err := client.Checkouts.New(context.Background(), polar.CheckoutNewParams{
+		ProductPriceID: polar.F("product_price_id"),
+		SuccessURL:     polar.F("https://example.com"),
 	})
 	if err == nil || res != nil {
 		t.Error("Expected there to be a cancel error and for the response to be nil")
@@ -116,9 +116,9 @@ func TestContextCancel(t *testing.T) {
 	)
 	cancelCtx, cancel := context.WithCancel(context.Background())
 	cancel()
-	res, err := client.Accounts.New(cancelCtx, polar.AccountNewParams{
-		AccountType: polar.F(polar.AccountNewParamsAccountTypeStripe),
-		Country:     polar.F("xx"),
+	res, err := client.Checkouts.New(cancelCtx, polar.CheckoutNewParams{
+		ProductPriceID: polar.F("product_price_id"),
+		SuccessURL:     polar.F("https://example.com"),
 	})
 	if err == nil || res != nil {
 		t.Error("Expected there to be a cancel error and for the response to be nil")
@@ -138,9 +138,9 @@ func TestContextCancelDelay(t *testing.T) {
 	)
 	cancelCtx, cancel := context.WithTimeout(context.Background(), 2*time.Millisecond)
 	defer cancel()
-	res, err := client.Accounts.New(cancelCtx, polar.AccountNewParams{
-		AccountType: polar.F(polar.AccountNewParamsAccountTypeStripe),
-		Country:     polar.F("xx"),
+	res, err := client.Checkouts.New(cancelCtx, polar.CheckoutNewParams{
+		ProductPriceID: polar.F("product_price_id"),
+		SuccessURL:     polar.F("https://example.com"),
 	})
 	if err == nil || res != nil {
 		t.Error("expected there to be a cancel error and for the response to be nil")
@@ -166,9 +166,9 @@ func TestContextDeadline(t *testing.T) {
 				},
 			}),
 		)
-		res, err := client.Accounts.New(deadlineCtx, polar.AccountNewParams{
-			AccountType: polar.F(polar.AccountNewParamsAccountTypeStripe),
-			Country:     polar.F("xx"),
+		res, err := client.Checkouts.New(deadlineCtx, polar.CheckoutNewParams{
+			ProductPriceID: polar.F("product_price_id"),
+			SuccessURL:     polar.F("https://example.com"),
 		})
 		if err == nil || res != nil {
 			t.Error("expected there to be a deadline error and for the response to be nil")
