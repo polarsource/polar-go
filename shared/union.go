@@ -19,9 +19,6 @@ func (UnionString) ImplementsExternalOrganizationListParamsOrganizationIDUnion()
 func (UnionString) ImplementsRepositoryListParamsExternalOrganizationNameUnion() {}
 func (UnionString) ImplementsRepositoryListParamsNameUnion()                     {}
 func (UnionString) ImplementsRepositoryListParamsOrganizationIDUnion()           {}
-func (UnionString) ImplementsIssueListParamsExternalOrganizationNameUnion()      {}
-func (UnionString) ImplementsIssueListParamsOrganizationIDUnion()                {}
-func (UnionString) ImplementsIssueListParamsRepositoryNameUnion()                {}
 func (UnionString) ImplementsSubscriptionListParamsOrganizationIDUnion()         {}
 func (UnionString) ImplementsSubscriptionListParamsProductIDUnion()              {}
 func (UnionString) ImplementsSubscriptionExportParamsOrganizationIDUnion()       {}
@@ -32,9 +29,5 @@ func (UnionString) ImplementsProductListParamsOrganizationIDUnion()             
 func (UnionString) ImplementsOrderListParamsOrganizationIDUnion()                {}
 func (UnionString) ImplementsOrderListParamsProductIDUnion()                     {}
 func (UnionString) ImplementsOrderListParamsUserIDUnion()                        {}
-func (UnionString) ImplementsMetricListParamsOrganizationIDUnion()               {}
-func (UnionString) ImplementsMetricListParamsProductIDUnion()                    {}
-
-type UnionInt int64
-
-func (UnionInt) ImplementsIssueListParamsNumberUnion() {}
+func (UnionString) ImplementsMetricGetParamsOrganizationIDUnion()                {}
+func (UnionString) ImplementsMetricGetParamsProductIDUnion()                     {}

@@ -15,7 +15,7 @@ import (
 	"github.com/polarsource/polar-go/shared"
 )
 
-func TestMetricListWithOptionalParams(t *testing.T) {
+func TestMetricGetWithOptionalParams(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -27,13 +27,13 @@ func TestMetricListWithOptionalParams(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithBearerToken("My Bearer Token"),
 	)
-	_, err := client.Metrics.List(context.TODO(), polar.MetricListParams{
+	_, err := client.Metrics.Get(context.TODO(), polar.MetricGetParams{
 		EndDate:          polar.F(time.Now()),
-		Interval:         polar.F(polar.MetricListParamsIntervalYear),
+		Interval:         polar.F(polar.MetricGetParamsIntervalYear),
 		StartDate:        polar.F(time.Now()),
-		OrganizationID:   polar.F[polar.MetricListParamsOrganizationIDUnion](shared.UnionString("string")),
-		ProductID:        polar.F[polar.MetricListParamsProductIDUnion](shared.UnionString("string")),
-		ProductPriceType: polar.F[polar.MetricListParamsProductPriceTypeUnion](polar.MetricListParamsProductPriceTypeProductPriceType(polar.MetricListParamsProductPriceTypeProductPriceTypeOneTime)),
+		OrganizationID:   polar.F[polar.MetricGetParamsOrganizationIDUnion](shared.UnionString("string")),
+		ProductID:        polar.F[polar.MetricGetParamsProductIDUnion](shared.UnionString("string")),
+		ProductPriceType: polar.F[polar.MetricGetParamsProductPriceTypeUnion](polar.MetricGetParamsProductPriceTypeProductPriceType(polar.MetricGetParamsProductPriceTypeProductPriceTypeOneTime)),
 	})
 	if err != nil {
 		var apierr *polar.Error

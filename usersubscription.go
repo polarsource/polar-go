@@ -13,6 +13,7 @@ import (
 
 	"github.com/polarsource/polar-go/internal/apijson"
 	"github.com/polarsource/polar-go/internal/apiquery"
+	"github.com/polarsource/polar-go/internal/pagination"
 	"github.com/polarsource/polar-go/internal/param"
 	"github.com/polarsource/polar-go/internal/requestconfig"
 	"github.com/polarsource/polar-go/option"
@@ -73,11 +74,26 @@ func (r *UserSubscriptionService) Update(ctx context.Context, id string, body Us
 }
 
 // List my subscriptions.
-func (r *UserSubscriptionService) List(ctx context.Context, query UserSubscriptionListParams, opts ...option.RequestOption) (res *UserSubscriptionListResponse, err error) {
+func (r *UserSubscriptionService) List(ctx context.Context, query UserSubscriptionListParams, opts ...option.RequestOption) (res *pagination.PolarPagination[UserSubscriptionListResponse], err error) {
+	var raw *http.Response
 	opts = append(r.Options[:], opts...)
+	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "v1/users/subscriptions/"
-	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
-	return
+	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
+	if err != nil {
+		return nil, err
+	}
+	err = cfg.Execute()
+	if err != nil {
+		return nil, err
+	}
+	res.SetPageConfig(cfg, raw)
+	return res, nil
+}
+
+// List my subscriptions.
+func (r *UserSubscriptionService) ListAutoPaging(ctx context.Context, query UserSubscriptionListParams, opts ...option.RequestOption) *pagination.PolarPaginationAutoPager[UserSubscriptionListResponse] {
+	return pagination.NewPolarPaginationAutoPager(r.List(ctx, query, opts...))
 }
 
 // Cancel a subscription.
@@ -2855,52 +2871,6 @@ func (r UserSubscriptionUpdateResponseStatus) IsKnown() bool {
 }
 
 type UserSubscriptionListResponse struct {
-	Pagination UserSubscriptionListResponsePagination `json:"pagination,required"`
-	Items      []UserSubscriptionListResponseItem     `json:"items"`
-	JSON       userSubscriptionListResponseJSON       `json:"-"`
-}
-
-// userSubscriptionListResponseJSON contains the JSON metadata for the struct
-// [UserSubscriptionListResponse]
-type userSubscriptionListResponseJSON struct {
-	Pagination  apijson.Field
-	Items       apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *UserSubscriptionListResponse) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-func (r userSubscriptionListResponseJSON) RawJSON() string {
-	return r.raw
-}
-
-type UserSubscriptionListResponsePagination struct {
-	MaxPage    int64                                      `json:"max_page,required"`
-	TotalCount int64                                      `json:"total_count,required"`
-	JSON       userSubscriptionListResponsePaginationJSON `json:"-"`
-}
-
-// userSubscriptionListResponsePaginationJSON contains the JSON metadata for the
-// struct [UserSubscriptionListResponsePagination]
-type userSubscriptionListResponsePaginationJSON struct {
-	MaxPage     apijson.Field
-	TotalCount  apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *UserSubscriptionListResponsePagination) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-func (r userSubscriptionListResponsePaginationJSON) RawJSON() string {
-	return r.raw
-}
-
-type UserSubscriptionListResponseItem struct {
 	ID                string `json:"id,required" format:"uuid4"`
 	CancelAtPeriodEnd bool   `json:"cancel_at_period_end,required"`
 	// Creation timestamp of the object.
@@ -2911,19 +2881,19 @@ type UserSubscriptionListResponseItem struct {
 	// Last modification timestamp of the object.
 	ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
 	// A recurring price for a product, i.e. a subscription.
-	Price     UserSubscriptionListResponseItemsPrice   `json:"price,required,nullable"`
-	PriceID   string                                   `json:"price_id,required,nullable" format:"uuid4"`
-	Product   UserSubscriptionListResponseItemsProduct `json:"product,required"`
-	ProductID string                                   `json:"product_id,required" format:"uuid4"`
-	StartedAt time.Time                                `json:"started_at,required,nullable" format:"date-time"`
-	Status    UserSubscriptionListResponseItemsStatus  `json:"status,required"`
-	UserID    string                                   `json:"user_id,required" format:"uuid4"`
-	JSON      userSubscriptionListResponseItemJSON     `json:"-"`
+	Price     UserSubscriptionListResponsePrice   `json:"price,required,nullable"`
+	PriceID   string                              `json:"price_id,required,nullable" format:"uuid4"`
+	Product   UserSubscriptionListResponseProduct `json:"product,required"`
+	ProductID string                              `json:"product_id,required" format:"uuid4"`
+	StartedAt time.Time                           `json:"started_at,required,nullable" format:"date-time"`
+	Status    UserSubscriptionListResponseStatus  `json:"status,required"`
+	UserID    string                              `json:"user_id,required" format:"uuid4"`
+	JSON      userSubscriptionListResponseJSON    `json:"-"`
 }
 
-// userSubscriptionListResponseItemJSON contains the JSON metadata for the struct
-// [UserSubscriptionListResponseItem]
-type userSubscriptionListResponseItemJSON struct {
+// userSubscriptionListResponseJSON contains the JSON metadata for the struct
+// [UserSubscriptionListResponse]
+type userSubscriptionListResponseJSON struct {
 	ID                 apijson.Field
 	CancelAtPeriodEnd  apijson.Field
 	CreatedAt          apijson.Field
@@ -2942,16 +2912,16 @@ type userSubscriptionListResponseItemJSON struct {
 	ExtraFields        map[string]apijson.Field
 }
 
-func (r *UserSubscriptionListResponseItem) UnmarshalJSON(data []byte) (err error) {
+func (r *UserSubscriptionListResponse) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-func (r userSubscriptionListResponseItemJSON) RawJSON() string {
+func (r userSubscriptionListResponseJSON) RawJSON() string {
 	return r.raw
 }
 
 // A recurring price for a product, i.e. a subscription.
-type UserSubscriptionListResponseItemsPrice struct {
+type UserSubscriptionListResponsePrice struct {
 	// Creation timestamp of the object.
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
 	// Last modification timestamp of the object.
@@ -2965,16 +2935,16 @@ type UserSubscriptionListResponseItemsPrice struct {
 	// Whether the price is archived and no longer available.
 	IsArchived bool `json:"is_archived,required"`
 	// The type of the price.
-	Type UserSubscriptionListResponseItemsPriceType `json:"type,required"`
+	Type UserSubscriptionListResponsePriceType `json:"type,required"`
 	// The recurring interval of the price, if type is `recurring`.
-	RecurringInterval UserSubscriptionListResponseItemsPriceRecurringInterval `json:"recurring_interval,nullable"`
-	JSON              userSubscriptionListResponseItemsPriceJSON              `json:"-"`
-	union             UserSubscriptionListResponseItemsPriceUnion
+	RecurringInterval UserSubscriptionListResponsePriceRecurringInterval `json:"recurring_interval,nullable"`
+	JSON              userSubscriptionListResponsePriceJSON              `json:"-"`
+	union             UserSubscriptionListResponsePriceUnion
 }
 
-// userSubscriptionListResponseItemsPriceJSON contains the JSON metadata for the
-// struct [UserSubscriptionListResponseItemsPrice]
-type userSubscriptionListResponseItemsPriceJSON struct {
+// userSubscriptionListResponsePriceJSON contains the JSON metadata for the struct
+// [UserSubscriptionListResponsePrice]
+type userSubscriptionListResponsePriceJSON struct {
 	CreatedAt         apijson.Field
 	ModifiedAt        apijson.Field
 	ID                apijson.Field
@@ -2987,12 +2957,12 @@ type userSubscriptionListResponseItemsPriceJSON struct {
 	ExtraFields       map[string]apijson.Field
 }
 
-func (r userSubscriptionListResponseItemsPriceJSON) RawJSON() string {
+func (r userSubscriptionListResponsePriceJSON) RawJSON() string {
 	return r.raw
 }
 
-func (r *UserSubscriptionListResponseItemsPrice) UnmarshalJSON(data []byte) (err error) {
-	*r = UserSubscriptionListResponseItemsPrice{}
+func (r *UserSubscriptionListResponsePrice) UnmarshalJSON(data []byte) (err error) {
+	*r = UserSubscriptionListResponsePrice{}
 	err = apijson.UnmarshalRoot(data, &r.union)
 	if err != nil {
 		return err
@@ -3000,43 +2970,43 @@ func (r *UserSubscriptionListResponseItemsPrice) UnmarshalJSON(data []byte) (err
 	return apijson.Port(r.union, &r)
 }
 
-// AsUnion returns a [UserSubscriptionListResponseItemsPriceUnion] interface which
-// you can cast to the specific types for more type safety.
+// AsUnion returns a [UserSubscriptionListResponsePriceUnion] interface which you
+// can cast to the specific types for more type safety.
 //
 // Possible runtime types of the union are
-// [UserSubscriptionListResponseItemsPriceProductPriceRecurring],
-// [UserSubscriptionListResponseItemsPriceProductPriceOneTime].
-func (r UserSubscriptionListResponseItemsPrice) AsUnion() UserSubscriptionListResponseItemsPriceUnion {
+// [UserSubscriptionListResponsePriceProductPriceRecurring],
+// [UserSubscriptionListResponsePriceProductPriceOneTime].
+func (r UserSubscriptionListResponsePrice) AsUnion() UserSubscriptionListResponsePriceUnion {
 	return r.union
 }
 
 // A recurring price for a product, i.e. a subscription.
 //
-// Union satisfied by [UserSubscriptionListResponseItemsPriceProductPriceRecurring]
-// or [UserSubscriptionListResponseItemsPriceProductPriceOneTime].
-type UserSubscriptionListResponseItemsPriceUnion interface {
-	implementsUserSubscriptionListResponseItemsPrice()
+// Union satisfied by [UserSubscriptionListResponsePriceProductPriceRecurring] or
+// [UserSubscriptionListResponsePriceProductPriceOneTime].
+type UserSubscriptionListResponsePriceUnion interface {
+	implementsUserSubscriptionListResponsePrice()
 }
 
 func init() {
 	apijson.RegisterUnion(
-		reflect.TypeOf((*UserSubscriptionListResponseItemsPriceUnion)(nil)).Elem(),
+		reflect.TypeOf((*UserSubscriptionListResponsePriceUnion)(nil)).Elem(),
 		"type",
 		apijson.UnionVariant{
 			TypeFilter:         gjson.JSON,
-			Type:               reflect.TypeOf(UserSubscriptionListResponseItemsPriceProductPriceRecurring{}),
+			Type:               reflect.TypeOf(UserSubscriptionListResponsePriceProductPriceRecurring{}),
 			DiscriminatorValue: "recurring",
 		},
 		apijson.UnionVariant{
 			TypeFilter:         gjson.JSON,
-			Type:               reflect.TypeOf(UserSubscriptionListResponseItemsPriceProductPriceOneTime{}),
+			Type:               reflect.TypeOf(UserSubscriptionListResponsePriceProductPriceOneTime{}),
 			DiscriminatorValue: "one_time",
 		},
 	)
 }
 
 // A recurring price for a product, i.e. a subscription.
-type UserSubscriptionListResponseItemsPriceProductPriceRecurring struct {
+type UserSubscriptionListResponsePriceProductPriceRecurring struct {
 	// The ID of the price.
 	ID string `json:"id,required" format:"uuid4"`
 	// Creation timestamp of the object.
@@ -3050,16 +3020,15 @@ type UserSubscriptionListResponseItemsPriceProductPriceRecurring struct {
 	// The currency.
 	PriceCurrency string `json:"price_currency,required"`
 	// The recurring interval of the price, if type is `recurring`.
-	RecurringInterval UserSubscriptionListResponseItemsPriceProductPriceRecurringRecurringInterval `json:"recurring_interval,required,nullable"`
+	RecurringInterval UserSubscriptionListResponsePriceProductPriceRecurringRecurringInterval `json:"recurring_interval,required,nullable"`
 	// The type of the price.
-	Type UserSubscriptionListResponseItemsPriceProductPriceRecurringType `json:"type,required"`
-	JSON userSubscriptionListResponseItemsPriceProductPriceRecurringJSON `json:"-"`
+	Type UserSubscriptionListResponsePriceProductPriceRecurringType `json:"type,required"`
+	JSON userSubscriptionListResponsePriceProductPriceRecurringJSON `json:"-"`
 }
 
-// userSubscriptionListResponseItemsPriceProductPriceRecurringJSON contains the
-// JSON metadata for the struct
-// [UserSubscriptionListResponseItemsPriceProductPriceRecurring]
-type userSubscriptionListResponseItemsPriceProductPriceRecurringJSON struct {
+// userSubscriptionListResponsePriceProductPriceRecurringJSON contains the JSON
+// metadata for the struct [UserSubscriptionListResponsePriceProductPriceRecurring]
+type userSubscriptionListResponsePriceProductPriceRecurringJSON struct {
 	ID                apijson.Field
 	CreatedAt         apijson.Field
 	IsArchived        apijson.Field
@@ -3072,50 +3041,50 @@ type userSubscriptionListResponseItemsPriceProductPriceRecurringJSON struct {
 	ExtraFields       map[string]apijson.Field
 }
 
-func (r *UserSubscriptionListResponseItemsPriceProductPriceRecurring) UnmarshalJSON(data []byte) (err error) {
+func (r *UserSubscriptionListResponsePriceProductPriceRecurring) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-func (r userSubscriptionListResponseItemsPriceProductPriceRecurringJSON) RawJSON() string {
+func (r userSubscriptionListResponsePriceProductPriceRecurringJSON) RawJSON() string {
 	return r.raw
 }
 
-func (r UserSubscriptionListResponseItemsPriceProductPriceRecurring) implementsUserSubscriptionListResponseItemsPrice() {
+func (r UserSubscriptionListResponsePriceProductPriceRecurring) implementsUserSubscriptionListResponsePrice() {
 }
 
 // The recurring interval of the price, if type is `recurring`.
-type UserSubscriptionListResponseItemsPriceProductPriceRecurringRecurringInterval string
+type UserSubscriptionListResponsePriceProductPriceRecurringRecurringInterval string
 
 const (
-	UserSubscriptionListResponseItemsPriceProductPriceRecurringRecurringIntervalMonth UserSubscriptionListResponseItemsPriceProductPriceRecurringRecurringInterval = "month"
-	UserSubscriptionListResponseItemsPriceProductPriceRecurringRecurringIntervalYear  UserSubscriptionListResponseItemsPriceProductPriceRecurringRecurringInterval = "year"
+	UserSubscriptionListResponsePriceProductPriceRecurringRecurringIntervalMonth UserSubscriptionListResponsePriceProductPriceRecurringRecurringInterval = "month"
+	UserSubscriptionListResponsePriceProductPriceRecurringRecurringIntervalYear  UserSubscriptionListResponsePriceProductPriceRecurringRecurringInterval = "year"
 )
 
-func (r UserSubscriptionListResponseItemsPriceProductPriceRecurringRecurringInterval) IsKnown() bool {
+func (r UserSubscriptionListResponsePriceProductPriceRecurringRecurringInterval) IsKnown() bool {
 	switch r {
-	case UserSubscriptionListResponseItemsPriceProductPriceRecurringRecurringIntervalMonth, UserSubscriptionListResponseItemsPriceProductPriceRecurringRecurringIntervalYear:
+	case UserSubscriptionListResponsePriceProductPriceRecurringRecurringIntervalMonth, UserSubscriptionListResponsePriceProductPriceRecurringRecurringIntervalYear:
 		return true
 	}
 	return false
 }
 
 // The type of the price.
-type UserSubscriptionListResponseItemsPriceProductPriceRecurringType string
+type UserSubscriptionListResponsePriceProductPriceRecurringType string
 
 const (
-	UserSubscriptionListResponseItemsPriceProductPriceRecurringTypeRecurring UserSubscriptionListResponseItemsPriceProductPriceRecurringType = "recurring"
+	UserSubscriptionListResponsePriceProductPriceRecurringTypeRecurring UserSubscriptionListResponsePriceProductPriceRecurringType = "recurring"
 )
 
-func (r UserSubscriptionListResponseItemsPriceProductPriceRecurringType) IsKnown() bool {
+func (r UserSubscriptionListResponsePriceProductPriceRecurringType) IsKnown() bool {
 	switch r {
-	case UserSubscriptionListResponseItemsPriceProductPriceRecurringTypeRecurring:
+	case UserSubscriptionListResponsePriceProductPriceRecurringTypeRecurring:
 		return true
 	}
 	return false
 }
 
 // A one-time price for a product.
-type UserSubscriptionListResponseItemsPriceProductPriceOneTime struct {
+type UserSubscriptionListResponsePriceProductPriceOneTime struct {
 	// The ID of the price.
 	ID string `json:"id,required" format:"uuid4"`
 	// Creation timestamp of the object.
@@ -3129,14 +3098,13 @@ type UserSubscriptionListResponseItemsPriceProductPriceOneTime struct {
 	// The currency.
 	PriceCurrency string `json:"price_currency,required"`
 	// The type of the price.
-	Type UserSubscriptionListResponseItemsPriceProductPriceOneTimeType `json:"type,required"`
-	JSON userSubscriptionListResponseItemsPriceProductPriceOneTimeJSON `json:"-"`
+	Type UserSubscriptionListResponsePriceProductPriceOneTimeType `json:"type,required"`
+	JSON userSubscriptionListResponsePriceProductPriceOneTimeJSON `json:"-"`
 }
 
-// userSubscriptionListResponseItemsPriceProductPriceOneTimeJSON contains the JSON
-// metadata for the struct
-// [UserSubscriptionListResponseItemsPriceProductPriceOneTime]
-type userSubscriptionListResponseItemsPriceProductPriceOneTimeJSON struct {
+// userSubscriptionListResponsePriceProductPriceOneTimeJSON contains the JSON
+// metadata for the struct [UserSubscriptionListResponsePriceProductPriceOneTime]
+type userSubscriptionListResponsePriceProductPriceOneTimeJSON struct {
 	ID            apijson.Field
 	CreatedAt     apijson.Field
 	IsArchived    apijson.Field
@@ -3148,69 +3116,69 @@ type userSubscriptionListResponseItemsPriceProductPriceOneTimeJSON struct {
 	ExtraFields   map[string]apijson.Field
 }
 
-func (r *UserSubscriptionListResponseItemsPriceProductPriceOneTime) UnmarshalJSON(data []byte) (err error) {
+func (r *UserSubscriptionListResponsePriceProductPriceOneTime) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-func (r userSubscriptionListResponseItemsPriceProductPriceOneTimeJSON) RawJSON() string {
+func (r userSubscriptionListResponsePriceProductPriceOneTimeJSON) RawJSON() string {
 	return r.raw
 }
 
-func (r UserSubscriptionListResponseItemsPriceProductPriceOneTime) implementsUserSubscriptionListResponseItemsPrice() {
+func (r UserSubscriptionListResponsePriceProductPriceOneTime) implementsUserSubscriptionListResponsePrice() {
 }
 
 // The type of the price.
-type UserSubscriptionListResponseItemsPriceProductPriceOneTimeType string
+type UserSubscriptionListResponsePriceProductPriceOneTimeType string
 
 const (
-	UserSubscriptionListResponseItemsPriceProductPriceOneTimeTypeOneTime UserSubscriptionListResponseItemsPriceProductPriceOneTimeType = "one_time"
+	UserSubscriptionListResponsePriceProductPriceOneTimeTypeOneTime UserSubscriptionListResponsePriceProductPriceOneTimeType = "one_time"
 )
 
-func (r UserSubscriptionListResponseItemsPriceProductPriceOneTimeType) IsKnown() bool {
+func (r UserSubscriptionListResponsePriceProductPriceOneTimeType) IsKnown() bool {
 	switch r {
-	case UserSubscriptionListResponseItemsPriceProductPriceOneTimeTypeOneTime:
+	case UserSubscriptionListResponsePriceProductPriceOneTimeTypeOneTime:
 		return true
 	}
 	return false
 }
 
 // The type of the price.
-type UserSubscriptionListResponseItemsPriceType string
+type UserSubscriptionListResponsePriceType string
 
 const (
-	UserSubscriptionListResponseItemsPriceTypeRecurring UserSubscriptionListResponseItemsPriceType = "recurring"
-	UserSubscriptionListResponseItemsPriceTypeOneTime   UserSubscriptionListResponseItemsPriceType = "one_time"
+	UserSubscriptionListResponsePriceTypeRecurring UserSubscriptionListResponsePriceType = "recurring"
+	UserSubscriptionListResponsePriceTypeOneTime   UserSubscriptionListResponsePriceType = "one_time"
 )
 
-func (r UserSubscriptionListResponseItemsPriceType) IsKnown() bool {
+func (r UserSubscriptionListResponsePriceType) IsKnown() bool {
 	switch r {
-	case UserSubscriptionListResponseItemsPriceTypeRecurring, UserSubscriptionListResponseItemsPriceTypeOneTime:
+	case UserSubscriptionListResponsePriceTypeRecurring, UserSubscriptionListResponsePriceTypeOneTime:
 		return true
 	}
 	return false
 }
 
 // The recurring interval of the price, if type is `recurring`.
-type UserSubscriptionListResponseItemsPriceRecurringInterval string
+type UserSubscriptionListResponsePriceRecurringInterval string
 
 const (
-	UserSubscriptionListResponseItemsPriceRecurringIntervalMonth UserSubscriptionListResponseItemsPriceRecurringInterval = "month"
-	UserSubscriptionListResponseItemsPriceRecurringIntervalYear  UserSubscriptionListResponseItemsPriceRecurringInterval = "year"
+	UserSubscriptionListResponsePriceRecurringIntervalMonth UserSubscriptionListResponsePriceRecurringInterval = "month"
+	UserSubscriptionListResponsePriceRecurringIntervalYear  UserSubscriptionListResponsePriceRecurringInterval = "year"
 )
 
-func (r UserSubscriptionListResponseItemsPriceRecurringInterval) IsKnown() bool {
+func (r UserSubscriptionListResponsePriceRecurringInterval) IsKnown() bool {
 	switch r {
-	case UserSubscriptionListResponseItemsPriceRecurringIntervalMonth, UserSubscriptionListResponseItemsPriceRecurringIntervalYear:
+	case UserSubscriptionListResponsePriceRecurringIntervalMonth, UserSubscriptionListResponsePriceRecurringIntervalYear:
 		return true
 	}
 	return false
 }
 
-type UserSubscriptionListResponseItemsProduct struct {
+type UserSubscriptionListResponseProduct struct {
 	// The ID of the product.
 	ID string `json:"id,required" format:"uuid4"`
 	// The benefits granted by the product.
-	Benefits []UserSubscriptionListResponseItemsProductBenefit `json:"benefits,required"`
+	Benefits []UserSubscriptionListResponseProductBenefit `json:"benefits,required"`
 	// Creation timestamp of the object.
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
 	// The description of the product.
@@ -3229,14 +3197,14 @@ type UserSubscriptionListResponseItemsProduct struct {
 	// The ID of the organization owning the product.
 	OrganizationID string `json:"organization_id,required" format:"uuid4"`
 	// List of available prices for this product.
-	Prices []UserSubscriptionListResponseItemsProductPrice `json:"prices,required"`
-	Type   UserSubscriptionListResponseItemsProductType    `json:"type,required,nullable"`
-	JSON   userSubscriptionListResponseItemsProductJSON    `json:"-"`
+	Prices []UserSubscriptionListResponseProductPrice `json:"prices,required"`
+	Type   UserSubscriptionListResponseProductType    `json:"type,required,nullable"`
+	JSON   userSubscriptionListResponseProductJSON    `json:"-"`
 }
 
-// userSubscriptionListResponseItemsProductJSON contains the JSON metadata for the
-// struct [UserSubscriptionListResponseItemsProduct]
-type userSubscriptionListResponseItemsProductJSON struct {
+// userSubscriptionListResponseProductJSON contains the JSON metadata for the
+// struct [UserSubscriptionListResponseProduct]
+type userSubscriptionListResponseProductJSON struct {
 	ID             apijson.Field
 	Benefits       apijson.Field
 	CreatedAt      apijson.Field
@@ -3254,18 +3222,18 @@ type userSubscriptionListResponseItemsProductJSON struct {
 	ExtraFields    map[string]apijson.Field
 }
 
-func (r *UserSubscriptionListResponseItemsProduct) UnmarshalJSON(data []byte) (err error) {
+func (r *UserSubscriptionListResponseProduct) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-func (r userSubscriptionListResponseItemsProductJSON) RawJSON() string {
+func (r userSubscriptionListResponseProductJSON) RawJSON() string {
 	return r.raw
 }
 
 // A benefit of type `articles`.
 //
 // Use it to grant access to posts.
-type UserSubscriptionListResponseItemsProductBenefit struct {
+type UserSubscriptionListResponseProductBenefit struct {
 	// Creation timestamp of the object.
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
 	// Last modification timestamp of the object.
@@ -3273,7 +3241,7 @@ type UserSubscriptionListResponseItemsProductBenefit struct {
 	// The ID of the benefit.
 	ID string `json:"id,required" format:"uuid4"`
 	// The type of the benefit.
-	Type UserSubscriptionListResponseItemsProductBenefitsType `json:"type,required"`
+	Type UserSubscriptionListResponseProductBenefitsType `json:"type,required"`
 	// The description of the benefit.
 	Description string `json:"description,required"`
 	// Whether the benefit is selectable when creating a product.
@@ -3283,15 +3251,15 @@ type UserSubscriptionListResponseItemsProductBenefit struct {
 	// The ID of the organization owning the benefit.
 	OrganizationID string `json:"organization_id,required" format:"uuid4"`
 	// This field can have the runtime type of
-	// [UserSubscriptionListResponseItemsProductBenefitsBenefitArticlesProperties].
-	Properties interface{}                                         `json:"properties,required"`
-	JSON       userSubscriptionListResponseItemsProductBenefitJSON `json:"-"`
-	union      UserSubscriptionListResponseItemsProductBenefitsUnion
+	// [UserSubscriptionListResponseProductBenefitsBenefitArticlesProperties].
+	Properties interface{}                                    `json:"properties,required"`
+	JSON       userSubscriptionListResponseProductBenefitJSON `json:"-"`
+	union      UserSubscriptionListResponseProductBenefitsUnion
 }
 
-// userSubscriptionListResponseItemsProductBenefitJSON contains the JSON metadata
-// for the struct [UserSubscriptionListResponseItemsProductBenefit]
-type userSubscriptionListResponseItemsProductBenefitJSON struct {
+// userSubscriptionListResponseProductBenefitJSON contains the JSON metadata for
+// the struct [UserSubscriptionListResponseProductBenefit]
+type userSubscriptionListResponseProductBenefitJSON struct {
 	CreatedAt      apijson.Field
 	ModifiedAt     apijson.Field
 	ID             apijson.Field
@@ -3305,12 +3273,12 @@ type userSubscriptionListResponseItemsProductBenefitJSON struct {
 	ExtraFields    map[string]apijson.Field
 }
 
-func (r userSubscriptionListResponseItemsProductBenefitJSON) RawJSON() string {
+func (r userSubscriptionListResponseProductBenefitJSON) RawJSON() string {
 	return r.raw
 }
 
-func (r *UserSubscriptionListResponseItemsProductBenefit) UnmarshalJSON(data []byte) (err error) {
-	*r = UserSubscriptionListResponseItemsProductBenefit{}
+func (r *UserSubscriptionListResponseProductBenefit) UnmarshalJSON(data []byte) (err error) {
+	*r = UserSubscriptionListResponseProductBenefit{}
 	err = apijson.UnmarshalRoot(data, &r.union)
 	if err != nil {
 		return err
@@ -3318,13 +3286,13 @@ func (r *UserSubscriptionListResponseItemsProductBenefit) UnmarshalJSON(data []b
 	return apijson.Port(r.union, &r)
 }
 
-// AsUnion returns a [UserSubscriptionListResponseItemsProductBenefitsUnion]
-// interface which you can cast to the specific types for more type safety.
+// AsUnion returns a [UserSubscriptionListResponseProductBenefitsUnion] interface
+// which you can cast to the specific types for more type safety.
 //
 // Possible runtime types of the union are
-// [UserSubscriptionListResponseItemsProductBenefitsBenefitBase],
-// [UserSubscriptionListResponseItemsProductBenefitsBenefitArticles].
-func (r UserSubscriptionListResponseItemsProductBenefit) AsUnion() UserSubscriptionListResponseItemsProductBenefitsUnion {
+// [UserSubscriptionListResponseProductBenefitsBenefitBase],
+// [UserSubscriptionListResponseProductBenefitsBenefitArticles].
+func (r UserSubscriptionListResponseProductBenefit) AsUnion() UserSubscriptionListResponseProductBenefitsUnion {
 	return r.union
 }
 
@@ -3332,28 +3300,28 @@ func (r UserSubscriptionListResponseItemsProductBenefit) AsUnion() UserSubscript
 //
 // Use it to grant access to posts.
 //
-// Union satisfied by [UserSubscriptionListResponseItemsProductBenefitsBenefitBase]
-// or [UserSubscriptionListResponseItemsProductBenefitsBenefitArticles].
-type UserSubscriptionListResponseItemsProductBenefitsUnion interface {
-	implementsUserSubscriptionListResponseItemsProductBenefit()
+// Union satisfied by [UserSubscriptionListResponseProductBenefitsBenefitBase] or
+// [UserSubscriptionListResponseProductBenefitsBenefitArticles].
+type UserSubscriptionListResponseProductBenefitsUnion interface {
+	implementsUserSubscriptionListResponseProductBenefit()
 }
 
 func init() {
 	apijson.RegisterUnion(
-		reflect.TypeOf((*UserSubscriptionListResponseItemsProductBenefitsUnion)(nil)).Elem(),
+		reflect.TypeOf((*UserSubscriptionListResponseProductBenefitsUnion)(nil)).Elem(),
 		"",
 		apijson.UnionVariant{
 			TypeFilter: gjson.JSON,
-			Type:       reflect.TypeOf(UserSubscriptionListResponseItemsProductBenefitsBenefitBase{}),
+			Type:       reflect.TypeOf(UserSubscriptionListResponseProductBenefitsBenefitBase{}),
 		},
 		apijson.UnionVariant{
 			TypeFilter: gjson.JSON,
-			Type:       reflect.TypeOf(UserSubscriptionListResponseItemsProductBenefitsBenefitArticles{}),
+			Type:       reflect.TypeOf(UserSubscriptionListResponseProductBenefitsBenefitArticles{}),
 		},
 	)
 }
 
-type UserSubscriptionListResponseItemsProductBenefitsBenefitBase struct {
+type UserSubscriptionListResponseProductBenefitsBenefitBase struct {
 	// The ID of the benefit.
 	ID string `json:"id,required" format:"uuid4"`
 	// Creation timestamp of the object.
@@ -3369,14 +3337,13 @@ type UserSubscriptionListResponseItemsProductBenefitsBenefitBase struct {
 	// Whether the benefit is selectable when creating a product.
 	Selectable bool `json:"selectable,required"`
 	// The type of the benefit.
-	Type UserSubscriptionListResponseItemsProductBenefitsBenefitBaseType `json:"type,required"`
-	JSON userSubscriptionListResponseItemsProductBenefitsBenefitBaseJSON `json:"-"`
+	Type UserSubscriptionListResponseProductBenefitsBenefitBaseType `json:"type,required"`
+	JSON userSubscriptionListResponseProductBenefitsBenefitBaseJSON `json:"-"`
 }
 
-// userSubscriptionListResponseItemsProductBenefitsBenefitBaseJSON contains the
-// JSON metadata for the struct
-// [UserSubscriptionListResponseItemsProductBenefitsBenefitBase]
-type userSubscriptionListResponseItemsProductBenefitsBenefitBaseJSON struct {
+// userSubscriptionListResponseProductBenefitsBenefitBaseJSON contains the JSON
+// metadata for the struct [UserSubscriptionListResponseProductBenefitsBenefitBase]
+type userSubscriptionListResponseProductBenefitsBenefitBaseJSON struct {
 	ID             apijson.Field
 	CreatedAt      apijson.Field
 	Deletable      apijson.Field
@@ -3389,32 +3356,32 @@ type userSubscriptionListResponseItemsProductBenefitsBenefitBaseJSON struct {
 	ExtraFields    map[string]apijson.Field
 }
 
-func (r *UserSubscriptionListResponseItemsProductBenefitsBenefitBase) UnmarshalJSON(data []byte) (err error) {
+func (r *UserSubscriptionListResponseProductBenefitsBenefitBase) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-func (r userSubscriptionListResponseItemsProductBenefitsBenefitBaseJSON) RawJSON() string {
+func (r userSubscriptionListResponseProductBenefitsBenefitBaseJSON) RawJSON() string {
 	return r.raw
 }
 
-func (r UserSubscriptionListResponseItemsProductBenefitsBenefitBase) implementsUserSubscriptionListResponseItemsProductBenefit() {
+func (r UserSubscriptionListResponseProductBenefitsBenefitBase) implementsUserSubscriptionListResponseProductBenefit() {
 }
 
 // The type of the benefit.
-type UserSubscriptionListResponseItemsProductBenefitsBenefitBaseType string
+type UserSubscriptionListResponseProductBenefitsBenefitBaseType string
 
 const (
-	UserSubscriptionListResponseItemsProductBenefitsBenefitBaseTypeCustom           UserSubscriptionListResponseItemsProductBenefitsBenefitBaseType = "custom"
-	UserSubscriptionListResponseItemsProductBenefitsBenefitBaseTypeArticles         UserSubscriptionListResponseItemsProductBenefitsBenefitBaseType = "articles"
-	UserSubscriptionListResponseItemsProductBenefitsBenefitBaseTypeAds              UserSubscriptionListResponseItemsProductBenefitsBenefitBaseType = "ads"
-	UserSubscriptionListResponseItemsProductBenefitsBenefitBaseTypeDiscord          UserSubscriptionListResponseItemsProductBenefitsBenefitBaseType = "discord"
-	UserSubscriptionListResponseItemsProductBenefitsBenefitBaseTypeGitHubRepository UserSubscriptionListResponseItemsProductBenefitsBenefitBaseType = "github_repository"
-	UserSubscriptionListResponseItemsProductBenefitsBenefitBaseTypeDownloadables    UserSubscriptionListResponseItemsProductBenefitsBenefitBaseType = "downloadables"
+	UserSubscriptionListResponseProductBenefitsBenefitBaseTypeCustom           UserSubscriptionListResponseProductBenefitsBenefitBaseType = "custom"
+	UserSubscriptionListResponseProductBenefitsBenefitBaseTypeArticles         UserSubscriptionListResponseProductBenefitsBenefitBaseType = "articles"
+	UserSubscriptionListResponseProductBenefitsBenefitBaseTypeAds              UserSubscriptionListResponseProductBenefitsBenefitBaseType = "ads"
+	UserSubscriptionListResponseProductBenefitsBenefitBaseTypeDiscord          UserSubscriptionListResponseProductBenefitsBenefitBaseType = "discord"
+	UserSubscriptionListResponseProductBenefitsBenefitBaseTypeGitHubRepository UserSubscriptionListResponseProductBenefitsBenefitBaseType = "github_repository"
+	UserSubscriptionListResponseProductBenefitsBenefitBaseTypeDownloadables    UserSubscriptionListResponseProductBenefitsBenefitBaseType = "downloadables"
 )
 
-func (r UserSubscriptionListResponseItemsProductBenefitsBenefitBaseType) IsKnown() bool {
+func (r UserSubscriptionListResponseProductBenefitsBenefitBaseType) IsKnown() bool {
 	switch r {
-	case UserSubscriptionListResponseItemsProductBenefitsBenefitBaseTypeCustom, UserSubscriptionListResponseItemsProductBenefitsBenefitBaseTypeArticles, UserSubscriptionListResponseItemsProductBenefitsBenefitBaseTypeAds, UserSubscriptionListResponseItemsProductBenefitsBenefitBaseTypeDiscord, UserSubscriptionListResponseItemsProductBenefitsBenefitBaseTypeGitHubRepository, UserSubscriptionListResponseItemsProductBenefitsBenefitBaseTypeDownloadables:
+	case UserSubscriptionListResponseProductBenefitsBenefitBaseTypeCustom, UserSubscriptionListResponseProductBenefitsBenefitBaseTypeArticles, UserSubscriptionListResponseProductBenefitsBenefitBaseTypeAds, UserSubscriptionListResponseProductBenefitsBenefitBaseTypeDiscord, UserSubscriptionListResponseProductBenefitsBenefitBaseTypeGitHubRepository, UserSubscriptionListResponseProductBenefitsBenefitBaseTypeDownloadables:
 		return true
 	}
 	return false
@@ -3423,7 +3390,7 @@ func (r UserSubscriptionListResponseItemsProductBenefitsBenefitBaseType) IsKnown
 // A benefit of type `articles`.
 //
 // Use it to grant access to posts.
-type UserSubscriptionListResponseItemsProductBenefitsBenefitArticles struct {
+type UserSubscriptionListResponseProductBenefitsBenefitArticles struct {
 	// The ID of the benefit.
 	ID string `json:"id,required" format:"uuid4"`
 	// Creation timestamp of the object.
@@ -3437,17 +3404,17 @@ type UserSubscriptionListResponseItemsProductBenefitsBenefitArticles struct {
 	// The ID of the organization owning the benefit.
 	OrganizationID string `json:"organization_id,required" format:"uuid4"`
 	// Properties for a benefit of type `articles`.
-	Properties UserSubscriptionListResponseItemsProductBenefitsBenefitArticlesProperties `json:"properties,required"`
+	Properties UserSubscriptionListResponseProductBenefitsBenefitArticlesProperties `json:"properties,required"`
 	// Whether the benefit is selectable when creating a product.
-	Selectable bool                                                                `json:"selectable,required"`
-	Type       UserSubscriptionListResponseItemsProductBenefitsBenefitArticlesType `json:"type,required"`
-	JSON       userSubscriptionListResponseItemsProductBenefitsBenefitArticlesJSON `json:"-"`
+	Selectable bool                                                           `json:"selectable,required"`
+	Type       UserSubscriptionListResponseProductBenefitsBenefitArticlesType `json:"type,required"`
+	JSON       userSubscriptionListResponseProductBenefitsBenefitArticlesJSON `json:"-"`
 }
 
-// userSubscriptionListResponseItemsProductBenefitsBenefitArticlesJSON contains the
-// JSON metadata for the struct
-// [UserSubscriptionListResponseItemsProductBenefitsBenefitArticles]
-type userSubscriptionListResponseItemsProductBenefitsBenefitArticlesJSON struct {
+// userSubscriptionListResponseProductBenefitsBenefitArticlesJSON contains the JSON
+// metadata for the struct
+// [UserSubscriptionListResponseProductBenefitsBenefitArticles]
+type userSubscriptionListResponseProductBenefitsBenefitArticlesJSON struct {
 	ID             apijson.Field
 	CreatedAt      apijson.Field
 	Deletable      apijson.Field
@@ -3461,77 +3428,77 @@ type userSubscriptionListResponseItemsProductBenefitsBenefitArticlesJSON struct 
 	ExtraFields    map[string]apijson.Field
 }
 
-func (r *UserSubscriptionListResponseItemsProductBenefitsBenefitArticles) UnmarshalJSON(data []byte) (err error) {
+func (r *UserSubscriptionListResponseProductBenefitsBenefitArticles) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-func (r userSubscriptionListResponseItemsProductBenefitsBenefitArticlesJSON) RawJSON() string {
+func (r userSubscriptionListResponseProductBenefitsBenefitArticlesJSON) RawJSON() string {
 	return r.raw
 }
 
-func (r UserSubscriptionListResponseItemsProductBenefitsBenefitArticles) implementsUserSubscriptionListResponseItemsProductBenefit() {
+func (r UserSubscriptionListResponseProductBenefitsBenefitArticles) implementsUserSubscriptionListResponseProductBenefit() {
 }
 
 // Properties for a benefit of type `articles`.
-type UserSubscriptionListResponseItemsProductBenefitsBenefitArticlesProperties struct {
+type UserSubscriptionListResponseProductBenefitsBenefitArticlesProperties struct {
 	// Whether the user can access paid articles.
-	PaidArticles bool                                                                          `json:"paid_articles,required"`
-	JSON         userSubscriptionListResponseItemsProductBenefitsBenefitArticlesPropertiesJSON `json:"-"`
+	PaidArticles bool                                                                     `json:"paid_articles,required"`
+	JSON         userSubscriptionListResponseProductBenefitsBenefitArticlesPropertiesJSON `json:"-"`
 }
 
-// userSubscriptionListResponseItemsProductBenefitsBenefitArticlesPropertiesJSON
+// userSubscriptionListResponseProductBenefitsBenefitArticlesPropertiesJSON
 // contains the JSON metadata for the struct
-// [UserSubscriptionListResponseItemsProductBenefitsBenefitArticlesProperties]
-type userSubscriptionListResponseItemsProductBenefitsBenefitArticlesPropertiesJSON struct {
+// [UserSubscriptionListResponseProductBenefitsBenefitArticlesProperties]
+type userSubscriptionListResponseProductBenefitsBenefitArticlesPropertiesJSON struct {
 	PaidArticles apijson.Field
 	raw          string
 	ExtraFields  map[string]apijson.Field
 }
 
-func (r *UserSubscriptionListResponseItemsProductBenefitsBenefitArticlesProperties) UnmarshalJSON(data []byte) (err error) {
+func (r *UserSubscriptionListResponseProductBenefitsBenefitArticlesProperties) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-func (r userSubscriptionListResponseItemsProductBenefitsBenefitArticlesPropertiesJSON) RawJSON() string {
+func (r userSubscriptionListResponseProductBenefitsBenefitArticlesPropertiesJSON) RawJSON() string {
 	return r.raw
 }
 
-type UserSubscriptionListResponseItemsProductBenefitsBenefitArticlesType string
+type UserSubscriptionListResponseProductBenefitsBenefitArticlesType string
 
 const (
-	UserSubscriptionListResponseItemsProductBenefitsBenefitArticlesTypeArticles UserSubscriptionListResponseItemsProductBenefitsBenefitArticlesType = "articles"
+	UserSubscriptionListResponseProductBenefitsBenefitArticlesTypeArticles UserSubscriptionListResponseProductBenefitsBenefitArticlesType = "articles"
 )
 
-func (r UserSubscriptionListResponseItemsProductBenefitsBenefitArticlesType) IsKnown() bool {
+func (r UserSubscriptionListResponseProductBenefitsBenefitArticlesType) IsKnown() bool {
 	switch r {
-	case UserSubscriptionListResponseItemsProductBenefitsBenefitArticlesTypeArticles:
+	case UserSubscriptionListResponseProductBenefitsBenefitArticlesTypeArticles:
 		return true
 	}
 	return false
 }
 
 // The type of the benefit.
-type UserSubscriptionListResponseItemsProductBenefitsType string
+type UserSubscriptionListResponseProductBenefitsType string
 
 const (
-	UserSubscriptionListResponseItemsProductBenefitsTypeCustom           UserSubscriptionListResponseItemsProductBenefitsType = "custom"
-	UserSubscriptionListResponseItemsProductBenefitsTypeArticles         UserSubscriptionListResponseItemsProductBenefitsType = "articles"
-	UserSubscriptionListResponseItemsProductBenefitsTypeAds              UserSubscriptionListResponseItemsProductBenefitsType = "ads"
-	UserSubscriptionListResponseItemsProductBenefitsTypeDiscord          UserSubscriptionListResponseItemsProductBenefitsType = "discord"
-	UserSubscriptionListResponseItemsProductBenefitsTypeGitHubRepository UserSubscriptionListResponseItemsProductBenefitsType = "github_repository"
-	UserSubscriptionListResponseItemsProductBenefitsTypeDownloadables    UserSubscriptionListResponseItemsProductBenefitsType = "downloadables"
+	UserSubscriptionListResponseProductBenefitsTypeCustom           UserSubscriptionListResponseProductBenefitsType = "custom"
+	UserSubscriptionListResponseProductBenefitsTypeArticles         UserSubscriptionListResponseProductBenefitsType = "articles"
+	UserSubscriptionListResponseProductBenefitsTypeAds              UserSubscriptionListResponseProductBenefitsType = "ads"
+	UserSubscriptionListResponseProductBenefitsTypeDiscord          UserSubscriptionListResponseProductBenefitsType = "discord"
+	UserSubscriptionListResponseProductBenefitsTypeGitHubRepository UserSubscriptionListResponseProductBenefitsType = "github_repository"
+	UserSubscriptionListResponseProductBenefitsTypeDownloadables    UserSubscriptionListResponseProductBenefitsType = "downloadables"
 )
 
-func (r UserSubscriptionListResponseItemsProductBenefitsType) IsKnown() bool {
+func (r UserSubscriptionListResponseProductBenefitsType) IsKnown() bool {
 	switch r {
-	case UserSubscriptionListResponseItemsProductBenefitsTypeCustom, UserSubscriptionListResponseItemsProductBenefitsTypeArticles, UserSubscriptionListResponseItemsProductBenefitsTypeAds, UserSubscriptionListResponseItemsProductBenefitsTypeDiscord, UserSubscriptionListResponseItemsProductBenefitsTypeGitHubRepository, UserSubscriptionListResponseItemsProductBenefitsTypeDownloadables:
+	case UserSubscriptionListResponseProductBenefitsTypeCustom, UserSubscriptionListResponseProductBenefitsTypeArticles, UserSubscriptionListResponseProductBenefitsTypeAds, UserSubscriptionListResponseProductBenefitsTypeDiscord, UserSubscriptionListResponseProductBenefitsTypeGitHubRepository, UserSubscriptionListResponseProductBenefitsTypeDownloadables:
 		return true
 	}
 	return false
 }
 
 // A recurring price for a product, i.e. a subscription.
-type UserSubscriptionListResponseItemsProductPrice struct {
+type UserSubscriptionListResponseProductPrice struct {
 	// Creation timestamp of the object.
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
 	// Last modification timestamp of the object.
@@ -3545,16 +3512,16 @@ type UserSubscriptionListResponseItemsProductPrice struct {
 	// Whether the price is archived and no longer available.
 	IsArchived bool `json:"is_archived,required"`
 	// The type of the price.
-	Type UserSubscriptionListResponseItemsProductPricesType `json:"type,required"`
+	Type UserSubscriptionListResponseProductPricesType `json:"type,required"`
 	// The recurring interval of the price, if type is `recurring`.
-	RecurringInterval UserSubscriptionListResponseItemsProductPricesRecurringInterval `json:"recurring_interval,nullable"`
-	JSON              userSubscriptionListResponseItemsProductPriceJSON               `json:"-"`
-	union             UserSubscriptionListResponseItemsProductPricesUnion
+	RecurringInterval UserSubscriptionListResponseProductPricesRecurringInterval `json:"recurring_interval,nullable"`
+	JSON              userSubscriptionListResponseProductPriceJSON               `json:"-"`
+	union             UserSubscriptionListResponseProductPricesUnion
 }
 
-// userSubscriptionListResponseItemsProductPriceJSON contains the JSON metadata for
-// the struct [UserSubscriptionListResponseItemsProductPrice]
-type userSubscriptionListResponseItemsProductPriceJSON struct {
+// userSubscriptionListResponseProductPriceJSON contains the JSON metadata for the
+// struct [UserSubscriptionListResponseProductPrice]
+type userSubscriptionListResponseProductPriceJSON struct {
 	CreatedAt         apijson.Field
 	ModifiedAt        apijson.Field
 	ID                apijson.Field
@@ -3567,12 +3534,12 @@ type userSubscriptionListResponseItemsProductPriceJSON struct {
 	ExtraFields       map[string]apijson.Field
 }
 
-func (r userSubscriptionListResponseItemsProductPriceJSON) RawJSON() string {
+func (r userSubscriptionListResponseProductPriceJSON) RawJSON() string {
 	return r.raw
 }
 
-func (r *UserSubscriptionListResponseItemsProductPrice) UnmarshalJSON(data []byte) (err error) {
-	*r = UserSubscriptionListResponseItemsProductPrice{}
+func (r *UserSubscriptionListResponseProductPrice) UnmarshalJSON(data []byte) (err error) {
+	*r = UserSubscriptionListResponseProductPrice{}
 	err = apijson.UnmarshalRoot(data, &r.union)
 	if err != nil {
 		return err
@@ -3580,44 +3547,44 @@ func (r *UserSubscriptionListResponseItemsProductPrice) UnmarshalJSON(data []byt
 	return apijson.Port(r.union, &r)
 }
 
-// AsUnion returns a [UserSubscriptionListResponseItemsProductPricesUnion]
-// interface which you can cast to the specific types for more type safety.
+// AsUnion returns a [UserSubscriptionListResponseProductPricesUnion] interface
+// which you can cast to the specific types for more type safety.
 //
 // Possible runtime types of the union are
-// [UserSubscriptionListResponseItemsProductPricesProductPriceRecurring],
-// [UserSubscriptionListResponseItemsProductPricesProductPriceOneTime].
-func (r UserSubscriptionListResponseItemsProductPrice) AsUnion() UserSubscriptionListResponseItemsProductPricesUnion {
+// [UserSubscriptionListResponseProductPricesProductPriceRecurring],
+// [UserSubscriptionListResponseProductPricesProductPriceOneTime].
+func (r UserSubscriptionListResponseProductPrice) AsUnion() UserSubscriptionListResponseProductPricesUnion {
 	return r.union
 }
 
 // A recurring price for a product, i.e. a subscription.
 //
 // Union satisfied by
-// [UserSubscriptionListResponseItemsProductPricesProductPriceRecurring] or
-// [UserSubscriptionListResponseItemsProductPricesProductPriceOneTime].
-type UserSubscriptionListResponseItemsProductPricesUnion interface {
-	implementsUserSubscriptionListResponseItemsProductPrice()
+// [UserSubscriptionListResponseProductPricesProductPriceRecurring] or
+// [UserSubscriptionListResponseProductPricesProductPriceOneTime].
+type UserSubscriptionListResponseProductPricesUnion interface {
+	implementsUserSubscriptionListResponseProductPrice()
 }
 
 func init() {
 	apijson.RegisterUnion(
-		reflect.TypeOf((*UserSubscriptionListResponseItemsProductPricesUnion)(nil)).Elem(),
+		reflect.TypeOf((*UserSubscriptionListResponseProductPricesUnion)(nil)).Elem(),
 		"type",
 		apijson.UnionVariant{
 			TypeFilter:         gjson.JSON,
-			Type:               reflect.TypeOf(UserSubscriptionListResponseItemsProductPricesProductPriceRecurring{}),
+			Type:               reflect.TypeOf(UserSubscriptionListResponseProductPricesProductPriceRecurring{}),
 			DiscriminatorValue: "recurring",
 		},
 		apijson.UnionVariant{
 			TypeFilter:         gjson.JSON,
-			Type:               reflect.TypeOf(UserSubscriptionListResponseItemsProductPricesProductPriceOneTime{}),
+			Type:               reflect.TypeOf(UserSubscriptionListResponseProductPricesProductPriceOneTime{}),
 			DiscriminatorValue: "one_time",
 		},
 	)
 }
 
 // A recurring price for a product, i.e. a subscription.
-type UserSubscriptionListResponseItemsProductPricesProductPriceRecurring struct {
+type UserSubscriptionListResponseProductPricesProductPriceRecurring struct {
 	// The ID of the price.
 	ID string `json:"id,required" format:"uuid4"`
 	// Creation timestamp of the object.
@@ -3631,16 +3598,16 @@ type UserSubscriptionListResponseItemsProductPricesProductPriceRecurring struct 
 	// The currency.
 	PriceCurrency string `json:"price_currency,required"`
 	// The recurring interval of the price, if type is `recurring`.
-	RecurringInterval UserSubscriptionListResponseItemsProductPricesProductPriceRecurringRecurringInterval `json:"recurring_interval,required,nullable"`
+	RecurringInterval UserSubscriptionListResponseProductPricesProductPriceRecurringRecurringInterval `json:"recurring_interval,required,nullable"`
 	// The type of the price.
-	Type UserSubscriptionListResponseItemsProductPricesProductPriceRecurringType `json:"type,required"`
-	JSON userSubscriptionListResponseItemsProductPricesProductPriceRecurringJSON `json:"-"`
+	Type UserSubscriptionListResponseProductPricesProductPriceRecurringType `json:"type,required"`
+	JSON userSubscriptionListResponseProductPricesProductPriceRecurringJSON `json:"-"`
 }
 
-// userSubscriptionListResponseItemsProductPricesProductPriceRecurringJSON contains
-// the JSON metadata for the struct
-// [UserSubscriptionListResponseItemsProductPricesProductPriceRecurring]
-type userSubscriptionListResponseItemsProductPricesProductPriceRecurringJSON struct {
+// userSubscriptionListResponseProductPricesProductPriceRecurringJSON contains the
+// JSON metadata for the struct
+// [UserSubscriptionListResponseProductPricesProductPriceRecurring]
+type userSubscriptionListResponseProductPricesProductPriceRecurringJSON struct {
 	ID                apijson.Field
 	CreatedAt         apijson.Field
 	IsArchived        apijson.Field
@@ -3653,50 +3620,50 @@ type userSubscriptionListResponseItemsProductPricesProductPriceRecurringJSON str
 	ExtraFields       map[string]apijson.Field
 }
 
-func (r *UserSubscriptionListResponseItemsProductPricesProductPriceRecurring) UnmarshalJSON(data []byte) (err error) {
+func (r *UserSubscriptionListResponseProductPricesProductPriceRecurring) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-func (r userSubscriptionListResponseItemsProductPricesProductPriceRecurringJSON) RawJSON() string {
+func (r userSubscriptionListResponseProductPricesProductPriceRecurringJSON) RawJSON() string {
 	return r.raw
 }
 
-func (r UserSubscriptionListResponseItemsProductPricesProductPriceRecurring) implementsUserSubscriptionListResponseItemsProductPrice() {
+func (r UserSubscriptionListResponseProductPricesProductPriceRecurring) implementsUserSubscriptionListResponseProductPrice() {
 }
 
 // The recurring interval of the price, if type is `recurring`.
-type UserSubscriptionListResponseItemsProductPricesProductPriceRecurringRecurringInterval string
+type UserSubscriptionListResponseProductPricesProductPriceRecurringRecurringInterval string
 
 const (
-	UserSubscriptionListResponseItemsProductPricesProductPriceRecurringRecurringIntervalMonth UserSubscriptionListResponseItemsProductPricesProductPriceRecurringRecurringInterval = "month"
-	UserSubscriptionListResponseItemsProductPricesProductPriceRecurringRecurringIntervalYear  UserSubscriptionListResponseItemsProductPricesProductPriceRecurringRecurringInterval = "year"
+	UserSubscriptionListResponseProductPricesProductPriceRecurringRecurringIntervalMonth UserSubscriptionListResponseProductPricesProductPriceRecurringRecurringInterval = "month"
+	UserSubscriptionListResponseProductPricesProductPriceRecurringRecurringIntervalYear  UserSubscriptionListResponseProductPricesProductPriceRecurringRecurringInterval = "year"
 )
 
-func (r UserSubscriptionListResponseItemsProductPricesProductPriceRecurringRecurringInterval) IsKnown() bool {
+func (r UserSubscriptionListResponseProductPricesProductPriceRecurringRecurringInterval) IsKnown() bool {
 	switch r {
-	case UserSubscriptionListResponseItemsProductPricesProductPriceRecurringRecurringIntervalMonth, UserSubscriptionListResponseItemsProductPricesProductPriceRecurringRecurringIntervalYear:
+	case UserSubscriptionListResponseProductPricesProductPriceRecurringRecurringIntervalMonth, UserSubscriptionListResponseProductPricesProductPriceRecurringRecurringIntervalYear:
 		return true
 	}
 	return false
 }
 
 // The type of the price.
-type UserSubscriptionListResponseItemsProductPricesProductPriceRecurringType string
+type UserSubscriptionListResponseProductPricesProductPriceRecurringType string
 
 const (
-	UserSubscriptionListResponseItemsProductPricesProductPriceRecurringTypeRecurring UserSubscriptionListResponseItemsProductPricesProductPriceRecurringType = "recurring"
+	UserSubscriptionListResponseProductPricesProductPriceRecurringTypeRecurring UserSubscriptionListResponseProductPricesProductPriceRecurringType = "recurring"
 )
 
-func (r UserSubscriptionListResponseItemsProductPricesProductPriceRecurringType) IsKnown() bool {
+func (r UserSubscriptionListResponseProductPricesProductPriceRecurringType) IsKnown() bool {
 	switch r {
-	case UserSubscriptionListResponseItemsProductPricesProductPriceRecurringTypeRecurring:
+	case UserSubscriptionListResponseProductPricesProductPriceRecurringTypeRecurring:
 		return true
 	}
 	return false
 }
 
 // A one-time price for a product.
-type UserSubscriptionListResponseItemsProductPricesProductPriceOneTime struct {
+type UserSubscriptionListResponseProductPricesProductPriceOneTime struct {
 	// The ID of the price.
 	ID string `json:"id,required" format:"uuid4"`
 	// Creation timestamp of the object.
@@ -3710,14 +3677,14 @@ type UserSubscriptionListResponseItemsProductPricesProductPriceOneTime struct {
 	// The currency.
 	PriceCurrency string `json:"price_currency,required"`
 	// The type of the price.
-	Type UserSubscriptionListResponseItemsProductPricesProductPriceOneTimeType `json:"type,required"`
-	JSON userSubscriptionListResponseItemsProductPricesProductPriceOneTimeJSON `json:"-"`
+	Type UserSubscriptionListResponseProductPricesProductPriceOneTimeType `json:"type,required"`
+	JSON userSubscriptionListResponseProductPricesProductPriceOneTimeJSON `json:"-"`
 }
 
-// userSubscriptionListResponseItemsProductPricesProductPriceOneTimeJSON contains
-// the JSON metadata for the struct
-// [UserSubscriptionListResponseItemsProductPricesProductPriceOneTime]
-type userSubscriptionListResponseItemsProductPricesProductPriceOneTimeJSON struct {
+// userSubscriptionListResponseProductPricesProductPriceOneTimeJSON contains the
+// JSON metadata for the struct
+// [UserSubscriptionListResponseProductPricesProductPriceOneTime]
+type userSubscriptionListResponseProductPricesProductPriceOneTimeJSON struct {
 	ID            apijson.Field
 	CreatedAt     apijson.Field
 	IsArchived    apijson.Field
@@ -3729,95 +3696,95 @@ type userSubscriptionListResponseItemsProductPricesProductPriceOneTimeJSON struc
 	ExtraFields   map[string]apijson.Field
 }
 
-func (r *UserSubscriptionListResponseItemsProductPricesProductPriceOneTime) UnmarshalJSON(data []byte) (err error) {
+func (r *UserSubscriptionListResponseProductPricesProductPriceOneTime) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-func (r userSubscriptionListResponseItemsProductPricesProductPriceOneTimeJSON) RawJSON() string {
+func (r userSubscriptionListResponseProductPricesProductPriceOneTimeJSON) RawJSON() string {
 	return r.raw
 }
 
-func (r UserSubscriptionListResponseItemsProductPricesProductPriceOneTime) implementsUserSubscriptionListResponseItemsProductPrice() {
+func (r UserSubscriptionListResponseProductPricesProductPriceOneTime) implementsUserSubscriptionListResponseProductPrice() {
 }
 
 // The type of the price.
-type UserSubscriptionListResponseItemsProductPricesProductPriceOneTimeType string
+type UserSubscriptionListResponseProductPricesProductPriceOneTimeType string
 
 const (
-	UserSubscriptionListResponseItemsProductPricesProductPriceOneTimeTypeOneTime UserSubscriptionListResponseItemsProductPricesProductPriceOneTimeType = "one_time"
+	UserSubscriptionListResponseProductPricesProductPriceOneTimeTypeOneTime UserSubscriptionListResponseProductPricesProductPriceOneTimeType = "one_time"
 )
 
-func (r UserSubscriptionListResponseItemsProductPricesProductPriceOneTimeType) IsKnown() bool {
+func (r UserSubscriptionListResponseProductPricesProductPriceOneTimeType) IsKnown() bool {
 	switch r {
-	case UserSubscriptionListResponseItemsProductPricesProductPriceOneTimeTypeOneTime:
+	case UserSubscriptionListResponseProductPricesProductPriceOneTimeTypeOneTime:
 		return true
 	}
 	return false
 }
 
 // The type of the price.
-type UserSubscriptionListResponseItemsProductPricesType string
+type UserSubscriptionListResponseProductPricesType string
 
 const (
-	UserSubscriptionListResponseItemsProductPricesTypeRecurring UserSubscriptionListResponseItemsProductPricesType = "recurring"
-	UserSubscriptionListResponseItemsProductPricesTypeOneTime   UserSubscriptionListResponseItemsProductPricesType = "one_time"
+	UserSubscriptionListResponseProductPricesTypeRecurring UserSubscriptionListResponseProductPricesType = "recurring"
+	UserSubscriptionListResponseProductPricesTypeOneTime   UserSubscriptionListResponseProductPricesType = "one_time"
 )
 
-func (r UserSubscriptionListResponseItemsProductPricesType) IsKnown() bool {
+func (r UserSubscriptionListResponseProductPricesType) IsKnown() bool {
 	switch r {
-	case UserSubscriptionListResponseItemsProductPricesTypeRecurring, UserSubscriptionListResponseItemsProductPricesTypeOneTime:
+	case UserSubscriptionListResponseProductPricesTypeRecurring, UserSubscriptionListResponseProductPricesTypeOneTime:
 		return true
 	}
 	return false
 }
 
 // The recurring interval of the price, if type is `recurring`.
-type UserSubscriptionListResponseItemsProductPricesRecurringInterval string
+type UserSubscriptionListResponseProductPricesRecurringInterval string
 
 const (
-	UserSubscriptionListResponseItemsProductPricesRecurringIntervalMonth UserSubscriptionListResponseItemsProductPricesRecurringInterval = "month"
-	UserSubscriptionListResponseItemsProductPricesRecurringIntervalYear  UserSubscriptionListResponseItemsProductPricesRecurringInterval = "year"
+	UserSubscriptionListResponseProductPricesRecurringIntervalMonth UserSubscriptionListResponseProductPricesRecurringInterval = "month"
+	UserSubscriptionListResponseProductPricesRecurringIntervalYear  UserSubscriptionListResponseProductPricesRecurringInterval = "year"
 )
 
-func (r UserSubscriptionListResponseItemsProductPricesRecurringInterval) IsKnown() bool {
+func (r UserSubscriptionListResponseProductPricesRecurringInterval) IsKnown() bool {
 	switch r {
-	case UserSubscriptionListResponseItemsProductPricesRecurringIntervalMonth, UserSubscriptionListResponseItemsProductPricesRecurringIntervalYear:
+	case UserSubscriptionListResponseProductPricesRecurringIntervalMonth, UserSubscriptionListResponseProductPricesRecurringIntervalYear:
 		return true
 	}
 	return false
 }
 
-type UserSubscriptionListResponseItemsProductType string
+type UserSubscriptionListResponseProductType string
 
 const (
-	UserSubscriptionListResponseItemsProductTypeFree       UserSubscriptionListResponseItemsProductType = "free"
-	UserSubscriptionListResponseItemsProductTypeIndividual UserSubscriptionListResponseItemsProductType = "individual"
-	UserSubscriptionListResponseItemsProductTypeBusiness   UserSubscriptionListResponseItemsProductType = "business"
+	UserSubscriptionListResponseProductTypeFree       UserSubscriptionListResponseProductType = "free"
+	UserSubscriptionListResponseProductTypeIndividual UserSubscriptionListResponseProductType = "individual"
+	UserSubscriptionListResponseProductTypeBusiness   UserSubscriptionListResponseProductType = "business"
 )
 
-func (r UserSubscriptionListResponseItemsProductType) IsKnown() bool {
+func (r UserSubscriptionListResponseProductType) IsKnown() bool {
 	switch r {
-	case UserSubscriptionListResponseItemsProductTypeFree, UserSubscriptionListResponseItemsProductTypeIndividual, UserSubscriptionListResponseItemsProductTypeBusiness:
+	case UserSubscriptionListResponseProductTypeFree, UserSubscriptionListResponseProductTypeIndividual, UserSubscriptionListResponseProductTypeBusiness:
 		return true
 	}
 	return false
 }
 
-type UserSubscriptionListResponseItemsStatus string
+type UserSubscriptionListResponseStatus string
 
 const (
-	UserSubscriptionListResponseItemsStatusIncomplete        UserSubscriptionListResponseItemsStatus = "incomplete"
-	UserSubscriptionListResponseItemsStatusIncompleteExpired UserSubscriptionListResponseItemsStatus = "incomplete_expired"
-	UserSubscriptionListResponseItemsStatusTrialing          UserSubscriptionListResponseItemsStatus = "trialing"
-	UserSubscriptionListResponseItemsStatusActive            UserSubscriptionListResponseItemsStatus = "active"
-	UserSubscriptionListResponseItemsStatusPastDue           UserSubscriptionListResponseItemsStatus = "past_due"
-	UserSubscriptionListResponseItemsStatusCanceled          UserSubscriptionListResponseItemsStatus = "canceled"
-	UserSubscriptionListResponseItemsStatusUnpaid            UserSubscriptionListResponseItemsStatus = "unpaid"
+	UserSubscriptionListResponseStatusIncomplete        UserSubscriptionListResponseStatus = "incomplete"
+	UserSubscriptionListResponseStatusIncompleteExpired UserSubscriptionListResponseStatus = "incomplete_expired"
+	UserSubscriptionListResponseStatusTrialing          UserSubscriptionListResponseStatus = "trialing"
+	UserSubscriptionListResponseStatusActive            UserSubscriptionListResponseStatus = "active"
+	UserSubscriptionListResponseStatusPastDue           UserSubscriptionListResponseStatus = "past_due"
+	UserSubscriptionListResponseStatusCanceled          UserSubscriptionListResponseStatus = "canceled"
+	UserSubscriptionListResponseStatusUnpaid            UserSubscriptionListResponseStatus = "unpaid"
 )
 
-func (r UserSubscriptionListResponseItemsStatus) IsKnown() bool {
+func (r UserSubscriptionListResponseStatus) IsKnown() bool {
 	switch r {
-	case UserSubscriptionListResponseItemsStatusIncomplete, UserSubscriptionListResponseItemsStatusIncompleteExpired, UserSubscriptionListResponseItemsStatusTrialing, UserSubscriptionListResponseItemsStatusActive, UserSubscriptionListResponseItemsStatusPastDue, UserSubscriptionListResponseItemsStatusCanceled, UserSubscriptionListResponseItemsStatusUnpaid:
+	case UserSubscriptionListResponseStatusIncomplete, UserSubscriptionListResponseStatusIncompleteExpired, UserSubscriptionListResponseStatusTrialing, UserSubscriptionListResponseStatusActive, UserSubscriptionListResponseStatusPastDue, UserSubscriptionListResponseStatusCanceled, UserSubscriptionListResponseStatusUnpaid:
 		return true
 	}
 	return false

@@ -9,6 +9,7 @@ import (
 
 	"github.com/polarsource/polar-go/internal/apijson"
 	"github.com/polarsource/polar-go/internal/apiquery"
+	"github.com/polarsource/polar-go/internal/pagination"
 	"github.com/polarsource/polar-go/internal/param"
 	"github.com/polarsource/polar-go/internal/requestconfig"
 	"github.com/polarsource/polar-go/option"
@@ -34,60 +35,29 @@ func NewExternalOrganizationService(opts ...option.RequestOption) (r *ExternalOr
 }
 
 // List external organizations.
-func (r *ExternalOrganizationService) List(ctx context.Context, query ExternalOrganizationListParams, opts ...option.RequestOption) (res *ExternalOrganizationListResponse, err error) {
+func (r *ExternalOrganizationService) List(ctx context.Context, query ExternalOrganizationListParams, opts ...option.RequestOption) (res *pagination.PolarPagination[ExternalOrganizationListResponse], err error) {
+	var raw *http.Response
 	opts = append(r.Options[:], opts...)
+	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "v1/external_organizations/"
-	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
-	return
+	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
+	if err != nil {
+		return nil, err
+	}
+	err = cfg.Execute()
+	if err != nil {
+		return nil, err
+	}
+	res.SetPageConfig(cfg, raw)
+	return res, nil
+}
+
+// List external organizations.
+func (r *ExternalOrganizationService) ListAutoPaging(ctx context.Context, query ExternalOrganizationListParams, opts ...option.RequestOption) *pagination.PolarPaginationAutoPager[ExternalOrganizationListResponse] {
+	return pagination.NewPolarPaginationAutoPager(r.List(ctx, query, opts...))
 }
 
 type ExternalOrganizationListResponse struct {
-	Pagination ExternalOrganizationListResponsePagination `json:"pagination,required"`
-	Items      []ExternalOrganizationListResponseItem     `json:"items"`
-	JSON       externalOrganizationListResponseJSON       `json:"-"`
-}
-
-// externalOrganizationListResponseJSON contains the JSON metadata for the struct
-// [ExternalOrganizationListResponse]
-type externalOrganizationListResponseJSON struct {
-	Pagination  apijson.Field
-	Items       apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *ExternalOrganizationListResponse) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-func (r externalOrganizationListResponseJSON) RawJSON() string {
-	return r.raw
-}
-
-type ExternalOrganizationListResponsePagination struct {
-	MaxPage    int64                                          `json:"max_page,required"`
-	TotalCount int64                                          `json:"total_count,required"`
-	JSON       externalOrganizationListResponsePaginationJSON `json:"-"`
-}
-
-// externalOrganizationListResponsePaginationJSON contains the JSON metadata for
-// the struct [ExternalOrganizationListResponsePagination]
-type externalOrganizationListResponsePaginationJSON struct {
-	MaxPage     apijson.Field
-	TotalCount  apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *ExternalOrganizationListResponsePagination) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-func (r externalOrganizationListResponsePaginationJSON) RawJSON() string {
-	return r.raw
-}
-
-type ExternalOrganizationListResponseItem struct {
 	ID         string `json:"id,required" format:"uuid"`
 	AvatarURL  string `json:"avatar_url,required"`
 	Bio        string `json:"bio,required,nullable"`
@@ -98,16 +68,16 @@ type ExternalOrganizationListResponseItem struct {
 	Location   string `json:"location,required,nullable"`
 	Name       string `json:"name,required"`
 	// The organization ID.
-	OrganizationID  string                                        `json:"organization_id,required,nullable" format:"uuid4"`
-	Platform        ExternalOrganizationListResponseItemsPlatform `json:"platform,required"`
-	PrettyName      string                                        `json:"pretty_name,required,nullable"`
-	TwitterUsername string                                        `json:"twitter_username,required,nullable"`
-	JSON            externalOrganizationListResponseItemJSON      `json:"-"`
+	OrganizationID  string                                   `json:"organization_id,required,nullable" format:"uuid4"`
+	Platform        ExternalOrganizationListResponsePlatform `json:"platform,required"`
+	PrettyName      string                                   `json:"pretty_name,required,nullable"`
+	TwitterUsername string                                   `json:"twitter_username,required,nullable"`
+	JSON            externalOrganizationListResponseJSON     `json:"-"`
 }
 
-// externalOrganizationListResponseItemJSON contains the JSON metadata for the
-// struct [ExternalOrganizationListResponseItem]
-type externalOrganizationListResponseItemJSON struct {
+// externalOrganizationListResponseJSON contains the JSON metadata for the struct
+// [ExternalOrganizationListResponse]
+type externalOrganizationListResponseJSON struct {
 	ID              apijson.Field
 	AvatarURL       apijson.Field
 	Bio             apijson.Field
@@ -125,23 +95,23 @@ type externalOrganizationListResponseItemJSON struct {
 	ExtraFields     map[string]apijson.Field
 }
 
-func (r *ExternalOrganizationListResponseItem) UnmarshalJSON(data []byte) (err error) {
+func (r *ExternalOrganizationListResponse) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-func (r externalOrganizationListResponseItemJSON) RawJSON() string {
+func (r externalOrganizationListResponseJSON) RawJSON() string {
 	return r.raw
 }
 
-type ExternalOrganizationListResponseItemsPlatform string
+type ExternalOrganizationListResponsePlatform string
 
 const (
-	ExternalOrganizationListResponseItemsPlatformGitHub ExternalOrganizationListResponseItemsPlatform = "github"
+	ExternalOrganizationListResponsePlatformGitHub ExternalOrganizationListResponsePlatform = "github"
 )
 
-func (r ExternalOrganizationListResponseItemsPlatform) IsKnown() bool {
+func (r ExternalOrganizationListResponsePlatform) IsKnown() bool {
 	switch r {
-	case ExternalOrganizationListResponseItemsPlatformGitHub:
+	case ExternalOrganizationListResponsePlatformGitHub:
 		return true
 	}
 	return false

@@ -17,23 +17,13 @@ import (
 type Client struct {
 	Options               []option.RequestOption
 	Users                 *UserService
-	Funding               *FundingService
 	ExternalOrganizations *ExternalOrganizationService
 	Repositories          *RepositoryService
-	Rewards               *RewardService
-	PullRequests          *PullRequestService
-	Accounts              *AccountService
-	Issues                *IssueService
-	Pledges               *PledgeService
 	Organizations         *OrganizationService
 	Subscriptions         *SubscriptionService
 	Articles              *ArticleService
-	Transactions          *TransactionService
 	Advertisements        *AdvertisementService
-	Donations             *DonationService
-	Oauth2                *Oauth2Service
 	Benefits              *BenefitService
-	Webhooks              *WebhookService
 	Products              *ProductService
 	Orders                *OrderService
 	Checkouts             *CheckoutService
@@ -55,23 +45,13 @@ func NewClient(opts ...option.RequestOption) (r *Client) {
 	r = &Client{Options: opts}
 
 	r.Users = NewUserService(opts...)
-	r.Funding = NewFundingService(opts...)
 	r.ExternalOrganizations = NewExternalOrganizationService(opts...)
 	r.Repositories = NewRepositoryService(opts...)
-	r.Rewards = NewRewardService(opts...)
-	r.PullRequests = NewPullRequestService(opts...)
-	r.Accounts = NewAccountService(opts...)
-	r.Issues = NewIssueService(opts...)
-	r.Pledges = NewPledgeService(opts...)
 	r.Organizations = NewOrganizationService(opts...)
 	r.Subscriptions = NewSubscriptionService(opts...)
 	r.Articles = NewArticleService(opts...)
-	r.Transactions = NewTransactionService(opts...)
 	r.Advertisements = NewAdvertisementService(opts...)
-	r.Donations = NewDonationService(opts...)
-	r.Oauth2 = NewOauth2Service(opts...)
 	r.Benefits = NewBenefitService(opts...)
-	r.Webhooks = NewWebhookService(opts...)
 	r.Products = NewProductService(opts...)
 	r.Orders = NewOrderService(opts...)
 	r.Checkouts = NewCheckoutService(opts...)
