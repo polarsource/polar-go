@@ -92,7 +92,7 @@ func TestRepositoryListWithOptionalParams(t *testing.T) {
 		OrganizationID:           polar.F[polar.RepositoryListParamsOrganizationIDUnion](shared.UnionString("string")),
 		Page:                     polar.F(int64(1)),
 		Platform:                 polar.F[polar.RepositoryListParamsPlatformUnion](polar.RepositoryListParamsPlatformPlatforms(polar.RepositoryListParamsPlatformPlatformsGitHub)),
-		Sorting:                  polar.F([]string{"string", "string", "string"}),
+		Sorting:                  polar.F([]polar.RepositoryListParamsSorting{polar.RepositoryListParamsSortingCreatedAt, polar.RepositoryListParamsSorting - CreatedAt, polar.RepositoryListParamsSortingName}),
 	})
 	if err != nil {
 		var apierr *polar.Error

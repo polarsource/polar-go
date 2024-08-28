@@ -59,7 +59,7 @@ func TestSubscriptionListWithOptionalParams(t *testing.T) {
 		OrganizationID: polar.F[polar.SubscriptionListParamsOrganizationIDUnion](shared.UnionString("string")),
 		Page:           polar.F(int64(1)),
 		ProductID:      polar.F[polar.SubscriptionListParamsProductIDUnion](shared.UnionString("string")),
-		Sorting:        polar.F([]string{"string", "string", "string"}),
+		Sorting:        polar.F([]polar.SubscriptionListParamsSorting{polar.SubscriptionListParamsSortingUser, polar.SubscriptionListParamsSorting - User, polar.SubscriptionListParamsSortingStatus}),
 		Type:           polar.F[polar.SubscriptionListParamsTypeUnion](polar.SubscriptionListParamsTypeSubscriptionTierType(polar.SubscriptionListParamsTypeSubscriptionTierTypeFree)),
 	})
 	if err != nil {

@@ -137,7 +137,7 @@ func TestOrganizationListWithOptionalParams(t *testing.T) {
 		Limit:    polar.F(int64(1)),
 		Page:     polar.F(int64(1)),
 		Slug:     polar.F("slug"),
-		Sorting:  polar.F([]string{"string", "string", "string"}),
+		Sorting:  polar.F([]polar.OrganizationListParamsSorting{polar.OrganizationListParamsSortingCreatedAt, polar.OrganizationListParamsSorting - CreatedAt, polar.OrganizationListParamsSortingName}),
 	})
 	if err != nil {
 		var apierr *polar.Error

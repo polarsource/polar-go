@@ -51,7 +51,7 @@ func TestAdvertisementListWithOptionalParams(t *testing.T) {
 		BenefitID: polar.F("benefit_id"),
 		Limit:     polar.F(int64(1)),
 		Page:      polar.F(int64(1)),
-		Sorting:   polar.F([]string{"string", "string", "string"}),
+		Sorting:   polar.F([]polar.AdvertisementListParamsSorting{polar.AdvertisementListParamsSortingCreatedAt, polar.AdvertisementListParamsSorting - CreatedAt, polar.AdvertisementListParamsSortingGrantedAt}),
 	})
 	if err != nil {
 		var apierr *polar.Error

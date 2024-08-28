@@ -32,7 +32,7 @@ func TestExternalOrganizationListWithOptionalParams(t *testing.T) {
 		OrganizationID: polar.F[polar.ExternalOrganizationListParamsOrganizationIDUnion](shared.UnionString("string")),
 		Page:           polar.F(int64(1)),
 		Platform:       polar.F[polar.ExternalOrganizationListParamsPlatformUnion](polar.ExternalOrganizationListParamsPlatformPlatforms(polar.ExternalOrganizationListParamsPlatformPlatformsGitHub)),
-		Sorting:        polar.F([]string{"string", "string", "string"}),
+		Sorting:        polar.F([]polar.ExternalOrganizationListParamsSorting{polar.ExternalOrganizationListParamsSortingCreatedAt, polar.ExternalOrganizationListParamsSorting - CreatedAt, polar.ExternalOrganizationListParamsSortingName}),
 	})
 	if err != nil {
 		var apierr *polar.Error
