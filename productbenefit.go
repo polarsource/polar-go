@@ -34,7 +34,7 @@ func NewProductBenefitService(opts ...option.RequestOption) (r *ProductBenefitSe
 }
 
 // Update benefits granted by a product.
-func (r *ProductBenefitService) Update(ctx context.Context, id string, body ProductBenefitUpdateParams, opts ...option.RequestOption) (res *ProductOutput, err error) {
+func (r *ProductBenefitService) Update(ctx context.Context, id string, body ProductBenefitUpdateParams, opts ...option.RequestOption) (res *Product, err error) {
 	opts = append(r.Options[:], opts...)
 	if id == "" {
 		err = errors.New("missing required id parameter")

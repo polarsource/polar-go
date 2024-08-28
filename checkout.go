@@ -63,7 +63,7 @@ type Checkout struct {
 	CustomerEmail string `json:"customer_email,required,nullable"`
 	CustomerName  string `json:"customer_name,required,nullable"`
 	// A product.
-	Product ProductOutput `json:"product,required"`
+	Product Product `json:"product,required"`
 	// A recurring price for a product, i.e. a subscription.
 	ProductPrice CheckoutProductPrice `json:"product_price,required"`
 	// URL the customer should be redirected to complete the purchase.
