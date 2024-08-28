@@ -26,7 +26,6 @@ import (
 // the [NewOrganizationService] method instead.
 type OrganizationService struct {
 Options []option.RequestOption
-Customers *OrganizationCustomerService
 }
 
 // NewOrganizationService generates a new service that applies the given options to
@@ -35,7 +34,6 @@ Customers *OrganizationCustomerService
 func NewOrganizationService(opts ...option.RequestOption) (r *OrganizationService) {
   r = &OrganizationService{}
   r.Options = opts
-  r.Customers = NewOrganizationCustomerService(opts...)
   return
 }
 

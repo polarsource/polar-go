@@ -103,7 +103,7 @@ ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
 Price SubscriptionNewResponsePrice `json:"price,required,nullable"`
 PriceID string `json:"price_id,required,nullable" format:"uuid4"`
 // A product.
-Product ProductOutput `json:"product,required"`
+Product Product `json:"product,required"`
 ProductID string `json:"product_id,required" format:"uuid4"`
 StartedAt time.Time `json:"started_at,required,nullable" format:"date-time"`
 Status SubscriptionNewResponseStatus `json:"status,required"`
@@ -456,7 +456,7 @@ ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
 Price SubscriptionListResponsePrice `json:"price,required,nullable"`
 PriceID string `json:"price_id,required,nullable" format:"uuid4"`
 // A product.
-Product ProductOutput `json:"product,required"`
+Product Product `json:"product,required"`
 ProductID string `json:"product_id,required" format:"uuid4"`
 StartedAt time.Time `json:"started_at,required,nullable" format:"date-time"`
 Status SubscriptionListResponseStatus `json:"status,required"`

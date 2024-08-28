@@ -168,8 +168,8 @@ You can use `.ListAutoPaging()` methods to iterate through items across all page
 iter := client.Products.ListAutoPaging(context.TODO(), polar.ProductListParams{})
 // Automatically fetches more pages as needed.
 for iter.Next() {
-	productOutput := iter.Current()
-	fmt.Printf("%+v\n", productOutput)
+	product := iter.Current()
+	fmt.Printf("%+v\n", product)
 }
 if err := iter.Err(); err != nil {
 	panic(err.Error())
