@@ -54,7 +54,7 @@ func TestOrderListWithOptionalParams(t *testing.T) {
 		Page:             polar.F(int64(1)),
 		ProductID:        polar.F[polar.OrderListParamsProductIDUnion](shared.UnionString("string")),
 		ProductPriceType: polar.F[polar.OrderListParamsProductPriceTypeUnion](polar.OrderListParamsProductPriceTypeProductPriceType(polar.OrderListParamsProductPriceTypeProductPriceTypeOneTime)),
-		Sorting:          polar.F([]string{"string", "string", "string"}),
+		Sorting:          polar.F([]polar.OrderListParamsSorting{polar.OrderListParamsSortingCreatedAt, polar.OrderListParamsSorting - CreatedAt, polar.OrderListParamsSortingAmount}),
 		UserID:           polar.F[polar.OrderListParamsUserIDUnion](shared.UnionString("string")),
 	})
 	if err != nil {
