@@ -108,7 +108,7 @@ func TestUserAdvertisementListWithOptionalParams(t *testing.T) {
 	_, err := client.Users.Advertisements.List(context.TODO(), polar.UserAdvertisementListParams{
 		Limit:   polar.F(int64(1)),
 		Page:    polar.F(int64(1)),
-		Sorting: polar.F([]string{"string", "string", "string"}),
+		Sorting: polar.F([]polar.UserAdvertisementListParamsSorting{polar.UserAdvertisementListParamsSortingCreatedAt, polar.UserAdvertisementListParamsSorting - CreatedAt, polar.UserAdvertisementListParamsSortingViews}),
 	})
 	if err != nil {
 		var apierr *polar.Error
