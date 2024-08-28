@@ -117,14 +117,6 @@ Methods:
 
 ## Customers
 
-Response Types:
-
-- <a href="https://pkg.go.dev/github.com/polarsource/polar-go">polar</a>.<a href="https://pkg.go.dev/github.com/polarsource/polar-go#OrganizationCustomerListResponse">OrganizationCustomerListResponse</a>
-
-Methods:
-
-- <code title="get /v1/organizations/{id}/customers">client.Organizations.Customers.<a href="https://pkg.go.dev/github.com/polarsource/polar-go#OrganizationCustomerService.List">List</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, id <a href="https://pkg.go.dev/builtin#string">string</a>, query <a href="https://pkg.go.dev/github.com/polarsource/polar-go">polar</a>.<a href="https://pkg.go.dev/github.com/polarsource/polar-go#OrganizationCustomerListParams">OrganizationCustomerListParams</a>) (<a href="https://pkg.go.dev/github.com/polarsource/polar-go/internal/pagination">pagination</a>.<a href="https://pkg.go.dev/github.com/polarsource/polar-go/internal/pagination#PolarPagination">PolarPagination</a>[<a href="https://pkg.go.dev/github.com/polarsource/polar-go">polar</a>.<a href="https://pkg.go.dev/github.com/polarsource/polar-go#OrganizationCustomerListResponse">OrganizationCustomerListResponse</a>], <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
-
 # Subscriptions
 
 Response Types:
