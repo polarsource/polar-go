@@ -204,6 +204,7 @@ Response Types:
 
 - <a href="https://pkg.go.dev/github.com/polarsource/polar-go">polar</a>.<a href="https://pkg.go.dev/github.com/polarsource/polar-go#ListResourceProduct">ListResourceProduct</a>
 - <a href="https://pkg.go.dev/github.com/polarsource/polar-go">polar</a>.<a href="https://pkg.go.dev/github.com/polarsource/polar-go#Product">Product</a>
+- <a href="https://pkg.go.dev/github.com/polarsource/polar-go">polar</a>.<a href="https://pkg.go.dev/github.com/polarsource/polar-go#ProductPrice">ProductPrice</a>
 
 Methods:
 

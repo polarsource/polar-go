@@ -459,6 +459,22 @@ func (r ProductBenefitsType) IsKnown() bool {
 	return false
 }
 
+type ProductType string
+
+const (
+	ProductTypeFree       ProductType = "free"
+	ProductTypeIndividual ProductType = "individual"
+	ProductTypeBusiness   ProductType = "business"
+)
+
+func (r ProductType) IsKnown() bool {
+	switch r {
+	case ProductTypeFree, ProductTypeIndividual, ProductTypeBusiness:
+		return true
+	}
+	return false
+}
+
 // A recurring price for a product, i.e. a subscription.
 type ProductPrice struct {
 	// Creation timestamp of the object.
@@ -474,11 +490,11 @@ type ProductPrice struct {
 	// Whether the price is archived and no longer available.
 	IsArchived bool `json:"is_archived,required"`
 	// The type of the price.
-	Type ProductPricesType `json:"type,required"`
+	Type ProductPriceType `json:"type,required"`
 	// The recurring interval of the price, if type is `recurring`.
-	RecurringInterval ProductPricesRecurringInterval `json:"recurring_interval,nullable"`
-	JSON              productPriceJSON               `json:"-"`
-	union             ProductPricesUnion
+	RecurringInterval ProductPriceRecurringInterval `json:"recurring_interval,nullable"`
+	JSON              productPriceJSON              `json:"-"`
+	union             ProductPriceUnion
 }
 
 // productPriceJSON contains the JSON metadata for the struct [ProductPrice]
@@ -508,42 +524,42 @@ func (r *ProductPrice) UnmarshalJSON(data []byte) (err error) {
 	return apijson.Port(r.union, &r)
 }
 
-// AsUnion returns a [ProductPricesUnion] interface which you can cast to the
+// AsUnion returns a [ProductPriceUnion] interface which you can cast to the
 // specific types for more type safety.
 //
-// Possible runtime types of the union are [ProductPricesProductPriceRecurring],
-// [ProductPricesProductPriceOneTime].
-func (r ProductPrice) AsUnion() ProductPricesUnion {
+// Possible runtime types of the union are [ProductPriceProductPriceRecurring],
+// [ProductPriceProductPriceOneTime].
+func (r ProductPrice) AsUnion() ProductPriceUnion {
 	return r.union
 }
 
 // A recurring price for a product, i.e. a subscription.
 //
-// Union satisfied by [ProductPricesProductPriceRecurring] or
-// [ProductPricesProductPriceOneTime].
-type ProductPricesUnion interface {
+// Union satisfied by [ProductPriceProductPriceRecurring] or
+// [ProductPriceProductPriceOneTime].
+type ProductPriceUnion interface {
 	implementsProductPrice()
 }
 
 func init() {
 	apijson.RegisterUnion(
-		reflect.TypeOf((*ProductPricesUnion)(nil)).Elem(),
+		reflect.TypeOf((*ProductPriceUnion)(nil)).Elem(),
 		"type",
 		apijson.UnionVariant{
 			TypeFilter:         gjson.JSON,
-			Type:               reflect.TypeOf(ProductPricesProductPriceRecurring{}),
+			Type:               reflect.TypeOf(ProductPriceProductPriceRecurring{}),
 			DiscriminatorValue: "recurring",
 		},
 		apijson.UnionVariant{
 			TypeFilter:         gjson.JSON,
-			Type:               reflect.TypeOf(ProductPricesProductPriceOneTime{}),
+			Type:               reflect.TypeOf(ProductPriceProductPriceOneTime{}),
 			DiscriminatorValue: "one_time",
 		},
 	)
 }
 
 // A recurring price for a product, i.e. a subscription.
-type ProductPricesProductPriceRecurring struct {
+type ProductPriceProductPriceRecurring struct {
 	// The ID of the price.
 	ID string `json:"id,required" format:"uuid4"`
 	// Creation timestamp of the object.
@@ -557,15 +573,15 @@ type ProductPricesProductPriceRecurring struct {
 	// The currency.
 	PriceCurrency string `json:"price_currency,required"`
 	// The recurring interval of the price, if type is `recurring`.
-	RecurringInterval ProductPricesProductPriceRecurringRecurringInterval `json:"recurring_interval,required,nullable"`
+	RecurringInterval ProductPriceProductPriceRecurringRecurringInterval `json:"recurring_interval,required,nullable"`
 	// The type of the price.
-	Type ProductPricesProductPriceRecurringType `json:"type,required"`
-	JSON productPricesProductPriceRecurringJSON `json:"-"`
+	Type ProductPriceProductPriceRecurringType `json:"type,required"`
+	JSON productPriceProductPriceRecurringJSON `json:"-"`
 }
 
-// productPricesProductPriceRecurringJSON contains the JSON metadata for the struct
-// [ProductPricesProductPriceRecurring]
-type productPricesProductPriceRecurringJSON struct {
+// productPriceProductPriceRecurringJSON contains the JSON metadata for the struct
+// [ProductPriceProductPriceRecurring]
+type productPriceProductPriceRecurringJSON struct {
 	ID                apijson.Field
 	CreatedAt         apijson.Field
 	IsArchived        apijson.Field
@@ -578,49 +594,49 @@ type productPricesProductPriceRecurringJSON struct {
 	ExtraFields       map[string]apijson.Field
 }
 
-func (r *ProductPricesProductPriceRecurring) UnmarshalJSON(data []byte) (err error) {
+func (r *ProductPriceProductPriceRecurring) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-func (r productPricesProductPriceRecurringJSON) RawJSON() string {
+func (r productPriceProductPriceRecurringJSON) RawJSON() string {
 	return r.raw
 }
 
-func (r ProductPricesProductPriceRecurring) implementsProductPrice() {}
+func (r ProductPriceProductPriceRecurring) implementsProductPrice() {}
 
 // The recurring interval of the price, if type is `recurring`.
-type ProductPricesProductPriceRecurringRecurringInterval string
+type ProductPriceProductPriceRecurringRecurringInterval string
 
 const (
-	ProductPricesProductPriceRecurringRecurringIntervalMonth ProductPricesProductPriceRecurringRecurringInterval = "month"
-	ProductPricesProductPriceRecurringRecurringIntervalYear  ProductPricesProductPriceRecurringRecurringInterval = "year"
+	ProductPriceProductPriceRecurringRecurringIntervalMonth ProductPriceProductPriceRecurringRecurringInterval = "month"
+	ProductPriceProductPriceRecurringRecurringIntervalYear  ProductPriceProductPriceRecurringRecurringInterval = "year"
 )
 
-func (r ProductPricesProductPriceRecurringRecurringInterval) IsKnown() bool {
+func (r ProductPriceProductPriceRecurringRecurringInterval) IsKnown() bool {
 	switch r {
-	case ProductPricesProductPriceRecurringRecurringIntervalMonth, ProductPricesProductPriceRecurringRecurringIntervalYear:
+	case ProductPriceProductPriceRecurringRecurringIntervalMonth, ProductPriceProductPriceRecurringRecurringIntervalYear:
 		return true
 	}
 	return false
 }
 
 // The type of the price.
-type ProductPricesProductPriceRecurringType string
+type ProductPriceProductPriceRecurringType string
 
 const (
-	ProductPricesProductPriceRecurringTypeRecurring ProductPricesProductPriceRecurringType = "recurring"
+	ProductPriceProductPriceRecurringTypeRecurring ProductPriceProductPriceRecurringType = "recurring"
 )
 
-func (r ProductPricesProductPriceRecurringType) IsKnown() bool {
+func (r ProductPriceProductPriceRecurringType) IsKnown() bool {
 	switch r {
-	case ProductPricesProductPriceRecurringTypeRecurring:
+	case ProductPriceProductPriceRecurringTypeRecurring:
 		return true
 	}
 	return false
 }
 
 // A one-time price for a product.
-type ProductPricesProductPriceOneTime struct {
+type ProductPriceProductPriceOneTime struct {
 	// The ID of the price.
 	ID string `json:"id,required" format:"uuid4"`
 	// Creation timestamp of the object.
@@ -634,13 +650,13 @@ type ProductPricesProductPriceOneTime struct {
 	// The currency.
 	PriceCurrency string `json:"price_currency,required"`
 	// The type of the price.
-	Type ProductPricesProductPriceOneTimeType `json:"type,required"`
-	JSON productPricesProductPriceOneTimeJSON `json:"-"`
+	Type ProductPriceProductPriceOneTimeType `json:"type,required"`
+	JSON productPriceProductPriceOneTimeJSON `json:"-"`
 }
 
-// productPricesProductPriceOneTimeJSON contains the JSON metadata for the struct
-// [ProductPricesProductPriceOneTime]
-type productPricesProductPriceOneTimeJSON struct {
+// productPriceProductPriceOneTimeJSON contains the JSON metadata for the struct
+// [ProductPriceProductPriceOneTime]
+type productPriceProductPriceOneTimeJSON struct {
 	ID            apijson.Field
 	CreatedAt     apijson.Field
 	IsArchived    apijson.Field
@@ -652,74 +668,58 @@ type productPricesProductPriceOneTimeJSON struct {
 	ExtraFields   map[string]apijson.Field
 }
 
-func (r *ProductPricesProductPriceOneTime) UnmarshalJSON(data []byte) (err error) {
+func (r *ProductPriceProductPriceOneTime) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-func (r productPricesProductPriceOneTimeJSON) RawJSON() string {
+func (r productPriceProductPriceOneTimeJSON) RawJSON() string {
 	return r.raw
 }
 
-func (r ProductPricesProductPriceOneTime) implementsProductPrice() {}
+func (r ProductPriceProductPriceOneTime) implementsProductPrice() {}
 
 // The type of the price.
-type ProductPricesProductPriceOneTimeType string
+type ProductPriceProductPriceOneTimeType string
 
 const (
-	ProductPricesProductPriceOneTimeTypeOneTime ProductPricesProductPriceOneTimeType = "one_time"
+	ProductPriceProductPriceOneTimeTypeOneTime ProductPriceProductPriceOneTimeType = "one_time"
 )
 
-func (r ProductPricesProductPriceOneTimeType) IsKnown() bool {
+func (r ProductPriceProductPriceOneTimeType) IsKnown() bool {
 	switch r {
-	case ProductPricesProductPriceOneTimeTypeOneTime:
+	case ProductPriceProductPriceOneTimeTypeOneTime:
 		return true
 	}
 	return false
 }
 
 // The type of the price.
-type ProductPricesType string
+type ProductPriceType string
 
 const (
-	ProductPricesTypeRecurring ProductPricesType = "recurring"
-	ProductPricesTypeOneTime   ProductPricesType = "one_time"
+	ProductPriceTypeRecurring ProductPriceType = "recurring"
+	ProductPriceTypeOneTime   ProductPriceType = "one_time"
 )
 
-func (r ProductPricesType) IsKnown() bool {
+func (r ProductPriceType) IsKnown() bool {
 	switch r {
-	case ProductPricesTypeRecurring, ProductPricesTypeOneTime:
+	case ProductPriceTypeRecurring, ProductPriceTypeOneTime:
 		return true
 	}
 	return false
 }
 
 // The recurring interval of the price, if type is `recurring`.
-type ProductPricesRecurringInterval string
+type ProductPriceRecurringInterval string
 
 const (
-	ProductPricesRecurringIntervalMonth ProductPricesRecurringInterval = "month"
-	ProductPricesRecurringIntervalYear  ProductPricesRecurringInterval = "year"
+	ProductPriceRecurringIntervalMonth ProductPriceRecurringInterval = "month"
+	ProductPriceRecurringIntervalYear  ProductPriceRecurringInterval = "year"
 )
 
-func (r ProductPricesRecurringInterval) IsKnown() bool {
+func (r ProductPriceRecurringInterval) IsKnown() bool {
 	switch r {
-	case ProductPricesRecurringIntervalMonth, ProductPricesRecurringIntervalYear:
-		return true
-	}
-	return false
-}
-
-type ProductType string
-
-const (
-	ProductTypeFree       ProductType = "free"
-	ProductTypeIndividual ProductType = "individual"
-	ProductTypeBusiness   ProductType = "business"
-)
-
-func (r ProductType) IsKnown() bool {
-	switch r {
-	case ProductTypeFree, ProductTypeIndividual, ProductTypeBusiness:
+	case ProductPriceRecurringIntervalMonth, ProductPriceRecurringIntervalYear:
 		return true
 	}
 	return false

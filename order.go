@@ -8,7 +8,6 @@ import (
   "fmt"
   "net/http"
   "net/url"
-  "reflect"
   "time"
 
   "github.com/polarsource/polar-go/internal/apijson"
@@ -17,7 +16,6 @@ import (
   "github.com/polarsource/polar-go/internal/param"
   "github.com/polarsource/polar-go/internal/requestconfig"
   "github.com/polarsource/polar-go/option"
-  "github.com/tidwall/gjson"
 )
 
 // OrderService contains methods and other services that help with interacting with
@@ -134,7 +132,7 @@ ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
 Product OrderOutputProduct `json:"product,required"`
 ProductID string `json:"product_id,required" format:"uuid4"`
 // A recurring price for a product, i.e. a subscription.
-ProductPrice OrderOutputProductPrice `json:"product_price,required"`
+ProductPrice ProductPrice `json:"product_price,required"`
 ProductPriceID string `json:"product_price_id,required" format:"uuid4"`
 Subscription OrderOutputSubscription `json:"subscription,required,nullable"`
 SubscriptionID string `json:"subscription_id,required,nullable" format:"uuid4"`
@@ -230,258 +228,6 @@ const (
 func (r OrderOutputProductType) IsKnown() (bool) {
   switch r {
   case OrderOutputProductTypeFree, OrderOutputProductTypeIndividual, OrderOutputProductTypeBusiness:
-      return true
-  }
-  return false
-}
-
-// A recurring price for a product, i.e. a subscription.
-type OrderOutputProductPrice struct {
-// Creation timestamp of the object.
-CreatedAt time.Time `json:"created_at,required" format:"date-time"`
-// Last modification timestamp of the object.
-ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
-// The ID of the price.
-ID string `json:"id,required" format:"uuid4"`
-// The price in cents.
-PriceAmount int64 `json:"price_amount,required"`
-// The currency.
-PriceCurrency string `json:"price_currency,required"`
-// Whether the price is archived and no longer available.
-IsArchived bool `json:"is_archived,required"`
-// The type of the price.
-Type OrderOutputProductPriceType `json:"type,required"`
-// The recurring interval of the price, if type is `recurring`.
-RecurringInterval OrderOutputProductPriceRecurringInterval `json:"recurring_interval,nullable"`
-JSON orderOutputProductPriceJSON `json:"-"`
-union OrderOutputProductPriceUnion
-}
-
-// orderOutputProductPriceJSON contains the JSON metadata for the struct
-// [OrderOutputProductPrice]
-type orderOutputProductPriceJSON struct {
-CreatedAt apijson.Field
-ModifiedAt apijson.Field
-ID apijson.Field
-PriceAmount apijson.Field
-PriceCurrency apijson.Field
-IsArchived apijson.Field
-Type apijson.Field
-RecurringInterval apijson.Field
-raw string
-ExtraFields map[string]apijson.Field
-}
-
-func (r orderOutputProductPriceJSON) RawJSON() (string) {
-  return r.raw
-}
-
-func (r *OrderOutputProductPrice) UnmarshalJSON(data []byte) (err error) {
-  *r = OrderOutputProductPrice{}
-  err = apijson.UnmarshalRoot(data, &r.union)
-  if err != nil {
-    return err
-  }
-  return apijson.Port(r.union, &r)
-}
-
-// AsUnion returns a [OrderOutputProductPriceUnion] interface which you can cast to
-// the specific types for more type safety.
-//
-// Possible runtime types of the union are
-// [OrderOutputProductPriceProductPriceRecurring],
-// [OrderOutputProductPriceProductPriceOneTime].
-func (r OrderOutputProductPrice) AsUnion() (OrderOutputProductPriceUnion) {
-  return r.union
-}
-
-// A recurring price for a product, i.e. a subscription.
-//
-// Union satisfied by [OrderOutputProductPriceProductPriceRecurring] or
-// [OrderOutputProductPriceProductPriceOneTime].
-type OrderOutputProductPriceUnion interface {
-  implementsOrderOutputProductPrice()
-}
-
-func init() {
-  apijson.RegisterUnion(
-    reflect.TypeOf((*OrderOutputProductPriceUnion)(nil)).Elem(),
-    "type",
-    apijson.UnionVariant{
-      TypeFilter: gjson.JSON,
-      Type: reflect.TypeOf(OrderOutputProductPriceProductPriceRecurring{}),
-      DiscriminatorValue: "recurring",
-    },
-    apijson.UnionVariant{
-      TypeFilter: gjson.JSON,
-      Type: reflect.TypeOf(OrderOutputProductPriceProductPriceOneTime{}),
-      DiscriminatorValue: "one_time",
-    },
-  )
-}
-
-// A recurring price for a product, i.e. a subscription.
-type OrderOutputProductPriceProductPriceRecurring struct {
-// The ID of the price.
-ID string `json:"id,required" format:"uuid4"`
-// Creation timestamp of the object.
-CreatedAt time.Time `json:"created_at,required" format:"date-time"`
-// Whether the price is archived and no longer available.
-IsArchived bool `json:"is_archived,required"`
-// Last modification timestamp of the object.
-ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
-// The price in cents.
-PriceAmount int64 `json:"price_amount,required"`
-// The currency.
-PriceCurrency string `json:"price_currency,required"`
-// The recurring interval of the price, if type is `recurring`.
-RecurringInterval OrderOutputProductPriceProductPriceRecurringRecurringInterval `json:"recurring_interval,required,nullable"`
-// The type of the price.
-Type OrderOutputProductPriceProductPriceRecurringType `json:"type,required"`
-JSON orderOutputProductPriceProductPriceRecurringJSON `json:"-"`
-}
-
-// orderOutputProductPriceProductPriceRecurringJSON contains the JSON metadata for
-// the struct [OrderOutputProductPriceProductPriceRecurring]
-type orderOutputProductPriceProductPriceRecurringJSON struct {
-ID apijson.Field
-CreatedAt apijson.Field
-IsArchived apijson.Field
-ModifiedAt apijson.Field
-PriceAmount apijson.Field
-PriceCurrency apijson.Field
-RecurringInterval apijson.Field
-Type apijson.Field
-raw string
-ExtraFields map[string]apijson.Field
-}
-
-func (r *OrderOutputProductPriceProductPriceRecurring) UnmarshalJSON(data []byte) (err error) {
-  return apijson.UnmarshalRoot(data, r)
-}
-
-func (r orderOutputProductPriceProductPriceRecurringJSON) RawJSON() (string) {
-  return r.raw
-}
-
-func (r OrderOutputProductPriceProductPriceRecurring) implementsOrderOutputProductPrice() {}
-
-// The recurring interval of the price, if type is `recurring`.
-type OrderOutputProductPriceProductPriceRecurringRecurringInterval string
-
-const (
-  OrderOutputProductPriceProductPriceRecurringRecurringIntervalMonth OrderOutputProductPriceProductPriceRecurringRecurringInterval = "month"
-  OrderOutputProductPriceProductPriceRecurringRecurringIntervalYear OrderOutputProductPriceProductPriceRecurringRecurringInterval = "year"
-)
-
-func (r OrderOutputProductPriceProductPriceRecurringRecurringInterval) IsKnown() (bool) {
-  switch r {
-  case OrderOutputProductPriceProductPriceRecurringRecurringIntervalMonth, OrderOutputProductPriceProductPriceRecurringRecurringIntervalYear:
-      return true
-  }
-  return false
-}
-
-// The type of the price.
-type OrderOutputProductPriceProductPriceRecurringType string
-
-const (
-  OrderOutputProductPriceProductPriceRecurringTypeRecurring OrderOutputProductPriceProductPriceRecurringType = "recurring"
-)
-
-func (r OrderOutputProductPriceProductPriceRecurringType) IsKnown() (bool) {
-  switch r {
-  case OrderOutputProductPriceProductPriceRecurringTypeRecurring:
-      return true
-  }
-  return false
-}
-
-// A one-time price for a product.
-type OrderOutputProductPriceProductPriceOneTime struct {
-// The ID of the price.
-ID string `json:"id,required" format:"uuid4"`
-// Creation timestamp of the object.
-CreatedAt time.Time `json:"created_at,required" format:"date-time"`
-// Whether the price is archived and no longer available.
-IsArchived bool `json:"is_archived,required"`
-// Last modification timestamp of the object.
-ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
-// The price in cents.
-PriceAmount int64 `json:"price_amount,required"`
-// The currency.
-PriceCurrency string `json:"price_currency,required"`
-// The type of the price.
-Type OrderOutputProductPriceProductPriceOneTimeType `json:"type,required"`
-JSON orderOutputProductPriceProductPriceOneTimeJSON `json:"-"`
-}
-
-// orderOutputProductPriceProductPriceOneTimeJSON contains the JSON metadata for
-// the struct [OrderOutputProductPriceProductPriceOneTime]
-type orderOutputProductPriceProductPriceOneTimeJSON struct {
-ID apijson.Field
-CreatedAt apijson.Field
-IsArchived apijson.Field
-ModifiedAt apijson.Field
-PriceAmount apijson.Field
-PriceCurrency apijson.Field
-Type apijson.Field
-raw string
-ExtraFields map[string]apijson.Field
-}
-
-func (r *OrderOutputProductPriceProductPriceOneTime) UnmarshalJSON(data []byte) (err error) {
-  return apijson.UnmarshalRoot(data, r)
-}
-
-func (r orderOutputProductPriceProductPriceOneTimeJSON) RawJSON() (string) {
-  return r.raw
-}
-
-func (r OrderOutputProductPriceProductPriceOneTime) implementsOrderOutputProductPrice() {}
-
-// The type of the price.
-type OrderOutputProductPriceProductPriceOneTimeType string
-
-const (
-  OrderOutputProductPriceProductPriceOneTimeTypeOneTime OrderOutputProductPriceProductPriceOneTimeType = "one_time"
-)
-
-func (r OrderOutputProductPriceProductPriceOneTimeType) IsKnown() (bool) {
-  switch r {
-  case OrderOutputProductPriceProductPriceOneTimeTypeOneTime:
-      return true
-  }
-  return false
-}
-
-// The type of the price.
-type OrderOutputProductPriceType string
-
-const (
-  OrderOutputProductPriceTypeRecurring OrderOutputProductPriceType = "recurring"
-  OrderOutputProductPriceTypeOneTime OrderOutputProductPriceType = "one_time"
-)
-
-func (r OrderOutputProductPriceType) IsKnown() (bool) {
-  switch r {
-  case OrderOutputProductPriceTypeRecurring, OrderOutputProductPriceTypeOneTime:
-      return true
-  }
-  return false
-}
-
-// The recurring interval of the price, if type is `recurring`.
-type OrderOutputProductPriceRecurringInterval string
-
-const (
-  OrderOutputProductPriceRecurringIntervalMonth OrderOutputProductPriceRecurringInterval = "month"
-  OrderOutputProductPriceRecurringIntervalYear OrderOutputProductPriceRecurringInterval = "year"
-)
-
-func (r OrderOutputProductPriceRecurringInterval) IsKnown() (bool) {
-  switch r {
-  case OrderOutputProductPriceRecurringIntervalMonth, OrderOutputProductPriceRecurringIntervalYear:
       return true
   }
   return false
