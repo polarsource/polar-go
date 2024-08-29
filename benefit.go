@@ -113,8 +113,8 @@ func (r *BenefitService) Delete(ctx context.Context, id string, opts ...option.R
 }
 
 type ListResourceUnionBenefitArticlesBenefitAdsBenefitCustomBenefitDiscordBenefitGitHubRepositoryBenefitDownloadables struct {
+	Items      []ListResourceUnionBenefitArticlesBenefitAdsBenefitCustomBenefitDiscordBenefitGitHubRepositoryBenefitDownloadablesItem     `json:"items,required"`
 	Pagination ListResourceUnionBenefitArticlesBenefitAdsBenefitCustomBenefitDiscordBenefitGitHubRepositoryBenefitDownloadablesPagination `json:"pagination,required"`
-	Items      []ListResourceUnionBenefitArticlesBenefitAdsBenefitCustomBenefitDiscordBenefitGitHubRepositoryBenefitDownloadablesItem     `json:"items"`
 	JSON       listResourceUnionBenefitArticlesBenefitAdsBenefitCustomBenefitDiscordBenefitGitHubRepositoryBenefitDownloadablesJSON       `json:"-"`
 }
 
@@ -122,8 +122,8 @@ type ListResourceUnionBenefitArticlesBenefitAdsBenefitCustomBenefitDiscordBenefi
 // contains the JSON metadata for the struct
 // [ListResourceUnionBenefitArticlesBenefitAdsBenefitCustomBenefitDiscordBenefitGitHubRepositoryBenefitDownloadables]
 type listResourceUnionBenefitArticlesBenefitAdsBenefitCustomBenefitDiscordBenefitGitHubRepositoryBenefitDownloadablesJSON struct {
-	Pagination  apijson.Field
 	Items       apijson.Field
+	Pagination  apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
 }
@@ -133,30 +133,6 @@ func (r *ListResourceUnionBenefitArticlesBenefitAdsBenefitCustomBenefitDiscordBe
 }
 
 func (r listResourceUnionBenefitArticlesBenefitAdsBenefitCustomBenefitDiscordBenefitGitHubRepositoryBenefitDownloadablesJSON) RawJSON() string {
-	return r.raw
-}
-
-type ListResourceUnionBenefitArticlesBenefitAdsBenefitCustomBenefitDiscordBenefitGitHubRepositoryBenefitDownloadablesPagination struct {
-	MaxPage    int64                                                                                                                          `json:"max_page,required"`
-	TotalCount int64                                                                                                                          `json:"total_count,required"`
-	JSON       listResourceUnionBenefitArticlesBenefitAdsBenefitCustomBenefitDiscordBenefitGitHubRepositoryBenefitDownloadablesPaginationJSON `json:"-"`
-}
-
-// listResourceUnionBenefitArticlesBenefitAdsBenefitCustomBenefitDiscordBenefitGitHubRepositoryBenefitDownloadablesPaginationJSON
-// contains the JSON metadata for the struct
-// [ListResourceUnionBenefitArticlesBenefitAdsBenefitCustomBenefitDiscordBenefitGitHubRepositoryBenefitDownloadablesPagination]
-type listResourceUnionBenefitArticlesBenefitAdsBenefitCustomBenefitDiscordBenefitGitHubRepositoryBenefitDownloadablesPaginationJSON struct {
-	MaxPage     apijson.Field
-	TotalCount  apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *ListResourceUnionBenefitArticlesBenefitAdsBenefitCustomBenefitDiscordBenefitGitHubRepositoryBenefitDownloadablesPagination) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-func (r listResourceUnionBenefitArticlesBenefitAdsBenefitCustomBenefitDiscordBenefitGitHubRepositoryBenefitDownloadablesPaginationJSON) RawJSON() string {
 	return r.raw
 }
 
@@ -879,6 +855,30 @@ func (r ListResourceUnionBenefitArticlesBenefitAdsBenefitCustomBenefitDiscordBen
 		return true
 	}
 	return false
+}
+
+type ListResourceUnionBenefitArticlesBenefitAdsBenefitCustomBenefitDiscordBenefitGitHubRepositoryBenefitDownloadablesPagination struct {
+	MaxPage    int64                                                                                                                          `json:"max_page,required"`
+	TotalCount int64                                                                                                                          `json:"total_count,required"`
+	JSON       listResourceUnionBenefitArticlesBenefitAdsBenefitCustomBenefitDiscordBenefitGitHubRepositoryBenefitDownloadablesPaginationJSON `json:"-"`
+}
+
+// listResourceUnionBenefitArticlesBenefitAdsBenefitCustomBenefitDiscordBenefitGitHubRepositoryBenefitDownloadablesPaginationJSON
+// contains the JSON metadata for the struct
+// [ListResourceUnionBenefitArticlesBenefitAdsBenefitCustomBenefitDiscordBenefitGitHubRepositoryBenefitDownloadablesPagination]
+type listResourceUnionBenefitArticlesBenefitAdsBenefitCustomBenefitDiscordBenefitGitHubRepositoryBenefitDownloadablesPaginationJSON struct {
+	MaxPage     apijson.Field
+	TotalCount  apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *ListResourceUnionBenefitArticlesBenefitAdsBenefitCustomBenefitDiscordBenefitGitHubRepositoryBenefitDownloadablesPagination) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r listResourceUnionBenefitArticlesBenefitAdsBenefitCustomBenefitDiscordBenefitGitHubRepositoryBenefitDownloadablesPaginationJSON) RawJSON() string {
+	return r.raw
 }
 
 // A benefit of type `articles`.

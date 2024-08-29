@@ -77,16 +77,16 @@ func (r *OrderService) ListAutoPaging(ctx context.Context, query OrderListParams
 }
 
 type ListResourceOrder struct {
+Items []OrderOutput `json:"items,required"`
 Pagination ListResourceOrderPagination `json:"pagination,required"`
-Items []OrderOutput `json:"items"`
 JSON listResourceOrderJSON `json:"-"`
 }
 
 // listResourceOrderJSON contains the JSON metadata for the struct
 // [ListResourceOrder]
 type listResourceOrderJSON struct {
-Pagination apijson.Field
 Items apijson.Field
+Pagination apijson.Field
 raw string
 ExtraFields map[string]apijson.Field
 }

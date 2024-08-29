@@ -97,16 +97,16 @@ func (r *ProductService) ListAutoPaging(ctx context.Context, query ProductListPa
 }
 
 type ListResourceProduct struct {
+	Items      []Product                     `json:"items,required"`
 	Pagination ListResourceProductPagination `json:"pagination,required"`
-	Items      []Product                     `json:"items"`
 	JSON       listResourceProductJSON       `json:"-"`
 }
 
 // listResourceProductJSON contains the JSON metadata for the struct
 // [ListResourceProduct]
 type listResourceProductJSON struct {
-	Pagination  apijson.Field
 	Items       apijson.Field
+	Pagination  apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
 }
