@@ -405,16 +405,16 @@ func (r articleReceiversJSON) RawJSON() string {
 }
 
 type ListResourceArticle struct {
+	Items      []Article                     `json:"items,required"`
 	Pagination ListResourceArticlePagination `json:"pagination,required"`
-	Items      []Article                     `json:"items"`
 	JSON       listResourceArticleJSON       `json:"-"`
 }
 
 // listResourceArticleJSON contains the JSON metadata for the struct
 // [ListResourceArticle]
 type listResourceArticleJSON struct {
-	Pagination  apijson.Field
 	Items       apijson.Field
+	Pagination  apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
 }

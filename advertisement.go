@@ -110,8 +110,8 @@ func (r advertisementCampaignJSON) RawJSON() (string) {
 type AdvertisementCampaignListResource struct {
 // The dimensions (width, height) in pixels of the advertisement images.
 Dimensions []int64 `json:"dimensions,required"`
+Items []AdvertisementCampaign `json:"items,required"`
 Pagination AdvertisementCampaignListResourcePagination `json:"pagination,required"`
-Items []AdvertisementCampaign `json:"items"`
 JSON advertisementCampaignListResourceJSON `json:"-"`
 }
 
@@ -119,8 +119,8 @@ JSON advertisementCampaignListResourceJSON `json:"-"`
 // [AdvertisementCampaignListResource]
 type advertisementCampaignListResourceJSON struct {
 Dimensions apijson.Field
-Pagination apijson.Field
 Items apijson.Field
+Pagination apijson.Field
 raw string
 ExtraFields map[string]apijson.Field
 }

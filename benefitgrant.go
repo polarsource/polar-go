@@ -69,16 +69,16 @@ func (r *BenefitGrantService) ListAutoPaging(ctx context.Context, id string, que
 }
 
 type ListResourceBenefitGrant struct {
+	Items      []ListResourceBenefitGrantItem     `json:"items,required"`
 	Pagination ListResourceBenefitGrantPagination `json:"pagination,required"`
-	Items      []ListResourceBenefitGrantItem     `json:"items"`
 	JSON       listResourceBenefitGrantJSON       `json:"-"`
 }
 
 // listResourceBenefitGrantJSON contains the JSON metadata for the struct
 // [ListResourceBenefitGrant]
 type listResourceBenefitGrantJSON struct {
-	Pagination  apijson.Field
 	Items       apijson.Field
+	Pagination  apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
 }
@@ -88,29 +88,6 @@ func (r *ListResourceBenefitGrant) UnmarshalJSON(data []byte) (err error) {
 }
 
 func (r listResourceBenefitGrantJSON) RawJSON() string {
-	return r.raw
-}
-
-type ListResourceBenefitGrantPagination struct {
-	MaxPage    int64                                  `json:"max_page,required"`
-	TotalCount int64                                  `json:"total_count,required"`
-	JSON       listResourceBenefitGrantPaginationJSON `json:"-"`
-}
-
-// listResourceBenefitGrantPaginationJSON contains the JSON metadata for the struct
-// [ListResourceBenefitGrantPagination]
-type listResourceBenefitGrantPaginationJSON struct {
-	MaxPage     apijson.Field
-	TotalCount  apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *ListResourceBenefitGrantPagination) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-func (r listResourceBenefitGrantPaginationJSON) RawJSON() string {
 	return r.raw
 }
 
@@ -169,6 +146,29 @@ func (r *ListResourceBenefitGrantItem) UnmarshalJSON(data []byte) (err error) {
 }
 
 func (r listResourceBenefitGrantItemJSON) RawJSON() string {
+	return r.raw
+}
+
+type ListResourceBenefitGrantPagination struct {
+	MaxPage    int64                                  `json:"max_page,required"`
+	TotalCount int64                                  `json:"total_count,required"`
+	JSON       listResourceBenefitGrantPaginationJSON `json:"-"`
+}
+
+// listResourceBenefitGrantPaginationJSON contains the JSON metadata for the struct
+// [ListResourceBenefitGrantPagination]
+type listResourceBenefitGrantPaginationJSON struct {
+	MaxPage     apijson.Field
+	TotalCount  apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *ListResourceBenefitGrantPagination) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r listResourceBenefitGrantPaginationJSON) RawJSON() string {
 	return r.raw
 }
 

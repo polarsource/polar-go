@@ -306,16 +306,16 @@ func (r fileUploadUploadPartJSON) RawJSON() string {
 }
 
 type ListResourceAnnotatedUnion struct {
+	Items      []ListResourceAnnotatedUnionItem     `json:"items,required"`
 	Pagination ListResourceAnnotatedUnionPagination `json:"pagination,required"`
-	Items      []ListResourceAnnotatedUnionItem     `json:"items"`
 	JSON       listResourceAnnotatedUnionJSON       `json:"-"`
 }
 
 // listResourceAnnotatedUnionJSON contains the JSON metadata for the struct
 // [ListResourceAnnotatedUnion]
 type listResourceAnnotatedUnionJSON struct {
-	Pagination  apijson.Field
 	Items       apijson.Field
+	Pagination  apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
 }
@@ -325,29 +325,6 @@ func (r *ListResourceAnnotatedUnion) UnmarshalJSON(data []byte) (err error) {
 }
 
 func (r listResourceAnnotatedUnionJSON) RawJSON() string {
-	return r.raw
-}
-
-type ListResourceAnnotatedUnionPagination struct {
-	MaxPage    int64                                    `json:"max_page,required"`
-	TotalCount int64                                    `json:"total_count,required"`
-	JSON       listResourceAnnotatedUnionPaginationJSON `json:"-"`
-}
-
-// listResourceAnnotatedUnionPaginationJSON contains the JSON metadata for the
-// struct [ListResourceAnnotatedUnionPagination]
-type listResourceAnnotatedUnionPaginationJSON struct {
-	MaxPage     apijson.Field
-	TotalCount  apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *ListResourceAnnotatedUnionPagination) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-func (r listResourceAnnotatedUnionPaginationJSON) RawJSON() string {
 	return r.raw
 }
 
@@ -464,6 +441,29 @@ func (r ListResourceAnnotatedUnionItemsService) IsKnown() bool {
 		return true
 	}
 	return false
+}
+
+type ListResourceAnnotatedUnionPagination struct {
+	MaxPage    int64                                    `json:"max_page,required"`
+	TotalCount int64                                    `json:"total_count,required"`
+	JSON       listResourceAnnotatedUnionPaginationJSON `json:"-"`
+}
+
+// listResourceAnnotatedUnionPaginationJSON contains the JSON metadata for the
+// struct [ListResourceAnnotatedUnionPagination]
+type listResourceAnnotatedUnionPaginationJSON struct {
+	MaxPage     apijson.Field
+	TotalCount  apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *ListResourceAnnotatedUnionPagination) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r listResourceAnnotatedUnionPaginationJSON) RawJSON() string {
+	return r.raw
 }
 
 // File to be used as an organization avatar.
