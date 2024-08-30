@@ -173,7 +173,6 @@ Methods:
 
 Response Types:
 
-- <a href="https://pkg.go.dev/github.com/polarsource/polar-go">polar</a>.<a href="https://pkg.go.dev/github.com/polarsource/polar-go#ListResourceUnionBenefitArticlesBenefitAdsBenefitCustomBenefitDiscordBenefitGitHubRepositoryBenefitDownloadables">ListResourceUnionBenefitArticlesBenefitAdsBenefitCustomBenefitDiscordBenefitGitHubRepositoryBenefitDownloadables</a>
 - <a href="https://pkg.go.dev/github.com/polarsource/polar-go">polar</a>.<a href="https://pkg.go.dev/github.com/polarsource/polar-go#BenefitNewResponse">BenefitNewResponse</a>
 - <a href="https://pkg.go.dev/github.com/polarsource/polar-go">polar</a>.<a href="https://pkg.go.dev/github.com/polarsource/polar-go#BenefitGetResponse">BenefitGetResponse</a>
 - <a href="https://pkg.go.dev/github.com/polarsource/polar-go">polar</a>.<a href="https://pkg.go.dev/github.com/polarsource/polar-go#BenefitUpdateResponse">BenefitUpdateResponse</a>
