@@ -342,11 +342,12 @@ const (
 	ProductBenefitsBenefitBaseTypeDiscord          ProductBenefitsBenefitBaseType = "discord"
 	ProductBenefitsBenefitBaseTypeGitHubRepository ProductBenefitsBenefitBaseType = "github_repository"
 	ProductBenefitsBenefitBaseTypeDownloadables    ProductBenefitsBenefitBaseType = "downloadables"
+	ProductBenefitsBenefitBaseTypeLicenseKeys      ProductBenefitsBenefitBaseType = "license_keys"
 )
 
 func (r ProductBenefitsBenefitBaseType) IsKnown() bool {
 	switch r {
-	case ProductBenefitsBenefitBaseTypeCustom, ProductBenefitsBenefitBaseTypeArticles, ProductBenefitsBenefitBaseTypeAds, ProductBenefitsBenefitBaseTypeDiscord, ProductBenefitsBenefitBaseTypeGitHubRepository, ProductBenefitsBenefitBaseTypeDownloadables:
+	case ProductBenefitsBenefitBaseTypeCustom, ProductBenefitsBenefitBaseTypeArticles, ProductBenefitsBenefitBaseTypeAds, ProductBenefitsBenefitBaseTypeDiscord, ProductBenefitsBenefitBaseTypeGitHubRepository, ProductBenefitsBenefitBaseTypeDownloadables, ProductBenefitsBenefitBaseTypeLicenseKeys:
 		return true
 	}
 	return false
@@ -449,11 +450,12 @@ const (
 	ProductBenefitsTypeDiscord          ProductBenefitsType = "discord"
 	ProductBenefitsTypeGitHubRepository ProductBenefitsType = "github_repository"
 	ProductBenefitsTypeDownloadables    ProductBenefitsType = "downloadables"
+	ProductBenefitsTypeLicenseKeys      ProductBenefitsType = "license_keys"
 )
 
 func (r ProductBenefitsType) IsKnown() bool {
 	switch r {
-	case ProductBenefitsTypeCustom, ProductBenefitsTypeArticles, ProductBenefitsTypeAds, ProductBenefitsTypeDiscord, ProductBenefitsTypeGitHubRepository, ProductBenefitsTypeDownloadables:
+	case ProductBenefitsTypeCustom, ProductBenefitsTypeArticles, ProductBenefitsTypeAds, ProductBenefitsTypeDiscord, ProductBenefitsTypeGitHubRepository, ProductBenefitsTypeDownloadables, ProductBenefitsTypeLicenseKeys:
 		return true
 	}
 	return false
