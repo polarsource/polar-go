@@ -159,8 +159,6 @@ func (r downloadableFileReadJSON) RawJSON() string {
 	return r.raw
 }
 
-func (r DownloadableFileRead) implementsListResourceAnnotatedUnionItem() {}
-
 func (r DownloadableFileRead) implementsFileUpdateResponse() {}
 
 func (r DownloadableFileRead) implementsFileListResponse() {}
@@ -305,167 +303,6 @@ func (r fileUploadUploadPartJSON) RawJSON() string {
 	return r.raw
 }
 
-type ListResourceAnnotatedUnion struct {
-	Items      []ListResourceAnnotatedUnionItem     `json:"items,required"`
-	Pagination ListResourceAnnotatedUnionPagination `json:"pagination,required"`
-	JSON       listResourceAnnotatedUnionJSON       `json:"-"`
-}
-
-// listResourceAnnotatedUnionJSON contains the JSON metadata for the struct
-// [ListResourceAnnotatedUnion]
-type listResourceAnnotatedUnionJSON struct {
-	Items       apijson.Field
-	Pagination  apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *ListResourceAnnotatedUnion) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-func (r listResourceAnnotatedUnionJSON) RawJSON() string {
-	return r.raw
-}
-
-// File to be associated with the downloadables benefit.
-type ListResourceAnnotatedUnionItem struct {
-	ID                   string                                 `json:"id,required" format:"uuid4"`
-	OrganizationID       string                                 `json:"organization_id,required" format:"uuid4"`
-	Name                 string                                 `json:"name,required"`
-	Path                 string                                 `json:"path,required"`
-	MimeType             string                                 `json:"mime_type,required"`
-	Size                 int64                                  `json:"size,required"`
-	StorageVersion       string                                 `json:"storage_version,required,nullable"`
-	ChecksumEtag         string                                 `json:"checksum_etag,required,nullable"`
-	ChecksumSha256Base64 string                                 `json:"checksum_sha256_base64,required,nullable"`
-	ChecksumSha256Hex    string                                 `json:"checksum_sha256_hex,required,nullable"`
-	LastModifiedAt       time.Time                              `json:"last_modified_at,required,nullable" format:"date-time"`
-	Version              string                                 `json:"version,required,nullable"`
-	Service              ListResourceAnnotatedUnionItemsService `json:"service,required"`
-	IsUploaded           bool                                   `json:"is_uploaded,required"`
-	CreatedAt            time.Time                              `json:"created_at,required" format:"date-time"`
-	SizeReadable         string                                 `json:"size_readable,required"`
-	PublicURL            string                                 `json:"public_url"`
-	JSON                 listResourceAnnotatedUnionItemJSON     `json:"-"`
-	union                ListResourceAnnotatedUnionItemsUnion
-}
-
-// listResourceAnnotatedUnionItemJSON contains the JSON metadata for the struct
-// [ListResourceAnnotatedUnionItem]
-type listResourceAnnotatedUnionItemJSON struct {
-	ID                   apijson.Field
-	OrganizationID       apijson.Field
-	Name                 apijson.Field
-	Path                 apijson.Field
-	MimeType             apijson.Field
-	Size                 apijson.Field
-	StorageVersion       apijson.Field
-	ChecksumEtag         apijson.Field
-	ChecksumSha256Base64 apijson.Field
-	ChecksumSha256Hex    apijson.Field
-	LastModifiedAt       apijson.Field
-	Version              apijson.Field
-	Service              apijson.Field
-	IsUploaded           apijson.Field
-	CreatedAt            apijson.Field
-	SizeReadable         apijson.Field
-	PublicURL            apijson.Field
-	raw                  string
-	ExtraFields          map[string]apijson.Field
-}
-
-func (r listResourceAnnotatedUnionItemJSON) RawJSON() string {
-	return r.raw
-}
-
-func (r *ListResourceAnnotatedUnionItem) UnmarshalJSON(data []byte) (err error) {
-	*r = ListResourceAnnotatedUnionItem{}
-	err = apijson.UnmarshalRoot(data, &r.union)
-	if err != nil {
-		return err
-	}
-	return apijson.Port(r.union, &r)
-}
-
-// AsUnion returns a [ListResourceAnnotatedUnionItemsUnion] interface which you can
-// cast to the specific types for more type safety.
-//
-// Possible runtime types of the union are [DownloadableFileRead],
-// [ProductMediaFileReadOutput], [OrganizationAvatarFileRead].
-func (r ListResourceAnnotatedUnionItem) AsUnion() ListResourceAnnotatedUnionItemsUnion {
-	return r.union
-}
-
-// File to be associated with the downloadables benefit.
-//
-// Union satisfied by [DownloadableFileRead], [ProductMediaFileReadOutput] or
-// [OrganizationAvatarFileRead].
-type ListResourceAnnotatedUnionItemsUnion interface {
-	implementsListResourceAnnotatedUnionItem()
-}
-
-func init() {
-	apijson.RegisterUnion(
-		reflect.TypeOf((*ListResourceAnnotatedUnionItemsUnion)(nil)).Elem(),
-		"service",
-		apijson.UnionVariant{
-			TypeFilter:         gjson.JSON,
-			Type:               reflect.TypeOf(DownloadableFileRead{}),
-			DiscriminatorValue: "downloadable",
-		},
-		apijson.UnionVariant{
-			TypeFilter:         gjson.JSON,
-			Type:               reflect.TypeOf(ProductMediaFileReadOutput{}),
-			DiscriminatorValue: "product_media",
-		},
-		apijson.UnionVariant{
-			TypeFilter:         gjson.JSON,
-			Type:               reflect.TypeOf(OrganizationAvatarFileRead{}),
-			DiscriminatorValue: "organization_avatar",
-		},
-	)
-}
-
-type ListResourceAnnotatedUnionItemsService string
-
-const (
-	ListResourceAnnotatedUnionItemsServiceDownloadable       ListResourceAnnotatedUnionItemsService = "downloadable"
-	ListResourceAnnotatedUnionItemsServiceProductMedia       ListResourceAnnotatedUnionItemsService = "product_media"
-	ListResourceAnnotatedUnionItemsServiceOrganizationAvatar ListResourceAnnotatedUnionItemsService = "organization_avatar"
-)
-
-func (r ListResourceAnnotatedUnionItemsService) IsKnown() bool {
-	switch r {
-	case ListResourceAnnotatedUnionItemsServiceDownloadable, ListResourceAnnotatedUnionItemsServiceProductMedia, ListResourceAnnotatedUnionItemsServiceOrganizationAvatar:
-		return true
-	}
-	return false
-}
-
-type ListResourceAnnotatedUnionPagination struct {
-	MaxPage    int64                                    `json:"max_page,required"`
-	TotalCount int64                                    `json:"total_count,required"`
-	JSON       listResourceAnnotatedUnionPaginationJSON `json:"-"`
-}
-
-// listResourceAnnotatedUnionPaginationJSON contains the JSON metadata for the
-// struct [ListResourceAnnotatedUnionPagination]
-type listResourceAnnotatedUnionPaginationJSON struct {
-	MaxPage     apijson.Field
-	TotalCount  apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *ListResourceAnnotatedUnionPagination) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-func (r listResourceAnnotatedUnionPaginationJSON) RawJSON() string {
-	return r.raw
-}
-
 // File to be used as an organization avatar.
 type OrganizationAvatarFileRead struct {
 	ID                   string                            `json:"id,required" format:"uuid4"`
@@ -519,8 +356,6 @@ func (r *OrganizationAvatarFileRead) UnmarshalJSON(data []byte) (err error) {
 func (r organizationAvatarFileReadJSON) RawJSON() string {
 	return r.raw
 }
-
-func (r OrganizationAvatarFileRead) implementsListResourceAnnotatedUnionItem() {}
 
 func (r OrganizationAvatarFileRead) implementsFileUpdateResponse() {}
 
@@ -595,8 +430,6 @@ func (r *ProductMediaFileReadOutput) UnmarshalJSON(data []byte) (err error) {
 func (r productMediaFileReadOutputJSON) RawJSON() string {
 	return r.raw
 }
-
-func (r ProductMediaFileReadOutput) implementsListResourceAnnotatedUnionItem() {}
 
 func (r ProductMediaFileReadOutput) implementsFileUpdateResponse() {}
 
