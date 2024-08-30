@@ -257,7 +257,6 @@ Response Types:
 
 - <a href="https://pkg.go.dev/github.com/polarsource/polar-go">polar</a>.<a href="https://pkg.go.dev/github.com/polarsource/polar-go#DownloadableFileRead">DownloadableFileRead</a>
 - <a href="https://pkg.go.dev/github.com/polarsource/polar-go">polar</a>.<a href="https://pkg.go.dev/github.com/polarsource/polar-go#FileUpload">FileUpload</a>
-- <a href="https://pkg.go.dev/github.com/polarsource/polar-go">polar</a>.<a href="https://pkg.go.dev/github.com/polarsource/polar-go#ListResourceAnnotatedUnion">ListResourceAnnotatedUnion</a>
 - <a href="https://pkg.go.dev/github.com/polarsource/polar-go">polar</a>.<a href="https://pkg.go.dev/github.com/polarsource/polar-go#OrganizationAvatarFileRead">OrganizationAvatarFileRead</a>
 - <a href="https://pkg.go.dev/github.com/polarsource/polar-go">polar</a>.<a href="https://pkg.go.dev/github.com/polarsource/polar-go#ProductMediaFileReadOutput">ProductMediaFileReadOutput</a>
 - <a href="https://pkg.go.dev/github.com/polarsource/polar-go">polar</a>.<a href="https://pkg.go.dev/github.com/polarsource/polar-go#FileUpdateResponse">FileUpdateResponse</a>
