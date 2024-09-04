@@ -13,7 +13,7 @@ import (
 	"github.com/polarsource/polar-go/option"
 )
 
-func TestArticleReceiverList(t *testing.T) {
+func TestArticleReceiverGet(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -25,7 +25,7 @@ func TestArticleReceiverList(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithBearerToken("My Bearer Token"),
 	)
-	_, err := client.Articles.Receivers.List(context.TODO(), "id")
+	_, err := client.Articles.Receivers.Get(context.TODO(), "id")
 	if err != nil {
 		var apierr *polar.Error
 		if errors.As(err, &apierr) {

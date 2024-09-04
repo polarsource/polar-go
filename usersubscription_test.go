@@ -108,7 +108,7 @@ func TestUserSubscriptionListWithOptionalParams(t *testing.T) {
 		Page:           polar.F(int64(1)),
 		ProductID:      polar.F[polar.UserSubscriptionListParamsProductIDUnion](shared.UnionString("string")),
 		Query:          polar.F("query"),
-		Sorting:        polar.F([]string{"string", "string", "string"}),
+		Sorting:        polar.F([]polar.UserSubscriptionListParamsSorting{polar.UserSubscriptionListParamsSortingStartedAt, polar.UserSubscriptionListParamsSorting - StartedAt, polar.UserSubscriptionListParamsSortingPriceAmount}),
 	})
 	if err != nil {
 		var apierr *polar.Error

@@ -12,6 +12,7 @@ import (
 
 	"github.com/polarsource/polar-go/internal/apijson"
 	"github.com/polarsource/polar-go/internal/apiquery"
+	"github.com/polarsource/polar-go/internal/pagination"
 	"github.com/polarsource/polar-go/internal/param"
 	"github.com/polarsource/polar-go/internal/requestconfig"
 	"github.com/polarsource/polar-go/option"
@@ -39,28 +40,45 @@ func NewBenefitGrantService(opts ...option.RequestOption) (r *BenefitGrantServic
 // List the individual grants for a benefit.
 //
 // It's especially useful to check if a user has been granted a benefit.
-func (r *BenefitGrantService) List(ctx context.Context, id string, query BenefitGrantListParams, opts ...option.RequestOption) (res *ListResourceBenefitGrant, err error) {
+func (r *BenefitGrantService) List(ctx context.Context, id string, query BenefitGrantListParams, opts ...option.RequestOption) (res *pagination.PolarPagination[BenefitGrantListResponse], err error) {
+	var raw *http.Response
 	opts = append(r.Options[:], opts...)
+	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	if id == "" {
 		err = errors.New("missing required id parameter")
 		return
 	}
 	path := fmt.Sprintf("v1/benefits/%s/grants", id)
-	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
-	return
+	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
+	if err != nil {
+		return nil, err
+	}
+	err = cfg.Execute()
+	if err != nil {
+		return nil, err
+	}
+	res.SetPageConfig(cfg, raw)
+	return res, nil
+}
+
+// List the individual grants for a benefit.
+//
+// It's especially useful to check if a user has been granted a benefit.
+func (r *BenefitGrantService) ListAutoPaging(ctx context.Context, id string, query BenefitGrantListParams, opts ...option.RequestOption) *pagination.PolarPaginationAutoPager[BenefitGrantListResponse] {
+	return pagination.NewPolarPaginationAutoPager(r.List(ctx, id, query, opts...))
 }
 
 type ListResourceBenefitGrant struct {
+	Items      []ListResourceBenefitGrantItem     `json:"items,required"`
 	Pagination ListResourceBenefitGrantPagination `json:"pagination,required"`
-	Items      []ListResourceBenefitGrantItem     `json:"items"`
 	JSON       listResourceBenefitGrantJSON       `json:"-"`
 }
 
 // listResourceBenefitGrantJSON contains the JSON metadata for the struct
 // [ListResourceBenefitGrant]
 type listResourceBenefitGrantJSON struct {
-	Pagination  apijson.Field
 	Items       apijson.Field
+	Pagination  apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
 }
@@ -70,6 +88,64 @@ func (r *ListResourceBenefitGrant) UnmarshalJSON(data []byte) (err error) {
 }
 
 func (r listResourceBenefitGrantJSON) RawJSON() string {
+	return r.raw
+}
+
+// A grant of a benefit to a user.
+type ListResourceBenefitGrantItem struct {
+	// The ID of the grant.
+	ID string `json:"id,required" format:"uuid4"`
+	// The ID of the benefit concerned by this grant.
+	BenefitID string `json:"benefit_id,required" format:"uuid4"`
+	// Creation timestamp of the object.
+	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	// Whether the benefit is granted.
+	IsGranted bool `json:"is_granted,required"`
+	// Whether the benefit is revoked.
+	IsRevoked bool `json:"is_revoked,required"`
+	// Last modification timestamp of the object.
+	ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
+	// The ID of the order that granted this benefit.
+	OrderID string `json:"order_id,required,nullable" format:"uuid4"`
+	// Properties for a benefit grant.
+	Properties interface{} `json:"properties,required"`
+	// The ID of the subscription that granted this benefit.
+	SubscriptionID string `json:"subscription_id,required,nullable" format:"uuid4"`
+	// The ID of the user concerned by this grant.
+	UserID string `json:"user_id,required" format:"uuid4"`
+	// The timestamp when the benefit was granted. If `None`, the benefit is not
+	// granted.
+	GrantedAt time.Time `json:"granted_at,nullable" format:"date-time"`
+	// The timestamp when the benefit was revoked. If `None`, the benefit is not
+	// revoked.
+	RevokedAt time.Time                        `json:"revoked_at,nullable" format:"date-time"`
+	JSON      listResourceBenefitGrantItemJSON `json:"-"`
+}
+
+// listResourceBenefitGrantItemJSON contains the JSON metadata for the struct
+// [ListResourceBenefitGrantItem]
+type listResourceBenefitGrantItemJSON struct {
+	ID             apijson.Field
+	BenefitID      apijson.Field
+	CreatedAt      apijson.Field
+	IsGranted      apijson.Field
+	IsRevoked      apijson.Field
+	ModifiedAt     apijson.Field
+	OrderID        apijson.Field
+	Properties     apijson.Field
+	SubscriptionID apijson.Field
+	UserID         apijson.Field
+	GrantedAt      apijson.Field
+	RevokedAt      apijson.Field
+	raw            string
+	ExtraFields    map[string]apijson.Field
+}
+
+func (r *ListResourceBenefitGrantItem) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r listResourceBenefitGrantItemJSON) RawJSON() string {
 	return r.raw
 }
 
@@ -97,7 +173,7 @@ func (r listResourceBenefitGrantPaginationJSON) RawJSON() string {
 }
 
 // A grant of a benefit to a user.
-type ListResourceBenefitGrantItem struct {
+type BenefitGrantListResponse struct {
 	// The ID of the grant.
 	ID string `json:"id,required" format:"uuid4"`
 	// The ID of the benefit concerned by this grant.
@@ -108,49 +184,49 @@ type ListResourceBenefitGrantItem struct {
 	IsGranted bool `json:"is_granted,required"`
 	// Whether the benefit is revoked.
 	IsRevoked bool `json:"is_revoked,required"`
+	// Last modification timestamp of the object.
+	ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
+	// The ID of the order that granted this benefit.
+	OrderID string `json:"order_id,required,nullable" format:"uuid4"`
 	// Properties for a benefit grant.
 	Properties interface{} `json:"properties,required"`
+	// The ID of the subscription that granted this benefit.
+	SubscriptionID string `json:"subscription_id,required,nullable" format:"uuid4"`
 	// The ID of the user concerned by this grant.
 	UserID string `json:"user_id,required" format:"uuid4"`
 	// The timestamp when the benefit was granted. If `None`, the benefit is not
 	// granted.
 	GrantedAt time.Time `json:"granted_at,nullable" format:"date-time"`
-	// Last modification timestamp of the object.
-	ModifiedAt time.Time `json:"modified_at,nullable" format:"date-time"`
-	// The ID of the order that granted this benefit.
-	OrderID string `json:"order_id,nullable" format:"uuid4"`
 	// The timestamp when the benefit was revoked. If `None`, the benefit is not
 	// revoked.
-	RevokedAt time.Time `json:"revoked_at,nullable" format:"date-time"`
-	// The ID of the subscription that granted this benefit.
-	SubscriptionID string                           `json:"subscription_id,nullable" format:"uuid4"`
-	JSON           listResourceBenefitGrantItemJSON `json:"-"`
+	RevokedAt time.Time                    `json:"revoked_at,nullable" format:"date-time"`
+	JSON      benefitGrantListResponseJSON `json:"-"`
 }
 
-// listResourceBenefitGrantItemJSON contains the JSON metadata for the struct
-// [ListResourceBenefitGrantItem]
-type listResourceBenefitGrantItemJSON struct {
+// benefitGrantListResponseJSON contains the JSON metadata for the struct
+// [BenefitGrantListResponse]
+type benefitGrantListResponseJSON struct {
 	ID             apijson.Field
 	BenefitID      apijson.Field
 	CreatedAt      apijson.Field
 	IsGranted      apijson.Field
 	IsRevoked      apijson.Field
-	Properties     apijson.Field
-	UserID         apijson.Field
-	GrantedAt      apijson.Field
 	ModifiedAt     apijson.Field
 	OrderID        apijson.Field
-	RevokedAt      apijson.Field
+	Properties     apijson.Field
 	SubscriptionID apijson.Field
+	UserID         apijson.Field
+	GrantedAt      apijson.Field
+	RevokedAt      apijson.Field
 	raw            string
 	ExtraFields    map[string]apijson.Field
 }
 
-func (r *ListResourceBenefitGrantItem) UnmarshalJSON(data []byte) (err error) {
+func (r *BenefitGrantListResponse) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-func (r listResourceBenefitGrantItemJSON) RawJSON() string {
+func (r benefitGrantListResponseJSON) RawJSON() string {
 	return r.raw
 }
 

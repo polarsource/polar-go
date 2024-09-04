@@ -13,6 +13,7 @@ import (
 
 	"github.com/polarsource/polar-go/internal/apijson"
 	"github.com/polarsource/polar-go/internal/apiquery"
+	"github.com/polarsource/polar-go/internal/pagination"
 	"github.com/polarsource/polar-go/internal/param"
 	"github.com/polarsource/polar-go/internal/requestconfig"
 	"github.com/polarsource/polar-go/option"
@@ -59,11 +60,26 @@ func (r *FileService) Update(ctx context.Context, id string, body FileUpdatePara
 }
 
 // List files.
-func (r *FileService) List(ctx context.Context, query FileListParams, opts ...option.RequestOption) (res *ListResourceAnnotatedUnion, err error) {
+func (r *FileService) List(ctx context.Context, query FileListParams, opts ...option.RequestOption) (res *pagination.PolarPagination[FileListResponse], err error) {
+	var raw *http.Response
 	opts = append(r.Options[:], opts...)
+	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "v1/files/"
-	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
-	return
+	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
+	if err != nil {
+		return nil, err
+	}
+	err = cfg.Execute()
+	if err != nil {
+		return nil, err
+	}
+	res.SetPageConfig(cfg, raw)
+	return res, nil
+}
+
+// List files.
+func (r *FileService) ListAutoPaging(ctx context.Context, query FileListParams, opts ...option.RequestOption) *pagination.PolarPaginationAutoPager[FileListResponse] {
+	return pagination.NewPolarPaginationAutoPager(r.List(ctx, query, opts...))
 }
 
 // Delete a file.
@@ -94,8 +110,12 @@ func (r *FileService) Uploaded(ctx context.Context, params FileUploadedParams, o
 // File to be associated with the downloadables benefit.
 type DownloadableFileRead struct {
 	ID                   string                      `json:"id,required" format:"uuid4"`
+	ChecksumEtag         string                      `json:"checksum_etag,required,nullable"`
+	ChecksumSha256Base64 string                      `json:"checksum_sha256_base64,required,nullable"`
+	ChecksumSha256Hex    string                      `json:"checksum_sha256_hex,required,nullable"`
 	CreatedAt            time.Time                   `json:"created_at,required" format:"date-time"`
 	IsUploaded           bool                        `json:"is_uploaded,required"`
+	LastModifiedAt       time.Time                   `json:"last_modified_at,required,nullable" format:"date-time"`
 	MimeType             string                      `json:"mime_type,required"`
 	Name                 string                      `json:"name,required"`
 	OrganizationID       string                      `json:"organization_id,required" format:"uuid4"`
@@ -103,12 +123,8 @@ type DownloadableFileRead struct {
 	Service              DownloadableFileReadService `json:"service,required"`
 	Size                 int64                       `json:"size,required"`
 	SizeReadable         string                      `json:"size_readable,required"`
-	ChecksumEtag         string                      `json:"checksum_etag,nullable"`
-	ChecksumSha256Base64 string                      `json:"checksum_sha256_base64,nullable"`
-	ChecksumSha256Hex    string                      `json:"checksum_sha256_hex,nullable"`
-	LastModifiedAt       time.Time                   `json:"last_modified_at,nullable" format:"date-time"`
-	StorageVersion       string                      `json:"storage_version,nullable"`
-	Version              string                      `json:"version,nullable"`
+	StorageVersion       string                      `json:"storage_version,required,nullable"`
+	Version              string                      `json:"version,required,nullable"`
 	JSON                 downloadableFileReadJSON    `json:"-"`
 }
 
@@ -116,8 +132,12 @@ type DownloadableFileRead struct {
 // [DownloadableFileRead]
 type downloadableFileReadJSON struct {
 	ID                   apijson.Field
+	ChecksumEtag         apijson.Field
+	ChecksumSha256Base64 apijson.Field
+	ChecksumSha256Hex    apijson.Field
 	CreatedAt            apijson.Field
 	IsUploaded           apijson.Field
+	LastModifiedAt       apijson.Field
 	MimeType             apijson.Field
 	Name                 apijson.Field
 	OrganizationID       apijson.Field
@@ -125,10 +145,6 @@ type downloadableFileReadJSON struct {
 	Service              apijson.Field
 	Size                 apijson.Field
 	SizeReadable         apijson.Field
-	ChecksumEtag         apijson.Field
-	ChecksumSha256Base64 apijson.Field
-	ChecksumSha256Hex    apijson.Field
-	LastModifiedAt       apijson.Field
 	StorageVersion       apijson.Field
 	Version              apijson.Field
 	raw                  string
@@ -143,9 +159,9 @@ func (r downloadableFileReadJSON) RawJSON() string {
 	return r.raw
 }
 
-func (r DownloadableFileRead) implementsListResourceAnnotatedUnionItem() {}
-
 func (r DownloadableFileRead) implementsFileUpdateResponse() {}
+
+func (r DownloadableFileRead) implementsFileListResponse() {}
 
 func (r DownloadableFileRead) implementsFileUploadedResponse() {}
 
@@ -165,6 +181,10 @@ func (r DownloadableFileReadService) IsKnown() bool {
 
 type FileUpload struct {
 	ID                   string            `json:"id,required" format:"uuid4"`
+	ChecksumEtag         string            `json:"checksum_etag,required,nullable"`
+	ChecksumSha256Base64 string            `json:"checksum_sha256_base64,required,nullable"`
+	ChecksumSha256Hex    string            `json:"checksum_sha256_hex,required,nullable"`
+	LastModifiedAt       time.Time         `json:"last_modified_at,required,nullable" format:"date-time"`
 	MimeType             string            `json:"mime_type,required"`
 	Name                 string            `json:"name,required"`
 	OrganizationID       string            `json:"organization_id,required" format:"uuid4"`
@@ -172,20 +192,20 @@ type FileUpload struct {
 	Service              FileUploadService `json:"service,required"`
 	Size                 int64             `json:"size,required"`
 	SizeReadable         string            `json:"size_readable,required"`
+	StorageVersion       string            `json:"storage_version,required,nullable"`
 	Upload               FileUploadUpload  `json:"upload,required"`
-	ChecksumEtag         string            `json:"checksum_etag,nullable"`
-	ChecksumSha256Base64 string            `json:"checksum_sha256_base64,nullable"`
-	ChecksumSha256Hex    string            `json:"checksum_sha256_hex,nullable"`
+	Version              string            `json:"version,required,nullable"`
 	IsUploaded           bool              `json:"is_uploaded"`
-	LastModifiedAt       time.Time         `json:"last_modified_at,nullable" format:"date-time"`
-	StorageVersion       string            `json:"storage_version,nullable"`
-	Version              string            `json:"version,nullable"`
 	JSON                 fileUploadJSON    `json:"-"`
 }
 
 // fileUploadJSON contains the JSON metadata for the struct [FileUpload]
 type fileUploadJSON struct {
 	ID                   apijson.Field
+	ChecksumEtag         apijson.Field
+	ChecksumSha256Base64 apijson.Field
+	ChecksumSha256Hex    apijson.Field
+	LastModifiedAt       apijson.Field
 	MimeType             apijson.Field
 	Name                 apijson.Field
 	OrganizationID       apijson.Field
@@ -193,14 +213,10 @@ type fileUploadJSON struct {
 	Service              apijson.Field
 	Size                 apijson.Field
 	SizeReadable         apijson.Field
-	Upload               apijson.Field
-	ChecksumEtag         apijson.Field
-	ChecksumSha256Base64 apijson.Field
-	ChecksumSha256Hex    apijson.Field
-	IsUploaded           apijson.Field
-	LastModifiedAt       apijson.Field
 	StorageVersion       apijson.Field
+	Upload               apijson.Field
 	Version              apijson.Field
+	IsUploaded           apijson.Field
 	raw                  string
 	ExtraFields          map[string]apijson.Field
 }
@@ -287,172 +303,15 @@ func (r fileUploadUploadPartJSON) RawJSON() string {
 	return r.raw
 }
 
-type ListResourceAnnotatedUnion struct {
-	Pagination ListResourceAnnotatedUnionPagination `json:"pagination,required"`
-	Items      []ListResourceAnnotatedUnionItem     `json:"items"`
-	JSON       listResourceAnnotatedUnionJSON       `json:"-"`
-}
-
-// listResourceAnnotatedUnionJSON contains the JSON metadata for the struct
-// [ListResourceAnnotatedUnion]
-type listResourceAnnotatedUnionJSON struct {
-	Pagination  apijson.Field
-	Items       apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *ListResourceAnnotatedUnion) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-func (r listResourceAnnotatedUnionJSON) RawJSON() string {
-	return r.raw
-}
-
-type ListResourceAnnotatedUnionPagination struct {
-	MaxPage    int64                                    `json:"max_page,required"`
-	TotalCount int64                                    `json:"total_count,required"`
-	JSON       listResourceAnnotatedUnionPaginationJSON `json:"-"`
-}
-
-// listResourceAnnotatedUnionPaginationJSON contains the JSON metadata for the
-// struct [ListResourceAnnotatedUnionPagination]
-type listResourceAnnotatedUnionPaginationJSON struct {
-	MaxPage     apijson.Field
-	TotalCount  apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *ListResourceAnnotatedUnionPagination) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-func (r listResourceAnnotatedUnionPaginationJSON) RawJSON() string {
-	return r.raw
-}
-
-// File to be associated with the downloadables benefit.
-type ListResourceAnnotatedUnionItem struct {
-	ID                   string                                 `json:"id,required" format:"uuid4"`
-	OrganizationID       string                                 `json:"organization_id,required" format:"uuid4"`
-	Name                 string                                 `json:"name,required"`
-	Path                 string                                 `json:"path,required"`
-	MimeType             string                                 `json:"mime_type,required"`
-	Size                 int64                                  `json:"size,required"`
-	StorageVersion       string                                 `json:"storage_version,nullable"`
-	ChecksumEtag         string                                 `json:"checksum_etag,nullable"`
-	ChecksumSha256Base64 string                                 `json:"checksum_sha256_base64,nullable"`
-	ChecksumSha256Hex    string                                 `json:"checksum_sha256_hex,nullable"`
-	LastModifiedAt       time.Time                              `json:"last_modified_at,nullable" format:"date-time"`
-	Version              string                                 `json:"version,nullable"`
-	Service              ListResourceAnnotatedUnionItemsService `json:"service,required"`
-	IsUploaded           bool                                   `json:"is_uploaded,required"`
-	CreatedAt            time.Time                              `json:"created_at,required" format:"date-time"`
-	SizeReadable         string                                 `json:"size_readable,required"`
-	PublicURL            string                                 `json:"public_url"`
-	JSON                 listResourceAnnotatedUnionItemJSON     `json:"-"`
-	union                ListResourceAnnotatedUnionItemsUnion
-}
-
-// listResourceAnnotatedUnionItemJSON contains the JSON metadata for the struct
-// [ListResourceAnnotatedUnionItem]
-type listResourceAnnotatedUnionItemJSON struct {
-	ID                   apijson.Field
-	OrganizationID       apijson.Field
-	Name                 apijson.Field
-	Path                 apijson.Field
-	MimeType             apijson.Field
-	Size                 apijson.Field
-	StorageVersion       apijson.Field
-	ChecksumEtag         apijson.Field
-	ChecksumSha256Base64 apijson.Field
-	ChecksumSha256Hex    apijson.Field
-	LastModifiedAt       apijson.Field
-	Version              apijson.Field
-	Service              apijson.Field
-	IsUploaded           apijson.Field
-	CreatedAt            apijson.Field
-	SizeReadable         apijson.Field
-	PublicURL            apijson.Field
-	raw                  string
-	ExtraFields          map[string]apijson.Field
-}
-
-func (r listResourceAnnotatedUnionItemJSON) RawJSON() string {
-	return r.raw
-}
-
-func (r *ListResourceAnnotatedUnionItem) UnmarshalJSON(data []byte) (err error) {
-	*r = ListResourceAnnotatedUnionItem{}
-	err = apijson.UnmarshalRoot(data, &r.union)
-	if err != nil {
-		return err
-	}
-	return apijson.Port(r.union, &r)
-}
-
-// AsUnion returns a [ListResourceAnnotatedUnionItemsUnion] interface which you can
-// cast to the specific types for more type safety.
-//
-// Possible runtime types of the union are [DownloadableFileRead],
-// [ProductMediaFileReadOutput], [OrganizationAvatarFileRead].
-func (r ListResourceAnnotatedUnionItem) AsUnion() ListResourceAnnotatedUnionItemsUnion {
-	return r.union
-}
-
-// File to be associated with the downloadables benefit.
-//
-// Union satisfied by [DownloadableFileRead], [ProductMediaFileReadOutput] or
-// [OrganizationAvatarFileRead].
-type ListResourceAnnotatedUnionItemsUnion interface {
-	implementsListResourceAnnotatedUnionItem()
-}
-
-func init() {
-	apijson.RegisterUnion(
-		reflect.TypeOf((*ListResourceAnnotatedUnionItemsUnion)(nil)).Elem(),
-		"service",
-		apijson.UnionVariant{
-			TypeFilter:         gjson.JSON,
-			Type:               reflect.TypeOf(DownloadableFileRead{}),
-			DiscriminatorValue: "downloadable",
-		},
-		apijson.UnionVariant{
-			TypeFilter:         gjson.JSON,
-			Type:               reflect.TypeOf(ProductMediaFileReadOutput{}),
-			DiscriminatorValue: "product_media",
-		},
-		apijson.UnionVariant{
-			TypeFilter:         gjson.JSON,
-			Type:               reflect.TypeOf(OrganizationAvatarFileRead{}),
-			DiscriminatorValue: "organization_avatar",
-		},
-	)
-}
-
-type ListResourceAnnotatedUnionItemsService string
-
-const (
-	ListResourceAnnotatedUnionItemsServiceDownloadable       ListResourceAnnotatedUnionItemsService = "downloadable"
-	ListResourceAnnotatedUnionItemsServiceProductMedia       ListResourceAnnotatedUnionItemsService = "product_media"
-	ListResourceAnnotatedUnionItemsServiceOrganizationAvatar ListResourceAnnotatedUnionItemsService = "organization_avatar"
-)
-
-func (r ListResourceAnnotatedUnionItemsService) IsKnown() bool {
-	switch r {
-	case ListResourceAnnotatedUnionItemsServiceDownloadable, ListResourceAnnotatedUnionItemsServiceProductMedia, ListResourceAnnotatedUnionItemsServiceOrganizationAvatar:
-		return true
-	}
-	return false
-}
-
 // File to be used as an organization avatar.
 type OrganizationAvatarFileRead struct {
 	ID                   string                            `json:"id,required" format:"uuid4"`
+	ChecksumEtag         string                            `json:"checksum_etag,required,nullable"`
+	ChecksumSha256Base64 string                            `json:"checksum_sha256_base64,required,nullable"`
+	ChecksumSha256Hex    string                            `json:"checksum_sha256_hex,required,nullable"`
 	CreatedAt            time.Time                         `json:"created_at,required" format:"date-time"`
 	IsUploaded           bool                              `json:"is_uploaded,required"`
+	LastModifiedAt       time.Time                         `json:"last_modified_at,required,nullable" format:"date-time"`
 	MimeType             string                            `json:"mime_type,required"`
 	Name                 string                            `json:"name,required"`
 	OrganizationID       string                            `json:"organization_id,required" format:"uuid4"`
@@ -461,12 +320,8 @@ type OrganizationAvatarFileRead struct {
 	Service              OrganizationAvatarFileReadService `json:"service,required"`
 	Size                 int64                             `json:"size,required"`
 	SizeReadable         string                            `json:"size_readable,required"`
-	ChecksumEtag         string                            `json:"checksum_etag,nullable"`
-	ChecksumSha256Base64 string                            `json:"checksum_sha256_base64,nullable"`
-	ChecksumSha256Hex    string                            `json:"checksum_sha256_hex,nullable"`
-	LastModifiedAt       time.Time                         `json:"last_modified_at,nullable" format:"date-time"`
-	StorageVersion       string                            `json:"storage_version,nullable"`
-	Version              string                            `json:"version,nullable"`
+	StorageVersion       string                            `json:"storage_version,required,nullable"`
+	Version              string                            `json:"version,required,nullable"`
 	JSON                 organizationAvatarFileReadJSON    `json:"-"`
 }
 
@@ -474,8 +329,12 @@ type OrganizationAvatarFileRead struct {
 // [OrganizationAvatarFileRead]
 type organizationAvatarFileReadJSON struct {
 	ID                   apijson.Field
+	ChecksumEtag         apijson.Field
+	ChecksumSha256Base64 apijson.Field
+	ChecksumSha256Hex    apijson.Field
 	CreatedAt            apijson.Field
 	IsUploaded           apijson.Field
+	LastModifiedAt       apijson.Field
 	MimeType             apijson.Field
 	Name                 apijson.Field
 	OrganizationID       apijson.Field
@@ -484,10 +343,6 @@ type organizationAvatarFileReadJSON struct {
 	Service              apijson.Field
 	Size                 apijson.Field
 	SizeReadable         apijson.Field
-	ChecksumEtag         apijson.Field
-	ChecksumSha256Base64 apijson.Field
-	ChecksumSha256Hex    apijson.Field
-	LastModifiedAt       apijson.Field
 	StorageVersion       apijson.Field
 	Version              apijson.Field
 	raw                  string
@@ -502,9 +357,9 @@ func (r organizationAvatarFileReadJSON) RawJSON() string {
 	return r.raw
 }
 
-func (r OrganizationAvatarFileRead) implementsListResourceAnnotatedUnionItem() {}
-
 func (r OrganizationAvatarFileRead) implementsFileUpdateResponse() {}
+
+func (r OrganizationAvatarFileRead) implementsFileListResponse() {}
 
 func (r OrganizationAvatarFileRead) implementsFileUploadedResponse() {}
 
@@ -525,8 +380,12 @@ func (r OrganizationAvatarFileReadService) IsKnown() bool {
 // File to be used as a product media file.
 type ProductMediaFileReadOutput struct {
 	ID                   string                            `json:"id,required" format:"uuid4"`
+	ChecksumEtag         string                            `json:"checksum_etag,required,nullable"`
+	ChecksumSha256Base64 string                            `json:"checksum_sha256_base64,required,nullable"`
+	ChecksumSha256Hex    string                            `json:"checksum_sha256_hex,required,nullable"`
 	CreatedAt            time.Time                         `json:"created_at,required" format:"date-time"`
 	IsUploaded           bool                              `json:"is_uploaded,required"`
+	LastModifiedAt       time.Time                         `json:"last_modified_at,required,nullable" format:"date-time"`
 	MimeType             string                            `json:"mime_type,required"`
 	Name                 string                            `json:"name,required"`
 	OrganizationID       string                            `json:"organization_id,required" format:"uuid4"`
@@ -535,12 +394,8 @@ type ProductMediaFileReadOutput struct {
 	Service              ProductMediaFileReadOutputService `json:"service,required"`
 	Size                 int64                             `json:"size,required"`
 	SizeReadable         string                            `json:"size_readable,required"`
-	ChecksumEtag         string                            `json:"checksum_etag,nullable"`
-	ChecksumSha256Base64 string                            `json:"checksum_sha256_base64,nullable"`
-	ChecksumSha256Hex    string                            `json:"checksum_sha256_hex,nullable"`
-	LastModifiedAt       time.Time                         `json:"last_modified_at,nullable" format:"date-time"`
-	StorageVersion       string                            `json:"storage_version,nullable"`
-	Version              string                            `json:"version,nullable"`
+	StorageVersion       string                            `json:"storage_version,required,nullable"`
+	Version              string                            `json:"version,required,nullable"`
 	JSON                 productMediaFileReadOutputJSON    `json:"-"`
 }
 
@@ -548,8 +403,12 @@ type ProductMediaFileReadOutput struct {
 // [ProductMediaFileReadOutput]
 type productMediaFileReadOutputJSON struct {
 	ID                   apijson.Field
+	ChecksumEtag         apijson.Field
+	ChecksumSha256Base64 apijson.Field
+	ChecksumSha256Hex    apijson.Field
 	CreatedAt            apijson.Field
 	IsUploaded           apijson.Field
+	LastModifiedAt       apijson.Field
 	MimeType             apijson.Field
 	Name                 apijson.Field
 	OrganizationID       apijson.Field
@@ -558,10 +417,6 @@ type productMediaFileReadOutputJSON struct {
 	Service              apijson.Field
 	Size                 apijson.Field
 	SizeReadable         apijson.Field
-	ChecksumEtag         apijson.Field
-	ChecksumSha256Base64 apijson.Field
-	ChecksumSha256Hex    apijson.Field
-	LastModifiedAt       apijson.Field
 	StorageVersion       apijson.Field
 	Version              apijson.Field
 	raw                  string
@@ -576,9 +431,9 @@ func (r productMediaFileReadOutputJSON) RawJSON() string {
 	return r.raw
 }
 
-func (r ProductMediaFileReadOutput) implementsListResourceAnnotatedUnionItem() {}
-
 func (r ProductMediaFileReadOutput) implementsFileUpdateResponse() {}
+
+func (r ProductMediaFileReadOutput) implementsFileListResponse() {}
 
 func (r ProductMediaFileReadOutput) implementsFileUploadedResponse() {}
 
@@ -604,12 +459,12 @@ type FileUpdateResponse struct {
 	Path                 string                    `json:"path,required"`
 	MimeType             string                    `json:"mime_type,required"`
 	Size                 int64                     `json:"size,required"`
-	StorageVersion       string                    `json:"storage_version,nullable"`
-	ChecksumEtag         string                    `json:"checksum_etag,nullable"`
-	ChecksumSha256Base64 string                    `json:"checksum_sha256_base64,nullable"`
-	ChecksumSha256Hex    string                    `json:"checksum_sha256_hex,nullable"`
-	LastModifiedAt       time.Time                 `json:"last_modified_at,nullable" format:"date-time"`
-	Version              string                    `json:"version,nullable"`
+	StorageVersion       string                    `json:"storage_version,required,nullable"`
+	ChecksumEtag         string                    `json:"checksum_etag,required,nullable"`
+	ChecksumSha256Base64 string                    `json:"checksum_sha256_base64,required,nullable"`
+	ChecksumSha256Hex    string                    `json:"checksum_sha256_hex,required,nullable"`
+	LastModifiedAt       time.Time                 `json:"last_modified_at,required,nullable" format:"date-time"`
+	Version              string                    `json:"version,required,nullable"`
 	Service              FileUpdateResponseService `json:"service,required"`
 	IsUploaded           bool                      `json:"is_uploaded,required"`
 	CreatedAt            time.Time                 `json:"created_at,required" format:"date-time"`
@@ -712,6 +567,121 @@ func (r FileUpdateResponseService) IsKnown() bool {
 }
 
 // File to be associated with the downloadables benefit.
+type FileListResponse struct {
+	ID                   string                  `json:"id,required" format:"uuid4"`
+	OrganizationID       string                  `json:"organization_id,required" format:"uuid4"`
+	Name                 string                  `json:"name,required"`
+	Path                 string                  `json:"path,required"`
+	MimeType             string                  `json:"mime_type,required"`
+	Size                 int64                   `json:"size,required"`
+	StorageVersion       string                  `json:"storage_version,required,nullable"`
+	ChecksumEtag         string                  `json:"checksum_etag,required,nullable"`
+	ChecksumSha256Base64 string                  `json:"checksum_sha256_base64,required,nullable"`
+	ChecksumSha256Hex    string                  `json:"checksum_sha256_hex,required,nullable"`
+	LastModifiedAt       time.Time               `json:"last_modified_at,required,nullable" format:"date-time"`
+	Version              string                  `json:"version,required,nullable"`
+	Service              FileListResponseService `json:"service,required"`
+	IsUploaded           bool                    `json:"is_uploaded,required"`
+	CreatedAt            time.Time               `json:"created_at,required" format:"date-time"`
+	SizeReadable         string                  `json:"size_readable,required"`
+	PublicURL            string                  `json:"public_url"`
+	JSON                 fileListResponseJSON    `json:"-"`
+	union                FileListResponseUnion
+}
+
+// fileListResponseJSON contains the JSON metadata for the struct
+// [FileListResponse]
+type fileListResponseJSON struct {
+	ID                   apijson.Field
+	OrganizationID       apijson.Field
+	Name                 apijson.Field
+	Path                 apijson.Field
+	MimeType             apijson.Field
+	Size                 apijson.Field
+	StorageVersion       apijson.Field
+	ChecksumEtag         apijson.Field
+	ChecksumSha256Base64 apijson.Field
+	ChecksumSha256Hex    apijson.Field
+	LastModifiedAt       apijson.Field
+	Version              apijson.Field
+	Service              apijson.Field
+	IsUploaded           apijson.Field
+	CreatedAt            apijson.Field
+	SizeReadable         apijson.Field
+	PublicURL            apijson.Field
+	raw                  string
+	ExtraFields          map[string]apijson.Field
+}
+
+func (r fileListResponseJSON) RawJSON() string {
+	return r.raw
+}
+
+func (r *FileListResponse) UnmarshalJSON(data []byte) (err error) {
+	*r = FileListResponse{}
+	err = apijson.UnmarshalRoot(data, &r.union)
+	if err != nil {
+		return err
+	}
+	return apijson.Port(r.union, &r)
+}
+
+// AsUnion returns a [FileListResponseUnion] interface which you can cast to the
+// specific types for more type safety.
+//
+// Possible runtime types of the union are [DownloadableFileRead],
+// [ProductMediaFileReadOutput], [OrganizationAvatarFileRead].
+func (r FileListResponse) AsUnion() FileListResponseUnion {
+	return r.union
+}
+
+// File to be associated with the downloadables benefit.
+//
+// Union satisfied by [DownloadableFileRead], [ProductMediaFileReadOutput] or
+// [OrganizationAvatarFileRead].
+type FileListResponseUnion interface {
+	implementsFileListResponse()
+}
+
+func init() {
+	apijson.RegisterUnion(
+		reflect.TypeOf((*FileListResponseUnion)(nil)).Elem(),
+		"service",
+		apijson.UnionVariant{
+			TypeFilter:         gjson.JSON,
+			Type:               reflect.TypeOf(DownloadableFileRead{}),
+			DiscriminatorValue: "downloadable",
+		},
+		apijson.UnionVariant{
+			TypeFilter:         gjson.JSON,
+			Type:               reflect.TypeOf(ProductMediaFileReadOutput{}),
+			DiscriminatorValue: "product_media",
+		},
+		apijson.UnionVariant{
+			TypeFilter:         gjson.JSON,
+			Type:               reflect.TypeOf(OrganizationAvatarFileRead{}),
+			DiscriminatorValue: "organization_avatar",
+		},
+	)
+}
+
+type FileListResponseService string
+
+const (
+	FileListResponseServiceDownloadable       FileListResponseService = "downloadable"
+	FileListResponseServiceProductMedia       FileListResponseService = "product_media"
+	FileListResponseServiceOrganizationAvatar FileListResponseService = "organization_avatar"
+)
+
+func (r FileListResponseService) IsKnown() bool {
+	switch r {
+	case FileListResponseServiceDownloadable, FileListResponseServiceProductMedia, FileListResponseServiceOrganizationAvatar:
+		return true
+	}
+	return false
+}
+
+// File to be associated with the downloadables benefit.
 type FileUploadedResponse struct {
 	ID                   string                      `json:"id,required" format:"uuid4"`
 	OrganizationID       string                      `json:"organization_id,required" format:"uuid4"`
@@ -719,12 +689,12 @@ type FileUploadedResponse struct {
 	Path                 string                      `json:"path,required"`
 	MimeType             string                      `json:"mime_type,required"`
 	Size                 int64                       `json:"size,required"`
-	StorageVersion       string                      `json:"storage_version,nullable"`
-	ChecksumEtag         string                      `json:"checksum_etag,nullable"`
-	ChecksumSha256Base64 string                      `json:"checksum_sha256_base64,nullable"`
-	ChecksumSha256Hex    string                      `json:"checksum_sha256_hex,nullable"`
-	LastModifiedAt       time.Time                   `json:"last_modified_at,nullable" format:"date-time"`
-	Version              string                      `json:"version,nullable"`
+	StorageVersion       string                      `json:"storage_version,required,nullable"`
+	ChecksumEtag         string                      `json:"checksum_etag,required,nullable"`
+	ChecksumSha256Base64 string                      `json:"checksum_sha256_base64,required,nullable"`
+	ChecksumSha256Hex    string                      `json:"checksum_sha256_hex,required,nullable"`
+	LastModifiedAt       time.Time                   `json:"last_modified_at,required,nullable" format:"date-time"`
+	Version              string                      `json:"version,required,nullable"`
 	Service              FileUploadedResponseService `json:"service,required"`
 	IsUploaded           bool                        `json:"is_uploaded,required"`
 	CreatedAt            time.Time                   `json:"created_at,required" format:"date-time"`
@@ -1081,8 +1051,8 @@ func (r FileUploadedParams) MarshalJSON() (data []byte, err error) {
 
 type FileUploadedParamsPart struct {
 	ChecksumEtag         param.Field[string] `json:"checksum_etag,required"`
+	ChecksumSha256Base64 param.Field[string] `json:"checksum_sha256_base64,required"`
 	Number               param.Field[int64]  `json:"number,required"`
-	ChecksumSha256Base64 param.Field[string] `json:"checksum_sha256_base64"`
 }
 
 func (r FileUploadedParamsPart) MarshalJSON() (data []byte, err error) {

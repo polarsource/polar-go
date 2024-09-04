@@ -24,12 +24,12 @@ func TestUsage(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithBearerToken("My Bearer Token"),
 	)
-	accountNewResponse, err := client.Accounts.New(context.TODO(), polar.AccountNewParams{
-		AccountType: polar.F(polar.AccountNewParamsAccountTypeStripe),
-		Country:     polar.F("xx"),
+	checkout, err := client.Checkouts.New(context.TODO(), polar.CheckoutNewParams{
+		ProductPriceID: polar.F("product_price_id"),
+		SuccessURL:     polar.F("https://example.com"),
 	})
 	if err != nil {
 		t.Error(err)
 	}
-	t.Logf("%+v\n", accountNewResponse.ID)
+	t.Logf("%+v\n", checkout.ID)
 }

@@ -53,7 +53,7 @@ func TestUserBenefitListWithOptionalParams(t *testing.T) {
 		OrderID:        polar.F[polar.UserBenefitListParamsOrderIDUnion](shared.UnionString("string")),
 		OrganizationID: polar.F[polar.UserBenefitListParamsOrganizationIDUnion](shared.UnionString("string")),
 		Page:           polar.F(int64(1)),
-		Sorting:        polar.F([]string{"string", "string", "string"}),
+		Sorting:        polar.F([]polar.UserBenefitListParamsSorting{polar.UserBenefitListParamsSortingGrantedAt, polar.UserBenefitListParamsSorting - GrantedAt, polar.UserBenefitListParamsSortingType}),
 		SubscriptionID: polar.F[polar.UserBenefitListParamsSubscriptionIDUnion](shared.UnionString("string")),
 		Type:           polar.F[polar.UserBenefitListParamsTypeUnion](polar.UserBenefitListParamsTypeBenefitType(polar.UserBenefitListParamsTypeBenefitTypeCustom)),
 	})

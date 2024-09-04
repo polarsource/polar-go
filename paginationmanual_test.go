@@ -4,7 +4,6 @@ package polar_test
 
 import (
 	"context"
-	"errors"
 	"os"
 	"testing"
 
@@ -13,7 +12,7 @@ import (
 	"github.com/polarsource/polar-go/option"
 )
 
-func TestPullRequestSearchWithOptionalParams(t *testing.T) {
+func TestManualPagination(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -25,14 +24,21 @@ func TestPullRequestSearchWithOptionalParams(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithBearerToken("My Bearer Token"),
 	)
-	_, err := client.PullRequests.Search(context.TODO(), polar.PullRequestSearchParams{
-		ReferencesIssueID: polar.F("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"),
-	})
+	page, err := client.Products.List(context.TODO(), polar.ProductListParams{})
 	if err != nil {
-		var apierr *polar.Error
-		if errors.As(err, &apierr) {
-			t.Log(string(apierr.DumpRequest(true)))
-		}
 		t.Fatalf("err should be nil: %s", err.Error())
+	}
+	for _, product := range page.Items {
+		t.Logf("%+v\n", product.ID)
+	}
+	// Prism mock isn't going to give us real pagination
+	page, err = page.GetNextPage()
+	if err != nil {
+		t.Fatalf("err should be nil: %s", err.Error())
+	}
+	if page != nil {
+		for _, product := range page.Items {
+			t.Logf("%+v\n", product.ID)
+		}
 	}
 }

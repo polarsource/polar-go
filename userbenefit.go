@@ -3,20 +3,21 @@
 package polar
 
 import (
-	"context"
-	"errors"
-	"fmt"
-	"net/http"
-	"net/url"
-	"reflect"
-	"time"
+  "context"
+  "errors"
+  "fmt"
+  "net/http"
+  "net/url"
+  "reflect"
+  "time"
 
-	"github.com/polarsource/polar-go/internal/apijson"
-	"github.com/polarsource/polar-go/internal/apiquery"
-	"github.com/polarsource/polar-go/internal/param"
-	"github.com/polarsource/polar-go/internal/requestconfig"
-	"github.com/polarsource/polar-go/option"
-	"github.com/tidwall/gjson"
+  "github.com/polarsource/polar-go/internal/apijson"
+  "github.com/polarsource/polar-go/internal/apiquery"
+  "github.com/polarsource/polar-go/internal/pagination"
+  "github.com/polarsource/polar-go/internal/param"
+  "github.com/polarsource/polar-go/internal/requestconfig"
+  "github.com/polarsource/polar-go/option"
+  "github.com/tidwall/gjson"
 )
 
 // UserBenefitService contains methods and other services that help with
@@ -26,98 +27,115 @@ import (
 // automatically. You should not instantiate this service directly, and instead use
 // the [NewUserBenefitService] method instead.
 type UserBenefitService struct {
-	Options []option.RequestOption
+Options []option.RequestOption
 }
 
 // NewUserBenefitService generates a new service that applies the given options to
 // each request. These options are applied after the parent client's options (if
 // there is one), and before any request-specific options.
 func NewUserBenefitService(opts ...option.RequestOption) (r *UserBenefitService) {
-	r = &UserBenefitService{}
-	r.Options = opts
-	return
+  r = &UserBenefitService{}
+  r.Options = opts
+  return
 }
 
 // Get a granted benefit by ID.
 func (r *UserBenefitService) Get(ctx context.Context, id string, opts ...option.RequestOption) (res *UserBenefitGetResponse, err error) {
-	opts = append(r.Options[:], opts...)
-	if id == "" {
-		err = errors.New("missing required id parameter")
-		return
-	}
-	path := fmt.Sprintf("v1/users/benefits/%s", id)
-	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
-	return
+  opts = append(r.Options[:], opts...)
+  if id == "" {
+    err = errors.New("missing required id parameter")
+    return
+  }
+  path := fmt.Sprintf("v1/users/benefits/%s", id)
+  err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
+  return
 }
 
 // List my granted benefits.
-func (r *UserBenefitService) List(ctx context.Context, query UserBenefitListParams, opts ...option.RequestOption) (res *UserBenefitListResponse, err error) {
-	opts = append(r.Options[:], opts...)
-	path := "v1/users/benefits/"
-	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
-	return
+func (r *UserBenefitService) List(ctx context.Context, query UserBenefitListParams, opts ...option.RequestOption) (res *pagination.PolarPagination[UserBenefitListResponse], err error) {
+  var raw *http.Response
+  opts = append(r.Options[:], opts...)
+  opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
+  path := "v1/users/benefits/"
+  cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
+  if err != nil {
+    return nil, err
+  }
+  err = cfg.Execute()
+  if err != nil {
+    return nil, err
+  }
+  res.SetPageConfig(cfg, raw)
+  return res, nil
+}
+
+// List my granted benefits.
+func (r *UserBenefitService) ListAutoPaging(ctx context.Context, query UserBenefitListParams, opts ...option.RequestOption) (*pagination.PolarPaginationAutoPager[UserBenefitListResponse]) {
+  return pagination.NewPolarPaginationAutoPager(r.List(ctx, query, opts...))
 }
 
 type UserBenefitGetResponse struct {
-	// Creation timestamp of the object.
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
-	// Last modification timestamp of the object.
-	ModifiedAt time.Time `json:"modified_at,nullable" format:"date-time"`
-	// The ID of the benefit.
-	ID   string                     `json:"id,required" format:"uuid4"`
-	Type UserBenefitGetResponseType `json:"type,required"`
-	// The description of the benefit.
-	Description string `json:"description,required"`
-	// Whether the benefit is selectable when creating a product.
-	Selectable bool `json:"selectable,required"`
-	// Whether the benefit is deletable.
-	Deletable bool `json:"deletable,required"`
-	// The ID of the organization owning the benefit.
-	OrganizationID string `json:"organization_id,required" format:"uuid4"`
-	// This field can have the runtime type of
-	// [UserBenefitGetResponseBenefitArticlesSubscriberProperties],
-	// [UserBenefitGetResponseBenefitAdsSubscriberProperties],
-	// [UserBenefitGetResponseBenefitDiscordSubscriberProperties],
-	// [UserBenefitGetResponseBenefitCustomSubscriberProperties],
-	// [UserBenefitGetResponseBenefitGitHubRepositorySubscriberProperties],
-	// [UserBenefitGetResponseBenefitDownloadablesSubscriberProperties].
-	Properties interface{} `json:"properties"`
-	// This field can have the runtime type of
-	// [[]UserBenefitGetResponseBenefitAdsSubscriberGrant],
-	// [[]UserBenefitGetResponseBenefitCustomSubscriberGrant].
-	Grants interface{}                `json:"grants,required"`
-	JSON   userBenefitGetResponseJSON `json:"-"`
-	union  UserBenefitGetResponseUnion
+// Creation timestamp of the object.
+CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+// Last modification timestamp of the object.
+ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
+// The ID of the benefit.
+ID string `json:"id,required" format:"uuid4"`
+Type UserBenefitGetResponseType `json:"type,required"`
+// The description of the benefit.
+Description string `json:"description,required"`
+// Whether the benefit is selectable when creating a product.
+Selectable bool `json:"selectable,required"`
+// Whether the benefit is deletable.
+Deletable bool `json:"deletable,required"`
+// The ID of the organization owning the benefit.
+OrganizationID string `json:"organization_id,required" format:"uuid4"`
+// This field can have the runtime type of
+// [UserBenefitGetResponseBenefitArticlesSubscriberProperties],
+// [UserBenefitGetResponseBenefitAdsSubscriberProperties],
+// [UserBenefitGetResponseBenefitDiscordSubscriberProperties],
+// [UserBenefitGetResponseBenefitCustomSubscriberProperties],
+// [UserBenefitGetResponseBenefitGitHubRepositorySubscriberProperties],
+// [UserBenefitGetResponseBenefitDownloadablesSubscriberProperties],
+// [UserBenefitGetResponseBenefitLicenseKeysSubscriberProperties].
+Properties interface{} `json:"properties"`
+// This field can have the runtime type of
+// [[]UserBenefitGetResponseBenefitAdsSubscriberGrant],
+// [[]UserBenefitGetResponseBenefitCustomSubscriberGrant],
+// [[]UserBenefitGetResponseBenefitLicenseKeysSubscriberGrant].
+Grants interface{} `json:"grants,required"`
+JSON userBenefitGetResponseJSON `json:"-"`
+union UserBenefitGetResponseUnion
 }
 
 // userBenefitGetResponseJSON contains the JSON metadata for the struct
 // [UserBenefitGetResponse]
 type userBenefitGetResponseJSON struct {
-	CreatedAt      apijson.Field
-	ModifiedAt     apijson.Field
-	ID             apijson.Field
-	Type           apijson.Field
-	Description    apijson.Field
-	Selectable     apijson.Field
-	Deletable      apijson.Field
-	OrganizationID apijson.Field
-	Properties     apijson.Field
-	Grants         apijson.Field
-	raw            string
-	ExtraFields    map[string]apijson.Field
+CreatedAt apijson.Field
+ModifiedAt apijson.Field
+ID apijson.Field
+Type apijson.Field
+Description apijson.Field
+Selectable apijson.Field
+Deletable apijson.Field
+OrganizationID apijson.Field
+Properties apijson.Field
+Grants apijson.Field
+raw string
+ExtraFields map[string]apijson.Field
 }
 
-func (r userBenefitGetResponseJSON) RawJSON() string {
-	return r.raw
+func (r userBenefitGetResponseJSON) RawJSON() (string) {
+  return r.raw
 }
 
 func (r *UserBenefitGetResponse) UnmarshalJSON(data []byte) (err error) {
-	*r = UserBenefitGetResponse{}
-	err = apijson.UnmarshalRoot(data, &r.union)
-	if err != nil {
-		return err
-	}
-	return apijson.Port(r.union, &r)
+  *r = UserBenefitGetResponse{}
+  err = apijson.UnmarshalRoot(data, &r.union)
+  if err != nil {
+    return err
+  }
+  return apijson.Port(r.union, &r)
 }
 
 // AsUnion returns a [UserBenefitGetResponseUnion] interface which you can cast to
@@ -129,1613 +147,2047 @@ func (r *UserBenefitGetResponse) UnmarshalJSON(data []byte) (err error) {
 // [UserBenefitGetResponseBenefitDiscordSubscriber],
 // [UserBenefitGetResponseBenefitCustomSubscriber],
 // [UserBenefitGetResponseBenefitGitHubRepositorySubscriber],
-// [UserBenefitGetResponseBenefitDownloadablesSubscriber].
-func (r UserBenefitGetResponse) AsUnion() UserBenefitGetResponseUnion {
-	return r.union
+// [UserBenefitGetResponseBenefitDownloadablesSubscriber],
+// [UserBenefitGetResponseBenefitLicenseKeysSubscriber].
+func (r UserBenefitGetResponse) AsUnion() (UserBenefitGetResponseUnion) {
+  return r.union
 }
 
 // Union satisfied by [UserBenefitGetResponseBenefitArticlesSubscriber],
 // [UserBenefitGetResponseBenefitAdsSubscriber],
 // [UserBenefitGetResponseBenefitDiscordSubscriber],
 // [UserBenefitGetResponseBenefitCustomSubscriber],
-// [UserBenefitGetResponseBenefitGitHubRepositorySubscriber] or
-// [UserBenefitGetResponseBenefitDownloadablesSubscriber].
+// [UserBenefitGetResponseBenefitGitHubRepositorySubscriber],
+// [UserBenefitGetResponseBenefitDownloadablesSubscriber] or
+// [UserBenefitGetResponseBenefitLicenseKeysSubscriber].
 type UserBenefitGetResponseUnion interface {
-	implementsUserBenefitGetResponse()
+  implementsUserBenefitGetResponse()
 }
 
 func init() {
-	apijson.RegisterUnion(
-		reflect.TypeOf((*UserBenefitGetResponseUnion)(nil)).Elem(),
-		"type",
-		apijson.UnionVariant{
-			TypeFilter:         gjson.JSON,
-			Type:               reflect.TypeOf(UserBenefitGetResponseBenefitArticlesSubscriber{}),
-			DiscriminatorValue: "articles",
-		},
-		apijson.UnionVariant{
-			TypeFilter:         gjson.JSON,
-			Type:               reflect.TypeOf(UserBenefitGetResponseBenefitAdsSubscriber{}),
-			DiscriminatorValue: "ads",
-		},
-		apijson.UnionVariant{
-			TypeFilter:         gjson.JSON,
-			Type:               reflect.TypeOf(UserBenefitGetResponseBenefitDiscordSubscriber{}),
-			DiscriminatorValue: "discord",
-		},
-		apijson.UnionVariant{
-			TypeFilter:         gjson.JSON,
-			Type:               reflect.TypeOf(UserBenefitGetResponseBenefitCustomSubscriber{}),
-			DiscriminatorValue: "custom",
-		},
-		apijson.UnionVariant{
-			TypeFilter:         gjson.JSON,
-			Type:               reflect.TypeOf(UserBenefitGetResponseBenefitGitHubRepositorySubscriber{}),
-			DiscriminatorValue: "github_repository",
-		},
-		apijson.UnionVariant{
-			TypeFilter:         gjson.JSON,
-			Type:               reflect.TypeOf(UserBenefitGetResponseBenefitDownloadablesSubscriber{}),
-			DiscriminatorValue: "downloadables",
-		},
-	)
+  apijson.RegisterUnion(
+    reflect.TypeOf((*UserBenefitGetResponseUnion)(nil)).Elem(),
+    "type",
+    apijson.UnionVariant{
+      TypeFilter: gjson.JSON,
+      Type: reflect.TypeOf(UserBenefitGetResponseBenefitArticlesSubscriber{}),
+      DiscriminatorValue: "articles",
+    },
+    apijson.UnionVariant{
+      TypeFilter: gjson.JSON,
+      Type: reflect.TypeOf(UserBenefitGetResponseBenefitAdsSubscriber{}),
+      DiscriminatorValue: "ads",
+    },
+    apijson.UnionVariant{
+      TypeFilter: gjson.JSON,
+      Type: reflect.TypeOf(UserBenefitGetResponseBenefitDiscordSubscriber{}),
+      DiscriminatorValue: "discord",
+    },
+    apijson.UnionVariant{
+      TypeFilter: gjson.JSON,
+      Type: reflect.TypeOf(UserBenefitGetResponseBenefitCustomSubscriber{}),
+      DiscriminatorValue: "custom",
+    },
+    apijson.UnionVariant{
+      TypeFilter: gjson.JSON,
+      Type: reflect.TypeOf(UserBenefitGetResponseBenefitGitHubRepositorySubscriber{}),
+      DiscriminatorValue: "github_repository",
+    },
+    apijson.UnionVariant{
+      TypeFilter: gjson.JSON,
+      Type: reflect.TypeOf(UserBenefitGetResponseBenefitDownloadablesSubscriber{}),
+      DiscriminatorValue: "downloadables",
+    },
+    apijson.UnionVariant{
+      TypeFilter: gjson.JSON,
+      Type: reflect.TypeOf(UserBenefitGetResponseBenefitLicenseKeysSubscriber{}),
+      DiscriminatorValue: "license_keys",
+    },
+  )
 }
 
 type UserBenefitGetResponseBenefitArticlesSubscriber struct {
-	// The ID of the benefit.
-	ID string `json:"id,required" format:"uuid4"`
-	// Creation timestamp of the object.
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
-	// Whether the benefit is deletable.
-	Deletable bool `json:"deletable,required"`
-	// The description of the benefit.
-	Description string `json:"description,required"`
-	// The ID of the organization owning the benefit.
-	OrganizationID string `json:"organization_id,required" format:"uuid4"`
-	// Properties available to subscribers for a benefit of type `articles`.
-	Properties UserBenefitGetResponseBenefitArticlesSubscriberProperties `json:"properties,required"`
-	// Whether the benefit is selectable when creating a product.
-	Selectable bool                                                `json:"selectable,required"`
-	Type       UserBenefitGetResponseBenefitArticlesSubscriberType `json:"type,required"`
-	// Last modification timestamp of the object.
-	ModifiedAt time.Time                                           `json:"modified_at,nullable" format:"date-time"`
-	JSON       userBenefitGetResponseBenefitArticlesSubscriberJSON `json:"-"`
+// The ID of the benefit.
+ID string `json:"id,required" format:"uuid4"`
+// Creation timestamp of the object.
+CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+// Whether the benefit is deletable.
+Deletable bool `json:"deletable,required"`
+// The description of the benefit.
+Description string `json:"description,required"`
+// Last modification timestamp of the object.
+ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
+// The ID of the organization owning the benefit.
+OrganizationID string `json:"organization_id,required" format:"uuid4"`
+// Properties available to subscribers for a benefit of type `articles`.
+Properties UserBenefitGetResponseBenefitArticlesSubscriberProperties `json:"properties,required"`
+// Whether the benefit is selectable when creating a product.
+Selectable bool `json:"selectable,required"`
+Type UserBenefitGetResponseBenefitArticlesSubscriberType `json:"type,required"`
+JSON userBenefitGetResponseBenefitArticlesSubscriberJSON `json:"-"`
 }
 
 // userBenefitGetResponseBenefitArticlesSubscriberJSON contains the JSON metadata
 // for the struct [UserBenefitGetResponseBenefitArticlesSubscriber]
 type userBenefitGetResponseBenefitArticlesSubscriberJSON struct {
-	ID             apijson.Field
-	CreatedAt      apijson.Field
-	Deletable      apijson.Field
-	Description    apijson.Field
-	OrganizationID apijson.Field
-	Properties     apijson.Field
-	Selectable     apijson.Field
-	Type           apijson.Field
-	ModifiedAt     apijson.Field
-	raw            string
-	ExtraFields    map[string]apijson.Field
+ID apijson.Field
+CreatedAt apijson.Field
+Deletable apijson.Field
+Description apijson.Field
+ModifiedAt apijson.Field
+OrganizationID apijson.Field
+Properties apijson.Field
+Selectable apijson.Field
+Type apijson.Field
+raw string
+ExtraFields map[string]apijson.Field
 }
 
 func (r *UserBenefitGetResponseBenefitArticlesSubscriber) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
+  return apijson.UnmarshalRoot(data, r)
 }
 
-func (r userBenefitGetResponseBenefitArticlesSubscriberJSON) RawJSON() string {
-	return r.raw
+func (r userBenefitGetResponseBenefitArticlesSubscriberJSON) RawJSON() (string) {
+  return r.raw
 }
 
 func (r UserBenefitGetResponseBenefitArticlesSubscriber) implementsUserBenefitGetResponse() {}
 
 // Properties available to subscribers for a benefit of type `articles`.
 type UserBenefitGetResponseBenefitArticlesSubscriberProperties struct {
-	// Whether the user can access paid articles.
-	PaidArticles bool                                                          `json:"paid_articles,required"`
-	JSON         userBenefitGetResponseBenefitArticlesSubscriberPropertiesJSON `json:"-"`
+// Whether the user can access paid articles.
+PaidArticles bool `json:"paid_articles,required"`
+JSON userBenefitGetResponseBenefitArticlesSubscriberPropertiesJSON `json:"-"`
 }
 
 // userBenefitGetResponseBenefitArticlesSubscriberPropertiesJSON contains the JSON
 // metadata for the struct
 // [UserBenefitGetResponseBenefitArticlesSubscriberProperties]
 type userBenefitGetResponseBenefitArticlesSubscriberPropertiesJSON struct {
-	PaidArticles apijson.Field
-	raw          string
-	ExtraFields  map[string]apijson.Field
+PaidArticles apijson.Field
+raw string
+ExtraFields map[string]apijson.Field
 }
 
 func (r *UserBenefitGetResponseBenefitArticlesSubscriberProperties) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
+  return apijson.UnmarshalRoot(data, r)
 }
 
-func (r userBenefitGetResponseBenefitArticlesSubscriberPropertiesJSON) RawJSON() string {
-	return r.raw
+func (r userBenefitGetResponseBenefitArticlesSubscriberPropertiesJSON) RawJSON() (string) {
+  return r.raw
 }
 
 type UserBenefitGetResponseBenefitArticlesSubscriberType string
 
 const (
-	UserBenefitGetResponseBenefitArticlesSubscriberTypeArticles UserBenefitGetResponseBenefitArticlesSubscriberType = "articles"
+  UserBenefitGetResponseBenefitArticlesSubscriberTypeArticles UserBenefitGetResponseBenefitArticlesSubscriberType = "articles"
 )
 
-func (r UserBenefitGetResponseBenefitArticlesSubscriberType) IsKnown() bool {
-	switch r {
-	case UserBenefitGetResponseBenefitArticlesSubscriberTypeArticles:
-		return true
-	}
-	return false
+func (r UserBenefitGetResponseBenefitArticlesSubscriberType) IsKnown() (bool) {
+  switch r {
+  case UserBenefitGetResponseBenefitArticlesSubscriberTypeArticles:
+      return true
+  }
+  return false
 }
 
 type UserBenefitGetResponseBenefitAdsSubscriber struct {
-	// The ID of the benefit.
-	ID string `json:"id,required" format:"uuid4"`
-	// Creation timestamp of the object.
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
-	// Whether the benefit is deletable.
-	Deletable bool `json:"deletable,required"`
-	// The description of the benefit.
-	Description string                                            `json:"description,required"`
-	Grants      []UserBenefitGetResponseBenefitAdsSubscriberGrant `json:"grants,required"`
-	// The ID of the organization owning the benefit.
-	OrganizationID string `json:"organization_id,required" format:"uuid4"`
-	// Properties for a benefit of type `ads`.
-	Properties UserBenefitGetResponseBenefitAdsSubscriberProperties `json:"properties,required"`
-	// Whether the benefit is selectable when creating a product.
-	Selectable bool                                           `json:"selectable,required"`
-	Type       UserBenefitGetResponseBenefitAdsSubscriberType `json:"type,required"`
-	// Last modification timestamp of the object.
-	ModifiedAt time.Time                                      `json:"modified_at,nullable" format:"date-time"`
-	JSON       userBenefitGetResponseBenefitAdsSubscriberJSON `json:"-"`
+// The ID of the benefit.
+ID string `json:"id,required" format:"uuid4"`
+// Creation timestamp of the object.
+CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+// Whether the benefit is deletable.
+Deletable bool `json:"deletable,required"`
+// The description of the benefit.
+Description string `json:"description,required"`
+Grants []UserBenefitGetResponseBenefitAdsSubscriberGrant `json:"grants,required"`
+// Last modification timestamp of the object.
+ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
+// The ID of the organization owning the benefit.
+OrganizationID string `json:"organization_id,required" format:"uuid4"`
+// Properties for a benefit of type `ads`.
+Properties UserBenefitGetResponseBenefitAdsSubscriberProperties `json:"properties,required"`
+// Whether the benefit is selectable when creating a product.
+Selectable bool `json:"selectable,required"`
+Type UserBenefitGetResponseBenefitAdsSubscriberType `json:"type,required"`
+JSON userBenefitGetResponseBenefitAdsSubscriberJSON `json:"-"`
 }
 
 // userBenefitGetResponseBenefitAdsSubscriberJSON contains the JSON metadata for
 // the struct [UserBenefitGetResponseBenefitAdsSubscriber]
 type userBenefitGetResponseBenefitAdsSubscriberJSON struct {
-	ID             apijson.Field
-	CreatedAt      apijson.Field
-	Deletable      apijson.Field
-	Description    apijson.Field
-	Grants         apijson.Field
-	OrganizationID apijson.Field
-	Properties     apijson.Field
-	Selectable     apijson.Field
-	Type           apijson.Field
-	ModifiedAt     apijson.Field
-	raw            string
-	ExtraFields    map[string]apijson.Field
+ID apijson.Field
+CreatedAt apijson.Field
+Deletable apijson.Field
+Description apijson.Field
+Grants apijson.Field
+ModifiedAt apijson.Field
+OrganizationID apijson.Field
+Properties apijson.Field
+Selectable apijson.Field
+Type apijson.Field
+raw string
+ExtraFields map[string]apijson.Field
 }
 
 func (r *UserBenefitGetResponseBenefitAdsSubscriber) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
+  return apijson.UnmarshalRoot(data, r)
 }
 
-func (r userBenefitGetResponseBenefitAdsSubscriberJSON) RawJSON() string {
-	return r.raw
+func (r userBenefitGetResponseBenefitAdsSubscriberJSON) RawJSON() (string) {
+  return r.raw
 }
 
 func (r UserBenefitGetResponseBenefitAdsSubscriber) implementsUserBenefitGetResponse() {}
 
 type UserBenefitGetResponseBenefitAdsSubscriberGrant struct {
-	// The ID of the grant.
-	ID string `json:"id,required" format:"uuid4"`
-	// The ID of the benefit concerned by this grant.
-	BenefitID string `json:"benefit_id,required" format:"uuid4"`
-	// Creation timestamp of the object.
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
-	// Whether the benefit is granted.
-	IsGranted bool `json:"is_granted,required"`
-	// Whether the benefit is revoked.
-	IsRevoked  bool                                                       `json:"is_revoked,required"`
-	Properties UserBenefitGetResponseBenefitAdsSubscriberGrantsProperties `json:"properties,required"`
-	// The ID of the user concerned by this grant.
-	UserID string `json:"user_id,required" format:"uuid4"`
-	// The timestamp when the benefit was granted. If `None`, the benefit is not
-	// granted.
-	GrantedAt time.Time `json:"granted_at,nullable" format:"date-time"`
-	// Last modification timestamp of the object.
-	ModifiedAt time.Time `json:"modified_at,nullable" format:"date-time"`
-	// The ID of the order that granted this benefit.
-	OrderID string `json:"order_id,nullable" format:"uuid4"`
-	// The timestamp when the benefit was revoked. If `None`, the benefit is not
-	// revoked.
-	RevokedAt time.Time `json:"revoked_at,nullable" format:"date-time"`
-	// The ID of the subscription that granted this benefit.
-	SubscriptionID string                                              `json:"subscription_id,nullable" format:"uuid4"`
-	JSON           userBenefitGetResponseBenefitAdsSubscriberGrantJSON `json:"-"`
+// The ID of the grant.
+ID string `json:"id,required" format:"uuid4"`
+// The ID of the benefit concerned by this grant.
+BenefitID string `json:"benefit_id,required" format:"uuid4"`
+// Creation timestamp of the object.
+CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+// Whether the benefit is granted.
+IsGranted bool `json:"is_granted,required"`
+// Whether the benefit is revoked.
+IsRevoked bool `json:"is_revoked,required"`
+// Last modification timestamp of the object.
+ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
+// The ID of the order that granted this benefit.
+OrderID string `json:"order_id,required,nullable" format:"uuid4"`
+Properties UserBenefitGetResponseBenefitAdsSubscriberGrantsProperties `json:"properties,required"`
+// The ID of the subscription that granted this benefit.
+SubscriptionID string `json:"subscription_id,required,nullable" format:"uuid4"`
+// The ID of the user concerned by this grant.
+UserID string `json:"user_id,required" format:"uuid4"`
+// The timestamp when the benefit was granted. If `None`, the benefit is not
+// granted.
+GrantedAt time.Time `json:"granted_at,nullable" format:"date-time"`
+// The timestamp when the benefit was revoked. If `None`, the benefit is not
+// revoked.
+RevokedAt time.Time `json:"revoked_at,nullable" format:"date-time"`
+JSON userBenefitGetResponseBenefitAdsSubscriberGrantJSON `json:"-"`
 }
 
 // userBenefitGetResponseBenefitAdsSubscriberGrantJSON contains the JSON metadata
 // for the struct [UserBenefitGetResponseBenefitAdsSubscriberGrant]
 type userBenefitGetResponseBenefitAdsSubscriberGrantJSON struct {
-	ID             apijson.Field
-	BenefitID      apijson.Field
-	CreatedAt      apijson.Field
-	IsGranted      apijson.Field
-	IsRevoked      apijson.Field
-	Properties     apijson.Field
-	UserID         apijson.Field
-	GrantedAt      apijson.Field
-	ModifiedAt     apijson.Field
-	OrderID        apijson.Field
-	RevokedAt      apijson.Field
-	SubscriptionID apijson.Field
-	raw            string
-	ExtraFields    map[string]apijson.Field
+ID apijson.Field
+BenefitID apijson.Field
+CreatedAt apijson.Field
+IsGranted apijson.Field
+IsRevoked apijson.Field
+ModifiedAt apijson.Field
+OrderID apijson.Field
+Properties apijson.Field
+SubscriptionID apijson.Field
+UserID apijson.Field
+GrantedAt apijson.Field
+RevokedAt apijson.Field
+raw string
+ExtraFields map[string]apijson.Field
 }
 
 func (r *UserBenefitGetResponseBenefitAdsSubscriberGrant) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
+  return apijson.UnmarshalRoot(data, r)
 }
 
-func (r userBenefitGetResponseBenefitAdsSubscriberGrantJSON) RawJSON() string {
-	return r.raw
+func (r userBenefitGetResponseBenefitAdsSubscriberGrantJSON) RawJSON() (string) {
+  return r.raw
 }
 
 type UserBenefitGetResponseBenefitAdsSubscriberGrantsProperties struct {
-	// The ID of the enabled advertisement campaign for this benefit grant.
-	AdvertisementCampaignID string                                                         `json:"advertisement_campaign_id,nullable" format:"uuid4"`
-	JSON                    userBenefitGetResponseBenefitAdsSubscriberGrantsPropertiesJSON `json:"-"`
+// The ID of the enabled advertisement campaign for this benefit grant.
+AdvertisementCampaignID string `json:"advertisement_campaign_id,nullable" format:"uuid4"`
+JSON userBenefitGetResponseBenefitAdsSubscriberGrantsPropertiesJSON `json:"-"`
 }
 
 // userBenefitGetResponseBenefitAdsSubscriberGrantsPropertiesJSON contains the JSON
 // metadata for the struct
 // [UserBenefitGetResponseBenefitAdsSubscriberGrantsProperties]
 type userBenefitGetResponseBenefitAdsSubscriberGrantsPropertiesJSON struct {
-	AdvertisementCampaignID apijson.Field
-	raw                     string
-	ExtraFields             map[string]apijson.Field
+AdvertisementCampaignID apijson.Field
+raw string
+ExtraFields map[string]apijson.Field
 }
 
 func (r *UserBenefitGetResponseBenefitAdsSubscriberGrantsProperties) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
+  return apijson.UnmarshalRoot(data, r)
 }
 
-func (r userBenefitGetResponseBenefitAdsSubscriberGrantsPropertiesJSON) RawJSON() string {
-	return r.raw
+func (r userBenefitGetResponseBenefitAdsSubscriberGrantsPropertiesJSON) RawJSON() (string) {
+  return r.raw
 }
 
 // Properties for a benefit of type `ads`.
 type UserBenefitGetResponseBenefitAdsSubscriberProperties struct {
-	// The height of the displayed ad.
-	ImageHeight int64 `json:"image_height"`
-	// The width of the displayed ad.
-	ImageWidth int64                                                    `json:"image_width"`
-	JSON       userBenefitGetResponseBenefitAdsSubscriberPropertiesJSON `json:"-"`
+// The height of the displayed ad.
+ImageHeight int64 `json:"image_height"`
+// The width of the displayed ad.
+ImageWidth int64 `json:"image_width"`
+JSON userBenefitGetResponseBenefitAdsSubscriberPropertiesJSON `json:"-"`
 }
 
 // userBenefitGetResponseBenefitAdsSubscriberPropertiesJSON contains the JSON
 // metadata for the struct [UserBenefitGetResponseBenefitAdsSubscriberProperties]
 type userBenefitGetResponseBenefitAdsSubscriberPropertiesJSON struct {
-	ImageHeight apijson.Field
-	ImageWidth  apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
+ImageHeight apijson.Field
+ImageWidth apijson.Field
+raw string
+ExtraFields map[string]apijson.Field
 }
 
 func (r *UserBenefitGetResponseBenefitAdsSubscriberProperties) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
+  return apijson.UnmarshalRoot(data, r)
 }
 
-func (r userBenefitGetResponseBenefitAdsSubscriberPropertiesJSON) RawJSON() string {
-	return r.raw
+func (r userBenefitGetResponseBenefitAdsSubscriberPropertiesJSON) RawJSON() (string) {
+  return r.raw
 }
 
 type UserBenefitGetResponseBenefitAdsSubscriberType string
 
 const (
-	UserBenefitGetResponseBenefitAdsSubscriberTypeAds UserBenefitGetResponseBenefitAdsSubscriberType = "ads"
+  UserBenefitGetResponseBenefitAdsSubscriberTypeAds UserBenefitGetResponseBenefitAdsSubscriberType = "ads"
 )
 
-func (r UserBenefitGetResponseBenefitAdsSubscriberType) IsKnown() bool {
-	switch r {
-	case UserBenefitGetResponseBenefitAdsSubscriberTypeAds:
-		return true
-	}
-	return false
+func (r UserBenefitGetResponseBenefitAdsSubscriberType) IsKnown() (bool) {
+  switch r {
+  case UserBenefitGetResponseBenefitAdsSubscriberTypeAds:
+      return true
+  }
+  return false
 }
 
 type UserBenefitGetResponseBenefitDiscordSubscriber struct {
-	// The ID of the benefit.
-	ID string `json:"id,required" format:"uuid4"`
-	// Creation timestamp of the object.
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
-	// Whether the benefit is deletable.
-	Deletable bool `json:"deletable,required"`
-	// The description of the benefit.
-	Description string `json:"description,required"`
-	// The ID of the organization owning the benefit.
-	OrganizationID string `json:"organization_id,required" format:"uuid4"`
-	// Properties available to subscribers for a benefit of type `discord`.
-	Properties UserBenefitGetResponseBenefitDiscordSubscriberProperties `json:"properties,required"`
-	// Whether the benefit is selectable when creating a product.
-	Selectable bool                                               `json:"selectable,required"`
-	Type       UserBenefitGetResponseBenefitDiscordSubscriberType `json:"type,required"`
-	// Last modification timestamp of the object.
-	ModifiedAt time.Time                                          `json:"modified_at,nullable" format:"date-time"`
-	JSON       userBenefitGetResponseBenefitDiscordSubscriberJSON `json:"-"`
+// The ID of the benefit.
+ID string `json:"id,required" format:"uuid4"`
+// Creation timestamp of the object.
+CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+// Whether the benefit is deletable.
+Deletable bool `json:"deletable,required"`
+// The description of the benefit.
+Description string `json:"description,required"`
+// Last modification timestamp of the object.
+ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
+// The ID of the organization owning the benefit.
+OrganizationID string `json:"organization_id,required" format:"uuid4"`
+// Properties available to subscribers for a benefit of type `discord`.
+Properties UserBenefitGetResponseBenefitDiscordSubscriberProperties `json:"properties,required"`
+// Whether the benefit is selectable when creating a product.
+Selectable bool `json:"selectable,required"`
+Type UserBenefitGetResponseBenefitDiscordSubscriberType `json:"type,required"`
+JSON userBenefitGetResponseBenefitDiscordSubscriberJSON `json:"-"`
 }
 
 // userBenefitGetResponseBenefitDiscordSubscriberJSON contains the JSON metadata
 // for the struct [UserBenefitGetResponseBenefitDiscordSubscriber]
 type userBenefitGetResponseBenefitDiscordSubscriberJSON struct {
-	ID             apijson.Field
-	CreatedAt      apijson.Field
-	Deletable      apijson.Field
-	Description    apijson.Field
-	OrganizationID apijson.Field
-	Properties     apijson.Field
-	Selectable     apijson.Field
-	Type           apijson.Field
-	ModifiedAt     apijson.Field
-	raw            string
-	ExtraFields    map[string]apijson.Field
+ID apijson.Field
+CreatedAt apijson.Field
+Deletable apijson.Field
+Description apijson.Field
+ModifiedAt apijson.Field
+OrganizationID apijson.Field
+Properties apijson.Field
+Selectable apijson.Field
+Type apijson.Field
+raw string
+ExtraFields map[string]apijson.Field
 }
 
 func (r *UserBenefitGetResponseBenefitDiscordSubscriber) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
+  return apijson.UnmarshalRoot(data, r)
 }
 
-func (r userBenefitGetResponseBenefitDiscordSubscriberJSON) RawJSON() string {
-	return r.raw
+func (r userBenefitGetResponseBenefitDiscordSubscriberJSON) RawJSON() (string) {
+  return r.raw
 }
 
 func (r UserBenefitGetResponseBenefitDiscordSubscriber) implementsUserBenefitGetResponse() {}
 
 // Properties available to subscribers for a benefit of type `discord`.
 type UserBenefitGetResponseBenefitDiscordSubscriberProperties struct {
-	// The ID of the Discord server.
-	GuildID string                                                       `json:"guild_id,required"`
-	JSON    userBenefitGetResponseBenefitDiscordSubscriberPropertiesJSON `json:"-"`
+// The ID of the Discord server.
+GuildID string `json:"guild_id,required"`
+JSON userBenefitGetResponseBenefitDiscordSubscriberPropertiesJSON `json:"-"`
 }
 
 // userBenefitGetResponseBenefitDiscordSubscriberPropertiesJSON contains the JSON
 // metadata for the struct
 // [UserBenefitGetResponseBenefitDiscordSubscriberProperties]
 type userBenefitGetResponseBenefitDiscordSubscriberPropertiesJSON struct {
-	GuildID     apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
+GuildID apijson.Field
+raw string
+ExtraFields map[string]apijson.Field
 }
 
 func (r *UserBenefitGetResponseBenefitDiscordSubscriberProperties) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
+  return apijson.UnmarshalRoot(data, r)
 }
 
-func (r userBenefitGetResponseBenefitDiscordSubscriberPropertiesJSON) RawJSON() string {
-	return r.raw
+func (r userBenefitGetResponseBenefitDiscordSubscriberPropertiesJSON) RawJSON() (string) {
+  return r.raw
 }
 
 type UserBenefitGetResponseBenefitDiscordSubscriberType string
 
 const (
-	UserBenefitGetResponseBenefitDiscordSubscriberTypeDiscord UserBenefitGetResponseBenefitDiscordSubscriberType = "discord"
+  UserBenefitGetResponseBenefitDiscordSubscriberTypeDiscord UserBenefitGetResponseBenefitDiscordSubscriberType = "discord"
 )
 
-func (r UserBenefitGetResponseBenefitDiscordSubscriberType) IsKnown() bool {
-	switch r {
-	case UserBenefitGetResponseBenefitDiscordSubscriberTypeDiscord:
-		return true
-	}
-	return false
+func (r UserBenefitGetResponseBenefitDiscordSubscriberType) IsKnown() (bool) {
+  switch r {
+  case UserBenefitGetResponseBenefitDiscordSubscriberTypeDiscord:
+      return true
+  }
+  return false
 }
 
 type UserBenefitGetResponseBenefitCustomSubscriber struct {
-	// The ID of the benefit.
-	ID string `json:"id,required" format:"uuid4"`
-	// Creation timestamp of the object.
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
-	// Whether the benefit is deletable.
-	Deletable bool `json:"deletable,required"`
-	// The description of the benefit.
-	Description string                                               `json:"description,required"`
-	Grants      []UserBenefitGetResponseBenefitCustomSubscriberGrant `json:"grants,required"`
-	// The ID of the organization owning the benefit.
-	OrganizationID string `json:"organization_id,required" format:"uuid4"`
-	// Properties available to subscribers for a benefit of type `custom`.
-	Properties UserBenefitGetResponseBenefitCustomSubscriberProperties `json:"properties,required"`
-	// Whether the benefit is selectable when creating a product.
-	Selectable bool                                              `json:"selectable,required"`
-	Type       UserBenefitGetResponseBenefitCustomSubscriberType `json:"type,required"`
-	// Last modification timestamp of the object.
-	ModifiedAt time.Time                                         `json:"modified_at,nullable" format:"date-time"`
-	JSON       userBenefitGetResponseBenefitCustomSubscriberJSON `json:"-"`
+// The ID of the benefit.
+ID string `json:"id,required" format:"uuid4"`
+// Creation timestamp of the object.
+CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+// Whether the benefit is deletable.
+Deletable bool `json:"deletable,required"`
+// The description of the benefit.
+Description string `json:"description,required"`
+Grants []UserBenefitGetResponseBenefitCustomSubscriberGrant `json:"grants,required"`
+// Last modification timestamp of the object.
+ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
+// The ID of the organization owning the benefit.
+OrganizationID string `json:"organization_id,required" format:"uuid4"`
+// Properties available to subscribers for a benefit of type `custom`.
+Properties UserBenefitGetResponseBenefitCustomSubscriberProperties `json:"properties,required"`
+// Whether the benefit is selectable when creating a product.
+Selectable bool `json:"selectable,required"`
+Type UserBenefitGetResponseBenefitCustomSubscriberType `json:"type,required"`
+JSON userBenefitGetResponseBenefitCustomSubscriberJSON `json:"-"`
 }
 
 // userBenefitGetResponseBenefitCustomSubscriberJSON contains the JSON metadata for
 // the struct [UserBenefitGetResponseBenefitCustomSubscriber]
 type userBenefitGetResponseBenefitCustomSubscriberJSON struct {
-	ID             apijson.Field
-	CreatedAt      apijson.Field
-	Deletable      apijson.Field
-	Description    apijson.Field
-	Grants         apijson.Field
-	OrganizationID apijson.Field
-	Properties     apijson.Field
-	Selectable     apijson.Field
-	Type           apijson.Field
-	ModifiedAt     apijson.Field
-	raw            string
-	ExtraFields    map[string]apijson.Field
+ID apijson.Field
+CreatedAt apijson.Field
+Deletable apijson.Field
+Description apijson.Field
+Grants apijson.Field
+ModifiedAt apijson.Field
+OrganizationID apijson.Field
+Properties apijson.Field
+Selectable apijson.Field
+Type apijson.Field
+raw string
+ExtraFields map[string]apijson.Field
 }
 
 func (r *UserBenefitGetResponseBenefitCustomSubscriber) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
+  return apijson.UnmarshalRoot(data, r)
 }
 
-func (r userBenefitGetResponseBenefitCustomSubscriberJSON) RawJSON() string {
-	return r.raw
+func (r userBenefitGetResponseBenefitCustomSubscriberJSON) RawJSON() (string) {
+  return r.raw
 }
 
 func (r UserBenefitGetResponseBenefitCustomSubscriber) implementsUserBenefitGetResponse() {}
 
 // A grant of a benefit to a user.
 type UserBenefitGetResponseBenefitCustomSubscriberGrant struct {
-	// The ID of the grant.
-	ID string `json:"id,required" format:"uuid4"`
-	// The ID of the benefit concerned by this grant.
-	BenefitID string `json:"benefit_id,required" format:"uuid4"`
-	// Creation timestamp of the object.
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
-	// Whether the benefit is granted.
-	IsGranted bool `json:"is_granted,required"`
-	// Whether the benefit is revoked.
-	IsRevoked bool `json:"is_revoked,required"`
-	// Properties for a benefit grant.
-	Properties interface{} `json:"properties,required"`
-	// The ID of the user concerned by this grant.
-	UserID string `json:"user_id,required" format:"uuid4"`
-	// The timestamp when the benefit was granted. If `None`, the benefit is not
-	// granted.
-	GrantedAt time.Time `json:"granted_at,nullable" format:"date-time"`
-	// Last modification timestamp of the object.
-	ModifiedAt time.Time `json:"modified_at,nullable" format:"date-time"`
-	// The ID of the order that granted this benefit.
-	OrderID string `json:"order_id,nullable" format:"uuid4"`
-	// The timestamp when the benefit was revoked. If `None`, the benefit is not
-	// revoked.
-	RevokedAt time.Time `json:"revoked_at,nullable" format:"date-time"`
-	// The ID of the subscription that granted this benefit.
-	SubscriptionID string                                                 `json:"subscription_id,nullable" format:"uuid4"`
-	JSON           userBenefitGetResponseBenefitCustomSubscriberGrantJSON `json:"-"`
+// The ID of the grant.
+ID string `json:"id,required" format:"uuid4"`
+// The ID of the benefit concerned by this grant.
+BenefitID string `json:"benefit_id,required" format:"uuid4"`
+// Creation timestamp of the object.
+CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+// Whether the benefit is granted.
+IsGranted bool `json:"is_granted,required"`
+// Whether the benefit is revoked.
+IsRevoked bool `json:"is_revoked,required"`
+// Last modification timestamp of the object.
+ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
+// The ID of the order that granted this benefit.
+OrderID string `json:"order_id,required,nullable" format:"uuid4"`
+// Properties for a benefit grant.
+Properties interface{} `json:"properties,required"`
+// The ID of the subscription that granted this benefit.
+SubscriptionID string `json:"subscription_id,required,nullable" format:"uuid4"`
+// The ID of the user concerned by this grant.
+UserID string `json:"user_id,required" format:"uuid4"`
+// The timestamp when the benefit was granted. If `None`, the benefit is not
+// granted.
+GrantedAt time.Time `json:"granted_at,nullable" format:"date-time"`
+// The timestamp when the benefit was revoked. If `None`, the benefit is not
+// revoked.
+RevokedAt time.Time `json:"revoked_at,nullable" format:"date-time"`
+JSON userBenefitGetResponseBenefitCustomSubscriberGrantJSON `json:"-"`
 }
 
 // userBenefitGetResponseBenefitCustomSubscriberGrantJSON contains the JSON
 // metadata for the struct [UserBenefitGetResponseBenefitCustomSubscriberGrant]
 type userBenefitGetResponseBenefitCustomSubscriberGrantJSON struct {
-	ID             apijson.Field
-	BenefitID      apijson.Field
-	CreatedAt      apijson.Field
-	IsGranted      apijson.Field
-	IsRevoked      apijson.Field
-	Properties     apijson.Field
-	UserID         apijson.Field
-	GrantedAt      apijson.Field
-	ModifiedAt     apijson.Field
-	OrderID        apijson.Field
-	RevokedAt      apijson.Field
-	SubscriptionID apijson.Field
-	raw            string
-	ExtraFields    map[string]apijson.Field
+ID apijson.Field
+BenefitID apijson.Field
+CreatedAt apijson.Field
+IsGranted apijson.Field
+IsRevoked apijson.Field
+ModifiedAt apijson.Field
+OrderID apijson.Field
+Properties apijson.Field
+SubscriptionID apijson.Field
+UserID apijson.Field
+GrantedAt apijson.Field
+RevokedAt apijson.Field
+raw string
+ExtraFields map[string]apijson.Field
 }
 
 func (r *UserBenefitGetResponseBenefitCustomSubscriberGrant) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
+  return apijson.UnmarshalRoot(data, r)
 }
 
-func (r userBenefitGetResponseBenefitCustomSubscriberGrantJSON) RawJSON() string {
-	return r.raw
+func (r userBenefitGetResponseBenefitCustomSubscriberGrantJSON) RawJSON() (string) {
+  return r.raw
 }
 
 // Properties available to subscribers for a benefit of type `custom`.
 type UserBenefitGetResponseBenefitCustomSubscriberProperties struct {
-	// Private note to be shared with users who have this benefit granted.
-	Note string                                                      `json:"note,nullable"`
-	JSON userBenefitGetResponseBenefitCustomSubscriberPropertiesJSON `json:"-"`
+// Private note to be shared with users who have this benefit granted.
+Note string `json:"note,required,nullable"`
+JSON userBenefitGetResponseBenefitCustomSubscriberPropertiesJSON `json:"-"`
 }
 
 // userBenefitGetResponseBenefitCustomSubscriberPropertiesJSON contains the JSON
 // metadata for the struct
 // [UserBenefitGetResponseBenefitCustomSubscriberProperties]
 type userBenefitGetResponseBenefitCustomSubscriberPropertiesJSON struct {
-	Note        apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
+Note apijson.Field
+raw string
+ExtraFields map[string]apijson.Field
 }
 
 func (r *UserBenefitGetResponseBenefitCustomSubscriberProperties) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
+  return apijson.UnmarshalRoot(data, r)
 }
 
-func (r userBenefitGetResponseBenefitCustomSubscriberPropertiesJSON) RawJSON() string {
-	return r.raw
+func (r userBenefitGetResponseBenefitCustomSubscriberPropertiesJSON) RawJSON() (string) {
+  return r.raw
 }
 
 type UserBenefitGetResponseBenefitCustomSubscriberType string
 
 const (
-	UserBenefitGetResponseBenefitCustomSubscriberTypeCustom UserBenefitGetResponseBenefitCustomSubscriberType = "custom"
+  UserBenefitGetResponseBenefitCustomSubscriberTypeCustom UserBenefitGetResponseBenefitCustomSubscriberType = "custom"
 )
 
-func (r UserBenefitGetResponseBenefitCustomSubscriberType) IsKnown() bool {
-	switch r {
-	case UserBenefitGetResponseBenefitCustomSubscriberTypeCustom:
-		return true
-	}
-	return false
+func (r UserBenefitGetResponseBenefitCustomSubscriberType) IsKnown() (bool) {
+  switch r {
+  case UserBenefitGetResponseBenefitCustomSubscriberTypeCustom:
+      return true
+  }
+  return false
 }
 
 type UserBenefitGetResponseBenefitGitHubRepositorySubscriber struct {
-	// The ID of the benefit.
-	ID string `json:"id,required" format:"uuid4"`
-	// Creation timestamp of the object.
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
-	// Whether the benefit is deletable.
-	Deletable bool `json:"deletable,required"`
-	// The description of the benefit.
-	Description string `json:"description,required"`
-	// The ID of the organization owning the benefit.
-	OrganizationID string `json:"organization_id,required" format:"uuid4"`
-	// Properties available to subscribers for a benefit of type `github_repository`.
-	Properties UserBenefitGetResponseBenefitGitHubRepositorySubscriberProperties `json:"properties,required"`
-	// Whether the benefit is selectable when creating a product.
-	Selectable bool                                                        `json:"selectable,required"`
-	Type       UserBenefitGetResponseBenefitGitHubRepositorySubscriberType `json:"type,required"`
-	// Last modification timestamp of the object.
-	ModifiedAt time.Time                                                   `json:"modified_at,nullable" format:"date-time"`
-	JSON       userBenefitGetResponseBenefitGitHubRepositorySubscriberJSON `json:"-"`
+// The ID of the benefit.
+ID string `json:"id,required" format:"uuid4"`
+// Creation timestamp of the object.
+CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+// Whether the benefit is deletable.
+Deletable bool `json:"deletable,required"`
+// The description of the benefit.
+Description string `json:"description,required"`
+// Last modification timestamp of the object.
+ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
+// The ID of the organization owning the benefit.
+OrganizationID string `json:"organization_id,required" format:"uuid4"`
+// Properties available to subscribers for a benefit of type `github_repository`.
+Properties UserBenefitGetResponseBenefitGitHubRepositorySubscriberProperties `json:"properties,required"`
+// Whether the benefit is selectable when creating a product.
+Selectable bool `json:"selectable,required"`
+Type UserBenefitGetResponseBenefitGitHubRepositorySubscriberType `json:"type,required"`
+JSON userBenefitGetResponseBenefitGitHubRepositorySubscriberJSON `json:"-"`
 }
 
 // userBenefitGetResponseBenefitGitHubRepositorySubscriberJSON contains the JSON
 // metadata for the struct
 // [UserBenefitGetResponseBenefitGitHubRepositorySubscriber]
 type userBenefitGetResponseBenefitGitHubRepositorySubscriberJSON struct {
-	ID             apijson.Field
-	CreatedAt      apijson.Field
-	Deletable      apijson.Field
-	Description    apijson.Field
-	OrganizationID apijson.Field
-	Properties     apijson.Field
-	Selectable     apijson.Field
-	Type           apijson.Field
-	ModifiedAt     apijson.Field
-	raw            string
-	ExtraFields    map[string]apijson.Field
+ID apijson.Field
+CreatedAt apijson.Field
+Deletable apijson.Field
+Description apijson.Field
+ModifiedAt apijson.Field
+OrganizationID apijson.Field
+Properties apijson.Field
+Selectable apijson.Field
+Type apijson.Field
+raw string
+ExtraFields map[string]apijson.Field
 }
 
 func (r *UserBenefitGetResponseBenefitGitHubRepositorySubscriber) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
+  return apijson.UnmarshalRoot(data, r)
 }
 
-func (r userBenefitGetResponseBenefitGitHubRepositorySubscriberJSON) RawJSON() string {
-	return r.raw
+func (r userBenefitGetResponseBenefitGitHubRepositorySubscriberJSON) RawJSON() (string) {
+  return r.raw
 }
 
 func (r UserBenefitGetResponseBenefitGitHubRepositorySubscriber) implementsUserBenefitGetResponse() {}
 
 // Properties available to subscribers for a benefit of type `github_repository`.
 type UserBenefitGetResponseBenefitGitHubRepositorySubscriberProperties struct {
-	// The name of the repository.
-	RepositoryName string `json:"repository_name,required"`
-	// The owner of the repository.
-	RepositoryOwner string                                                                `json:"repository_owner,required"`
-	JSON            userBenefitGetResponseBenefitGitHubRepositorySubscriberPropertiesJSON `json:"-"`
+// The name of the repository.
+RepositoryName string `json:"repository_name,required"`
+// The owner of the repository.
+RepositoryOwner string `json:"repository_owner,required"`
+JSON userBenefitGetResponseBenefitGitHubRepositorySubscriberPropertiesJSON `json:"-"`
 }
 
 // userBenefitGetResponseBenefitGitHubRepositorySubscriberPropertiesJSON contains
 // the JSON metadata for the struct
 // [UserBenefitGetResponseBenefitGitHubRepositorySubscriberProperties]
 type userBenefitGetResponseBenefitGitHubRepositorySubscriberPropertiesJSON struct {
-	RepositoryName  apijson.Field
-	RepositoryOwner apijson.Field
-	raw             string
-	ExtraFields     map[string]apijson.Field
+RepositoryName apijson.Field
+RepositoryOwner apijson.Field
+raw string
+ExtraFields map[string]apijson.Field
 }
 
 func (r *UserBenefitGetResponseBenefitGitHubRepositorySubscriberProperties) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
+  return apijson.UnmarshalRoot(data, r)
 }
 
-func (r userBenefitGetResponseBenefitGitHubRepositorySubscriberPropertiesJSON) RawJSON() string {
-	return r.raw
+func (r userBenefitGetResponseBenefitGitHubRepositorySubscriberPropertiesJSON) RawJSON() (string) {
+  return r.raw
 }
 
 type UserBenefitGetResponseBenefitGitHubRepositorySubscriberType string
 
 const (
-	UserBenefitGetResponseBenefitGitHubRepositorySubscriberTypeGitHubRepository UserBenefitGetResponseBenefitGitHubRepositorySubscriberType = "github_repository"
+  UserBenefitGetResponseBenefitGitHubRepositorySubscriberTypeGitHubRepository UserBenefitGetResponseBenefitGitHubRepositorySubscriberType = "github_repository"
 )
 
-func (r UserBenefitGetResponseBenefitGitHubRepositorySubscriberType) IsKnown() bool {
-	switch r {
-	case UserBenefitGetResponseBenefitGitHubRepositorySubscriberTypeGitHubRepository:
-		return true
-	}
-	return false
+func (r UserBenefitGetResponseBenefitGitHubRepositorySubscriberType) IsKnown() (bool) {
+  switch r {
+  case UserBenefitGetResponseBenefitGitHubRepositorySubscriberTypeGitHubRepository:
+      return true
+  }
+  return false
 }
 
 type UserBenefitGetResponseBenefitDownloadablesSubscriber struct {
-	// The ID of the benefit.
-	ID string `json:"id,required" format:"uuid4"`
-	// Creation timestamp of the object.
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
-	// Whether the benefit is deletable.
-	Deletable bool `json:"deletable,required"`
-	// The description of the benefit.
-	Description string `json:"description,required"`
-	// The ID of the organization owning the benefit.
-	OrganizationID string                                                         `json:"organization_id,required" format:"uuid4"`
-	Properties     UserBenefitGetResponseBenefitDownloadablesSubscriberProperties `json:"properties,required"`
-	// Whether the benefit is selectable when creating a product.
-	Selectable bool                                                     `json:"selectable,required"`
-	Type       UserBenefitGetResponseBenefitDownloadablesSubscriberType `json:"type,required"`
-	// Last modification timestamp of the object.
-	ModifiedAt time.Time                                                `json:"modified_at,nullable" format:"date-time"`
-	JSON       userBenefitGetResponseBenefitDownloadablesSubscriberJSON `json:"-"`
+// The ID of the benefit.
+ID string `json:"id,required" format:"uuid4"`
+// Creation timestamp of the object.
+CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+// Whether the benefit is deletable.
+Deletable bool `json:"deletable,required"`
+// The description of the benefit.
+Description string `json:"description,required"`
+// Last modification timestamp of the object.
+ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
+// The ID of the organization owning the benefit.
+OrganizationID string `json:"organization_id,required" format:"uuid4"`
+Properties UserBenefitGetResponseBenefitDownloadablesSubscriberProperties `json:"properties,required"`
+// Whether the benefit is selectable when creating a product.
+Selectable bool `json:"selectable,required"`
+Type UserBenefitGetResponseBenefitDownloadablesSubscriberType `json:"type,required"`
+JSON userBenefitGetResponseBenefitDownloadablesSubscriberJSON `json:"-"`
 }
 
 // userBenefitGetResponseBenefitDownloadablesSubscriberJSON contains the JSON
 // metadata for the struct [UserBenefitGetResponseBenefitDownloadablesSubscriber]
 type userBenefitGetResponseBenefitDownloadablesSubscriberJSON struct {
-	ID             apijson.Field
-	CreatedAt      apijson.Field
-	Deletable      apijson.Field
-	Description    apijson.Field
-	OrganizationID apijson.Field
-	Properties     apijson.Field
-	Selectable     apijson.Field
-	Type           apijson.Field
-	ModifiedAt     apijson.Field
-	raw            string
-	ExtraFields    map[string]apijson.Field
+ID apijson.Field
+CreatedAt apijson.Field
+Deletable apijson.Field
+Description apijson.Field
+ModifiedAt apijson.Field
+OrganizationID apijson.Field
+Properties apijson.Field
+Selectable apijson.Field
+Type apijson.Field
+raw string
+ExtraFields map[string]apijson.Field
 }
 
 func (r *UserBenefitGetResponseBenefitDownloadablesSubscriber) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
+  return apijson.UnmarshalRoot(data, r)
 }
 
-func (r userBenefitGetResponseBenefitDownloadablesSubscriberJSON) RawJSON() string {
-	return r.raw
+func (r userBenefitGetResponseBenefitDownloadablesSubscriberJSON) RawJSON() (string) {
+  return r.raw
 }
 
 func (r UserBenefitGetResponseBenefitDownloadablesSubscriber) implementsUserBenefitGetResponse() {}
 
 type UserBenefitGetResponseBenefitDownloadablesSubscriberProperties struct {
-	ActiveFiles []string                                                           `json:"active_files,required" format:"uuid4"`
-	JSON        userBenefitGetResponseBenefitDownloadablesSubscriberPropertiesJSON `json:"-"`
+ActiveFiles []string `json:"active_files,required" format:"uuid4"`
+JSON userBenefitGetResponseBenefitDownloadablesSubscriberPropertiesJSON `json:"-"`
 }
 
 // userBenefitGetResponseBenefitDownloadablesSubscriberPropertiesJSON contains the
 // JSON metadata for the struct
 // [UserBenefitGetResponseBenefitDownloadablesSubscriberProperties]
 type userBenefitGetResponseBenefitDownloadablesSubscriberPropertiesJSON struct {
-	ActiveFiles apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
+ActiveFiles apijson.Field
+raw string
+ExtraFields map[string]apijson.Field
 }
 
 func (r *UserBenefitGetResponseBenefitDownloadablesSubscriberProperties) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
+  return apijson.UnmarshalRoot(data, r)
 }
 
-func (r userBenefitGetResponseBenefitDownloadablesSubscriberPropertiesJSON) RawJSON() string {
-	return r.raw
+func (r userBenefitGetResponseBenefitDownloadablesSubscriberPropertiesJSON) RawJSON() (string) {
+  return r.raw
 }
 
 type UserBenefitGetResponseBenefitDownloadablesSubscriberType string
 
 const (
-	UserBenefitGetResponseBenefitDownloadablesSubscriberTypeDownloadables UserBenefitGetResponseBenefitDownloadablesSubscriberType = "downloadables"
+  UserBenefitGetResponseBenefitDownloadablesSubscriberTypeDownloadables UserBenefitGetResponseBenefitDownloadablesSubscriberType = "downloadables"
 )
 
-func (r UserBenefitGetResponseBenefitDownloadablesSubscriberType) IsKnown() bool {
-	switch r {
-	case UserBenefitGetResponseBenefitDownloadablesSubscriberTypeDownloadables:
-		return true
-	}
-	return false
+func (r UserBenefitGetResponseBenefitDownloadablesSubscriberType) IsKnown() (bool) {
+  switch r {
+  case UserBenefitGetResponseBenefitDownloadablesSubscriberTypeDownloadables:
+      return true
+  }
+  return false
+}
+
+type UserBenefitGetResponseBenefitLicenseKeysSubscriber struct {
+// The ID of the benefit.
+ID string `json:"id,required" format:"uuid4"`
+// Creation timestamp of the object.
+CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+// Whether the benefit is deletable.
+Deletable bool `json:"deletable,required"`
+// The description of the benefit.
+Description string `json:"description,required"`
+Grants []UserBenefitGetResponseBenefitLicenseKeysSubscriberGrant `json:"grants,required"`
+// Last modification timestamp of the object.
+ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
+// The ID of the organization owning the benefit.
+OrganizationID string `json:"organization_id,required" format:"uuid4"`
+Properties UserBenefitGetResponseBenefitLicenseKeysSubscriberProperties `json:"properties,required"`
+// Whether the benefit is selectable when creating a product.
+Selectable bool `json:"selectable,required"`
+Type UserBenefitGetResponseBenefitLicenseKeysSubscriberType `json:"type,required"`
+JSON userBenefitGetResponseBenefitLicenseKeysSubscriberJSON `json:"-"`
+}
+
+// userBenefitGetResponseBenefitLicenseKeysSubscriberJSON contains the JSON
+// metadata for the struct [UserBenefitGetResponseBenefitLicenseKeysSubscriber]
+type userBenefitGetResponseBenefitLicenseKeysSubscriberJSON struct {
+ID apijson.Field
+CreatedAt apijson.Field
+Deletable apijson.Field
+Description apijson.Field
+Grants apijson.Field
+ModifiedAt apijson.Field
+OrganizationID apijson.Field
+Properties apijson.Field
+Selectable apijson.Field
+Type apijson.Field
+raw string
+ExtraFields map[string]apijson.Field
+}
+
+func (r *UserBenefitGetResponseBenefitLicenseKeysSubscriber) UnmarshalJSON(data []byte) (err error) {
+  return apijson.UnmarshalRoot(data, r)
+}
+
+func (r userBenefitGetResponseBenefitLicenseKeysSubscriberJSON) RawJSON() (string) {
+  return r.raw
+}
+
+func (r UserBenefitGetResponseBenefitLicenseKeysSubscriber) implementsUserBenefitGetResponse() {}
+
+type UserBenefitGetResponseBenefitLicenseKeysSubscriberGrant struct {
+// The ID of the grant.
+ID string `json:"id,required" format:"uuid4"`
+// The ID of the benefit concerned by this grant.
+BenefitID string `json:"benefit_id,required" format:"uuid4"`
+// Creation timestamp of the object.
+CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+// Whether the benefit is granted.
+IsGranted bool `json:"is_granted,required"`
+// Whether the benefit is revoked.
+IsRevoked bool `json:"is_revoked,required"`
+// Last modification timestamp of the object.
+ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
+// The ID of the order that granted this benefit.
+OrderID string `json:"order_id,required,nullable" format:"uuid4"`
+Properties UserBenefitGetResponseBenefitLicenseKeysSubscriberGrantsProperties `json:"properties,required"`
+// The ID of the subscription that granted this benefit.
+SubscriptionID string `json:"subscription_id,required,nullable" format:"uuid4"`
+// The ID of the user concerned by this grant.
+UserID string `json:"user_id,required" format:"uuid4"`
+// The timestamp when the benefit was granted. If `None`, the benefit is not
+// granted.
+GrantedAt time.Time `json:"granted_at,nullable" format:"date-time"`
+// The timestamp when the benefit was revoked. If `None`, the benefit is not
+// revoked.
+RevokedAt time.Time `json:"revoked_at,nullable" format:"date-time"`
+JSON userBenefitGetResponseBenefitLicenseKeysSubscriberGrantJSON `json:"-"`
+}
+
+// userBenefitGetResponseBenefitLicenseKeysSubscriberGrantJSON contains the JSON
+// metadata for the struct
+// [UserBenefitGetResponseBenefitLicenseKeysSubscriberGrant]
+type userBenefitGetResponseBenefitLicenseKeysSubscriberGrantJSON struct {
+ID apijson.Field
+BenefitID apijson.Field
+CreatedAt apijson.Field
+IsGranted apijson.Field
+IsRevoked apijson.Field
+ModifiedAt apijson.Field
+OrderID apijson.Field
+Properties apijson.Field
+SubscriptionID apijson.Field
+UserID apijson.Field
+GrantedAt apijson.Field
+RevokedAt apijson.Field
+raw string
+ExtraFields map[string]apijson.Field
+}
+
+func (r *UserBenefitGetResponseBenefitLicenseKeysSubscriberGrant) UnmarshalJSON(data []byte) (err error) {
+  return apijson.UnmarshalRoot(data, r)
+}
+
+func (r userBenefitGetResponseBenefitLicenseKeysSubscriberGrantJSON) RawJSON() (string) {
+  return r.raw
+}
+
+type UserBenefitGetResponseBenefitLicenseKeysSubscriberGrantsProperties struct {
+DisplayKey string `json:"display_key,required"`
+LicenseKeyID string `json:"license_key_id,required" format:"uuid4"`
+JSON userBenefitGetResponseBenefitLicenseKeysSubscriberGrantsPropertiesJSON `json:"-"`
+}
+
+// userBenefitGetResponseBenefitLicenseKeysSubscriberGrantsPropertiesJSON contains
+// the JSON metadata for the struct
+// [UserBenefitGetResponseBenefitLicenseKeysSubscriberGrantsProperties]
+type userBenefitGetResponseBenefitLicenseKeysSubscriberGrantsPropertiesJSON struct {
+DisplayKey apijson.Field
+LicenseKeyID apijson.Field
+raw string
+ExtraFields map[string]apijson.Field
+}
+
+func (r *UserBenefitGetResponseBenefitLicenseKeysSubscriberGrantsProperties) UnmarshalJSON(data []byte) (err error) {
+  return apijson.UnmarshalRoot(data, r)
+}
+
+func (r userBenefitGetResponseBenefitLicenseKeysSubscriberGrantsPropertiesJSON) RawJSON() (string) {
+  return r.raw
+}
+
+type UserBenefitGetResponseBenefitLicenseKeysSubscriberProperties struct {
+Activations UserBenefitGetResponseBenefitLicenseKeysSubscriberPropertiesActivations `json:"activations,required,nullable"`
+Expires UserBenefitGetResponseBenefitLicenseKeysSubscriberPropertiesExpires `json:"expires,required,nullable"`
+LimitUsage int64 `json:"limit_usage,required,nullable"`
+Prefix string `json:"prefix,required,nullable"`
+JSON userBenefitGetResponseBenefitLicenseKeysSubscriberPropertiesJSON `json:"-"`
+}
+
+// userBenefitGetResponseBenefitLicenseKeysSubscriberPropertiesJSON contains the
+// JSON metadata for the struct
+// [UserBenefitGetResponseBenefitLicenseKeysSubscriberProperties]
+type userBenefitGetResponseBenefitLicenseKeysSubscriberPropertiesJSON struct {
+Activations apijson.Field
+Expires apijson.Field
+LimitUsage apijson.Field
+Prefix apijson.Field
+raw string
+ExtraFields map[string]apijson.Field
+}
+
+func (r *UserBenefitGetResponseBenefitLicenseKeysSubscriberProperties) UnmarshalJSON(data []byte) (err error) {
+  return apijson.UnmarshalRoot(data, r)
+}
+
+func (r userBenefitGetResponseBenefitLicenseKeysSubscriberPropertiesJSON) RawJSON() (string) {
+  return r.raw
+}
+
+type UserBenefitGetResponseBenefitLicenseKeysSubscriberPropertiesActivations struct {
+EnableUserAdmin bool `json:"enable_user_admin,required"`
+Limit int64 `json:"limit,required"`
+JSON userBenefitGetResponseBenefitLicenseKeysSubscriberPropertiesActivationsJSON `json:"-"`
+}
+
+// userBenefitGetResponseBenefitLicenseKeysSubscriberPropertiesActivationsJSON
+// contains the JSON metadata for the struct
+// [UserBenefitGetResponseBenefitLicenseKeysSubscriberPropertiesActivations]
+type userBenefitGetResponseBenefitLicenseKeysSubscriberPropertiesActivationsJSON struct {
+EnableUserAdmin apijson.Field
+Limit apijson.Field
+raw string
+ExtraFields map[string]apijson.Field
+}
+
+func (r *UserBenefitGetResponseBenefitLicenseKeysSubscriberPropertiesActivations) UnmarshalJSON(data []byte) (err error) {
+  return apijson.UnmarshalRoot(data, r)
+}
+
+func (r userBenefitGetResponseBenefitLicenseKeysSubscriberPropertiesActivationsJSON) RawJSON() (string) {
+  return r.raw
+}
+
+type UserBenefitGetResponseBenefitLicenseKeysSubscriberPropertiesExpires struct {
+Timeframe UserBenefitGetResponseBenefitLicenseKeysSubscriberPropertiesExpiresTimeframe `json:"timeframe,required"`
+Ttl int64 `json:"ttl,required"`
+JSON userBenefitGetResponseBenefitLicenseKeysSubscriberPropertiesExpiresJSON `json:"-"`
+}
+
+// userBenefitGetResponseBenefitLicenseKeysSubscriberPropertiesExpiresJSON contains
+// the JSON metadata for the struct
+// [UserBenefitGetResponseBenefitLicenseKeysSubscriberPropertiesExpires]
+type userBenefitGetResponseBenefitLicenseKeysSubscriberPropertiesExpiresJSON struct {
+Timeframe apijson.Field
+Ttl apijson.Field
+raw string
+ExtraFields map[string]apijson.Field
+}
+
+func (r *UserBenefitGetResponseBenefitLicenseKeysSubscriberPropertiesExpires) UnmarshalJSON(data []byte) (err error) {
+  return apijson.UnmarshalRoot(data, r)
+}
+
+func (r userBenefitGetResponseBenefitLicenseKeysSubscriberPropertiesExpiresJSON) RawJSON() (string) {
+  return r.raw
+}
+
+type UserBenefitGetResponseBenefitLicenseKeysSubscriberPropertiesExpiresTimeframe string
+
+const (
+  UserBenefitGetResponseBenefitLicenseKeysSubscriberPropertiesExpiresTimeframeYear UserBenefitGetResponseBenefitLicenseKeysSubscriberPropertiesExpiresTimeframe = "year"
+  UserBenefitGetResponseBenefitLicenseKeysSubscriberPropertiesExpiresTimeframeMonth UserBenefitGetResponseBenefitLicenseKeysSubscriberPropertiesExpiresTimeframe = "month"
+  UserBenefitGetResponseBenefitLicenseKeysSubscriberPropertiesExpiresTimeframeDay UserBenefitGetResponseBenefitLicenseKeysSubscriberPropertiesExpiresTimeframe = "day"
+)
+
+func (r UserBenefitGetResponseBenefitLicenseKeysSubscriberPropertiesExpiresTimeframe) IsKnown() (bool) {
+  switch r {
+  case UserBenefitGetResponseBenefitLicenseKeysSubscriberPropertiesExpiresTimeframeYear, UserBenefitGetResponseBenefitLicenseKeysSubscriberPropertiesExpiresTimeframeMonth, UserBenefitGetResponseBenefitLicenseKeysSubscriberPropertiesExpiresTimeframeDay:
+      return true
+  }
+  return false
+}
+
+type UserBenefitGetResponseBenefitLicenseKeysSubscriberType string
+
+const (
+  UserBenefitGetResponseBenefitLicenseKeysSubscriberTypeLicenseKeys UserBenefitGetResponseBenefitLicenseKeysSubscriberType = "license_keys"
+)
+
+func (r UserBenefitGetResponseBenefitLicenseKeysSubscriberType) IsKnown() (bool) {
+  switch r {
+  case UserBenefitGetResponseBenefitLicenseKeysSubscriberTypeLicenseKeys:
+      return true
+  }
+  return false
 }
 
 type UserBenefitGetResponseType string
 
 const (
-	UserBenefitGetResponseTypeArticles         UserBenefitGetResponseType = "articles"
-	UserBenefitGetResponseTypeAds              UserBenefitGetResponseType = "ads"
-	UserBenefitGetResponseTypeDiscord          UserBenefitGetResponseType = "discord"
-	UserBenefitGetResponseTypeCustom           UserBenefitGetResponseType = "custom"
-	UserBenefitGetResponseTypeGitHubRepository UserBenefitGetResponseType = "github_repository"
-	UserBenefitGetResponseTypeDownloadables    UserBenefitGetResponseType = "downloadables"
+  UserBenefitGetResponseTypeArticles UserBenefitGetResponseType = "articles"
+  UserBenefitGetResponseTypeAds UserBenefitGetResponseType = "ads"
+  UserBenefitGetResponseTypeDiscord UserBenefitGetResponseType = "discord"
+  UserBenefitGetResponseTypeCustom UserBenefitGetResponseType = "custom"
+  UserBenefitGetResponseTypeGitHubRepository UserBenefitGetResponseType = "github_repository"
+  UserBenefitGetResponseTypeDownloadables UserBenefitGetResponseType = "downloadables"
+  UserBenefitGetResponseTypeLicenseKeys UserBenefitGetResponseType = "license_keys"
 )
 
-func (r UserBenefitGetResponseType) IsKnown() bool {
-	switch r {
-	case UserBenefitGetResponseTypeArticles, UserBenefitGetResponseTypeAds, UserBenefitGetResponseTypeDiscord, UserBenefitGetResponseTypeCustom, UserBenefitGetResponseTypeGitHubRepository, UserBenefitGetResponseTypeDownloadables:
-		return true
-	}
-	return false
+func (r UserBenefitGetResponseType) IsKnown() (bool) {
+  switch r {
+  case UserBenefitGetResponseTypeArticles, UserBenefitGetResponseTypeAds, UserBenefitGetResponseTypeDiscord, UserBenefitGetResponseTypeCustom, UserBenefitGetResponseTypeGitHubRepository, UserBenefitGetResponseTypeDownloadables, UserBenefitGetResponseTypeLicenseKeys:
+      return true
+  }
+  return false
 }
 
 type UserBenefitListResponse struct {
-	Pagination UserBenefitListResponsePagination `json:"pagination,required"`
-	Items      []UserBenefitListResponseItem     `json:"items"`
-	JSON       userBenefitListResponseJSON       `json:"-"`
+// Creation timestamp of the object.
+CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+// Last modification timestamp of the object.
+ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
+// The ID of the benefit.
+ID string `json:"id,required" format:"uuid4"`
+Type UserBenefitListResponseType `json:"type,required"`
+// The description of the benefit.
+Description string `json:"description,required"`
+// Whether the benefit is selectable when creating a product.
+Selectable bool `json:"selectable,required"`
+// Whether the benefit is deletable.
+Deletable bool `json:"deletable,required"`
+// The ID of the organization owning the benefit.
+OrganizationID string `json:"organization_id,required" format:"uuid4"`
+// This field can have the runtime type of
+// [UserBenefitListResponseBenefitArticlesSubscriberProperties],
+// [UserBenefitListResponseBenefitAdsSubscriberProperties],
+// [UserBenefitListResponseBenefitDiscordSubscriberProperties],
+// [UserBenefitListResponseBenefitCustomSubscriberProperties],
+// [UserBenefitListResponseBenefitGitHubRepositorySubscriberProperties],
+// [UserBenefitListResponseBenefitDownloadablesSubscriberProperties],
+// [UserBenefitListResponseBenefitLicenseKeysSubscriberProperties].
+Properties interface{} `json:"properties"`
+// This field can have the runtime type of
+// [[]UserBenefitListResponseBenefitAdsSubscriberGrant],
+// [[]UserBenefitListResponseBenefitCustomSubscriberGrant],
+// [[]UserBenefitListResponseBenefitLicenseKeysSubscriberGrant].
+Grants interface{} `json:"grants,required"`
+JSON userBenefitListResponseJSON `json:"-"`
+union UserBenefitListResponseUnion
 }
 
 // userBenefitListResponseJSON contains the JSON metadata for the struct
 // [UserBenefitListResponse]
 type userBenefitListResponseJSON struct {
-	Pagination  apijson.Field
-	Items       apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
+CreatedAt apijson.Field
+ModifiedAt apijson.Field
+ID apijson.Field
+Type apijson.Field
+Description apijson.Field
+Selectable apijson.Field
+Deletable apijson.Field
+OrganizationID apijson.Field
+Properties apijson.Field
+Grants apijson.Field
+raw string
+ExtraFields map[string]apijson.Field
+}
+
+func (r userBenefitListResponseJSON) RawJSON() (string) {
+  return r.raw
 }
 
 func (r *UserBenefitListResponse) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
+  *r = UserBenefitListResponse{}
+  err = apijson.UnmarshalRoot(data, &r.union)
+  if err != nil {
+    return err
+  }
+  return apijson.Port(r.union, &r)
 }
 
-func (r userBenefitListResponseJSON) RawJSON() string {
-	return r.raw
-}
-
-type UserBenefitListResponsePagination struct {
-	MaxPage    int64                                 `json:"max_page,required"`
-	TotalCount int64                                 `json:"total_count,required"`
-	JSON       userBenefitListResponsePaginationJSON `json:"-"`
-}
-
-// userBenefitListResponsePaginationJSON contains the JSON metadata for the struct
-// [UserBenefitListResponsePagination]
-type userBenefitListResponsePaginationJSON struct {
-	MaxPage     apijson.Field
-	TotalCount  apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *UserBenefitListResponsePagination) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-func (r userBenefitListResponsePaginationJSON) RawJSON() string {
-	return r.raw
-}
-
-type UserBenefitListResponseItem struct {
-	// Creation timestamp of the object.
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
-	// Last modification timestamp of the object.
-	ModifiedAt time.Time `json:"modified_at,nullable" format:"date-time"`
-	// The ID of the benefit.
-	ID   string                           `json:"id,required" format:"uuid4"`
-	Type UserBenefitListResponseItemsType `json:"type,required"`
-	// The description of the benefit.
-	Description string `json:"description,required"`
-	// Whether the benefit is selectable when creating a product.
-	Selectable bool `json:"selectable,required"`
-	// Whether the benefit is deletable.
-	Deletable bool `json:"deletable,required"`
-	// The ID of the organization owning the benefit.
-	OrganizationID string `json:"organization_id,required" format:"uuid4"`
-	// This field can have the runtime type of
-	// [UserBenefitListResponseItemsBenefitArticlesSubscriberProperties],
-	// [UserBenefitListResponseItemsBenefitAdsSubscriberProperties],
-	// [UserBenefitListResponseItemsBenefitDiscordSubscriberProperties],
-	// [UserBenefitListResponseItemsBenefitCustomSubscriberProperties],
-	// [UserBenefitListResponseItemsBenefitGitHubRepositorySubscriberProperties],
-	// [UserBenefitListResponseItemsBenefitDownloadablesSubscriberProperties].
-	Properties interface{} `json:"properties"`
-	// This field can have the runtime type of
-	// [[]UserBenefitListResponseItemsBenefitAdsSubscriberGrant],
-	// [[]UserBenefitListResponseItemsBenefitCustomSubscriberGrant].
-	Grants interface{}                     `json:"grants,required"`
-	JSON   userBenefitListResponseItemJSON `json:"-"`
-	union  UserBenefitListResponseItemsUnion
-}
-
-// userBenefitListResponseItemJSON contains the JSON metadata for the struct
-// [UserBenefitListResponseItem]
-type userBenefitListResponseItemJSON struct {
-	CreatedAt      apijson.Field
-	ModifiedAt     apijson.Field
-	ID             apijson.Field
-	Type           apijson.Field
-	Description    apijson.Field
-	Selectable     apijson.Field
-	Deletable      apijson.Field
-	OrganizationID apijson.Field
-	Properties     apijson.Field
-	Grants         apijson.Field
-	raw            string
-	ExtraFields    map[string]apijson.Field
-}
-
-func (r userBenefitListResponseItemJSON) RawJSON() string {
-	return r.raw
-}
-
-func (r *UserBenefitListResponseItem) UnmarshalJSON(data []byte) (err error) {
-	*r = UserBenefitListResponseItem{}
-	err = apijson.UnmarshalRoot(data, &r.union)
-	if err != nil {
-		return err
-	}
-	return apijson.Port(r.union, &r)
-}
-
-// AsUnion returns a [UserBenefitListResponseItemsUnion] interface which you can
-// cast to the specific types for more type safety.
+// AsUnion returns a [UserBenefitListResponseUnion] interface which you can cast to
+// the specific types for more type safety.
 //
 // Possible runtime types of the union are
-// [UserBenefitListResponseItemsBenefitArticlesSubscriber],
-// [UserBenefitListResponseItemsBenefitAdsSubscriber],
-// [UserBenefitListResponseItemsBenefitDiscordSubscriber],
-// [UserBenefitListResponseItemsBenefitCustomSubscriber],
-// [UserBenefitListResponseItemsBenefitGitHubRepositorySubscriber],
-// [UserBenefitListResponseItemsBenefitDownloadablesSubscriber].
-func (r UserBenefitListResponseItem) AsUnion() UserBenefitListResponseItemsUnion {
-	return r.union
+// [UserBenefitListResponseBenefitArticlesSubscriber],
+// [UserBenefitListResponseBenefitAdsSubscriber],
+// [UserBenefitListResponseBenefitDiscordSubscriber],
+// [UserBenefitListResponseBenefitCustomSubscriber],
+// [UserBenefitListResponseBenefitGitHubRepositorySubscriber],
+// [UserBenefitListResponseBenefitDownloadablesSubscriber],
+// [UserBenefitListResponseBenefitLicenseKeysSubscriber].
+func (r UserBenefitListResponse) AsUnion() (UserBenefitListResponseUnion) {
+  return r.union
 }
 
-// Union satisfied by [UserBenefitListResponseItemsBenefitArticlesSubscriber],
-// [UserBenefitListResponseItemsBenefitAdsSubscriber],
-// [UserBenefitListResponseItemsBenefitDiscordSubscriber],
-// [UserBenefitListResponseItemsBenefitCustomSubscriber],
-// [UserBenefitListResponseItemsBenefitGitHubRepositorySubscriber] or
-// [UserBenefitListResponseItemsBenefitDownloadablesSubscriber].
-type UserBenefitListResponseItemsUnion interface {
-	implementsUserBenefitListResponseItem()
+// Union satisfied by [UserBenefitListResponseBenefitArticlesSubscriber],
+// [UserBenefitListResponseBenefitAdsSubscriber],
+// [UserBenefitListResponseBenefitDiscordSubscriber],
+// [UserBenefitListResponseBenefitCustomSubscriber],
+// [UserBenefitListResponseBenefitGitHubRepositorySubscriber],
+// [UserBenefitListResponseBenefitDownloadablesSubscriber] or
+// [UserBenefitListResponseBenefitLicenseKeysSubscriber].
+type UserBenefitListResponseUnion interface {
+  implementsUserBenefitListResponse()
 }
 
 func init() {
-	apijson.RegisterUnion(
-		reflect.TypeOf((*UserBenefitListResponseItemsUnion)(nil)).Elem(),
-		"type",
-		apijson.UnionVariant{
-			TypeFilter:         gjson.JSON,
-			Type:               reflect.TypeOf(UserBenefitListResponseItemsBenefitArticlesSubscriber{}),
-			DiscriminatorValue: "articles",
-		},
-		apijson.UnionVariant{
-			TypeFilter:         gjson.JSON,
-			Type:               reflect.TypeOf(UserBenefitListResponseItemsBenefitAdsSubscriber{}),
-			DiscriminatorValue: "ads",
-		},
-		apijson.UnionVariant{
-			TypeFilter:         gjson.JSON,
-			Type:               reflect.TypeOf(UserBenefitListResponseItemsBenefitDiscordSubscriber{}),
-			DiscriminatorValue: "discord",
-		},
-		apijson.UnionVariant{
-			TypeFilter:         gjson.JSON,
-			Type:               reflect.TypeOf(UserBenefitListResponseItemsBenefitCustomSubscriber{}),
-			DiscriminatorValue: "custom",
-		},
-		apijson.UnionVariant{
-			TypeFilter:         gjson.JSON,
-			Type:               reflect.TypeOf(UserBenefitListResponseItemsBenefitGitHubRepositorySubscriber{}),
-			DiscriminatorValue: "github_repository",
-		},
-		apijson.UnionVariant{
-			TypeFilter:         gjson.JSON,
-			Type:               reflect.TypeOf(UserBenefitListResponseItemsBenefitDownloadablesSubscriber{}),
-			DiscriminatorValue: "downloadables",
-		},
-	)
+  apijson.RegisterUnion(
+    reflect.TypeOf((*UserBenefitListResponseUnion)(nil)).Elem(),
+    "type",
+    apijson.UnionVariant{
+      TypeFilter: gjson.JSON,
+      Type: reflect.TypeOf(UserBenefitListResponseBenefitArticlesSubscriber{}),
+      DiscriminatorValue: "articles",
+    },
+    apijson.UnionVariant{
+      TypeFilter: gjson.JSON,
+      Type: reflect.TypeOf(UserBenefitListResponseBenefitAdsSubscriber{}),
+      DiscriminatorValue: "ads",
+    },
+    apijson.UnionVariant{
+      TypeFilter: gjson.JSON,
+      Type: reflect.TypeOf(UserBenefitListResponseBenefitDiscordSubscriber{}),
+      DiscriminatorValue: "discord",
+    },
+    apijson.UnionVariant{
+      TypeFilter: gjson.JSON,
+      Type: reflect.TypeOf(UserBenefitListResponseBenefitCustomSubscriber{}),
+      DiscriminatorValue: "custom",
+    },
+    apijson.UnionVariant{
+      TypeFilter: gjson.JSON,
+      Type: reflect.TypeOf(UserBenefitListResponseBenefitGitHubRepositorySubscriber{}),
+      DiscriminatorValue: "github_repository",
+    },
+    apijson.UnionVariant{
+      TypeFilter: gjson.JSON,
+      Type: reflect.TypeOf(UserBenefitListResponseBenefitDownloadablesSubscriber{}),
+      DiscriminatorValue: "downloadables",
+    },
+    apijson.UnionVariant{
+      TypeFilter: gjson.JSON,
+      Type: reflect.TypeOf(UserBenefitListResponseBenefitLicenseKeysSubscriber{}),
+      DiscriminatorValue: "license_keys",
+    },
+  )
 }
 
-type UserBenefitListResponseItemsBenefitArticlesSubscriber struct {
-	// The ID of the benefit.
-	ID string `json:"id,required" format:"uuid4"`
-	// Creation timestamp of the object.
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
-	// Whether the benefit is deletable.
-	Deletable bool `json:"deletable,required"`
-	// The description of the benefit.
-	Description string `json:"description,required"`
-	// The ID of the organization owning the benefit.
-	OrganizationID string `json:"organization_id,required" format:"uuid4"`
-	// Properties available to subscribers for a benefit of type `articles`.
-	Properties UserBenefitListResponseItemsBenefitArticlesSubscriberProperties `json:"properties,required"`
-	// Whether the benefit is selectable when creating a product.
-	Selectable bool                                                      `json:"selectable,required"`
-	Type       UserBenefitListResponseItemsBenefitArticlesSubscriberType `json:"type,required"`
-	// Last modification timestamp of the object.
-	ModifiedAt time.Time                                                 `json:"modified_at,nullable" format:"date-time"`
-	JSON       userBenefitListResponseItemsBenefitArticlesSubscriberJSON `json:"-"`
+type UserBenefitListResponseBenefitArticlesSubscriber struct {
+// The ID of the benefit.
+ID string `json:"id,required" format:"uuid4"`
+// Creation timestamp of the object.
+CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+// Whether the benefit is deletable.
+Deletable bool `json:"deletable,required"`
+// The description of the benefit.
+Description string `json:"description,required"`
+// Last modification timestamp of the object.
+ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
+// The ID of the organization owning the benefit.
+OrganizationID string `json:"organization_id,required" format:"uuid4"`
+// Properties available to subscribers for a benefit of type `articles`.
+Properties UserBenefitListResponseBenefitArticlesSubscriberProperties `json:"properties,required"`
+// Whether the benefit is selectable when creating a product.
+Selectable bool `json:"selectable,required"`
+Type UserBenefitListResponseBenefitArticlesSubscriberType `json:"type,required"`
+JSON userBenefitListResponseBenefitArticlesSubscriberJSON `json:"-"`
 }
 
-// userBenefitListResponseItemsBenefitArticlesSubscriberJSON contains the JSON
-// metadata for the struct [UserBenefitListResponseItemsBenefitArticlesSubscriber]
-type userBenefitListResponseItemsBenefitArticlesSubscriberJSON struct {
-	ID             apijson.Field
-	CreatedAt      apijson.Field
-	Deletable      apijson.Field
-	Description    apijson.Field
-	OrganizationID apijson.Field
-	Properties     apijson.Field
-	Selectable     apijson.Field
-	Type           apijson.Field
-	ModifiedAt     apijson.Field
-	raw            string
-	ExtraFields    map[string]apijson.Field
+// userBenefitListResponseBenefitArticlesSubscriberJSON contains the JSON metadata
+// for the struct [UserBenefitListResponseBenefitArticlesSubscriber]
+type userBenefitListResponseBenefitArticlesSubscriberJSON struct {
+ID apijson.Field
+CreatedAt apijson.Field
+Deletable apijson.Field
+Description apijson.Field
+ModifiedAt apijson.Field
+OrganizationID apijson.Field
+Properties apijson.Field
+Selectable apijson.Field
+Type apijson.Field
+raw string
+ExtraFields map[string]apijson.Field
 }
 
-func (r *UserBenefitListResponseItemsBenefitArticlesSubscriber) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
+func (r *UserBenefitListResponseBenefitArticlesSubscriber) UnmarshalJSON(data []byte) (err error) {
+  return apijson.UnmarshalRoot(data, r)
 }
 
-func (r userBenefitListResponseItemsBenefitArticlesSubscriberJSON) RawJSON() string {
-	return r.raw
+func (r userBenefitListResponseBenefitArticlesSubscriberJSON) RawJSON() (string) {
+  return r.raw
 }
 
-func (r UserBenefitListResponseItemsBenefitArticlesSubscriber) implementsUserBenefitListResponseItem() {
-}
+func (r UserBenefitListResponseBenefitArticlesSubscriber) implementsUserBenefitListResponse() {}
 
 // Properties available to subscribers for a benefit of type `articles`.
-type UserBenefitListResponseItemsBenefitArticlesSubscriberProperties struct {
-	// Whether the user can access paid articles.
-	PaidArticles bool                                                                `json:"paid_articles,required"`
-	JSON         userBenefitListResponseItemsBenefitArticlesSubscriberPropertiesJSON `json:"-"`
+type UserBenefitListResponseBenefitArticlesSubscriberProperties struct {
+// Whether the user can access paid articles.
+PaidArticles bool `json:"paid_articles,required"`
+JSON userBenefitListResponseBenefitArticlesSubscriberPropertiesJSON `json:"-"`
 }
 
-// userBenefitListResponseItemsBenefitArticlesSubscriberPropertiesJSON contains the
-// JSON metadata for the struct
-// [UserBenefitListResponseItemsBenefitArticlesSubscriberProperties]
-type userBenefitListResponseItemsBenefitArticlesSubscriberPropertiesJSON struct {
-	PaidArticles apijson.Field
-	raw          string
-	ExtraFields  map[string]apijson.Field
+// userBenefitListResponseBenefitArticlesSubscriberPropertiesJSON contains the JSON
+// metadata for the struct
+// [UserBenefitListResponseBenefitArticlesSubscriberProperties]
+type userBenefitListResponseBenefitArticlesSubscriberPropertiesJSON struct {
+PaidArticles apijson.Field
+raw string
+ExtraFields map[string]apijson.Field
 }
 
-func (r *UserBenefitListResponseItemsBenefitArticlesSubscriberProperties) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
+func (r *UserBenefitListResponseBenefitArticlesSubscriberProperties) UnmarshalJSON(data []byte) (err error) {
+  return apijson.UnmarshalRoot(data, r)
 }
 
-func (r userBenefitListResponseItemsBenefitArticlesSubscriberPropertiesJSON) RawJSON() string {
-	return r.raw
+func (r userBenefitListResponseBenefitArticlesSubscriberPropertiesJSON) RawJSON() (string) {
+  return r.raw
 }
 
-type UserBenefitListResponseItemsBenefitArticlesSubscriberType string
+type UserBenefitListResponseBenefitArticlesSubscriberType string
 
 const (
-	UserBenefitListResponseItemsBenefitArticlesSubscriberTypeArticles UserBenefitListResponseItemsBenefitArticlesSubscriberType = "articles"
+  UserBenefitListResponseBenefitArticlesSubscriberTypeArticles UserBenefitListResponseBenefitArticlesSubscriberType = "articles"
 )
 
-func (r UserBenefitListResponseItemsBenefitArticlesSubscriberType) IsKnown() bool {
-	switch r {
-	case UserBenefitListResponseItemsBenefitArticlesSubscriberTypeArticles:
-		return true
-	}
-	return false
+func (r UserBenefitListResponseBenefitArticlesSubscriberType) IsKnown() (bool) {
+  switch r {
+  case UserBenefitListResponseBenefitArticlesSubscriberTypeArticles:
+      return true
+  }
+  return false
 }
 
-type UserBenefitListResponseItemsBenefitAdsSubscriber struct {
-	// The ID of the benefit.
-	ID string `json:"id,required" format:"uuid4"`
-	// Creation timestamp of the object.
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
-	// Whether the benefit is deletable.
-	Deletable bool `json:"deletable,required"`
-	// The description of the benefit.
-	Description string                                                  `json:"description,required"`
-	Grants      []UserBenefitListResponseItemsBenefitAdsSubscriberGrant `json:"grants,required"`
-	// The ID of the organization owning the benefit.
-	OrganizationID string `json:"organization_id,required" format:"uuid4"`
-	// Properties for a benefit of type `ads`.
-	Properties UserBenefitListResponseItemsBenefitAdsSubscriberProperties `json:"properties,required"`
-	// Whether the benefit is selectable when creating a product.
-	Selectable bool                                                 `json:"selectable,required"`
-	Type       UserBenefitListResponseItemsBenefitAdsSubscriberType `json:"type,required"`
-	// Last modification timestamp of the object.
-	ModifiedAt time.Time                                            `json:"modified_at,nullable" format:"date-time"`
-	JSON       userBenefitListResponseItemsBenefitAdsSubscriberJSON `json:"-"`
+type UserBenefitListResponseBenefitAdsSubscriber struct {
+// The ID of the benefit.
+ID string `json:"id,required" format:"uuid4"`
+// Creation timestamp of the object.
+CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+// Whether the benefit is deletable.
+Deletable bool `json:"deletable,required"`
+// The description of the benefit.
+Description string `json:"description,required"`
+Grants []UserBenefitListResponseBenefitAdsSubscriberGrant `json:"grants,required"`
+// Last modification timestamp of the object.
+ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
+// The ID of the organization owning the benefit.
+OrganizationID string `json:"organization_id,required" format:"uuid4"`
+// Properties for a benefit of type `ads`.
+Properties UserBenefitListResponseBenefitAdsSubscriberProperties `json:"properties,required"`
+// Whether the benefit is selectable when creating a product.
+Selectable bool `json:"selectable,required"`
+Type UserBenefitListResponseBenefitAdsSubscriberType `json:"type,required"`
+JSON userBenefitListResponseBenefitAdsSubscriberJSON `json:"-"`
 }
 
-// userBenefitListResponseItemsBenefitAdsSubscriberJSON contains the JSON metadata
-// for the struct [UserBenefitListResponseItemsBenefitAdsSubscriber]
-type userBenefitListResponseItemsBenefitAdsSubscriberJSON struct {
-	ID             apijson.Field
-	CreatedAt      apijson.Field
-	Deletable      apijson.Field
-	Description    apijson.Field
-	Grants         apijson.Field
-	OrganizationID apijson.Field
-	Properties     apijson.Field
-	Selectable     apijson.Field
-	Type           apijson.Field
-	ModifiedAt     apijson.Field
-	raw            string
-	ExtraFields    map[string]apijson.Field
+// userBenefitListResponseBenefitAdsSubscriberJSON contains the JSON metadata for
+// the struct [UserBenefitListResponseBenefitAdsSubscriber]
+type userBenefitListResponseBenefitAdsSubscriberJSON struct {
+ID apijson.Field
+CreatedAt apijson.Field
+Deletable apijson.Field
+Description apijson.Field
+Grants apijson.Field
+ModifiedAt apijson.Field
+OrganizationID apijson.Field
+Properties apijson.Field
+Selectable apijson.Field
+Type apijson.Field
+raw string
+ExtraFields map[string]apijson.Field
 }
 
-func (r *UserBenefitListResponseItemsBenefitAdsSubscriber) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
+func (r *UserBenefitListResponseBenefitAdsSubscriber) UnmarshalJSON(data []byte) (err error) {
+  return apijson.UnmarshalRoot(data, r)
 }
 
-func (r userBenefitListResponseItemsBenefitAdsSubscriberJSON) RawJSON() string {
-	return r.raw
+func (r userBenefitListResponseBenefitAdsSubscriberJSON) RawJSON() (string) {
+  return r.raw
 }
 
-func (r UserBenefitListResponseItemsBenefitAdsSubscriber) implementsUserBenefitListResponseItem() {}
+func (r UserBenefitListResponseBenefitAdsSubscriber) implementsUserBenefitListResponse() {}
 
-type UserBenefitListResponseItemsBenefitAdsSubscriberGrant struct {
-	// The ID of the grant.
-	ID string `json:"id,required" format:"uuid4"`
-	// The ID of the benefit concerned by this grant.
-	BenefitID string `json:"benefit_id,required" format:"uuid4"`
-	// Creation timestamp of the object.
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
-	// Whether the benefit is granted.
-	IsGranted bool `json:"is_granted,required"`
-	// Whether the benefit is revoked.
-	IsRevoked  bool                                                             `json:"is_revoked,required"`
-	Properties UserBenefitListResponseItemsBenefitAdsSubscriberGrantsProperties `json:"properties,required"`
-	// The ID of the user concerned by this grant.
-	UserID string `json:"user_id,required" format:"uuid4"`
-	// The timestamp when the benefit was granted. If `None`, the benefit is not
-	// granted.
-	GrantedAt time.Time `json:"granted_at,nullable" format:"date-time"`
-	// Last modification timestamp of the object.
-	ModifiedAt time.Time `json:"modified_at,nullable" format:"date-time"`
-	// The ID of the order that granted this benefit.
-	OrderID string `json:"order_id,nullable" format:"uuid4"`
-	// The timestamp when the benefit was revoked. If `None`, the benefit is not
-	// revoked.
-	RevokedAt time.Time `json:"revoked_at,nullable" format:"date-time"`
-	// The ID of the subscription that granted this benefit.
-	SubscriptionID string                                                    `json:"subscription_id,nullable" format:"uuid4"`
-	JSON           userBenefitListResponseItemsBenefitAdsSubscriberGrantJSON `json:"-"`
+type UserBenefitListResponseBenefitAdsSubscriberGrant struct {
+// The ID of the grant.
+ID string `json:"id,required" format:"uuid4"`
+// The ID of the benefit concerned by this grant.
+BenefitID string `json:"benefit_id,required" format:"uuid4"`
+// Creation timestamp of the object.
+CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+// Whether the benefit is granted.
+IsGranted bool `json:"is_granted,required"`
+// Whether the benefit is revoked.
+IsRevoked bool `json:"is_revoked,required"`
+// Last modification timestamp of the object.
+ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
+// The ID of the order that granted this benefit.
+OrderID string `json:"order_id,required,nullable" format:"uuid4"`
+Properties UserBenefitListResponseBenefitAdsSubscriberGrantsProperties `json:"properties,required"`
+// The ID of the subscription that granted this benefit.
+SubscriptionID string `json:"subscription_id,required,nullable" format:"uuid4"`
+// The ID of the user concerned by this grant.
+UserID string `json:"user_id,required" format:"uuid4"`
+// The timestamp when the benefit was granted. If `None`, the benefit is not
+// granted.
+GrantedAt time.Time `json:"granted_at,nullable" format:"date-time"`
+// The timestamp when the benefit was revoked. If `None`, the benefit is not
+// revoked.
+RevokedAt time.Time `json:"revoked_at,nullable" format:"date-time"`
+JSON userBenefitListResponseBenefitAdsSubscriberGrantJSON `json:"-"`
 }
 
-// userBenefitListResponseItemsBenefitAdsSubscriberGrantJSON contains the JSON
-// metadata for the struct [UserBenefitListResponseItemsBenefitAdsSubscriberGrant]
-type userBenefitListResponseItemsBenefitAdsSubscriberGrantJSON struct {
-	ID             apijson.Field
-	BenefitID      apijson.Field
-	CreatedAt      apijson.Field
-	IsGranted      apijson.Field
-	IsRevoked      apijson.Field
-	Properties     apijson.Field
-	UserID         apijson.Field
-	GrantedAt      apijson.Field
-	ModifiedAt     apijson.Field
-	OrderID        apijson.Field
-	RevokedAt      apijson.Field
-	SubscriptionID apijson.Field
-	raw            string
-	ExtraFields    map[string]apijson.Field
+// userBenefitListResponseBenefitAdsSubscriberGrantJSON contains the JSON metadata
+// for the struct [UserBenefitListResponseBenefitAdsSubscriberGrant]
+type userBenefitListResponseBenefitAdsSubscriberGrantJSON struct {
+ID apijson.Field
+BenefitID apijson.Field
+CreatedAt apijson.Field
+IsGranted apijson.Field
+IsRevoked apijson.Field
+ModifiedAt apijson.Field
+OrderID apijson.Field
+Properties apijson.Field
+SubscriptionID apijson.Field
+UserID apijson.Field
+GrantedAt apijson.Field
+RevokedAt apijson.Field
+raw string
+ExtraFields map[string]apijson.Field
 }
 
-func (r *UserBenefitListResponseItemsBenefitAdsSubscriberGrant) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
+func (r *UserBenefitListResponseBenefitAdsSubscriberGrant) UnmarshalJSON(data []byte) (err error) {
+  return apijson.UnmarshalRoot(data, r)
 }
 
-func (r userBenefitListResponseItemsBenefitAdsSubscriberGrantJSON) RawJSON() string {
-	return r.raw
+func (r userBenefitListResponseBenefitAdsSubscriberGrantJSON) RawJSON() (string) {
+  return r.raw
 }
 
-type UserBenefitListResponseItemsBenefitAdsSubscriberGrantsProperties struct {
-	// The ID of the enabled advertisement campaign for this benefit grant.
-	AdvertisementCampaignID string                                                               `json:"advertisement_campaign_id,nullable" format:"uuid4"`
-	JSON                    userBenefitListResponseItemsBenefitAdsSubscriberGrantsPropertiesJSON `json:"-"`
+type UserBenefitListResponseBenefitAdsSubscriberGrantsProperties struct {
+// The ID of the enabled advertisement campaign for this benefit grant.
+AdvertisementCampaignID string `json:"advertisement_campaign_id,nullable" format:"uuid4"`
+JSON userBenefitListResponseBenefitAdsSubscriberGrantsPropertiesJSON `json:"-"`
 }
 
-// userBenefitListResponseItemsBenefitAdsSubscriberGrantsPropertiesJSON contains
-// the JSON metadata for the struct
-// [UserBenefitListResponseItemsBenefitAdsSubscriberGrantsProperties]
-type userBenefitListResponseItemsBenefitAdsSubscriberGrantsPropertiesJSON struct {
-	AdvertisementCampaignID apijson.Field
-	raw                     string
-	ExtraFields             map[string]apijson.Field
+// userBenefitListResponseBenefitAdsSubscriberGrantsPropertiesJSON contains the
+// JSON metadata for the struct
+// [UserBenefitListResponseBenefitAdsSubscriberGrantsProperties]
+type userBenefitListResponseBenefitAdsSubscriberGrantsPropertiesJSON struct {
+AdvertisementCampaignID apijson.Field
+raw string
+ExtraFields map[string]apijson.Field
 }
 
-func (r *UserBenefitListResponseItemsBenefitAdsSubscriberGrantsProperties) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
+func (r *UserBenefitListResponseBenefitAdsSubscriberGrantsProperties) UnmarshalJSON(data []byte) (err error) {
+  return apijson.UnmarshalRoot(data, r)
 }
 
-func (r userBenefitListResponseItemsBenefitAdsSubscriberGrantsPropertiesJSON) RawJSON() string {
-	return r.raw
+func (r userBenefitListResponseBenefitAdsSubscriberGrantsPropertiesJSON) RawJSON() (string) {
+  return r.raw
 }
 
 // Properties for a benefit of type `ads`.
-type UserBenefitListResponseItemsBenefitAdsSubscriberProperties struct {
-	// The height of the displayed ad.
-	ImageHeight int64 `json:"image_height"`
-	// The width of the displayed ad.
-	ImageWidth int64                                                          `json:"image_width"`
-	JSON       userBenefitListResponseItemsBenefitAdsSubscriberPropertiesJSON `json:"-"`
+type UserBenefitListResponseBenefitAdsSubscriberProperties struct {
+// The height of the displayed ad.
+ImageHeight int64 `json:"image_height"`
+// The width of the displayed ad.
+ImageWidth int64 `json:"image_width"`
+JSON userBenefitListResponseBenefitAdsSubscriberPropertiesJSON `json:"-"`
 }
 
-// userBenefitListResponseItemsBenefitAdsSubscriberPropertiesJSON contains the JSON
-// metadata for the struct
-// [UserBenefitListResponseItemsBenefitAdsSubscriberProperties]
-type userBenefitListResponseItemsBenefitAdsSubscriberPropertiesJSON struct {
-	ImageHeight apijson.Field
-	ImageWidth  apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
+// userBenefitListResponseBenefitAdsSubscriberPropertiesJSON contains the JSON
+// metadata for the struct [UserBenefitListResponseBenefitAdsSubscriberProperties]
+type userBenefitListResponseBenefitAdsSubscriberPropertiesJSON struct {
+ImageHeight apijson.Field
+ImageWidth apijson.Field
+raw string
+ExtraFields map[string]apijson.Field
 }
 
-func (r *UserBenefitListResponseItemsBenefitAdsSubscriberProperties) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
+func (r *UserBenefitListResponseBenefitAdsSubscriberProperties) UnmarshalJSON(data []byte) (err error) {
+  return apijson.UnmarshalRoot(data, r)
 }
 
-func (r userBenefitListResponseItemsBenefitAdsSubscriberPropertiesJSON) RawJSON() string {
-	return r.raw
+func (r userBenefitListResponseBenefitAdsSubscriberPropertiesJSON) RawJSON() (string) {
+  return r.raw
 }
 
-type UserBenefitListResponseItemsBenefitAdsSubscriberType string
+type UserBenefitListResponseBenefitAdsSubscriberType string
 
 const (
-	UserBenefitListResponseItemsBenefitAdsSubscriberTypeAds UserBenefitListResponseItemsBenefitAdsSubscriberType = "ads"
+  UserBenefitListResponseBenefitAdsSubscriberTypeAds UserBenefitListResponseBenefitAdsSubscriberType = "ads"
 )
 
-func (r UserBenefitListResponseItemsBenefitAdsSubscriberType) IsKnown() bool {
-	switch r {
-	case UserBenefitListResponseItemsBenefitAdsSubscriberTypeAds:
-		return true
-	}
-	return false
+func (r UserBenefitListResponseBenefitAdsSubscriberType) IsKnown() (bool) {
+  switch r {
+  case UserBenefitListResponseBenefitAdsSubscriberTypeAds:
+      return true
+  }
+  return false
 }
 
-type UserBenefitListResponseItemsBenefitDiscordSubscriber struct {
-	// The ID of the benefit.
-	ID string `json:"id,required" format:"uuid4"`
-	// Creation timestamp of the object.
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
-	// Whether the benefit is deletable.
-	Deletable bool `json:"deletable,required"`
-	// The description of the benefit.
-	Description string `json:"description,required"`
-	// The ID of the organization owning the benefit.
-	OrganizationID string `json:"organization_id,required" format:"uuid4"`
-	// Properties available to subscribers for a benefit of type `discord`.
-	Properties UserBenefitListResponseItemsBenefitDiscordSubscriberProperties `json:"properties,required"`
-	// Whether the benefit is selectable when creating a product.
-	Selectable bool                                                     `json:"selectable,required"`
-	Type       UserBenefitListResponseItemsBenefitDiscordSubscriberType `json:"type,required"`
-	// Last modification timestamp of the object.
-	ModifiedAt time.Time                                                `json:"modified_at,nullable" format:"date-time"`
-	JSON       userBenefitListResponseItemsBenefitDiscordSubscriberJSON `json:"-"`
+type UserBenefitListResponseBenefitDiscordSubscriber struct {
+// The ID of the benefit.
+ID string `json:"id,required" format:"uuid4"`
+// Creation timestamp of the object.
+CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+// Whether the benefit is deletable.
+Deletable bool `json:"deletable,required"`
+// The description of the benefit.
+Description string `json:"description,required"`
+// Last modification timestamp of the object.
+ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
+// The ID of the organization owning the benefit.
+OrganizationID string `json:"organization_id,required" format:"uuid4"`
+// Properties available to subscribers for a benefit of type `discord`.
+Properties UserBenefitListResponseBenefitDiscordSubscriberProperties `json:"properties,required"`
+// Whether the benefit is selectable when creating a product.
+Selectable bool `json:"selectable,required"`
+Type UserBenefitListResponseBenefitDiscordSubscriberType `json:"type,required"`
+JSON userBenefitListResponseBenefitDiscordSubscriberJSON `json:"-"`
 }
 
-// userBenefitListResponseItemsBenefitDiscordSubscriberJSON contains the JSON
-// metadata for the struct [UserBenefitListResponseItemsBenefitDiscordSubscriber]
-type userBenefitListResponseItemsBenefitDiscordSubscriberJSON struct {
-	ID             apijson.Field
-	CreatedAt      apijson.Field
-	Deletable      apijson.Field
-	Description    apijson.Field
-	OrganizationID apijson.Field
-	Properties     apijson.Field
-	Selectable     apijson.Field
-	Type           apijson.Field
-	ModifiedAt     apijson.Field
-	raw            string
-	ExtraFields    map[string]apijson.Field
+// userBenefitListResponseBenefitDiscordSubscriberJSON contains the JSON metadata
+// for the struct [UserBenefitListResponseBenefitDiscordSubscriber]
+type userBenefitListResponseBenefitDiscordSubscriberJSON struct {
+ID apijson.Field
+CreatedAt apijson.Field
+Deletable apijson.Field
+Description apijson.Field
+ModifiedAt apijson.Field
+OrganizationID apijson.Field
+Properties apijson.Field
+Selectable apijson.Field
+Type apijson.Field
+raw string
+ExtraFields map[string]apijson.Field
 }
 
-func (r *UserBenefitListResponseItemsBenefitDiscordSubscriber) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
+func (r *UserBenefitListResponseBenefitDiscordSubscriber) UnmarshalJSON(data []byte) (err error) {
+  return apijson.UnmarshalRoot(data, r)
 }
 
-func (r userBenefitListResponseItemsBenefitDiscordSubscriberJSON) RawJSON() string {
-	return r.raw
+func (r userBenefitListResponseBenefitDiscordSubscriberJSON) RawJSON() (string) {
+  return r.raw
 }
 
-func (r UserBenefitListResponseItemsBenefitDiscordSubscriber) implementsUserBenefitListResponseItem() {
-}
+func (r UserBenefitListResponseBenefitDiscordSubscriber) implementsUserBenefitListResponse() {}
 
 // Properties available to subscribers for a benefit of type `discord`.
-type UserBenefitListResponseItemsBenefitDiscordSubscriberProperties struct {
-	// The ID of the Discord server.
-	GuildID string                                                             `json:"guild_id,required"`
-	JSON    userBenefitListResponseItemsBenefitDiscordSubscriberPropertiesJSON `json:"-"`
+type UserBenefitListResponseBenefitDiscordSubscriberProperties struct {
+// The ID of the Discord server.
+GuildID string `json:"guild_id,required"`
+JSON userBenefitListResponseBenefitDiscordSubscriberPropertiesJSON `json:"-"`
 }
 
-// userBenefitListResponseItemsBenefitDiscordSubscriberPropertiesJSON contains the
-// JSON metadata for the struct
-// [UserBenefitListResponseItemsBenefitDiscordSubscriberProperties]
-type userBenefitListResponseItemsBenefitDiscordSubscriberPropertiesJSON struct {
-	GuildID     apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
+// userBenefitListResponseBenefitDiscordSubscriberPropertiesJSON contains the JSON
+// metadata for the struct
+// [UserBenefitListResponseBenefitDiscordSubscriberProperties]
+type userBenefitListResponseBenefitDiscordSubscriberPropertiesJSON struct {
+GuildID apijson.Field
+raw string
+ExtraFields map[string]apijson.Field
 }
 
-func (r *UserBenefitListResponseItemsBenefitDiscordSubscriberProperties) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
+func (r *UserBenefitListResponseBenefitDiscordSubscriberProperties) UnmarshalJSON(data []byte) (err error) {
+  return apijson.UnmarshalRoot(data, r)
 }
 
-func (r userBenefitListResponseItemsBenefitDiscordSubscriberPropertiesJSON) RawJSON() string {
-	return r.raw
+func (r userBenefitListResponseBenefitDiscordSubscriberPropertiesJSON) RawJSON() (string) {
+  return r.raw
 }
 
-type UserBenefitListResponseItemsBenefitDiscordSubscriberType string
+type UserBenefitListResponseBenefitDiscordSubscriberType string
 
 const (
-	UserBenefitListResponseItemsBenefitDiscordSubscriberTypeDiscord UserBenefitListResponseItemsBenefitDiscordSubscriberType = "discord"
+  UserBenefitListResponseBenefitDiscordSubscriberTypeDiscord UserBenefitListResponseBenefitDiscordSubscriberType = "discord"
 )
 
-func (r UserBenefitListResponseItemsBenefitDiscordSubscriberType) IsKnown() bool {
-	switch r {
-	case UserBenefitListResponseItemsBenefitDiscordSubscriberTypeDiscord:
-		return true
-	}
-	return false
+func (r UserBenefitListResponseBenefitDiscordSubscriberType) IsKnown() (bool) {
+  switch r {
+  case UserBenefitListResponseBenefitDiscordSubscriberTypeDiscord:
+      return true
+  }
+  return false
 }
 
-type UserBenefitListResponseItemsBenefitCustomSubscriber struct {
-	// The ID of the benefit.
-	ID string `json:"id,required" format:"uuid4"`
-	// Creation timestamp of the object.
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
-	// Whether the benefit is deletable.
-	Deletable bool `json:"deletable,required"`
-	// The description of the benefit.
-	Description string                                                     `json:"description,required"`
-	Grants      []UserBenefitListResponseItemsBenefitCustomSubscriberGrant `json:"grants,required"`
-	// The ID of the organization owning the benefit.
-	OrganizationID string `json:"organization_id,required" format:"uuid4"`
-	// Properties available to subscribers for a benefit of type `custom`.
-	Properties UserBenefitListResponseItemsBenefitCustomSubscriberProperties `json:"properties,required"`
-	// Whether the benefit is selectable when creating a product.
-	Selectable bool                                                    `json:"selectable,required"`
-	Type       UserBenefitListResponseItemsBenefitCustomSubscriberType `json:"type,required"`
-	// Last modification timestamp of the object.
-	ModifiedAt time.Time                                               `json:"modified_at,nullable" format:"date-time"`
-	JSON       userBenefitListResponseItemsBenefitCustomSubscriberJSON `json:"-"`
+type UserBenefitListResponseBenefitCustomSubscriber struct {
+// The ID of the benefit.
+ID string `json:"id,required" format:"uuid4"`
+// Creation timestamp of the object.
+CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+// Whether the benefit is deletable.
+Deletable bool `json:"deletable,required"`
+// The description of the benefit.
+Description string `json:"description,required"`
+Grants []UserBenefitListResponseBenefitCustomSubscriberGrant `json:"grants,required"`
+// Last modification timestamp of the object.
+ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
+// The ID of the organization owning the benefit.
+OrganizationID string `json:"organization_id,required" format:"uuid4"`
+// Properties available to subscribers for a benefit of type `custom`.
+Properties UserBenefitListResponseBenefitCustomSubscriberProperties `json:"properties,required"`
+// Whether the benefit is selectable when creating a product.
+Selectable bool `json:"selectable,required"`
+Type UserBenefitListResponseBenefitCustomSubscriberType `json:"type,required"`
+JSON userBenefitListResponseBenefitCustomSubscriberJSON `json:"-"`
 }
 
-// userBenefitListResponseItemsBenefitCustomSubscriberJSON contains the JSON
-// metadata for the struct [UserBenefitListResponseItemsBenefitCustomSubscriber]
-type userBenefitListResponseItemsBenefitCustomSubscriberJSON struct {
-	ID             apijson.Field
-	CreatedAt      apijson.Field
-	Deletable      apijson.Field
-	Description    apijson.Field
-	Grants         apijson.Field
-	OrganizationID apijson.Field
-	Properties     apijson.Field
-	Selectable     apijson.Field
-	Type           apijson.Field
-	ModifiedAt     apijson.Field
-	raw            string
-	ExtraFields    map[string]apijson.Field
+// userBenefitListResponseBenefitCustomSubscriberJSON contains the JSON metadata
+// for the struct [UserBenefitListResponseBenefitCustomSubscriber]
+type userBenefitListResponseBenefitCustomSubscriberJSON struct {
+ID apijson.Field
+CreatedAt apijson.Field
+Deletable apijson.Field
+Description apijson.Field
+Grants apijson.Field
+ModifiedAt apijson.Field
+OrganizationID apijson.Field
+Properties apijson.Field
+Selectable apijson.Field
+Type apijson.Field
+raw string
+ExtraFields map[string]apijson.Field
 }
 
-func (r *UserBenefitListResponseItemsBenefitCustomSubscriber) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
+func (r *UserBenefitListResponseBenefitCustomSubscriber) UnmarshalJSON(data []byte) (err error) {
+  return apijson.UnmarshalRoot(data, r)
 }
 
-func (r userBenefitListResponseItemsBenefitCustomSubscriberJSON) RawJSON() string {
-	return r.raw
+func (r userBenefitListResponseBenefitCustomSubscriberJSON) RawJSON() (string) {
+  return r.raw
 }
 
-func (r UserBenefitListResponseItemsBenefitCustomSubscriber) implementsUserBenefitListResponseItem() {
-}
+func (r UserBenefitListResponseBenefitCustomSubscriber) implementsUserBenefitListResponse() {}
 
 // A grant of a benefit to a user.
-type UserBenefitListResponseItemsBenefitCustomSubscriberGrant struct {
-	// The ID of the grant.
-	ID string `json:"id,required" format:"uuid4"`
-	// The ID of the benefit concerned by this grant.
-	BenefitID string `json:"benefit_id,required" format:"uuid4"`
-	// Creation timestamp of the object.
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
-	// Whether the benefit is granted.
-	IsGranted bool `json:"is_granted,required"`
-	// Whether the benefit is revoked.
-	IsRevoked bool `json:"is_revoked,required"`
-	// Properties for a benefit grant.
-	Properties interface{} `json:"properties,required"`
-	// The ID of the user concerned by this grant.
-	UserID string `json:"user_id,required" format:"uuid4"`
-	// The timestamp when the benefit was granted. If `None`, the benefit is not
-	// granted.
-	GrantedAt time.Time `json:"granted_at,nullable" format:"date-time"`
-	// Last modification timestamp of the object.
-	ModifiedAt time.Time `json:"modified_at,nullable" format:"date-time"`
-	// The ID of the order that granted this benefit.
-	OrderID string `json:"order_id,nullable" format:"uuid4"`
-	// The timestamp when the benefit was revoked. If `None`, the benefit is not
-	// revoked.
-	RevokedAt time.Time `json:"revoked_at,nullable" format:"date-time"`
-	// The ID of the subscription that granted this benefit.
-	SubscriptionID string                                                       `json:"subscription_id,nullable" format:"uuid4"`
-	JSON           userBenefitListResponseItemsBenefitCustomSubscriberGrantJSON `json:"-"`
+type UserBenefitListResponseBenefitCustomSubscriberGrant struct {
+// The ID of the grant.
+ID string `json:"id,required" format:"uuid4"`
+// The ID of the benefit concerned by this grant.
+BenefitID string `json:"benefit_id,required" format:"uuid4"`
+// Creation timestamp of the object.
+CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+// Whether the benefit is granted.
+IsGranted bool `json:"is_granted,required"`
+// Whether the benefit is revoked.
+IsRevoked bool `json:"is_revoked,required"`
+// Last modification timestamp of the object.
+ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
+// The ID of the order that granted this benefit.
+OrderID string `json:"order_id,required,nullable" format:"uuid4"`
+// Properties for a benefit grant.
+Properties interface{} `json:"properties,required"`
+// The ID of the subscription that granted this benefit.
+SubscriptionID string `json:"subscription_id,required,nullable" format:"uuid4"`
+// The ID of the user concerned by this grant.
+UserID string `json:"user_id,required" format:"uuid4"`
+// The timestamp when the benefit was granted. If `None`, the benefit is not
+// granted.
+GrantedAt time.Time `json:"granted_at,nullable" format:"date-time"`
+// The timestamp when the benefit was revoked. If `None`, the benefit is not
+// revoked.
+RevokedAt time.Time `json:"revoked_at,nullable" format:"date-time"`
+JSON userBenefitListResponseBenefitCustomSubscriberGrantJSON `json:"-"`
 }
 
-// userBenefitListResponseItemsBenefitCustomSubscriberGrantJSON contains the JSON
-// metadata for the struct
-// [UserBenefitListResponseItemsBenefitCustomSubscriberGrant]
-type userBenefitListResponseItemsBenefitCustomSubscriberGrantJSON struct {
-	ID             apijson.Field
-	BenefitID      apijson.Field
-	CreatedAt      apijson.Field
-	IsGranted      apijson.Field
-	IsRevoked      apijson.Field
-	Properties     apijson.Field
-	UserID         apijson.Field
-	GrantedAt      apijson.Field
-	ModifiedAt     apijson.Field
-	OrderID        apijson.Field
-	RevokedAt      apijson.Field
-	SubscriptionID apijson.Field
-	raw            string
-	ExtraFields    map[string]apijson.Field
+// userBenefitListResponseBenefitCustomSubscriberGrantJSON contains the JSON
+// metadata for the struct [UserBenefitListResponseBenefitCustomSubscriberGrant]
+type userBenefitListResponseBenefitCustomSubscriberGrantJSON struct {
+ID apijson.Field
+BenefitID apijson.Field
+CreatedAt apijson.Field
+IsGranted apijson.Field
+IsRevoked apijson.Field
+ModifiedAt apijson.Field
+OrderID apijson.Field
+Properties apijson.Field
+SubscriptionID apijson.Field
+UserID apijson.Field
+GrantedAt apijson.Field
+RevokedAt apijson.Field
+raw string
+ExtraFields map[string]apijson.Field
 }
 
-func (r *UserBenefitListResponseItemsBenefitCustomSubscriberGrant) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
+func (r *UserBenefitListResponseBenefitCustomSubscriberGrant) UnmarshalJSON(data []byte) (err error) {
+  return apijson.UnmarshalRoot(data, r)
 }
 
-func (r userBenefitListResponseItemsBenefitCustomSubscriberGrantJSON) RawJSON() string {
-	return r.raw
+func (r userBenefitListResponseBenefitCustomSubscriberGrantJSON) RawJSON() (string) {
+  return r.raw
 }
 
 // Properties available to subscribers for a benefit of type `custom`.
-type UserBenefitListResponseItemsBenefitCustomSubscriberProperties struct {
-	// Private note to be shared with users who have this benefit granted.
-	Note string                                                            `json:"note,nullable"`
-	JSON userBenefitListResponseItemsBenefitCustomSubscriberPropertiesJSON `json:"-"`
+type UserBenefitListResponseBenefitCustomSubscriberProperties struct {
+// Private note to be shared with users who have this benefit granted.
+Note string `json:"note,required,nullable"`
+JSON userBenefitListResponseBenefitCustomSubscriberPropertiesJSON `json:"-"`
 }
 
-// userBenefitListResponseItemsBenefitCustomSubscriberPropertiesJSON contains the
-// JSON metadata for the struct
-// [UserBenefitListResponseItemsBenefitCustomSubscriberProperties]
-type userBenefitListResponseItemsBenefitCustomSubscriberPropertiesJSON struct {
-	Note        apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
+// userBenefitListResponseBenefitCustomSubscriberPropertiesJSON contains the JSON
+// metadata for the struct
+// [UserBenefitListResponseBenefitCustomSubscriberProperties]
+type userBenefitListResponseBenefitCustomSubscriberPropertiesJSON struct {
+Note apijson.Field
+raw string
+ExtraFields map[string]apijson.Field
 }
 
-func (r *UserBenefitListResponseItemsBenefitCustomSubscriberProperties) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
+func (r *UserBenefitListResponseBenefitCustomSubscriberProperties) UnmarshalJSON(data []byte) (err error) {
+  return apijson.UnmarshalRoot(data, r)
 }
 
-func (r userBenefitListResponseItemsBenefitCustomSubscriberPropertiesJSON) RawJSON() string {
-	return r.raw
+func (r userBenefitListResponseBenefitCustomSubscriberPropertiesJSON) RawJSON() (string) {
+  return r.raw
 }
 
-type UserBenefitListResponseItemsBenefitCustomSubscriberType string
+type UserBenefitListResponseBenefitCustomSubscriberType string
 
 const (
-	UserBenefitListResponseItemsBenefitCustomSubscriberTypeCustom UserBenefitListResponseItemsBenefitCustomSubscriberType = "custom"
+  UserBenefitListResponseBenefitCustomSubscriberTypeCustom UserBenefitListResponseBenefitCustomSubscriberType = "custom"
 )
 
-func (r UserBenefitListResponseItemsBenefitCustomSubscriberType) IsKnown() bool {
-	switch r {
-	case UserBenefitListResponseItemsBenefitCustomSubscriberTypeCustom:
-		return true
-	}
-	return false
+func (r UserBenefitListResponseBenefitCustomSubscriberType) IsKnown() (bool) {
+  switch r {
+  case UserBenefitListResponseBenefitCustomSubscriberTypeCustom:
+      return true
+  }
+  return false
 }
 
-type UserBenefitListResponseItemsBenefitGitHubRepositorySubscriber struct {
-	// The ID of the benefit.
-	ID string `json:"id,required" format:"uuid4"`
-	// Creation timestamp of the object.
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
-	// Whether the benefit is deletable.
-	Deletable bool `json:"deletable,required"`
-	// The description of the benefit.
-	Description string `json:"description,required"`
-	// The ID of the organization owning the benefit.
-	OrganizationID string `json:"organization_id,required" format:"uuid4"`
-	// Properties available to subscribers for a benefit of type `github_repository`.
-	Properties UserBenefitListResponseItemsBenefitGitHubRepositorySubscriberProperties `json:"properties,required"`
-	// Whether the benefit is selectable when creating a product.
-	Selectable bool                                                              `json:"selectable,required"`
-	Type       UserBenefitListResponseItemsBenefitGitHubRepositorySubscriberType `json:"type,required"`
-	// Last modification timestamp of the object.
-	ModifiedAt time.Time                                                         `json:"modified_at,nullable" format:"date-time"`
-	JSON       userBenefitListResponseItemsBenefitGitHubRepositorySubscriberJSON `json:"-"`
+type UserBenefitListResponseBenefitGitHubRepositorySubscriber struct {
+// The ID of the benefit.
+ID string `json:"id,required" format:"uuid4"`
+// Creation timestamp of the object.
+CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+// Whether the benefit is deletable.
+Deletable bool `json:"deletable,required"`
+// The description of the benefit.
+Description string `json:"description,required"`
+// Last modification timestamp of the object.
+ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
+// The ID of the organization owning the benefit.
+OrganizationID string `json:"organization_id,required" format:"uuid4"`
+// Properties available to subscribers for a benefit of type `github_repository`.
+Properties UserBenefitListResponseBenefitGitHubRepositorySubscriberProperties `json:"properties,required"`
+// Whether the benefit is selectable when creating a product.
+Selectable bool `json:"selectable,required"`
+Type UserBenefitListResponseBenefitGitHubRepositorySubscriberType `json:"type,required"`
+JSON userBenefitListResponseBenefitGitHubRepositorySubscriberJSON `json:"-"`
 }
 
-// userBenefitListResponseItemsBenefitGitHubRepositorySubscriberJSON contains the
-// JSON metadata for the struct
-// [UserBenefitListResponseItemsBenefitGitHubRepositorySubscriber]
-type userBenefitListResponseItemsBenefitGitHubRepositorySubscriberJSON struct {
-	ID             apijson.Field
-	CreatedAt      apijson.Field
-	Deletable      apijson.Field
-	Description    apijson.Field
-	OrganizationID apijson.Field
-	Properties     apijson.Field
-	Selectable     apijson.Field
-	Type           apijson.Field
-	ModifiedAt     apijson.Field
-	raw            string
-	ExtraFields    map[string]apijson.Field
+// userBenefitListResponseBenefitGitHubRepositorySubscriberJSON contains the JSON
+// metadata for the struct
+// [UserBenefitListResponseBenefitGitHubRepositorySubscriber]
+type userBenefitListResponseBenefitGitHubRepositorySubscriberJSON struct {
+ID apijson.Field
+CreatedAt apijson.Field
+Deletable apijson.Field
+Description apijson.Field
+ModifiedAt apijson.Field
+OrganizationID apijson.Field
+Properties apijson.Field
+Selectable apijson.Field
+Type apijson.Field
+raw string
+ExtraFields map[string]apijson.Field
 }
 
-func (r *UserBenefitListResponseItemsBenefitGitHubRepositorySubscriber) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
+func (r *UserBenefitListResponseBenefitGitHubRepositorySubscriber) UnmarshalJSON(data []byte) (err error) {
+  return apijson.UnmarshalRoot(data, r)
 }
 
-func (r userBenefitListResponseItemsBenefitGitHubRepositorySubscriberJSON) RawJSON() string {
-	return r.raw
+func (r userBenefitListResponseBenefitGitHubRepositorySubscriberJSON) RawJSON() (string) {
+  return r.raw
 }
 
-func (r UserBenefitListResponseItemsBenefitGitHubRepositorySubscriber) implementsUserBenefitListResponseItem() {
-}
+func (r UserBenefitListResponseBenefitGitHubRepositorySubscriber) implementsUserBenefitListResponse() {}
 
 // Properties available to subscribers for a benefit of type `github_repository`.
-type UserBenefitListResponseItemsBenefitGitHubRepositorySubscriberProperties struct {
-	// The name of the repository.
-	RepositoryName string `json:"repository_name,required"`
-	// The owner of the repository.
-	RepositoryOwner string                                                                      `json:"repository_owner,required"`
-	JSON            userBenefitListResponseItemsBenefitGitHubRepositorySubscriberPropertiesJSON `json:"-"`
+type UserBenefitListResponseBenefitGitHubRepositorySubscriberProperties struct {
+// The name of the repository.
+RepositoryName string `json:"repository_name,required"`
+// The owner of the repository.
+RepositoryOwner string `json:"repository_owner,required"`
+JSON userBenefitListResponseBenefitGitHubRepositorySubscriberPropertiesJSON `json:"-"`
 }
 
-// userBenefitListResponseItemsBenefitGitHubRepositorySubscriberPropertiesJSON
-// contains the JSON metadata for the struct
-// [UserBenefitListResponseItemsBenefitGitHubRepositorySubscriberProperties]
-type userBenefitListResponseItemsBenefitGitHubRepositorySubscriberPropertiesJSON struct {
-	RepositoryName  apijson.Field
-	RepositoryOwner apijson.Field
-	raw             string
-	ExtraFields     map[string]apijson.Field
+// userBenefitListResponseBenefitGitHubRepositorySubscriberPropertiesJSON contains
+// the JSON metadata for the struct
+// [UserBenefitListResponseBenefitGitHubRepositorySubscriberProperties]
+type userBenefitListResponseBenefitGitHubRepositorySubscriberPropertiesJSON struct {
+RepositoryName apijson.Field
+RepositoryOwner apijson.Field
+raw string
+ExtraFields map[string]apijson.Field
 }
 
-func (r *UserBenefitListResponseItemsBenefitGitHubRepositorySubscriberProperties) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
+func (r *UserBenefitListResponseBenefitGitHubRepositorySubscriberProperties) UnmarshalJSON(data []byte) (err error) {
+  return apijson.UnmarshalRoot(data, r)
 }
 
-func (r userBenefitListResponseItemsBenefitGitHubRepositorySubscriberPropertiesJSON) RawJSON() string {
-	return r.raw
+func (r userBenefitListResponseBenefitGitHubRepositorySubscriberPropertiesJSON) RawJSON() (string) {
+  return r.raw
 }
 
-type UserBenefitListResponseItemsBenefitGitHubRepositorySubscriberType string
+type UserBenefitListResponseBenefitGitHubRepositorySubscriberType string
 
 const (
-	UserBenefitListResponseItemsBenefitGitHubRepositorySubscriberTypeGitHubRepository UserBenefitListResponseItemsBenefitGitHubRepositorySubscriberType = "github_repository"
+  UserBenefitListResponseBenefitGitHubRepositorySubscriberTypeGitHubRepository UserBenefitListResponseBenefitGitHubRepositorySubscriberType = "github_repository"
 )
 
-func (r UserBenefitListResponseItemsBenefitGitHubRepositorySubscriberType) IsKnown() bool {
-	switch r {
-	case UserBenefitListResponseItemsBenefitGitHubRepositorySubscriberTypeGitHubRepository:
-		return true
-	}
-	return false
+func (r UserBenefitListResponseBenefitGitHubRepositorySubscriberType) IsKnown() (bool) {
+  switch r {
+  case UserBenefitListResponseBenefitGitHubRepositorySubscriberTypeGitHubRepository:
+      return true
+  }
+  return false
 }
 
-type UserBenefitListResponseItemsBenefitDownloadablesSubscriber struct {
-	// The ID of the benefit.
-	ID string `json:"id,required" format:"uuid4"`
-	// Creation timestamp of the object.
-	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
-	// Whether the benefit is deletable.
-	Deletable bool `json:"deletable,required"`
-	// The description of the benefit.
-	Description string `json:"description,required"`
-	// The ID of the organization owning the benefit.
-	OrganizationID string                                                               `json:"organization_id,required" format:"uuid4"`
-	Properties     UserBenefitListResponseItemsBenefitDownloadablesSubscriberProperties `json:"properties,required"`
-	// Whether the benefit is selectable when creating a product.
-	Selectable bool                                                           `json:"selectable,required"`
-	Type       UserBenefitListResponseItemsBenefitDownloadablesSubscriberType `json:"type,required"`
-	// Last modification timestamp of the object.
-	ModifiedAt time.Time                                                      `json:"modified_at,nullable" format:"date-time"`
-	JSON       userBenefitListResponseItemsBenefitDownloadablesSubscriberJSON `json:"-"`
+type UserBenefitListResponseBenefitDownloadablesSubscriber struct {
+// The ID of the benefit.
+ID string `json:"id,required" format:"uuid4"`
+// Creation timestamp of the object.
+CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+// Whether the benefit is deletable.
+Deletable bool `json:"deletable,required"`
+// The description of the benefit.
+Description string `json:"description,required"`
+// Last modification timestamp of the object.
+ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
+// The ID of the organization owning the benefit.
+OrganizationID string `json:"organization_id,required" format:"uuid4"`
+Properties UserBenefitListResponseBenefitDownloadablesSubscriberProperties `json:"properties,required"`
+// Whether the benefit is selectable when creating a product.
+Selectable bool `json:"selectable,required"`
+Type UserBenefitListResponseBenefitDownloadablesSubscriberType `json:"type,required"`
+JSON userBenefitListResponseBenefitDownloadablesSubscriberJSON `json:"-"`
 }
 
-// userBenefitListResponseItemsBenefitDownloadablesSubscriberJSON contains the JSON
+// userBenefitListResponseBenefitDownloadablesSubscriberJSON contains the JSON
+// metadata for the struct [UserBenefitListResponseBenefitDownloadablesSubscriber]
+type userBenefitListResponseBenefitDownloadablesSubscriberJSON struct {
+ID apijson.Field
+CreatedAt apijson.Field
+Deletable apijson.Field
+Description apijson.Field
+ModifiedAt apijson.Field
+OrganizationID apijson.Field
+Properties apijson.Field
+Selectable apijson.Field
+Type apijson.Field
+raw string
+ExtraFields map[string]apijson.Field
+}
+
+func (r *UserBenefitListResponseBenefitDownloadablesSubscriber) UnmarshalJSON(data []byte) (err error) {
+  return apijson.UnmarshalRoot(data, r)
+}
+
+func (r userBenefitListResponseBenefitDownloadablesSubscriberJSON) RawJSON() (string) {
+  return r.raw
+}
+
+func (r UserBenefitListResponseBenefitDownloadablesSubscriber) implementsUserBenefitListResponse() {}
+
+type UserBenefitListResponseBenefitDownloadablesSubscriberProperties struct {
+ActiveFiles []string `json:"active_files,required" format:"uuid4"`
+JSON userBenefitListResponseBenefitDownloadablesSubscriberPropertiesJSON `json:"-"`
+}
+
+// userBenefitListResponseBenefitDownloadablesSubscriberPropertiesJSON contains the
+// JSON metadata for the struct
+// [UserBenefitListResponseBenefitDownloadablesSubscriberProperties]
+type userBenefitListResponseBenefitDownloadablesSubscriberPropertiesJSON struct {
+ActiveFiles apijson.Field
+raw string
+ExtraFields map[string]apijson.Field
+}
+
+func (r *UserBenefitListResponseBenefitDownloadablesSubscriberProperties) UnmarshalJSON(data []byte) (err error) {
+  return apijson.UnmarshalRoot(data, r)
+}
+
+func (r userBenefitListResponseBenefitDownloadablesSubscriberPropertiesJSON) RawJSON() (string) {
+  return r.raw
+}
+
+type UserBenefitListResponseBenefitDownloadablesSubscriberType string
+
+const (
+  UserBenefitListResponseBenefitDownloadablesSubscriberTypeDownloadables UserBenefitListResponseBenefitDownloadablesSubscriberType = "downloadables"
+)
+
+func (r UserBenefitListResponseBenefitDownloadablesSubscriberType) IsKnown() (bool) {
+  switch r {
+  case UserBenefitListResponseBenefitDownloadablesSubscriberTypeDownloadables:
+      return true
+  }
+  return false
+}
+
+type UserBenefitListResponseBenefitLicenseKeysSubscriber struct {
+// The ID of the benefit.
+ID string `json:"id,required" format:"uuid4"`
+// Creation timestamp of the object.
+CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+// Whether the benefit is deletable.
+Deletable bool `json:"deletable,required"`
+// The description of the benefit.
+Description string `json:"description,required"`
+Grants []UserBenefitListResponseBenefitLicenseKeysSubscriberGrant `json:"grants,required"`
+// Last modification timestamp of the object.
+ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
+// The ID of the organization owning the benefit.
+OrganizationID string `json:"organization_id,required" format:"uuid4"`
+Properties UserBenefitListResponseBenefitLicenseKeysSubscriberProperties `json:"properties,required"`
+// Whether the benefit is selectable when creating a product.
+Selectable bool `json:"selectable,required"`
+Type UserBenefitListResponseBenefitLicenseKeysSubscriberType `json:"type,required"`
+JSON userBenefitListResponseBenefitLicenseKeysSubscriberJSON `json:"-"`
+}
+
+// userBenefitListResponseBenefitLicenseKeysSubscriberJSON contains the JSON
+// metadata for the struct [UserBenefitListResponseBenefitLicenseKeysSubscriber]
+type userBenefitListResponseBenefitLicenseKeysSubscriberJSON struct {
+ID apijson.Field
+CreatedAt apijson.Field
+Deletable apijson.Field
+Description apijson.Field
+Grants apijson.Field
+ModifiedAt apijson.Field
+OrganizationID apijson.Field
+Properties apijson.Field
+Selectable apijson.Field
+Type apijson.Field
+raw string
+ExtraFields map[string]apijson.Field
+}
+
+func (r *UserBenefitListResponseBenefitLicenseKeysSubscriber) UnmarshalJSON(data []byte) (err error) {
+  return apijson.UnmarshalRoot(data, r)
+}
+
+func (r userBenefitListResponseBenefitLicenseKeysSubscriberJSON) RawJSON() (string) {
+  return r.raw
+}
+
+func (r UserBenefitListResponseBenefitLicenseKeysSubscriber) implementsUserBenefitListResponse() {}
+
+type UserBenefitListResponseBenefitLicenseKeysSubscriberGrant struct {
+// The ID of the grant.
+ID string `json:"id,required" format:"uuid4"`
+// The ID of the benefit concerned by this grant.
+BenefitID string `json:"benefit_id,required" format:"uuid4"`
+// Creation timestamp of the object.
+CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+// Whether the benefit is granted.
+IsGranted bool `json:"is_granted,required"`
+// Whether the benefit is revoked.
+IsRevoked bool `json:"is_revoked,required"`
+// Last modification timestamp of the object.
+ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
+// The ID of the order that granted this benefit.
+OrderID string `json:"order_id,required,nullable" format:"uuid4"`
+Properties UserBenefitListResponseBenefitLicenseKeysSubscriberGrantsProperties `json:"properties,required"`
+// The ID of the subscription that granted this benefit.
+SubscriptionID string `json:"subscription_id,required,nullable" format:"uuid4"`
+// The ID of the user concerned by this grant.
+UserID string `json:"user_id,required" format:"uuid4"`
+// The timestamp when the benefit was granted. If `None`, the benefit is not
+// granted.
+GrantedAt time.Time `json:"granted_at,nullable" format:"date-time"`
+// The timestamp when the benefit was revoked. If `None`, the benefit is not
+// revoked.
+RevokedAt time.Time `json:"revoked_at,nullable" format:"date-time"`
+JSON userBenefitListResponseBenefitLicenseKeysSubscriberGrantJSON `json:"-"`
+}
+
+// userBenefitListResponseBenefitLicenseKeysSubscriberGrantJSON contains the JSON
 // metadata for the struct
-// [UserBenefitListResponseItemsBenefitDownloadablesSubscriber]
-type userBenefitListResponseItemsBenefitDownloadablesSubscriberJSON struct {
-	ID             apijson.Field
-	CreatedAt      apijson.Field
-	Deletable      apijson.Field
-	Description    apijson.Field
-	OrganizationID apijson.Field
-	Properties     apijson.Field
-	Selectable     apijson.Field
-	Type           apijson.Field
-	ModifiedAt     apijson.Field
-	raw            string
-	ExtraFields    map[string]apijson.Field
+// [UserBenefitListResponseBenefitLicenseKeysSubscriberGrant]
+type userBenefitListResponseBenefitLicenseKeysSubscriberGrantJSON struct {
+ID apijson.Field
+BenefitID apijson.Field
+CreatedAt apijson.Field
+IsGranted apijson.Field
+IsRevoked apijson.Field
+ModifiedAt apijson.Field
+OrderID apijson.Field
+Properties apijson.Field
+SubscriptionID apijson.Field
+UserID apijson.Field
+GrantedAt apijson.Field
+RevokedAt apijson.Field
+raw string
+ExtraFields map[string]apijson.Field
 }
 
-func (r *UserBenefitListResponseItemsBenefitDownloadablesSubscriber) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
+func (r *UserBenefitListResponseBenefitLicenseKeysSubscriberGrant) UnmarshalJSON(data []byte) (err error) {
+  return apijson.UnmarshalRoot(data, r)
 }
 
-func (r userBenefitListResponseItemsBenefitDownloadablesSubscriberJSON) RawJSON() string {
-	return r.raw
+func (r userBenefitListResponseBenefitLicenseKeysSubscriberGrantJSON) RawJSON() (string) {
+  return r.raw
 }
 
-func (r UserBenefitListResponseItemsBenefitDownloadablesSubscriber) implementsUserBenefitListResponseItem() {
+type UserBenefitListResponseBenefitLicenseKeysSubscriberGrantsProperties struct {
+DisplayKey string `json:"display_key,required"`
+LicenseKeyID string `json:"license_key_id,required" format:"uuid4"`
+JSON userBenefitListResponseBenefitLicenseKeysSubscriberGrantsPropertiesJSON `json:"-"`
 }
 
-type UserBenefitListResponseItemsBenefitDownloadablesSubscriberProperties struct {
-	ActiveFiles []string                                                                 `json:"active_files,required" format:"uuid4"`
-	JSON        userBenefitListResponseItemsBenefitDownloadablesSubscriberPropertiesJSON `json:"-"`
+// userBenefitListResponseBenefitLicenseKeysSubscriberGrantsPropertiesJSON contains
+// the JSON metadata for the struct
+// [UserBenefitListResponseBenefitLicenseKeysSubscriberGrantsProperties]
+type userBenefitListResponseBenefitLicenseKeysSubscriberGrantsPropertiesJSON struct {
+DisplayKey apijson.Field
+LicenseKeyID apijson.Field
+raw string
+ExtraFields map[string]apijson.Field
 }
 
-// userBenefitListResponseItemsBenefitDownloadablesSubscriberPropertiesJSON
+func (r *UserBenefitListResponseBenefitLicenseKeysSubscriberGrantsProperties) UnmarshalJSON(data []byte) (err error) {
+  return apijson.UnmarshalRoot(data, r)
+}
+
+func (r userBenefitListResponseBenefitLicenseKeysSubscriberGrantsPropertiesJSON) RawJSON() (string) {
+  return r.raw
+}
+
+type UserBenefitListResponseBenefitLicenseKeysSubscriberProperties struct {
+Activations UserBenefitListResponseBenefitLicenseKeysSubscriberPropertiesActivations `json:"activations,required,nullable"`
+Expires UserBenefitListResponseBenefitLicenseKeysSubscriberPropertiesExpires `json:"expires,required,nullable"`
+LimitUsage int64 `json:"limit_usage,required,nullable"`
+Prefix string `json:"prefix,required,nullable"`
+JSON userBenefitListResponseBenefitLicenseKeysSubscriberPropertiesJSON `json:"-"`
+}
+
+// userBenefitListResponseBenefitLicenseKeysSubscriberPropertiesJSON contains the
+// JSON metadata for the struct
+// [UserBenefitListResponseBenefitLicenseKeysSubscriberProperties]
+type userBenefitListResponseBenefitLicenseKeysSubscriberPropertiesJSON struct {
+Activations apijson.Field
+Expires apijson.Field
+LimitUsage apijson.Field
+Prefix apijson.Field
+raw string
+ExtraFields map[string]apijson.Field
+}
+
+func (r *UserBenefitListResponseBenefitLicenseKeysSubscriberProperties) UnmarshalJSON(data []byte) (err error) {
+  return apijson.UnmarshalRoot(data, r)
+}
+
+func (r userBenefitListResponseBenefitLicenseKeysSubscriberPropertiesJSON) RawJSON() (string) {
+  return r.raw
+}
+
+type UserBenefitListResponseBenefitLicenseKeysSubscriberPropertiesActivations struct {
+EnableUserAdmin bool `json:"enable_user_admin,required"`
+Limit int64 `json:"limit,required"`
+JSON userBenefitListResponseBenefitLicenseKeysSubscriberPropertiesActivationsJSON `json:"-"`
+}
+
+// userBenefitListResponseBenefitLicenseKeysSubscriberPropertiesActivationsJSON
 // contains the JSON metadata for the struct
-// [UserBenefitListResponseItemsBenefitDownloadablesSubscriberProperties]
-type userBenefitListResponseItemsBenefitDownloadablesSubscriberPropertiesJSON struct {
-	ActiveFiles apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
+// [UserBenefitListResponseBenefitLicenseKeysSubscriberPropertiesActivations]
+type userBenefitListResponseBenefitLicenseKeysSubscriberPropertiesActivationsJSON struct {
+EnableUserAdmin apijson.Field
+Limit apijson.Field
+raw string
+ExtraFields map[string]apijson.Field
 }
 
-func (r *UserBenefitListResponseItemsBenefitDownloadablesSubscriberProperties) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
+func (r *UserBenefitListResponseBenefitLicenseKeysSubscriberPropertiesActivations) UnmarshalJSON(data []byte) (err error) {
+  return apijson.UnmarshalRoot(data, r)
 }
 
-func (r userBenefitListResponseItemsBenefitDownloadablesSubscriberPropertiesJSON) RawJSON() string {
-	return r.raw
+func (r userBenefitListResponseBenefitLicenseKeysSubscriberPropertiesActivationsJSON) RawJSON() (string) {
+  return r.raw
 }
 
-type UserBenefitListResponseItemsBenefitDownloadablesSubscriberType string
+type UserBenefitListResponseBenefitLicenseKeysSubscriberPropertiesExpires struct {
+Timeframe UserBenefitListResponseBenefitLicenseKeysSubscriberPropertiesExpiresTimeframe `json:"timeframe,required"`
+Ttl int64 `json:"ttl,required"`
+JSON userBenefitListResponseBenefitLicenseKeysSubscriberPropertiesExpiresJSON `json:"-"`
+}
+
+// userBenefitListResponseBenefitLicenseKeysSubscriberPropertiesExpiresJSON
+// contains the JSON metadata for the struct
+// [UserBenefitListResponseBenefitLicenseKeysSubscriberPropertiesExpires]
+type userBenefitListResponseBenefitLicenseKeysSubscriberPropertiesExpiresJSON struct {
+Timeframe apijson.Field
+Ttl apijson.Field
+raw string
+ExtraFields map[string]apijson.Field
+}
+
+func (r *UserBenefitListResponseBenefitLicenseKeysSubscriberPropertiesExpires) UnmarshalJSON(data []byte) (err error) {
+  return apijson.UnmarshalRoot(data, r)
+}
+
+func (r userBenefitListResponseBenefitLicenseKeysSubscriberPropertiesExpiresJSON) RawJSON() (string) {
+  return r.raw
+}
+
+type UserBenefitListResponseBenefitLicenseKeysSubscriberPropertiesExpiresTimeframe string
 
 const (
-	UserBenefitListResponseItemsBenefitDownloadablesSubscriberTypeDownloadables UserBenefitListResponseItemsBenefitDownloadablesSubscriberType = "downloadables"
+  UserBenefitListResponseBenefitLicenseKeysSubscriberPropertiesExpiresTimeframeYear UserBenefitListResponseBenefitLicenseKeysSubscriberPropertiesExpiresTimeframe = "year"
+  UserBenefitListResponseBenefitLicenseKeysSubscriberPropertiesExpiresTimeframeMonth UserBenefitListResponseBenefitLicenseKeysSubscriberPropertiesExpiresTimeframe = "month"
+  UserBenefitListResponseBenefitLicenseKeysSubscriberPropertiesExpiresTimeframeDay UserBenefitListResponseBenefitLicenseKeysSubscriberPropertiesExpiresTimeframe = "day"
 )
 
-func (r UserBenefitListResponseItemsBenefitDownloadablesSubscriberType) IsKnown() bool {
-	switch r {
-	case UserBenefitListResponseItemsBenefitDownloadablesSubscriberTypeDownloadables:
-		return true
-	}
-	return false
+func (r UserBenefitListResponseBenefitLicenseKeysSubscriberPropertiesExpiresTimeframe) IsKnown() (bool) {
+  switch r {
+  case UserBenefitListResponseBenefitLicenseKeysSubscriberPropertiesExpiresTimeframeYear, UserBenefitListResponseBenefitLicenseKeysSubscriberPropertiesExpiresTimeframeMonth, UserBenefitListResponseBenefitLicenseKeysSubscriberPropertiesExpiresTimeframeDay:
+      return true
+  }
+  return false
 }
 
-type UserBenefitListResponseItemsType string
+type UserBenefitListResponseBenefitLicenseKeysSubscriberType string
 
 const (
-	UserBenefitListResponseItemsTypeArticles         UserBenefitListResponseItemsType = "articles"
-	UserBenefitListResponseItemsTypeAds              UserBenefitListResponseItemsType = "ads"
-	UserBenefitListResponseItemsTypeDiscord          UserBenefitListResponseItemsType = "discord"
-	UserBenefitListResponseItemsTypeCustom           UserBenefitListResponseItemsType = "custom"
-	UserBenefitListResponseItemsTypeGitHubRepository UserBenefitListResponseItemsType = "github_repository"
-	UserBenefitListResponseItemsTypeDownloadables    UserBenefitListResponseItemsType = "downloadables"
+  UserBenefitListResponseBenefitLicenseKeysSubscriberTypeLicenseKeys UserBenefitListResponseBenefitLicenseKeysSubscriberType = "license_keys"
 )
 
-func (r UserBenefitListResponseItemsType) IsKnown() bool {
-	switch r {
-	case UserBenefitListResponseItemsTypeArticles, UserBenefitListResponseItemsTypeAds, UserBenefitListResponseItemsTypeDiscord, UserBenefitListResponseItemsTypeCustom, UserBenefitListResponseItemsTypeGitHubRepository, UserBenefitListResponseItemsTypeDownloadables:
-		return true
-	}
-	return false
+func (r UserBenefitListResponseBenefitLicenseKeysSubscriberType) IsKnown() (bool) {
+  switch r {
+  case UserBenefitListResponseBenefitLicenseKeysSubscriberTypeLicenseKeys:
+      return true
+  }
+  return false
+}
+
+type UserBenefitListResponseType string
+
+const (
+  UserBenefitListResponseTypeArticles UserBenefitListResponseType = "articles"
+  UserBenefitListResponseTypeAds UserBenefitListResponseType = "ads"
+  UserBenefitListResponseTypeDiscord UserBenefitListResponseType = "discord"
+  UserBenefitListResponseTypeCustom UserBenefitListResponseType = "custom"
+  UserBenefitListResponseTypeGitHubRepository UserBenefitListResponseType = "github_repository"
+  UserBenefitListResponseTypeDownloadables UserBenefitListResponseType = "downloadables"
+  UserBenefitListResponseTypeLicenseKeys UserBenefitListResponseType = "license_keys"
+)
+
+func (r UserBenefitListResponseType) IsKnown() (bool) {
+  switch r {
+  case UserBenefitListResponseTypeArticles, UserBenefitListResponseTypeAds, UserBenefitListResponseTypeDiscord, UserBenefitListResponseTypeCustom, UserBenefitListResponseTypeGitHubRepository, UserBenefitListResponseTypeDownloadables, UserBenefitListResponseTypeLicenseKeys:
+      return true
+  }
+  return false
 }
 
 type UserBenefitListParams struct {
-	// Size of a page, defaults to 10. Maximum is 100.
-	Limit param.Field[int64] `query:"limit"`
-	// Filter by order ID.
-	OrderID param.Field[UserBenefitListParamsOrderIDUnion] `query:"order_id" format:"uuid4"`
-	// Filter by organization ID.
-	OrganizationID param.Field[UserBenefitListParamsOrganizationIDUnion] `query:"organization_id" format:"uuid4"`
-	// Page number, defaults to 1.
-	Page param.Field[int64] `query:"page"`
-	// Sorting criterion. Several criteria can be used simultaneously and will be
-	// applied in order. Add a minus sign `-` before the criteria name to sort by
-	// descending order.
-	Sorting param.Field[[]string] `query:"sorting"`
-	// Filter by subscription ID.
-	SubscriptionID param.Field[UserBenefitListParamsSubscriptionIDUnion] `query:"subscription_id" format:"uuid4"`
-	// Filter by benefit type.
-	Type param.Field[UserBenefitListParamsTypeUnion] `query:"type"`
+// Size of a page, defaults to 10. Maximum is 100.
+Limit param.Field[int64] `query:"limit"`
+// Filter by order ID.
+OrderID param.Field[UserBenefitListParamsOrderIDUnion] `query:"order_id" format:"uuid4"`
+// Filter by organization ID.
+OrganizationID param.Field[UserBenefitListParamsOrganizationIDUnion] `query:"organization_id" format:"uuid4"`
+// Page number, defaults to 1.
+Page param.Field[int64] `query:"page"`
+// Sorting criterion. Several criteria can be used simultaneously and will be
+// applied in order. Add a minus sign `-` before the criteria name to sort by
+// descending order.
+Sorting param.Field[[]UserBenefitListParamsSorting] `query:"sorting"`
+// Filter by subscription ID.
+SubscriptionID param.Field[UserBenefitListParamsSubscriptionIDUnion] `query:"subscription_id" format:"uuid4"`
+// Filter by benefit type.
+Type param.Field[UserBenefitListParamsTypeUnion] `query:"type"`
 }
 
 // URLQuery serializes [UserBenefitListParams]'s query parameters as `url.Values`.
 func (r UserBenefitListParams) URLQuery() (v url.Values) {
-	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
-		ArrayFormat:  apiquery.ArrayQueryFormatComma,
-		NestedFormat: apiquery.NestedQueryFormatBrackets,
-	})
+  return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+    ArrayFormat: apiquery.ArrayQueryFormatComma,
+    NestedFormat: apiquery.NestedQueryFormatBrackets,
+  })
 }
 
 // Filter by order ID.
 //
 // Satisfied by [shared.UnionString], [UserBenefitListParamsOrderIDArray].
 type UserBenefitListParamsOrderIDUnion interface {
-	ImplementsUserBenefitListParamsOrderIDUnion()
+  ImplementsUserBenefitListParamsOrderIDUnion()
 }
 
 type UserBenefitListParamsOrderIDArray []string
@@ -1746,51 +2198,69 @@ func (r UserBenefitListParamsOrderIDArray) ImplementsUserBenefitListParamsOrderI
 //
 // Satisfied by [shared.UnionString], [UserBenefitListParamsOrganizationIDArray].
 type UserBenefitListParamsOrganizationIDUnion interface {
-	ImplementsUserBenefitListParamsOrganizationIDUnion()
+  ImplementsUserBenefitListParamsOrganizationIDUnion()
 }
 
 type UserBenefitListParamsOrganizationIDArray []string
 
-func (r UserBenefitListParamsOrganizationIDArray) ImplementsUserBenefitListParamsOrganizationIDUnion() {
+func (r UserBenefitListParamsOrganizationIDArray) ImplementsUserBenefitListParamsOrganizationIDUnion() {}
+
+type UserBenefitListParamsSorting string
+
+const (
+  UserBenefitListParamsSortingGrantedAt UserBenefitListParamsSorting = "granted_at"
+  UserBenefitListParamsSorting-GrantedAt UserBenefitListParamsSorting = "-granted_at"
+  UserBenefitListParamsSortingType UserBenefitListParamsSorting = "type"
+  UserBenefitListParamsSorting-Type UserBenefitListParamsSorting = "-type"
+  UserBenefitListParamsSortingOrganization UserBenefitListParamsSorting = "organization"
+  UserBenefitListParamsSorting-Organization UserBenefitListParamsSorting = "-organization"
+)
+
+func (r UserBenefitListParamsSorting) IsKnown() (bool) {
+  switch r {
+  case UserBenefitListParamsSortingGrantedAt, UserBenefitListParamsSorting-GrantedAt, UserBenefitListParamsSortingType, UserBenefitListParamsSorting-Type, UserBenefitListParamsSortingOrganization, UserBenefitListParamsSorting-Organization:
+      return true
+  }
+  return false
 }
 
 // Filter by subscription ID.
 //
 // Satisfied by [shared.UnionString], [UserBenefitListParamsSubscriptionIDArray].
 type UserBenefitListParamsSubscriptionIDUnion interface {
-	ImplementsUserBenefitListParamsSubscriptionIDUnion()
+  ImplementsUserBenefitListParamsSubscriptionIDUnion()
 }
 
 type UserBenefitListParamsSubscriptionIDArray []string
 
-func (r UserBenefitListParamsSubscriptionIDArray) ImplementsUserBenefitListParamsSubscriptionIDUnion() {
-}
+func (r UserBenefitListParamsSubscriptionIDArray) ImplementsUserBenefitListParamsSubscriptionIDUnion() {}
 
 // Filter by benefit type.
 //
 // Satisfied by [UserBenefitListParamsTypeBenefitType],
 // [UserBenefitListParamsTypeArray].
 type UserBenefitListParamsTypeUnion interface {
-	implementsUserBenefitListParamsTypeUnion()
+  implementsUserBenefitListParamsTypeUnion()
 }
 
 type UserBenefitListParamsTypeBenefitType string
 
 const (
-	UserBenefitListParamsTypeBenefitTypeCustom           UserBenefitListParamsTypeBenefitType = "custom"
-	UserBenefitListParamsTypeBenefitTypeArticles         UserBenefitListParamsTypeBenefitType = "articles"
-	UserBenefitListParamsTypeBenefitTypeAds              UserBenefitListParamsTypeBenefitType = "ads"
-	UserBenefitListParamsTypeBenefitTypeDiscord          UserBenefitListParamsTypeBenefitType = "discord"
-	UserBenefitListParamsTypeBenefitTypeGitHubRepository UserBenefitListParamsTypeBenefitType = "github_repository"
-	UserBenefitListParamsTypeBenefitTypeDownloadables    UserBenefitListParamsTypeBenefitType = "downloadables"
+  UserBenefitListParamsTypeBenefitTypeCustom UserBenefitListParamsTypeBenefitType = "custom"
+  UserBenefitListParamsTypeBenefitTypeArticles UserBenefitListParamsTypeBenefitType = "articles"
+  UserBenefitListParamsTypeBenefitTypeAds UserBenefitListParamsTypeBenefitType = "ads"
+  UserBenefitListParamsTypeBenefitTypeDiscord UserBenefitListParamsTypeBenefitType = "discord"
+  UserBenefitListParamsTypeBenefitTypeGitHubRepository UserBenefitListParamsTypeBenefitType = "github_repository"
+  UserBenefitListParamsTypeBenefitTypeDownloadables UserBenefitListParamsTypeBenefitType = "downloadables"
+  UserBenefitListParamsTypeBenefitTypeLicenseKeys UserBenefitListParamsTypeBenefitType = "license_keys"
 )
 
-func (r UserBenefitListParamsTypeBenefitType) IsKnown() bool {
-	switch r {
-	case UserBenefitListParamsTypeBenefitTypeCustom, UserBenefitListParamsTypeBenefitTypeArticles, UserBenefitListParamsTypeBenefitTypeAds, UserBenefitListParamsTypeBenefitTypeDiscord, UserBenefitListParamsTypeBenefitTypeGitHubRepository, UserBenefitListParamsTypeBenefitTypeDownloadables:
-		return true
-	}
-	return false
+func (r UserBenefitListParamsTypeBenefitType) IsKnown() (bool) {
+  switch r {
+  case UserBenefitListParamsTypeBenefitTypeCustom, UserBenefitListParamsTypeBenefitTypeArticles, UserBenefitListParamsTypeBenefitTypeAds, UserBenefitListParamsTypeBenefitTypeDiscord, UserBenefitListParamsTypeBenefitTypeGitHubRepository, UserBenefitListParamsTypeBenefitTypeDownloadables, UserBenefitListParamsTypeBenefitTypeLicenseKeys:
+      return true
+  }
+  return false
 }
 
 func (r UserBenefitListParamsTypeBenefitType) implementsUserBenefitListParamsTypeUnion() {}

@@ -13,6 +13,7 @@ import (
 
 	"github.com/polarsource/polar-go/internal/apijson"
 	"github.com/polarsource/polar-go/internal/apiquery"
+	"github.com/polarsource/polar-go/internal/pagination"
 	"github.com/polarsource/polar-go/internal/param"
 	"github.com/polarsource/polar-go/internal/requestconfig"
 	"github.com/polarsource/polar-go/option"
@@ -41,7 +42,7 @@ func NewProductService(opts ...option.RequestOption) (r *ProductService) {
 }
 
 // Create a product.
-func (r *ProductService) New(ctx context.Context, body ProductNewParams, opts ...option.RequestOption) (res *ProductOutput, err error) {
+func (r *ProductService) New(ctx context.Context, body ProductNewParams, opts ...option.RequestOption) (res *Product, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "v1/products/"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
@@ -49,7 +50,7 @@ func (r *ProductService) New(ctx context.Context, body ProductNewParams, opts ..
 }
 
 // Get a product by ID.
-func (r *ProductService) Get(ctx context.Context, id string, opts ...option.RequestOption) (res *ProductOutput, err error) {
+func (r *ProductService) Get(ctx context.Context, id string, opts ...option.RequestOption) (res *Product, err error) {
 	opts = append(r.Options[:], opts...)
 	if id == "" {
 		err = errors.New("missing required id parameter")
@@ -61,7 +62,7 @@ func (r *ProductService) Get(ctx context.Context, id string, opts ...option.Requ
 }
 
 // Update a product.
-func (r *ProductService) Update(ctx context.Context, id string, body ProductUpdateParams, opts ...option.RequestOption) (res *ProductOutput, err error) {
+func (r *ProductService) Update(ctx context.Context, id string, body ProductUpdateParams, opts ...option.RequestOption) (res *Product, err error) {
 	opts = append(r.Options[:], opts...)
 	if id == "" {
 		err = errors.New("missing required id parameter")
@@ -73,24 +74,39 @@ func (r *ProductService) Update(ctx context.Context, id string, body ProductUpda
 }
 
 // List products.
-func (r *ProductService) List(ctx context.Context, query ProductListParams, opts ...option.RequestOption) (res *ListResourceProduct, err error) {
+func (r *ProductService) List(ctx context.Context, query ProductListParams, opts ...option.RequestOption) (res *pagination.PolarPagination[Product], err error) {
+	var raw *http.Response
 	opts = append(r.Options[:], opts...)
+	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "v1/products/"
-	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
-	return
+	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
+	if err != nil {
+		return nil, err
+	}
+	err = cfg.Execute()
+	if err != nil {
+		return nil, err
+	}
+	res.SetPageConfig(cfg, raw)
+	return res, nil
+}
+
+// List products.
+func (r *ProductService) ListAutoPaging(ctx context.Context, query ProductListParams, opts ...option.RequestOption) *pagination.PolarPaginationAutoPager[Product] {
+	return pagination.NewPolarPaginationAutoPager(r.List(ctx, query, opts...))
 }
 
 type ListResourceProduct struct {
+	Items      []Product                     `json:"items,required"`
 	Pagination ListResourceProductPagination `json:"pagination,required"`
-	Items      []ProductOutput               `json:"items"`
 	JSON       listResourceProductJSON       `json:"-"`
 }
 
 // listResourceProductJSON contains the JSON metadata for the struct
 // [ListResourceProduct]
 type listResourceProductJSON struct {
-	Pagination  apijson.Field
 	Items       apijson.Field
+	Pagination  apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
 }
@@ -127,73 +143,73 @@ func (r listResourceProductPaginationJSON) RawJSON() string {
 }
 
 // A product.
-type ProductOutput struct {
+type Product struct {
 	// The ID of the product.
 	ID string `json:"id,required" format:"uuid4"`
 	// The benefits granted by the product.
-	Benefits []ProductOutputBenefit `json:"benefits,required"`
+	Benefits []ProductBenefit `json:"benefits,required"`
 	// Creation timestamp of the object.
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
+	// The description of the product.
+	Description string `json:"description,required,nullable"`
 	// Whether the product is archived and no longer available.
-	IsArchived bool `json:"is_archived,required"`
+	IsArchived    bool `json:"is_archived,required"`
+	IsHighlighted bool `json:"is_highlighted,required,nullable"`
 	// Whether the product is a subscription tier.
 	IsRecurring bool `json:"is_recurring,required"`
 	// The medias associated to the product.
 	Medias []ProductMediaFileReadOutput `json:"medias,required"`
+	// Last modification timestamp of the object.
+	ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
 	// The name of the product.
 	Name string `json:"name,required"`
 	// The ID of the organization owning the product.
 	OrganizationID string `json:"organization_id,required" format:"uuid4"`
 	// List of available prices for this product.
-	Prices []ProductOutputPrice `json:"prices,required"`
-	// The description of the product.
-	Description   string `json:"description,nullable"`
-	IsHighlighted bool   `json:"is_highlighted,nullable"`
-	// Last modification timestamp of the object.
-	ModifiedAt time.Time         `json:"modified_at,nullable" format:"date-time"`
-	Type       ProductOutputType `json:"type,nullable"`
-	JSON       productOutputJSON `json:"-"`
+	Prices []ProductPrice `json:"prices,required"`
+	Type   ProductType    `json:"type,required,nullable"`
+	JSON   productJSON    `json:"-"`
 }
 
-// productOutputJSON contains the JSON metadata for the struct [ProductOutput]
-type productOutputJSON struct {
+// productJSON contains the JSON metadata for the struct [Product]
+type productJSON struct {
 	ID             apijson.Field
 	Benefits       apijson.Field
 	CreatedAt      apijson.Field
+	Description    apijson.Field
 	IsArchived     apijson.Field
+	IsHighlighted  apijson.Field
 	IsRecurring    apijson.Field
 	Medias         apijson.Field
+	ModifiedAt     apijson.Field
 	Name           apijson.Field
 	OrganizationID apijson.Field
 	Prices         apijson.Field
-	Description    apijson.Field
-	IsHighlighted  apijson.Field
-	ModifiedAt     apijson.Field
 	Type           apijson.Field
 	raw            string
 	ExtraFields    map[string]apijson.Field
 }
 
-func (r *ProductOutput) UnmarshalJSON(data []byte) (err error) {
+func (r *Product) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-func (r productOutputJSON) RawJSON() string {
+func (r productJSON) RawJSON() string {
 	return r.raw
 }
 
 // A benefit of type `articles`.
 //
 // Use it to grant access to posts.
-type ProductOutputBenefit struct {
+type ProductBenefit struct {
 	// Creation timestamp of the object.
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
 	// Last modification timestamp of the object.
-	ModifiedAt time.Time `json:"modified_at,nullable" format:"date-time"`
+	ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
 	// The ID of the benefit.
 	ID string `json:"id,required" format:"uuid4"`
 	// The type of the benefit.
-	Type ProductOutputBenefitsType `json:"type,required"`
+	Type ProductBenefitsType `json:"type,required"`
 	// The description of the benefit.
 	Description string `json:"description,required"`
 	// Whether the benefit is selectable when creating a product.
@@ -203,15 +219,14 @@ type ProductOutputBenefit struct {
 	// The ID of the organization owning the benefit.
 	OrganizationID string `json:"organization_id,required" format:"uuid4"`
 	// This field can have the runtime type of
-	// [ProductOutputBenefitsBenefitArticlesProperties].
-	Properties interface{}              `json:"properties,required"`
-	JSON       productOutputBenefitJSON `json:"-"`
-	union      ProductOutputBenefitsUnion
+	// [ProductBenefitsBenefitArticlesProperties].
+	Properties interface{}        `json:"properties,required"`
+	JSON       productBenefitJSON `json:"-"`
+	union      ProductBenefitsUnion
 }
 
-// productOutputBenefitJSON contains the JSON metadata for the struct
-// [ProductOutputBenefit]
-type productOutputBenefitJSON struct {
+// productBenefitJSON contains the JSON metadata for the struct [ProductBenefit]
+type productBenefitJSON struct {
 	CreatedAt      apijson.Field
 	ModifiedAt     apijson.Field
 	ID             apijson.Field
@@ -225,12 +240,12 @@ type productOutputBenefitJSON struct {
 	ExtraFields    map[string]apijson.Field
 }
 
-func (r productOutputBenefitJSON) RawJSON() string {
+func (r productBenefitJSON) RawJSON() string {
 	return r.raw
 }
 
-func (r *ProductOutputBenefit) UnmarshalJSON(data []byte) (err error) {
-	*r = ProductOutputBenefit{}
+func (r *ProductBenefit) UnmarshalJSON(data []byte) (err error) {
+	*r = ProductBenefit{}
 	err = apijson.UnmarshalRoot(data, &r.union)
 	if err != nil {
 		return err
@@ -238,12 +253,12 @@ func (r *ProductOutputBenefit) UnmarshalJSON(data []byte) (err error) {
 	return apijson.Port(r.union, &r)
 }
 
-// AsUnion returns a [ProductOutputBenefitsUnion] interface which you can cast to
-// the specific types for more type safety.
+// AsUnion returns a [ProductBenefitsUnion] interface which you can cast to the
+// specific types for more type safety.
 //
-// Possible runtime types of the union are [ProductOutputBenefitsBenefitBase],
-// [ProductOutputBenefitsBenefitArticles].
-func (r ProductOutputBenefit) AsUnion() ProductOutputBenefitsUnion {
+// Possible runtime types of the union are [ProductBenefitsBenefitBase],
+// [ProductBenefitsBenefitArticles].
+func (r ProductBenefit) AsUnion() ProductBenefitsUnion {
 	return r.union
 }
 
@@ -251,28 +266,28 @@ func (r ProductOutputBenefit) AsUnion() ProductOutputBenefitsUnion {
 //
 // Use it to grant access to posts.
 //
-// Union satisfied by [ProductOutputBenefitsBenefitBase] or
-// [ProductOutputBenefitsBenefitArticles].
-type ProductOutputBenefitsUnion interface {
-	implementsProductOutputBenefit()
+// Union satisfied by [ProductBenefitsBenefitBase] or
+// [ProductBenefitsBenefitArticles].
+type ProductBenefitsUnion interface {
+	implementsProductBenefit()
 }
 
 func init() {
 	apijson.RegisterUnion(
-		reflect.TypeOf((*ProductOutputBenefitsUnion)(nil)).Elem(),
+		reflect.TypeOf((*ProductBenefitsUnion)(nil)).Elem(),
 		"",
 		apijson.UnionVariant{
 			TypeFilter: gjson.JSON,
-			Type:       reflect.TypeOf(ProductOutputBenefitsBenefitBase{}),
+			Type:       reflect.TypeOf(ProductBenefitsBenefitBase{}),
 		},
 		apijson.UnionVariant{
 			TypeFilter: gjson.JSON,
-			Type:       reflect.TypeOf(ProductOutputBenefitsBenefitArticles{}),
+			Type:       reflect.TypeOf(ProductBenefitsBenefitArticles{}),
 		},
 	)
 }
 
-type ProductOutputBenefitsBenefitBase struct {
+type ProductBenefitsBenefitBase struct {
 	// The ID of the benefit.
 	ID string `json:"id,required" format:"uuid4"`
 	// Creation timestamp of the object.
@@ -281,57 +296,58 @@ type ProductOutputBenefitsBenefitBase struct {
 	Deletable bool `json:"deletable,required"`
 	// The description of the benefit.
 	Description string `json:"description,required"`
+	// Last modification timestamp of the object.
+	ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
 	// The ID of the organization owning the benefit.
 	OrganizationID string `json:"organization_id,required" format:"uuid4"`
 	// Whether the benefit is selectable when creating a product.
 	Selectable bool `json:"selectable,required"`
 	// The type of the benefit.
-	Type ProductOutputBenefitsBenefitBaseType `json:"type,required"`
-	// Last modification timestamp of the object.
-	ModifiedAt time.Time                            `json:"modified_at,nullable" format:"date-time"`
-	JSON       productOutputBenefitsBenefitBaseJSON `json:"-"`
+	Type ProductBenefitsBenefitBaseType `json:"type,required"`
+	JSON productBenefitsBenefitBaseJSON `json:"-"`
 }
 
-// productOutputBenefitsBenefitBaseJSON contains the JSON metadata for the struct
-// [ProductOutputBenefitsBenefitBase]
-type productOutputBenefitsBenefitBaseJSON struct {
+// productBenefitsBenefitBaseJSON contains the JSON metadata for the struct
+// [ProductBenefitsBenefitBase]
+type productBenefitsBenefitBaseJSON struct {
 	ID             apijson.Field
 	CreatedAt      apijson.Field
 	Deletable      apijson.Field
 	Description    apijson.Field
+	ModifiedAt     apijson.Field
 	OrganizationID apijson.Field
 	Selectable     apijson.Field
 	Type           apijson.Field
-	ModifiedAt     apijson.Field
 	raw            string
 	ExtraFields    map[string]apijson.Field
 }
 
-func (r *ProductOutputBenefitsBenefitBase) UnmarshalJSON(data []byte) (err error) {
+func (r *ProductBenefitsBenefitBase) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-func (r productOutputBenefitsBenefitBaseJSON) RawJSON() string {
+func (r productBenefitsBenefitBaseJSON) RawJSON() string {
 	return r.raw
 }
 
-func (r ProductOutputBenefitsBenefitBase) implementsProductOutputBenefit() {}
+func (r ProductBenefitsBenefitBase) implementsProductBenefit() {}
 
 // The type of the benefit.
-type ProductOutputBenefitsBenefitBaseType string
+type ProductBenefitsBenefitBaseType string
 
 const (
-	ProductOutputBenefitsBenefitBaseTypeCustom           ProductOutputBenefitsBenefitBaseType = "custom"
-	ProductOutputBenefitsBenefitBaseTypeArticles         ProductOutputBenefitsBenefitBaseType = "articles"
-	ProductOutputBenefitsBenefitBaseTypeAds              ProductOutputBenefitsBenefitBaseType = "ads"
-	ProductOutputBenefitsBenefitBaseTypeDiscord          ProductOutputBenefitsBenefitBaseType = "discord"
-	ProductOutputBenefitsBenefitBaseTypeGitHubRepository ProductOutputBenefitsBenefitBaseType = "github_repository"
-	ProductOutputBenefitsBenefitBaseTypeDownloadables    ProductOutputBenefitsBenefitBaseType = "downloadables"
+	ProductBenefitsBenefitBaseTypeCustom           ProductBenefitsBenefitBaseType = "custom"
+	ProductBenefitsBenefitBaseTypeArticles         ProductBenefitsBenefitBaseType = "articles"
+	ProductBenefitsBenefitBaseTypeAds              ProductBenefitsBenefitBaseType = "ads"
+	ProductBenefitsBenefitBaseTypeDiscord          ProductBenefitsBenefitBaseType = "discord"
+	ProductBenefitsBenefitBaseTypeGitHubRepository ProductBenefitsBenefitBaseType = "github_repository"
+	ProductBenefitsBenefitBaseTypeDownloadables    ProductBenefitsBenefitBaseType = "downloadables"
+	ProductBenefitsBenefitBaseTypeLicenseKeys      ProductBenefitsBenefitBaseType = "license_keys"
 )
 
-func (r ProductOutputBenefitsBenefitBaseType) IsKnown() bool {
+func (r ProductBenefitsBenefitBaseType) IsKnown() bool {
 	switch r {
-	case ProductOutputBenefitsBenefitBaseTypeCustom, ProductOutputBenefitsBenefitBaseTypeArticles, ProductOutputBenefitsBenefitBaseTypeAds, ProductOutputBenefitsBenefitBaseTypeDiscord, ProductOutputBenefitsBenefitBaseTypeGitHubRepository, ProductOutputBenefitsBenefitBaseTypeDownloadables:
+	case ProductBenefitsBenefitBaseTypeCustom, ProductBenefitsBenefitBaseTypeArticles, ProductBenefitsBenefitBaseTypeAds, ProductBenefitsBenefitBaseTypeDiscord, ProductBenefitsBenefitBaseTypeGitHubRepository, ProductBenefitsBenefitBaseTypeDownloadables, ProductBenefitsBenefitBaseTypeLicenseKeys:
 		return true
 	}
 	return false
@@ -340,7 +356,7 @@ func (r ProductOutputBenefitsBenefitBaseType) IsKnown() bool {
 // A benefit of type `articles`.
 //
 // Use it to grant access to posts.
-type ProductOutputBenefitsBenefitArticles struct {
+type ProductBenefitsBenefitArticles struct {
 	// The ID of the benefit.
 	ID string `json:"id,required" format:"uuid4"`
 	// Creation timestamp of the object.
@@ -349,107 +365,124 @@ type ProductOutputBenefitsBenefitArticles struct {
 	Deletable bool `json:"deletable,required"`
 	// The description of the benefit.
 	Description string `json:"description,required"`
+	// Last modification timestamp of the object.
+	ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
 	// The ID of the organization owning the benefit.
 	OrganizationID string `json:"organization_id,required" format:"uuid4"`
 	// Properties for a benefit of type `articles`.
-	Properties ProductOutputBenefitsBenefitArticlesProperties `json:"properties,required"`
+	Properties ProductBenefitsBenefitArticlesProperties `json:"properties,required"`
 	// Whether the benefit is selectable when creating a product.
-	Selectable bool                                     `json:"selectable,required"`
-	Type       ProductOutputBenefitsBenefitArticlesType `json:"type,required"`
-	// Last modification timestamp of the object.
-	ModifiedAt time.Time                                `json:"modified_at,nullable" format:"date-time"`
-	JSON       productOutputBenefitsBenefitArticlesJSON `json:"-"`
+	Selectable bool                               `json:"selectable,required"`
+	Type       ProductBenefitsBenefitArticlesType `json:"type,required"`
+	JSON       productBenefitsBenefitArticlesJSON `json:"-"`
 }
 
-// productOutputBenefitsBenefitArticlesJSON contains the JSON metadata for the
-// struct [ProductOutputBenefitsBenefitArticles]
-type productOutputBenefitsBenefitArticlesJSON struct {
+// productBenefitsBenefitArticlesJSON contains the JSON metadata for the struct
+// [ProductBenefitsBenefitArticles]
+type productBenefitsBenefitArticlesJSON struct {
 	ID             apijson.Field
 	CreatedAt      apijson.Field
 	Deletable      apijson.Field
 	Description    apijson.Field
+	ModifiedAt     apijson.Field
 	OrganizationID apijson.Field
 	Properties     apijson.Field
 	Selectable     apijson.Field
 	Type           apijson.Field
-	ModifiedAt     apijson.Field
 	raw            string
 	ExtraFields    map[string]apijson.Field
 }
 
-func (r *ProductOutputBenefitsBenefitArticles) UnmarshalJSON(data []byte) (err error) {
+func (r *ProductBenefitsBenefitArticles) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-func (r productOutputBenefitsBenefitArticlesJSON) RawJSON() string {
+func (r productBenefitsBenefitArticlesJSON) RawJSON() string {
 	return r.raw
 }
 
-func (r ProductOutputBenefitsBenefitArticles) implementsProductOutputBenefit() {}
+func (r ProductBenefitsBenefitArticles) implementsProductBenefit() {}
 
 // Properties for a benefit of type `articles`.
-type ProductOutputBenefitsBenefitArticlesProperties struct {
+type ProductBenefitsBenefitArticlesProperties struct {
 	// Whether the user can access paid articles.
-	PaidArticles bool                                               `json:"paid_articles,required"`
-	JSON         productOutputBenefitsBenefitArticlesPropertiesJSON `json:"-"`
+	PaidArticles bool                                         `json:"paid_articles,required"`
+	JSON         productBenefitsBenefitArticlesPropertiesJSON `json:"-"`
 }
 
-// productOutputBenefitsBenefitArticlesPropertiesJSON contains the JSON metadata
-// for the struct [ProductOutputBenefitsBenefitArticlesProperties]
-type productOutputBenefitsBenefitArticlesPropertiesJSON struct {
+// productBenefitsBenefitArticlesPropertiesJSON contains the JSON metadata for the
+// struct [ProductBenefitsBenefitArticlesProperties]
+type productBenefitsBenefitArticlesPropertiesJSON struct {
 	PaidArticles apijson.Field
 	raw          string
 	ExtraFields  map[string]apijson.Field
 }
 
-func (r *ProductOutputBenefitsBenefitArticlesProperties) UnmarshalJSON(data []byte) (err error) {
+func (r *ProductBenefitsBenefitArticlesProperties) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-func (r productOutputBenefitsBenefitArticlesPropertiesJSON) RawJSON() string {
+func (r productBenefitsBenefitArticlesPropertiesJSON) RawJSON() string {
 	return r.raw
 }
 
-type ProductOutputBenefitsBenefitArticlesType string
+type ProductBenefitsBenefitArticlesType string
 
 const (
-	ProductOutputBenefitsBenefitArticlesTypeArticles ProductOutputBenefitsBenefitArticlesType = "articles"
+	ProductBenefitsBenefitArticlesTypeArticles ProductBenefitsBenefitArticlesType = "articles"
 )
 
-func (r ProductOutputBenefitsBenefitArticlesType) IsKnown() bool {
+func (r ProductBenefitsBenefitArticlesType) IsKnown() bool {
 	switch r {
-	case ProductOutputBenefitsBenefitArticlesTypeArticles:
+	case ProductBenefitsBenefitArticlesTypeArticles:
 		return true
 	}
 	return false
 }
 
 // The type of the benefit.
-type ProductOutputBenefitsType string
+type ProductBenefitsType string
 
 const (
-	ProductOutputBenefitsTypeCustom           ProductOutputBenefitsType = "custom"
-	ProductOutputBenefitsTypeArticles         ProductOutputBenefitsType = "articles"
-	ProductOutputBenefitsTypeAds              ProductOutputBenefitsType = "ads"
-	ProductOutputBenefitsTypeDiscord          ProductOutputBenefitsType = "discord"
-	ProductOutputBenefitsTypeGitHubRepository ProductOutputBenefitsType = "github_repository"
-	ProductOutputBenefitsTypeDownloadables    ProductOutputBenefitsType = "downloadables"
+	ProductBenefitsTypeCustom           ProductBenefitsType = "custom"
+	ProductBenefitsTypeArticles         ProductBenefitsType = "articles"
+	ProductBenefitsTypeAds              ProductBenefitsType = "ads"
+	ProductBenefitsTypeDiscord          ProductBenefitsType = "discord"
+	ProductBenefitsTypeGitHubRepository ProductBenefitsType = "github_repository"
+	ProductBenefitsTypeDownloadables    ProductBenefitsType = "downloadables"
+	ProductBenefitsTypeLicenseKeys      ProductBenefitsType = "license_keys"
 )
 
-func (r ProductOutputBenefitsType) IsKnown() bool {
+func (r ProductBenefitsType) IsKnown() bool {
 	switch r {
-	case ProductOutputBenefitsTypeCustom, ProductOutputBenefitsTypeArticles, ProductOutputBenefitsTypeAds, ProductOutputBenefitsTypeDiscord, ProductOutputBenefitsTypeGitHubRepository, ProductOutputBenefitsTypeDownloadables:
+	case ProductBenefitsTypeCustom, ProductBenefitsTypeArticles, ProductBenefitsTypeAds, ProductBenefitsTypeDiscord, ProductBenefitsTypeGitHubRepository, ProductBenefitsTypeDownloadables, ProductBenefitsTypeLicenseKeys:
+		return true
+	}
+	return false
+}
+
+type ProductType string
+
+const (
+	ProductTypeFree       ProductType = "free"
+	ProductTypeIndividual ProductType = "individual"
+	ProductTypeBusiness   ProductType = "business"
+)
+
+func (r ProductType) IsKnown() bool {
+	switch r {
+	case ProductTypeFree, ProductTypeIndividual, ProductTypeBusiness:
 		return true
 	}
 	return false
 }
 
 // A recurring price for a product, i.e. a subscription.
-type ProductOutputPrice struct {
+type ProductPrice struct {
 	// Creation timestamp of the object.
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
 	// Last modification timestamp of the object.
-	ModifiedAt time.Time `json:"modified_at,nullable" format:"date-time"`
+	ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
 	// The ID of the price.
 	ID string `json:"id,required" format:"uuid4"`
 	// The price in cents.
@@ -459,16 +492,15 @@ type ProductOutputPrice struct {
 	// Whether the price is archived and no longer available.
 	IsArchived bool `json:"is_archived,required"`
 	// The type of the price.
-	Type ProductOutputPricesType `json:"type,required"`
+	Type ProductPriceType `json:"type,required"`
 	// The recurring interval of the price, if type is `recurring`.
-	RecurringInterval ProductOutputPricesRecurringInterval `json:"recurring_interval,nullable"`
-	JSON              productOutputPriceJSON               `json:"-"`
-	union             ProductOutputPricesUnion
+	RecurringInterval ProductPriceRecurringInterval `json:"recurring_interval,nullable"`
+	JSON              productPriceJSON              `json:"-"`
+	union             ProductPriceUnion
 }
 
-// productOutputPriceJSON contains the JSON metadata for the struct
-// [ProductOutputPrice]
-type productOutputPriceJSON struct {
+// productPriceJSON contains the JSON metadata for the struct [ProductPrice]
+type productPriceJSON struct {
 	CreatedAt         apijson.Field
 	ModifiedAt        apijson.Field
 	ID                apijson.Field
@@ -481,12 +513,12 @@ type productOutputPriceJSON struct {
 	ExtraFields       map[string]apijson.Field
 }
 
-func (r productOutputPriceJSON) RawJSON() string {
+func (r productPriceJSON) RawJSON() string {
 	return r.raw
 }
 
-func (r *ProductOutputPrice) UnmarshalJSON(data []byte) (err error) {
-	*r = ProductOutputPrice{}
+func (r *ProductPrice) UnmarshalJSON(data []byte) (err error) {
+	*r = ProductPrice{}
 	err = apijson.UnmarshalRoot(data, &r.union)
 	if err != nil {
 		return err
@@ -494,219 +526,202 @@ func (r *ProductOutputPrice) UnmarshalJSON(data []byte) (err error) {
 	return apijson.Port(r.union, &r)
 }
 
-// AsUnion returns a [ProductOutputPricesUnion] interface which you can cast to the
+// AsUnion returns a [ProductPriceUnion] interface which you can cast to the
 // specific types for more type safety.
 //
-// Possible runtime types of the union are
-// [ProductOutputPricesProductPriceRecurring],
-// [ProductOutputPricesProductPriceOneTime].
-func (r ProductOutputPrice) AsUnion() ProductOutputPricesUnion {
+// Possible runtime types of the union are [ProductPriceProductPriceRecurring],
+// [ProductPriceProductPriceOneTime].
+func (r ProductPrice) AsUnion() ProductPriceUnion {
 	return r.union
 }
 
 // A recurring price for a product, i.e. a subscription.
 //
-// Union satisfied by [ProductOutputPricesProductPriceRecurring] or
-// [ProductOutputPricesProductPriceOneTime].
-type ProductOutputPricesUnion interface {
-	implementsProductOutputPrice()
+// Union satisfied by [ProductPriceProductPriceRecurring] or
+// [ProductPriceProductPriceOneTime].
+type ProductPriceUnion interface {
+	implementsProductPrice()
 }
 
 func init() {
 	apijson.RegisterUnion(
-		reflect.TypeOf((*ProductOutputPricesUnion)(nil)).Elem(),
+		reflect.TypeOf((*ProductPriceUnion)(nil)).Elem(),
 		"type",
 		apijson.UnionVariant{
 			TypeFilter:         gjson.JSON,
-			Type:               reflect.TypeOf(ProductOutputPricesProductPriceRecurring{}),
+			Type:               reflect.TypeOf(ProductPriceProductPriceRecurring{}),
 			DiscriminatorValue: "recurring",
 		},
 		apijson.UnionVariant{
 			TypeFilter:         gjson.JSON,
-			Type:               reflect.TypeOf(ProductOutputPricesProductPriceOneTime{}),
+			Type:               reflect.TypeOf(ProductPriceProductPriceOneTime{}),
 			DiscriminatorValue: "one_time",
 		},
 	)
 }
 
 // A recurring price for a product, i.e. a subscription.
-type ProductOutputPricesProductPriceRecurring struct {
+type ProductPriceProductPriceRecurring struct {
 	// The ID of the price.
 	ID string `json:"id,required" format:"uuid4"`
 	// Creation timestamp of the object.
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
 	// Whether the price is archived and no longer available.
 	IsArchived bool `json:"is_archived,required"`
+	// Last modification timestamp of the object.
+	ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
 	// The price in cents.
 	PriceAmount int64 `json:"price_amount,required"`
 	// The currency.
 	PriceCurrency string `json:"price_currency,required"`
-	// The type of the price.
-	Type ProductOutputPricesProductPriceRecurringType `json:"type,required"`
-	// Last modification timestamp of the object.
-	ModifiedAt time.Time `json:"modified_at,nullable" format:"date-time"`
 	// The recurring interval of the price, if type is `recurring`.
-	RecurringInterval ProductOutputPricesProductPriceRecurringRecurringInterval `json:"recurring_interval,nullable"`
-	JSON              productOutputPricesProductPriceRecurringJSON              `json:"-"`
+	RecurringInterval ProductPriceProductPriceRecurringRecurringInterval `json:"recurring_interval,required,nullable"`
+	// The type of the price.
+	Type ProductPriceProductPriceRecurringType `json:"type,required"`
+	JSON productPriceProductPriceRecurringJSON `json:"-"`
 }
 
-// productOutputPricesProductPriceRecurringJSON contains the JSON metadata for the
-// struct [ProductOutputPricesProductPriceRecurring]
-type productOutputPricesProductPriceRecurringJSON struct {
+// productPriceProductPriceRecurringJSON contains the JSON metadata for the struct
+// [ProductPriceProductPriceRecurring]
+type productPriceProductPriceRecurringJSON struct {
 	ID                apijson.Field
 	CreatedAt         apijson.Field
 	IsArchived        apijson.Field
+	ModifiedAt        apijson.Field
 	PriceAmount       apijson.Field
 	PriceCurrency     apijson.Field
-	Type              apijson.Field
-	ModifiedAt        apijson.Field
 	RecurringInterval apijson.Field
+	Type              apijson.Field
 	raw               string
 	ExtraFields       map[string]apijson.Field
 }
 
-func (r *ProductOutputPricesProductPriceRecurring) UnmarshalJSON(data []byte) (err error) {
+func (r *ProductPriceProductPriceRecurring) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-func (r productOutputPricesProductPriceRecurringJSON) RawJSON() string {
+func (r productPriceProductPriceRecurringJSON) RawJSON() string {
 	return r.raw
 }
 
-func (r ProductOutputPricesProductPriceRecurring) implementsProductOutputPrice() {}
+func (r ProductPriceProductPriceRecurring) implementsProductPrice() {}
 
-// The type of the price.
-type ProductOutputPricesProductPriceRecurringType string
+// The recurring interval of the price, if type is `recurring`.
+type ProductPriceProductPriceRecurringRecurringInterval string
 
 const (
-	ProductOutputPricesProductPriceRecurringTypeRecurring ProductOutputPricesProductPriceRecurringType = "recurring"
+	ProductPriceProductPriceRecurringRecurringIntervalMonth ProductPriceProductPriceRecurringRecurringInterval = "month"
+	ProductPriceProductPriceRecurringRecurringIntervalYear  ProductPriceProductPriceRecurringRecurringInterval = "year"
 )
 
-func (r ProductOutputPricesProductPriceRecurringType) IsKnown() bool {
+func (r ProductPriceProductPriceRecurringRecurringInterval) IsKnown() bool {
 	switch r {
-	case ProductOutputPricesProductPriceRecurringTypeRecurring:
+	case ProductPriceProductPriceRecurringRecurringIntervalMonth, ProductPriceProductPriceRecurringRecurringIntervalYear:
 		return true
 	}
 	return false
 }
 
-// The recurring interval of the price, if type is `recurring`.
-type ProductOutputPricesProductPriceRecurringRecurringInterval string
+// The type of the price.
+type ProductPriceProductPriceRecurringType string
 
 const (
-	ProductOutputPricesProductPriceRecurringRecurringIntervalMonth ProductOutputPricesProductPriceRecurringRecurringInterval = "month"
-	ProductOutputPricesProductPriceRecurringRecurringIntervalYear  ProductOutputPricesProductPriceRecurringRecurringInterval = "year"
+	ProductPriceProductPriceRecurringTypeRecurring ProductPriceProductPriceRecurringType = "recurring"
 )
 
-func (r ProductOutputPricesProductPriceRecurringRecurringInterval) IsKnown() bool {
+func (r ProductPriceProductPriceRecurringType) IsKnown() bool {
 	switch r {
-	case ProductOutputPricesProductPriceRecurringRecurringIntervalMonth, ProductOutputPricesProductPriceRecurringRecurringIntervalYear:
+	case ProductPriceProductPriceRecurringTypeRecurring:
 		return true
 	}
 	return false
 }
 
 // A one-time price for a product.
-type ProductOutputPricesProductPriceOneTime struct {
+type ProductPriceProductPriceOneTime struct {
 	// The ID of the price.
 	ID string `json:"id,required" format:"uuid4"`
 	// Creation timestamp of the object.
 	CreatedAt time.Time `json:"created_at,required" format:"date-time"`
 	// Whether the price is archived and no longer available.
 	IsArchived bool `json:"is_archived,required"`
+	// Last modification timestamp of the object.
+	ModifiedAt time.Time `json:"modified_at,required,nullable" format:"date-time"`
 	// The price in cents.
 	PriceAmount int64 `json:"price_amount,required"`
 	// The currency.
 	PriceCurrency string `json:"price_currency,required"`
 	// The type of the price.
-	Type ProductOutputPricesProductPriceOneTimeType `json:"type,required"`
-	// Last modification timestamp of the object.
-	ModifiedAt time.Time                                  `json:"modified_at,nullable" format:"date-time"`
-	JSON       productOutputPricesProductPriceOneTimeJSON `json:"-"`
+	Type ProductPriceProductPriceOneTimeType `json:"type,required"`
+	JSON productPriceProductPriceOneTimeJSON `json:"-"`
 }
 
-// productOutputPricesProductPriceOneTimeJSON contains the JSON metadata for the
-// struct [ProductOutputPricesProductPriceOneTime]
-type productOutputPricesProductPriceOneTimeJSON struct {
+// productPriceProductPriceOneTimeJSON contains the JSON metadata for the struct
+// [ProductPriceProductPriceOneTime]
+type productPriceProductPriceOneTimeJSON struct {
 	ID            apijson.Field
 	CreatedAt     apijson.Field
 	IsArchived    apijson.Field
+	ModifiedAt    apijson.Field
 	PriceAmount   apijson.Field
 	PriceCurrency apijson.Field
 	Type          apijson.Field
-	ModifiedAt    apijson.Field
 	raw           string
 	ExtraFields   map[string]apijson.Field
 }
 
-func (r *ProductOutputPricesProductPriceOneTime) UnmarshalJSON(data []byte) (err error) {
+func (r *ProductPriceProductPriceOneTime) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-func (r productOutputPricesProductPriceOneTimeJSON) RawJSON() string {
+func (r productPriceProductPriceOneTimeJSON) RawJSON() string {
 	return r.raw
 }
 
-func (r ProductOutputPricesProductPriceOneTime) implementsProductOutputPrice() {}
+func (r ProductPriceProductPriceOneTime) implementsProductPrice() {}
 
 // The type of the price.
-type ProductOutputPricesProductPriceOneTimeType string
+type ProductPriceProductPriceOneTimeType string
 
 const (
-	ProductOutputPricesProductPriceOneTimeTypeOneTime ProductOutputPricesProductPriceOneTimeType = "one_time"
+	ProductPriceProductPriceOneTimeTypeOneTime ProductPriceProductPriceOneTimeType = "one_time"
 )
 
-func (r ProductOutputPricesProductPriceOneTimeType) IsKnown() bool {
+func (r ProductPriceProductPriceOneTimeType) IsKnown() bool {
 	switch r {
-	case ProductOutputPricesProductPriceOneTimeTypeOneTime:
+	case ProductPriceProductPriceOneTimeTypeOneTime:
 		return true
 	}
 	return false
 }
 
 // The type of the price.
-type ProductOutputPricesType string
+type ProductPriceType string
 
 const (
-	ProductOutputPricesTypeRecurring ProductOutputPricesType = "recurring"
-	ProductOutputPricesTypeOneTime   ProductOutputPricesType = "one_time"
+	ProductPriceTypeRecurring ProductPriceType = "recurring"
+	ProductPriceTypeOneTime   ProductPriceType = "one_time"
 )
 
-func (r ProductOutputPricesType) IsKnown() bool {
+func (r ProductPriceType) IsKnown() bool {
 	switch r {
-	case ProductOutputPricesTypeRecurring, ProductOutputPricesTypeOneTime:
+	case ProductPriceTypeRecurring, ProductPriceTypeOneTime:
 		return true
 	}
 	return false
 }
 
 // The recurring interval of the price, if type is `recurring`.
-type ProductOutputPricesRecurringInterval string
+type ProductPriceRecurringInterval string
 
 const (
-	ProductOutputPricesRecurringIntervalMonth ProductOutputPricesRecurringInterval = "month"
-	ProductOutputPricesRecurringIntervalYear  ProductOutputPricesRecurringInterval = "year"
+	ProductPriceRecurringIntervalMonth ProductPriceRecurringInterval = "month"
+	ProductPriceRecurringIntervalYear  ProductPriceRecurringInterval = "year"
 )
 
-func (r ProductOutputPricesRecurringInterval) IsKnown() bool {
+func (r ProductPriceRecurringInterval) IsKnown() bool {
 	switch r {
-	case ProductOutputPricesRecurringIntervalMonth, ProductOutputPricesRecurringIntervalYear:
-		return true
-	}
-	return false
-}
-
-type ProductOutputType string
-
-const (
-	ProductOutputTypeFree       ProductOutputType = "free"
-	ProductOutputTypeIndividual ProductOutputType = "individual"
-	ProductOutputTypeBusiness   ProductOutputType = "business"
-)
-
-func (r ProductOutputType) IsKnown() bool {
-	switch r {
-	case ProductOutputTypeFree, ProductOutputTypeIndividual, ProductOutputTypeBusiness:
+	case ProductPriceRecurringIntervalMonth, ProductPriceRecurringIntervalYear:
 		return true
 	}
 	return false

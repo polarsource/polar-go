@@ -4,7 +4,6 @@ package polar_test
 
 import (
 	"context"
-	"errors"
 	"os"
 	"testing"
 
@@ -13,7 +12,7 @@ import (
 	"github.com/polarsource/polar-go/option"
 )
 
-func TestPledgeSummaryGet(t *testing.T) {
+func TestAutoPagination(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -25,14 +24,13 @@ func TestPledgeSummaryGet(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithBearerToken("My Bearer Token"),
 	)
-	_, err := client.Pledges.Summary.Get(context.TODO(), polar.PledgeSummaryGetParams{
-		IssueID: polar.F("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e"),
-	})
-	if err != nil {
-		var apierr *polar.Error
-		if errors.As(err, &apierr) {
-			t.Log(string(apierr.DumpRequest(true)))
-		}
+	iter := client.Products.ListAutoPaging(context.TODO(), polar.ProductListParams{})
+	// Prism mock isn't going to give us real pagination
+	for i := 0; i < 3 && iter.Next(); i++ {
+		product := iter.Current()
+		t.Logf("%+v\n", product.ID)
+	}
+	if err := iter.Err(); err != nil {
 		t.Fatalf("err should be nil: %s", err.Error())
 	}
 }

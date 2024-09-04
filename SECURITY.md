@@ -20,7 +20,7 @@ or products provided by Polar please follow the respective company's security re
 
 ### Polar Terms and Policies
 
-Please contact dev-feedback@polar.com for any questions or concerns regarding security of our services.
+Please contact tech@polar.sh for any questions or concerns regarding security of our services.
 
 ---
 

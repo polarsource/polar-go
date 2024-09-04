@@ -12,6 +12,7 @@ import (
 
 	"github.com/polarsource/polar-go/internal/apijson"
 	"github.com/polarsource/polar-go/internal/apiquery"
+	"github.com/polarsource/polar-go/internal/pagination"
 	"github.com/polarsource/polar-go/internal/param"
 	"github.com/polarsource/polar-go/internal/requestconfig"
 	"github.com/polarsource/polar-go/option"
@@ -49,26 +50,43 @@ func (r *UserDownloadableService) Get(ctx context.Context, token string, opts ..
 }
 
 // List Downloadables
-func (r *UserDownloadableService) List(ctx context.Context, query UserDownloadableListParams, opts ...option.RequestOption) (res *UserDownloadableListResponse, err error) {
+func (r *UserDownloadableService) List(ctx context.Context, query UserDownloadableListParams, opts ...option.RequestOption) (res *pagination.PolarPagination[UserDownloadableListResponse], err error) {
+	var raw *http.Response
 	opts = append(r.Options[:], opts...)
+	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "v1/users/downloadables/"
-	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
-	return
+	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
+	if err != nil {
+		return nil, err
+	}
+	err = cfg.Execute()
+	if err != nil {
+		return nil, err
+	}
+	res.SetPageConfig(cfg, raw)
+	return res, nil
+}
+
+// List Downloadables
+func (r *UserDownloadableService) ListAutoPaging(ctx context.Context, query UserDownloadableListParams, opts ...option.RequestOption) *pagination.PolarPaginationAutoPager[UserDownloadableListResponse] {
+	return pagination.NewPolarPaginationAutoPager(r.List(ctx, query, opts...))
 }
 
 type UserDownloadableGetResponse = interface{}
 
 type UserDownloadableListResponse struct {
-	Pagination UserDownloadableListResponsePagination `json:"pagination,required"`
-	Items      []UserDownloadableListResponseItem     `json:"items"`
-	JSON       userDownloadableListResponseJSON       `json:"-"`
+	ID        string                           `json:"id,required" format:"uuid4"`
+	BenefitID string                           `json:"benefit_id,required" format:"uuid4"`
+	File      UserDownloadableListResponseFile `json:"file,required"`
+	JSON      userDownloadableListResponseJSON `json:"-"`
 }
 
 // userDownloadableListResponseJSON contains the JSON metadata for the struct
 // [UserDownloadableListResponse]
 type userDownloadableListResponseJSON struct {
-	Pagination  apijson.Field
-	Items       apijson.Field
+	ID          apijson.Field
+	BenefitID   apijson.Field
+	File        apijson.Field
 	raw         string
 	ExtraFields map[string]apijson.Field
 }
@@ -81,80 +99,36 @@ func (r userDownloadableListResponseJSON) RawJSON() string {
 	return r.raw
 }
 
-type UserDownloadableListResponsePagination struct {
-	MaxPage    int64                                      `json:"max_page,required"`
-	TotalCount int64                                      `json:"total_count,required"`
-	JSON       userDownloadableListResponsePaginationJSON `json:"-"`
+type UserDownloadableListResponseFile struct {
+	ID                   string                                   `json:"id,required" format:"uuid4"`
+	ChecksumEtag         string                                   `json:"checksum_etag,required,nullable"`
+	ChecksumSha256Base64 string                                   `json:"checksum_sha256_base64,required,nullable"`
+	ChecksumSha256Hex    string                                   `json:"checksum_sha256_hex,required,nullable"`
+	Download             UserDownloadableListResponseFileDownload `json:"download,required"`
+	IsUploaded           bool                                     `json:"is_uploaded,required"`
+	LastModifiedAt       time.Time                                `json:"last_modified_at,required,nullable" format:"date-time"`
+	MimeType             string                                   `json:"mime_type,required"`
+	Name                 string                                   `json:"name,required"`
+	OrganizationID       string                                   `json:"organization_id,required" format:"uuid4"`
+	Path                 string                                   `json:"path,required"`
+	Service              UserDownloadableListResponseFileService  `json:"service,required"`
+	Size                 int64                                    `json:"size,required"`
+	SizeReadable         string                                   `json:"size_readable,required"`
+	StorageVersion       string                                   `json:"storage_version,required,nullable"`
+	Version              string                                   `json:"version,required,nullable"`
+	JSON                 userDownloadableListResponseFileJSON     `json:"-"`
 }
 
-// userDownloadableListResponsePaginationJSON contains the JSON metadata for the
-// struct [UserDownloadableListResponsePagination]
-type userDownloadableListResponsePaginationJSON struct {
-	MaxPage     apijson.Field
-	TotalCount  apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *UserDownloadableListResponsePagination) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-func (r userDownloadableListResponsePaginationJSON) RawJSON() string {
-	return r.raw
-}
-
-type UserDownloadableListResponseItem struct {
-	ID        string                                `json:"id,required" format:"uuid4"`
-	BenefitID string                                `json:"benefit_id,required" format:"uuid4"`
-	File      UserDownloadableListResponseItemsFile `json:"file,required"`
-	JSON      userDownloadableListResponseItemJSON  `json:"-"`
-}
-
-// userDownloadableListResponseItemJSON contains the JSON metadata for the struct
-// [UserDownloadableListResponseItem]
-type userDownloadableListResponseItemJSON struct {
-	ID          apijson.Field
-	BenefitID   apijson.Field
-	File        apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *UserDownloadableListResponseItem) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-func (r userDownloadableListResponseItemJSON) RawJSON() string {
-	return r.raw
-}
-
-type UserDownloadableListResponseItemsFile struct {
-	ID                   string                                        `json:"id,required" format:"uuid4"`
-	Download             UserDownloadableListResponseItemsFileDownload `json:"download,required"`
-	IsUploaded           bool                                          `json:"is_uploaded,required"`
-	MimeType             string                                        `json:"mime_type,required"`
-	Name                 string                                        `json:"name,required"`
-	OrganizationID       string                                        `json:"organization_id,required" format:"uuid4"`
-	Path                 string                                        `json:"path,required"`
-	Service              UserDownloadableListResponseItemsFileService  `json:"service,required"`
-	Size                 int64                                         `json:"size,required"`
-	SizeReadable         string                                        `json:"size_readable,required"`
-	Version              string                                        `json:"version,required,nullable"`
-	ChecksumEtag         string                                        `json:"checksum_etag,nullable"`
-	ChecksumSha256Base64 string                                        `json:"checksum_sha256_base64,nullable"`
-	ChecksumSha256Hex    string                                        `json:"checksum_sha256_hex,nullable"`
-	LastModifiedAt       time.Time                                     `json:"last_modified_at,nullable" format:"date-time"`
-	StorageVersion       string                                        `json:"storage_version,nullable"`
-	JSON                 userDownloadableListResponseItemsFileJSON     `json:"-"`
-}
-
-// userDownloadableListResponseItemsFileJSON contains the JSON metadata for the
-// struct [UserDownloadableListResponseItemsFile]
-type userDownloadableListResponseItemsFileJSON struct {
+// userDownloadableListResponseFileJSON contains the JSON metadata for the struct
+// [UserDownloadableListResponseFile]
+type userDownloadableListResponseFileJSON struct {
 	ID                   apijson.Field
+	ChecksumEtag         apijson.Field
+	ChecksumSha256Base64 apijson.Field
+	ChecksumSha256Hex    apijson.Field
 	Download             apijson.Field
 	IsUploaded           apijson.Field
+	LastModifiedAt       apijson.Field
 	MimeType             apijson.Field
 	Name                 apijson.Field
 	OrganizationID       apijson.Field
@@ -162,34 +136,30 @@ type userDownloadableListResponseItemsFileJSON struct {
 	Service              apijson.Field
 	Size                 apijson.Field
 	SizeReadable         apijson.Field
-	Version              apijson.Field
-	ChecksumEtag         apijson.Field
-	ChecksumSha256Base64 apijson.Field
-	ChecksumSha256Hex    apijson.Field
-	LastModifiedAt       apijson.Field
 	StorageVersion       apijson.Field
+	Version              apijson.Field
 	raw                  string
 	ExtraFields          map[string]apijson.Field
 }
 
-func (r *UserDownloadableListResponseItemsFile) UnmarshalJSON(data []byte) (err error) {
+func (r *UserDownloadableListResponseFile) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-func (r userDownloadableListResponseItemsFileJSON) RawJSON() string {
+func (r userDownloadableListResponseFileJSON) RawJSON() string {
 	return r.raw
 }
 
-type UserDownloadableListResponseItemsFileDownload struct {
-	ExpiresAt time.Time                                         `json:"expires_at,required" format:"date-time"`
-	URL       string                                            `json:"url,required"`
-	Headers   map[string]string                                 `json:"headers"`
-	JSON      userDownloadableListResponseItemsFileDownloadJSON `json:"-"`
+type UserDownloadableListResponseFileDownload struct {
+	ExpiresAt time.Time                                    `json:"expires_at,required" format:"date-time"`
+	URL       string                                       `json:"url,required"`
+	Headers   map[string]string                            `json:"headers"`
+	JSON      userDownloadableListResponseFileDownloadJSON `json:"-"`
 }
 
-// userDownloadableListResponseItemsFileDownloadJSON contains the JSON metadata for
-// the struct [UserDownloadableListResponseItemsFileDownload]
-type userDownloadableListResponseItemsFileDownloadJSON struct {
+// userDownloadableListResponseFileDownloadJSON contains the JSON metadata for the
+// struct [UserDownloadableListResponseFileDownload]
+type userDownloadableListResponseFileDownloadJSON struct {
 	ExpiresAt   apijson.Field
 	URL         apijson.Field
 	Headers     apijson.Field
@@ -197,25 +167,25 @@ type userDownloadableListResponseItemsFileDownloadJSON struct {
 	ExtraFields map[string]apijson.Field
 }
 
-func (r *UserDownloadableListResponseItemsFileDownload) UnmarshalJSON(data []byte) (err error) {
+func (r *UserDownloadableListResponseFileDownload) UnmarshalJSON(data []byte) (err error) {
 	return apijson.UnmarshalRoot(data, r)
 }
 
-func (r userDownloadableListResponseItemsFileDownloadJSON) RawJSON() string {
+func (r userDownloadableListResponseFileDownloadJSON) RawJSON() string {
 	return r.raw
 }
 
-type UserDownloadableListResponseItemsFileService string
+type UserDownloadableListResponseFileService string
 
 const (
-	UserDownloadableListResponseItemsFileServiceDownloadable       UserDownloadableListResponseItemsFileService = "downloadable"
-	UserDownloadableListResponseItemsFileServiceProductMedia       UserDownloadableListResponseItemsFileService = "product_media"
-	UserDownloadableListResponseItemsFileServiceOrganizationAvatar UserDownloadableListResponseItemsFileService = "organization_avatar"
+	UserDownloadableListResponseFileServiceDownloadable       UserDownloadableListResponseFileService = "downloadable"
+	UserDownloadableListResponseFileServiceProductMedia       UserDownloadableListResponseFileService = "product_media"
+	UserDownloadableListResponseFileServiceOrganizationAvatar UserDownloadableListResponseFileService = "organization_avatar"
 )
 
-func (r UserDownloadableListResponseItemsFileService) IsKnown() bool {
+func (r UserDownloadableListResponseFileService) IsKnown() bool {
 	switch r {
-	case UserDownloadableListResponseItemsFileServiceDownloadable, UserDownloadableListResponseItemsFileServiceProductMedia, UserDownloadableListResponseItemsFileServiceOrganizationAvatar:
+	case UserDownloadableListResponseFileServiceDownloadable, UserDownloadableListResponseFileServiceProductMedia, UserDownloadableListResponseFileServiceOrganizationAvatar:
 		return true
 	}
 	return false
