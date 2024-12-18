@@ -23,15 +23,15 @@ package main
 import(
 	"context"
 	"os"
-	polargo "github.com/polarsource/polar-go"
+	"polar"
 	"log"
 )
 
 func main() {
     ctx := context.Background()
     
-    s := polargo.New(
-        polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
+    s := polar.New(
+        polar.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )
 
     res, err := s.Oauth2.Clients.List(ctx, nil, nil)
@@ -88,16 +88,16 @@ package main
 import(
 	"context"
 	"os"
-	polargo "github.com/polarsource/polar-go"
-	"github.com/polarsource/polar-go/models/components"
+	"polar"
+	"polar/models/components"
 	"log"
 )
 
 func main() {
     ctx := context.Background()
     
-    s := polargo.New(
-        polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
+    s := polar.New(
+        polar.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )
 
     res, err := s.Oauth2.Clients.Create(ctx, components.OAuth2ClientConfiguration{
@@ -146,15 +146,15 @@ package main
 import(
 	"context"
 	"os"
-	polargo "github.com/polarsource/polar-go"
+	"polar"
 	"log"
 )
 
 func main() {
     ctx := context.Background()
     
-    s := polargo.New(
-        polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
+    s := polar.New(
+        polar.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )
 
     res, err := s.Oauth2.Clients.Get(ctx, "<id>")
@@ -198,16 +198,16 @@ package main
 import(
 	"context"
 	"os"
-	polargo "github.com/polarsource/polar-go"
-	"github.com/polarsource/polar-go/models/components"
+	"polar"
+	"polar/models/components"
 	"log"
 )
 
 func main() {
     ctx := context.Background()
     
-    s := polargo.New(
-        polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
+    s := polar.New(
+        polar.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )
 
     res, err := s.Oauth2.Clients.Update(ctx, "<id>", components.OAuth2ClientConfigurationUpdate{
@@ -260,15 +260,15 @@ package main
 import(
 	"context"
 	"os"
-	polargo "github.com/polarsource/polar-go"
+	"polar"
 	"log"
 )
 
 func main() {
     ctx := context.Background()
     
-    s := polargo.New(
-        polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
+    s := polar.New(
+        polar.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )
 
     res, err := s.Oauth2.Clients.Delete(ctx, "<id>")

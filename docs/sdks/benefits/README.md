@@ -24,15 +24,15 @@ package main
 import(
 	"context"
 	"os"
-	polargo "github.com/polarsource/polar-go"
+	"polar"
 	"log"
 )
 
 func main() {
     ctx := context.Background()
     
-    s := polargo.New(
-        polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
+    s := polar.New(
+        polar.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )
 
     res, err := s.Benefits.List(ctx, nil, nil, nil, nil)
@@ -91,16 +91,16 @@ package main
 import(
 	"context"
 	"os"
-	polargo "github.com/polarsource/polar-go"
-	"github.com/polarsource/polar-go/models/components"
+	"polar"
+	"polar/models/components"
 	"log"
 )
 
 func main() {
     ctx := context.Background()
     
-    s := polargo.New(
-        polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
+    s := polar.New(
+        polar.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )
 
     res, err := s.Benefits.Create(ctx, components.CreateBenefitCreateBenefitDownloadablesCreate(
@@ -153,15 +153,15 @@ package main
 import(
 	"context"
 	"os"
-	polargo "github.com/polarsource/polar-go"
+	"polar"
 	"log"
 )
 
 func main() {
     ctx := context.Background()
     
-    s := polargo.New(
-        polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
+    s := polar.New(
+        polar.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )
 
     res, err := s.Benefits.Get(ctx, "<value>")
@@ -206,16 +206,16 @@ package main
 import(
 	"context"
 	"os"
-	polargo "github.com/polarsource/polar-go"
-	"github.com/polarsource/polar-go/models/components"
+	"polar"
+	"polar/models/components"
 	"log"
 )
 
 func main() {
     ctx := context.Background()
     
-    s := polargo.New(
-        polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
+    s := polar.New(
+        polar.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )
 
     res, err := s.Benefits.Update(ctx, "<value>", operations.CreateBenefitsUpdateBenefitUpdateBenefitGitHubRepositoryUpdate(
@@ -274,15 +274,15 @@ package main
 import(
 	"context"
 	"os"
-	polargo "github.com/polarsource/polar-go"
+	"polar"
 	"log"
 )
 
 func main() {
     ctx := context.Background()
     
-    s := polargo.New(
-        polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
+    s := polar.New(
+        polar.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )
 
     res, err := s.Benefits.Delete(ctx, "<value>")
@@ -330,16 +330,16 @@ package main
 import(
 	"context"
 	"os"
-	polargo "github.com/polarsource/polar-go"
-	"github.com/polarsource/polar-go/models/operations"
+	"polar"
+	"polar/models/operations"
 	"log"
 )
 
 func main() {
     ctx := context.Background()
     
-    s := polargo.New(
-        polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
+    s := polar.New(
+        polar.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )
 
     res, err := s.Benefits.Grants(ctx, operations.BenefitsGrantsRequest{

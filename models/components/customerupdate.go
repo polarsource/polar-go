@@ -5,7 +5,7 @@ package components
 import (
 	"errors"
 	"fmt"
-	"github.com/polarsource/polar-go/internal/utils"
+	"polar/internal/utils"
 )
 
 type CustomerUpdateTaxIDType string

@@ -23,16 +23,16 @@ package main
 import(
 	"context"
 	"os"
-	polargo "github.com/polarsource/polar-go"
-	"github.com/polarsource/polar-go/models/operations"
+	"polar"
+	"polar/models/operations"
 	"log"
 )
 
 func main() {
     ctx := context.Background()
     
-    s := polargo.New(
-        polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
+    s := polar.New(
+        polar.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )
 
     res, err := s.Products.List(ctx, operations.ProductsListRequest{})
@@ -88,16 +88,16 @@ package main
 import(
 	"context"
 	"os"
-	polargo "github.com/polarsource/polar-go"
-	"github.com/polarsource/polar-go/models/components"
+	"polar"
+	"polar/models/components"
 	"log"
 )
 
 func main() {
     ctx := context.Background()
     
-    s := polargo.New(
-        polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
+    s := polar.New(
+        polar.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )
 
     res, err := s.Products.Create(ctx, components.CreateProductCreateProductRecurringCreate(
@@ -153,15 +153,15 @@ package main
 import(
 	"context"
 	"os"
-	polargo "github.com/polarsource/polar-go"
+	"polar"
 	"log"
 )
 
 func main() {
     ctx := context.Background()
     
-    s := polargo.New(
-        polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
+    s := polar.New(
+        polar.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )
 
     res, err := s.Products.Get(ctx, "<value>")
@@ -206,16 +206,16 @@ package main
 import(
 	"context"
 	"os"
-	polargo "github.com/polarsource/polar-go"
-	"github.com/polarsource/polar-go/models/components"
+	"polar"
+	"polar/models/components"
 	"log"
 )
 
 func main() {
     ctx := context.Background()
     
-    s := polargo.New(
-        polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
+    s := polar.New(
+        polar.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )
 
     res, err := s.Products.Update(ctx, "<value>", components.ProductUpdate{})
@@ -262,16 +262,16 @@ package main
 import(
 	"context"
 	"os"
-	polargo "github.com/polarsource/polar-go"
-	"github.com/polarsource/polar-go/models/components"
+	"polar"
+	"polar/models/components"
 	"log"
 )
 
 func main() {
     ctx := context.Background()
     
-    s := polargo.New(
-        polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
+    s := polar.New(
+        polar.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )
 
     res, err := s.Products.UpdateBenefits(ctx, "<value>", components.ProductBenefitsUpdate{

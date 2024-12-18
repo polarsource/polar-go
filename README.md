@@ -61,16 +61,16 @@ package main
 
 import (
 	"context"
-	polargo "github.com/polarsource/polar-go"
-	"github.com/polarsource/polar-go/models/components"
-	"github.com/polarsource/polar-go/types"
 	"log"
+	"polar"
+	"polar/models/components"
+	"polar/types"
 )
 
 func main() {
 	ctx := context.Background()
 
-	s := polargo.New()
+	s := polar.New()
 
 	res, err := s.EndpointcheckoutCreatedPost(ctx, components.WebhookCheckoutCreatedPayload{
 		Data: components.Checkout{
@@ -82,29 +82,29 @@ func main() {
 			URL:                    "https://heavy-beret.com/",
 			ExpiresAt:              types.MustTimeFromString("2022-02-25T02:26:48.460Z"),
 			SuccessURL:             "https://sardonic-final.info/",
-			EmbedOrigin:            polargo.String("<value>"),
-			Amount:                 polargo.Int64(962818),
-			TaxAmount:              polargo.Int64(6400),
-			Currency:               polargo.String("Yen"),
-			SubtotalAmount:         polargo.Int64(648726),
-			TotalAmount:            polargo.Int64(210702),
+			EmbedOrigin:            polar.String("<value>"),
+			Amount:                 polar.Int64(962818),
+			TaxAmount:              polar.Int64(6400),
+			Currency:               polar.String("Yen"),
+			SubtotalAmount:         polar.Int64(648726),
+			TotalAmount:            polar.Int64(210702),
 			ProductID:              "<value>",
 			ProductPriceID:         "<value>",
-			DiscountID:             polargo.String("<value>"),
+			DiscountID:             polar.String("<value>"),
 			AllowDiscountCodes:     true,
 			IsDiscountApplicable:   false,
 			IsFreeProductPrice:     false,
 			IsPaymentRequired:      false,
 			IsPaymentSetupRequired: false,
 			IsPaymentFormRequired:  false,
-			CustomerID:             polargo.String("<value>"),
-			CustomerName:           polargo.String("<value>"),
-			CustomerEmail:          polargo.String("Ryley_Erdman@hotmail.com"),
-			CustomerIPAddress:      polargo.String("<value>"),
+			CustomerID:             polar.String("<value>"),
+			CustomerName:           polar.String("<value>"),
+			CustomerEmail:          polar.String("Ryley_Erdman@hotmail.com"),
+			CustomerIPAddress:      polar.String("<value>"),
 			CustomerBillingAddress: &components.Address{
 				Country: "South Africa",
 			},
-			CustomerTaxID:            polargo.String("<id>"),
+			CustomerTaxID:            polar.String("<id>"),
 			PaymentProcessorMetadata: components.PaymentProcessorMetadata{},
 			Metadata: map[string]components.CheckoutMetadata{
 				"key": components.CreateCheckoutMetadataInteger(
@@ -119,7 +119,7 @@ func main() {
 				ModifiedAt:     types.MustNewTimeFromString("2023-12-16T03:02:38.803Z"),
 				ID:             "<value>",
 				Name:           "<value>",
-				Description:    polargo.String("for embarrassment untidy long-term near honestly separate yet"),
+				Description:    polar.String("for embarrassment untidy long-term near honestly separate yet"),
 				IsRecurring:    true,
 				IsArchived:     false,
 				OrganizationID: "<value>",
@@ -133,9 +133,9 @@ func main() {
 								IsArchived:    false,
 								ProductID:     "<value>",
 								PriceCurrency: "<value>",
-								MinimumAmount: polargo.Int64(691423),
-								MaximumAmount: polargo.Int64(499526),
-								PresetAmount:  polargo.Int64(18677),
+								MinimumAmount: polar.Int64(691423),
+								MaximumAmount: polar.Int64(499526),
+								PresetAmount:  polar.Int64(18677),
 							},
 						),
 					),
@@ -160,12 +160,12 @@ func main() {
 						Path:                 "/private/var",
 						MimeType:             "<value>",
 						Size:                 245189,
-						StorageVersion:       polargo.String("<value>"),
-						ChecksumEtag:         polargo.String("<value>"),
-						ChecksumSha256Base64: polargo.String("<value>"),
-						ChecksumSha256Hex:    polargo.String("<value>"),
+						StorageVersion:       polar.String("<value>"),
+						ChecksumEtag:         polar.String("<value>"),
+						ChecksumSha256Base64: polar.String("<value>"),
+						ChecksumSha256Hex:    polar.String("<value>"),
 						LastModifiedAt:       types.MustNewTimeFromString("2022-11-03T15:00:03.276Z"),
-						Version:              polargo.String("<value>"),
+						Version:              polar.String("<value>"),
 						IsUploaded:           false,
 						CreatedAt:            types.MustTimeFromString("2024-06-07T13:47:02.365Z"),
 						SizeReadable:         "<value>",
@@ -193,10 +193,10 @@ func main() {
 					BasisPoints: 341163,
 					ID:          "<value>",
 					Name:        "<value>",
-					Code:        polargo.String("<value>"),
+					Code:        polar.String("<value>"),
 				},
 			),
-			SubscriptionID: polargo.String("<value>"),
+			SubscriptionID: polar.String("<value>"),
 			AttachedCustomFields: []components.AttachedCustomField{
 				components.AttachedCustomField{
 					CustomFieldID: "<value>",
@@ -269,6 +269,14 @@ func main() {
 					Required: true,
 				},
 			},
+			CustomerMetadata: map[string]components.CustomerMetadata{
+				"key": components.CreateCustomerMetadataStr(
+					"<value>",
+				),
+				"key1": components.CreateCustomerMetadataStr(
+					"<value>",
+				),
+			},
 		},
 	})
 	if err != nil {
@@ -299,17 +307,17 @@ package main
 
 import (
 	"context"
-	polargo "github.com/polarsource/polar-go"
-	"github.com/polarsource/polar-go/models/operations"
 	"log"
 	"os"
+	"polar"
+	"polar/models/operations"
 )
 
 func main() {
 	ctx := context.Background()
 
-	s := polargo.New(
-		polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
+	s := polar.New(
+		polar.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
 	)
 
 	res, err := s.ExternalOrganizations.List(ctx, operations.ExternalOrganizationsListRequest{})
@@ -535,17 +543,17 @@ package main
 
 import (
 	"context"
-	polargo "github.com/polarsource/polar-go"
-	"github.com/polarsource/polar-go/models/operations"
 	"log"
 	"os"
+	"polar"
+	"polar/models/operations"
 )
 
 func main() {
 	ctx := context.Background()
 
-	s := polargo.New(
-		polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
+	s := polar.New(
+		polar.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
 	)
 
 	res, err := s.ExternalOrganizations.List(ctx, operations.ExternalOrganizationsListRequest{})
@@ -583,19 +591,19 @@ package main
 
 import (
 	"context"
-	polargo "github.com/polarsource/polar-go"
-	"github.com/polarsource/polar-go/models/operations"
-	"github.com/polarsource/polar-go/retry"
 	"log"
 	"models/operations"
 	"os"
+	"polar"
+	"polar/models/operations"
+	"polar/retry"
 )
 
 func main() {
 	ctx := context.Background()
 
-	s := polargo.New(
-		polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
+	s := polar.New(
+		polar.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
 	)
 
 	res, err := s.ExternalOrganizations.List(ctx, operations.ExternalOrganizationsListRequest{}, operations.WithRetries(
@@ -637,18 +645,18 @@ package main
 
 import (
 	"context"
-	polargo "github.com/polarsource/polar-go"
-	"github.com/polarsource/polar-go/models/operations"
-	"github.com/polarsource/polar-go/retry"
 	"log"
 	"os"
+	"polar"
+	"polar/models/operations"
+	"polar/retry"
 )
 
 func main() {
 	ctx := context.Background()
 
-	s := polargo.New(
-		polargo.WithRetryConfig(
+	s := polar.New(
+		polar.WithRetryConfig(
 			retry.Config{
 				Strategy: "backoff",
 				Backoff: &retry.BackoffStrategy{
@@ -659,7 +667,7 @@ func main() {
 				},
 				RetryConnectionErrors: false,
 			}),
-		polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
+		polar.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
 	)
 
 	res, err := s.ExternalOrganizations.List(ctx, operations.ExternalOrganizationsListRequest{})
@@ -708,18 +716,18 @@ package main
 import (
 	"context"
 	"errors"
-	polargo "github.com/polarsource/polar-go"
-	"github.com/polarsource/polar-go/models/apierrors"
-	"github.com/polarsource/polar-go/models/operations"
 	"log"
 	"os"
+	"polar"
+	"polar/models/apierrors"
+	"polar/models/operations"
 )
 
 func main() {
 	ctx := context.Background()
 
-	s := polargo.New(
-		polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
+	s := polar.New(
+		polar.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
 	)
 
 	res, err := s.ExternalOrganizations.List(ctx, operations.ExternalOrganizationsListRequest{})
@@ -761,18 +769,18 @@ package main
 
 import (
 	"context"
-	polargo "github.com/polarsource/polar-go"
-	"github.com/polarsource/polar-go/models/operations"
 	"log"
 	"os"
+	"polar"
+	"polar/models/operations"
 )
 
 func main() {
 	ctx := context.Background()
 
-	s := polargo.New(
-		polargo.WithServer("sandbox"),
-		polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
+	s := polar.New(
+		polar.WithServer("sandbox"),
+		polar.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
 	)
 
 	res, err := s.ExternalOrganizations.List(ctx, operations.ExternalOrganizationsListRequest{})
@@ -806,18 +814,18 @@ package main
 
 import (
 	"context"
-	polargo "github.com/polarsource/polar-go"
-	"github.com/polarsource/polar-go/models/operations"
 	"log"
 	"os"
+	"polar"
+	"polar/models/operations"
 )
 
 func main() {
 	ctx := context.Background()
 
-	s := polargo.New(
-		polargo.WithServerURL("https://api.polar.sh"),
-		polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
+	s := polar.New(
+		polar.WithServerURL("https://api.polar.sh"),
+		polar.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
 	)
 
 	res, err := s.ExternalOrganizations.List(ctx, operations.ExternalOrganizationsListRequest{})

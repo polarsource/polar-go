@@ -4,7 +4,7 @@ package apierrors
 
 import (
 	"encoding/json"
-	"github.com/polarsource/polar-go/models/components"
+	"polar/models/components"
 )
 
 type HTTPValidationError struct {

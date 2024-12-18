@@ -3,7 +3,7 @@
 package components
 
 import (
-	"github.com/polarsource/polar-go/internal/utils"
+	"polar/internal/utils"
 )
 
 type OrganizationFeatureSettings struct {

@@ -6,7 +6,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/polarsource/polar-go/internal/utils"
+	"polar/internal/utils"
 )
 
 type CustomFieldUpdateTextMetadataType string
@@ -119,16 +119,6 @@ func (e *CustomFieldUpdateTextType) UnmarshalJSON(data []byte) error {
 
 // CustomFieldUpdateText - Schema to update a custom field of type text.
 type CustomFieldUpdateText struct {
-	// Key-value object allowing you to store additional information.
-	//
-	// The key must be a string with a maximum length of **40 characters**.
-	// The value must be either:
-	//
-	// * A string with a maximum length of **500 characters**
-	// * An integer
-	// * A boolean
-	//
-	// You can store up to **50 key-value pairs**.
 	Metadata   map[string]CustomFieldUpdateTextMetadata `json:"metadata,omitempty"`
 	Name       *string                                  `json:"name,omitempty"`
 	Slug       *string                                  `json:"slug,omitempty"`

@@ -6,8 +6,8 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/polarsource/polar-go/internal/utils"
-	"github.com/polarsource/polar-go/models/components"
+	"polar/internal/utils"
+	"polar/models/components"
 )
 
 type Oauth2RequestTokenRequestBodyType string

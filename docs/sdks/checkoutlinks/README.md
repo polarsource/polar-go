@@ -23,16 +23,16 @@ package main
 import(
 	"context"
 	"os"
-	polargo "github.com/polarsource/polar-go"
-	"github.com/polarsource/polar-go/models/operations"
+	"polar"
+	"polar/models/operations"
 	"log"
 )
 
 func main() {
     ctx := context.Background()
     
-    s := polargo.New(
-        polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
+    s := polar.New(
+        polar.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )
 
     res, err := s.CheckoutLinks.List(ctx, operations.CheckoutLinksListRequest{})
@@ -88,16 +88,16 @@ package main
 import(
 	"context"
 	"os"
-	polargo "github.com/polarsource/polar-go"
-	"github.com/polarsource/polar-go/models/components"
+	"polar"
+	"polar/models/components"
 	"log"
 )
 
 func main() {
     ctx := context.Background()
     
-    s := polargo.New(
-        polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
+    s := polar.New(
+        polar.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )
 
     res, err := s.CheckoutLinks.Create(ctx, components.CreateCheckoutLinkCreateCheckoutLinkPriceCreate(
@@ -145,15 +145,15 @@ package main
 import(
 	"context"
 	"os"
-	polargo "github.com/polarsource/polar-go"
+	"polar"
 	"log"
 )
 
 func main() {
     ctx := context.Background()
     
-    s := polargo.New(
-        polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
+    s := polar.New(
+        polar.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )
 
     res, err := s.CheckoutLinks.Get(ctx, "<value>")
@@ -198,16 +198,16 @@ package main
 import(
 	"context"
 	"os"
-	polargo "github.com/polarsource/polar-go"
-	"github.com/polarsource/polar-go/models/components"
+	"polar"
+	"polar/models/components"
 	"log"
 )
 
 func main() {
     ctx := context.Background()
     
-    s := polargo.New(
-        polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
+    s := polar.New(
+        polar.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )
 
     res, err := s.CheckoutLinks.Update(ctx, "<value>", components.CheckoutLinkUpdate{})
@@ -253,15 +253,15 @@ package main
 import(
 	"context"
 	"os"
-	polargo "github.com/polarsource/polar-go"
+	"polar"
 	"log"
 )
 
 func main() {
     ctx := context.Background()
     
-    s := polargo.New(
-        polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
+    s := polar.New(
+        polar.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )
 
     res, err := s.CheckoutLinks.Delete(ctx, "<value>")

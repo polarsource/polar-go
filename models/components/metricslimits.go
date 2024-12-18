@@ -3,8 +3,8 @@
 package components
 
 import (
-	"github.com/polarsource/polar-go/internal/utils"
-	"github.com/polarsource/polar-go/types"
+	"polar/internal/utils"
+	"polar/types"
 )
 
 // MetricsLimits - Date limits to get metrics.

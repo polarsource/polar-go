@@ -5,7 +5,7 @@ package components
 import (
 	"errors"
 	"fmt"
-	"github.com/polarsource/polar-go/internal/utils"
+	"polar/internal/utils"
 )
 
 type CheckoutLinkUpdateMetadataType string
@@ -95,16 +95,6 @@ func (u CheckoutLinkUpdateMetadata) MarshalJSON() ([]byte, error) {
 
 // CheckoutLinkUpdate - Schema to update an existing checkout link.
 type CheckoutLinkUpdate struct {
-	// Key-value object allowing you to store additional information.
-	//
-	// The key must be a string with a maximum length of **40 characters**.
-	// The value must be either:
-	//
-	// * A string with a maximum length of **500 characters**
-	// * An integer
-	// * A boolean
-	//
-	// You can store up to **50 key-value pairs**.
 	Metadata map[string]CheckoutLinkUpdateMetadata `json:"metadata,omitempty"`
 	Label    *string                               `json:"label,omitempty"`
 	// Whether to allow the customer to apply discount codes. If you apply a discount through `discount_id`, it'll still be applied, but the customer won't be able to change it.

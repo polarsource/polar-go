@@ -4,17 +4,17 @@ package main
 
 import (
 	"context"
-	polargo "github.com/polarsource/polar-go"
-	"github.com/polarsource/polar-go/models/operations"
 	"log"
 	"os"
+	"polar"
+	"polar/models/operations"
 )
 
 func main() {
 	ctx := context.Background()
 
-	s := polargo.New(
-		polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
+	s := polar.New(
+		polar.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
 	)
 
 	res, err := s.ExternalOrganizations.List(ctx, operations.ExternalOrganizationsListRequest{})

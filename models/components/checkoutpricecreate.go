@@ -6,7 +6,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/polarsource/polar-go/internal/utils"
+	"polar/internal/utils"
 )
 
 type CheckoutPriceCreateMetadataType string
@@ -122,6 +122,91 @@ func (e *CheckoutPriceCreatePaymentProcessor) UnmarshalJSON(data []byte) error {
 	}
 }
 
+type CheckoutPriceCreateCustomerMetadataType string
+
+const (
+	CheckoutPriceCreateCustomerMetadataTypeStr     CheckoutPriceCreateCustomerMetadataType = "str"
+	CheckoutPriceCreateCustomerMetadataTypeInteger CheckoutPriceCreateCustomerMetadataType = "integer"
+	CheckoutPriceCreateCustomerMetadataTypeBoolean CheckoutPriceCreateCustomerMetadataType = "boolean"
+)
+
+type CheckoutPriceCreateCustomerMetadata struct {
+	Str     *string `queryParam:"inline"`
+	Integer *int64  `queryParam:"inline"`
+	Boolean *bool   `queryParam:"inline"`
+
+	Type CheckoutPriceCreateCustomerMetadataType
+}
+
+func CreateCheckoutPriceCreateCustomerMetadataStr(str string) CheckoutPriceCreateCustomerMetadata {
+	typ := CheckoutPriceCreateCustomerMetadataTypeStr
+
+	return CheckoutPriceCreateCustomerMetadata{
+		Str:  &str,
+		Type: typ,
+	}
+}
+
+func CreateCheckoutPriceCreateCustomerMetadataInteger(integer int64) CheckoutPriceCreateCustomerMetadata {
+	typ := CheckoutPriceCreateCustomerMetadataTypeInteger
+
+	return CheckoutPriceCreateCustomerMetadata{
+		Integer: &integer,
+		Type:    typ,
+	}
+}
+
+func CreateCheckoutPriceCreateCustomerMetadataBoolean(boolean bool) CheckoutPriceCreateCustomerMetadata {
+	typ := CheckoutPriceCreateCustomerMetadataTypeBoolean
+
+	return CheckoutPriceCreateCustomerMetadata{
+		Boolean: &boolean,
+		Type:    typ,
+	}
+}
+
+func (u *CheckoutPriceCreateCustomerMetadata) UnmarshalJSON(data []byte) error {
+
+	var str string = ""
+	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
+		u.Str = &str
+		u.Type = CheckoutPriceCreateCustomerMetadataTypeStr
+		return nil
+	}
+
+	var integer int64 = int64(0)
+	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
+		u.Integer = &integer
+		u.Type = CheckoutPriceCreateCustomerMetadataTypeInteger
+		return nil
+	}
+
+	var boolean bool = false
+	if err := utils.UnmarshalJSON(data, &boolean, "", true, true); err == nil {
+		u.Boolean = &boolean
+		u.Type = CheckoutPriceCreateCustomerMetadataTypeBoolean
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for CheckoutPriceCreateCustomerMetadata", string(data))
+}
+
+func (u CheckoutPriceCreateCustomerMetadata) MarshalJSON() ([]byte, error) {
+	if u.Str != nil {
+		return utils.MarshalJSON(u.Str, "", true)
+	}
+
+	if u.Integer != nil {
+		return utils.MarshalJSON(u.Integer, "", true)
+	}
+
+	if u.Boolean != nil {
+		return utils.MarshalJSON(u.Boolean, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type CheckoutPriceCreateCustomerMetadata: all fields are null")
+}
+
 // CheckoutPriceCreate - Create a new checkout session from a product price.
 //
 // Metadata set on the checkout will be copied
@@ -154,6 +239,17 @@ type CheckoutPriceCreate struct {
 	CustomerIPAddress      *string  `json:"customer_ip_address,omitempty"`
 	CustomerBillingAddress *Address `json:"customer_billing_address,omitempty"`
 	CustomerTaxID          *string  `json:"customer_tax_id,omitempty"`
+	// Key-value object allowing you to store additional information that'll be copied to the created customer.
+	//
+	// The key must be a string with a maximum length of **40 characters**.
+	// The value must be either:
+	//
+	// * A string with a maximum length of **500 characters**
+	// * An integer
+	// * A boolean
+	//
+	// You can store up to **50 key-value pairs**.
+	CustomerMetadata map[string]CheckoutPriceCreateCustomerMetadata `json:"customer_metadata,omitempty"`
 	// ID of a subscription to upgrade. It must be on a free pricing. If checkout is successful, metadata set on this checkout will be copied to the subscription, and existing keys will be overwritten.
 	SubscriptionID *string `json:"subscription_id,omitempty"`
 	// URL where the customer will be redirected after a successful payment.You can add the `checkout_id={CHECKOUT_ID}` query parameter to retrieve the checkout session id.
@@ -254,6 +350,13 @@ func (o *CheckoutPriceCreate) GetCustomerTaxID() *string {
 		return nil
 	}
 	return o.CustomerTaxID
+}
+
+func (o *CheckoutPriceCreate) GetCustomerMetadata() map[string]CheckoutPriceCreateCustomerMetadata {
+	if o == nil {
+		return nil
+	}
+	return o.CustomerMetadata
 }
 
 func (o *CheckoutPriceCreate) GetSubscriptionID() *string {

@@ -5,7 +5,7 @@ package components
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/polarsource/polar-go/internal/utils"
+	"polar/internal/utils"
 )
 
 type BenefitCustomCreateType string
@@ -38,8 +38,6 @@ type BenefitCustomCreate struct {
 	Description string `json:"description"`
 	// The ID of the organization owning the benefit. **Required unless you use an organization token.**
 	OrganizationID *string `json:"organization_id,omitempty"`
-	// Whether the benefit is taxable.
-	IsTaxApplicable bool `json:"is_tax_applicable"`
 	// Properties for creating a benefit of type `custom`.
 	Properties BenefitCustomCreateProperties `json:"properties"`
 }
@@ -71,13 +69,6 @@ func (o *BenefitCustomCreate) GetOrganizationID() *string {
 		return nil
 	}
 	return o.OrganizationID
-}
-
-func (o *BenefitCustomCreate) GetIsTaxApplicable() bool {
-	if o == nil {
-		return false
-	}
-	return o.IsTaxApplicable
 }
 
 func (o *BenefitCustomCreate) GetProperties() BenefitCustomCreateProperties {

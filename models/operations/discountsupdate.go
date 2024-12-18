@@ -3,7 +3,7 @@
 package operations
 
 import (
-	"github.com/polarsource/polar-go/models/components"
+	"polar/models/components"
 )
 
 type DiscountsUpdateRequest struct {

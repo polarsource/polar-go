@@ -5,7 +5,7 @@ package components
 import (
 	"errors"
 	"fmt"
-	"github.com/polarsource/polar-go/internal/utils"
+	"polar/internal/utils"
 )
 
 type CustomFieldData struct {
@@ -96,18 +96,109 @@ func (u CheckoutUpdateMetadata) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type CheckoutUpdateMetadata: all fields are null")
 }
 
+type CheckoutUpdateCustomerMetadataType string
+
+const (
+	CheckoutUpdateCustomerMetadataTypeStr     CheckoutUpdateCustomerMetadataType = "str"
+	CheckoutUpdateCustomerMetadataTypeInteger CheckoutUpdateCustomerMetadataType = "integer"
+	CheckoutUpdateCustomerMetadataTypeBoolean CheckoutUpdateCustomerMetadataType = "boolean"
+)
+
+type CheckoutUpdateCustomerMetadata struct {
+	Str     *string `queryParam:"inline"`
+	Integer *int64  `queryParam:"inline"`
+	Boolean *bool   `queryParam:"inline"`
+
+	Type CheckoutUpdateCustomerMetadataType
+}
+
+func CreateCheckoutUpdateCustomerMetadataStr(str string) CheckoutUpdateCustomerMetadata {
+	typ := CheckoutUpdateCustomerMetadataTypeStr
+
+	return CheckoutUpdateCustomerMetadata{
+		Str:  &str,
+		Type: typ,
+	}
+}
+
+func CreateCheckoutUpdateCustomerMetadataInteger(integer int64) CheckoutUpdateCustomerMetadata {
+	typ := CheckoutUpdateCustomerMetadataTypeInteger
+
+	return CheckoutUpdateCustomerMetadata{
+		Integer: &integer,
+		Type:    typ,
+	}
+}
+
+func CreateCheckoutUpdateCustomerMetadataBoolean(boolean bool) CheckoutUpdateCustomerMetadata {
+	typ := CheckoutUpdateCustomerMetadataTypeBoolean
+
+	return CheckoutUpdateCustomerMetadata{
+		Boolean: &boolean,
+		Type:    typ,
+	}
+}
+
+func (u *CheckoutUpdateCustomerMetadata) UnmarshalJSON(data []byte) error {
+
+	var str string = ""
+	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
+		u.Str = &str
+		u.Type = CheckoutUpdateCustomerMetadataTypeStr
+		return nil
+	}
+
+	var integer int64 = int64(0)
+	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
+		u.Integer = &integer
+		u.Type = CheckoutUpdateCustomerMetadataTypeInteger
+		return nil
+	}
+
+	var boolean bool = false
+	if err := utils.UnmarshalJSON(data, &boolean, "", true, true); err == nil {
+		u.Boolean = &boolean
+		u.Type = CheckoutUpdateCustomerMetadataTypeBoolean
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for CheckoutUpdateCustomerMetadata", string(data))
+}
+
+func (u CheckoutUpdateCustomerMetadata) MarshalJSON() ([]byte, error) {
+	if u.Str != nil {
+		return utils.MarshalJSON(u.Str, "", true)
+	}
+
+	if u.Integer != nil {
+		return utils.MarshalJSON(u.Integer, "", true)
+	}
+
+	if u.Boolean != nil {
+		return utils.MarshalJSON(u.Boolean, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type CheckoutUpdateCustomerMetadata: all fields are null")
+}
+
 // CheckoutUpdate - Update an existing checkout session using an access token.
 type CheckoutUpdate struct {
 	// Key-value object storing custom field values.
 	CustomFieldData *CustomFieldData `json:"custom_field_data,omitempty"`
 	// ID of the product price to checkout. Must correspond to a price linked to the same product.
-	ProductPriceID         *string  `json:"product_price_id,omitempty"`
-	Amount                 *int64   `json:"amount,omitempty"`
-	CustomerName           *string  `json:"customer_name,omitempty"`
-	CustomerEmail          *string  `json:"customer_email,omitempty"`
-	CustomerBillingAddress *Address `json:"customer_billing_address,omitempty"`
-	CustomerTaxID          *string  `json:"customer_tax_id,omitempty"`
-	// Key-value object allowing you to store additional information.
+	ProductPriceID         *string                           `json:"product_price_id,omitempty"`
+	Amount                 *int64                            `json:"amount,omitempty"`
+	CustomerName           *string                           `json:"customer_name,omitempty"`
+	CustomerEmail          *string                           `json:"customer_email,omitempty"`
+	CustomerBillingAddress *Address                          `json:"customer_billing_address,omitempty"`
+	CustomerTaxID          *string                           `json:"customer_tax_id,omitempty"`
+	Metadata               map[string]CheckoutUpdateMetadata `json:"metadata,omitempty"`
+	// ID of the discount to apply to the checkout.
+	DiscountID *string `json:"discount_id,omitempty"`
+	// Whether to allow the customer to apply discount codes. If you apply a discount through `discount_id`, it'll still be applied, but the customer won't be able to change it.
+	AllowDiscountCodes *bool   `json:"allow_discount_codes,omitempty"`
+	CustomerIPAddress  *string `json:"customer_ip_address,omitempty"`
+	// Key-value object allowing you to store additional information that'll be copied to the created customer.
 	//
 	// The key must be a string with a maximum length of **40 characters**.
 	// The value must be either:
@@ -117,12 +208,7 @@ type CheckoutUpdate struct {
 	// * A boolean
 	//
 	// You can store up to **50 key-value pairs**.
-	Metadata map[string]CheckoutUpdateMetadata `json:"metadata,omitempty"`
-	// ID of the discount to apply to the checkout.
-	DiscountID *string `json:"discount_id,omitempty"`
-	// Whether to allow the customer to apply discount codes. If you apply a discount through `discount_id`, it'll still be applied, but the customer won't be able to change it.
-	AllowDiscountCodes *bool   `json:"allow_discount_codes,omitempty"`
-	CustomerIPAddress  *string `json:"customer_ip_address,omitempty"`
+	CustomerMetadata map[string]CheckoutUpdateCustomerMetadata `json:"customer_metadata,omitempty"`
 	// URL where the customer will be redirected after a successful payment.You can add the `checkout_id={CHECKOUT_ID}` query parameter to retrieve the checkout session id.
 	SuccessURL *string `json:"success_url,omitempty"`
 	// If you plan to embed the checkout session, set this to the Origin of the embedding page. It'll allow the Polar iframe to communicate with the parent page.
@@ -204,6 +290,13 @@ func (o *CheckoutUpdate) GetCustomerIPAddress() *string {
 		return nil
 	}
 	return o.CustomerIPAddress
+}
+
+func (o *CheckoutUpdate) GetCustomerMetadata() map[string]CheckoutUpdateCustomerMetadata {
+	if o == nil {
+		return nil
+	}
+	return o.CustomerMetadata
 }
 
 func (o *CheckoutUpdate) GetSuccessURL() *string {

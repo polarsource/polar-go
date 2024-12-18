@@ -5,7 +5,7 @@ package components
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/polarsource/polar-go/internal/utils"
+	"polar/internal/utils"
 	"time"
 )
 
@@ -53,7 +53,7 @@ type BenefitCustom struct {
 	OrganizationID string `json:"organization_id"`
 	// Properties for a benefit of type `custom`.
 	Properties BenefitCustomProperties `json:"properties"`
-	// Whether the benefit is taxable.
+	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
 	IsTaxApplicable bool `json:"is_tax_applicable"`
 }
 

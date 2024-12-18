@@ -5,80 +5,80 @@ package components
 import (
 	"errors"
 	"fmt"
-	"github.com/polarsource/polar-go/internal/utils"
+	"polar/internal/utils"
 	"time"
 )
 
-type CustomerMetadataType string
+type CustomerMetadata1Type string
 
 const (
-	CustomerMetadataTypeStr     CustomerMetadataType = "str"
-	CustomerMetadataTypeInteger CustomerMetadataType = "integer"
-	CustomerMetadataTypeBoolean CustomerMetadataType = "boolean"
+	CustomerMetadata1TypeStr     CustomerMetadata1Type = "str"
+	CustomerMetadata1TypeInteger CustomerMetadata1Type = "integer"
+	CustomerMetadata1TypeBoolean CustomerMetadata1Type = "boolean"
 )
 
-type CustomerMetadata struct {
+type CustomerMetadata1 struct {
 	Str     *string `queryParam:"inline"`
 	Integer *int64  `queryParam:"inline"`
 	Boolean *bool   `queryParam:"inline"`
 
-	Type CustomerMetadataType
+	Type CustomerMetadata1Type
 }
 
-func CreateCustomerMetadataStr(str string) CustomerMetadata {
-	typ := CustomerMetadataTypeStr
+func CreateCustomerMetadata1Str(str string) CustomerMetadata1 {
+	typ := CustomerMetadata1TypeStr
 
-	return CustomerMetadata{
+	return CustomerMetadata1{
 		Str:  &str,
 		Type: typ,
 	}
 }
 
-func CreateCustomerMetadataInteger(integer int64) CustomerMetadata {
-	typ := CustomerMetadataTypeInteger
+func CreateCustomerMetadata1Integer(integer int64) CustomerMetadata1 {
+	typ := CustomerMetadata1TypeInteger
 
-	return CustomerMetadata{
+	return CustomerMetadata1{
 		Integer: &integer,
 		Type:    typ,
 	}
 }
 
-func CreateCustomerMetadataBoolean(boolean bool) CustomerMetadata {
-	typ := CustomerMetadataTypeBoolean
+func CreateCustomerMetadata1Boolean(boolean bool) CustomerMetadata1 {
+	typ := CustomerMetadata1TypeBoolean
 
-	return CustomerMetadata{
+	return CustomerMetadata1{
 		Boolean: &boolean,
 		Type:    typ,
 	}
 }
 
-func (u *CustomerMetadata) UnmarshalJSON(data []byte) error {
+func (u *CustomerMetadata1) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
 	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
 		u.Str = &str
-		u.Type = CustomerMetadataTypeStr
+		u.Type = CustomerMetadata1TypeStr
 		return nil
 	}
 
 	var integer int64 = int64(0)
 	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
 		u.Integer = &integer
-		u.Type = CustomerMetadataTypeInteger
+		u.Type = CustomerMetadata1TypeInteger
 		return nil
 	}
 
 	var boolean bool = false
 	if err := utils.UnmarshalJSON(data, &boolean, "", true, true); err == nil {
 		u.Boolean = &boolean
-		u.Type = CustomerMetadataTypeBoolean
+		u.Type = CustomerMetadata1TypeBoolean
 		return nil
 	}
 
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for CustomerMetadata", string(data))
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for CustomerMetadata1", string(data))
 }
 
-func (u CustomerMetadata) MarshalJSON() ([]byte, error) {
+func (u CustomerMetadata1) MarshalJSON() ([]byte, error) {
 	if u.Str != nil {
 		return utils.MarshalJSON(u.Str, "", true)
 	}
@@ -91,7 +91,7 @@ func (u CustomerMetadata) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.Boolean, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type CustomerMetadata: all fields are null")
+	return nil, errors.New("could not marshal union type CustomerMetadata1: all fields are null")
 }
 
 type CustomerTaxIDType string
@@ -164,15 +164,15 @@ type Customer struct {
 	// Last modification timestamp of the object.
 	ModifiedAt *time.Time `json:"modified_at"`
 	// The ID of the object.
-	ID             string                      `json:"id"`
-	Metadata       map[string]CustomerMetadata `json:"metadata"`
-	Email          string                      `json:"email"`
-	EmailVerified  bool                        `json:"email_verified"`
-	Name           *string                     `json:"name"`
-	BillingAddress *Address                    `json:"billing_address"`
-	TaxID          []CustomerTaxID             `json:"tax_id"`
-	OrganizationID string                      `json:"organization_id"`
-	AvatarURL      string                      `json:"avatar_url"`
+	ID             string                       `json:"id"`
+	Metadata       map[string]CustomerMetadata1 `json:"metadata"`
+	Email          string                       `json:"email"`
+	EmailVerified  bool                         `json:"email_verified"`
+	Name           *string                      `json:"name"`
+	BillingAddress *Address                     `json:"billing_address"`
+	TaxID          []CustomerTaxID              `json:"tax_id"`
+	OrganizationID string                       `json:"organization_id"`
+	AvatarURL      string                       `json:"avatar_url"`
 }
 
 func (c Customer) MarshalJSON() ([]byte, error) {
@@ -207,9 +207,9 @@ func (o *Customer) GetID() string {
 	return o.ID
 }
 
-func (o *Customer) GetMetadata() map[string]CustomerMetadata {
+func (o *Customer) GetMetadata() map[string]CustomerMetadata1 {
 	if o == nil {
-		return map[string]CustomerMetadata{}
+		return map[string]CustomerMetadata1{}
 	}
 	return o.Metadata
 }
