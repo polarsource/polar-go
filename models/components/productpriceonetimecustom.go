@@ -3,9 +3,58 @@
 package components
 
 import (
+	"encoding/json"
+	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
 	"time"
 )
+
+type ProductPriceOneTimeCustomAmountType string
+
+const (
+	ProductPriceOneTimeCustomAmountTypeCustom ProductPriceOneTimeCustomAmountType = "custom"
+)
+
+func (e ProductPriceOneTimeCustomAmountType) ToPointer() *ProductPriceOneTimeCustomAmountType {
+	return &e
+}
+func (e *ProductPriceOneTimeCustomAmountType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "custom":
+		*e = ProductPriceOneTimeCustomAmountType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for ProductPriceOneTimeCustomAmountType: %v", v)
+	}
+}
+
+// ProductPriceOneTimeCustomType - The type of the price.
+type ProductPriceOneTimeCustomType string
+
+const (
+	ProductPriceOneTimeCustomTypeOneTime ProductPriceOneTimeCustomType = "one_time"
+)
+
+func (e ProductPriceOneTimeCustomType) ToPointer() *ProductPriceOneTimeCustomType {
+	return &e
+}
+func (e *ProductPriceOneTimeCustomType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "one_time":
+		*e = ProductPriceOneTimeCustomType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for ProductPriceOneTimeCustomType: %v", v)
+	}
+}
 
 // ProductPriceOneTimeCustom - A pay-what-you-want price for a one-time product.
 type ProductPriceOneTimeCustom struct {
@@ -14,8 +63,8 @@ type ProductPriceOneTimeCustom struct {
 	// Last modification timestamp of the object.
 	ModifiedAt *time.Time `json:"modified_at"`
 	// The ID of the price.
-	ID         string `json:"id"`
-	amountType string `const:"custom" json:"amount_type"`
+	ID         string                              `json:"id"`
+	amountType ProductPriceOneTimeCustomAmountType `const:"custom" json:"amount_type"`
 	// Whether the price is archived and no longer available.
 	IsArchived bool `json:"is_archived"`
 	// The ID of the product owning the price.
@@ -29,7 +78,7 @@ type ProductPriceOneTimeCustom struct {
 	// The initial amount shown to the customer.
 	PresetAmount *int64 `json:"preset_amount"`
 	// The type of the price.
-	type_ string `const:"one_time" json:"type"`
+	type_ ProductPriceOneTimeCustomType `const:"one_time" json:"type"`
 }
 
 func (p ProductPriceOneTimeCustom) MarshalJSON() ([]byte, error) {
@@ -64,8 +113,8 @@ func (o *ProductPriceOneTimeCustom) GetID() string {
 	return o.ID
 }
 
-func (o *ProductPriceOneTimeCustom) GetAmountType() string {
-	return "custom"
+func (o *ProductPriceOneTimeCustom) GetAmountType() ProductPriceOneTimeCustomAmountType {
+	return ProductPriceOneTimeCustomAmountTypeCustom
 }
 
 func (o *ProductPriceOneTimeCustom) GetIsArchived() bool {
@@ -110,6 +159,6 @@ func (o *ProductPriceOneTimeCustom) GetPresetAmount() *int64 {
 	return o.PresetAmount
 }
 
-func (o *ProductPriceOneTimeCustom) GetType() string {
-	return "one_time"
+func (o *ProductPriceOneTimeCustom) GetType() ProductPriceOneTimeCustomType {
+	return ProductPriceOneTimeCustomTypeOneTime
 }

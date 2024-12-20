@@ -3,9 +3,34 @@
 package components
 
 import (
+	"encoding/json"
+	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
 	"time"
 )
+
+type BenefitLicenseKeysType string
+
+const (
+	BenefitLicenseKeysTypeLicenseKeys BenefitLicenseKeysType = "license_keys"
+)
+
+func (e BenefitLicenseKeysType) ToPointer() *BenefitLicenseKeysType {
+	return &e
+}
+func (e *BenefitLicenseKeysType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "license_keys":
+		*e = BenefitLicenseKeysType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for BenefitLicenseKeysType: %v", v)
+	}
+}
 
 type BenefitLicenseKeys struct {
 	// Creation timestamp of the object.
@@ -13,8 +38,8 @@ type BenefitLicenseKeys struct {
 	// Last modification timestamp of the object.
 	ModifiedAt *time.Time `json:"modified_at"`
 	// The ID of the benefit.
-	ID    string `json:"id"`
-	type_ string `const:"license_keys" json:"type"`
+	ID    string                 `json:"id"`
+	type_ BenefitLicenseKeysType `const:"license_keys" json:"type"`
 	// The description of the benefit.
 	Description string `json:"description"`
 	// Whether the benefit is selectable when creating a product.
@@ -58,8 +83,8 @@ func (o *BenefitLicenseKeys) GetID() string {
 	return o.ID
 }
 
-func (o *BenefitLicenseKeys) GetType() string {
-	return "license_keys"
+func (o *BenefitLicenseKeys) GetType() BenefitLicenseKeysType {
+	return BenefitLicenseKeysTypeLicenseKeys
 }
 
 func (o *BenefitLicenseKeys) GetDescription() string {

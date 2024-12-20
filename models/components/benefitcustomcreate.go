@@ -3,12 +3,37 @@
 package components
 
 import (
+	"encoding/json"
+	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
 )
 
+type BenefitCustomCreateType string
+
+const (
+	BenefitCustomCreateTypeCustom BenefitCustomCreateType = "custom"
+)
+
+func (e BenefitCustomCreateType) ToPointer() *BenefitCustomCreateType {
+	return &e
+}
+func (e *BenefitCustomCreateType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "custom":
+		*e = BenefitCustomCreateType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for BenefitCustomCreateType: %v", v)
+	}
+}
+
 // BenefitCustomCreate - Schema to create a benefit of type `custom`.
 type BenefitCustomCreate struct {
-	type_ string `const:"custom" json:"type"`
+	type_ BenefitCustomCreateType `const:"custom" json:"type"`
 	// The description of the benefit. Will be displayed on products having this benefit.
 	Description string `json:"description"`
 	// The ID of the organization owning the benefit. **Required unless you use an organization token.**
@@ -28,8 +53,8 @@ func (b *BenefitCustomCreate) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *BenefitCustomCreate) GetType() string {
-	return "custom"
+func (o *BenefitCustomCreate) GetType() BenefitCustomCreateType {
+	return BenefitCustomCreateTypeCustom
 }
 
 func (o *BenefitCustomCreate) GetDescription() string {

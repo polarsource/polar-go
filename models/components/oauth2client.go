@@ -64,12 +64,35 @@ func (e *GrantTypes) UnmarshalJSON(data []byte) error {
 	}
 }
 
+type ResponseTypes string
+
+const (
+	ResponseTypesCode ResponseTypes = "code"
+)
+
+func (e ResponseTypes) ToPointer() *ResponseTypes {
+	return &e
+}
+func (e *ResponseTypes) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "code":
+		*e = ResponseTypes(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for ResponseTypes: %v", v)
+	}
+}
+
 type OAuth2Client struct {
 	RedirectUris            []string                 `json:"redirect_uris"`
 	TokenEndpointAuthMethod *TokenEndpointAuthMethod `default:"client_secret_post" json:"token_endpoint_auth_method"`
 	GrantTypes              []GrantTypes             `json:"grant_types,omitempty"`
-	ResponseTypes           []string                 `json:"response_types,omitempty"`
-	Scope                   *string                  `default:"openid profile email user:read organizations:read organizations:write custom_fields:read custom_fields:write discounts:read discounts:write checkout_links:read checkout_links:write checkouts:read checkouts:write products:read products:write benefits:read benefits:write files:read files:write subscriptions:read subscriptions:write customers:read customers:write orders:read metrics:read webhooks:read webhooks:write external_organizations:read license_keys:read license_keys:write repositories:read repositories:write issues:read issues:write customer_portal:read customer_portal:write" json:"scope"`
+	ResponseTypes           []ResponseTypes          `json:"response_types,omitempty"`
+	Scope                   *string                  `default:"openid profile email user:read organizations:read organizations:write custom_fields:read custom_fields:write discounts:read discounts:write checkout_links:read checkout_links:write checkouts:read checkouts:write products:read products:write benefits:read benefits:write files:read files:write subscriptions:read subscriptions:write customers:read customers:write customer_sessions:write orders:read metrics:read webhooks:read webhooks:write external_organizations:read license_keys:read license_keys:write repositories:read repositories:write issues:read issues:write customer_portal:read customer_portal:write" json:"scope"`
 	ClientName              string                   `json:"client_name"`
 	ClientURI               *string                  `json:"client_uri,omitempty"`
 	LogoURI                 *string                  `json:"logo_uri,omitempty"`
@@ -117,7 +140,7 @@ func (o *OAuth2Client) GetGrantTypes() []GrantTypes {
 	return o.GrantTypes
 }
 
-func (o *OAuth2Client) GetResponseTypes() []string {
+func (o *OAuth2Client) GetResponseTypes() []ResponseTypes {
 	if o == nil {
 		return nil
 	}

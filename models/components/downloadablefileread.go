@@ -3,29 +3,54 @@
 package components
 
 import (
+	"encoding/json"
+	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
 	"time"
 )
 
+type DownloadableFileReadService string
+
+const (
+	DownloadableFileReadServiceDownloadable DownloadableFileReadService = "downloadable"
+)
+
+func (e DownloadableFileReadService) ToPointer() *DownloadableFileReadService {
+	return &e
+}
+func (e *DownloadableFileReadService) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "downloadable":
+		*e = DownloadableFileReadService(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for DownloadableFileReadService: %v", v)
+	}
+}
+
 // DownloadableFileRead - File to be associated with the downloadables benefit.
 type DownloadableFileRead struct {
 	// The ID of the object.
-	ID                   string     `json:"id"`
-	OrganizationID       string     `json:"organization_id"`
-	Name                 string     `json:"name"`
-	Path                 string     `json:"path"`
-	MimeType             string     `json:"mime_type"`
-	Size                 int64      `json:"size"`
-	StorageVersion       *string    `json:"storage_version"`
-	ChecksumEtag         *string    `json:"checksum_etag"`
-	ChecksumSha256Base64 *string    `json:"checksum_sha256_base64"`
-	ChecksumSha256Hex    *string    `json:"checksum_sha256_hex"`
-	LastModifiedAt       *time.Time `json:"last_modified_at"`
-	Version              *string    `json:"version"`
-	service              string     `const:"downloadable" json:"service"`
-	IsUploaded           bool       `json:"is_uploaded"`
-	CreatedAt            time.Time  `json:"created_at"`
-	SizeReadable         string     `json:"size_readable"`
+	ID                   string                      `json:"id"`
+	OrganizationID       string                      `json:"organization_id"`
+	Name                 string                      `json:"name"`
+	Path                 string                      `json:"path"`
+	MimeType             string                      `json:"mime_type"`
+	Size                 int64                       `json:"size"`
+	StorageVersion       *string                     `json:"storage_version"`
+	ChecksumEtag         *string                     `json:"checksum_etag"`
+	ChecksumSha256Base64 *string                     `json:"checksum_sha256_base64"`
+	ChecksumSha256Hex    *string                     `json:"checksum_sha256_hex"`
+	LastModifiedAt       *time.Time                  `json:"last_modified_at"`
+	Version              *string                     `json:"version"`
+	service              DownloadableFileReadService `const:"downloadable" json:"service"`
+	IsUploaded           bool                        `json:"is_uploaded"`
+	CreatedAt            time.Time                   `json:"created_at"`
+	SizeReadable         string                      `json:"size_readable"`
 }
 
 func (d DownloadableFileRead) MarshalJSON() ([]byte, error) {
@@ -123,8 +148,8 @@ func (o *DownloadableFileRead) GetVersion() *string {
 	return o.Version
 }
 
-func (o *DownloadableFileRead) GetService() string {
-	return "downloadable"
+func (o *DownloadableFileRead) GetService() DownloadableFileReadService {
+	return DownloadableFileReadServiceDownloadable
 }
 
 func (o *DownloadableFileRead) GetIsUploaded() bool {

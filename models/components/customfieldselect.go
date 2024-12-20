@@ -3,6 +3,7 @@
 package components
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
@@ -94,6 +95,29 @@ func (u CustomFieldSelectMetadata) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type CustomFieldSelectMetadata: all fields are null")
 }
 
+type CustomFieldSelectType string
+
+const (
+	CustomFieldSelectTypeSelect CustomFieldSelectType = "select"
+)
+
+func (e CustomFieldSelectType) ToPointer() *CustomFieldSelectType {
+	return &e
+}
+func (e *CustomFieldSelectType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "select":
+		*e = CustomFieldSelectType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for CustomFieldSelectType: %v", v)
+	}
+}
+
 // CustomFieldSelect - Schema for a custom field of type select.
 type CustomFieldSelect struct {
 	// Creation timestamp of the object.
@@ -103,7 +127,7 @@ type CustomFieldSelect struct {
 	// The ID of the object.
 	ID       string                               `json:"id"`
 	Metadata map[string]CustomFieldSelectMetadata `json:"metadata"`
-	type_    string                               `const:"select" json:"type"`
+	type_    CustomFieldSelectType                `const:"select" json:"type"`
 	// Identifier of the custom field. It'll be used as key when storing the value.
 	Slug string `json:"slug"`
 	// Name of the custom field.
@@ -152,8 +176,8 @@ func (o *CustomFieldSelect) GetMetadata() map[string]CustomFieldSelectMetadata {
 	return o.Metadata
 }
 
-func (o *CustomFieldSelect) GetType() string {
-	return "select"
+func (o *CustomFieldSelect) GetType() CustomFieldSelectType {
+	return CustomFieldSelectTypeSelect
 }
 
 func (o *CustomFieldSelect) GetSlug() string {

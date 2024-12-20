@@ -3,13 +3,61 @@
 package components
 
 import (
+	"encoding/json"
+	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
 )
 
+type ProductPriceRecurringFixedCreateType string
+
+const (
+	ProductPriceRecurringFixedCreateTypeRecurring ProductPriceRecurringFixedCreateType = "recurring"
+)
+
+func (e ProductPriceRecurringFixedCreateType) ToPointer() *ProductPriceRecurringFixedCreateType {
+	return &e
+}
+func (e *ProductPriceRecurringFixedCreateType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "recurring":
+		*e = ProductPriceRecurringFixedCreateType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for ProductPriceRecurringFixedCreateType: %v", v)
+	}
+}
+
+type ProductPriceRecurringFixedCreateAmountType string
+
+const (
+	ProductPriceRecurringFixedCreateAmountTypeFixed ProductPriceRecurringFixedCreateAmountType = "fixed"
+)
+
+func (e ProductPriceRecurringFixedCreateAmountType) ToPointer() *ProductPriceRecurringFixedCreateAmountType {
+	return &e
+}
+func (e *ProductPriceRecurringFixedCreateAmountType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "fixed":
+		*e = ProductPriceRecurringFixedCreateAmountType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for ProductPriceRecurringFixedCreateAmountType: %v", v)
+	}
+}
+
 // ProductPriceRecurringFixedCreate - Schema to create a recurring product price, i.e. a subscription.
 type ProductPriceRecurringFixedCreate struct {
-	type_      string `const:"recurring" json:"type"`
-	amountType string `const:"fixed" json:"amount_type"`
+	type_      ProductPriceRecurringFixedCreateType       `const:"recurring" json:"type"`
+	amountType ProductPriceRecurringFixedCreateAmountType `const:"fixed" json:"amount_type"`
 	// The price in cents.
 	PriceAmount int64 `json:"price_amount"`
 	// The currency. Currently, only `usd` is supported.
@@ -28,12 +76,12 @@ func (p *ProductPriceRecurringFixedCreate) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *ProductPriceRecurringFixedCreate) GetType() string {
-	return "recurring"
+func (o *ProductPriceRecurringFixedCreate) GetType() ProductPriceRecurringFixedCreateType {
+	return ProductPriceRecurringFixedCreateTypeRecurring
 }
 
-func (o *ProductPriceRecurringFixedCreate) GetAmountType() string {
-	return "fixed"
+func (o *ProductPriceRecurringFixedCreate) GetAmountType() ProductPriceRecurringFixedCreateAmountType {
+	return ProductPriceRecurringFixedCreateAmountTypeFixed
 }
 
 func (o *ProductPriceRecurringFixedCreate) GetPriceAmount() int64 {

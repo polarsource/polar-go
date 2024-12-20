@@ -9,7 +9,7 @@ import (
 
 type Issue struct {
 	ID       string    `json:"id"`
-	Platform Platforms `json:"platform"`
+	platform Platforms `const:"github" json:"platform"`
 	// GitHub #number
 	Number int64 `json:"number"`
 	// GitHub issue title
@@ -62,10 +62,7 @@ func (o *Issue) GetID() string {
 }
 
 func (o *Issue) GetPlatform() Platforms {
-	if o == nil {
-		return Platforms("")
-	}
-	return o.Platform
+	return PlatformsGithub
 }
 
 func (o *Issue) GetNumber() int64 {

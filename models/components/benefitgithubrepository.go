@@ -3,9 +3,34 @@
 package components
 
 import (
+	"encoding/json"
+	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
 	"time"
 )
+
+type BenefitGitHubRepositoryType string
+
+const (
+	BenefitGitHubRepositoryTypeGithubRepository BenefitGitHubRepositoryType = "github_repository"
+)
+
+func (e BenefitGitHubRepositoryType) ToPointer() *BenefitGitHubRepositoryType {
+	return &e
+}
+func (e *BenefitGitHubRepositoryType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "github_repository":
+		*e = BenefitGitHubRepositoryType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for BenefitGitHubRepositoryType: %v", v)
+	}
+}
 
 // BenefitGitHubRepository - A benefit of type `github_repository`.
 //
@@ -16,8 +41,8 @@ type BenefitGitHubRepository struct {
 	// Last modification timestamp of the object.
 	ModifiedAt *time.Time `json:"modified_at"`
 	// The ID of the benefit.
-	ID    string `json:"id"`
-	type_ string `const:"github_repository" json:"type"`
+	ID    string                      `json:"id"`
+	type_ BenefitGitHubRepositoryType `const:"github_repository" json:"type"`
 	// The description of the benefit.
 	Description string `json:"description"`
 	// Whether the benefit is selectable when creating a product.
@@ -62,8 +87,8 @@ func (o *BenefitGitHubRepository) GetID() string {
 	return o.ID
 }
 
-func (o *BenefitGitHubRepository) GetType() string {
-	return "github_repository"
+func (o *BenefitGitHubRepository) GetType() BenefitGitHubRepositoryType {
+	return BenefitGitHubRepositoryTypeGithubRepository
 }
 
 func (o *BenefitGitHubRepository) GetDescription() string {

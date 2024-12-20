@@ -3,6 +3,7 @@
 package components
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
@@ -93,6 +94,29 @@ func (u CustomFieldCreateCheckboxMetadata) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type CustomFieldCreateCheckboxMetadata: all fields are null")
 }
 
+type CustomFieldCreateCheckboxType string
+
+const (
+	CustomFieldCreateCheckboxTypeCheckbox CustomFieldCreateCheckboxType = "checkbox"
+)
+
+func (e CustomFieldCreateCheckboxType) ToPointer() *CustomFieldCreateCheckboxType {
+	return &e
+}
+func (e *CustomFieldCreateCheckboxType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "checkbox":
+		*e = CustomFieldCreateCheckboxType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for CustomFieldCreateCheckboxType: %v", v)
+	}
+}
+
 // CustomFieldCreateCheckbox - Schema to create a custom field of type checkbox.
 type CustomFieldCreateCheckbox struct {
 	// Key-value object allowing you to store additional information.
@@ -106,7 +130,7 @@ type CustomFieldCreateCheckbox struct {
 	//
 	// You can store up to **50 key-value pairs**.
 	Metadata map[string]CustomFieldCreateCheckboxMetadata `json:"metadata,omitempty"`
-	type_    string                                       `const:"checkbox" json:"type"`
+	type_    CustomFieldCreateCheckboxType                `const:"checkbox" json:"type"`
 	// Identifier of the custom field. It'll be used as key when storing the value. Must be unique across the organization.It can only contain ASCII letters, numbers and hyphens.
 	Slug string `json:"slug"`
 	// Name of the custom field.
@@ -134,8 +158,8 @@ func (o *CustomFieldCreateCheckbox) GetMetadata() map[string]CustomFieldCreateCh
 	return o.Metadata
 }
 
-func (o *CustomFieldCreateCheckbox) GetType() string {
-	return "checkbox"
+func (o *CustomFieldCreateCheckbox) GetType() CustomFieldCreateCheckboxType {
+	return CustomFieldCreateCheckboxTypeCheckbox
 }
 
 func (o *CustomFieldCreateCheckbox) GetSlug() string {

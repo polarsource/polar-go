@@ -3,15 +3,40 @@
 package components
 
 import (
+	"encoding/json"
+	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
 )
+
+type WebhookPledgeCreatedPayloadType string
+
+const (
+	WebhookPledgeCreatedPayloadTypePledgeCreated WebhookPledgeCreatedPayloadType = "pledge.created"
+)
+
+func (e WebhookPledgeCreatedPayloadType) ToPointer() *WebhookPledgeCreatedPayloadType {
+	return &e
+}
+func (e *WebhookPledgeCreatedPayloadType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "pledge.created":
+		*e = WebhookPledgeCreatedPayloadType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for WebhookPledgeCreatedPayloadType: %v", v)
+	}
+}
 
 // WebhookPledgeCreatedPayload - Sent when a new pledge is created. Note that this does mean that the pledge has been paid yet.
 //
 // **Discord & Slack support:** Full
 type WebhookPledgeCreatedPayload struct {
-	type_ string `const:"pledge.created" json:"type"`
-	Data  Pledge `json:"data"`
+	type_ WebhookPledgeCreatedPayloadType `const:"pledge.created" json:"type"`
+	Data  Pledge                          `json:"data"`
 }
 
 func (w WebhookPledgeCreatedPayload) MarshalJSON() ([]byte, error) {
@@ -25,8 +50,8 @@ func (w *WebhookPledgeCreatedPayload) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *WebhookPledgeCreatedPayload) GetType() string {
-	return "pledge.created"
+func (o *WebhookPledgeCreatedPayload) GetType() WebhookPledgeCreatedPayloadType {
+	return WebhookPledgeCreatedPayloadTypePledgeCreated
 }
 
 func (o *WebhookPledgeCreatedPayload) GetData() Pledge {

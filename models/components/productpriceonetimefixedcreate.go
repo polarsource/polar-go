@@ -3,13 +3,61 @@
 package components
 
 import (
+	"encoding/json"
+	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
 )
 
+type ProductPriceOneTimeFixedCreateType string
+
+const (
+	ProductPriceOneTimeFixedCreateTypeOneTime ProductPriceOneTimeFixedCreateType = "one_time"
+)
+
+func (e ProductPriceOneTimeFixedCreateType) ToPointer() *ProductPriceOneTimeFixedCreateType {
+	return &e
+}
+func (e *ProductPriceOneTimeFixedCreateType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "one_time":
+		*e = ProductPriceOneTimeFixedCreateType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for ProductPriceOneTimeFixedCreateType: %v", v)
+	}
+}
+
+type ProductPriceOneTimeFixedCreateAmountType string
+
+const (
+	ProductPriceOneTimeFixedCreateAmountTypeFixed ProductPriceOneTimeFixedCreateAmountType = "fixed"
+)
+
+func (e ProductPriceOneTimeFixedCreateAmountType) ToPointer() *ProductPriceOneTimeFixedCreateAmountType {
+	return &e
+}
+func (e *ProductPriceOneTimeFixedCreateAmountType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "fixed":
+		*e = ProductPriceOneTimeFixedCreateAmountType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for ProductPriceOneTimeFixedCreateAmountType: %v", v)
+	}
+}
+
 // ProductPriceOneTimeFixedCreate - Schema to create a one-time product price.
 type ProductPriceOneTimeFixedCreate struct {
-	type_      string `const:"one_time" json:"type"`
-	amountType string `const:"fixed" json:"amount_type"`
+	type_      ProductPriceOneTimeFixedCreateType       `const:"one_time" json:"type"`
+	amountType ProductPriceOneTimeFixedCreateAmountType `const:"fixed" json:"amount_type"`
 	// The price in cents.
 	PriceAmount int64 `json:"price_amount"`
 	// The currency. Currently, only `usd` is supported.
@@ -27,12 +75,12 @@ func (p *ProductPriceOneTimeFixedCreate) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *ProductPriceOneTimeFixedCreate) GetType() string {
-	return "one_time"
+func (o *ProductPriceOneTimeFixedCreate) GetType() ProductPriceOneTimeFixedCreateType {
+	return ProductPriceOneTimeFixedCreateTypeOneTime
 }
 
-func (o *ProductPriceOneTimeFixedCreate) GetAmountType() string {
-	return "fixed"
+func (o *ProductPriceOneTimeFixedCreate) GetAmountType() ProductPriceOneTimeFixedCreateAmountType {
+	return ProductPriceOneTimeFixedCreateAmountTypeFixed
 }
 
 func (o *ProductPriceOneTimeFixedCreate) GetPriceAmount() int64 {

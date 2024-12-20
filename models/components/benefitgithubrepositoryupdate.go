@@ -3,13 +3,38 @@
 package components
 
 import (
+	"encoding/json"
+	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
 )
+
+type BenefitGitHubRepositoryUpdateType string
+
+const (
+	BenefitGitHubRepositoryUpdateTypeGithubRepository BenefitGitHubRepositoryUpdateType = "github_repository"
+)
+
+func (e BenefitGitHubRepositoryUpdateType) ToPointer() *BenefitGitHubRepositoryUpdateType {
+	return &e
+}
+func (e *BenefitGitHubRepositoryUpdateType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "github_repository":
+		*e = BenefitGitHubRepositoryUpdateType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for BenefitGitHubRepositoryUpdateType: %v", v)
+	}
+}
 
 type BenefitGitHubRepositoryUpdate struct {
 	// The description of the benefit. Will be displayed on products having this benefit.
 	Description *string                                  `json:"description,omitempty"`
-	type_       string                                   `const:"github_repository" json:"type"`
+	type_       BenefitGitHubRepositoryUpdateType        `const:"github_repository" json:"type"`
 	Properties  *BenefitGitHubRepositoryCreateProperties `json:"properties,omitempty"`
 }
 
@@ -31,8 +56,8 @@ func (o *BenefitGitHubRepositoryUpdate) GetDescription() *string {
 	return o.Description
 }
 
-func (o *BenefitGitHubRepositoryUpdate) GetType() string {
-	return "github_repository"
+func (o *BenefitGitHubRepositoryUpdate) GetType() BenefitGitHubRepositoryUpdateType {
+	return BenefitGitHubRepositoryUpdateTypeGithubRepository
 }
 
 func (o *BenefitGitHubRepositoryUpdate) GetProperties() *BenefitGitHubRepositoryCreateProperties {

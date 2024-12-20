@@ -3,6 +3,7 @@
 package components
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
@@ -93,12 +94,35 @@ func (u CustomFieldUpdateSelectMetadata) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type CustomFieldUpdateSelectMetadata: all fields are null")
 }
 
+type CustomFieldUpdateSelectType string
+
+const (
+	CustomFieldUpdateSelectTypeSelect CustomFieldUpdateSelectType = "select"
+)
+
+func (e CustomFieldUpdateSelectType) ToPointer() *CustomFieldUpdateSelectType {
+	return &e
+}
+func (e *CustomFieldUpdateSelectType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "select":
+		*e = CustomFieldUpdateSelectType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for CustomFieldUpdateSelectType: %v", v)
+	}
+}
+
 // CustomFieldUpdateSelect - Schema to update a custom field of type select.
 type CustomFieldUpdateSelect struct {
 	Metadata   map[string]CustomFieldUpdateSelectMetadata `json:"metadata,omitempty"`
 	Name       *string                                    `json:"name,omitempty"`
 	Slug       *string                                    `json:"slug,omitempty"`
-	type_      string                                     `const:"select" json:"type"`
+	type_      CustomFieldUpdateSelectType                `const:"select" json:"type"`
 	Properties *CustomFieldSelectProperties               `json:"properties,omitempty"`
 }
 
@@ -134,8 +158,8 @@ func (o *CustomFieldUpdateSelect) GetSlug() *string {
 	return o.Slug
 }
 
-func (o *CustomFieldUpdateSelect) GetType() string {
-	return "select"
+func (o *CustomFieldUpdateSelect) GetType() CustomFieldUpdateSelectType {
+	return CustomFieldUpdateSelectTypeSelect
 }
 
 func (o *CustomFieldUpdateSelect) GetProperties() *CustomFieldSelectProperties {

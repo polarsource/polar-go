@@ -3,9 +3,58 @@
 package components
 
 import (
+	"encoding/json"
+	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
 	"time"
 )
+
+type ProductPriceRecurringCustomAmountType string
+
+const (
+	ProductPriceRecurringCustomAmountTypeCustom ProductPriceRecurringCustomAmountType = "custom"
+)
+
+func (e ProductPriceRecurringCustomAmountType) ToPointer() *ProductPriceRecurringCustomAmountType {
+	return &e
+}
+func (e *ProductPriceRecurringCustomAmountType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "custom":
+		*e = ProductPriceRecurringCustomAmountType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for ProductPriceRecurringCustomAmountType: %v", v)
+	}
+}
+
+// ProductPriceRecurringCustomType - The type of the price.
+type ProductPriceRecurringCustomType string
+
+const (
+	ProductPriceRecurringCustomTypeRecurring ProductPriceRecurringCustomType = "recurring"
+)
+
+func (e ProductPriceRecurringCustomType) ToPointer() *ProductPriceRecurringCustomType {
+	return &e
+}
+func (e *ProductPriceRecurringCustomType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "recurring":
+		*e = ProductPriceRecurringCustomType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for ProductPriceRecurringCustomType: %v", v)
+	}
+}
 
 // ProductPriceRecurringCustom - A pay-what-you-want recurring price for a product, i.e. a subscription.
 type ProductPriceRecurringCustom struct {
@@ -14,8 +63,8 @@ type ProductPriceRecurringCustom struct {
 	// Last modification timestamp of the object.
 	ModifiedAt *time.Time `json:"modified_at"`
 	// The ID of the price.
-	ID         string `json:"id"`
-	amountType string `const:"custom" json:"amount_type"`
+	ID         string                                `json:"id"`
+	amountType ProductPriceRecurringCustomAmountType `const:"custom" json:"amount_type"`
 	// Whether the price is archived and no longer available.
 	IsArchived bool `json:"is_archived"`
 	// The ID of the product owning the price.
@@ -29,8 +78,8 @@ type ProductPriceRecurringCustom struct {
 	// The initial amount shown to the customer.
 	PresetAmount *int64 `json:"preset_amount"`
 	// The type of the price.
-	type_             string                        `const:"recurring" json:"type"`
-	RecurringInterval SubscriptionRecurringInterval `json:"recurring_interval"`
+	type_             ProductPriceRecurringCustomType `const:"recurring" json:"type"`
+	RecurringInterval SubscriptionRecurringInterval   `json:"recurring_interval"`
 }
 
 func (p ProductPriceRecurringCustom) MarshalJSON() ([]byte, error) {
@@ -65,8 +114,8 @@ func (o *ProductPriceRecurringCustom) GetID() string {
 	return o.ID
 }
 
-func (o *ProductPriceRecurringCustom) GetAmountType() string {
-	return "custom"
+func (o *ProductPriceRecurringCustom) GetAmountType() ProductPriceRecurringCustomAmountType {
+	return ProductPriceRecurringCustomAmountTypeCustom
 }
 
 func (o *ProductPriceRecurringCustom) GetIsArchived() bool {
@@ -111,8 +160,8 @@ func (o *ProductPriceRecurringCustom) GetPresetAmount() *int64 {
 	return o.PresetAmount
 }
 
-func (o *ProductPriceRecurringCustom) GetType() string {
-	return "recurring"
+func (o *ProductPriceRecurringCustom) GetType() ProductPriceRecurringCustomType {
+	return ProductPriceRecurringCustomTypeRecurring
 }
 
 func (o *ProductPriceRecurringCustom) GetRecurringInterval() SubscriptionRecurringInterval {

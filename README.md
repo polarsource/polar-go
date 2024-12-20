@@ -77,7 +77,6 @@ func main() {
 			CreatedAt:              types.MustTimeFromString("2024-11-12T14:26:42.882Z"),
 			ModifiedAt:             types.MustNewTimeFromString("2023-05-28T05:08:06.235Z"),
 			ID:                     "<value>",
-			PaymentProcessor:       components.PaymentProcessorStripe,
 			Status:                 components.CheckoutStatusFailed,
 			ClientSecret:           "<value>",
 			URL:                    "https://heavy-beret.com/",
@@ -438,6 +437,10 @@ func main() {
 * [Get](docs/sdks/customers/README.md#get) - Get Customer
 * [Update](docs/sdks/customers/README.md#update) - Update Customer
 * [Delete](docs/sdks/customers/README.md#delete) - Delete Customer
+
+### [CustomerSessions](docs/sdks/customersessions/README.md)
+
+* [Create](docs/sdks/customersessions/README.md#create) - Create Customer Session
 
 ### [CustomFields](docs/sdks/customfields/README.md)
 

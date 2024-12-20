@@ -3,15 +3,40 @@
 package components
 
 import (
+	"encoding/json"
+	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
 )
+
+type WebhookPledgeUpdatedPayloadType string
+
+const (
+	WebhookPledgeUpdatedPayloadTypePledgeUpdated WebhookPledgeUpdatedPayloadType = "pledge.updated"
+)
+
+func (e WebhookPledgeUpdatedPayloadType) ToPointer() *WebhookPledgeUpdatedPayloadType {
+	return &e
+}
+func (e *WebhookPledgeUpdatedPayloadType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "pledge.updated":
+		*e = WebhookPledgeUpdatedPayloadType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for WebhookPledgeUpdatedPayloadType: %v", v)
+	}
+}
 
 // WebhookPledgeUpdatedPayload - Sent when a pledge is updated.
 //
 // **Discord & Slack support:** Basic
 type WebhookPledgeUpdatedPayload struct {
-	type_ string `const:"pledge.updated" json:"type"`
-	Data  Pledge `json:"data"`
+	type_ WebhookPledgeUpdatedPayloadType `const:"pledge.updated" json:"type"`
+	Data  Pledge                          `json:"data"`
 }
 
 func (w WebhookPledgeUpdatedPayload) MarshalJSON() ([]byte, error) {
@@ -25,8 +50,8 @@ func (w *WebhookPledgeUpdatedPayload) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *WebhookPledgeUpdatedPayload) GetType() string {
-	return "pledge.updated"
+func (o *WebhookPledgeUpdatedPayload) GetType() WebhookPledgeUpdatedPayloadType {
+	return WebhookPledgeUpdatedPayloadTypePledgeUpdated
 }
 
 func (o *WebhookPledgeUpdatedPayload) GetData() Pledge {

@@ -3,14 +3,39 @@
 package components
 
 import (
+	"encoding/json"
+	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
 )
+
+type WebhookCheckoutUpdatedPayloadType string
+
+const (
+	WebhookCheckoutUpdatedPayloadTypeCheckoutUpdated WebhookCheckoutUpdatedPayloadType = "checkout.updated"
+)
+
+func (e WebhookCheckoutUpdatedPayloadType) ToPointer() *WebhookCheckoutUpdatedPayloadType {
+	return &e
+}
+func (e *WebhookCheckoutUpdatedPayloadType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "checkout.updated":
+		*e = WebhookCheckoutUpdatedPayloadType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for WebhookCheckoutUpdatedPayloadType: %v", v)
+	}
+}
 
 // WebhookCheckoutUpdatedPayload - Sent when a checkout is updated.
 //
 // **Discord & Slack support:** Basic
 type WebhookCheckoutUpdatedPayload struct {
-	type_ string `const:"checkout.updated" json:"type"`
+	type_ WebhookCheckoutUpdatedPayloadType `const:"checkout.updated" json:"type"`
 	// Checkout session data retrieved using an access token.
 	Data Checkout `json:"data"`
 }
@@ -26,8 +51,8 @@ func (w *WebhookCheckoutUpdatedPayload) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *WebhookCheckoutUpdatedPayload) GetType() string {
-	return "checkout.updated"
+func (o *WebhookCheckoutUpdatedPayload) GetType() WebhookCheckoutUpdatedPayloadType {
+	return WebhookCheckoutUpdatedPayloadTypeCheckoutUpdated
 }
 
 func (o *WebhookCheckoutUpdatedPayload) GetData() Checkout {

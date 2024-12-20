@@ -3,11 +3,36 @@
 package components
 
 import (
+	"encoding/json"
+	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
 )
 
+type BenefitGitHubRepositoryCreateType string
+
+const (
+	BenefitGitHubRepositoryCreateTypeGithubRepository BenefitGitHubRepositoryCreateType = "github_repository"
+)
+
+func (e BenefitGitHubRepositoryCreateType) ToPointer() *BenefitGitHubRepositoryCreateType {
+	return &e
+}
+func (e *BenefitGitHubRepositoryCreateType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "github_repository":
+		*e = BenefitGitHubRepositoryCreateType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for BenefitGitHubRepositoryCreateType: %v", v)
+	}
+}
+
 type BenefitGitHubRepositoryCreate struct {
-	type_ string `const:"github_repository" json:"type"`
+	type_ BenefitGitHubRepositoryCreateType `const:"github_repository" json:"type"`
 	// The description of the benefit. Will be displayed on products having this benefit.
 	Description string `json:"description"`
 	// The ID of the organization owning the benefit. **Required unless you use an organization token.**
@@ -27,8 +52,8 @@ func (b *BenefitGitHubRepositoryCreate) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *BenefitGitHubRepositoryCreate) GetType() string {
-	return "github_repository"
+func (o *BenefitGitHubRepositoryCreate) GetType() BenefitGitHubRepositoryCreateType {
+	return BenefitGitHubRepositoryCreateTypeGithubRepository
 }
 
 func (o *BenefitGitHubRepositoryCreate) GetDescription() string {

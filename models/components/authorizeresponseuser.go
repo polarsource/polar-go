@@ -3,14 +3,39 @@
 package components
 
 import (
+	"encoding/json"
+	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
 )
 
+type AuthorizeResponseUserSubType string
+
+const (
+	AuthorizeResponseUserSubTypeUser AuthorizeResponseUserSubType = "user"
+)
+
+func (e AuthorizeResponseUserSubType) ToPointer() *AuthorizeResponseUserSubType {
+	return &e
+}
+func (e *AuthorizeResponseUserSubType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "user":
+		*e = AuthorizeResponseUserSubType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for AuthorizeResponseUserSubType: %v", v)
+	}
+}
+
 type AuthorizeResponseUser struct {
-	Client  OAuth2ClientPublic `json:"client"`
-	subType string             `const:"user" json:"sub_type"`
-	Sub     *AuthorizeUser     `json:"sub"`
-	Scopes  []Scope            `json:"scopes"`
+	Client  OAuth2ClientPublic           `json:"client"`
+	subType AuthorizeResponseUserSubType `const:"user" json:"sub_type"`
+	Sub     *AuthorizeUser               `json:"sub"`
+	Scopes  []Scope                      `json:"scopes"`
 }
 
 func (a AuthorizeResponseUser) MarshalJSON() ([]byte, error) {
@@ -31,8 +56,8 @@ func (o *AuthorizeResponseUser) GetClient() OAuth2ClientPublic {
 	return o.Client
 }
 
-func (o *AuthorizeResponseUser) GetSubType() string {
-	return "user"
+func (o *AuthorizeResponseUser) GetSubType() AuthorizeResponseUserSubType {
+	return AuthorizeResponseUserSubTypeUser
 }
 
 func (o *AuthorizeResponseUser) GetSub() *AuthorizeUser {

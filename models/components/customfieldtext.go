@@ -3,6 +3,7 @@
 package components
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
@@ -94,6 +95,29 @@ func (u CustomFieldTextMetadata) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type CustomFieldTextMetadata: all fields are null")
 }
 
+type CustomFieldTextType string
+
+const (
+	CustomFieldTextTypeText CustomFieldTextType = "text"
+)
+
+func (e CustomFieldTextType) ToPointer() *CustomFieldTextType {
+	return &e
+}
+func (e *CustomFieldTextType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "text":
+		*e = CustomFieldTextType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for CustomFieldTextType: %v", v)
+	}
+}
+
 // CustomFieldText - Schema for a custom field of type text.
 type CustomFieldText struct {
 	// Creation timestamp of the object.
@@ -103,7 +127,7 @@ type CustomFieldText struct {
 	// The ID of the object.
 	ID       string                             `json:"id"`
 	Metadata map[string]CustomFieldTextMetadata `json:"metadata"`
-	type_    string                             `const:"text" json:"type"`
+	type_    CustomFieldTextType                `const:"text" json:"type"`
 	// Identifier of the custom field. It'll be used as key when storing the value.
 	Slug string `json:"slug"`
 	// Name of the custom field.
@@ -152,8 +176,8 @@ func (o *CustomFieldText) GetMetadata() map[string]CustomFieldTextMetadata {
 	return o.Metadata
 }
 
-func (o *CustomFieldText) GetType() string {
-	return "text"
+func (o *CustomFieldText) GetType() CustomFieldTextType {
+	return CustomFieldTextTypeText
 }
 
 func (o *CustomFieldText) GetSlug() string {

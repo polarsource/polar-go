@@ -4,10 +4,34 @@ package apierrors
 
 import (
 	"encoding/json"
+	"fmt"
 )
 
+type Error string
+
+const (
+	ErrorResourceNotFound Error = "ResourceNotFound"
+)
+
+func (e Error) ToPointer() *Error {
+	return &e
+}
+func (e *Error) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "ResourceNotFound":
+		*e = Error(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for Error: %v", v)
+	}
+}
+
 type ResourceNotFound struct {
-	Error_ string `const:"ResourceNotFound" json:"error"`
+	Error_ Error  `const:"ResourceNotFound" json:"error"`
 	Detail string `json:"detail"`
 }
 

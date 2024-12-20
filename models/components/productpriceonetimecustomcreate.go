@@ -3,13 +3,61 @@
 package components
 
 import (
+	"encoding/json"
+	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
 )
 
+type ProductPriceOneTimeCustomCreateType string
+
+const (
+	ProductPriceOneTimeCustomCreateTypeOneTime ProductPriceOneTimeCustomCreateType = "one_time"
+)
+
+func (e ProductPriceOneTimeCustomCreateType) ToPointer() *ProductPriceOneTimeCustomCreateType {
+	return &e
+}
+func (e *ProductPriceOneTimeCustomCreateType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "one_time":
+		*e = ProductPriceOneTimeCustomCreateType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for ProductPriceOneTimeCustomCreateType: %v", v)
+	}
+}
+
+type ProductPriceOneTimeCustomCreateAmountType string
+
+const (
+	ProductPriceOneTimeCustomCreateAmountTypeCustom ProductPriceOneTimeCustomCreateAmountType = "custom"
+)
+
+func (e ProductPriceOneTimeCustomCreateAmountType) ToPointer() *ProductPriceOneTimeCustomCreateAmountType {
+	return &e
+}
+func (e *ProductPriceOneTimeCustomCreateAmountType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "custom":
+		*e = ProductPriceOneTimeCustomCreateAmountType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for ProductPriceOneTimeCustomCreateAmountType: %v", v)
+	}
+}
+
 // ProductPriceOneTimeCustomCreate - Schema to create a pay-what-you-want price for a one-time product.
 type ProductPriceOneTimeCustomCreate struct {
-	type_      string `const:"one_time" json:"type"`
-	amountType string `const:"custom" json:"amount_type"`
+	type_      ProductPriceOneTimeCustomCreateType       `const:"one_time" json:"type"`
+	amountType ProductPriceOneTimeCustomCreateAmountType `const:"custom" json:"amount_type"`
 	// The currency. Currently, only `usd` is supported.
 	PriceCurrency *string `default:"usd" json:"price_currency"`
 	// The minimum amount the customer can pay.
@@ -31,12 +79,12 @@ func (p *ProductPriceOneTimeCustomCreate) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *ProductPriceOneTimeCustomCreate) GetType() string {
-	return "one_time"
+func (o *ProductPriceOneTimeCustomCreate) GetType() ProductPriceOneTimeCustomCreateType {
+	return ProductPriceOneTimeCustomCreateTypeOneTime
 }
 
-func (o *ProductPriceOneTimeCustomCreate) GetAmountType() string {
-	return "custom"
+func (o *ProductPriceOneTimeCustomCreate) GetAmountType() ProductPriceOneTimeCustomCreateAmountType {
+	return ProductPriceOneTimeCustomCreateAmountTypeCustom
 }
 
 func (o *ProductPriceOneTimeCustomCreate) GetPriceCurrency() *string {

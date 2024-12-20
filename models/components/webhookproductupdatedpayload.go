@@ -3,14 +3,39 @@
 package components
 
 import (
+	"encoding/json"
+	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
 )
+
+type WebhookProductUpdatedPayloadType string
+
+const (
+	WebhookProductUpdatedPayloadTypeProductUpdated WebhookProductUpdatedPayloadType = "product.updated"
+)
+
+func (e WebhookProductUpdatedPayloadType) ToPointer() *WebhookProductUpdatedPayloadType {
+	return &e
+}
+func (e *WebhookProductUpdatedPayloadType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "product.updated":
+		*e = WebhookProductUpdatedPayloadType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for WebhookProductUpdatedPayloadType: %v", v)
+	}
+}
 
 // WebhookProductUpdatedPayload - Sent when a product is updated.
 //
 // **Discord & Slack support:** Basic
 type WebhookProductUpdatedPayload struct {
-	type_ string `const:"product.updated" json:"type"`
+	type_ WebhookProductUpdatedPayloadType `const:"product.updated" json:"type"`
 	// A product.
 	Data Product `json:"data"`
 }
@@ -26,8 +51,8 @@ func (w *WebhookProductUpdatedPayload) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *WebhookProductUpdatedPayload) GetType() string {
-	return "product.updated"
+func (o *WebhookProductUpdatedPayload) GetType() WebhookProductUpdatedPayloadType {
+	return WebhookProductUpdatedPayloadTypeProductUpdated
 }
 
 func (o *WebhookProductUpdatedPayload) GetData() Product {

@@ -2,9 +2,13 @@
 
 package components
 
+import (
+	"github.com/polarsource/polar-go/internal/utils"
+)
+
 type ExternalOrganization struct {
 	ID              string    `json:"id"`
-	Platform        Platforms `json:"platform"`
+	platform        Platforms `const:"github" json:"platform"`
 	Name            string    `json:"name"`
 	AvatarURL       string    `json:"avatar_url"`
 	IsPersonal      bool      `json:"is_personal"`
@@ -18,6 +22,17 @@ type ExternalOrganization struct {
 	OrganizationID  *string   `json:"organization_id"`
 }
 
+func (e ExternalOrganization) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(e, "", false)
+}
+
+func (e *ExternalOrganization) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &e, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
 func (o *ExternalOrganization) GetID() string {
 	if o == nil {
 		return ""
@@ -26,10 +41,7 @@ func (o *ExternalOrganization) GetID() string {
 }
 
 func (o *ExternalOrganization) GetPlatform() Platforms {
-	if o == nil {
-		return Platforms("")
-	}
-	return o.Platform
+	return PlatformsGithub
 }
 
 func (o *ExternalOrganization) GetName() string {

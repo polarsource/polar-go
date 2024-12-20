@@ -3,13 +3,38 @@
 package components
 
 import (
+	"encoding/json"
+	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
 )
+
+type BenefitCustomUpdateType string
+
+const (
+	BenefitCustomUpdateTypeCustom BenefitCustomUpdateType = "custom"
+)
+
+func (e BenefitCustomUpdateType) ToPointer() *BenefitCustomUpdateType {
+	return &e
+}
+func (e *BenefitCustomUpdateType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "custom":
+		*e = BenefitCustomUpdateType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for BenefitCustomUpdateType: %v", v)
+	}
+}
 
 type BenefitCustomUpdate struct {
 	// The description of the benefit. Will be displayed on products having this benefit.
 	Description *string                  `json:"description,omitempty"`
-	type_       string                   `const:"custom" json:"type"`
+	type_       BenefitCustomUpdateType  `const:"custom" json:"type"`
 	Properties  *BenefitCustomProperties `json:"properties,omitempty"`
 }
 
@@ -31,8 +56,8 @@ func (o *BenefitCustomUpdate) GetDescription() *string {
 	return o.Description
 }
 
-func (o *BenefitCustomUpdate) GetType() string {
-	return "custom"
+func (o *BenefitCustomUpdate) GetType() BenefitCustomUpdateType {
+	return BenefitCustomUpdateTypeCustom
 }
 
 func (o *BenefitCustomUpdate) GetProperties() *BenefitCustomProperties {

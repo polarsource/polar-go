@@ -3,16 +3,41 @@
 package components
 
 import (
+	"encoding/json"
+	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
 )
 
+type TokenType string
+
+const (
+	TokenTypeBearer TokenType = "Bearer"
+)
+
+func (e TokenType) ToPointer() *TokenType {
+	return &e
+}
+func (e *TokenType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "Bearer":
+		*e = TokenType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for TokenType: %v", v)
+	}
+}
+
 type TokenResponse struct {
-	AccessToken  string  `json:"access_token"`
-	tokenType    string  `const:"Bearer" json:"token_type"`
-	ExpiresIn    int64   `json:"expires_in"`
-	RefreshToken *string `json:"refresh_token"`
-	Scope        string  `json:"scope"`
-	IDToken      string  `json:"id_token"`
+	AccessToken  string    `json:"access_token"`
+	tokenType    TokenType `const:"Bearer" json:"token_type"`
+	ExpiresIn    int64     `json:"expires_in"`
+	RefreshToken *string   `json:"refresh_token"`
+	Scope        string    `json:"scope"`
+	IDToken      string    `json:"id_token"`
 }
 
 func (t TokenResponse) MarshalJSON() ([]byte, error) {
@@ -33,8 +58,8 @@ func (o *TokenResponse) GetAccessToken() string {
 	return o.AccessToken
 }
 
-func (o *TokenResponse) GetTokenType() string {
-	return "Bearer"
+func (o *TokenResponse) GetTokenType() TokenType {
+	return TokenTypeBearer
 }
 
 func (o *TokenResponse) GetExpiresIn() int64 {

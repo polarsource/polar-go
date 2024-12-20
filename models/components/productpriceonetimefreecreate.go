@@ -3,13 +3,61 @@
 package components
 
 import (
+	"encoding/json"
+	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
 )
 
+type ProductPriceOneTimeFreeCreateType string
+
+const (
+	ProductPriceOneTimeFreeCreateTypeOneTime ProductPriceOneTimeFreeCreateType = "one_time"
+)
+
+func (e ProductPriceOneTimeFreeCreateType) ToPointer() *ProductPriceOneTimeFreeCreateType {
+	return &e
+}
+func (e *ProductPriceOneTimeFreeCreateType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "one_time":
+		*e = ProductPriceOneTimeFreeCreateType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for ProductPriceOneTimeFreeCreateType: %v", v)
+	}
+}
+
+type ProductPriceOneTimeFreeCreateAmountType string
+
+const (
+	ProductPriceOneTimeFreeCreateAmountTypeFree ProductPriceOneTimeFreeCreateAmountType = "free"
+)
+
+func (e ProductPriceOneTimeFreeCreateAmountType) ToPointer() *ProductPriceOneTimeFreeCreateAmountType {
+	return &e
+}
+func (e *ProductPriceOneTimeFreeCreateAmountType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "free":
+		*e = ProductPriceOneTimeFreeCreateAmountType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for ProductPriceOneTimeFreeCreateAmountType: %v", v)
+	}
+}
+
 // ProductPriceOneTimeFreeCreate - Schema to create a free one-time product price.
 type ProductPriceOneTimeFreeCreate struct {
-	type_      string `const:"one_time" json:"type"`
-	amountType string `const:"free" json:"amount_type"`
+	type_      ProductPriceOneTimeFreeCreateType       `const:"one_time" json:"type"`
+	amountType ProductPriceOneTimeFreeCreateAmountType `const:"free" json:"amount_type"`
 }
 
 func (p ProductPriceOneTimeFreeCreate) MarshalJSON() ([]byte, error) {
@@ -23,10 +71,10 @@ func (p *ProductPriceOneTimeFreeCreate) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *ProductPriceOneTimeFreeCreate) GetType() string {
-	return "one_time"
+func (o *ProductPriceOneTimeFreeCreate) GetType() ProductPriceOneTimeFreeCreateType {
+	return ProductPriceOneTimeFreeCreateTypeOneTime
 }
 
-func (o *ProductPriceOneTimeFreeCreate) GetAmountType() string {
-	return "free"
+func (o *ProductPriceOneTimeFreeCreate) GetAmountType() ProductPriceOneTimeFreeCreateAmountType {
+	return ProductPriceOneTimeFreeCreateAmountTypeFree
 }

@@ -3,6 +3,7 @@
 package components
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
@@ -93,12 +94,35 @@ func (u CustomFieldUpdateNumberMetadata) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type CustomFieldUpdateNumberMetadata: all fields are null")
 }
 
+type CustomFieldUpdateNumberType string
+
+const (
+	CustomFieldUpdateNumberTypeNumber CustomFieldUpdateNumberType = "number"
+)
+
+func (e CustomFieldUpdateNumberType) ToPointer() *CustomFieldUpdateNumberType {
+	return &e
+}
+func (e *CustomFieldUpdateNumberType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "number":
+		*e = CustomFieldUpdateNumberType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for CustomFieldUpdateNumberType: %v", v)
+	}
+}
+
 // CustomFieldUpdateNumber - Schema to update a custom field of type number.
 type CustomFieldUpdateNumber struct {
 	Metadata   map[string]CustomFieldUpdateNumberMetadata `json:"metadata,omitempty"`
 	Name       *string                                    `json:"name,omitempty"`
 	Slug       *string                                    `json:"slug,omitempty"`
-	type_      string                                     `const:"number" json:"type"`
+	type_      CustomFieldUpdateNumberType                `const:"number" json:"type"`
 	Properties *CustomFieldNumberProperties               `json:"properties,omitempty"`
 }
 
@@ -134,8 +158,8 @@ func (o *CustomFieldUpdateNumber) GetSlug() *string {
 	return o.Slug
 }
 
-func (o *CustomFieldUpdateNumber) GetType() string {
-	return "number"
+func (o *CustomFieldUpdateNumber) GetType() CustomFieldUpdateNumberType {
+	return CustomFieldUpdateNumberTypeNumber
 }
 
 func (o *CustomFieldUpdateNumber) GetProperties() *CustomFieldNumberProperties {

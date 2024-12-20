@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: e7f2de70-a9ae-48d3-92f6-da15e6733a27
 management:
-  docChecksum: 5638ebd7f971beb61045971e7ddcf06c
+  docChecksum: 509f7f04da4bb45734ebdd8250c8c50d
   docVersion: 0.1.0
-  speakeasyVersion: 1.456.0
+  speakeasyVersion: 1.456.1
   generationVersion: 2.481.0
-  releaseVersion: 0.0.3
-  configChecksum: f8c4ca81a57e7d87e8cdc95431a2cf33
+  releaseVersion: 0.0.4
+  configChecksum: 8f7c0e15a0cf2f817349d005d9110284
   repoURL: https://github.com/polarsource/polar-go.git
   installationURL: https://github.com/polarsource/polar-go
 features:
@@ -162,6 +162,8 @@ generatedFiles:
   - /models/components/customerordersubscription.go
   - /models/components/customerportalcustomer.go
   - /models/components/customerportaloauthaccount.go
+  - /models/components/customersession.go
+  - /models/components/customersessioncreate.go
   - /models/components/customersortproperty.go
   - /models/components/customersubscription.go
   - /models/components/customersubscriptionproduct.go
@@ -414,6 +416,7 @@ generatedFiles:
   - /models/operations/customerportalsubscriptionsupdate.go
   - /models/operations/customerscreate.go
   - /models/operations/customersdelete.go
+  - /models/operations/customersessionscreate.go
   - /models/operations/customersget.go
   - /models/operations/customerslist.go
   - /models/operations/customersupdate.go
@@ -495,62 +498,90 @@ generatedFiles:
   - custom.go
   - customerportal.go
   - customers.go
+  - customersessions.go
   - customfields.go
   - discounts.go
   - docs/models/apierrors/alreadycanceledsubscription.md
+  - docs/models/apierrors/alreadycanceledsubscriptionerror.md
+  - docs/models/apierrors/error.md
   - docs/models/apierrors/httpvalidationerror.md
   - docs/models/apierrors/notpermitted.md
+  - docs/models/apierrors/notpermittederror.md
   - docs/models/apierrors/resourcenotfound.md
   - docs/models/apierrors/unauthorized.md
+  - docs/models/apierrors/unauthorizederror.md
   - docs/models/components/address.md
   - docs/models/components/advertisementcampaign.md
   - docs/models/components/advertisementcampaignlistresource.md
   - docs/models/components/advertisementsortproperty.md
+  - docs/models/components/amounttype.md
   - docs/models/components/assignee.md
   - docs/models/components/attachedcustomfield.md
   - docs/models/components/attachedcustomfieldcreate.md
   - docs/models/components/author.md
   - docs/models/components/authorizeorganization.md
   - docs/models/components/authorizeresponseorganization.md
+  - docs/models/components/authorizeresponseorganizationsubtype.md
   - docs/models/components/authorizeresponseuser.md
+  - docs/models/components/authorizeresponseusersubtype.md
   - docs/models/components/authorizeuser.md
   - docs/models/components/benefit.md
   - docs/models/components/benefitads.md
   - docs/models/components/benefitadscreate.md
+  - docs/models/components/benefitadscreatetype.md
   - docs/models/components/benefitadsproperties.md
   - docs/models/components/benefitadssubscriber.md
+  - docs/models/components/benefitadssubscribertype.md
+  - docs/models/components/benefitadstype.md
   - docs/models/components/benefitadsupdate.md
+  - docs/models/components/benefitadsupdatetype.md
   - docs/models/components/benefitbase.md
   - docs/models/components/benefitcreate.md
   - docs/models/components/benefitcustom.md
   - docs/models/components/benefitcustomcreate.md
   - docs/models/components/benefitcustomcreateproperties.md
+  - docs/models/components/benefitcustomcreatetype.md
   - docs/models/components/benefitcustomproperties.md
   - docs/models/components/benefitcustomsubscriber.md
   - docs/models/components/benefitcustomsubscriberproperties.md
+  - docs/models/components/benefitcustomsubscribertype.md
+  - docs/models/components/benefitcustomtype.md
   - docs/models/components/benefitcustomupdate.md
+  - docs/models/components/benefitcustomupdatetype.md
   - docs/models/components/benefitdiscord.md
   - docs/models/components/benefitdiscordcreate.md
   - docs/models/components/benefitdiscordcreateproperties.md
+  - docs/models/components/benefitdiscordcreatetype.md
   - docs/models/components/benefitdiscordproperties.md
   - docs/models/components/benefitdiscordsubscriber.md
   - docs/models/components/benefitdiscordsubscriberproperties.md
+  - docs/models/components/benefitdiscordsubscribertype.md
+  - docs/models/components/benefitdiscordtype.md
   - docs/models/components/benefitdiscordupdate.md
+  - docs/models/components/benefitdiscordupdatetype.md
   - docs/models/components/benefitdownloadables.md
   - docs/models/components/benefitdownloadablescreate.md
   - docs/models/components/benefitdownloadablescreateproperties.md
+  - docs/models/components/benefitdownloadablescreatetype.md
   - docs/models/components/benefitdownloadablesproperties.md
   - docs/models/components/benefitdownloadablessubscriber.md
   - docs/models/components/benefitdownloadablessubscriberproperties.md
+  - docs/models/components/benefitdownloadablessubscribertype.md
+  - docs/models/components/benefitdownloadablestype.md
   - docs/models/components/benefitdownloadablesupdate.md
+  - docs/models/components/benefitdownloadablesupdatetype.md
   - docs/models/components/benefitgithubrepository.md
   - docs/models/components/benefitgithubrepositorycreate.md
   - docs/models/components/benefitgithubrepositorycreateproperties.md
   - docs/models/components/benefitgithubrepositorycreatepropertiespermission.md
+  - docs/models/components/benefitgithubrepositorycreatetype.md
   - docs/models/components/benefitgithubrepositoryproperties.md
   - docs/models/components/benefitgithubrepositorysubscriber.md
   - docs/models/components/benefitgithubrepositorysubscriberproperties.md
+  - docs/models/components/benefitgithubrepositorysubscribertype.md
+  - docs/models/components/benefitgithubrepositorytype.md
   - docs/models/components/benefitgithubrepositoryupdate.md
+  - docs/models/components/benefitgithubrepositoryupdatetype.md
   - docs/models/components/benefitgrant.md
   - docs/models/components/benefitgrantadsproperties.md
   - docs/models/components/benefitgrantcustomproperties.md
@@ -566,10 +597,14 @@ generatedFiles:
   - docs/models/components/benefitlicensekeys.md
   - docs/models/components/benefitlicensekeyscreate.md
   - docs/models/components/benefitlicensekeyscreateproperties.md
+  - docs/models/components/benefitlicensekeyscreatetype.md
   - docs/models/components/benefitlicensekeysproperties.md
   - docs/models/components/benefitlicensekeyssubscriber.md
   - docs/models/components/benefitlicensekeyssubscriberproperties.md
+  - docs/models/components/benefitlicensekeyssubscribertype.md
+  - docs/models/components/benefitlicensekeystype.md
   - docs/models/components/benefitlicensekeysupdate.md
+  - docs/models/components/benefitlicensekeysupdatetype.md
   - docs/models/components/benefittype.md
   - docs/models/components/checkout.md
   - docs/models/components/checkoutconfirmstripe.md
@@ -589,9 +624,11 @@ generatedFiles:
   - docs/models/components/checkoutlinkmetadata.md
   - docs/models/components/checkoutlinkpricecreate.md
   - docs/models/components/checkoutlinkpricecreatemetadata.md
+  - docs/models/components/checkoutlinkpricecreatepaymentprocessor.md
   - docs/models/components/checkoutlinkproduct.md
   - docs/models/components/checkoutlinkproductcreate.md
   - docs/models/components/checkoutlinkproductcreatemetadata.md
+  - docs/models/components/checkoutlinkproductcreatepaymentprocessor.md
   - docs/models/components/checkoutlinksortproperty.md
   - docs/models/components/checkoutlinkupdate.md
   - docs/models/components/checkoutlinkupdatemetadata.md
@@ -600,11 +637,13 @@ generatedFiles:
   - docs/models/components/checkoutpricecreatecustomermetadata.md
   - docs/models/components/checkoutpricecreatecustomfielddata.md
   - docs/models/components/checkoutpricecreatemetadata.md
+  - docs/models/components/checkoutpricecreatepaymentprocessor.md
   - docs/models/components/checkoutproduct.md
   - docs/models/components/checkoutproductcreate.md
   - docs/models/components/checkoutproductcreatecustomermetadata.md
   - docs/models/components/checkoutproductcreatecustomfielddata.md
   - docs/models/components/checkoutproductcreatemetadata.md
+  - docs/models/components/checkoutproductcreatepaymentprocessor.md
   - docs/models/components/checkoutpublic.md
   - docs/models/components/checkoutpublicconfirmed.md
   - docs/models/components/checkoutpublicconfirmedcustomfielddata.md
@@ -626,18 +665,24 @@ generatedFiles:
   - docs/models/components/customerbenefitgrant.md
   - docs/models/components/customerbenefitgrantads.md
   - docs/models/components/customerbenefitgrantadsupdate.md
+  - docs/models/components/customerbenefitgrantadsupdatebenefittype.md
   - docs/models/components/customerbenefitgrantcustom.md
   - docs/models/components/customerbenefitgrantcustomupdate.md
+  - docs/models/components/customerbenefitgrantcustomupdatebenefittype.md
   - docs/models/components/customerbenefitgrantdiscord.md
   - docs/models/components/customerbenefitgrantdiscordpropertiesupdate.md
   - docs/models/components/customerbenefitgrantdiscordupdate.md
+  - docs/models/components/customerbenefitgrantdiscordupdatebenefittype.md
   - docs/models/components/customerbenefitgrantdownloadables.md
   - docs/models/components/customerbenefitgrantdownloadablesupdate.md
+  - docs/models/components/customerbenefitgrantdownloadablesupdatebenefittype.md
   - docs/models/components/customerbenefitgrantgithubrepository.md
   - docs/models/components/customerbenefitgrantgithubrepositorypropertiesupdate.md
   - docs/models/components/customerbenefitgrantgithubrepositoryupdate.md
+  - docs/models/components/customerbenefitgrantgithubrepositoryupdatebenefittype.md
   - docs/models/components/customerbenefitgrantlicensekeys.md
   - docs/models/components/customerbenefitgrantlicensekeysupdate.md
+  - docs/models/components/customerbenefitgrantlicensekeysupdatebenefittype.md
   - docs/models/components/customerbenefitgrantsortproperty.md
   - docs/models/components/customerbenefitgrantupdate.md
   - docs/models/components/customercreate.md
@@ -652,6 +697,8 @@ generatedFiles:
   - docs/models/components/customerportalcustomer.md
   - docs/models/components/customerportalcustomertaxid.md
   - docs/models/components/customerportaloauthaccount.md
+  - docs/models/components/customersession.md
+  - docs/models/components/customersessioncreate.md
   - docs/models/components/customersortproperty.md
   - docs/models/components/customersubscription.md
   - docs/models/components/customersubscriptionproduct.md
@@ -664,44 +711,59 @@ generatedFiles:
   - docs/models/components/customfieldcheckbox.md
   - docs/models/components/customfieldcheckboxmetadata.md
   - docs/models/components/customfieldcheckboxproperties.md
+  - docs/models/components/customfieldcheckboxtype.md
   - docs/models/components/customfieldcreate.md
   - docs/models/components/customfieldcreatecheckbox.md
   - docs/models/components/customfieldcreatecheckboxmetadata.md
+  - docs/models/components/customfieldcreatecheckboxtype.md
   - docs/models/components/customfieldcreatedate.md
   - docs/models/components/customfieldcreatedatemetadata.md
+  - docs/models/components/customfieldcreatedatetype.md
   - docs/models/components/customfieldcreatenumber.md
   - docs/models/components/customfieldcreatenumbermetadata.md
+  - docs/models/components/customfieldcreatenumbertype.md
   - docs/models/components/customfieldcreateselect.md
   - docs/models/components/customfieldcreateselectmetadata.md
+  - docs/models/components/customfieldcreateselecttype.md
   - docs/models/components/customfieldcreatetext.md
   - docs/models/components/customfieldcreatetextmetadata.md
+  - docs/models/components/customfieldcreatetexttype.md
   - docs/models/components/customfielddata.md
   - docs/models/components/customfielddate.md
   - docs/models/components/customfielddatemetadata.md
   - docs/models/components/customfielddateproperties.md
+  - docs/models/components/customfielddatetype.md
   - docs/models/components/customfieldnumber.md
   - docs/models/components/customfieldnumbermetadata.md
   - docs/models/components/customfieldnumberproperties.md
+  - docs/models/components/customfieldnumbertype.md
   - docs/models/components/customfieldselect.md
   - docs/models/components/customfieldselectmetadata.md
   - docs/models/components/customfieldselectoption.md
   - docs/models/components/customfieldselectproperties.md
+  - docs/models/components/customfieldselecttype.md
   - docs/models/components/customfieldsortproperty.md
   - docs/models/components/customfieldtext.md
   - docs/models/components/customfieldtextmetadata.md
   - docs/models/components/customfieldtextproperties.md
+  - docs/models/components/customfieldtexttype.md
   - docs/models/components/customfieldtype.md
   - docs/models/components/customfieldupdate.md
   - docs/models/components/customfieldupdatecheckbox.md
   - docs/models/components/customfieldupdatecheckboxmetadata.md
+  - docs/models/components/customfieldupdatecheckboxtype.md
   - docs/models/components/customfieldupdatedate.md
   - docs/models/components/customfieldupdatedatemetadata.md
+  - docs/models/components/customfieldupdatedatetype.md
   - docs/models/components/customfieldupdatenumber.md
   - docs/models/components/customfieldupdatenumbermetadata.md
+  - docs/models/components/customfieldupdatenumbertype.md
   - docs/models/components/customfieldupdateselect.md
   - docs/models/components/customfieldupdateselectmetadata.md
+  - docs/models/components/customfieldupdateselecttype.md
   - docs/models/components/customfieldupdatetext.md
   - docs/models/components/customfieldupdatetextmetadata.md
+  - docs/models/components/customfieldupdatetexttype.md
   - docs/models/components/discount.md
   - docs/models/components/discountcreate.md
   - docs/models/components/discountduration.md
@@ -735,7 +797,9 @@ generatedFiles:
   - docs/models/components/discountupdate.md
   - docs/models/components/discountupdatemetadata.md
   - docs/models/components/downloadablefilecreate.md
+  - docs/models/components/downloadablefilecreateservice.md
   - docs/models/components/downloadablefileread.md
+  - docs/models/components/downloadablefilereadservice.md
   - docs/models/components/downloadableread.md
   - docs/models/components/existingproductprice.md
   - docs/models/components/externalorganization.md
@@ -748,10 +812,12 @@ generatedFiles:
   - docs/models/components/fileupload.md
   - docs/models/components/fileuploadcompleted.md
   - docs/models/components/funding.md
+  - docs/models/components/granttype.md
   - docs/models/components/granttypes.md
   - docs/models/components/httpmetadata.md
   - docs/models/components/interval.md
   - docs/models/components/introspecttokenresponse.md
+  - docs/models/components/introspecttokenresponsetokentype.md
   - docs/models/components/issue.md
   - docs/models/components/label.md
   - docs/models/components/licensekeyactivate.md
@@ -804,13 +870,16 @@ generatedFiles:
   - docs/models/components/oauth2client.md
   - docs/models/components/oauth2clientconfiguration.md
   - docs/models/components/oauth2clientconfigurationgranttypes.md
+  - docs/models/components/oauth2clientconfigurationresponsetypes.md
   - docs/models/components/oauth2clientconfigurationtokenendpointauthmethod.md
   - docs/models/components/oauth2clientconfigurationupdate.md
   - docs/models/components/oauth2clientconfigurationupdategranttypes.md
+  - docs/models/components/oauth2clientconfigurationupdateresponsetypes.md
   - docs/models/components/oauth2clientconfigurationupdatetokenendpointauthmethod.md
   - docs/models/components/oauth2clientpublic.md
   - docs/models/components/onev11oauth21tokenpostxcomponentsauthorizationcodetokenrequest.md
   - docs/models/components/onev11oauth21tokenpostxcomponentsrefreshtokenrequest.md
+  - docs/models/components/onev11oauth21tokenpostxcomponentsrefreshtokenrequestgranttype.md
   - docs/models/components/order.md
   - docs/models/components/orderbillingreason.md
   - docs/models/components/ordercustomer.md
@@ -827,7 +896,9 @@ generatedFiles:
   - docs/models/components/orderuser.md
   - docs/models/components/organization.md
   - docs/models/components/organizationavatarfilecreate.md
+  - docs/models/components/organizationavatarfilecreateservice.md
   - docs/models/components/organizationavatarfileread.md
+  - docs/models/components/organizationavatarfilereadservice.md
   - docs/models/components/organizationcreate.md
   - docs/models/components/organizationfeaturesettings.md
   - docs/models/components/organizationprofilesettings.md
@@ -849,6 +920,7 @@ generatedFiles:
   - docs/models/components/productbenefitsupdate.md
   - docs/models/components/productcreate.md
   - docs/models/components/productmediafilecreate.md
+  - docs/models/components/productmediafilecreateservice.md
   - docs/models/components/productmediafileread.md
   - docs/models/components/productmetadata.md
   - docs/models/components/productonetimecreate.md
@@ -856,17 +928,37 @@ generatedFiles:
   - docs/models/components/productprice.md
   - docs/models/components/productpriceonetime.md
   - docs/models/components/productpriceonetimecustom.md
+  - docs/models/components/productpriceonetimecustomamounttype.md
   - docs/models/components/productpriceonetimecustomcreate.md
+  - docs/models/components/productpriceonetimecustomcreateamounttype.md
+  - docs/models/components/productpriceonetimecustomcreatetype.md
+  - docs/models/components/productpriceonetimecustomtype.md
   - docs/models/components/productpriceonetimefixed.md
+  - docs/models/components/productpriceonetimefixedamounttype.md
   - docs/models/components/productpriceonetimefixedcreate.md
+  - docs/models/components/productpriceonetimefixedcreateamounttype.md
+  - docs/models/components/productpriceonetimefixedcreatetype.md
+  - docs/models/components/productpriceonetimefixedtype.md
   - docs/models/components/productpriceonetimefree.md
+  - docs/models/components/productpriceonetimefreeamounttype.md
   - docs/models/components/productpriceonetimefreecreate.md
+  - docs/models/components/productpriceonetimefreecreateamounttype.md
+  - docs/models/components/productpriceonetimefreecreatetype.md
+  - docs/models/components/productpriceonetimefreetype.md
   - docs/models/components/productpricerecurring.md
   - docs/models/components/productpricerecurringcustom.md
+  - docs/models/components/productpricerecurringcustomamounttype.md
+  - docs/models/components/productpricerecurringcustomtype.md
   - docs/models/components/productpricerecurringfixed.md
   - docs/models/components/productpricerecurringfixedcreate.md
+  - docs/models/components/productpricerecurringfixedcreateamounttype.md
+  - docs/models/components/productpricerecurringfixedcreatetype.md
   - docs/models/components/productpricerecurringfree.md
+  - docs/models/components/productpricerecurringfreeamounttype.md
   - docs/models/components/productpricerecurringfreecreate.md
+  - docs/models/components/productpricerecurringfreecreateamounttype.md
+  - docs/models/components/productpricerecurringfreecreatetype.md
+  - docs/models/components/productpricerecurringfreetype.md
   - docs/models/components/productpricetype.md
   - docs/models/components/productrecurringcreate.md
   - docs/models/components/productrecurringcreatemetadata.md
@@ -882,6 +974,7 @@ generatedFiles:
   - docs/models/components/repositoryprofilesettingsupdate.md
   - docs/models/components/repositorysortproperty.md
   - docs/models/components/repositoryupdate.md
+  - docs/models/components/responsetypes.md
   - docs/models/components/revoketokenresponse.md
   - docs/models/components/s3downloadurl.md
   - docs/models/components/s3filecreatemultipart.md
@@ -891,7 +984,9 @@ generatedFiles:
   - docs/models/components/s3fileuploadpart.md
   - docs/models/components/scope.md
   - docs/models/components/security.md
+  - docs/models/components/service.md
   - docs/models/components/state.md
+  - docs/models/components/status.md
   - docs/models/components/subscription.md
   - docs/models/components/subscriptioncustomer.md
   - docs/models/components/subscriptioncustomermetadata.md
@@ -908,28 +1003,47 @@ generatedFiles:
   - docs/models/components/tokenendpointauthmethod.md
   - docs/models/components/tokenresponse.md
   - docs/models/components/tokentype.md
+  - docs/models/components/type.md
   - docs/models/components/userinfoorganization.md
   - docs/models/components/userinfouser.md
   - docs/models/components/validatedlicensekey.md
   - docs/models/components/validationerror.md
   - docs/models/components/webhookbenefitcreatedpayload.md
+  - docs/models/components/webhookbenefitcreatedpayloadtype.md
   - docs/models/components/webhookbenefitgrantcreatedpayload.md
+  - docs/models/components/webhookbenefitgrantcreatedpayloadtype.md
   - docs/models/components/webhookbenefitgrantrevokedpayload.md
+  - docs/models/components/webhookbenefitgrantrevokedpayloadtype.md
   - docs/models/components/webhookbenefitgrantupdatedpayload.md
+  - docs/models/components/webhookbenefitgrantupdatedpayloadtype.md
   - docs/models/components/webhookbenefitupdatedpayload.md
+  - docs/models/components/webhookbenefitupdatedpayloadtype.md
   - docs/models/components/webhookcheckoutcreatedpayload.md
+  - docs/models/components/webhookcheckoutcreatedpayloadtype.md
   - docs/models/components/webhookcheckoutupdatedpayload.md
+  - docs/models/components/webhookcheckoutupdatedpayloadtype.md
   - docs/models/components/webhookordercreatedpayload.md
+  - docs/models/components/webhookordercreatedpayloadtype.md
   - docs/models/components/webhookorganizationupdatedpayload.md
+  - docs/models/components/webhookorganizationupdatedpayloadtype.md
   - docs/models/components/webhookpledgecreatedpayload.md
+  - docs/models/components/webhookpledgecreatedpayloadtype.md
   - docs/models/components/webhookpledgeupdatedpayload.md
+  - docs/models/components/webhookpledgeupdatedpayloadtype.md
   - docs/models/components/webhookproductcreatedpayload.md
+  - docs/models/components/webhookproductcreatedpayloadtype.md
   - docs/models/components/webhookproductupdatedpayload.md
+  - docs/models/components/webhookproductupdatedpayloadtype.md
   - docs/models/components/webhooksubscriptionactivepayload.md
+  - docs/models/components/webhooksubscriptionactivepayloadtype.md
   - docs/models/components/webhooksubscriptioncanceledpayload.md
+  - docs/models/components/webhooksubscriptioncanceledpayloadtype.md
   - docs/models/components/webhooksubscriptioncreatedpayload.md
+  - docs/models/components/webhooksubscriptioncreatedpayloadtype.md
   - docs/models/components/webhooksubscriptionrevokedpayload.md
+  - docs/models/components/webhooksubscriptionrevokedpayloadtype.md
   - docs/models/components/webhooksubscriptionupdatedpayload.md
+  - docs/models/components/webhooksubscriptionupdatedpayloadtype.md
   - docs/models/operations/advertisementsgetrequest.md
   - docs/models/operations/advertisementsgetresponse.md
   - docs/models/operations/advertisementslistrequest.md
@@ -1028,6 +1142,7 @@ generatedFiles:
   - docs/models/operations/customerscreateresponse.md
   - docs/models/operations/customersdeleterequest.md
   - docs/models/operations/customersdeleteresponse.md
+  - docs/models/operations/customersessionscreateresponse.md
   - docs/models/operations/customersgetrequest.md
   - docs/models/operations/customersgetresponse.md
   - docs/models/operations/customerslistqueryparamorganizationidfilter.md
@@ -1188,6 +1303,7 @@ generatedFiles:
   - docs/sdks/custom/README.md
   - docs/sdks/customerportal/README.md
   - docs/sdks/customers/README.md
+  - docs/sdks/customersessions/README.md
   - docs/sdks/customfields/README.md
   - docs/sdks/discounts/README.md
   - docs/sdks/downloadables/README.md
@@ -2392,6 +2508,15 @@ examples:
           application/json: {"detail": "<value>"}
         "404":
           application/json: {"detail": "<value>"}
+        "422":
+          application/json: {}
+  customer-sessions:create:
+    speakeasy-default-customer-sessions:create:
+      requestBody:
+        application/json: {"customer_id": "<value>"}
+      responses:
+        "201":
+          application/json: {"created_at": "2023-06-18T07:14:55.338Z", "modified_at": "2023-12-01T17:06:07.804Z", "id": "<value>", "token": "<value>", "expires_at": "2023-04-03T12:48:32.253Z", "customer_id": "<value>", "customer": {"created_at": "2022-05-28T06:20:22.766Z", "modified_at": "2022-03-17T15:39:20.911Z", "id": "<value>", "metadata": {"key": true, "key1": "<value>", "key2": "<value>"}, "email": "Raymundo_Rolfson35@hotmail.com", "email_verified": true, "name": "<value>", "billing_address": {"country": "Cyprus"}, "tax_id": [], "organization_id": "<value>", "avatar_url": "https://glorious-convection.com/"}}
         "422":
           application/json: {}
 generatedTests: {}

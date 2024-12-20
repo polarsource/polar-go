@@ -3,6 +3,7 @@
 package components
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
@@ -93,12 +94,35 @@ func (u CustomFieldUpdateDateMetadata) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type CustomFieldUpdateDateMetadata: all fields are null")
 }
 
+type CustomFieldUpdateDateType string
+
+const (
+	CustomFieldUpdateDateTypeDate CustomFieldUpdateDateType = "date"
+)
+
+func (e CustomFieldUpdateDateType) ToPointer() *CustomFieldUpdateDateType {
+	return &e
+}
+func (e *CustomFieldUpdateDateType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "date":
+		*e = CustomFieldUpdateDateType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for CustomFieldUpdateDateType: %v", v)
+	}
+}
+
 // CustomFieldUpdateDate - Schema to update a custom field of type date.
 type CustomFieldUpdateDate struct {
 	Metadata   map[string]CustomFieldUpdateDateMetadata `json:"metadata,omitempty"`
 	Name       *string                                  `json:"name,omitempty"`
 	Slug       *string                                  `json:"slug,omitempty"`
-	type_      string                                   `const:"date" json:"type"`
+	type_      CustomFieldUpdateDateType                `const:"date" json:"type"`
 	Properties *CustomFieldDateProperties               `json:"properties,omitempty"`
 }
 
@@ -134,8 +158,8 @@ func (o *CustomFieldUpdateDate) GetSlug() *string {
 	return o.Slug
 }
 
-func (o *CustomFieldUpdateDate) GetType() string {
-	return "date"
+func (o *CustomFieldUpdateDate) GetType() CustomFieldUpdateDateType {
+	return CustomFieldUpdateDateTypeDate
 }
 
 func (o *CustomFieldUpdateDate) GetProperties() *CustomFieldDateProperties {

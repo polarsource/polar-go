@@ -3,8 +3,33 @@
 package components
 
 import (
+	"encoding/json"
+	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
 )
+
+type WebhookSubscriptionUpdatedPayloadType string
+
+const (
+	WebhookSubscriptionUpdatedPayloadTypeSubscriptionUpdated WebhookSubscriptionUpdatedPayloadType = "subscription.updated"
+)
+
+func (e WebhookSubscriptionUpdatedPayloadType) ToPointer() *WebhookSubscriptionUpdatedPayloadType {
+	return &e
+}
+func (e *WebhookSubscriptionUpdatedPayloadType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "subscription.updated":
+		*e = WebhookSubscriptionUpdatedPayloadType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for WebhookSubscriptionUpdatedPayloadType: %v", v)
+	}
+}
 
 // WebhookSubscriptionUpdatedPayload - Sent when a subscription is updated. This event fires for all changes to the subscription, including renewals.
 //
@@ -14,8 +39,8 @@ import (
 //
 // **Discord & Slack support:** On cancellation and revocation. Renewals are skipped.
 type WebhookSubscriptionUpdatedPayload struct {
-	type_ string       `const:"subscription.updated" json:"type"`
-	Data  Subscription `json:"data"`
+	type_ WebhookSubscriptionUpdatedPayloadType `const:"subscription.updated" json:"type"`
+	Data  Subscription                          `json:"data"`
 }
 
 func (w WebhookSubscriptionUpdatedPayload) MarshalJSON() ([]byte, error) {
@@ -29,8 +54,8 @@ func (w *WebhookSubscriptionUpdatedPayload) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *WebhookSubscriptionUpdatedPayload) GetType() string {
-	return "subscription.updated"
+func (o *WebhookSubscriptionUpdatedPayload) GetType() WebhookSubscriptionUpdatedPayloadType {
+	return WebhookSubscriptionUpdatedPayloadTypeSubscriptionUpdated
 }
 
 func (o *WebhookSubscriptionUpdatedPayload) GetData() Subscription {

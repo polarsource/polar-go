@@ -3,6 +3,7 @@
 package components
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
@@ -94,6 +95,29 @@ func (u CustomFieldCheckboxMetadata) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type CustomFieldCheckboxMetadata: all fields are null")
 }
 
+type CustomFieldCheckboxType string
+
+const (
+	CustomFieldCheckboxTypeCheckbox CustomFieldCheckboxType = "checkbox"
+)
+
+func (e CustomFieldCheckboxType) ToPointer() *CustomFieldCheckboxType {
+	return &e
+}
+func (e *CustomFieldCheckboxType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "checkbox":
+		*e = CustomFieldCheckboxType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for CustomFieldCheckboxType: %v", v)
+	}
+}
+
 // CustomFieldCheckbox - Schema for a custom field of type checkbox.
 type CustomFieldCheckbox struct {
 	// Creation timestamp of the object.
@@ -103,7 +127,7 @@ type CustomFieldCheckbox struct {
 	// The ID of the object.
 	ID       string                                 `json:"id"`
 	Metadata map[string]CustomFieldCheckboxMetadata `json:"metadata"`
-	type_    string                                 `const:"checkbox" json:"type"`
+	type_    CustomFieldCheckboxType                `const:"checkbox" json:"type"`
 	// Identifier of the custom field. It'll be used as key when storing the value.
 	Slug string `json:"slug"`
 	// Name of the custom field.
@@ -152,8 +176,8 @@ func (o *CustomFieldCheckbox) GetMetadata() map[string]CustomFieldCheckboxMetada
 	return o.Metadata
 }
 
-func (o *CustomFieldCheckbox) GetType() string {
-	return "checkbox"
+func (o *CustomFieldCheckbox) GetType() CustomFieldCheckboxType {
+	return CustomFieldCheckboxTypeCheckbox
 }
 
 func (o *CustomFieldCheckbox) GetSlug() string {

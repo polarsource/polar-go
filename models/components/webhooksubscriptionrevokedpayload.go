@@ -3,16 +3,41 @@
 package components
 
 import (
+	"encoding/json"
+	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
 )
+
+type WebhookSubscriptionRevokedPayloadType string
+
+const (
+	WebhookSubscriptionRevokedPayloadTypeSubscriptionRevoked WebhookSubscriptionRevokedPayloadType = "subscription.revoked"
+)
+
+func (e WebhookSubscriptionRevokedPayloadType) ToPointer() *WebhookSubscriptionRevokedPayloadType {
+	return &e
+}
+func (e *WebhookSubscriptionRevokedPayloadType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "subscription.revoked":
+		*e = WebhookSubscriptionRevokedPayloadType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for WebhookSubscriptionRevokedPayloadType: %v", v)
+	}
+}
 
 // WebhookSubscriptionRevokedPayload - Sent when a subscription is revoked, the user looses access immediately.
 // Happens when the subscription is canceled, or payment is past due.
 //
 // **Discord & Slack support:** Full
 type WebhookSubscriptionRevokedPayload struct {
-	type_ string       `const:"subscription.revoked" json:"type"`
-	Data  Subscription `json:"data"`
+	type_ WebhookSubscriptionRevokedPayloadType `const:"subscription.revoked" json:"type"`
+	Data  Subscription                          `json:"data"`
 }
 
 func (w WebhookSubscriptionRevokedPayload) MarshalJSON() ([]byte, error) {
@@ -26,8 +51,8 @@ func (w *WebhookSubscriptionRevokedPayload) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *WebhookSubscriptionRevokedPayload) GetType() string {
-	return "subscription.revoked"
+func (o *WebhookSubscriptionRevokedPayload) GetType() WebhookSubscriptionRevokedPayloadType {
+	return WebhookSubscriptionRevokedPayloadTypeSubscriptionRevoked
 }
 
 func (o *WebhookSubscriptionRevokedPayload) GetData() Subscription {

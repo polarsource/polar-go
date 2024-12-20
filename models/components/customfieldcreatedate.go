@@ -3,6 +3,7 @@
 package components
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
@@ -93,6 +94,29 @@ func (u CustomFieldCreateDateMetadata) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type CustomFieldCreateDateMetadata: all fields are null")
 }
 
+type CustomFieldCreateDateType string
+
+const (
+	CustomFieldCreateDateTypeDate CustomFieldCreateDateType = "date"
+)
+
+func (e CustomFieldCreateDateType) ToPointer() *CustomFieldCreateDateType {
+	return &e
+}
+func (e *CustomFieldCreateDateType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "date":
+		*e = CustomFieldCreateDateType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for CustomFieldCreateDateType: %v", v)
+	}
+}
+
 // CustomFieldCreateDate - Schema to create a custom field of type date.
 type CustomFieldCreateDate struct {
 	// Key-value object allowing you to store additional information.
@@ -106,7 +130,7 @@ type CustomFieldCreateDate struct {
 	//
 	// You can store up to **50 key-value pairs**.
 	Metadata map[string]CustomFieldCreateDateMetadata `json:"metadata,omitempty"`
-	type_    string                                   `const:"date" json:"type"`
+	type_    CustomFieldCreateDateType                `const:"date" json:"type"`
 	// Identifier of the custom field. It'll be used as key when storing the value. Must be unique across the organization.It can only contain ASCII letters, numbers and hyphens.
 	Slug string `json:"slug"`
 	// Name of the custom field.
@@ -134,8 +158,8 @@ func (o *CustomFieldCreateDate) GetMetadata() map[string]CustomFieldCreateDateMe
 	return o.Metadata
 }
 
-func (o *CustomFieldCreateDate) GetType() string {
-	return "date"
+func (o *CustomFieldCreateDate) GetType() CustomFieldCreateDateType {
+	return CustomFieldCreateDateTypeDate
 }
 
 func (o *CustomFieldCreateDate) GetSlug() string {

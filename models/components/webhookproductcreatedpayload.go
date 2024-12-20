@@ -3,14 +3,39 @@
 package components
 
 import (
+	"encoding/json"
+	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
 )
+
+type WebhookProductCreatedPayloadType string
+
+const (
+	WebhookProductCreatedPayloadTypeProductCreated WebhookProductCreatedPayloadType = "product.created"
+)
+
+func (e WebhookProductCreatedPayloadType) ToPointer() *WebhookProductCreatedPayloadType {
+	return &e
+}
+func (e *WebhookProductCreatedPayloadType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "product.created":
+		*e = WebhookProductCreatedPayloadType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for WebhookProductCreatedPayloadType: %v", v)
+	}
+}
 
 // WebhookProductCreatedPayload - Sent when a new product is created.
 //
 // **Discord & Slack support:** Basic
 type WebhookProductCreatedPayload struct {
-	type_ string `const:"product.created" json:"type"`
+	type_ WebhookProductCreatedPayloadType `const:"product.created" json:"type"`
 	// A product.
 	Data Product `json:"data"`
 }
@@ -26,8 +51,8 @@ func (w *WebhookProductCreatedPayload) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *WebhookProductCreatedPayload) GetType() string {
-	return "product.created"
+func (o *WebhookProductCreatedPayload) GetType() WebhookProductCreatedPayloadType {
+	return WebhookProductCreatedPayloadTypeProductCreated
 }
 
 func (o *WebhookProductCreatedPayload) GetData() Product {

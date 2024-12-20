@@ -3,9 +3,34 @@
 package components
 
 import (
+	"encoding/json"
+	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
 	"time"
 )
+
+type BenefitDownloadablesType string
+
+const (
+	BenefitDownloadablesTypeDownloadables BenefitDownloadablesType = "downloadables"
+)
+
+func (e BenefitDownloadablesType) ToPointer() *BenefitDownloadablesType {
+	return &e
+}
+func (e *BenefitDownloadablesType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "downloadables":
+		*e = BenefitDownloadablesType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for BenefitDownloadablesType: %v", v)
+	}
+}
 
 type BenefitDownloadables struct {
 	// Creation timestamp of the object.
@@ -13,8 +38,8 @@ type BenefitDownloadables struct {
 	// Last modification timestamp of the object.
 	ModifiedAt *time.Time `json:"modified_at"`
 	// The ID of the benefit.
-	ID    string `json:"id"`
-	type_ string `const:"downloadables" json:"type"`
+	ID    string                   `json:"id"`
+	type_ BenefitDownloadablesType `const:"downloadables" json:"type"`
 	// The description of the benefit.
 	Description string `json:"description"`
 	// Whether the benefit is selectable when creating a product.
@@ -58,8 +83,8 @@ func (o *BenefitDownloadables) GetID() string {
 	return o.ID
 }
 
-func (o *BenefitDownloadables) GetType() string {
-	return "downloadables"
+func (o *BenefitDownloadables) GetType() BenefitDownloadablesType {
+	return BenefitDownloadablesTypeDownloadables
 }
 
 func (o *BenefitDownloadables) GetDescription() string {

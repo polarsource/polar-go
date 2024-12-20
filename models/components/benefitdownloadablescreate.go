@@ -3,11 +3,36 @@
 package components
 
 import (
+	"encoding/json"
+	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
 )
 
+type BenefitDownloadablesCreateType string
+
+const (
+	BenefitDownloadablesCreateTypeDownloadables BenefitDownloadablesCreateType = "downloadables"
+)
+
+func (e BenefitDownloadablesCreateType) ToPointer() *BenefitDownloadablesCreateType {
+	return &e
+}
+func (e *BenefitDownloadablesCreateType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "downloadables":
+		*e = BenefitDownloadablesCreateType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for BenefitDownloadablesCreateType: %v", v)
+	}
+}
+
 type BenefitDownloadablesCreate struct {
-	type_ string `const:"downloadables" json:"type"`
+	type_ BenefitDownloadablesCreateType `const:"downloadables" json:"type"`
 	// The description of the benefit. Will be displayed on products having this benefit.
 	Description string `json:"description"`
 	// The ID of the organization owning the benefit. **Required unless you use an organization token.**
@@ -26,8 +51,8 @@ func (b *BenefitDownloadablesCreate) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *BenefitDownloadablesCreate) GetType() string {
-	return "downloadables"
+func (o *BenefitDownloadablesCreate) GetType() BenefitDownloadablesCreateType {
+	return BenefitDownloadablesCreateTypeDownloadables
 }
 
 func (o *BenefitDownloadablesCreate) GetDescription() string {

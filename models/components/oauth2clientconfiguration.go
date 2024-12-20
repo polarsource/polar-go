@@ -63,12 +63,35 @@ func (e *OAuth2ClientConfigurationGrantTypes) UnmarshalJSON(data []byte) error {
 	}
 }
 
+type OAuth2ClientConfigurationResponseTypes string
+
+const (
+	OAuth2ClientConfigurationResponseTypesCode OAuth2ClientConfigurationResponseTypes = "code"
+)
+
+func (e OAuth2ClientConfigurationResponseTypes) ToPointer() *OAuth2ClientConfigurationResponseTypes {
+	return &e
+}
+func (e *OAuth2ClientConfigurationResponseTypes) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "code":
+		*e = OAuth2ClientConfigurationResponseTypes(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for OAuth2ClientConfigurationResponseTypes: %v", v)
+	}
+}
+
 type OAuth2ClientConfiguration struct {
 	RedirectUris            []string                                          `json:"redirect_uris"`
 	TokenEndpointAuthMethod *OAuth2ClientConfigurationTokenEndpointAuthMethod `default:"client_secret_post" json:"token_endpoint_auth_method"`
 	GrantTypes              []OAuth2ClientConfigurationGrantTypes             `json:"grant_types,omitempty"`
-	ResponseTypes           []string                                          `json:"response_types,omitempty"`
-	Scope                   *string                                           `default:"openid profile email user:read organizations:read organizations:write custom_fields:read custom_fields:write discounts:read discounts:write checkout_links:read checkout_links:write checkouts:read checkouts:write products:read products:write benefits:read benefits:write files:read files:write subscriptions:read subscriptions:write customers:read customers:write orders:read metrics:read webhooks:read webhooks:write external_organizations:read license_keys:read license_keys:write repositories:read repositories:write issues:read issues:write customer_portal:read customer_portal:write" json:"scope"`
+	ResponseTypes           []OAuth2ClientConfigurationResponseTypes          `json:"response_types,omitempty"`
+	Scope                   *string                                           `default:"openid profile email user:read organizations:read organizations:write custom_fields:read custom_fields:write discounts:read discounts:write checkout_links:read checkout_links:write checkouts:read checkouts:write products:read products:write benefits:read benefits:write files:read files:write subscriptions:read subscriptions:write customers:read customers:write customer_sessions:write orders:read metrics:read webhooks:read webhooks:write external_organizations:read license_keys:read license_keys:write repositories:read repositories:write issues:read issues:write customer_portal:read customer_portal:write" json:"scope"`
 	ClientName              string                                            `json:"client_name"`
 	ClientURI               *string                                           `json:"client_uri,omitempty"`
 	LogoURI                 *string                                           `json:"logo_uri,omitempty"`
@@ -108,7 +131,7 @@ func (o *OAuth2ClientConfiguration) GetGrantTypes() []OAuth2ClientConfigurationG
 	return o.GrantTypes
 }
 
-func (o *OAuth2ClientConfiguration) GetResponseTypes() []string {
+func (o *OAuth2ClientConfiguration) GetResponseTypes() []OAuth2ClientConfigurationResponseTypes {
 	if o == nil {
 		return nil
 	}

@@ -3,15 +3,40 @@
 package components
 
 import (
+	"encoding/json"
+	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
 )
+
+type WebhookBenefitGrantUpdatedPayloadType string
+
+const (
+	WebhookBenefitGrantUpdatedPayloadTypeBenefitGrantUpdated WebhookBenefitGrantUpdatedPayloadType = "benefit_grant.updated"
+)
+
+func (e WebhookBenefitGrantUpdatedPayloadType) ToPointer() *WebhookBenefitGrantUpdatedPayloadType {
+	return &e
+}
+func (e *WebhookBenefitGrantUpdatedPayloadType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "benefit_grant.updated":
+		*e = WebhookBenefitGrantUpdatedPayloadType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for WebhookBenefitGrantUpdatedPayloadType: %v", v)
+	}
+}
 
 // WebhookBenefitGrantUpdatedPayload - Sent when a new benefit grant is updated.
 //
 // **Discord & Slack support:** Basic
 type WebhookBenefitGrantUpdatedPayload struct {
-	type_ string              `const:"benefit_grant.updated" json:"type"`
-	Data  BenefitGrantWebhook `json:"data"`
+	type_ WebhookBenefitGrantUpdatedPayloadType `const:"benefit_grant.updated" json:"type"`
+	Data  BenefitGrantWebhook                   `json:"data"`
 }
 
 func (w WebhookBenefitGrantUpdatedPayload) MarshalJSON() ([]byte, error) {
@@ -25,8 +50,8 @@ func (w *WebhookBenefitGrantUpdatedPayload) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *WebhookBenefitGrantUpdatedPayload) GetType() string {
-	return "benefit_grant.updated"
+func (o *WebhookBenefitGrantUpdatedPayload) GetType() WebhookBenefitGrantUpdatedPayloadType {
+	return WebhookBenefitGrantUpdatedPayloadTypeBenefitGrantUpdated
 }
 
 func (o *WebhookBenefitGrantUpdatedPayload) GetData() BenefitGrantWebhook {

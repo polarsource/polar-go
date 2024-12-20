@@ -3,8 +3,33 @@
 package components
 
 import (
+	"encoding/json"
+	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
 )
+
+type ProductMediaFileCreateService string
+
+const (
+	ProductMediaFileCreateServiceProductMedia ProductMediaFileCreateService = "product_media"
+)
+
+func (e ProductMediaFileCreateService) ToPointer() *ProductMediaFileCreateService {
+	return &e
+}
+func (e *ProductMediaFileCreateService) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "product_media":
+		*e = ProductMediaFileCreateService(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for ProductMediaFileCreateService: %v", v)
+	}
+}
 
 // ProductMediaFileCreate - Schema to create a file to be used as a product media file.
 type ProductMediaFileCreate struct {
@@ -13,11 +38,11 @@ type ProductMediaFileCreate struct {
 	// MIME type of the file. Only images are supported for this type of file.
 	MimeType string `json:"mime_type"`
 	// Size of the file. A maximum of 10 MB is allowed for this type of file.
-	Size                 int64                 `json:"size"`
-	ChecksumSha256Base64 *string               `json:"checksum_sha256_base64,omitempty"`
-	Upload               S3FileCreateMultipart `json:"upload"`
-	service              string                `const:"product_media" json:"service"`
-	Version              *string               `json:"version,omitempty"`
+	Size                 int64                         `json:"size"`
+	ChecksumSha256Base64 *string                       `json:"checksum_sha256_base64,omitempty"`
+	Upload               S3FileCreateMultipart         `json:"upload"`
+	service              ProductMediaFileCreateService `const:"product_media" json:"service"`
+	Version              *string                       `json:"version,omitempty"`
 }
 
 func (p ProductMediaFileCreate) MarshalJSON() ([]byte, error) {
@@ -73,8 +98,8 @@ func (o *ProductMediaFileCreate) GetUpload() S3FileCreateMultipart {
 	return o.Upload
 }
 
-func (o *ProductMediaFileCreate) GetService() string {
-	return "product_media"
+func (o *ProductMediaFileCreate) GetService() ProductMediaFileCreateService {
+	return ProductMediaFileCreateServiceProductMedia
 }
 
 func (o *ProductMediaFileCreate) GetVersion() *string {

@@ -3,6 +3,7 @@
 package components
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
@@ -93,6 +94,29 @@ func (u CustomFieldCreateSelectMetadata) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type CustomFieldCreateSelectMetadata: all fields are null")
 }
 
+type CustomFieldCreateSelectType string
+
+const (
+	CustomFieldCreateSelectTypeSelect CustomFieldCreateSelectType = "select"
+)
+
+func (e CustomFieldCreateSelectType) ToPointer() *CustomFieldCreateSelectType {
+	return &e
+}
+func (e *CustomFieldCreateSelectType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "select":
+		*e = CustomFieldCreateSelectType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for CustomFieldCreateSelectType: %v", v)
+	}
+}
+
 // CustomFieldCreateSelect - Schema to create a custom field of type select.
 type CustomFieldCreateSelect struct {
 	// Key-value object allowing you to store additional information.
@@ -106,7 +130,7 @@ type CustomFieldCreateSelect struct {
 	//
 	// You can store up to **50 key-value pairs**.
 	Metadata map[string]CustomFieldCreateSelectMetadata `json:"metadata,omitempty"`
-	type_    string                                     `const:"select" json:"type"`
+	type_    CustomFieldCreateSelectType                `const:"select" json:"type"`
 	// Identifier of the custom field. It'll be used as key when storing the value. Must be unique across the organization.It can only contain ASCII letters, numbers and hyphens.
 	Slug string `json:"slug"`
 	// Name of the custom field.
@@ -134,8 +158,8 @@ func (o *CustomFieldCreateSelect) GetMetadata() map[string]CustomFieldCreateSele
 	return o.Metadata
 }
 
-func (o *CustomFieldCreateSelect) GetType() string {
-	return "select"
+func (o *CustomFieldCreateSelect) GetType() CustomFieldCreateSelectType {
+	return CustomFieldCreateSelectTypeSelect
 }
 
 func (o *CustomFieldCreateSelect) GetSlug() string {

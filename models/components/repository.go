@@ -2,9 +2,13 @@
 
 package components
 
+import (
+	"github.com/polarsource/polar-go/internal/utils"
+)
+
 type Repository struct {
 	ID          string    `json:"id"`
-	Platform    Platforms `json:"platform"`
+	platform    Platforms `const:"github" json:"platform"`
 	IsPrivate   bool      `json:"is_private"`
 	Name        string    `json:"name"`
 	Description *string   `json:"description"`
@@ -17,6 +21,17 @@ type Repository struct {
 	InternalOrganization *Organization              `json:"internal_organization"`
 }
 
+func (r Repository) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(r, "", false)
+}
+
+func (r *Repository) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &r, "", false, false); err != nil {
+		return err
+	}
+	return nil
+}
+
 func (o *Repository) GetID() string {
 	if o == nil {
 		return ""
@@ -25,10 +40,7 @@ func (o *Repository) GetID() string {
 }
 
 func (o *Repository) GetPlatform() Platforms {
-	if o == nil {
-		return Platforms("")
-	}
-	return o.Platform
+	return PlatformsGithub
 }
 
 func (o *Repository) GetIsPrivate() bool {

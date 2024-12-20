@@ -3,9 +3,58 @@
 package components
 
 import (
+	"encoding/json"
+	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
 	"time"
 )
+
+type AmountType string
+
+const (
+	AmountTypeFixed AmountType = "fixed"
+)
+
+func (e AmountType) ToPointer() *AmountType {
+	return &e
+}
+func (e *AmountType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "fixed":
+		*e = AmountType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for AmountType: %v", v)
+	}
+}
+
+// Type - The type of the price.
+type Type string
+
+const (
+	TypeRecurring Type = "recurring"
+)
+
+func (e Type) ToPointer() *Type {
+	return &e
+}
+func (e *Type) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "recurring":
+		*e = Type(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for Type: %v", v)
+	}
+}
 
 // ProductPriceRecurringFixed - A recurring price for a product, i.e. a subscription.
 type ProductPriceRecurringFixed struct {
@@ -14,8 +63,8 @@ type ProductPriceRecurringFixed struct {
 	// Last modification timestamp of the object.
 	ModifiedAt *time.Time `json:"modified_at"`
 	// The ID of the price.
-	ID         string `json:"id"`
-	amountType string `const:"fixed" json:"amount_type"`
+	ID         string     `json:"id"`
+	amountType AmountType `const:"fixed" json:"amount_type"`
 	// Whether the price is archived and no longer available.
 	IsArchived bool `json:"is_archived"`
 	// The ID of the product owning the price.
@@ -25,7 +74,7 @@ type ProductPriceRecurringFixed struct {
 	// The price in cents.
 	PriceAmount int64 `json:"price_amount"`
 	// The type of the price.
-	type_             string                        `const:"recurring" json:"type"`
+	type_             Type                          `const:"recurring" json:"type"`
 	RecurringInterval SubscriptionRecurringInterval `json:"recurring_interval"`
 }
 
@@ -61,8 +110,8 @@ func (o *ProductPriceRecurringFixed) GetID() string {
 	return o.ID
 }
 
-func (o *ProductPriceRecurringFixed) GetAmountType() string {
-	return "fixed"
+func (o *ProductPriceRecurringFixed) GetAmountType() AmountType {
+	return AmountTypeFixed
 }
 
 func (o *ProductPriceRecurringFixed) GetIsArchived() bool {
@@ -93,8 +142,8 @@ func (o *ProductPriceRecurringFixed) GetPriceAmount() int64 {
 	return o.PriceAmount
 }
 
-func (o *ProductPriceRecurringFixed) GetType() string {
-	return "recurring"
+func (o *ProductPriceRecurringFixed) GetType() Type {
+	return TypeRecurring
 }
 
 func (o *ProductPriceRecurringFixed) GetRecurringInterval() SubscriptionRecurringInterval {

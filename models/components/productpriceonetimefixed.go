@@ -3,9 +3,58 @@
 package components
 
 import (
+	"encoding/json"
+	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
 	"time"
 )
+
+type ProductPriceOneTimeFixedAmountType string
+
+const (
+	ProductPriceOneTimeFixedAmountTypeFixed ProductPriceOneTimeFixedAmountType = "fixed"
+)
+
+func (e ProductPriceOneTimeFixedAmountType) ToPointer() *ProductPriceOneTimeFixedAmountType {
+	return &e
+}
+func (e *ProductPriceOneTimeFixedAmountType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "fixed":
+		*e = ProductPriceOneTimeFixedAmountType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for ProductPriceOneTimeFixedAmountType: %v", v)
+	}
+}
+
+// ProductPriceOneTimeFixedType - The type of the price.
+type ProductPriceOneTimeFixedType string
+
+const (
+	ProductPriceOneTimeFixedTypeOneTime ProductPriceOneTimeFixedType = "one_time"
+)
+
+func (e ProductPriceOneTimeFixedType) ToPointer() *ProductPriceOneTimeFixedType {
+	return &e
+}
+func (e *ProductPriceOneTimeFixedType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "one_time":
+		*e = ProductPriceOneTimeFixedType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for ProductPriceOneTimeFixedType: %v", v)
+	}
+}
 
 // ProductPriceOneTimeFixed - A one-time price for a product.
 type ProductPriceOneTimeFixed struct {
@@ -14,8 +63,8 @@ type ProductPriceOneTimeFixed struct {
 	// Last modification timestamp of the object.
 	ModifiedAt *time.Time `json:"modified_at"`
 	// The ID of the price.
-	ID         string `json:"id"`
-	amountType string `const:"fixed" json:"amount_type"`
+	ID         string                             `json:"id"`
+	amountType ProductPriceOneTimeFixedAmountType `const:"fixed" json:"amount_type"`
 	// Whether the price is archived and no longer available.
 	IsArchived bool `json:"is_archived"`
 	// The ID of the product owning the price.
@@ -25,7 +74,7 @@ type ProductPriceOneTimeFixed struct {
 	// The price in cents.
 	PriceAmount int64 `json:"price_amount"`
 	// The type of the price.
-	type_ string `const:"one_time" json:"type"`
+	type_ ProductPriceOneTimeFixedType `const:"one_time" json:"type"`
 }
 
 func (p ProductPriceOneTimeFixed) MarshalJSON() ([]byte, error) {
@@ -60,8 +109,8 @@ func (o *ProductPriceOneTimeFixed) GetID() string {
 	return o.ID
 }
 
-func (o *ProductPriceOneTimeFixed) GetAmountType() string {
-	return "fixed"
+func (o *ProductPriceOneTimeFixed) GetAmountType() ProductPriceOneTimeFixedAmountType {
+	return ProductPriceOneTimeFixedAmountTypeFixed
 }
 
 func (o *ProductPriceOneTimeFixed) GetIsArchived() bool {
@@ -92,6 +141,6 @@ func (o *ProductPriceOneTimeFixed) GetPriceAmount() int64 {
 	return o.PriceAmount
 }
 
-func (o *ProductPriceOneTimeFixed) GetType() string {
-	return "one_time"
+func (o *ProductPriceOneTimeFixed) GetType() ProductPriceOneTimeFixedType {
+	return ProductPriceOneTimeFixedTypeOneTime
 }

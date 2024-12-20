@@ -3,14 +3,62 @@
 package components
 
 import (
+	"encoding/json"
+	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
 )
 
+type ProductPriceRecurringFreeCreateType string
+
+const (
+	ProductPriceRecurringFreeCreateTypeRecurring ProductPriceRecurringFreeCreateType = "recurring"
+)
+
+func (e ProductPriceRecurringFreeCreateType) ToPointer() *ProductPriceRecurringFreeCreateType {
+	return &e
+}
+func (e *ProductPriceRecurringFreeCreateType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "recurring":
+		*e = ProductPriceRecurringFreeCreateType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for ProductPriceRecurringFreeCreateType: %v", v)
+	}
+}
+
+type ProductPriceRecurringFreeCreateAmountType string
+
+const (
+	ProductPriceRecurringFreeCreateAmountTypeFree ProductPriceRecurringFreeCreateAmountType = "free"
+)
+
+func (e ProductPriceRecurringFreeCreateAmountType) ToPointer() *ProductPriceRecurringFreeCreateAmountType {
+	return &e
+}
+func (e *ProductPriceRecurringFreeCreateAmountType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "free":
+		*e = ProductPriceRecurringFreeCreateAmountType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for ProductPriceRecurringFreeCreateAmountType: %v", v)
+	}
+}
+
 // ProductPriceRecurringFreeCreate - Schema to create a free recurring product price, i.e. a subscription.
 type ProductPriceRecurringFreeCreate struct {
-	type_             string                        `const:"recurring" json:"type"`
-	amountType        string                        `const:"free" json:"amount_type"`
-	RecurringInterval SubscriptionRecurringInterval `json:"recurring_interval"`
+	type_             ProductPriceRecurringFreeCreateType       `const:"recurring" json:"type"`
+	amountType        ProductPriceRecurringFreeCreateAmountType `const:"free" json:"amount_type"`
+	RecurringInterval SubscriptionRecurringInterval             `json:"recurring_interval"`
 }
 
 func (p ProductPriceRecurringFreeCreate) MarshalJSON() ([]byte, error) {
@@ -24,12 +72,12 @@ func (p *ProductPriceRecurringFreeCreate) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *ProductPriceRecurringFreeCreate) GetType() string {
-	return "recurring"
+func (o *ProductPriceRecurringFreeCreate) GetType() ProductPriceRecurringFreeCreateType {
+	return ProductPriceRecurringFreeCreateTypeRecurring
 }
 
-func (o *ProductPriceRecurringFreeCreate) GetAmountType() string {
-	return "free"
+func (o *ProductPriceRecurringFreeCreate) GetAmountType() ProductPriceRecurringFreeCreateAmountType {
+	return ProductPriceRecurringFreeCreateAmountTypeFree
 }
 
 func (o *ProductPriceRecurringFreeCreate) GetRecurringInterval() SubscriptionRecurringInterval {

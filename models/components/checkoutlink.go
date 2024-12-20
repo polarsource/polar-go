@@ -210,7 +210,7 @@ type CheckoutLink struct {
 	// The ID of the object.
 	ID               string                          `json:"id"`
 	Metadata         map[string]CheckoutLinkMetadata `json:"metadata"`
-	PaymentProcessor PaymentProcessor                `json:"payment_processor"`
+	paymentProcessor PaymentProcessor                `const:"stripe" json:"payment_processor"`
 	// Client secret used to access the checkout link.
 	ClientSecret string `json:"client_secret"`
 	// URL where the customer will be redirected after a successful payment.
@@ -272,10 +272,7 @@ func (o *CheckoutLink) GetMetadata() map[string]CheckoutLinkMetadata {
 }
 
 func (o *CheckoutLink) GetPaymentProcessor() PaymentProcessor {
-	if o == nil {
-		return PaymentProcessor("")
-	}
-	return o.PaymentProcessor
+	return PaymentProcessorStripe
 }
 
 func (o *CheckoutLink) GetClientSecret() string {

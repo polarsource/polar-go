@@ -31,6 +31,7 @@
 | `ScopeSubscriptionsWrite`        | subscriptions:write              |
 | `ScopeCustomersRead`             | customers:read                   |
 | `ScopeCustomersWrite`            | customers:write                  |
+| `ScopeCustomerSessionsWrite`     | customer_sessions:write          |
 | `ScopeOrdersRead`                | orders:read                      |
 | `ScopeMetricsRead`               | metrics:read                     |
 | `ScopeWebhooksRead`              | webhooks:read                    |

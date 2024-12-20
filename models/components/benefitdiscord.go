@@ -3,9 +3,34 @@
 package components
 
 import (
+	"encoding/json"
+	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
 	"time"
 )
+
+type BenefitDiscordType string
+
+const (
+	BenefitDiscordTypeDiscord BenefitDiscordType = "discord"
+)
+
+func (e BenefitDiscordType) ToPointer() *BenefitDiscordType {
+	return &e
+}
+func (e *BenefitDiscordType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "discord":
+		*e = BenefitDiscordType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for BenefitDiscordType: %v", v)
+	}
+}
 
 // BenefitDiscord - A benefit of type `discord`.
 //
@@ -16,8 +41,8 @@ type BenefitDiscord struct {
 	// Last modification timestamp of the object.
 	ModifiedAt *time.Time `json:"modified_at"`
 	// The ID of the benefit.
-	ID    string `json:"id"`
-	type_ string `const:"discord" json:"type"`
+	ID    string             `json:"id"`
+	type_ BenefitDiscordType `const:"discord" json:"type"`
 	// The description of the benefit.
 	Description string `json:"description"`
 	// Whether the benefit is selectable when creating a product.
@@ -62,8 +87,8 @@ func (o *BenefitDiscord) GetID() string {
 	return o.ID
 }
 
-func (o *BenefitDiscord) GetType() string {
-	return "discord"
+func (o *BenefitDiscord) GetType() BenefitDiscordType {
+	return BenefitDiscordTypeDiscord
 }
 
 func (o *BenefitDiscord) GetDescription() string {

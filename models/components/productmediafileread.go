@@ -3,9 +3,34 @@
 package components
 
 import (
+	"encoding/json"
+	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
 	"time"
 )
+
+type Service string
+
+const (
+	ServiceProductMedia Service = "product_media"
+)
+
+func (e Service) ToPointer() *Service {
+	return &e
+}
+func (e *Service) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "product_media":
+		*e = Service(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for Service: %v", v)
+	}
+}
 
 // ProductMediaFileRead - File to be used as a product media file.
 type ProductMediaFileRead struct {
@@ -22,7 +47,7 @@ type ProductMediaFileRead struct {
 	ChecksumSha256Hex    *string    `json:"checksum_sha256_hex"`
 	LastModifiedAt       *time.Time `json:"last_modified_at"`
 	Version              *string    `json:"version"`
-	service              string     `const:"product_media" json:"service"`
+	service              Service    `const:"product_media" json:"service"`
 	IsUploaded           bool       `json:"is_uploaded"`
 	CreatedAt            time.Time  `json:"created_at"`
 	SizeReadable         string     `json:"size_readable"`
@@ -124,8 +149,8 @@ func (o *ProductMediaFileRead) GetVersion() *string {
 	return o.Version
 }
 
-func (o *ProductMediaFileRead) GetService() string {
-	return "product_media"
+func (o *ProductMediaFileRead) GetService() Service {
+	return ServiceProductMedia
 }
 
 func (o *ProductMediaFileRead) GetIsUploaded() bool {

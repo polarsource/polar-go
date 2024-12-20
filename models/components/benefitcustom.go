@@ -3,9 +3,34 @@
 package components
 
 import (
+	"encoding/json"
+	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
 	"time"
 )
+
+type BenefitCustomType string
+
+const (
+	BenefitCustomTypeCustom BenefitCustomType = "custom"
+)
+
+func (e BenefitCustomType) ToPointer() *BenefitCustomType {
+	return &e
+}
+func (e *BenefitCustomType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "custom":
+		*e = BenefitCustomType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for BenefitCustomType: %v", v)
+	}
+}
 
 // BenefitCustom - A benefit of type `custom`.
 //
@@ -16,8 +41,8 @@ type BenefitCustom struct {
 	// Last modification timestamp of the object.
 	ModifiedAt *time.Time `json:"modified_at"`
 	// The ID of the benefit.
-	ID    string `json:"id"`
-	type_ string `const:"custom" json:"type"`
+	ID    string            `json:"id"`
+	type_ BenefitCustomType `const:"custom" json:"type"`
 	// The description of the benefit.
 	Description string `json:"description"`
 	// Whether the benefit is selectable when creating a product.
@@ -64,8 +89,8 @@ func (o *BenefitCustom) GetID() string {
 	return o.ID
 }
 
-func (o *BenefitCustom) GetType() string {
-	return "custom"
+func (o *BenefitCustom) GetType() BenefitCustomType {
+	return BenefitCustomTypeCustom
 }
 
 func (o *BenefitCustom) GetDescription() string {

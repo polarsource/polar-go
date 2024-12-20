@@ -3,19 +3,44 @@
 package components
 
 import (
+	"encoding/json"
+	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
 )
 
+type DownloadableFileCreateService string
+
+const (
+	DownloadableFileCreateServiceDownloadable DownloadableFileCreateService = "downloadable"
+)
+
+func (e DownloadableFileCreateService) ToPointer() *DownloadableFileCreateService {
+	return &e
+}
+func (e *DownloadableFileCreateService) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "downloadable":
+		*e = DownloadableFileCreateService(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for DownloadableFileCreateService: %v", v)
+	}
+}
+
 // DownloadableFileCreate - Schema to create a file to be associated with the downloadables benefit.
 type DownloadableFileCreate struct {
-	OrganizationID       *string               `json:"organization_id,omitempty"`
-	Name                 string                `json:"name"`
-	MimeType             string                `json:"mime_type"`
-	Size                 int64                 `json:"size"`
-	ChecksumSha256Base64 *string               `json:"checksum_sha256_base64,omitempty"`
-	Upload               S3FileCreateMultipart `json:"upload"`
-	service              string                `const:"downloadable" json:"service"`
-	Version              *string               `json:"version,omitempty"`
+	OrganizationID       *string                       `json:"organization_id,omitempty"`
+	Name                 string                        `json:"name"`
+	MimeType             string                        `json:"mime_type"`
+	Size                 int64                         `json:"size"`
+	ChecksumSha256Base64 *string                       `json:"checksum_sha256_base64,omitempty"`
+	Upload               S3FileCreateMultipart         `json:"upload"`
+	service              DownloadableFileCreateService `const:"downloadable" json:"service"`
+	Version              *string                       `json:"version,omitempty"`
 }
 
 func (d DownloadableFileCreate) MarshalJSON() ([]byte, error) {
@@ -71,8 +96,8 @@ func (o *DownloadableFileCreate) GetUpload() S3FileCreateMultipart {
 	return o.Upload
 }
 
-func (o *DownloadableFileCreate) GetService() string {
-	return "downloadable"
+func (o *DownloadableFileCreate) GetService() DownloadableFileCreateService {
+	return DownloadableFileCreateServiceDownloadable
 }
 
 func (o *DownloadableFileCreate) GetVersion() *string {

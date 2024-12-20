@@ -3,6 +3,7 @@
 package components
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
@@ -93,6 +94,30 @@ func (u CheckoutLinkPriceCreateMetadata) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type CheckoutLinkPriceCreateMetadata: all fields are null")
 }
 
+// CheckoutLinkPriceCreatePaymentProcessor - Payment processor to use. Currently only Stripe is supported.
+type CheckoutLinkPriceCreatePaymentProcessor string
+
+const (
+	CheckoutLinkPriceCreatePaymentProcessorStripe CheckoutLinkPriceCreatePaymentProcessor = "stripe"
+)
+
+func (e CheckoutLinkPriceCreatePaymentProcessor) ToPointer() *CheckoutLinkPriceCreatePaymentProcessor {
+	return &e
+}
+func (e *CheckoutLinkPriceCreatePaymentProcessor) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "stripe":
+		*e = CheckoutLinkPriceCreatePaymentProcessor(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for CheckoutLinkPriceCreatePaymentProcessor: %v", v)
+	}
+}
+
 type CheckoutLinkPriceCreate struct {
 	// Key-value object allowing you to store additional information.
 	//
@@ -106,7 +131,7 @@ type CheckoutLinkPriceCreate struct {
 	// You can store up to **50 key-value pairs**.
 	Metadata map[string]CheckoutLinkPriceCreateMetadata `json:"metadata,omitempty"`
 	// Payment processor to use. Currently only Stripe is supported.
-	paymentProcessor string `const:"stripe" json:"payment_processor"`
+	paymentProcessor CheckoutLinkPriceCreatePaymentProcessor `const:"stripe" json:"payment_processor"`
 	// Optional label to distinguish links internally
 	Label *string `json:"label,omitempty"`
 	// Whether to allow the customer to apply discount codes. If you apply a discount through `discount_id`, it'll still be applied, but the customer won't be able to change it.
@@ -137,8 +162,8 @@ func (o *CheckoutLinkPriceCreate) GetMetadata() map[string]CheckoutLinkPriceCrea
 	return o.Metadata
 }
 
-func (o *CheckoutLinkPriceCreate) GetPaymentProcessor() string {
-	return "stripe"
+func (o *CheckoutLinkPriceCreate) GetPaymentProcessor() CheckoutLinkPriceCreatePaymentProcessor {
+	return CheckoutLinkPriceCreatePaymentProcessorStripe
 }
 
 func (o *CheckoutLinkPriceCreate) GetLabel() *string {

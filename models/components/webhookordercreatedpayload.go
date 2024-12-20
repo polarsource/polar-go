@@ -3,15 +3,40 @@
 package components
 
 import (
+	"encoding/json"
+	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
 )
+
+type WebhookOrderCreatedPayloadType string
+
+const (
+	WebhookOrderCreatedPayloadTypeOrderCreated WebhookOrderCreatedPayloadType = "order.created"
+)
+
+func (e WebhookOrderCreatedPayloadType) ToPointer() *WebhookOrderCreatedPayloadType {
+	return &e
+}
+func (e *WebhookOrderCreatedPayloadType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "order.created":
+		*e = WebhookOrderCreatedPayloadType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for WebhookOrderCreatedPayloadType: %v", v)
+	}
+}
 
 // WebhookOrderCreatedPayload - Sent when a new order is created.
 //
 // **Discord & Slack support:** Full
 type WebhookOrderCreatedPayload struct {
-	type_ string `const:"order.created" json:"type"`
-	Data  Order  `json:"data"`
+	type_ WebhookOrderCreatedPayloadType `const:"order.created" json:"type"`
+	Data  Order                          `json:"data"`
 }
 
 func (w WebhookOrderCreatedPayload) MarshalJSON() ([]byte, error) {
@@ -25,8 +50,8 @@ func (w *WebhookOrderCreatedPayload) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *WebhookOrderCreatedPayload) GetType() string {
-	return "order.created"
+func (o *WebhookOrderCreatedPayload) GetType() WebhookOrderCreatedPayloadType {
+	return WebhookOrderCreatedPayloadTypeOrderCreated
 }
 
 func (o *WebhookOrderCreatedPayload) GetData() Order {

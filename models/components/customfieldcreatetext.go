@@ -3,6 +3,7 @@
 package components
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
@@ -93,6 +94,29 @@ func (u CustomFieldCreateTextMetadata) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type CustomFieldCreateTextMetadata: all fields are null")
 }
 
+type CustomFieldCreateTextType string
+
+const (
+	CustomFieldCreateTextTypeText CustomFieldCreateTextType = "text"
+)
+
+func (e CustomFieldCreateTextType) ToPointer() *CustomFieldCreateTextType {
+	return &e
+}
+func (e *CustomFieldCreateTextType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "text":
+		*e = CustomFieldCreateTextType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for CustomFieldCreateTextType: %v", v)
+	}
+}
+
 // CustomFieldCreateText - Schema to create a custom field of type text.
 type CustomFieldCreateText struct {
 	// Key-value object allowing you to store additional information.
@@ -106,7 +130,7 @@ type CustomFieldCreateText struct {
 	//
 	// You can store up to **50 key-value pairs**.
 	Metadata map[string]CustomFieldCreateTextMetadata `json:"metadata,omitempty"`
-	type_    string                                   `const:"text" json:"type"`
+	type_    CustomFieldCreateTextType                `const:"text" json:"type"`
 	// Identifier of the custom field. It'll be used as key when storing the value. Must be unique across the organization.It can only contain ASCII letters, numbers and hyphens.
 	Slug string `json:"slug"`
 	// Name of the custom field.
@@ -134,8 +158,8 @@ func (o *CustomFieldCreateText) GetMetadata() map[string]CustomFieldCreateTextMe
 	return o.Metadata
 }
 
-func (o *CustomFieldCreateText) GetType() string {
-	return "text"
+func (o *CustomFieldCreateText) GetType() CustomFieldCreateTextType {
+	return CustomFieldCreateTextTypeText
 }
 
 func (o *CustomFieldCreateText) GetSlug() string {

@@ -3,11 +3,36 @@
 package components
 
 import (
+	"encoding/json"
+	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
 )
 
+type BenefitAdsCreateType string
+
+const (
+	BenefitAdsCreateTypeAds BenefitAdsCreateType = "ads"
+)
+
+func (e BenefitAdsCreateType) ToPointer() *BenefitAdsCreateType {
+	return &e
+}
+func (e *BenefitAdsCreateType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "ads":
+		*e = BenefitAdsCreateType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for BenefitAdsCreateType: %v", v)
+	}
+}
+
 type BenefitAdsCreate struct {
-	type_ string `const:"ads" json:"type"`
+	type_ BenefitAdsCreateType `const:"ads" json:"type"`
 	// The description of the benefit. Will be displayed on products having this benefit.
 	Description string `json:"description"`
 	// The ID of the organization owning the benefit. **Required unless you use an organization token.**
@@ -27,8 +52,8 @@ func (b *BenefitAdsCreate) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *BenefitAdsCreate) GetType() string {
-	return "ads"
+func (o *BenefitAdsCreate) GetType() BenefitAdsCreateType {
+	return BenefitAdsCreateTypeAds
 }
 
 func (o *BenefitAdsCreate) GetDescription() string {

@@ -3,6 +3,7 @@
 package components
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
@@ -11,6 +12,29 @@ import (
 
 // CheckoutPublicConfirmedCustomFieldData - Key-value object storing custom field values.
 type CheckoutPublicConfirmedCustomFieldData struct {
+}
+
+type Status string
+
+const (
+	StatusConfirmed Status = "confirmed"
+)
+
+func (e Status) ToPointer() *Status {
+	return &e
+}
+func (e *Status) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "confirmed":
+		*e = Status(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for Status: %v", v)
+	}
 }
 
 type CheckoutPublicConfirmedPaymentProcessorMetadata struct {
@@ -136,8 +160,8 @@ type CheckoutPublicConfirmed struct {
 	ID string `json:"id"`
 	// Key-value object storing custom field values.
 	CustomFieldData  *CheckoutPublicConfirmedCustomFieldData `json:"custom_field_data,omitempty"`
-	PaymentProcessor PaymentProcessor                        `json:"payment_processor"`
-	status           string                                  `const:"confirmed" json:"status"`
+	paymentProcessor PaymentProcessor                        `const:"stripe" json:"payment_processor"`
+	status           Status                                  `const:"confirmed" json:"status"`
 	// Client secret used to update and complete the checkout session from the client.
 	ClientSecret string `json:"client_secret"`
 	// URL where the customer can access the checkout session.
@@ -231,14 +255,11 @@ func (o *CheckoutPublicConfirmed) GetCustomFieldData() *CheckoutPublicConfirmedC
 }
 
 func (o *CheckoutPublicConfirmed) GetPaymentProcessor() PaymentProcessor {
-	if o == nil {
-		return PaymentProcessor("")
-	}
-	return o.PaymentProcessor
+	return PaymentProcessorStripe
 }
 
-func (o *CheckoutPublicConfirmed) GetStatus() string {
-	return "confirmed"
+func (o *CheckoutPublicConfirmed) GetStatus() Status {
+	return StatusConfirmed
 }
 
 func (o *CheckoutPublicConfirmed) GetClientSecret() string {

@@ -36,6 +36,7 @@ const (
 	ScopeSubscriptionsWrite        Scope = "subscriptions:write"
 	ScopeCustomersRead             Scope = "customers:read"
 	ScopeCustomersWrite            Scope = "customers:write"
+	ScopeCustomerSessionsWrite     Scope = "customer_sessions:write"
 	ScopeOrdersRead                Scope = "orders:read"
 	ScopeMetricsRead               Scope = "metrics:read"
 	ScopeWebhooksRead              Scope = "webhooks:read"
@@ -111,6 +112,8 @@ func (e *Scope) UnmarshalJSON(data []byte) error {
 	case "customers:read":
 		fallthrough
 	case "customers:write":
+		fallthrough
+	case "customer_sessions:write":
 		fallthrough
 	case "orders:read":
 		fallthrough

@@ -3,13 +3,38 @@
 package components
 
 import (
+	"encoding/json"
+	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
 )
+
+type BenefitLicenseKeysUpdateType string
+
+const (
+	BenefitLicenseKeysUpdateTypeLicenseKeys BenefitLicenseKeysUpdateType = "license_keys"
+)
+
+func (e BenefitLicenseKeysUpdateType) ToPointer() *BenefitLicenseKeysUpdateType {
+	return &e
+}
+func (e *BenefitLicenseKeysUpdateType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "license_keys":
+		*e = BenefitLicenseKeysUpdateType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for BenefitLicenseKeysUpdateType: %v", v)
+	}
+}
 
 type BenefitLicenseKeysUpdate struct {
 	// The description of the benefit. Will be displayed on products having this benefit.
 	Description *string                             `json:"description,omitempty"`
-	type_       string                              `const:"license_keys" json:"type"`
+	type_       BenefitLicenseKeysUpdateType        `const:"license_keys" json:"type"`
 	Properties  *BenefitLicenseKeysCreateProperties `json:"properties,omitempty"`
 }
 
@@ -31,8 +56,8 @@ func (o *BenefitLicenseKeysUpdate) GetDescription() *string {
 	return o.Description
 }
 
-func (o *BenefitLicenseKeysUpdate) GetType() string {
-	return "license_keys"
+func (o *BenefitLicenseKeysUpdate) GetType() BenefitLicenseKeysUpdateType {
+	return BenefitLicenseKeysUpdateTypeLicenseKeys
 }
 
 func (o *BenefitLicenseKeysUpdate) GetProperties() *BenefitLicenseKeysCreateProperties {

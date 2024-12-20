@@ -3,12 +3,37 @@
 package components
 
 import (
+	"encoding/json"
+	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
 )
 
+type CustomerBenefitGrantGitHubRepositoryUpdateBenefitType string
+
+const (
+	CustomerBenefitGrantGitHubRepositoryUpdateBenefitTypeGithubRepository CustomerBenefitGrantGitHubRepositoryUpdateBenefitType = "github_repository"
+)
+
+func (e CustomerBenefitGrantGitHubRepositoryUpdateBenefitType) ToPointer() *CustomerBenefitGrantGitHubRepositoryUpdateBenefitType {
+	return &e
+}
+func (e *CustomerBenefitGrantGitHubRepositoryUpdateBenefitType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "github_repository":
+		*e = CustomerBenefitGrantGitHubRepositoryUpdateBenefitType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for CustomerBenefitGrantGitHubRepositoryUpdateBenefitType: %v", v)
+	}
+}
+
 type CustomerBenefitGrantGitHubRepositoryUpdate struct {
-	benefitType string                                               `const:"github_repository" json:"benefit_type"`
-	Properties  CustomerBenefitGrantGitHubRepositoryPropertiesUpdate `json:"properties"`
+	benefitType CustomerBenefitGrantGitHubRepositoryUpdateBenefitType `const:"github_repository" json:"benefit_type"`
+	Properties  CustomerBenefitGrantGitHubRepositoryPropertiesUpdate  `json:"properties"`
 }
 
 func (c CustomerBenefitGrantGitHubRepositoryUpdate) MarshalJSON() ([]byte, error) {
@@ -22,8 +47,8 @@ func (c *CustomerBenefitGrantGitHubRepositoryUpdate) UnmarshalJSON(data []byte) 
 	return nil
 }
 
-func (o *CustomerBenefitGrantGitHubRepositoryUpdate) GetBenefitType() string {
-	return "github_repository"
+func (o *CustomerBenefitGrantGitHubRepositoryUpdate) GetBenefitType() CustomerBenefitGrantGitHubRepositoryUpdateBenefitType {
+	return CustomerBenefitGrantGitHubRepositoryUpdateBenefitTypeGithubRepository
 }
 
 func (o *CustomerBenefitGrantGitHubRepositoryUpdate) GetProperties() CustomerBenefitGrantGitHubRepositoryPropertiesUpdate {

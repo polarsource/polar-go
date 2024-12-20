@@ -3,6 +3,7 @@
 package components
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
@@ -94,6 +95,29 @@ func (u CustomFieldDateMetadata) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type CustomFieldDateMetadata: all fields are null")
 }
 
+type CustomFieldDateType string
+
+const (
+	CustomFieldDateTypeDate CustomFieldDateType = "date"
+)
+
+func (e CustomFieldDateType) ToPointer() *CustomFieldDateType {
+	return &e
+}
+func (e *CustomFieldDateType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "date":
+		*e = CustomFieldDateType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for CustomFieldDateType: %v", v)
+	}
+}
+
 // CustomFieldDate - Schema for a custom field of type date.
 type CustomFieldDate struct {
 	// Creation timestamp of the object.
@@ -103,7 +127,7 @@ type CustomFieldDate struct {
 	// The ID of the object.
 	ID       string                             `json:"id"`
 	Metadata map[string]CustomFieldDateMetadata `json:"metadata"`
-	type_    string                             `const:"date" json:"type"`
+	type_    CustomFieldDateType                `const:"date" json:"type"`
 	// Identifier of the custom field. It'll be used as key when storing the value.
 	Slug string `json:"slug"`
 	// Name of the custom field.
@@ -152,8 +176,8 @@ func (o *CustomFieldDate) GetMetadata() map[string]CustomFieldDateMetadata {
 	return o.Metadata
 }
 
-func (o *CustomFieldDate) GetType() string {
-	return "date"
+func (o *CustomFieldDate) GetType() CustomFieldDateType {
+	return CustomFieldDateTypeDate
 }
 
 func (o *CustomFieldDate) GetSlug() string {

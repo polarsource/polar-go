@@ -3,30 +3,55 @@
 package components
 
 import (
+	"encoding/json"
+	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
 	"time"
 )
 
+type OrganizationAvatarFileReadService string
+
+const (
+	OrganizationAvatarFileReadServiceOrganizationAvatar OrganizationAvatarFileReadService = "organization_avatar"
+)
+
+func (e OrganizationAvatarFileReadService) ToPointer() *OrganizationAvatarFileReadService {
+	return &e
+}
+func (e *OrganizationAvatarFileReadService) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "organization_avatar":
+		*e = OrganizationAvatarFileReadService(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for OrganizationAvatarFileReadService: %v", v)
+	}
+}
+
 // OrganizationAvatarFileRead - File to be used as an organization avatar.
 type OrganizationAvatarFileRead struct {
 	// The ID of the object.
-	ID                   string     `json:"id"`
-	OrganizationID       string     `json:"organization_id"`
-	Name                 string     `json:"name"`
-	Path                 string     `json:"path"`
-	MimeType             string     `json:"mime_type"`
-	Size                 int64      `json:"size"`
-	StorageVersion       *string    `json:"storage_version"`
-	ChecksumEtag         *string    `json:"checksum_etag"`
-	ChecksumSha256Base64 *string    `json:"checksum_sha256_base64"`
-	ChecksumSha256Hex    *string    `json:"checksum_sha256_hex"`
-	LastModifiedAt       *time.Time `json:"last_modified_at"`
-	Version              *string    `json:"version"`
-	service              string     `const:"organization_avatar" json:"service"`
-	IsUploaded           bool       `json:"is_uploaded"`
-	CreatedAt            time.Time  `json:"created_at"`
-	SizeReadable         string     `json:"size_readable"`
-	PublicURL            string     `json:"public_url"`
+	ID                   string                            `json:"id"`
+	OrganizationID       string                            `json:"organization_id"`
+	Name                 string                            `json:"name"`
+	Path                 string                            `json:"path"`
+	MimeType             string                            `json:"mime_type"`
+	Size                 int64                             `json:"size"`
+	StorageVersion       *string                           `json:"storage_version"`
+	ChecksumEtag         *string                           `json:"checksum_etag"`
+	ChecksumSha256Base64 *string                           `json:"checksum_sha256_base64"`
+	ChecksumSha256Hex    *string                           `json:"checksum_sha256_hex"`
+	LastModifiedAt       *time.Time                        `json:"last_modified_at"`
+	Version              *string                           `json:"version"`
+	service              OrganizationAvatarFileReadService `const:"organization_avatar" json:"service"`
+	IsUploaded           bool                              `json:"is_uploaded"`
+	CreatedAt            time.Time                         `json:"created_at"`
+	SizeReadable         string                            `json:"size_readable"`
+	PublicURL            string                            `json:"public_url"`
 }
 
 func (o OrganizationAvatarFileRead) MarshalJSON() ([]byte, error) {
@@ -124,8 +149,8 @@ func (o *OrganizationAvatarFileRead) GetVersion() *string {
 	return o.Version
 }
 
-func (o *OrganizationAvatarFileRead) GetService() string {
-	return "organization_avatar"
+func (o *OrganizationAvatarFileRead) GetService() OrganizationAvatarFileReadService {
+	return OrganizationAvatarFileReadServiceOrganizationAvatar
 }
 
 func (o *OrganizationAvatarFileRead) GetIsUploaded() bool {

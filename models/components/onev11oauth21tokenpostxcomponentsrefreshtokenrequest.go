@@ -3,14 +3,39 @@
 package components
 
 import (
+	"encoding/json"
+	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
 )
 
+type Onev11oauth21tokenPostXComponentsRefreshTokenRequestGrantType string
+
+const (
+	Onev11oauth21tokenPostXComponentsRefreshTokenRequestGrantTypeRefreshToken Onev11oauth21tokenPostXComponentsRefreshTokenRequestGrantType = "refresh_token"
+)
+
+func (e Onev11oauth21tokenPostXComponentsRefreshTokenRequestGrantType) ToPointer() *Onev11oauth21tokenPostXComponentsRefreshTokenRequestGrantType {
+	return &e
+}
+func (e *Onev11oauth21tokenPostXComponentsRefreshTokenRequestGrantType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "refresh_token":
+		*e = Onev11oauth21tokenPostXComponentsRefreshTokenRequestGrantType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for Onev11oauth21tokenPostXComponentsRefreshTokenRequestGrantType: %v", v)
+	}
+}
+
 type Onev11oauth21tokenPostXComponentsRefreshTokenRequest struct {
-	grantType    string `const:"refresh_token" form:"name=grant_type"`
-	ClientID     string `form:"name=client_id"`
-	ClientSecret string `form:"name=client_secret"`
-	RefreshToken string `form:"name=refresh_token"`
+	grantType    Onev11oauth21tokenPostXComponentsRefreshTokenRequestGrantType `const:"refresh_token" form:"name=grant_type"`
+	ClientID     string                                                        `form:"name=client_id"`
+	ClientSecret string                                                        `form:"name=client_secret"`
+	RefreshToken string                                                        `form:"name=refresh_token"`
 }
 
 func (o Onev11oauth21tokenPostXComponentsRefreshTokenRequest) MarshalJSON() ([]byte, error) {
@@ -24,8 +49,8 @@ func (o *Onev11oauth21tokenPostXComponentsRefreshTokenRequest) UnmarshalJSON(dat
 	return nil
 }
 
-func (o *Onev11oauth21tokenPostXComponentsRefreshTokenRequest) GetGrantType() string {
-	return "refresh_token"
+func (o *Onev11oauth21tokenPostXComponentsRefreshTokenRequest) GetGrantType() Onev11oauth21tokenPostXComponentsRefreshTokenRequestGrantType {
+	return Onev11oauth21tokenPostXComponentsRefreshTokenRequestGrantTypeRefreshToken
 }
 
 func (o *Onev11oauth21tokenPostXComponentsRefreshTokenRequest) GetClientID() string {

@@ -4,11 +4,35 @@ package apierrors
 
 import (
 	"encoding/json"
+	"fmt"
 )
 
+type UnauthorizedError string
+
+const (
+	UnauthorizedErrorUnauthorized UnauthorizedError = "Unauthorized"
+)
+
+func (e UnauthorizedError) ToPointer() *UnauthorizedError {
+	return &e
+}
+func (e *UnauthorizedError) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "Unauthorized":
+		*e = UnauthorizedError(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for UnauthorizedError: %v", v)
+	}
+}
+
 type Unauthorized struct {
-	Error_ string `const:"Unauthorized" json:"error"`
-	Detail string `json:"detail"`
+	Error_ UnauthorizedError `const:"Unauthorized" json:"error"`
+	Detail string            `json:"detail"`
 }
 
 var _ error = &Unauthorized{}

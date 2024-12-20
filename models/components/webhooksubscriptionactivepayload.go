@@ -3,16 +3,41 @@
 package components
 
 import (
+	"encoding/json"
+	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
 )
+
+type WebhookSubscriptionActivePayloadType string
+
+const (
+	WebhookSubscriptionActivePayloadTypeSubscriptionActive WebhookSubscriptionActivePayloadType = "subscription.active"
+)
+
+func (e WebhookSubscriptionActivePayloadType) ToPointer() *WebhookSubscriptionActivePayloadType {
+	return &e
+}
+func (e *WebhookSubscriptionActivePayloadType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "subscription.active":
+		*e = WebhookSubscriptionActivePayloadType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for WebhookSubscriptionActivePayloadType: %v", v)
+	}
+}
 
 // WebhookSubscriptionActivePayload - Sent when a subscription becomes active,
 // whether because it's a new paid subscription or because payment was recovered.
 //
 // **Discord & Slack support:** Full
 type WebhookSubscriptionActivePayload struct {
-	type_ string       `const:"subscription.active" json:"type"`
-	Data  Subscription `json:"data"`
+	type_ WebhookSubscriptionActivePayloadType `const:"subscription.active" json:"type"`
+	Data  Subscription                         `json:"data"`
 }
 
 func (w WebhookSubscriptionActivePayload) MarshalJSON() ([]byte, error) {
@@ -26,8 +51,8 @@ func (w *WebhookSubscriptionActivePayload) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *WebhookSubscriptionActivePayload) GetType() string {
-	return "subscription.active"
+func (o *WebhookSubscriptionActivePayload) GetType() WebhookSubscriptionActivePayloadType {
+	return WebhookSubscriptionActivePayloadTypeSubscriptionActive
 }
 
 func (o *WebhookSubscriptionActivePayload) GetData() Subscription {

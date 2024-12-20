@@ -3,6 +3,7 @@
 package components
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
@@ -95,6 +96,30 @@ func (u CheckoutPriceCreateMetadata) MarshalJSON() ([]byte, error) {
 
 // CheckoutPriceCreateCustomFieldData - Key-value object storing custom field values.
 type CheckoutPriceCreateCustomFieldData struct {
+}
+
+// CheckoutPriceCreatePaymentProcessor - Payment processor to use. Currently only Stripe is supported.
+type CheckoutPriceCreatePaymentProcessor string
+
+const (
+	CheckoutPriceCreatePaymentProcessorStripe CheckoutPriceCreatePaymentProcessor = "stripe"
+)
+
+func (e CheckoutPriceCreatePaymentProcessor) ToPointer() *CheckoutPriceCreatePaymentProcessor {
+	return &e
+}
+func (e *CheckoutPriceCreatePaymentProcessor) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "stripe":
+		*e = CheckoutPriceCreatePaymentProcessor(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for CheckoutPriceCreatePaymentProcessor: %v", v)
+	}
 }
 
 type CheckoutPriceCreateCustomerMetadataType string
@@ -201,7 +226,7 @@ type CheckoutPriceCreate struct {
 	// Key-value object storing custom field values.
 	CustomFieldData *CheckoutPriceCreateCustomFieldData `json:"custom_field_data,omitempty"`
 	// Payment processor to use. Currently only Stripe is supported.
-	paymentProcessor string `const:"stripe" json:"payment_processor"`
+	paymentProcessor CheckoutPriceCreatePaymentProcessor `const:"stripe" json:"payment_processor"`
 	// ID of the discount to apply to the checkout.
 	DiscountID *string `json:"discount_id,omitempty"`
 	// Whether to allow the customer to apply discount codes. If you apply a discount through `discount_id`, it'll still be applied, but the customer won't be able to change it.
@@ -260,8 +285,8 @@ func (o *CheckoutPriceCreate) GetCustomFieldData() *CheckoutPriceCreateCustomFie
 	return o.CustomFieldData
 }
 
-func (o *CheckoutPriceCreate) GetPaymentProcessor() string {
-	return "stripe"
+func (o *CheckoutPriceCreate) GetPaymentProcessor() CheckoutPriceCreatePaymentProcessor {
+	return CheckoutPriceCreatePaymentProcessorStripe
 }
 
 func (o *CheckoutPriceCreate) GetDiscountID() *string {

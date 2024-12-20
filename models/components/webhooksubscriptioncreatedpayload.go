@@ -3,15 +3,40 @@
 package components
 
 import (
+	"encoding/json"
+	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
 )
+
+type WebhookSubscriptionCreatedPayloadType string
+
+const (
+	WebhookSubscriptionCreatedPayloadTypeSubscriptionCreated WebhookSubscriptionCreatedPayloadType = "subscription.created"
+)
+
+func (e WebhookSubscriptionCreatedPayloadType) ToPointer() *WebhookSubscriptionCreatedPayloadType {
+	return &e
+}
+func (e *WebhookSubscriptionCreatedPayloadType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "subscription.created":
+		*e = WebhookSubscriptionCreatedPayloadType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for WebhookSubscriptionCreatedPayloadType: %v", v)
+	}
+}
 
 // WebhookSubscriptionCreatedPayload - Sent when a new subscription is created.
 //
 // **Discord & Slack support:** Full
 type WebhookSubscriptionCreatedPayload struct {
-	type_ string       `const:"subscription.created" json:"type"`
-	Data  Subscription `json:"data"`
+	type_ WebhookSubscriptionCreatedPayloadType `const:"subscription.created" json:"type"`
+	Data  Subscription                          `json:"data"`
 }
 
 func (w WebhookSubscriptionCreatedPayload) MarshalJSON() ([]byte, error) {
@@ -25,8 +50,8 @@ func (w *WebhookSubscriptionCreatedPayload) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *WebhookSubscriptionCreatedPayload) GetType() string {
-	return "subscription.created"
+func (o *WebhookSubscriptionCreatedPayload) GetType() WebhookSubscriptionCreatedPayloadType {
+	return WebhookSubscriptionCreatedPayloadTypeSubscriptionCreated
 }
 
 func (o *WebhookSubscriptionCreatedPayload) GetData() Subscription {
