@@ -202,7 +202,10 @@ func (s *LicenseKeys) List(ctx context.Context, organizationID *operations.Licen
 		if err != nil {
 			return nil, err
 		}
-		p := *page
+		var p int64 = 1
+		if page != nil {
+			p = *page
+		}
 		nP := int64(p + 1)
 		nPs, err := ajson.Eval(b, "$.pagination.max_page")
 		if err != nil {
@@ -234,7 +237,11 @@ func (s *LicenseKeys) List(ctx context.Context, organizationID *operations.Licen
 		if len(arr) == 0 {
 			return nil, nil
 		}
-		l := int(*limit)
+
+		l := 0
+		if limit != nil {
+			l = int(*limit)
+		}
 		if len(arr) < l {
 			return nil, nil
 		}

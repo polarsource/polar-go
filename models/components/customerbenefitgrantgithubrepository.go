@@ -22,6 +22,7 @@ type CustomerBenefitGrantGitHubRepository struct {
 	OrderID        *string                                `json:"order_id"`
 	IsGranted      bool                                   `json:"is_granted"`
 	IsRevoked      bool                                   `json:"is_revoked"`
+	Customer       CustomerPortalCustomer                 `json:"customer"`
 	Benefit        BenefitGitHubRepositorySubscriber      `json:"benefit"`
 	Properties     BenefitGrantGitHubRepositoryProperties `json:"properties"`
 }
@@ -112,6 +113,13 @@ func (o *CustomerBenefitGrantGitHubRepository) GetIsRevoked() bool {
 		return false
 	}
 	return o.IsRevoked
+}
+
+func (o *CustomerBenefitGrantGitHubRepository) GetCustomer() CustomerPortalCustomer {
+	if o == nil {
+		return CustomerPortalCustomer{}
+	}
+	return o.Customer
 }
 
 func (o *CustomerBenefitGrantGitHubRepository) GetBenefit() BenefitGitHubRepositorySubscriber {

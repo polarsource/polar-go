@@ -7,17 +7,17 @@ import (
 	"fmt"
 )
 
-type IntrospectTokenResponseTokenType string
+type TokenType string
 
 const (
-	IntrospectTokenResponseTokenTypeAccessToken  IntrospectTokenResponseTokenType = "access_token"
-	IntrospectTokenResponseTokenTypeRefreshToken IntrospectTokenResponseTokenType = "refresh_token"
+	TokenTypeAccessToken  TokenType = "access_token"
+	TokenTypeRefreshToken TokenType = "refresh_token"
 )
 
-func (e IntrospectTokenResponseTokenType) ToPointer() *IntrospectTokenResponseTokenType {
+func (e TokenType) ToPointer() *TokenType {
 	return &e
 }
-func (e *IntrospectTokenResponseTokenType) UnmarshalJSON(data []byte) error {
+func (e *TokenType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -26,24 +26,24 @@ func (e *IntrospectTokenResponseTokenType) UnmarshalJSON(data []byte) error {
 	case "access_token":
 		fallthrough
 	case "refresh_token":
-		*e = IntrospectTokenResponseTokenType(v)
+		*e = TokenType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for IntrospectTokenResponseTokenType: %v", v)
+		return fmt.Errorf("invalid value for TokenType: %v", v)
 	}
 }
 
 type IntrospectTokenResponse struct {
-	Active    bool                             `json:"active"`
-	ClientID  string                           `json:"client_id"`
-	TokenType IntrospectTokenResponseTokenType `json:"token_type"`
-	Scope     string                           `json:"scope"`
-	SubType   SubType                          `json:"sub_type"`
-	Sub       string                           `json:"sub"`
-	Aud       string                           `json:"aud"`
-	Iss       string                           `json:"iss"`
-	Exp       int64                            `json:"exp"`
-	Iat       int64                            `json:"iat"`
+	Active    bool      `json:"active"`
+	ClientID  string    `json:"client_id"`
+	TokenType TokenType `json:"token_type"`
+	Scope     string    `json:"scope"`
+	SubType   SubType   `json:"sub_type"`
+	Sub       string    `json:"sub"`
+	Aud       string    `json:"aud"`
+	Iss       string    `json:"iss"`
+	Exp       int64     `json:"exp"`
+	Iat       int64     `json:"iat"`
 }
 
 func (o *IntrospectTokenResponse) GetActive() bool {
@@ -60,9 +60,9 @@ func (o *IntrospectTokenResponse) GetClientID() string {
 	return o.ClientID
 }
 
-func (o *IntrospectTokenResponse) GetTokenType() IntrospectTokenResponseTokenType {
+func (o *IntrospectTokenResponse) GetTokenType() TokenType {
 	if o == nil {
-		return IntrospectTokenResponseTokenType("")
+		return TokenType("")
 	}
 	return o.TokenType
 }

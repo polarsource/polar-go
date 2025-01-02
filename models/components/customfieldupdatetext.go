@@ -3,7 +3,6 @@
 package components
 
 import (
-	"encoding/json"
 	"errors"
 	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
@@ -94,35 +93,12 @@ func (u CustomFieldUpdateTextMetadata) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type CustomFieldUpdateTextMetadata: all fields are null")
 }
 
-type CustomFieldUpdateTextType string
-
-const (
-	CustomFieldUpdateTextTypeText CustomFieldUpdateTextType = "text"
-)
-
-func (e CustomFieldUpdateTextType) ToPointer() *CustomFieldUpdateTextType {
-	return &e
-}
-func (e *CustomFieldUpdateTextType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "text":
-		*e = CustomFieldUpdateTextType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for CustomFieldUpdateTextType: %v", v)
-	}
-}
-
 // CustomFieldUpdateText - Schema to update a custom field of type text.
 type CustomFieldUpdateText struct {
 	Metadata   map[string]CustomFieldUpdateTextMetadata `json:"metadata,omitempty"`
 	Name       *string                                  `json:"name,omitempty"`
 	Slug       *string                                  `json:"slug,omitempty"`
-	type_      CustomFieldUpdateTextType                `const:"text" json:"type"`
+	type_      string                                   `const:"text" json:"type"`
 	Properties *CustomFieldTextProperties               `json:"properties,omitempty"`
 }
 
@@ -158,8 +134,8 @@ func (o *CustomFieldUpdateText) GetSlug() *string {
 	return o.Slug
 }
 
-func (o *CustomFieldUpdateText) GetType() CustomFieldUpdateTextType {
-	return CustomFieldUpdateTextTypeText
+func (o *CustomFieldUpdateText) GetType() string {
+	return "text"
 }
 
 func (o *CustomFieldUpdateText) GetProperties() *CustomFieldTextProperties {

@@ -3,36 +3,11 @@
 package components
 
 import (
-	"encoding/json"
-	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
 )
 
-type CustomerBenefitGrantAdsUpdateBenefitType string
-
-const (
-	CustomerBenefitGrantAdsUpdateBenefitTypeAds CustomerBenefitGrantAdsUpdateBenefitType = "ads"
-)
-
-func (e CustomerBenefitGrantAdsUpdateBenefitType) ToPointer() *CustomerBenefitGrantAdsUpdateBenefitType {
-	return &e
-}
-func (e *CustomerBenefitGrantAdsUpdateBenefitType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "ads":
-		*e = CustomerBenefitGrantAdsUpdateBenefitType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for CustomerBenefitGrantAdsUpdateBenefitType: %v", v)
-	}
-}
-
 type CustomerBenefitGrantAdsUpdate struct {
-	benefitType CustomerBenefitGrantAdsUpdateBenefitType `const:"ads" json:"benefit_type"`
+	benefitType string `const:"ads" json:"benefit_type"`
 }
 
 func (c CustomerBenefitGrantAdsUpdate) MarshalJSON() ([]byte, error) {
@@ -46,6 +21,6 @@ func (c *CustomerBenefitGrantAdsUpdate) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *CustomerBenefitGrantAdsUpdate) GetBenefitType() CustomerBenefitGrantAdsUpdateBenefitType {
-	return CustomerBenefitGrantAdsUpdateBenefitTypeAds
+func (o *CustomerBenefitGrantAdsUpdate) GetBenefitType() string {
+	return "ads"
 }

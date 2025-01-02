@@ -14,10 +14,11 @@ type CustomerSession struct {
 	// Last modification timestamp of the object.
 	ModifiedAt *time.Time `json:"modified_at"`
 	// The ID of the object.
-	ID         string    `json:"id"`
-	Token      string    `json:"token"`
-	ExpiresAt  time.Time `json:"expires_at"`
-	CustomerID string    `json:"customer_id"`
+	ID                string    `json:"id"`
+	Token             string    `json:"token"`
+	ExpiresAt         time.Time `json:"expires_at"`
+	CustomerPortalURL string    `json:"customer_portal_url"`
+	CustomerID        string    `json:"customer_id"`
 	// A customer in an organization.
 	Customer Customer `json:"customer"`
 }
@@ -66,6 +67,13 @@ func (o *CustomerSession) GetExpiresAt() time.Time {
 		return time.Time{}
 	}
 	return o.ExpiresAt
+}
+
+func (o *CustomerSession) GetCustomerPortalURL() string {
+	if o == nil {
+		return ""
+	}
+	return o.CustomerPortalURL
 }
 
 func (o *CustomerSession) GetCustomerID() string {

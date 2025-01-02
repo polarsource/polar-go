@@ -22,6 +22,7 @@ type CustomerBenefitGrantLicenseKeys struct {
 	OrderID        *string                           `json:"order_id"`
 	IsGranted      bool                              `json:"is_granted"`
 	IsRevoked      bool                              `json:"is_revoked"`
+	Customer       CustomerPortalCustomer            `json:"customer"`
 	Benefit        BenefitLicenseKeysSubscriber      `json:"benefit"`
 	Properties     BenefitGrantLicenseKeysProperties `json:"properties"`
 }
@@ -112,6 +113,13 @@ func (o *CustomerBenefitGrantLicenseKeys) GetIsRevoked() bool {
 		return false
 	}
 	return o.IsRevoked
+}
+
+func (o *CustomerBenefitGrantLicenseKeys) GetCustomer() CustomerPortalCustomer {
+	if o == nil {
+		return CustomerPortalCustomer{}
+	}
+	return o.Customer
 }
 
 func (o *CustomerBenefitGrantLicenseKeys) GetBenefit() BenefitLicenseKeysSubscriber {

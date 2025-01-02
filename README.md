@@ -77,6 +77,7 @@ func main() {
 			CreatedAt:              types.MustTimeFromString("2024-11-12T14:26:42.882Z"),
 			ModifiedAt:             types.MustNewTimeFromString("2023-05-28T05:08:06.235Z"),
 			ID:                     "<value>",
+			PaymentProcessor:       components.PaymentProcessorStripe,
 			Status:                 components.CheckoutStatusFailed,
 			ClientSecret:           "<value>",
 			URL:                    "https://heavy-beret.com/",
@@ -127,8 +128,8 @@ func main() {
 					components.CreateProductPriceProductPriceOneTime(
 						components.CreateProductPriceOneTimeProductPriceOneTimeCustom(
 							components.ProductPriceOneTimeCustom{
-								CreatedAt:     types.MustTimeFromString("2023-02-07T04:30:48.802Z"),
-								ModifiedAt:    types.MustNewTimeFromString("2024-06-25T22:47:14.264Z"),
+								CreatedAt:     types.MustTimeFromString("2024-02-07T04:30:48.802Z"),
+								ModifiedAt:    types.MustNewTimeFromString("2025-06-25T22:47:14.264Z"),
 								ID:            "<value>",
 								IsArchived:    false,
 								ProductID:     "<value>",
@@ -176,8 +177,8 @@ func main() {
 			ProductPrice: components.CreateProductPriceProductPriceOneTime(
 				components.CreateProductPriceOneTimeProductPriceOneTimeFixed(
 					components.ProductPriceOneTimeFixed{
-						CreatedAt:     types.MustTimeFromString("2022-04-02T00:05:42.586Z"),
-						ModifiedAt:    types.MustNewTimeFromString("2023-12-16T03:02:38.803Z"),
+						CreatedAt:     types.MustTimeFromString("2023-04-02T00:05:42.586Z"),
+						ModifiedAt:    types.MustNewTimeFromString("2024-12-15T03:02:38.803Z"),
 						ID:            "<value>",
 						IsArchived:    false,
 						ProductID:     "<value>",
@@ -202,8 +203,8 @@ func main() {
 					CustomFieldID: "<value>",
 					CustomField: components.CreateCustomFieldCustomFieldNumber(
 						components.CustomFieldNumber{
-							CreatedAt:  types.MustTimeFromString("2024-06-23T16:57:50.081Z"),
-							ModifiedAt: types.MustNewTimeFromString("2023-12-14T18:25:33.693Z"),
+							CreatedAt:  types.MustTimeFromString("2025-06-23T16:57:50.081Z"),
+							ModifiedAt: types.MustNewTimeFromString("2024-12-13T18:25:33.693Z"),
 							ID:         "<value>",
 							Metadata: map[string]components.CustomFieldNumberMetadata{
 								"key": components.CreateCustomFieldNumberMetadataStr(
@@ -223,8 +224,8 @@ func main() {
 					CustomFieldID: "<value>",
 					CustomField: components.CreateCustomFieldCustomFieldSelect(
 						components.CustomFieldSelect{
-							CreatedAt:  types.MustTimeFromString("2022-04-26T22:34:57.487Z"),
-							ModifiedAt: types.MustNewTimeFromString("2022-08-07T19:57:51.694Z"),
+							CreatedAt:  types.MustTimeFromString("2023-04-26T22:34:57.487Z"),
+							ModifiedAt: types.MustNewTimeFromString("2023-08-07T19:57:51.694Z"),
 							ID:         "<value>",
 							Metadata: map[string]components.CustomFieldSelectMetadata{
 								"key": components.CreateCustomFieldSelectMetadataInteger(
@@ -251,8 +252,8 @@ func main() {
 					CustomFieldID: "<value>",
 					CustomField: components.CreateCustomFieldCustomFieldCheckbox(
 						components.CustomFieldCheckbox{
-							CreatedAt:  types.MustTimeFromString("2024-05-25T15:20:50.694Z"),
-							ModifiedAt: types.MustNewTimeFromString("2023-11-28T14:29:40.329Z"),
+							CreatedAt:  types.MustTimeFromString("2025-05-25T15:20:50.694Z"),
+							ModifiedAt: types.MustNewTimeFromString("2024-11-27T14:29:40.329Z"),
 							ID:         "<value>",
 							Metadata: map[string]components.CustomFieldCheckboxMetadata{
 								"key": components.CreateCustomFieldCheckboxMetadataBoolean(

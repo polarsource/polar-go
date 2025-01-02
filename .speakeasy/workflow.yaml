@@ -17,7 +17,7 @@ targets:
         source: Polar-OAS
         codeSamples:
             output: codeSamples.yaml
-            labelOverride:
-                fixedValue: Go (SDK)
             registry:
                 location: registry.speakeasyapi.dev/polar/polar/polar-oas-code-samples-go
+            labelOverride:
+                fixedValue: Go (SDK)

@@ -102,9 +102,9 @@ func main() {
         polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )
 
-    res, err := s.Checkouts.Custom.Create(ctx, components.CreateCheckoutCreateCheckoutPriceCreate(
-        components.CheckoutPriceCreate{
-            ProductPriceID: "<value>",
+    res, err := s.Checkouts.Custom.Create(ctx, components.CreateCheckoutCreateCheckoutProductCreate(
+        components.CheckoutProductCreate{
+            ProductID: "<value>",
         },
     ))
     if err != nil {

@@ -202,7 +202,10 @@ func (s *Benefits) List(ctx context.Context, organizationID *operations.Benefits
 		if err != nil {
 			return nil, err
 		}
-		p := *page
+		var p int64 = 1
+		if page != nil {
+			p = *page
+		}
 		nP := int64(p + 1)
 		nPs, err := ajson.Eval(b, "$.pagination.max_page")
 		if err != nil {
@@ -234,7 +237,11 @@ func (s *Benefits) List(ctx context.Context, organizationID *operations.Benefits
 		if len(arr) == 0 {
 			return nil, nil
 		}
-		l := int(*limit)
+
+		l := 0
+		if limit != nil {
+			l = int(*limit)
+		}
 		if len(arr) < l {
 			return nil, nil
 		}
@@ -1468,7 +1475,10 @@ func (s *Benefits) Grants(ctx context.Context, request operations.BenefitsGrants
 		if err != nil {
 			return nil, err
 		}
-		p := *request.Page
+		var p int64 = 1
+		if request.Page != nil {
+			p = *request.Page
+		}
 		nP := int64(p + 1)
 		nPs, err := ajson.Eval(b, "$.pagination.max_page")
 		if err != nil {
@@ -1500,7 +1510,11 @@ func (s *Benefits) Grants(ctx context.Context, request operations.BenefitsGrants
 		if len(arr) == 0 {
 			return nil, nil
 		}
-		l := int(*request.Limit)
+
+		l := 0
+		if request.Limit != nil {
+			l = int(*request.Limit)
+		}
 		if len(arr) < l {
 			return nil, nil
 		}

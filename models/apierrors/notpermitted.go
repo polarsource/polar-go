@@ -4,35 +4,11 @@ package apierrors
 
 import (
 	"encoding/json"
-	"fmt"
 )
-
-type NotPermittedError string
-
-const (
-	NotPermittedErrorNotPermitted NotPermittedError = "NotPermitted"
-)
-
-func (e NotPermittedError) ToPointer() *NotPermittedError {
-	return &e
-}
-func (e *NotPermittedError) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "NotPermitted":
-		*e = NotPermittedError(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for NotPermittedError: %v", v)
-	}
-}
 
 type NotPermitted struct {
-	Error_ NotPermittedError `const:"NotPermitted" json:"error"`
-	Detail string            `json:"detail"`
+	Error_ string `const:"NotPermitted" json:"error"`
+	Detail string `json:"detail"`
 }
 
 var _ error = &NotPermitted{}

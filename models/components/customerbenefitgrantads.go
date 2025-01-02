@@ -22,6 +22,7 @@ type CustomerBenefitGrantAds struct {
 	OrderID        *string                   `json:"order_id"`
 	IsGranted      bool                      `json:"is_granted"`
 	IsRevoked      bool                      `json:"is_revoked"`
+	Customer       CustomerPortalCustomer    `json:"customer"`
 	Benefit        BenefitAdsSubscriber      `json:"benefit"`
 	Properties     BenefitGrantAdsProperties `json:"properties"`
 }
@@ -112,6 +113,13 @@ func (o *CustomerBenefitGrantAds) GetIsRevoked() bool {
 		return false
 	}
 	return o.IsRevoked
+}
+
+func (o *CustomerBenefitGrantAds) GetCustomer() CustomerPortalCustomer {
+	if o == nil {
+		return CustomerPortalCustomer{}
+	}
+	return o.Customer
 }
 
 func (o *CustomerBenefitGrantAds) GetBenefit() BenefitAdsSubscriber {

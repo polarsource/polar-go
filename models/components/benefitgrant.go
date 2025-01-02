@@ -184,7 +184,9 @@ type BenefitGrant struct {
 	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
 	UserID string `json:"user_id"`
 	// The ID of the benefit concerned by this grant.
-	BenefitID  string     `json:"benefit_id"`
+	BenefitID string `json:"benefit_id"`
+	// A customer in an organization.
+	Customer   Customer   `json:"customer"`
 	Properties Properties `json:"properties"`
 }
 
@@ -281,6 +283,13 @@ func (o *BenefitGrant) GetBenefitID() string {
 		return ""
 	}
 	return o.BenefitID
+}
+
+func (o *BenefitGrant) GetCustomer() Customer {
+	if o == nil {
+		return Customer{}
+	}
+	return o.Customer
 }
 
 func (o *BenefitGrant) GetProperties() Properties {

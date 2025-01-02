@@ -335,7 +335,9 @@ type BenefitGrantWebhook struct {
 	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
 	UserID string `json:"user_id"`
 	// The ID of the benefit concerned by this grant.
-	BenefitID          string                        `json:"benefit_id"`
+	BenefitID string `json:"benefit_id"`
+	// A customer in an organization.
+	Customer           Customer                      `json:"customer"`
 	Properties         BenefitGrantWebhookProperties `json:"properties"`
 	Benefit            Benefit                       `json:"benefit"`
 	PreviousProperties *PreviousProperties           `json:"previous_properties,omitempty"`
@@ -434,6 +436,13 @@ func (o *BenefitGrantWebhook) GetBenefitID() string {
 		return ""
 	}
 	return o.BenefitID
+}
+
+func (o *BenefitGrantWebhook) GetCustomer() Customer {
+	if o == nil {
+		return Customer{}
+	}
+	return o.Customer
 }
 
 func (o *BenefitGrantWebhook) GetProperties() BenefitGrantWebhookProperties {

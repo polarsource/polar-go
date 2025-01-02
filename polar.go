@@ -180,9 +180,9 @@ func New(opts ...SDKOption) *Polar {
 		sdkConfiguration: sdkConfiguration{
 			Language:          "go",
 			OpenAPIDocVersion: "0.1.0",
-			SDKVersion:        "0.0.4",
-			GenVersion:        "2.481.0",
-			UserAgent:         "speakeasy-sdk/go 0.0.4 2.481.0 0.1.0 github.com/polarsource/polar-go",
+			SDKVersion:        "0.1.0",
+			GenVersion:        "2.484.0",
+			UserAgent:         "speakeasy-sdk/go 0.1.0 2.484.0 0.1.0 github.com/polarsource/polar-go",
 			Hooks:             hooks.New(),
 		},
 	}

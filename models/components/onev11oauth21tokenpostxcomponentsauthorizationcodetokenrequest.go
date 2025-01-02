@@ -3,40 +3,15 @@
 package components
 
 import (
-	"encoding/json"
-	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
 )
 
-type GrantType string
-
-const (
-	GrantTypeAuthorizationCode GrantType = "authorization_code"
-)
-
-func (e GrantType) ToPointer() *GrantType {
-	return &e
-}
-func (e *GrantType) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "authorization_code":
-		*e = GrantType(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for GrantType: %v", v)
-	}
-}
-
 type Onev11oauth21tokenPostXComponentsAuthorizationCodeTokenRequest struct {
-	grantType    GrantType `const:"authorization_code" form:"name=grant_type"`
-	ClientID     string    `form:"name=client_id"`
-	ClientSecret string    `form:"name=client_secret"`
-	Code         string    `form:"name=code"`
-	RedirectURI  string    `form:"name=redirect_uri"`
+	grantType    string `const:"authorization_code" form:"name=grant_type"`
+	ClientID     string `form:"name=client_id"`
+	ClientSecret string `form:"name=client_secret"`
+	Code         string `form:"name=code"`
+	RedirectURI  string `form:"name=redirect_uri"`
 }
 
 func (o Onev11oauth21tokenPostXComponentsAuthorizationCodeTokenRequest) MarshalJSON() ([]byte, error) {
@@ -50,8 +25,8 @@ func (o *Onev11oauth21tokenPostXComponentsAuthorizationCodeTokenRequest) Unmarsh
 	return nil
 }
 
-func (o *Onev11oauth21tokenPostXComponentsAuthorizationCodeTokenRequest) GetGrantType() GrantType {
-	return GrantTypeAuthorizationCode
+func (o *Onev11oauth21tokenPostXComponentsAuthorizationCodeTokenRequest) GetGrantType() string {
+	return "authorization_code"
 }
 
 func (o *Onev11oauth21tokenPostXComponentsAuthorizationCodeTokenRequest) GetClientID() string {

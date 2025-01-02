@@ -303,7 +303,7 @@ type Checkout struct {
 	ID string `json:"id"`
 	// Key-value object storing custom field values.
 	CustomFieldData  *CheckoutCustomFieldData `json:"custom_field_data,omitempty"`
-	paymentProcessor PaymentProcessor         `const:"stripe" json:"payment_processor"`
+	PaymentProcessor PaymentProcessor         `json:"payment_processor"`
 	Status           CheckoutStatus           `json:"status"`
 	// Client secret used to update and complete the checkout session from the client.
 	ClientSecret string `json:"client_secret"`
@@ -399,7 +399,10 @@ func (o *Checkout) GetCustomFieldData() *CheckoutCustomFieldData {
 }
 
 func (o *Checkout) GetPaymentProcessor() PaymentProcessor {
-	return PaymentProcessorStripe
+	if o == nil {
+		return PaymentProcessor("")
+	}
+	return o.PaymentProcessor
 }
 
 func (o *Checkout) GetStatus() CheckoutStatus {

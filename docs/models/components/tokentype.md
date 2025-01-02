@@ -3,6 +3,7 @@
 
 ## Values
 
-| Name              | Value             |
-| ----------------- | ----------------- |
-| `TokenTypeBearer` | Bearer            |
+| Name                    | Value                   |
+| ----------------------- | ----------------------- |
+| `TokenTypeAccessToken`  | access_token            |
+| `TokenTypeRefreshToken` | refresh_token           |
