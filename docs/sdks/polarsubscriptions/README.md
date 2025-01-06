@@ -113,7 +113,7 @@ func main() {
 | Parameter                                                | Type                                                     | Required                                                 | Description                                              |
 | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- |
 | `ctx`                                                    | [context.Context](https://pkg.go.dev/context#Context)    | :heavy_check_mark:                                       | The context to use for the request.                      |
-| `id`                                                     | *string*                                                 | :heavy_check_mark:                                       | The subscription ID.                                     |
+| `id`                                                     | *string*                                                 | :heavy_check_mark:                                       | Customer subscription ID.                                |
 | `opts`                                                   | [][operations.Option](../../models/operations/option.md) | :heavy_minus_sign:                                       | The options for this request.                            |
 
 ### Response
@@ -152,9 +152,11 @@ func main() {
         polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )
 
-    res, err := s.CustomerPortal.Subscriptions.Update(ctx, "<value>", components.CustomerSubscriptionUpdate{
-        ProductPriceID: "<value>",
-    })
+    res, err := s.CustomerPortal.Subscriptions.Update(ctx, "<value>", components.CreateCustomerSubscriptionUpdateCustomerSubscriptionUpdatePrice(
+        components.CustomerSubscriptionUpdatePrice{
+            ProductPriceID: "<value>",
+        },
+    ))
     if err != nil {
         log.Fatal(err)
     }
@@ -169,7 +171,7 @@ func main() {
 | Parameter                                                                                      | Type                                                                                           | Required                                                                                       | Description                                                                                    |
 | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
 | `ctx`                                                                                          | [context.Context](https://pkg.go.dev/context#Context)                                          | :heavy_check_mark:                                                                             | The context to use for the request.                                                            |
-| `id`                                                                                           | *string*                                                                                       | :heavy_check_mark:                                                                             | The subscription ID.                                                                           |
+| `id`                                                                                           | *string*                                                                                       | :heavy_check_mark:                                                                             | Customer subscription ID.                                                                      |
 | `customerSubscriptionUpdate`                                                                   | [components.CustomerSubscriptionUpdate](../../models/components/customersubscriptionupdate.md) | :heavy_check_mark:                                                                             | N/A                                                                                            |
 | `opts`                                                                                         | [][operations.Option](../../models/operations/option.md)                                       | :heavy_minus_sign:                                                                             | The options for this request.                                                                  |
 
@@ -179,11 +181,12 @@ func main() {
 
 ### Errors
 
-| Error Type                    | Status Code                   | Content Type                  |
-| ----------------------------- | ----------------------------- | ----------------------------- |
-| apierrors.ResourceNotFound    | 404                           | application/json              |
-| apierrors.HTTPValidationError | 422                           | application/json              |
-| apierrors.APIError            | 4XX, 5XX                      | \*/\*                         |
+| Error Type                            | Status Code                           | Content Type                          |
+| ------------------------------------- | ------------------------------------- | ------------------------------------- |
+| apierrors.AlreadyCanceledSubscription | 403                                   | application/json                      |
+| apierrors.ResourceNotFound            | 404                                   | application/json                      |
+| apierrors.HTTPValidationError         | 422                                   | application/json                      |
+| apierrors.APIError                    | 4XX, 5XX                              | \*/\*                                 |
 
 ## Cancel
 
@@ -223,7 +226,7 @@ func main() {
 | Parameter                                                | Type                                                     | Required                                                 | Description                                              |
 | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- |
 | `ctx`                                                    | [context.Context](https://pkg.go.dev/context#Context)    | :heavy_check_mark:                                       | The context to use for the request.                      |
-| `id`                                                     | *string*                                                 | :heavy_check_mark:                                       | The subscription ID.                                     |
+| `id`                                                     | *string*                                                 | :heavy_check_mark:                                       | Customer subscription ID.                                |
 | `opts`                                                   | [][operations.Option](../../models/operations/option.md) | :heavy_minus_sign:                                       | The options for this request.                            |
 
 ### Response

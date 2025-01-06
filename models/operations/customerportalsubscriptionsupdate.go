@@ -7,7 +7,7 @@ import (
 )
 
 type CustomerPortalSubscriptionsUpdateRequest struct {
-	// The subscription ID.
+	// Customer subscription ID.
 	ID                         string                                `pathParam:"style=simple,explode=false,name=id"`
 	CustomerSubscriptionUpdate components.CustomerSubscriptionUpdate `request:"mediaType=application/json"`
 }
@@ -28,7 +28,7 @@ func (o *CustomerPortalSubscriptionsUpdateRequest) GetCustomerSubscriptionUpdate
 
 type CustomerPortalSubscriptionsUpdateResponse struct {
 	HTTPMeta components.HTTPMetadata `json:"-"`
-	// Subscription updated.
+	// Customer subscription updated.
 	CustomerSubscription *components.CustomerSubscription
 }
 

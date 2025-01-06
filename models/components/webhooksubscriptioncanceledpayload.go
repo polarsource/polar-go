@@ -6,8 +6,8 @@ import (
 	"github.com/polarsource/polar-go/internal/utils"
 )
 
-// WebhookSubscriptionCanceledPayload - Sent when a subscription is canceled by the user.
-// They might still have access until the end of the current period.
+// WebhookSubscriptionCanceledPayload - Sent when a subscription is canceled.
+// Customers might still have access until the end of the current period.
 //
 // **Discord & Slack support:** Full
 type WebhookSubscriptionCanceledPayload struct {

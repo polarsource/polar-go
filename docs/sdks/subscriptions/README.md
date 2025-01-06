@@ -7,6 +7,8 @@
 
 * [List](#list) - List Subscriptions
 * [Export](#export) - Export Subscriptions
+* [Update](#update) - Update Subscription
+* [Revoke](#revoke) - Revoke Subscription
 
 ## List
 
@@ -124,3 +126,115 @@ func main() {
 | ----------------------------- | ----------------------------- | ----------------------------- |
 | apierrors.HTTPValidationError | 422                           | application/json              |
 | apierrors.APIError            | 4XX, 5XX                      | \*/\*                         |
+
+## Update
+
+Update a subscription.
+
+### Example Usage
+
+```go
+package main
+
+import(
+	"context"
+	"os"
+	polargo "github.com/polarsource/polar-go"
+	"github.com/polarsource/polar-go/models/components"
+	"log"
+)
+
+func main() {
+    ctx := context.Background()
+    
+    s := polargo.New(
+        polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
+    )
+
+    res, err := s.Subscriptions.Update(ctx, "<value>", components.CreateSubscriptionUpdateSubscriptionCancel(
+        components.SubscriptionCancel{},
+    ))
+    if err != nil {
+        log.Fatal(err)
+    }
+    if res.Subscription != nil {
+        // handle response
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                                      | Type                                                                           | Required                                                                       | Description                                                                    |
+| ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ |
+| `ctx`                                                                          | [context.Context](https://pkg.go.dev/context#Context)                          | :heavy_check_mark:                                                             | The context to use for the request.                                            |
+| `id`                                                                           | *string*                                                                       | :heavy_check_mark:                                                             | The subscription ID.                                                           |
+| `subscriptionUpdate`                                                           | [components.SubscriptionUpdate](../../models/components/subscriptionupdate.md) | :heavy_check_mark:                                                             | N/A                                                                            |
+| `opts`                                                                         | [][operations.Option](../../models/operations/option.md)                       | :heavy_minus_sign:                                                             | The options for this request.                                                  |
+
+### Response
+
+**[*operations.SubscriptionsUpdateResponse](../../models/operations/subscriptionsupdateresponse.md), error**
+
+### Errors
+
+| Error Type                            | Status Code                           | Content Type                          |
+| ------------------------------------- | ------------------------------------- | ------------------------------------- |
+| apierrors.AlreadyCanceledSubscription | 403                                   | application/json                      |
+| apierrors.ResourceNotFound            | 404                                   | application/json                      |
+| apierrors.HTTPValidationError         | 422                                   | application/json                      |
+| apierrors.APIError                    | 4XX, 5XX                              | \*/\*                                 |
+
+## Revoke
+
+Revoke a subscription, i.e cancel immediately.
+
+### Example Usage
+
+```go
+package main
+
+import(
+	"context"
+	"os"
+	polargo "github.com/polarsource/polar-go"
+	"log"
+)
+
+func main() {
+    ctx := context.Background()
+    
+    s := polargo.New(
+        polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
+    )
+
+    res, err := s.Subscriptions.Revoke(ctx, "<value>")
+    if err != nil {
+        log.Fatal(err)
+    }
+    if res.Subscription != nil {
+        // handle response
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                | Type                                                     | Required                                                 | Description                                              |
+| -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- |
+| `ctx`                                                    | [context.Context](https://pkg.go.dev/context#Context)    | :heavy_check_mark:                                       | The context to use for the request.                      |
+| `id`                                                     | *string*                                                 | :heavy_check_mark:                                       | The subscription ID.                                     |
+| `opts`                                                   | [][operations.Option](../../models/operations/option.md) | :heavy_minus_sign:                                       | The options for this request.                            |
+
+### Response
+
+**[*operations.SubscriptionsRevokeResponse](../../models/operations/subscriptionsrevokeresponse.md), error**
+
+### Errors
+
+| Error Type                            | Status Code                           | Content Type                          |
+| ------------------------------------- | ------------------------------------- | ------------------------------------- |
+| apierrors.AlreadyCanceledSubscription | 403                                   | application/json                      |
+| apierrors.ResourceNotFound            | 404                                   | application/json                      |
+| apierrors.HTTPValidationError         | 422                                   | application/json                      |
+| apierrors.APIError                    | 4XX, 5XX                              | \*/\*                                 |

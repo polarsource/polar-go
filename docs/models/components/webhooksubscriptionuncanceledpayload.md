@@ -1,7 +1,6 @@
-# WebhookSubscriptionCanceledPayload
+# WebhookSubscriptionUncanceledPayload
 
-Sent when a subscription is canceled.
-Customers might still have access until the end of the current period.
+Sent when a subscription is uncanceled.
 
 **Discord & Slack support:** Full
 

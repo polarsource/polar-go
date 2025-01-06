@@ -7,7 +7,7 @@ import (
 )
 
 type CustomerPortalSubscriptionsCancelRequest struct {
-	// The subscription ID.
+	// Customer subscription ID.
 	ID string `pathParam:"style=simple,explode=false,name=id"`
 }
 
@@ -20,7 +20,7 @@ func (o *CustomerPortalSubscriptionsCancelRequest) GetID() string {
 
 type CustomerPortalSubscriptionsCancelResponse struct {
 	HTTPMeta components.HTTPMetadata `json:"-"`
-	// Subscription canceled.
+	// Customer subscription is canceled.
 	CustomerSubscription *components.CustomerSubscription
 }
 

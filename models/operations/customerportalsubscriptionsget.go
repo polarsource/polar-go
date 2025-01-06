@@ -7,7 +7,7 @@ import (
 )
 
 type CustomerPortalSubscriptionsGetRequest struct {
-	// The subscription ID.
+	// Customer subscription ID.
 	ID string `pathParam:"style=simple,explode=false,name=id"`
 }
 

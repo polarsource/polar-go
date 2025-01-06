@@ -2,13 +2,71 @@
 
 package components
 
+import (
+	"errors"
+	"fmt"
+	"github.com/polarsource/polar-go/internal/utils"
+)
+
+type CustomerSubscriptionUpdateType string
+
+const (
+	CustomerSubscriptionUpdateTypeCustomerSubscriptionUpdatePrice CustomerSubscriptionUpdateType = "CustomerSubscriptionUpdatePrice"
+	CustomerSubscriptionUpdateTypeCustomerSubscriptionCancel      CustomerSubscriptionUpdateType = "CustomerSubscriptionCancel"
+)
+
 type CustomerSubscriptionUpdate struct {
-	ProductPriceID string `json:"product_price_id"`
+	CustomerSubscriptionUpdatePrice *CustomerSubscriptionUpdatePrice `queryParam:"inline"`
+	CustomerSubscriptionCancel      *CustomerSubscriptionCancel      `queryParam:"inline"`
+
+	Type CustomerSubscriptionUpdateType
 }
 
-func (o *CustomerSubscriptionUpdate) GetProductPriceID() string {
-	if o == nil {
-		return ""
+func CreateCustomerSubscriptionUpdateCustomerSubscriptionUpdatePrice(customerSubscriptionUpdatePrice CustomerSubscriptionUpdatePrice) CustomerSubscriptionUpdate {
+	typ := CustomerSubscriptionUpdateTypeCustomerSubscriptionUpdatePrice
+
+	return CustomerSubscriptionUpdate{
+		CustomerSubscriptionUpdatePrice: &customerSubscriptionUpdatePrice,
+		Type:                            typ,
 	}
-	return o.ProductPriceID
+}
+
+func CreateCustomerSubscriptionUpdateCustomerSubscriptionCancel(customerSubscriptionCancel CustomerSubscriptionCancel) CustomerSubscriptionUpdate {
+	typ := CustomerSubscriptionUpdateTypeCustomerSubscriptionCancel
+
+	return CustomerSubscriptionUpdate{
+		CustomerSubscriptionCancel: &customerSubscriptionCancel,
+		Type:                       typ,
+	}
+}
+
+func (u *CustomerSubscriptionUpdate) UnmarshalJSON(data []byte) error {
+
+	var customerSubscriptionUpdatePrice CustomerSubscriptionUpdatePrice = CustomerSubscriptionUpdatePrice{}
+	if err := utils.UnmarshalJSON(data, &customerSubscriptionUpdatePrice, "", true, true); err == nil {
+		u.CustomerSubscriptionUpdatePrice = &customerSubscriptionUpdatePrice
+		u.Type = CustomerSubscriptionUpdateTypeCustomerSubscriptionUpdatePrice
+		return nil
+	}
+
+	var customerSubscriptionCancel CustomerSubscriptionCancel = CustomerSubscriptionCancel{}
+	if err := utils.UnmarshalJSON(data, &customerSubscriptionCancel, "", true, true); err == nil {
+		u.CustomerSubscriptionCancel = &customerSubscriptionCancel
+		u.Type = CustomerSubscriptionUpdateTypeCustomerSubscriptionCancel
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for CustomerSubscriptionUpdate", string(data))
+}
+
+func (u CustomerSubscriptionUpdate) MarshalJSON() ([]byte, error) {
+	if u.CustomerSubscriptionUpdatePrice != nil {
+		return utils.MarshalJSON(u.CustomerSubscriptionUpdatePrice, "", true)
+	}
+
+	if u.CustomerSubscriptionCancel != nil {
+		return utils.MarshalJSON(u.CustomerSubscriptionCancel, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type CustomerSubscriptionUpdate: all fields are null")
 }

@@ -13,21 +13,25 @@ type CustomerSubscription struct {
 	// Last modification timestamp of the object.
 	ModifiedAt *time.Time `json:"modified_at"`
 	// The ID of the object.
-	ID                 string                        `json:"id"`
-	Amount             *int64                        `json:"amount"`
-	Currency           *string                       `json:"currency"`
-	RecurringInterval  SubscriptionRecurringInterval `json:"recurring_interval"`
-	Status             SubscriptionStatus            `json:"status"`
-	CurrentPeriodStart time.Time                     `json:"current_period_start"`
-	CurrentPeriodEnd   *time.Time                    `json:"current_period_end"`
-	CancelAtPeriodEnd  bool                          `json:"cancel_at_period_end"`
-	StartedAt          *time.Time                    `json:"started_at"`
-	EndedAt            *time.Time                    `json:"ended_at"`
-	CustomerID         string                        `json:"customer_id"`
-	ProductID          string                        `json:"product_id"`
-	PriceID            string                        `json:"price_id"`
-	DiscountID         *string                       `json:"discount_id"`
-	CheckoutID         *string                       `json:"checkout_id"`
+	ID                          string                        `json:"id"`
+	Amount                      *int64                        `json:"amount"`
+	Currency                    *string                       `json:"currency"`
+	RecurringInterval           SubscriptionRecurringInterval `json:"recurring_interval"`
+	Status                      SubscriptionStatus            `json:"status"`
+	CurrentPeriodStart          time.Time                     `json:"current_period_start"`
+	CurrentPeriodEnd            *time.Time                    `json:"current_period_end"`
+	CancelAtPeriodEnd           bool                          `json:"cancel_at_period_end"`
+	CanceledAt                  *time.Time                    `json:"canceled_at"`
+	StartedAt                   *time.Time                    `json:"started_at"`
+	EndsAt                      *time.Time                    `json:"ends_at"`
+	EndedAt                     *time.Time                    `json:"ended_at"`
+	CustomerID                  string                        `json:"customer_id"`
+	ProductID                   string                        `json:"product_id"`
+	PriceID                     string                        `json:"price_id"`
+	DiscountID                  *string                       `json:"discount_id"`
+	CheckoutID                  *string                       `json:"checkout_id"`
+	CustomerCancellationReason  *CustomerCancellationReason   `json:"customer_cancellation_reason"`
+	CustomerCancellationComment *string                       `json:"customer_cancellation_comment"`
 	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
 	UserID  string                      `json:"user_id"`
 	Product CustomerSubscriptionProduct `json:"product"`
@@ -115,11 +119,25 @@ func (o *CustomerSubscription) GetCancelAtPeriodEnd() bool {
 	return o.CancelAtPeriodEnd
 }
 
+func (o *CustomerSubscription) GetCanceledAt() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.CanceledAt
+}
+
 func (o *CustomerSubscription) GetStartedAt() *time.Time {
 	if o == nil {
 		return nil
 	}
 	return o.StartedAt
+}
+
+func (o *CustomerSubscription) GetEndsAt() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.EndsAt
 }
 
 func (o *CustomerSubscription) GetEndedAt() *time.Time {
@@ -162,6 +180,20 @@ func (o *CustomerSubscription) GetCheckoutID() *string {
 		return nil
 	}
 	return o.CheckoutID
+}
+
+func (o *CustomerSubscription) GetCustomerCancellationReason() *CustomerCancellationReason {
+	if o == nil {
+		return nil
+	}
+	return o.CustomerCancellationReason
+}
+
+func (o *CustomerSubscription) GetCustomerCancellationComment() *string {
+	if o == nil {
+		return nil
+	}
+	return o.CustomerCancellationComment
 }
 
 func (o *CustomerSubscription) GetUserID() string {

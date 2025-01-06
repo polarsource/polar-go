@@ -211,22 +211,26 @@ type Subscription struct {
 	// Last modification timestamp of the object.
 	ModifiedAt *time.Time `json:"modified_at"`
 	// The ID of the object.
-	ID                 string                        `json:"id"`
-	Amount             *int64                        `json:"amount"`
-	Currency           *string                       `json:"currency"`
-	RecurringInterval  SubscriptionRecurringInterval `json:"recurring_interval"`
-	Status             SubscriptionStatus            `json:"status"`
-	CurrentPeriodStart time.Time                     `json:"current_period_start"`
-	CurrentPeriodEnd   *time.Time                    `json:"current_period_end"`
-	CancelAtPeriodEnd  bool                          `json:"cancel_at_period_end"`
-	StartedAt          *time.Time                    `json:"started_at"`
-	EndedAt            *time.Time                    `json:"ended_at"`
-	CustomerID         string                        `json:"customer_id"`
-	ProductID          string                        `json:"product_id"`
-	PriceID            string                        `json:"price_id"`
-	DiscountID         *string                       `json:"discount_id"`
-	CheckoutID         *string                       `json:"checkout_id"`
-	Metadata           map[string]Metadata           `json:"metadata"`
+	ID                          string                        `json:"id"`
+	Amount                      *int64                        `json:"amount"`
+	Currency                    *string                       `json:"currency"`
+	RecurringInterval           SubscriptionRecurringInterval `json:"recurring_interval"`
+	Status                      SubscriptionStatus            `json:"status"`
+	CurrentPeriodStart          time.Time                     `json:"current_period_start"`
+	CurrentPeriodEnd            *time.Time                    `json:"current_period_end"`
+	CancelAtPeriodEnd           bool                          `json:"cancel_at_period_end"`
+	CanceledAt                  *time.Time                    `json:"canceled_at"`
+	StartedAt                   *time.Time                    `json:"started_at"`
+	EndsAt                      *time.Time                    `json:"ends_at"`
+	EndedAt                     *time.Time                    `json:"ended_at"`
+	CustomerID                  string                        `json:"customer_id"`
+	ProductID                   string                        `json:"product_id"`
+	PriceID                     string                        `json:"price_id"`
+	DiscountID                  *string                       `json:"discount_id"`
+	CheckoutID                  *string                       `json:"checkout_id"`
+	CustomerCancellationReason  *CustomerCancellationReason   `json:"customer_cancellation_reason"`
+	CustomerCancellationComment *string                       `json:"customer_cancellation_comment"`
+	Metadata                    map[string]Metadata           `json:"metadata"`
 	// Key-value object storing custom field values.
 	CustomFieldData *SubscriptionCustomFieldData `json:"custom_field_data,omitempty"`
 	Customer        SubscriptionCustomer         `json:"customer"`
@@ -320,11 +324,25 @@ func (o *Subscription) GetCancelAtPeriodEnd() bool {
 	return o.CancelAtPeriodEnd
 }
 
+func (o *Subscription) GetCanceledAt() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.CanceledAt
+}
+
 func (o *Subscription) GetStartedAt() *time.Time {
 	if o == nil {
 		return nil
 	}
 	return o.StartedAt
+}
+
+func (o *Subscription) GetEndsAt() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.EndsAt
 }
 
 func (o *Subscription) GetEndedAt() *time.Time {
@@ -367,6 +385,20 @@ func (o *Subscription) GetCheckoutID() *string {
 		return nil
 	}
 	return o.CheckoutID
+}
+
+func (o *Subscription) GetCustomerCancellationReason() *CustomerCancellationReason {
+	if o == nil {
+		return nil
+	}
+	return o.CustomerCancellationReason
+}
+
+func (o *Subscription) GetCustomerCancellationComment() *string {
+	if o == nil {
+		return nil
+	}
+	return o.CustomerCancellationComment
 }
 
 func (o *Subscription) GetMetadata() map[string]Metadata {
