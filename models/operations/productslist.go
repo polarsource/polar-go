@@ -9,6 +9,70 @@ import (
 	"github.com/polarsource/polar-go/models/components"
 )
 
+type QueryParamProductIDFilterType string
+
+const (
+	QueryParamProductIDFilterTypeStr        QueryParamProductIDFilterType = "str"
+	QueryParamProductIDFilterTypeArrayOfStr QueryParamProductIDFilterType = "arrayOfStr"
+)
+
+// QueryParamProductIDFilter - Filter by product ID.
+type QueryParamProductIDFilter struct {
+	Str        *string  `queryParam:"inline"`
+	ArrayOfStr []string `queryParam:"inline"`
+
+	Type QueryParamProductIDFilterType
+}
+
+func CreateQueryParamProductIDFilterStr(str string) QueryParamProductIDFilter {
+	typ := QueryParamProductIDFilterTypeStr
+
+	return QueryParamProductIDFilter{
+		Str:  &str,
+		Type: typ,
+	}
+}
+
+func CreateQueryParamProductIDFilterArrayOfStr(arrayOfStr []string) QueryParamProductIDFilter {
+	typ := QueryParamProductIDFilterTypeArrayOfStr
+
+	return QueryParamProductIDFilter{
+		ArrayOfStr: arrayOfStr,
+		Type:       typ,
+	}
+}
+
+func (u *QueryParamProductIDFilter) UnmarshalJSON(data []byte) error {
+
+	var str string = ""
+	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
+		u.Str = &str
+		u.Type = QueryParamProductIDFilterTypeStr
+		return nil
+	}
+
+	var arrayOfStr []string = []string{}
+	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, true); err == nil {
+		u.ArrayOfStr = arrayOfStr
+		u.Type = QueryParamProductIDFilterTypeArrayOfStr
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for QueryParamProductIDFilter", string(data))
+}
+
+func (u QueryParamProductIDFilter) MarshalJSON() ([]byte, error) {
+	if u.Str != nil {
+		return utils.MarshalJSON(u.Str, "", true)
+	}
+
+	if u.ArrayOfStr != nil {
+		return utils.MarshalJSON(u.ArrayOfStr, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type QueryParamProductIDFilter: all fields are null")
+}
+
 type ProductsListQueryParamOrganizationIDFilterType string
 
 const (
@@ -138,6 +202,8 @@ func (u BenefitIDFilter) MarshalJSON() ([]byte, error) {
 }
 
 type ProductsListRequest struct {
+	// Filter by product ID.
+	ID *QueryParamProductIDFilter `queryParam:"style=form,explode=true,name=id"`
 	// Filter by organization ID.
 	OrganizationID *ProductsListQueryParamOrganizationIDFilter `queryParam:"style=form,explode=true,name=organization_id"`
 	// Filter by product name.
@@ -165,6 +231,13 @@ func (p *ProductsListRequest) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
+}
+
+func (o *ProductsListRequest) GetID() *QueryParamProductIDFilter {
+	if o == nil {
+		return nil
+	}
+	return o.ID
 }
 
 func (o *ProductsListRequest) GetOrganizationID() *ProductsListQueryParamOrganizationIDFilter {

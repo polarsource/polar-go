@@ -242,6 +242,7 @@ func (s *Products) List(ctx context.Context, request operations.ProductsListRequ
 		return s.List(
 			ctx,
 			operations.ProductsListRequest{
+				ID:             request.ID,
 				OrganizationID: request.OrganizationID,
 				Query:          request.Query,
 				IsArchived:     request.IsArchived,

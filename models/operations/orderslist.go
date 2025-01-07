@@ -73,59 +73,59 @@ func (u OrdersListQueryParamOrganizationIDFilter) MarshalJSON() ([]byte, error) 
 	return nil, errors.New("could not marshal union type OrdersListQueryParamOrganizationIDFilter: all fields are null")
 }
 
-type QueryParamProductIDFilterType string
+type OrdersListQueryParamProductIDFilterType string
 
 const (
-	QueryParamProductIDFilterTypeStr        QueryParamProductIDFilterType = "str"
-	QueryParamProductIDFilterTypeArrayOfStr QueryParamProductIDFilterType = "arrayOfStr"
+	OrdersListQueryParamProductIDFilterTypeStr        OrdersListQueryParamProductIDFilterType = "str"
+	OrdersListQueryParamProductIDFilterTypeArrayOfStr OrdersListQueryParamProductIDFilterType = "arrayOfStr"
 )
 
-// QueryParamProductIDFilter - Filter by product ID.
-type QueryParamProductIDFilter struct {
+// OrdersListQueryParamProductIDFilter - Filter by product ID.
+type OrdersListQueryParamProductIDFilter struct {
 	Str        *string  `queryParam:"inline"`
 	ArrayOfStr []string `queryParam:"inline"`
 
-	Type QueryParamProductIDFilterType
+	Type OrdersListQueryParamProductIDFilterType
 }
 
-func CreateQueryParamProductIDFilterStr(str string) QueryParamProductIDFilter {
-	typ := QueryParamProductIDFilterTypeStr
+func CreateOrdersListQueryParamProductIDFilterStr(str string) OrdersListQueryParamProductIDFilter {
+	typ := OrdersListQueryParamProductIDFilterTypeStr
 
-	return QueryParamProductIDFilter{
+	return OrdersListQueryParamProductIDFilter{
 		Str:  &str,
 		Type: typ,
 	}
 }
 
-func CreateQueryParamProductIDFilterArrayOfStr(arrayOfStr []string) QueryParamProductIDFilter {
-	typ := QueryParamProductIDFilterTypeArrayOfStr
+func CreateOrdersListQueryParamProductIDFilterArrayOfStr(arrayOfStr []string) OrdersListQueryParamProductIDFilter {
+	typ := OrdersListQueryParamProductIDFilterTypeArrayOfStr
 
-	return QueryParamProductIDFilter{
+	return OrdersListQueryParamProductIDFilter{
 		ArrayOfStr: arrayOfStr,
 		Type:       typ,
 	}
 }
 
-func (u *QueryParamProductIDFilter) UnmarshalJSON(data []byte) error {
+func (u *OrdersListQueryParamProductIDFilter) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
 	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
 		u.Str = &str
-		u.Type = QueryParamProductIDFilterTypeStr
+		u.Type = OrdersListQueryParamProductIDFilterTypeStr
 		return nil
 	}
 
 	var arrayOfStr []string = []string{}
 	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, true); err == nil {
 		u.ArrayOfStr = arrayOfStr
-		u.Type = QueryParamProductIDFilterTypeArrayOfStr
+		u.Type = OrdersListQueryParamProductIDFilterTypeArrayOfStr
 		return nil
 	}
 
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for QueryParamProductIDFilter", string(data))
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for OrdersListQueryParamProductIDFilter", string(data))
 }
 
-func (u QueryParamProductIDFilter) MarshalJSON() ([]byte, error) {
+func (u OrdersListQueryParamProductIDFilter) MarshalJSON() ([]byte, error) {
 	if u.Str != nil {
 		return utils.MarshalJSON(u.Str, "", true)
 	}
@@ -134,7 +134,7 @@ func (u QueryParamProductIDFilter) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.ArrayOfStr, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type QueryParamProductIDFilter: all fields are null")
+	return nil, errors.New("could not marshal union type OrdersListQueryParamProductIDFilter: all fields are null")
 }
 
 type ProductPriceTypeFilterType string
@@ -333,7 +333,7 @@ type OrdersListRequest struct {
 	// Filter by organization ID.
 	OrganizationID *OrdersListQueryParamOrganizationIDFilter `queryParam:"style=form,explode=true,name=organization_id"`
 	// Filter by product ID.
-	ProductID *QueryParamProductIDFilter `queryParam:"style=form,explode=true,name=product_id"`
+	ProductID *OrdersListQueryParamProductIDFilter `queryParam:"style=form,explode=true,name=product_id"`
 	// Filter by product price type. `recurring` will return orders corresponding to subscriptions creations or renewals. `one_time` will return orders corresponding to one-time purchases.
 	ProductPriceType *ProductPriceTypeFilter `queryParam:"style=form,explode=true,name=product_price_type"`
 	// Filter by discount ID.
@@ -366,7 +366,7 @@ func (o *OrdersListRequest) GetOrganizationID() *OrdersListQueryParamOrganizatio
 	return o.OrganizationID
 }
 
-func (o *OrdersListRequest) GetProductID() *QueryParamProductIDFilter {
+func (o *OrdersListRequest) GetProductID() *OrdersListQueryParamProductIDFilter {
 	if o == nil {
 		return nil
 	}

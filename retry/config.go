@@ -20,6 +20,9 @@ type BackoffStrategy struct {
 
 // Config configures a retry policy.
 type Config struct {
+	// Strategy sets the algorithm to use for a retry loop. It can be one of:
+	//   - "backoff": retry with exponential backoff and random jitter.
+	//   - "none" or "": disables retries.
 	Strategy              string
 	Backoff               *BackoffStrategy
 	RetryConnectionErrors bool
