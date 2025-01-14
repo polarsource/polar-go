@@ -19,7 +19,7 @@ Developer-friendly & type-safe Go SDK specifically catered to leverage *github.c
 
 Polar API: Polar HTTP and Webhooks API
 
-Read the docs at https://docs.polar.sh/api
+Read the docs at https://docs.polar.sh/api-reference
 <!-- End Summary [summary] -->
 
 <!-- Start Table of Contents [toc] -->
