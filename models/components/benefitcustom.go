@@ -28,7 +28,7 @@ type BenefitCustom struct {
 	OrganizationID string `json:"organization_id"`
 	// Properties for a benefit of type `custom`.
 	Properties BenefitCustomProperties `json:"properties"`
-	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
+	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
 	IsTaxApplicable bool `json:"is_tax_applicable"`
 }
 

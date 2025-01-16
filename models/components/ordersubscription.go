@@ -120,7 +120,7 @@ type OrderSubscription struct {
 	CheckoutID                  *string                       `json:"checkout_id"`
 	CustomerCancellationReason  *CustomerCancellationReason   `json:"customer_cancellation_reason"`
 	CustomerCancellationComment *string                       `json:"customer_cancellation_comment"`
-	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
+	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
 	UserID string `json:"user_id"`
 }
 

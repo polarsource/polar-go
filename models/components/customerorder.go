@@ -20,7 +20,7 @@ type CustomerOrder struct {
 	ProductID      string     `json:"product_id"`
 	ProductPriceID string     `json:"product_price_id"`
 	SubscriptionID *string    `json:"subscription_id"`
-	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
+	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
 	UserID       string                     `json:"user_id"`
 	Product      CustomerOrderProduct       `json:"product"`
 	ProductPrice ProductPrice               `json:"product_price"`

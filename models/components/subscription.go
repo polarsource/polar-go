@@ -234,7 +234,7 @@ type Subscription struct {
 	// Key-value object storing custom field values.
 	CustomFieldData *SubscriptionCustomFieldData `json:"custom_field_data,omitempty"`
 	Customer        SubscriptionCustomer         `json:"customer"`
-	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
+	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
 	UserID string           `json:"user_id"`
 	User   SubscriptionUser `json:"user"`
 	// A product.

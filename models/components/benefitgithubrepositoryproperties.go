@@ -51,7 +51,7 @@ type BenefitGitHubRepositoryProperties struct {
 	RepositoryName string `json:"repository_name"`
 	// The permission level to grant. Read more about roles and their permissions on [GitHub documentation](https://docs.github.com/en/organizations/managing-user-access-to-your-organizations-repositories/managing-repository-roles/repository-roles-for-an-organization#permissions-for-each-role).
 	Permission Permission `json:"permission"`
-	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
+	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
 	RepositoryID *string `json:"repository_id,omitempty"`
 }
 

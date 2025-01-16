@@ -10,7 +10,7 @@ import (
 type ValidatedLicenseKey struct {
 	ID             string `json:"id"`
 	OrganizationID string `json:"organization_id"`
-	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
+	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
 	UserID     string             `json:"user_id"`
 	CustomerID string             `json:"customer_id"`
 	User       LicenseKeyUser     `json:"user"`

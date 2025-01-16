@@ -76,6 +76,8 @@ func (u CustomersListQueryParamOrganizationIDFilter) MarshalJSON() ([]byte, erro
 type CustomersListRequest struct {
 	// Filter by organization ID.
 	OrganizationID *CustomersListQueryParamOrganizationIDFilter `queryParam:"style=form,explode=true,name=organization_id"`
+	// Filter by exact email.
+	Email *string `queryParam:"style=form,explode=true,name=email"`
 	// Filter by name or email.
 	Query *string `queryParam:"style=form,explode=true,name=query"`
 	// Page number, defaults to 1.
@@ -84,6 +86,8 @@ type CustomersListRequest struct {
 	Limit *int64 `default:"10" queryParam:"style=form,explode=true,name=limit"`
 	// Sorting criterion. Several criteria can be used simultaneously and will be applied in order. Add a minus sign `-` before the criteria name to sort by descending order.
 	Sorting []components.CustomerSortProperty `queryParam:"style=form,explode=true,name=sorting"`
+	// Filter by metadata key-value pairs. It uses the `deepObject` style, e.g. `?metadata[key]=value`.
+	Metadata map[string]components.MetadataQuery `queryParam:"style=deepObject,explode=true,name=metadata"`
 }
 
 func (c CustomersListRequest) MarshalJSON() ([]byte, error) {
@@ -102,6 +106,13 @@ func (o *CustomersListRequest) GetOrganizationID() *CustomersListQueryParamOrgan
 		return nil
 	}
 	return o.OrganizationID
+}
+
+func (o *CustomersListRequest) GetEmail() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Email
 }
 
 func (o *CustomersListRequest) GetQuery() *string {
@@ -130,6 +141,13 @@ func (o *CustomersListRequest) GetSorting() []components.CustomerSortProperty {
 		return nil
 	}
 	return o.Sorting
+}
+
+func (o *CustomersListRequest) GetMetadata() map[string]components.MetadataQuery {
+	if o == nil {
+		return nil
+	}
+	return o.Metadata
 }
 
 type CustomersListResponse struct {

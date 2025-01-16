@@ -181,7 +181,7 @@ type BenefitGrant struct {
 	OrderID *string `json:"order_id"`
 	// The ID of the customer concerned by this grant.
 	CustomerID string `json:"customer_id"`
-	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
+	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
 	UserID string `json:"user_id"`
 	// The ID of the benefit concerned by this grant.
 	BenefitID string `json:"benefit_id"`

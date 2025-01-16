@@ -227,7 +227,7 @@ type Order struct {
 	SubscriptionID  *string               `json:"subscription_id"`
 	CheckoutID      *string               `json:"checkout_id"`
 	Customer        OrderCustomer         `json:"customer"`
-	// Deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
+	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
 	UserID       string             `json:"user_id"`
 	User         OrderUser          `json:"user"`
 	Product      OrderProduct       `json:"product"`
