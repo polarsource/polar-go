@@ -94,8 +94,111 @@ func (u OrderMetadata) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type OrderMetadata: all fields are null")
 }
 
-// OrderCustomFieldData - Key-value object storing custom field values.
+type OrderCustomFieldDataType string
+
+const (
+	OrderCustomFieldDataTypeStr      OrderCustomFieldDataType = "str"
+	OrderCustomFieldDataTypeInteger  OrderCustomFieldDataType = "integer"
+	OrderCustomFieldDataTypeBoolean  OrderCustomFieldDataType = "boolean"
+	OrderCustomFieldDataTypeDateTime OrderCustomFieldDataType = "date-time"
+)
+
 type OrderCustomFieldData struct {
+	Str      *string    `queryParam:"inline"`
+	Integer  *int64     `queryParam:"inline"`
+	Boolean  *bool      `queryParam:"inline"`
+	DateTime *time.Time `queryParam:"inline"`
+
+	Type OrderCustomFieldDataType
+}
+
+func CreateOrderCustomFieldDataStr(str string) OrderCustomFieldData {
+	typ := OrderCustomFieldDataTypeStr
+
+	return OrderCustomFieldData{
+		Str:  &str,
+		Type: typ,
+	}
+}
+
+func CreateOrderCustomFieldDataInteger(integer int64) OrderCustomFieldData {
+	typ := OrderCustomFieldDataTypeInteger
+
+	return OrderCustomFieldData{
+		Integer: &integer,
+		Type:    typ,
+	}
+}
+
+func CreateOrderCustomFieldDataBoolean(boolean bool) OrderCustomFieldData {
+	typ := OrderCustomFieldDataTypeBoolean
+
+	return OrderCustomFieldData{
+		Boolean: &boolean,
+		Type:    typ,
+	}
+}
+
+func CreateOrderCustomFieldDataDateTime(dateTime time.Time) OrderCustomFieldData {
+	typ := OrderCustomFieldDataTypeDateTime
+
+	return OrderCustomFieldData{
+		DateTime: &dateTime,
+		Type:     typ,
+	}
+}
+
+func (u *OrderCustomFieldData) UnmarshalJSON(data []byte) error {
+
+	var str string = ""
+	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
+		u.Str = &str
+		u.Type = OrderCustomFieldDataTypeStr
+		return nil
+	}
+
+	var integer int64 = int64(0)
+	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
+		u.Integer = &integer
+		u.Type = OrderCustomFieldDataTypeInteger
+		return nil
+	}
+
+	var boolean bool = false
+	if err := utils.UnmarshalJSON(data, &boolean, "", true, true); err == nil {
+		u.Boolean = &boolean
+		u.Type = OrderCustomFieldDataTypeBoolean
+		return nil
+	}
+
+	var dateTime time.Time = time.Time{}
+	if err := utils.UnmarshalJSON(data, &dateTime, "", true, true); err == nil {
+		u.DateTime = &dateTime
+		u.Type = OrderCustomFieldDataTypeDateTime
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for OrderCustomFieldData", string(data))
+}
+
+func (u OrderCustomFieldData) MarshalJSON() ([]byte, error) {
+	if u.Str != nil {
+		return utils.MarshalJSON(u.Str, "", true)
+	}
+
+	if u.Integer != nil {
+		return utils.MarshalJSON(u.Integer, "", true)
+	}
+
+	if u.Boolean != nil {
+		return utils.MarshalJSON(u.Boolean, "", true)
+	}
+
+	if u.DateTime != nil {
+		return utils.MarshalJSON(u.DateTime, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type OrderCustomFieldData: all fields are null")
 }
 
 type OrderDiscountType string
@@ -214,19 +317,24 @@ type Order struct {
 	ID       string                   `json:"id"`
 	Metadata map[string]OrderMetadata `json:"metadata"`
 	// Key-value object storing custom field values.
-	CustomFieldData *OrderCustomFieldData `json:"custom_field_data,omitempty"`
-	Amount          int64                 `json:"amount"`
-	TaxAmount       int64                 `json:"tax_amount"`
-	Currency        string                `json:"currency"`
-	BillingReason   OrderBillingReason    `json:"billing_reason"`
-	BillingAddress  *Address              `json:"billing_address"`
-	CustomerID      string                `json:"customer_id"`
-	ProductID       string                `json:"product_id"`
-	ProductPriceID  string                `json:"product_price_id"`
-	DiscountID      *string               `json:"discount_id"`
-	SubscriptionID  *string               `json:"subscription_id"`
-	CheckoutID      *string               `json:"checkout_id"`
-	Customer        OrderCustomer         `json:"customer"`
+	CustomFieldData map[string]OrderCustomFieldData `json:"custom_field_data,omitempty"`
+	Status          string                          `json:"status"`
+	Amount          int64                           `json:"amount"`
+	TaxAmount       int64                           `json:"tax_amount"`
+	// Amount refunded
+	RefundedAmount int64 `json:"refunded_amount"`
+	// Sales tax refunded
+	RefundedTaxAmount int64              `json:"refunded_tax_amount"`
+	Currency          string             `json:"currency"`
+	BillingReason     OrderBillingReason `json:"billing_reason"`
+	BillingAddress    *Address           `json:"billing_address"`
+	CustomerID        string             `json:"customer_id"`
+	ProductID         string             `json:"product_id"`
+	ProductPriceID    string             `json:"product_price_id"`
+	DiscountID        *string            `json:"discount_id"`
+	SubscriptionID    *string            `json:"subscription_id"`
+	CheckoutID        *string            `json:"checkout_id"`
+	Customer          OrderCustomer      `json:"customer"`
 	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
 	UserID       string             `json:"user_id"`
 	User         OrderUser          `json:"user"`
@@ -275,11 +383,18 @@ func (o *Order) GetMetadata() map[string]OrderMetadata {
 	return o.Metadata
 }
 
-func (o *Order) GetCustomFieldData() *OrderCustomFieldData {
+func (o *Order) GetCustomFieldData() map[string]OrderCustomFieldData {
 	if o == nil {
 		return nil
 	}
 	return o.CustomFieldData
+}
+
+func (o *Order) GetStatus() string {
+	if o == nil {
+		return ""
+	}
+	return o.Status
 }
 
 func (o *Order) GetAmount() int64 {
@@ -294,6 +409,20 @@ func (o *Order) GetTaxAmount() int64 {
 		return 0
 	}
 	return o.TaxAmount
+}
+
+func (o *Order) GetRefundedAmount() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.RefundedAmount
+}
+
+func (o *Order) GetRefundedTaxAmount() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.RefundedTaxAmount
 }
 
 func (o *Order) GetCurrency() string {

@@ -1,9 +1,29 @@
 # CheckoutCustomFieldData
 
-Key-value object storing custom field values.
 
+## Supported Types
 
-## Fields
+### 
 
-| Field       | Type        | Required    | Description |
-| ----------- | ----------- | ----------- | ----------- |
+```go
+checkoutCustomFieldData := components.CreateCheckoutCustomFieldDataStr(string{/* values here */})
+```
+
+### 
+
+```go
+checkoutCustomFieldData := components.CreateCheckoutCustomFieldDataInteger(int64{/* values here */})
+```
+
+### 
+
+```go
+checkoutCustomFieldData := components.CreateCheckoutCustomFieldDataBoolean(bool{/* values here */})
+```
+
+### 
+
+```go
+checkoutCustomFieldData := components.CreateCheckoutCustomFieldDataDateTime(time.Time{/* values here */})
+```
+

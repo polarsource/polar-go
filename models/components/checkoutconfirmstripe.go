@@ -2,13 +2,124 @@
 
 package components
 
+import (
+	"errors"
+	"fmt"
+	"github.com/polarsource/polar-go/internal/utils"
+	"time"
+)
+
+type CheckoutConfirmStripeCustomFieldDataType string
+
+const (
+	CheckoutConfirmStripeCustomFieldDataTypeStr      CheckoutConfirmStripeCustomFieldDataType = "str"
+	CheckoutConfirmStripeCustomFieldDataTypeInteger  CheckoutConfirmStripeCustomFieldDataType = "integer"
+	CheckoutConfirmStripeCustomFieldDataTypeBoolean  CheckoutConfirmStripeCustomFieldDataType = "boolean"
+	CheckoutConfirmStripeCustomFieldDataTypeDateTime CheckoutConfirmStripeCustomFieldDataType = "date-time"
+)
+
 type CheckoutConfirmStripeCustomFieldData struct {
+	Str      *string    `queryParam:"inline"`
+	Integer  *int64     `queryParam:"inline"`
+	Boolean  *bool      `queryParam:"inline"`
+	DateTime *time.Time `queryParam:"inline"`
+
+	Type CheckoutConfirmStripeCustomFieldDataType
+}
+
+func CreateCheckoutConfirmStripeCustomFieldDataStr(str string) CheckoutConfirmStripeCustomFieldData {
+	typ := CheckoutConfirmStripeCustomFieldDataTypeStr
+
+	return CheckoutConfirmStripeCustomFieldData{
+		Str:  &str,
+		Type: typ,
+	}
+}
+
+func CreateCheckoutConfirmStripeCustomFieldDataInteger(integer int64) CheckoutConfirmStripeCustomFieldData {
+	typ := CheckoutConfirmStripeCustomFieldDataTypeInteger
+
+	return CheckoutConfirmStripeCustomFieldData{
+		Integer: &integer,
+		Type:    typ,
+	}
+}
+
+func CreateCheckoutConfirmStripeCustomFieldDataBoolean(boolean bool) CheckoutConfirmStripeCustomFieldData {
+	typ := CheckoutConfirmStripeCustomFieldDataTypeBoolean
+
+	return CheckoutConfirmStripeCustomFieldData{
+		Boolean: &boolean,
+		Type:    typ,
+	}
+}
+
+func CreateCheckoutConfirmStripeCustomFieldDataDateTime(dateTime time.Time) CheckoutConfirmStripeCustomFieldData {
+	typ := CheckoutConfirmStripeCustomFieldDataTypeDateTime
+
+	return CheckoutConfirmStripeCustomFieldData{
+		DateTime: &dateTime,
+		Type:     typ,
+	}
+}
+
+func (u *CheckoutConfirmStripeCustomFieldData) UnmarshalJSON(data []byte) error {
+
+	var str string = ""
+	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
+		u.Str = &str
+		u.Type = CheckoutConfirmStripeCustomFieldDataTypeStr
+		return nil
+	}
+
+	var integer int64 = int64(0)
+	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
+		u.Integer = &integer
+		u.Type = CheckoutConfirmStripeCustomFieldDataTypeInteger
+		return nil
+	}
+
+	var boolean bool = false
+	if err := utils.UnmarshalJSON(data, &boolean, "", true, true); err == nil {
+		u.Boolean = &boolean
+		u.Type = CheckoutConfirmStripeCustomFieldDataTypeBoolean
+		return nil
+	}
+
+	var dateTime time.Time = time.Time{}
+	if err := utils.UnmarshalJSON(data, &dateTime, "", true, true); err == nil {
+		u.DateTime = &dateTime
+		u.Type = CheckoutConfirmStripeCustomFieldDataTypeDateTime
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for CheckoutConfirmStripeCustomFieldData", string(data))
+}
+
+func (u CheckoutConfirmStripeCustomFieldData) MarshalJSON() ([]byte, error) {
+	if u.Str != nil {
+		return utils.MarshalJSON(u.Str, "", true)
+	}
+
+	if u.Integer != nil {
+		return utils.MarshalJSON(u.Integer, "", true)
+	}
+
+	if u.Boolean != nil {
+		return utils.MarshalJSON(u.Boolean, "", true)
+	}
+
+	if u.DateTime != nil {
+		return utils.MarshalJSON(u.DateTime, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type CheckoutConfirmStripeCustomFieldData: all fields are null")
 }
 
 // CheckoutConfirmStripe - Confirm a checkout session using a Stripe confirmation token.
 type CheckoutConfirmStripe struct {
 	// Key-value object storing custom field values.
-	CustomFieldData *CheckoutConfirmStripeCustomFieldData `json:"custom_field_data,omitempty"`
+	CustomFieldData map[string]CheckoutConfirmStripeCustomFieldData `json:"custom_field_data,omitempty"`
 	// ID of the product price to checkout. Must correspond to a price linked to the same product.
 	ProductPriceID         *string  `json:"product_price_id,omitempty"`
 	Amount                 *int64   `json:"amount,omitempty"`
@@ -22,7 +133,7 @@ type CheckoutConfirmStripe struct {
 	ConfirmationTokenID *string `json:"confirmation_token_id,omitempty"`
 }
 
-func (o *CheckoutConfirmStripe) GetCustomFieldData() *CheckoutConfirmStripeCustomFieldData {
+func (o *CheckoutConfirmStripe) GetCustomFieldData() map[string]CheckoutConfirmStripeCustomFieldData {
 	if o == nil {
 		return nil
 	}

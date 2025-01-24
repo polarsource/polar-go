@@ -34,7 +34,7 @@ func main() {
         polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )
 
-    res, err := s.Files.List(ctx, nil, nil, nil, nil)
+    res, err := s.Files.List(ctx, nil, nil, polargo.Int64(1), polargo.Int64(10))
     if err != nil {
         log.Fatal(err)
     }
@@ -102,7 +102,7 @@ func main() {
         polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )
 
-    res, err := s.Files.Create(ctx, components.CreateFileCreateProductMediaFileCreate(
+    res, err := s.Files.Create(ctx, components.CreateFileCreateProductMedia(
         components.ProductMediaFileCreate{
             Name: "<value>",
             MimeType: "<value>",

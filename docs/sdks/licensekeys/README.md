@@ -33,7 +33,7 @@ func main() {
         polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )
 
-    res, err := s.LicenseKeys.List(ctx, nil, nil, nil, nil)
+    res, err := s.LicenseKeys.List(ctx, nil, nil, polargo.Int64(1), polargo.Int64(10))
     if err != nil {
         log.Fatal(err)
     }
@@ -157,7 +157,9 @@ func main() {
         polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )
 
-    res, err := s.LicenseKeys.Update(ctx, "<value>", components.LicenseKeyUpdate{})
+    res, err := s.LicenseKeys.Update(ctx, "<value>", components.LicenseKeyUpdate{
+        Usage: polargo.Int64(0),
+    })
     if err != nil {
         log.Fatal(err)
     }

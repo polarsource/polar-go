@@ -12,6 +12,7 @@ type MetricPeriod struct {
 	Timestamp                   time.Time `json:"timestamp"`
 	Orders                      int64     `json:"orders"`
 	Revenue                     int64     `json:"revenue"`
+	CumulativeRevenue           int64     `json:"cumulative_revenue"`
 	AverageOrderValue           int64     `json:"average_order_value"`
 	OneTimeProducts             int64     `json:"one_time_products"`
 	OneTimeProductsRevenue      int64     `json:"one_time_products_revenue"`
@@ -53,6 +54,13 @@ func (o *MetricPeriod) GetRevenue() int64 {
 		return 0
 	}
 	return o.Revenue
+}
+
+func (o *MetricPeriod) GetCumulativeRevenue() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.CumulativeRevenue
 }
 
 func (o *MetricPeriod) GetAverageOrderValue() int64 {

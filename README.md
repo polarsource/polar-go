@@ -74,14 +74,14 @@ func main() {
 
 	res, err := s.EndpointcheckoutCreatedPost(ctx, components.WebhookCheckoutCreatedPayload{
 		Data: components.Checkout{
-			CreatedAt:              types.MustTimeFromString("2024-11-12T14:26:42.882Z"),
-			ModifiedAt:             types.MustNewTimeFromString("2023-05-28T05:08:06.235Z"),
+			CreatedAt:              types.MustTimeFromString("2025-11-12T14:26:42.882Z"),
+			ModifiedAt:             types.MustNewTimeFromString("2024-05-27T05:08:06.235Z"),
 			ID:                     "<value>",
 			PaymentProcessor:       components.PaymentProcessorStripe,
 			Status:                 components.CheckoutStatusFailed,
 			ClientSecret:           "<value>",
 			URL:                    "https://heavy-beret.com/",
-			ExpiresAt:              types.MustTimeFromString("2022-02-25T02:26:48.460Z"),
+			ExpiresAt:              types.MustTimeFromString("2023-02-25T02:26:48.460Z"),
 			SuccessURL:             "https://sardonic-final.info/",
 			EmbedOrigin:            polargo.String("<value>"),
 			Amount:                 polargo.Int64(962818),
@@ -100,54 +100,39 @@ func main() {
 			IsPaymentFormRequired:  false,
 			CustomerID:             polargo.String("<value>"),
 			CustomerName:           polargo.String("<value>"),
-			CustomerEmail:          polargo.String("Ryley_Erdman@hotmail.com"),
+			CustomerEmail:          polargo.String("<value>"),
 			CustomerIPAddress:      polargo.String("<value>"),
 			CustomerBillingAddress: &components.Address{
-				Country: "South Africa",
+				Country: "Solomon Islands",
 			},
-			CustomerTaxID:            polargo.String("<id>"),
-			PaymentProcessorMetadata: components.PaymentProcessorMetadata{},
+			CustomerTaxID: polargo.String("<id>"),
+			PaymentProcessorMetadata: map[string]string{
+				"key":  "<value>",
+				"key1": "<value>",
+				"key2": "<value>",
+			},
 			Metadata: map[string]components.CheckoutMetadata{
-				"key": components.CreateCheckoutMetadataInteger(
-					18677,
-				),
-				"key1": components.CreateCheckoutMetadataInteger(
-					95370,
+				"key": components.CreateCheckoutMetadataStr(
+					"<value>",
 				),
 			},
 			Product: components.CheckoutProduct{
-				CreatedAt:      types.MustTimeFromString("2022-04-02T00:05:42.586Z"),
-				ModifiedAt:     types.MustNewTimeFromString("2023-12-16T03:02:38.803Z"),
+				CreatedAt:      types.MustTimeFromString("2024-11-17T19:11:13.132Z"),
+				ModifiedAt:     types.MustNewTimeFromString("2024-02-27T04:46:39.621Z"),
 				ID:             "<value>",
 				Name:           "<value>",
-				Description:    polargo.String("for embarrassment untidy long-term near honestly separate yet"),
-				IsRecurring:    true,
-				IsArchived:     false,
+				Description:    polargo.String("border opposite overload interior shady"),
+				IsRecurring:    false,
+				IsArchived:     true,
 				OrganizationID: "<value>",
-				Prices: []components.ProductPrice{
-					components.CreateProductPriceProductPriceOneTime(
-						components.CreateProductPriceOneTimeProductPriceOneTimeCustom(
-							components.ProductPriceOneTimeCustom{
-								CreatedAt:     types.MustTimeFromString("2024-02-07T04:30:48.802Z"),
-								ModifiedAt:    types.MustNewTimeFromString("2025-06-25T22:47:14.264Z"),
-								ID:            "<value>",
-								IsArchived:    false,
-								ProductID:     "<value>",
-								PriceCurrency: "<value>",
-								MinimumAmount: polargo.Int64(691423),
-								MaximumAmount: polargo.Int64(499526),
-								PresetAmount:  polargo.Int64(18677),
-							},
-						),
-					),
-				},
+				Prices:         []components.ProductPrice{},
 				Benefits: []components.BenefitBase{
 					components.BenefitBase{
-						CreatedAt:      types.MustTimeFromString("2023-08-22T00:47:02.059Z"),
-						ModifiedAt:     types.MustNewTimeFromString("2023-06-04T10:32:44.101Z"),
+						CreatedAt:      types.MustTimeFromString("2025-08-24T18:28:03.144Z"),
+						ModifiedAt:     types.MustNewTimeFromString("2023-10-21T11:52:11.842Z"),
 						ID:             "<value>",
-						Type:           components.BenefitTypeLicenseKeys,
-						Description:    "within jacket unless",
+						Type:           components.BenefitTypeAds,
+						Description:    "certainly these restfully geez who countess happily gym",
 						Selectable:     false,
 						Deletable:      false,
 						OrganizationID: "<value>",
@@ -158,57 +143,115 @@ func main() {
 						ID:                   "<value>",
 						OrganizationID:       "<value>",
 						Name:                 "<value>",
-						Path:                 "/private/var",
+						Path:                 "/private/tmp",
 						MimeType:             "<value>",
-						Size:                 245189,
+						Size:                 486328,
 						StorageVersion:       polargo.String("<value>"),
 						ChecksumEtag:         polargo.String("<value>"),
 						ChecksumSha256Base64: polargo.String("<value>"),
 						ChecksumSha256Hex:    polargo.String("<value>"),
-						LastModifiedAt:       types.MustNewTimeFromString("2022-11-03T15:00:03.276Z"),
+						LastModifiedAt:       types.MustNewTimeFromString("2023-09-26T17:28:00.673Z"),
+						Version:              polargo.String("<value>"),
+						IsUploaded:           true,
+						CreatedAt:            types.MustTimeFromString("2025-05-06T18:54:29.001Z"),
+						SizeReadable:         "<value>",
+						PublicURL:            "https://forsaken-underpants.biz",
+					},
+					components.ProductMediaFileRead{
+						ID:                   "<value>",
+						OrganizationID:       "<value>",
+						Name:                 "<value>",
+						Path:                 "/Users",
+						MimeType:             "<value>",
+						Size:                 796127,
+						StorageVersion:       polargo.String("<value>"),
+						ChecksumEtag:         polargo.String("<value>"),
+						ChecksumSha256Base64: polargo.String("<value>"),
+						ChecksumSha256Hex:    polargo.String("<value>"),
+						LastModifiedAt:       types.MustNewTimeFromString("2023-09-05T18:42:07.313Z"),
 						Version:              polargo.String("<value>"),
 						IsUploaded:           false,
-						CreatedAt:            types.MustTimeFromString("2024-06-07T13:47:02.365Z"),
+						CreatedAt:            types.MustTimeFromString("2025-10-05T11:55:07.194Z"),
 						SizeReadable:         "<value>",
-						PublicURL:            "https://webbed-experience.name/",
+						PublicURL:            "https://quick-witted-markup.org/",
 					},
 				},
 			},
 			ProductPrice: components.CreateProductPriceProductPriceOneTime(
-				components.CreateProductPriceOneTimeProductPriceOneTimeFixed(
-					components.ProductPriceOneTimeFixed{
-						CreatedAt:     types.MustTimeFromString("2023-04-02T00:05:42.586Z"),
-						ModifiedAt:    types.MustNewTimeFromString("2024-12-15T03:02:38.803Z"),
-						ID:            "<value>",
-						IsArchived:    false,
-						ProductID:     "<value>",
-						PriceCurrency: "<value>",
-						PriceAmount:   740296,
+				components.CreateProductPriceOneTimeProductPriceOneTimeFree(
+					components.ProductPriceOneTimeFree{
+						CreatedAt:  types.MustTimeFromString("2025-06-18T23:55:22.042Z"),
+						ModifiedAt: types.MustNewTimeFromString("2025-07-31T13:25:31.669Z"),
+						ID:         "<value>",
+						IsArchived: false,
+						ProductID:  "<value>",
 					},
 				),
 			),
-			Discount: components.CreateCheckoutDiscountCheckoutDiscountPercentageOnceForeverDuration(
+			Discount: polargo.Pointer(components.CreateCheckoutDiscountCheckoutDiscountPercentageOnceForeverDuration(
 				components.CheckoutDiscountPercentageOnceForeverDuration{
 					Duration:    components.DiscountDurationRepeating,
-					Type:        components.DiscountTypeFixed,
-					BasisPoints: 341163,
+					Type:        components.DiscountTypePercentage,
+					BasisPoints: 416143,
 					ID:          "<value>",
 					Name:        "<value>",
 					Code:        polargo.String("<value>"),
 				},
-			),
+			)),
 			SubscriptionID: polargo.String("<value>"),
 			AttachedCustomFields: []components.AttachedCustomField{
 				components.AttachedCustomField{
 					CustomFieldID: "<value>",
-					CustomField: components.CreateCustomFieldCustomFieldNumber(
+					CustomField: components.CreateCustomFieldDate(
+						components.CustomFieldDate{
+							CreatedAt:  types.MustTimeFromString("2023-08-29T09:50:00.241Z"),
+							ModifiedAt: types.MustNewTimeFromString("2024-11-17T19:11:13.132Z"),
+							ID:         "<value>",
+							Metadata: map[string]components.CustomFieldDateMetadata{
+								"key": components.CreateCustomFieldDateMetadataInteger(
+									366960,
+								),
+							},
+							Slug:           "<value>",
+							Name:           "<value>",
+							OrganizationID: "<value>",
+							Properties:     components.CustomFieldDateProperties{},
+						},
+					),
+					Order:    169862,
+					Required: true,
+				},
+				components.AttachedCustomField{
+					CustomFieldID: "<value>",
+					CustomField: components.CreateCustomFieldText(
+						components.CustomFieldText{
+							CreatedAt:  types.MustTimeFromString("2025-01-27T19:10:37.564Z"),
+							ModifiedAt: types.MustNewTimeFromString("2024-07-01T11:31:44.349Z"),
+							ID:         "<value>",
+							Metadata: map[string]components.CustomFieldTextMetadata{
+								"key": components.CreateCustomFieldTextMetadataStr(
+									"<value>",
+								),
+							},
+							Slug:           "<value>",
+							Name:           "<value>",
+							OrganizationID: "<value>",
+							Properties:     components.CustomFieldTextProperties{},
+						},
+					),
+					Order:    918364,
+					Required: true,
+				},
+				components.AttachedCustomField{
+					CustomFieldID: "<value>",
+					CustomField: components.CreateCustomFieldNumber(
 						components.CustomFieldNumber{
-							CreatedAt:  types.MustTimeFromString("2025-06-23T16:57:50.081Z"),
-							ModifiedAt: types.MustNewTimeFromString("2024-12-13T18:25:33.693Z"),
+							CreatedAt:  types.MustTimeFromString("2023-04-15T12:36:50.681Z"),
+							ModifiedAt: types.MustNewTimeFromString("2023-04-02T00:05:42.586Z"),
 							ID:         "<value>",
 							Metadata: map[string]components.CustomFieldNumberMetadata{
-								"key": components.CreateCustomFieldNumberMetadataStr(
-									"<value>",
+								"key": components.CreateCustomFieldNumberMetadataInteger(
+									740296,
 								),
 							},
 							Slug:           "<value>",
@@ -217,56 +260,7 @@ func main() {
 							Properties:     components.CustomFieldNumberProperties{},
 						},
 					),
-					Order:    996863,
-					Required: false,
-				},
-				components.AttachedCustomField{
-					CustomFieldID: "<value>",
-					CustomField: components.CreateCustomFieldCustomFieldSelect(
-						components.CustomFieldSelect{
-							CreatedAt:  types.MustTimeFromString("2023-04-26T22:34:57.487Z"),
-							ModifiedAt: types.MustNewTimeFromString("2023-08-07T19:57:51.694Z"),
-							ID:         "<value>",
-							Metadata: map[string]components.CustomFieldSelectMetadata{
-								"key": components.CreateCustomFieldSelectMetadataInteger(
-									856200,
-								),
-							},
-							Slug:           "<value>",
-							Name:           "<value>",
-							OrganizationID: "<value>",
-							Properties: components.CustomFieldSelectProperties{
-								Options: []components.CustomFieldSelectOption{
-									components.CustomFieldSelectOption{
-										Value: "<value>",
-										Label: "<value>",
-									},
-								},
-							},
-						},
-					),
-					Order:    72589,
-					Required: true,
-				},
-				components.AttachedCustomField{
-					CustomFieldID: "<value>",
-					CustomField: components.CreateCustomFieldCustomFieldCheckbox(
-						components.CustomFieldCheckbox{
-							CreatedAt:  types.MustTimeFromString("2025-05-25T15:20:50.694Z"),
-							ModifiedAt: types.MustNewTimeFromString("2024-11-27T14:29:40.329Z"),
-							ID:         "<value>",
-							Metadata: map[string]components.CustomFieldCheckboxMetadata{
-								"key": components.CreateCustomFieldCheckboxMetadataBoolean(
-									false,
-								),
-							},
-							Slug:           "<value>",
-							Name:           "<value>",
-							OrganizationID: "<value>",
-							Properties:     components.CustomFieldCheckboxProperties{},
-						},
-					),
-					Order:    161325,
+					Order:    187532,
 					Required: true,
 				},
 			},
@@ -274,8 +268,8 @@ func main() {
 				"key": components.CreateCustomerMetadataStr(
 					"<value>",
 				),
-				"key1": components.CreateCustomerMetadataStr(
-					"<value>",
+				"key1": components.CreateCustomerMetadataInteger(
+					790078,
 				),
 			},
 		},
@@ -321,7 +315,10 @@ func main() {
 		polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
 	)
 
-	res, err := s.ExternalOrganizations.List(ctx, operations.ExternalOrganizationsListRequest{})
+	res, err := s.ExternalOrganizations.List(ctx, operations.ExternalOrganizationsListRequest{
+		Page:  polargo.Int64(1),
+		Limit: polargo.Int64(10),
+	})
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -521,6 +518,11 @@ func main() {
 * [Update](docs/sdks/products/README.md#update) - Update Product
 * [UpdateBenefits](docs/sdks/products/README.md#updatebenefits) - Update Product Benefits
 
+### [Refunds](docs/sdks/refunds/README.md)
+
+* [List](docs/sdks/refunds/README.md#list) - List Refunds
+* [Create](docs/sdks/refunds/README.md#create) - Create Refund
+
 ### [Repositories](docs/sdks/repositories/README.md)
 
 * [List](docs/sdks/repositories/README.md#list) - List Repositories
@@ -563,7 +565,10 @@ func main() {
 		polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
 	)
 
-	res, err := s.ExternalOrganizations.List(ctx, operations.ExternalOrganizationsListRequest{})
+	res, err := s.ExternalOrganizations.List(ctx, operations.ExternalOrganizationsListRequest{
+		Page:  polargo.Int64(1),
+		Limit: polargo.Int64(10),
+	})
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -613,7 +618,10 @@ func main() {
 		polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
 	)
 
-	res, err := s.ExternalOrganizations.List(ctx, operations.ExternalOrganizationsListRequest{}, operations.WithRetries(
+	res, err := s.ExternalOrganizations.List(ctx, operations.ExternalOrganizationsListRequest{
+		Page:  polargo.Int64(1),
+		Limit: polargo.Int64(10),
+	}, operations.WithRetries(
 		retry.Config{
 			Strategy: "backoff",
 			Backoff: &retry.BackoffStrategy{
@@ -677,7 +685,10 @@ func main() {
 		polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
 	)
 
-	res, err := s.ExternalOrganizations.List(ctx, operations.ExternalOrganizationsListRequest{})
+	res, err := s.ExternalOrganizations.List(ctx, operations.ExternalOrganizationsListRequest{
+		Page:  polargo.Int64(1),
+		Limit: polargo.Int64(10),
+	})
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -737,7 +748,10 @@ func main() {
 		polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
 	)
 
-	res, err := s.ExternalOrganizations.List(ctx, operations.ExternalOrganizationsListRequest{})
+	res, err := s.ExternalOrganizations.List(ctx, operations.ExternalOrganizationsListRequest{
+		Page:  polargo.Int64(1),
+		Limit: polargo.Int64(10),
+	})
 	if err != nil {
 
 		var e *apierrors.HTTPValidationError
@@ -790,7 +804,10 @@ func main() {
 		polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
 	)
 
-	res, err := s.ExternalOrganizations.List(ctx, operations.ExternalOrganizationsListRequest{})
+	res, err := s.ExternalOrganizations.List(ctx, operations.ExternalOrganizationsListRequest{
+		Page:  polargo.Int64(1),
+		Limit: polargo.Int64(10),
+	})
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -835,7 +852,10 @@ func main() {
 		polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
 	)
 
-	res, err := s.ExternalOrganizations.List(ctx, operations.ExternalOrganizationsListRequest{})
+	res, err := s.ExternalOrganizations.List(ctx, operations.ExternalOrganizationsListRequest{
+		Page:  polargo.Int64(1),
+		Limit: polargo.Int64(10),
+	})
 	if err != nil {
 		log.Fatal(err)
 	}

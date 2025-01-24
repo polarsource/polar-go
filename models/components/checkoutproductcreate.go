@@ -6,6 +6,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
+	"time"
 )
 
 type CheckoutProductCreateMetadataType string
@@ -93,8 +94,111 @@ func (u CheckoutProductCreateMetadata) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type CheckoutProductCreateMetadata: all fields are null")
 }
 
-// CheckoutProductCreateCustomFieldData - Key-value object storing custom field values.
+type CheckoutProductCreateCustomFieldDataType string
+
+const (
+	CheckoutProductCreateCustomFieldDataTypeStr      CheckoutProductCreateCustomFieldDataType = "str"
+	CheckoutProductCreateCustomFieldDataTypeInteger  CheckoutProductCreateCustomFieldDataType = "integer"
+	CheckoutProductCreateCustomFieldDataTypeBoolean  CheckoutProductCreateCustomFieldDataType = "boolean"
+	CheckoutProductCreateCustomFieldDataTypeDateTime CheckoutProductCreateCustomFieldDataType = "date-time"
+)
+
 type CheckoutProductCreateCustomFieldData struct {
+	Str      *string    `queryParam:"inline"`
+	Integer  *int64     `queryParam:"inline"`
+	Boolean  *bool      `queryParam:"inline"`
+	DateTime *time.Time `queryParam:"inline"`
+
+	Type CheckoutProductCreateCustomFieldDataType
+}
+
+func CreateCheckoutProductCreateCustomFieldDataStr(str string) CheckoutProductCreateCustomFieldData {
+	typ := CheckoutProductCreateCustomFieldDataTypeStr
+
+	return CheckoutProductCreateCustomFieldData{
+		Str:  &str,
+		Type: typ,
+	}
+}
+
+func CreateCheckoutProductCreateCustomFieldDataInteger(integer int64) CheckoutProductCreateCustomFieldData {
+	typ := CheckoutProductCreateCustomFieldDataTypeInteger
+
+	return CheckoutProductCreateCustomFieldData{
+		Integer: &integer,
+		Type:    typ,
+	}
+}
+
+func CreateCheckoutProductCreateCustomFieldDataBoolean(boolean bool) CheckoutProductCreateCustomFieldData {
+	typ := CheckoutProductCreateCustomFieldDataTypeBoolean
+
+	return CheckoutProductCreateCustomFieldData{
+		Boolean: &boolean,
+		Type:    typ,
+	}
+}
+
+func CreateCheckoutProductCreateCustomFieldDataDateTime(dateTime time.Time) CheckoutProductCreateCustomFieldData {
+	typ := CheckoutProductCreateCustomFieldDataTypeDateTime
+
+	return CheckoutProductCreateCustomFieldData{
+		DateTime: &dateTime,
+		Type:     typ,
+	}
+}
+
+func (u *CheckoutProductCreateCustomFieldData) UnmarshalJSON(data []byte) error {
+
+	var str string = ""
+	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
+		u.Str = &str
+		u.Type = CheckoutProductCreateCustomFieldDataTypeStr
+		return nil
+	}
+
+	var integer int64 = int64(0)
+	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
+		u.Integer = &integer
+		u.Type = CheckoutProductCreateCustomFieldDataTypeInteger
+		return nil
+	}
+
+	var boolean bool = false
+	if err := utils.UnmarshalJSON(data, &boolean, "", true, true); err == nil {
+		u.Boolean = &boolean
+		u.Type = CheckoutProductCreateCustomFieldDataTypeBoolean
+		return nil
+	}
+
+	var dateTime time.Time = time.Time{}
+	if err := utils.UnmarshalJSON(data, &dateTime, "", true, true); err == nil {
+		u.DateTime = &dateTime
+		u.Type = CheckoutProductCreateCustomFieldDataTypeDateTime
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for CheckoutProductCreateCustomFieldData", string(data))
+}
+
+func (u CheckoutProductCreateCustomFieldData) MarshalJSON() ([]byte, error) {
+	if u.Str != nil {
+		return utils.MarshalJSON(u.Str, "", true)
+	}
+
+	if u.Integer != nil {
+		return utils.MarshalJSON(u.Integer, "", true)
+	}
+
+	if u.Boolean != nil {
+		return utils.MarshalJSON(u.Boolean, "", true)
+	}
+
+	if u.DateTime != nil {
+		return utils.MarshalJSON(u.DateTime, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type CheckoutProductCreateCustomFieldData: all fields are null")
 }
 
 type CheckoutProductCreateCustomerMetadataType string
@@ -199,7 +303,7 @@ type CheckoutProductCreate struct {
 	// You can store up to **50 key-value pairs**.
 	Metadata map[string]CheckoutProductCreateMetadata `json:"metadata,omitempty"`
 	// Key-value object storing custom field values.
-	CustomFieldData *CheckoutProductCreateCustomFieldData `json:"custom_field_data,omitempty"`
+	CustomFieldData map[string]CheckoutProductCreateCustomFieldData `json:"custom_field_data,omitempty"`
 	// ID of the discount to apply to the checkout.
 	DiscountID *string `json:"discount_id,omitempty"`
 	// Whether to allow the customer to apply discount codes. If you apply a discount through `discount_id`, it'll still be applied, but the customer won't be able to change it.
@@ -251,7 +355,7 @@ func (o *CheckoutProductCreate) GetMetadata() map[string]CheckoutProductCreateMe
 	return o.Metadata
 }
 
-func (o *CheckoutProductCreate) GetCustomFieldData() *CheckoutProductCreateCustomFieldData {
+func (o *CheckoutProductCreate) GetCustomFieldData() map[string]CheckoutProductCreateCustomFieldData {
 	if o == nil {
 		return nil
 	}

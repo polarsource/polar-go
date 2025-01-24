@@ -35,7 +35,10 @@ func main() {
         polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )
 
-    res, err := s.CustomFields.List(ctx, operations.CustomFieldsListRequest{})
+    res, err := s.CustomFields.List(ctx, operations.CustomFieldsListRequest{
+        Page: polargo.Int64(1),
+        Limit: polargo.Int64(10),
+    })
     if err != nil {
         log.Fatal(err)
     }
@@ -100,7 +103,7 @@ func main() {
         polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )
 
-    res, err := s.CustomFields.Create(ctx, components.CreateCustomFieldCreateCustomFieldCreateSelect(
+    res, err := s.CustomFields.Create(ctx, components.CreateCustomFieldCreateSelect(
         components.CustomFieldCreateSelect{
             Slug: "<value>",
             Name: "<value>",
@@ -219,7 +222,7 @@ func main() {
         polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )
 
-    res, err := s.CustomFields.Update(ctx, "<value>", components.CreateCustomFieldUpdateCustomFieldUpdateNumber(
+    res, err := s.CustomFields.Update(ctx, "<value>", components.CreateCustomFieldUpdateNumber(
         components.CustomFieldUpdateNumber{},
     ))
     if err != nil {

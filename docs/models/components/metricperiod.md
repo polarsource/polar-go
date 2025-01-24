@@ -8,6 +8,7 @@
 | `Timestamp`                               | [time.Time](https://pkg.go.dev/time#Time) | :heavy_check_mark:                        | Timestamp of this period data.            |
 | `Orders`                                  | *int64*                                   | :heavy_check_mark:                        | N/A                                       |
 | `Revenue`                                 | *int64*                                   | :heavy_check_mark:                        | N/A                                       |
+| `CumulativeRevenue`                       | *int64*                                   | :heavy_check_mark:                        | N/A                                       |
 | `AverageOrderValue`                       | *int64*                                   | :heavy_check_mark:                        | N/A                                       |
 | `OneTimeProducts`                         | *int64*                                   | :heavy_check_mark:                        | N/A                                       |
 | `OneTimeProductsRevenue`                  | *int64*                                   | :heavy_check_mark:                        | N/A                                       |

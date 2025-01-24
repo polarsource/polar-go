@@ -33,7 +33,10 @@ func main() {
         polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )
 
-    res, err := s.CustomerPortal.BenefitGrants.List(ctx, operations.CustomerPortalBenefitGrantsListRequest{})
+    res, err := s.CustomerPortal.BenefitGrants.List(ctx, operations.CustomerPortalBenefitGrantsListRequest{
+        Page: polargo.Int64(1),
+        Limit: polargo.Int64(10),
+    })
     if err != nil {
         log.Fatal(err)
     }
@@ -151,7 +154,7 @@ func main() {
         polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )
 
-    res, err := s.CustomerPortal.BenefitGrants.Update(ctx, "<value>", components.CreateCustomerBenefitGrantUpdateCustomerBenefitGrantDownloadablesUpdate(
+    res, err := s.CustomerPortal.BenefitGrants.Update(ctx, "<value>", components.CreateCustomerBenefitGrantUpdateDownloadables(
         components.CustomerBenefitGrantDownloadablesUpdate{},
     ))
     if err != nil {

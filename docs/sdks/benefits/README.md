@@ -35,7 +35,7 @@ func main() {
         polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )
 
-    res, err := s.Benefits.List(ctx, nil, nil, nil, nil)
+    res, err := s.Benefits.List(ctx, nil, nil, polargo.Int64(1), polargo.Int64(10))
     if err != nil {
         log.Fatal(err)
     }
@@ -103,7 +103,7 @@ func main() {
         polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )
 
-    res, err := s.Benefits.Create(ctx, components.CreateBenefitCreateBenefitDownloadablesCreate(
+    res, err := s.Benefits.Create(ctx, components.CreateBenefitCreateDownloadables(
         components.BenefitDownloadablesCreate{
             Description: "yuck forager beneath please shadowy foodstuffs welcome",
             Properties: components.BenefitDownloadablesCreateProperties{
@@ -208,6 +208,7 @@ import(
 	"os"
 	polargo "github.com/polarsource/polar-go"
 	"github.com/polarsource/polar-go/models/components"
+	"github.com/polarsource/polar-go/models/operations"
 	"log"
 )
 
@@ -344,6 +345,8 @@ func main() {
 
     res, err := s.Benefits.Grants(ctx, operations.BenefitsGrantsRequest{
         ID: "<value>",
+        Page: polargo.Int64(1),
+        Limit: polargo.Int64(10),
     })
     if err != nil {
         log.Fatal(err)

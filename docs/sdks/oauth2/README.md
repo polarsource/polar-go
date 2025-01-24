@@ -75,6 +75,7 @@ import(
 	"os"
 	polargo "github.com/polarsource/polar-go"
 	"github.com/polarsource/polar-go/models/components"
+	"github.com/polarsource/polar-go/models/operations"
 	"log"
 )
 
@@ -85,7 +86,7 @@ func main() {
         polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )
 
-    res, err := s.Oauth2.Token(ctx, operations.CreateOauth2RequestTokenRequestBodyOnev11oauth21tokenPostXComponentsAuthorizationCodeTokenRequest(
+    res, err := s.Oauth2.Token(ctx, operations.CreateOauth2RequestTokenRequestBodyAuthorizationCode(
         components.Onev11oauth21tokenPostXComponentsAuthorizationCodeTokenRequest{
             ClientID: "<id>",
             ClientSecret: "<value>",

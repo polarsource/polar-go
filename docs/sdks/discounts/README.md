@@ -35,7 +35,10 @@ func main() {
         polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )
 
-    res, err := s.Discounts.List(ctx, operations.DiscountsListRequest{})
+    res, err := s.Discounts.List(ctx, operations.DiscountsListRequest{
+        Page: polargo.Int64(1),
+        Limit: polargo.Int64(10),
+    })
     if err != nil {
         log.Fatal(err)
     }
@@ -106,6 +109,7 @@ func main() {
             DurationInMonths: 417458,
             Type: components.DiscountTypeFixed,
             Amount: 69025,
+            Currency: polargo.String("usd"),
             Name: "<value>",
         },
     ))
@@ -214,7 +218,9 @@ func main() {
         polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )
 
-    res, err := s.Discounts.Update(ctx, "<value>", components.DiscountUpdate{})
+    res, err := s.Discounts.Update(ctx, "<value>", components.DiscountUpdate{
+        Currency: polargo.String("usd"),
+    })
     if err != nil {
         log.Fatal(err)
     }

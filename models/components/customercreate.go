@@ -8,6 +8,91 @@ import (
 	"github.com/polarsource/polar-go/internal/utils"
 )
 
+type CustomerCreateMetadataType string
+
+const (
+	CustomerCreateMetadataTypeStr     CustomerCreateMetadataType = "str"
+	CustomerCreateMetadataTypeInteger CustomerCreateMetadataType = "integer"
+	CustomerCreateMetadataTypeBoolean CustomerCreateMetadataType = "boolean"
+)
+
+type CustomerCreateMetadata struct {
+	Str     *string `queryParam:"inline"`
+	Integer *int64  `queryParam:"inline"`
+	Boolean *bool   `queryParam:"inline"`
+
+	Type CustomerCreateMetadataType
+}
+
+func CreateCustomerCreateMetadataStr(str string) CustomerCreateMetadata {
+	typ := CustomerCreateMetadataTypeStr
+
+	return CustomerCreateMetadata{
+		Str:  &str,
+		Type: typ,
+	}
+}
+
+func CreateCustomerCreateMetadataInteger(integer int64) CustomerCreateMetadata {
+	typ := CustomerCreateMetadataTypeInteger
+
+	return CustomerCreateMetadata{
+		Integer: &integer,
+		Type:    typ,
+	}
+}
+
+func CreateCustomerCreateMetadataBoolean(boolean bool) CustomerCreateMetadata {
+	typ := CustomerCreateMetadataTypeBoolean
+
+	return CustomerCreateMetadata{
+		Boolean: &boolean,
+		Type:    typ,
+	}
+}
+
+func (u *CustomerCreateMetadata) UnmarshalJSON(data []byte) error {
+
+	var str string = ""
+	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
+		u.Str = &str
+		u.Type = CustomerCreateMetadataTypeStr
+		return nil
+	}
+
+	var integer int64 = int64(0)
+	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
+		u.Integer = &integer
+		u.Type = CustomerCreateMetadataTypeInteger
+		return nil
+	}
+
+	var boolean bool = false
+	if err := utils.UnmarshalJSON(data, &boolean, "", true, true); err == nil {
+		u.Boolean = &boolean
+		u.Type = CustomerCreateMetadataTypeBoolean
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for CustomerCreateMetadata", string(data))
+}
+
+func (u CustomerCreateMetadata) MarshalJSON() ([]byte, error) {
+	if u.Str != nil {
+		return utils.MarshalJSON(u.Str, "", true)
+	}
+
+	if u.Integer != nil {
+		return utils.MarshalJSON(u.Integer, "", true)
+	}
+
+	if u.Boolean != nil {
+		return utils.MarshalJSON(u.Boolean, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type CustomerCreateMetadata: all fields are null")
+}
+
 type CustomerCreateTaxIDType string
 
 const (
@@ -72,12 +157,30 @@ func (u CustomerCreateTaxID) MarshalJSON() ([]byte, error) {
 }
 
 type CustomerCreate struct {
-	Email          string                `json:"email"`
-	Name           *string               `json:"name,omitempty"`
-	BillingAddress *Address              `json:"billing_address,omitempty"`
-	TaxID          []CustomerCreateTaxID `json:"tax_id,omitempty"`
+	// Key-value object allowing you to store additional information.
+	//
+	// The key must be a string with a maximum length of **40 characters**.
+	// The value must be either:
+	//
+	// * A string with a maximum length of **500 characters**
+	// * An integer
+	// * A boolean
+	//
+	// You can store up to **50 key-value pairs**.
+	Metadata       map[string]CustomerCreateMetadata `json:"metadata,omitempty"`
+	Email          string                            `json:"email"`
+	Name           *string                           `json:"name,omitempty"`
+	BillingAddress *Address                          `json:"billing_address,omitempty"`
+	TaxID          []CustomerCreateTaxID             `json:"tax_id,omitempty"`
 	// The ID of the organization owning the customer. **Required unless you use an organization token.**
 	OrganizationID *string `json:"organization_id,omitempty"`
+}
+
+func (o *CustomerCreate) GetMetadata() map[string]CustomerCreateMetadata {
+	if o == nil {
+		return nil
+	}
+	return o.Metadata
 }
 
 func (o *CustomerCreate) GetEmail() string {

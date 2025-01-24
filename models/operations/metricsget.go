@@ -202,6 +202,70 @@ func (u QueryParamProductPriceTypeFilter) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type QueryParamProductPriceTypeFilter: all fields are null")
 }
 
+type MetricsGetQueryParamCustomerIDFilterType string
+
+const (
+	MetricsGetQueryParamCustomerIDFilterTypeStr        MetricsGetQueryParamCustomerIDFilterType = "str"
+	MetricsGetQueryParamCustomerIDFilterTypeArrayOfStr MetricsGetQueryParamCustomerIDFilterType = "arrayOfStr"
+)
+
+// MetricsGetQueryParamCustomerIDFilter - Filter by customer ID.
+type MetricsGetQueryParamCustomerIDFilter struct {
+	Str        *string  `queryParam:"inline"`
+	ArrayOfStr []string `queryParam:"inline"`
+
+	Type MetricsGetQueryParamCustomerIDFilterType
+}
+
+func CreateMetricsGetQueryParamCustomerIDFilterStr(str string) MetricsGetQueryParamCustomerIDFilter {
+	typ := MetricsGetQueryParamCustomerIDFilterTypeStr
+
+	return MetricsGetQueryParamCustomerIDFilter{
+		Str:  &str,
+		Type: typ,
+	}
+}
+
+func CreateMetricsGetQueryParamCustomerIDFilterArrayOfStr(arrayOfStr []string) MetricsGetQueryParamCustomerIDFilter {
+	typ := MetricsGetQueryParamCustomerIDFilterTypeArrayOfStr
+
+	return MetricsGetQueryParamCustomerIDFilter{
+		ArrayOfStr: arrayOfStr,
+		Type:       typ,
+	}
+}
+
+func (u *MetricsGetQueryParamCustomerIDFilter) UnmarshalJSON(data []byte) error {
+
+	var str string = ""
+	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
+		u.Str = &str
+		u.Type = MetricsGetQueryParamCustomerIDFilterTypeStr
+		return nil
+	}
+
+	var arrayOfStr []string = []string{}
+	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, true); err == nil {
+		u.ArrayOfStr = arrayOfStr
+		u.Type = MetricsGetQueryParamCustomerIDFilterTypeArrayOfStr
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for MetricsGetQueryParamCustomerIDFilter", string(data))
+}
+
+func (u MetricsGetQueryParamCustomerIDFilter) MarshalJSON() ([]byte, error) {
+	if u.Str != nil {
+		return utils.MarshalJSON(u.Str, "", true)
+	}
+
+	if u.ArrayOfStr != nil {
+		return utils.MarshalJSON(u.ArrayOfStr, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type MetricsGetQueryParamCustomerIDFilter: all fields are null")
+}
+
 type MetricsGetRequest struct {
 	// Start date.
 	StartDate types.Date `queryParam:"style=form,explode=true,name=start_date"`
@@ -215,6 +279,8 @@ type MetricsGetRequest struct {
 	ProductID *MetricsGetQueryParamProductIDFilter `queryParam:"style=form,explode=true,name=product_id"`
 	// Filter by product price type. `recurring` will filter data corresponding to subscriptions creations or renewals. `one_time` will filter data corresponding to one-time purchases.
 	ProductPriceType *QueryParamProductPriceTypeFilter `queryParam:"style=form,explode=true,name=product_price_type"`
+	// Filter by customer ID.
+	CustomerID *MetricsGetQueryParamCustomerIDFilter `queryParam:"style=form,explode=true,name=customer_id"`
 }
 
 func (m MetricsGetRequest) MarshalJSON() ([]byte, error) {
@@ -268,6 +334,13 @@ func (o *MetricsGetRequest) GetProductPriceType() *QueryParamProductPriceTypeFil
 		return nil
 	}
 	return o.ProductPriceType
+}
+
+func (o *MetricsGetRequest) GetCustomerID() *MetricsGetQueryParamCustomerIDFilter {
+	if o == nil {
+		return nil
+	}
+	return o.CustomerID
 }
 
 type MetricsGetResponse struct {

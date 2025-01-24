@@ -8,6 +8,8 @@ type Metrics struct {
 	// Information about a metric.
 	Revenue Metric `json:"revenue"`
 	// Information about a metric.
+	CumulativeRevenue Metric `json:"cumulative_revenue"`
+	// Information about a metric.
 	AverageOrderValue Metric `json:"average_order_value"`
 	// Information about a metric.
 	OneTimeProducts Metric `json:"one_time_products"`
@@ -39,6 +41,13 @@ func (o *Metrics) GetRevenue() Metric {
 		return Metric{}
 	}
 	return o.Revenue
+}
+
+func (o *Metrics) GetCumulativeRevenue() Metric {
+	if o == nil {
+		return Metric{}
+	}
+	return o.CumulativeRevenue
 }
 
 func (o *Metrics) GetAverageOrderValue() Metric {

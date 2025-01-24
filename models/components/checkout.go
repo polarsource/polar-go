@@ -9,11 +9,111 @@ import (
 	"time"
 )
 
-// CheckoutCustomFieldData - Key-value object storing custom field values.
+type CheckoutCustomFieldDataType string
+
+const (
+	CheckoutCustomFieldDataTypeStr      CheckoutCustomFieldDataType = "str"
+	CheckoutCustomFieldDataTypeInteger  CheckoutCustomFieldDataType = "integer"
+	CheckoutCustomFieldDataTypeBoolean  CheckoutCustomFieldDataType = "boolean"
+	CheckoutCustomFieldDataTypeDateTime CheckoutCustomFieldDataType = "date-time"
+)
+
 type CheckoutCustomFieldData struct {
+	Str      *string    `queryParam:"inline"`
+	Integer  *int64     `queryParam:"inline"`
+	Boolean  *bool      `queryParam:"inline"`
+	DateTime *time.Time `queryParam:"inline"`
+
+	Type CheckoutCustomFieldDataType
 }
 
-type PaymentProcessorMetadata struct {
+func CreateCheckoutCustomFieldDataStr(str string) CheckoutCustomFieldData {
+	typ := CheckoutCustomFieldDataTypeStr
+
+	return CheckoutCustomFieldData{
+		Str:  &str,
+		Type: typ,
+	}
+}
+
+func CreateCheckoutCustomFieldDataInteger(integer int64) CheckoutCustomFieldData {
+	typ := CheckoutCustomFieldDataTypeInteger
+
+	return CheckoutCustomFieldData{
+		Integer: &integer,
+		Type:    typ,
+	}
+}
+
+func CreateCheckoutCustomFieldDataBoolean(boolean bool) CheckoutCustomFieldData {
+	typ := CheckoutCustomFieldDataTypeBoolean
+
+	return CheckoutCustomFieldData{
+		Boolean: &boolean,
+		Type:    typ,
+	}
+}
+
+func CreateCheckoutCustomFieldDataDateTime(dateTime time.Time) CheckoutCustomFieldData {
+	typ := CheckoutCustomFieldDataTypeDateTime
+
+	return CheckoutCustomFieldData{
+		DateTime: &dateTime,
+		Type:     typ,
+	}
+}
+
+func (u *CheckoutCustomFieldData) UnmarshalJSON(data []byte) error {
+
+	var str string = ""
+	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
+		u.Str = &str
+		u.Type = CheckoutCustomFieldDataTypeStr
+		return nil
+	}
+
+	var integer int64 = int64(0)
+	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
+		u.Integer = &integer
+		u.Type = CheckoutCustomFieldDataTypeInteger
+		return nil
+	}
+
+	var boolean bool = false
+	if err := utils.UnmarshalJSON(data, &boolean, "", true, true); err == nil {
+		u.Boolean = &boolean
+		u.Type = CheckoutCustomFieldDataTypeBoolean
+		return nil
+	}
+
+	var dateTime time.Time = time.Time{}
+	if err := utils.UnmarshalJSON(data, &dateTime, "", true, true); err == nil {
+		u.DateTime = &dateTime
+		u.Type = CheckoutCustomFieldDataTypeDateTime
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for CheckoutCustomFieldData", string(data))
+}
+
+func (u CheckoutCustomFieldData) MarshalJSON() ([]byte, error) {
+	if u.Str != nil {
+		return utils.MarshalJSON(u.Str, "", true)
+	}
+
+	if u.Integer != nil {
+		return utils.MarshalJSON(u.Integer, "", true)
+	}
+
+	if u.Boolean != nil {
+		return utils.MarshalJSON(u.Boolean, "", true)
+	}
+
+	if u.DateTime != nil {
+		return utils.MarshalJSON(u.DateTime, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type CheckoutCustomFieldData: all fields are null")
 }
 
 type CheckoutMetadataType string
@@ -302,9 +402,9 @@ type Checkout struct {
 	// The ID of the object.
 	ID string `json:"id"`
 	// Key-value object storing custom field values.
-	CustomFieldData  *CheckoutCustomFieldData `json:"custom_field_data,omitempty"`
-	PaymentProcessor PaymentProcessor         `json:"payment_processor"`
-	Status           CheckoutStatus           `json:"status"`
+	CustomFieldData  map[string]CheckoutCustomFieldData `json:"custom_field_data,omitempty"`
+	PaymentProcessor PaymentProcessor                   `json:"payment_processor"`
+	Status           CheckoutStatus                     `json:"status"`
 	// Client secret used to update and complete the checkout session from the client.
 	ClientSecret string `json:"client_secret"`
 	// URL where the customer can access the checkout session.
@@ -341,14 +441,16 @@ type Checkout struct {
 	// Whether the checkout requires setting up a payment method, regardless of the amount, e.g. subscriptions that have first free cycles.
 	IsPaymentSetupRequired bool `json:"is_payment_setup_required"`
 	// Whether the checkout requires a payment form, whether because of a payment or payment method setup.
-	IsPaymentFormRequired    bool                        `json:"is_payment_form_required"`
-	CustomerID               *string                     `json:"customer_id"`
-	CustomerName             *string                     `json:"customer_name"`
+	IsPaymentFormRequired bool    `json:"is_payment_form_required"`
+	CustomerID            *string `json:"customer_id"`
+	// Name of the customer.
+	CustomerName *string `json:"customer_name"`
+	// Email address of the customer.
 	CustomerEmail            *string                     `json:"customer_email"`
 	CustomerIPAddress        *string                     `json:"customer_ip_address"`
 	CustomerBillingAddress   *Address                    `json:"customer_billing_address"`
 	CustomerTaxID            *string                     `json:"customer_tax_id"`
-	PaymentProcessorMetadata PaymentProcessorMetadata    `json:"payment_processor_metadata"`
+	PaymentProcessorMetadata map[string]string           `json:"payment_processor_metadata"`
 	Metadata                 map[string]CheckoutMetadata `json:"metadata"`
 	// Product data for a checkout session.
 	Product              CheckoutProduct             `json:"product"`
@@ -391,7 +493,7 @@ func (o *Checkout) GetID() string {
 	return o.ID
 }
 
-func (o *Checkout) GetCustomFieldData() *CheckoutCustomFieldData {
+func (o *Checkout) GetCustomFieldData() map[string]CheckoutCustomFieldData {
 	if o == nil {
 		return nil
 	}
@@ -587,9 +689,9 @@ func (o *Checkout) GetCustomerTaxID() *string {
 	return o.CustomerTaxID
 }
 
-func (o *Checkout) GetPaymentProcessorMetadata() PaymentProcessorMetadata {
+func (o *Checkout) GetPaymentProcessorMetadata() map[string]string {
 	if o == nil {
-		return PaymentProcessorMetadata{}
+		return map[string]string{}
 	}
 	return o.PaymentProcessorMetadata
 }

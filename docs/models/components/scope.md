@@ -33,6 +33,8 @@
 | `ScopeCustomersWrite`            | customers:write                  |
 | `ScopeCustomerSessionsWrite`     | customer_sessions:write          |
 | `ScopeOrdersRead`                | orders:read                      |
+| `ScopeRefundsRead`               | refunds:read                     |
+| `ScopeRefundsWrite`              | refunds:write                    |
 | `ScopeMetricsRead`               | metrics:read                     |
 | `ScopeWebhooksRead`              | webhooks:read                    |
 | `ScopeWebhooksWrite`             | webhooks:write                   |

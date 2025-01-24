@@ -2,13 +2,124 @@
 
 package components
 
+import (
+	"errors"
+	"fmt"
+	"github.com/polarsource/polar-go/internal/utils"
+	"time"
+)
+
+type CheckoutUpdatePublicCustomFieldDataType string
+
+const (
+	CheckoutUpdatePublicCustomFieldDataTypeStr      CheckoutUpdatePublicCustomFieldDataType = "str"
+	CheckoutUpdatePublicCustomFieldDataTypeInteger  CheckoutUpdatePublicCustomFieldDataType = "integer"
+	CheckoutUpdatePublicCustomFieldDataTypeBoolean  CheckoutUpdatePublicCustomFieldDataType = "boolean"
+	CheckoutUpdatePublicCustomFieldDataTypeDateTime CheckoutUpdatePublicCustomFieldDataType = "date-time"
+)
+
 type CheckoutUpdatePublicCustomFieldData struct {
+	Str      *string    `queryParam:"inline"`
+	Integer  *int64     `queryParam:"inline"`
+	Boolean  *bool      `queryParam:"inline"`
+	DateTime *time.Time `queryParam:"inline"`
+
+	Type CheckoutUpdatePublicCustomFieldDataType
+}
+
+func CreateCheckoutUpdatePublicCustomFieldDataStr(str string) CheckoutUpdatePublicCustomFieldData {
+	typ := CheckoutUpdatePublicCustomFieldDataTypeStr
+
+	return CheckoutUpdatePublicCustomFieldData{
+		Str:  &str,
+		Type: typ,
+	}
+}
+
+func CreateCheckoutUpdatePublicCustomFieldDataInteger(integer int64) CheckoutUpdatePublicCustomFieldData {
+	typ := CheckoutUpdatePublicCustomFieldDataTypeInteger
+
+	return CheckoutUpdatePublicCustomFieldData{
+		Integer: &integer,
+		Type:    typ,
+	}
+}
+
+func CreateCheckoutUpdatePublicCustomFieldDataBoolean(boolean bool) CheckoutUpdatePublicCustomFieldData {
+	typ := CheckoutUpdatePublicCustomFieldDataTypeBoolean
+
+	return CheckoutUpdatePublicCustomFieldData{
+		Boolean: &boolean,
+		Type:    typ,
+	}
+}
+
+func CreateCheckoutUpdatePublicCustomFieldDataDateTime(dateTime time.Time) CheckoutUpdatePublicCustomFieldData {
+	typ := CheckoutUpdatePublicCustomFieldDataTypeDateTime
+
+	return CheckoutUpdatePublicCustomFieldData{
+		DateTime: &dateTime,
+		Type:     typ,
+	}
+}
+
+func (u *CheckoutUpdatePublicCustomFieldData) UnmarshalJSON(data []byte) error {
+
+	var str string = ""
+	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
+		u.Str = &str
+		u.Type = CheckoutUpdatePublicCustomFieldDataTypeStr
+		return nil
+	}
+
+	var integer int64 = int64(0)
+	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
+		u.Integer = &integer
+		u.Type = CheckoutUpdatePublicCustomFieldDataTypeInteger
+		return nil
+	}
+
+	var boolean bool = false
+	if err := utils.UnmarshalJSON(data, &boolean, "", true, true); err == nil {
+		u.Boolean = &boolean
+		u.Type = CheckoutUpdatePublicCustomFieldDataTypeBoolean
+		return nil
+	}
+
+	var dateTime time.Time = time.Time{}
+	if err := utils.UnmarshalJSON(data, &dateTime, "", true, true); err == nil {
+		u.DateTime = &dateTime
+		u.Type = CheckoutUpdatePublicCustomFieldDataTypeDateTime
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for CheckoutUpdatePublicCustomFieldData", string(data))
+}
+
+func (u CheckoutUpdatePublicCustomFieldData) MarshalJSON() ([]byte, error) {
+	if u.Str != nil {
+		return utils.MarshalJSON(u.Str, "", true)
+	}
+
+	if u.Integer != nil {
+		return utils.MarshalJSON(u.Integer, "", true)
+	}
+
+	if u.Boolean != nil {
+		return utils.MarshalJSON(u.Boolean, "", true)
+	}
+
+	if u.DateTime != nil {
+		return utils.MarshalJSON(u.DateTime, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type CheckoutUpdatePublicCustomFieldData: all fields are null")
 }
 
 // CheckoutUpdatePublic - Update an existing checkout session using the client secret.
 type CheckoutUpdatePublic struct {
 	// Key-value object storing custom field values.
-	CustomFieldData *CheckoutUpdatePublicCustomFieldData `json:"custom_field_data,omitempty"`
+	CustomFieldData map[string]CheckoutUpdatePublicCustomFieldData `json:"custom_field_data,omitempty"`
 	// ID of the product price to checkout. Must correspond to a price linked to the same product.
 	ProductPriceID         *string  `json:"product_price_id,omitempty"`
 	Amount                 *int64   `json:"amount,omitempty"`
@@ -20,7 +131,7 @@ type CheckoutUpdatePublic struct {
 	DiscountCode *string `json:"discount_code,omitempty"`
 }
 
-func (o *CheckoutUpdatePublic) GetCustomFieldData() *CheckoutUpdatePublicCustomFieldData {
+func (o *CheckoutUpdatePublic) GetCustomFieldData() map[string]CheckoutUpdatePublicCustomFieldData {
 	if o == nil {
 		return nil
 	}

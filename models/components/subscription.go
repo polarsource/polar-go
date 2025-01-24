@@ -94,8 +94,111 @@ func (u Metadata) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type Metadata: all fields are null")
 }
 
-// SubscriptionCustomFieldData - Key-value object storing custom field values.
-type SubscriptionCustomFieldData struct {
+type CustomFieldDataType string
+
+const (
+	CustomFieldDataTypeStr      CustomFieldDataType = "str"
+	CustomFieldDataTypeInteger  CustomFieldDataType = "integer"
+	CustomFieldDataTypeBoolean  CustomFieldDataType = "boolean"
+	CustomFieldDataTypeDateTime CustomFieldDataType = "date-time"
+)
+
+type CustomFieldData struct {
+	Str      *string    `queryParam:"inline"`
+	Integer  *int64     `queryParam:"inline"`
+	Boolean  *bool      `queryParam:"inline"`
+	DateTime *time.Time `queryParam:"inline"`
+
+	Type CustomFieldDataType
+}
+
+func CreateCustomFieldDataStr(str string) CustomFieldData {
+	typ := CustomFieldDataTypeStr
+
+	return CustomFieldData{
+		Str:  &str,
+		Type: typ,
+	}
+}
+
+func CreateCustomFieldDataInteger(integer int64) CustomFieldData {
+	typ := CustomFieldDataTypeInteger
+
+	return CustomFieldData{
+		Integer: &integer,
+		Type:    typ,
+	}
+}
+
+func CreateCustomFieldDataBoolean(boolean bool) CustomFieldData {
+	typ := CustomFieldDataTypeBoolean
+
+	return CustomFieldData{
+		Boolean: &boolean,
+		Type:    typ,
+	}
+}
+
+func CreateCustomFieldDataDateTime(dateTime time.Time) CustomFieldData {
+	typ := CustomFieldDataTypeDateTime
+
+	return CustomFieldData{
+		DateTime: &dateTime,
+		Type:     typ,
+	}
+}
+
+func (u *CustomFieldData) UnmarshalJSON(data []byte) error {
+
+	var str string = ""
+	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
+		u.Str = &str
+		u.Type = CustomFieldDataTypeStr
+		return nil
+	}
+
+	var integer int64 = int64(0)
+	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
+		u.Integer = &integer
+		u.Type = CustomFieldDataTypeInteger
+		return nil
+	}
+
+	var boolean bool = false
+	if err := utils.UnmarshalJSON(data, &boolean, "", true, true); err == nil {
+		u.Boolean = &boolean
+		u.Type = CustomFieldDataTypeBoolean
+		return nil
+	}
+
+	var dateTime time.Time = time.Time{}
+	if err := utils.UnmarshalJSON(data, &dateTime, "", true, true); err == nil {
+		u.DateTime = &dateTime
+		u.Type = CustomFieldDataTypeDateTime
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for CustomFieldData", string(data))
+}
+
+func (u CustomFieldData) MarshalJSON() ([]byte, error) {
+	if u.Str != nil {
+		return utils.MarshalJSON(u.Str, "", true)
+	}
+
+	if u.Integer != nil {
+		return utils.MarshalJSON(u.Integer, "", true)
+	}
+
+	if u.Boolean != nil {
+		return utils.MarshalJSON(u.Boolean, "", true)
+	}
+
+	if u.DateTime != nil {
+		return utils.MarshalJSON(u.DateTime, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type CustomFieldData: all fields are null")
 }
 
 type SubscriptionDiscountType string
@@ -232,8 +335,8 @@ type Subscription struct {
 	CustomerCancellationComment *string                       `json:"customer_cancellation_comment"`
 	Metadata                    map[string]Metadata           `json:"metadata"`
 	// Key-value object storing custom field values.
-	CustomFieldData *SubscriptionCustomFieldData `json:"custom_field_data,omitempty"`
-	Customer        SubscriptionCustomer         `json:"customer"`
+	CustomFieldData map[string]CustomFieldData `json:"custom_field_data,omitempty"`
+	Customer        SubscriptionCustomer       `json:"customer"`
 	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
 	UserID string           `json:"user_id"`
 	User   SubscriptionUser `json:"user"`
@@ -408,7 +511,7 @@ func (o *Subscription) GetMetadata() map[string]Metadata {
 	return o.Metadata
 }
 
-func (o *Subscription) GetCustomFieldData() *SubscriptionCustomFieldData {
+func (o *Subscription) GetCustomFieldData() map[string]CustomFieldData {
 	if o == nil {
 		return nil
 	}

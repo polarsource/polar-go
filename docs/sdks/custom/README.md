@@ -37,7 +37,10 @@ func main() {
         polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )
 
-    res, err := s.Checkouts.Custom.List(ctx, operations.CheckoutsCustomListRequest{})
+    res, err := s.Checkouts.Custom.List(ctx, operations.CheckoutsCustomListRequest{
+        Page: polargo.Int64(1),
+        Limit: polargo.Int64(10),
+    })
     if err != nil {
         log.Fatal(err)
     }
@@ -104,6 +107,7 @@ func main() {
 
     res, err := s.Checkouts.Custom.Create(ctx, components.CreateCheckoutCreateCheckoutProductCreate(
         components.CheckoutProductCreate{
+            AllowDiscountCodes: polargo.Bool(true),
             ProductID: "<value>",
         },
     ))

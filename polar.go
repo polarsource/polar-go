@@ -91,6 +91,7 @@ type Polar struct {
 	Benefits              *Benefits
 	Products              *Products
 	Orders                *Orders
+	Refunds               *Refunds
 	Checkouts             *Checkouts
 	Files                 *Files
 	Metrics               *Metrics
@@ -180,9 +181,9 @@ func New(opts ...SDKOption) *Polar {
 		sdkConfiguration: sdkConfiguration{
 			Language:          "go",
 			OpenAPIDocVersion: "0.1.0",
-			SDKVersion:        "0.1.4",
-			GenVersion:        "2.493.19",
-			UserAgent:         "speakeasy-sdk/go 0.1.4 2.493.19 0.1.0 github.com/polarsource/polar-go",
+			SDKVersion:        "0.1.5",
+			GenVersion:        "2.495.1",
+			UserAgent:         "speakeasy-sdk/go 0.1.5 2.495.1 0.1.0 github.com/polarsource/polar-go",
 			Hooks:             hooks.New(),
 		},
 	}
@@ -226,6 +227,8 @@ func New(opts ...SDKOption) *Polar {
 	sdk.Products = newProducts(sdk.sdkConfiguration)
 
 	sdk.Orders = newOrders(sdk.sdkConfiguration)
+
+	sdk.Refunds = newRefunds(sdk.sdkConfiguration)
 
 	sdk.Checkouts = newCheckouts(sdk.sdkConfiguration)
 

@@ -34,7 +34,10 @@ func main() {
         polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )
 
-    res, err := s.CustomerPortal.Subscriptions.List(ctx, operations.CustomerPortalSubscriptionsListRequest{})
+    res, err := s.CustomerPortal.Subscriptions.List(ctx, operations.CustomerPortalSubscriptionsListRequest{
+        Page: polargo.Int64(1),
+        Limit: polargo.Int64(10),
+    })
     if err != nil {
         log.Fatal(err)
     }
@@ -113,7 +116,7 @@ func main() {
 | Parameter                                                | Type                                                     | Required                                                 | Description                                              |
 | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- |
 | `ctx`                                                    | [context.Context](https://pkg.go.dev/context#Context)    | :heavy_check_mark:                                       | The context to use for the request.                      |
-| `id`                                                     | *string*                                                 | :heavy_check_mark:                                       | Customer subscription ID.                                |
+| `id`                                                     | *string*                                                 | :heavy_check_mark:                                       | The subscription ID.                                     |
 | `opts`                                                   | [][operations.Option](../../models/operations/option.md) | :heavy_minus_sign:                                       | The options for this request.                            |
 
 ### Response
@@ -152,10 +155,8 @@ func main() {
         polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )
 
-    res, err := s.CustomerPortal.Subscriptions.Update(ctx, "<value>", components.CreateCustomerSubscriptionUpdateCustomerSubscriptionUpdatePrice(
-        components.CustomerSubscriptionUpdatePrice{
-            ProductPriceID: "<value>",
-        },
+    res, err := s.CustomerPortal.Subscriptions.Update(ctx, "<value>", components.CreateCustomerSubscriptionUpdateCustomerSubscriptionCancel(
+        components.CustomerSubscriptionCancel{},
     ))
     if err != nil {
         log.Fatal(err)
@@ -171,7 +172,7 @@ func main() {
 | Parameter                                                                                      | Type                                                                                           | Required                                                                                       | Description                                                                                    |
 | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
 | `ctx`                                                                                          | [context.Context](https://pkg.go.dev/context#Context)                                          | :heavy_check_mark:                                                                             | The context to use for the request.                                                            |
-| `id`                                                                                           | *string*                                                                                       | :heavy_check_mark:                                                                             | Customer subscription ID.                                                                      |
+| `id`                                                                                           | *string*                                                                                       | :heavy_check_mark:                                                                             | The subscription ID.                                                                           |
 | `customerSubscriptionUpdate`                                                                   | [components.CustomerSubscriptionUpdate](../../models/components/customersubscriptionupdate.md) | :heavy_check_mark:                                                                             | N/A                                                                                            |
 | `opts`                                                                                         | [][operations.Option](../../models/operations/option.md)                                       | :heavy_minus_sign:                                                                             | The options for this request.                                                                  |
 
@@ -226,7 +227,7 @@ func main() {
 | Parameter                                                | Type                                                     | Required                                                 | Description                                              |
 | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- |
 | `ctx`                                                    | [context.Context](https://pkg.go.dev/context#Context)    | :heavy_check_mark:                                       | The context to use for the request.                      |
-| `id`                                                     | *string*                                                 | :heavy_check_mark:                                       | Customer subscription ID.                                |
+| `id`                                                     | *string*                                                 | :heavy_check_mark:                                       | The subscription ID.                                     |
 | `opts`                                                   | [][operations.Option](../../models/operations/option.md) | :heavy_minus_sign:                                       | The options for this request.                            |
 
 ### Response

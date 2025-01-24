@@ -8,6 +8,91 @@ import (
 	"github.com/polarsource/polar-go/internal/utils"
 )
 
+type CustomerUpdateMetadataType string
+
+const (
+	CustomerUpdateMetadataTypeStr     CustomerUpdateMetadataType = "str"
+	CustomerUpdateMetadataTypeInteger CustomerUpdateMetadataType = "integer"
+	CustomerUpdateMetadataTypeBoolean CustomerUpdateMetadataType = "boolean"
+)
+
+type CustomerUpdateMetadata struct {
+	Str     *string `queryParam:"inline"`
+	Integer *int64  `queryParam:"inline"`
+	Boolean *bool   `queryParam:"inline"`
+
+	Type CustomerUpdateMetadataType
+}
+
+func CreateCustomerUpdateMetadataStr(str string) CustomerUpdateMetadata {
+	typ := CustomerUpdateMetadataTypeStr
+
+	return CustomerUpdateMetadata{
+		Str:  &str,
+		Type: typ,
+	}
+}
+
+func CreateCustomerUpdateMetadataInteger(integer int64) CustomerUpdateMetadata {
+	typ := CustomerUpdateMetadataTypeInteger
+
+	return CustomerUpdateMetadata{
+		Integer: &integer,
+		Type:    typ,
+	}
+}
+
+func CreateCustomerUpdateMetadataBoolean(boolean bool) CustomerUpdateMetadata {
+	typ := CustomerUpdateMetadataTypeBoolean
+
+	return CustomerUpdateMetadata{
+		Boolean: &boolean,
+		Type:    typ,
+	}
+}
+
+func (u *CustomerUpdateMetadata) UnmarshalJSON(data []byte) error {
+
+	var str string = ""
+	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
+		u.Str = &str
+		u.Type = CustomerUpdateMetadataTypeStr
+		return nil
+	}
+
+	var integer int64 = int64(0)
+	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
+		u.Integer = &integer
+		u.Type = CustomerUpdateMetadataTypeInteger
+		return nil
+	}
+
+	var boolean bool = false
+	if err := utils.UnmarshalJSON(data, &boolean, "", true, true); err == nil {
+		u.Boolean = &boolean
+		u.Type = CustomerUpdateMetadataTypeBoolean
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for CustomerUpdateMetadata", string(data))
+}
+
+func (u CustomerUpdateMetadata) MarshalJSON() ([]byte, error) {
+	if u.Str != nil {
+		return utils.MarshalJSON(u.Str, "", true)
+	}
+
+	if u.Integer != nil {
+		return utils.MarshalJSON(u.Integer, "", true)
+	}
+
+	if u.Boolean != nil {
+		return utils.MarshalJSON(u.Boolean, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type CustomerUpdateMetadata: all fields are null")
+}
+
 type CustomerUpdateTaxIDType string
 
 const (
@@ -72,10 +157,18 @@ func (u CustomerUpdateTaxID) MarshalJSON() ([]byte, error) {
 }
 
 type CustomerUpdate struct {
-	Email          *string               `json:"email,omitempty"`
-	Name           *string               `json:"name,omitempty"`
-	BillingAddress *Address              `json:"billing_address,omitempty"`
-	TaxID          []CustomerUpdateTaxID `json:"tax_id,omitempty"`
+	Metadata       map[string]CustomerUpdateMetadata `json:"metadata,omitempty"`
+	Email          *string                           `json:"email,omitempty"`
+	Name           *string                           `json:"name,omitempty"`
+	BillingAddress *Address                          `json:"billing_address,omitempty"`
+	TaxID          []CustomerUpdateTaxID             `json:"tax_id,omitempty"`
+}
+
+func (o *CustomerUpdate) GetMetadata() map[string]CustomerUpdateMetadata {
+	if o == nil {
+		return nil
+	}
+	return o.Metadata
 }
 
 func (o *CustomerUpdate) GetEmail() *string {

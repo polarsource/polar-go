@@ -35,8 +35,8 @@ func main() {
     )
 
     res, err := s.Metrics.Get(ctx, operations.MetricsGetRequest{
-        StartDate: types.MustDateFromString("2024-02-07"),
-        EndDate: types.MustDateFromString("2023-09-05"),
+        StartDate: types.MustDateFromString("2025-02-06"),
+        EndDate: types.MustDateFromString("2024-09-04"),
         Interval: components.IntervalWeek,
     })
     if err != nil {
