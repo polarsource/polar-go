@@ -1,0 +1,10 @@
+# OrganizationSubscriptionSettings
+
+
+## Fields
+
+| Field                                                                                                | Type                                                                                                 | Required                                                                                             | Description                                                                                          |
+| ---------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
+| `AllowMultipleSubscriptions`                                                                         | *bool*                                                                                               | :heavy_check_mark:                                                                                   | N/A                                                                                                  |
+| `AllowCustomerUpdates`                                                                               | *bool*                                                                                               | :heavy_check_mark:                                                                                   | N/A                                                                                                  |
+| `ProrationBehavior`                                                                                  | [components.SubscriptionProrationBehavior](../../models/components/subscriptionprorationbehavior.md) | :heavy_check_mark:                                                                                   | N/A                                                                                                  |

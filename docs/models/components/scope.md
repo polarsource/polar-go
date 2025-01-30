@@ -25,6 +25,8 @@
 | `ScopeProductsWrite`             | products:write                   |
 | `ScopeBenefitsRead`              | benefits:read                    |
 | `ScopeBenefitsWrite`             | benefits:write                   |
+| `ScopeEventsRead`                | events:read                      |
+| `ScopeEventsWrite`               | events:write                     |
 | `ScopeFilesRead`                 | files:read                       |
 | `ScopeFilesWrite`                | files:write                      |
 | `ScopeSubscriptionsRead`         | subscriptions:read               |

@@ -29,7 +29,8 @@ type Organization struct {
 	// Settings for the organization profile
 	ProfileSettings *OrganizationProfileSettings `json:"profile_settings"`
 	// Settings for the organization features
-	FeatureSettings *OrganizationFeatureSettings `json:"feature_settings"`
+	FeatureSettings      *OrganizationFeatureSettings     `json:"feature_settings"`
+	SubscriptionSettings OrganizationSubscriptionSettings `json:"subscription_settings"`
 }
 
 func (o Organization) MarshalJSON() ([]byte, error) {
@@ -160,4 +161,11 @@ func (o *Organization) GetFeatureSettings() *OrganizationFeatureSettings {
 		return nil
 	}
 	return o.FeatureSettings
+}
+
+func (o *Organization) GetSubscriptionSettings() OrganizationSubscriptionSettings {
+	if o == nil {
+		return OrganizationSubscriptionSettings{}
+	}
+	return o.SubscriptionSettings
 }

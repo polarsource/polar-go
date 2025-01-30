@@ -5,6 +5,8 @@ package components
 type SubscriptionUpdatePrice struct {
 	// Update subscription to another price.
 	ProductPriceID string `json:"product_price_id"`
+	// Determine how to handle the proration billing. If not provided, will use the default organization setting.
+	ProrationBehavior *SubscriptionProrationBehavior `json:"proration_behavior,omitempty"`
 }
 
 func (o *SubscriptionUpdatePrice) GetProductPriceID() string {
@@ -12,4 +14,11 @@ func (o *SubscriptionUpdatePrice) GetProductPriceID() string {
 		return ""
 	}
 	return o.ProductPriceID
+}
+
+func (o *SubscriptionUpdatePrice) GetProrationBehavior() *SubscriptionProrationBehavior {
+	if o == nil {
+		return nil
+	}
+	return o.ProrationBehavior
 }

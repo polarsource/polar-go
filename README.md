@@ -533,6 +533,7 @@ func main() {
 
 * [List](docs/sdks/subscriptions/README.md#list) - List Subscriptions
 * [Export](docs/sdks/subscriptions/README.md#export) - Export Subscriptions
+* [Get](docs/sdks/subscriptions/README.md#get) - Get Subscription
 * [Update](docs/sdks/subscriptions/README.md#update) - Update Subscription
 * [Revoke](docs/sdks/subscriptions/README.md#revoke) - Revoke Subscription
 

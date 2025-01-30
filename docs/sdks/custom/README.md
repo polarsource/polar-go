@@ -241,11 +241,12 @@ func main() {
 
 ### Errors
 
-| Error Type                    | Status Code                   | Content Type                  |
-| ----------------------------- | ----------------------------- | ----------------------------- |
-| apierrors.ResourceNotFound    | 404                           | application/json              |
-| apierrors.HTTPValidationError | 422                           | application/json              |
-| apierrors.APIError            | 4XX, 5XX                      | \*/\*                         |
+| Error Type                               | Status Code                              | Content Type                             |
+| ---------------------------------------- | ---------------------------------------- | ---------------------------------------- |
+| apierrors.AlreadyActiveSubscriptionError | 403                                      | application/json                         |
+| apierrors.ResourceNotFound               | 404                                      | application/json                         |
+| apierrors.HTTPValidationError            | 422                                      | application/json                         |
+| apierrors.APIError                       | 4XX, 5XX                                 | \*/\*                                    |
 
 ## ClientGet
 
@@ -349,11 +350,12 @@ func main() {
 
 ### Errors
 
-| Error Type                    | Status Code                   | Content Type                  |
-| ----------------------------- | ----------------------------- | ----------------------------- |
-| apierrors.ResourceNotFound    | 404                           | application/json              |
-| apierrors.HTTPValidationError | 422                           | application/json              |
-| apierrors.APIError            | 4XX, 5XX                      | \*/\*                         |
+| Error Type                               | Status Code                              | Content Type                             |
+| ---------------------------------------- | ---------------------------------------- | ---------------------------------------- |
+| apierrors.AlreadyActiveSubscriptionError | 403                                      | application/json                         |
+| apierrors.ResourceNotFound               | 404                                      | application/json                         |
+| apierrors.HTTPValidationError            | 422                                      | application/json                         |
+| apierrors.APIError                       | 4XX, 5XX                                 | \*/\*                                    |
 
 ## ClientConfirm
 
@@ -406,8 +408,9 @@ func main() {
 
 ### Errors
 
-| Error Type                    | Status Code                   | Content Type                  |
-| ----------------------------- | ----------------------------- | ----------------------------- |
-| apierrors.ResourceNotFound    | 404                           | application/json              |
-| apierrors.HTTPValidationError | 422                           | application/json              |
-| apierrors.APIError            | 4XX, 5XX                      | \*/\*                         |
+| Error Type                               | Status Code                              | Content Type                             |
+| ---------------------------------------- | ---------------------------------------- | ---------------------------------------- |
+| apierrors.AlreadyActiveSubscriptionError | 403                                      | application/json                         |
+| apierrors.ResourceNotFound               | 404                                      | application/json                         |
+| apierrors.HTTPValidationError            | 422                                      | application/json                         |
+| apierrors.APIError                       | 4XX, 5XX                                 | \*/\*                                    |

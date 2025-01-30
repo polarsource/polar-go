@@ -3,10 +3,11 @@
 package components
 
 type OrganizationCreate struct {
-	Name            string                       `json:"name"`
-	Slug            string                       `json:"slug"`
-	AvatarURL       *string                      `json:"avatar_url,omitempty"`
-	FeatureSettings *OrganizationFeatureSettings `json:"feature_settings,omitempty"`
+	Name                 string                            `json:"name"`
+	Slug                 string                            `json:"slug"`
+	AvatarURL            *string                           `json:"avatar_url,omitempty"`
+	FeatureSettings      *OrganizationFeatureSettings      `json:"feature_settings,omitempty"`
+	SubscriptionSettings *OrganizationSubscriptionSettings `json:"subscription_settings,omitempty"`
 }
 
 func (o *OrganizationCreate) GetName() string {
@@ -35,4 +36,11 @@ func (o *OrganizationCreate) GetFeatureSettings() *OrganizationFeatureSettings {
 		return nil
 	}
 	return o.FeatureSettings
+}
+
+func (o *OrganizationCreate) GetSubscriptionSettings() *OrganizationSubscriptionSettings {
+	if o == nil {
+		return nil
+	}
+	return o.SubscriptionSettings
 }

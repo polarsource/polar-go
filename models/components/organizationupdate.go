@@ -7,17 +7,18 @@ import (
 )
 
 type OrganizationUpdate struct {
-	Name                              *string                      `json:"name,omitempty"`
-	AvatarURL                         *string                      `json:"avatar_url,omitempty"`
-	DefaultUpfrontSplitToContributors *int64                       `json:"default_upfront_split_to_contributors,omitempty"`
-	PledgeBadgeShowAmount             *bool                        `default:"false" json:"pledge_badge_show_amount"`
-	BillingEmail                      *string                      `json:"billing_email,omitempty"`
-	DefaultBadgeCustomContent         *string                      `json:"default_badge_custom_content,omitempty"`
-	PledgeMinimumAmount               *int64                       `default:"2000" json:"pledge_minimum_amount"`
-	TotalMonthlySpendingLimit         *int64                       `json:"total_monthly_spending_limit,omitempty"`
-	PerUserMonthlySpendingLimit       *int64                       `json:"per_user_monthly_spending_limit,omitempty"`
-	ProfileSettings                   *OrganizationProfileSettings `json:"profile_settings,omitempty"`
-	FeatureSettings                   *OrganizationFeatureSettings `json:"feature_settings,omitempty"`
+	Name                              *string                           `json:"name,omitempty"`
+	AvatarURL                         *string                           `json:"avatar_url,omitempty"`
+	DefaultUpfrontSplitToContributors *int64                            `json:"default_upfront_split_to_contributors,omitempty"`
+	PledgeBadgeShowAmount             *bool                             `default:"false" json:"pledge_badge_show_amount"`
+	BillingEmail                      *string                           `json:"billing_email,omitempty"`
+	DefaultBadgeCustomContent         *string                           `json:"default_badge_custom_content,omitempty"`
+	PledgeMinimumAmount               *int64                            `default:"2000" json:"pledge_minimum_amount"`
+	TotalMonthlySpendingLimit         *int64                            `json:"total_monthly_spending_limit,omitempty"`
+	PerUserMonthlySpendingLimit       *int64                            `json:"per_user_monthly_spending_limit,omitempty"`
+	ProfileSettings                   *OrganizationProfileSettings      `json:"profile_settings,omitempty"`
+	FeatureSettings                   *OrganizationFeatureSettings      `json:"feature_settings,omitempty"`
+	SubscriptionSettings              *OrganizationSubscriptionSettings `json:"subscription_settings,omitempty"`
 }
 
 func (o OrganizationUpdate) MarshalJSON() ([]byte, error) {
@@ -106,4 +107,11 @@ func (o *OrganizationUpdate) GetFeatureSettings() *OrganizationFeatureSettings {
 		return nil
 	}
 	return o.FeatureSettings
+}
+
+func (o *OrganizationUpdate) GetSubscriptionSettings() *OrganizationSubscriptionSettings {
+	if o == nil {
+		return nil
+	}
+	return o.SubscriptionSettings
 }
