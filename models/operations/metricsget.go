@@ -272,7 +272,7 @@ type MetricsGetRequest struct {
 	// End date.
 	EndDate types.Date `queryParam:"style=form,explode=true,name=end_date"`
 	// Interval between two timestamps.
-	Interval components.Interval `queryParam:"style=form,explode=true,name=interval"`
+	Interval components.TimeInterval `queryParam:"style=form,explode=true,name=interval"`
 	// Filter by organization ID.
 	OrganizationID *MetricsGetQueryParamOrganizationIDFilter `queryParam:"style=form,explode=true,name=organization_id"`
 	// Filter by product ID.
@@ -308,9 +308,9 @@ func (o *MetricsGetRequest) GetEndDate() types.Date {
 	return o.EndDate
 }
 
-func (o *MetricsGetRequest) GetInterval() components.Interval {
+func (o *MetricsGetRequest) GetInterval() components.TimeInterval {
 	if o == nil {
-		return components.Interval("")
+		return components.TimeInterval("")
 	}
 	return o.Interval
 }

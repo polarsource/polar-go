@@ -32,10 +32,7 @@ func main() {
         polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )
 
-    res, err := s.Refunds.List(ctx, operations.RefundsListRequest{
-        Page: polargo.Int64(1),
-        Limit: polargo.Int64(10),
-    })
+    res, err := s.Refunds.List(ctx, operations.RefundsListRequest{})
     if err != nil {
         log.Fatal(err)
     }
@@ -104,7 +101,6 @@ func main() {
         OrderID: "<value>",
         Reason: components.RefundReasonCustomerRequest,
         Amount: 638424,
-        RevokeBenefits: polargo.Bool(false),
     })
     if err != nil {
         log.Fatal(err)

@@ -1,0 +1,11 @@
+# MeterUpdate
+
+
+## Fields
+
+| Field                                                                                       | Type                                                                                        | Required                                                                                    | Description                                                                                 |
+| ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- |
+| `Metadata`                                                                                  | map[string][components.MeterUpdateMetadata](../../models/components/meterupdatemetadata.md) | :heavy_minus_sign:                                                                          | N/A                                                                                         |
+| `Name`                                                                                      | **string*                                                                                   | :heavy_minus_sign:                                                                          | The name of the meter. Will be shown on customer's invoices and usage.                      |
+| `Filter`                                                                                    | [*components.Filter](../../models/components/filter.md)                                     | :heavy_minus_sign:                                                                          | The filter to apply on events that'll be used to calculate the meter.                       |
+| `Aggregation`                                                                               | [*components.Aggregation](../../models/components/aggregation.md)                           | :heavy_minus_sign:                                                                          | The aggregation to apply on the filtered events to calculate the meter.                     |

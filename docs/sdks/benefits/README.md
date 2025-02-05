@@ -35,7 +35,7 @@ func main() {
         polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )
 
-    res, err := s.Benefits.List(ctx, nil, nil, polargo.Int64(1), polargo.Int64(10))
+    res, err := s.Benefits.List(ctx, nil, nil, nil, nil)
     if err != nil {
         log.Fatal(err)
     }
@@ -345,8 +345,6 @@ func main() {
 
     res, err := s.Benefits.Grants(ctx, operations.BenefitsGrantsRequest{
         ID: "<value>",
-        Page: polargo.Int64(1),
-        Limit: polargo.Int64(10),
     })
     if err != nil {
         log.Fatal(err)

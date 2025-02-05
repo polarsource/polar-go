@@ -27,6 +27,8 @@
 | `ScopeBenefitsWrite`             | benefits:write                   |
 | `ScopeEventsRead`                | events:read                      |
 | `ScopeEventsWrite`               | events:write                     |
+| `ScopeMetersRead`                | meters:read                      |
+| `ScopeMetersWrite`               | meters:write                     |
 | `ScopeFilesRead`                 | files:read                       |
 | `ScopeFilesWrite`                | files:write                      |
 | `ScopeSubscriptionsRead`         | subscriptions:read               |

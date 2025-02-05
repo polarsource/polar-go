@@ -35,10 +35,7 @@ func main() {
         polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )
 
-    res, err := s.Products.List(ctx, operations.ProductsListRequest{
-        Page: polargo.Int64(1),
-        Limit: polargo.Int64(10),
-    })
+    res, err := s.Products.List(ctx, operations.ProductsListRequest{})
     if err != nil {
         log.Fatal(err)
     }

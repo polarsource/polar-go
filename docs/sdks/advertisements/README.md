@@ -31,7 +31,7 @@ func main() {
         polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )
 
-    res, err := s.Advertisements.List(ctx, "<value>", polargo.Int64(1), polargo.Int64(10), nil)
+    res, err := s.Advertisements.List(ctx, "<value>", nil, nil, nil)
     if err != nil {
         log.Fatal(err)
     }

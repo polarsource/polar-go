@@ -315,10 +315,7 @@ func main() {
 		polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
 	)
 
-	res, err := s.ExternalOrganizations.List(ctx, operations.ExternalOrganizationsListRequest{
-		Page:  polargo.Int64(1),
-		Limit: polargo.Int64(10),
-	})
+	res, err := s.ExternalOrganizations.List(ctx, operations.ExternalOrganizationsListRequest{})
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -456,6 +453,12 @@ func main() {
 * [Update](docs/sdks/discounts/README.md#update) - Update Discount
 * [Delete](docs/sdks/discounts/README.md#delete) - Delete Discount
 
+### [Events](docs/sdks/events/README.md)
+
+* [List](docs/sdks/events/README.md#list) - List Events
+* [Get](docs/sdks/events/README.md#get) - Get Event
+* [Ingest](docs/sdks/events/README.md#ingest) - Ingest Events
+
 ### [ExternalOrganizations](docs/sdks/externalorganizations/README.md)
 
 * [List](docs/sdks/externalorganizations/README.md#list) - List External Organizations
@@ -474,6 +477,15 @@ func main() {
 * [Get](docs/sdks/licensekeys/README.md#get) - Get License Key
 * [Update](docs/sdks/licensekeys/README.md#update) - Update License Key
 * [GetActivation](docs/sdks/licensekeys/README.md#getactivation) - Get Activation
+
+### [Meters](docs/sdks/meters/README.md)
+
+* [List](docs/sdks/meters/README.md#list) - List Meters
+* [Create](docs/sdks/meters/README.md#create) - Create Meter
+* [Get](docs/sdks/meters/README.md#get) - Get Meter
+* [Update](docs/sdks/meters/README.md#update) - Update Meter
+* [Events](docs/sdks/meters/README.md#events) - Get Meter Events
+* [Quantities](docs/sdks/meters/README.md#quantities) - Get Meter Quantities
 
 ### [Metrics](docs/sdks/metrics/README.md)
 
@@ -566,10 +578,7 @@ func main() {
 		polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
 	)
 
-	res, err := s.ExternalOrganizations.List(ctx, operations.ExternalOrganizationsListRequest{
-		Page:  polargo.Int64(1),
-		Limit: polargo.Int64(10),
-	})
+	res, err := s.ExternalOrganizations.List(ctx, operations.ExternalOrganizationsListRequest{})
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -619,10 +628,7 @@ func main() {
 		polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
 	)
 
-	res, err := s.ExternalOrganizations.List(ctx, operations.ExternalOrganizationsListRequest{
-		Page:  polargo.Int64(1),
-		Limit: polargo.Int64(10),
-	}, operations.WithRetries(
+	res, err := s.ExternalOrganizations.List(ctx, operations.ExternalOrganizationsListRequest{}, operations.WithRetries(
 		retry.Config{
 			Strategy: "backoff",
 			Backoff: &retry.BackoffStrategy{
@@ -686,10 +692,7 @@ func main() {
 		polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
 	)
 
-	res, err := s.ExternalOrganizations.List(ctx, operations.ExternalOrganizationsListRequest{
-		Page:  polargo.Int64(1),
-		Limit: polargo.Int64(10),
-	})
+	res, err := s.ExternalOrganizations.List(ctx, operations.ExternalOrganizationsListRequest{})
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -749,10 +752,7 @@ func main() {
 		polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
 	)
 
-	res, err := s.ExternalOrganizations.List(ctx, operations.ExternalOrganizationsListRequest{
-		Page:  polargo.Int64(1),
-		Limit: polargo.Int64(10),
-	})
+	res, err := s.ExternalOrganizations.List(ctx, operations.ExternalOrganizationsListRequest{})
 	if err != nil {
 
 		var e *apierrors.HTTPValidationError
@@ -805,10 +805,7 @@ func main() {
 		polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
 	)
 
-	res, err := s.ExternalOrganizations.List(ctx, operations.ExternalOrganizationsListRequest{
-		Page:  polargo.Int64(1),
-		Limit: polargo.Int64(10),
-	})
+	res, err := s.ExternalOrganizations.List(ctx, operations.ExternalOrganizationsListRequest{})
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -853,10 +850,7 @@ func main() {
 		polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
 	)
 
-	res, err := s.ExternalOrganizations.List(ctx, operations.ExternalOrganizationsListRequest{
-		Page:  polargo.Int64(1),
-		Limit: polargo.Int64(10),
-	})
+	res, err := s.ExternalOrganizations.List(ctx, operations.ExternalOrganizationsListRequest{})
 	if err != nil {
 		log.Fatal(err)
 	}
