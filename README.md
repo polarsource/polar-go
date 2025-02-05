@@ -369,18 +369,13 @@ func main() {
 
 ### [Checkouts](docs/sdks/checkouts/README.md)
 
-* [~~Create~~](docs/sdks/checkouts/README.md#create) - Create Checkout :warning: **Deprecated** Use [Create](docs/sdks/custom/README.md#create) instead.
-* [~~Get~~](docs/sdks/checkouts/README.md#get) - Get Checkout :warning: **Deprecated**
-
-#### [Checkouts.Custom](docs/sdks/custom/README.md)
-
-* [List](docs/sdks/custom/README.md#list) - List Checkout Sessions
-* [Create](docs/sdks/custom/README.md#create) - Create Checkout Session
-* [Get](docs/sdks/custom/README.md#get) - Get Checkout Session
-* [Update](docs/sdks/custom/README.md#update) - Update Checkout Session
-* [ClientGet](docs/sdks/custom/README.md#clientget) - Get Checkout Session from Client
-* [ClientUpdate](docs/sdks/custom/README.md#clientupdate) - Update Checkout Session from Client
-* [ClientConfirm](docs/sdks/custom/README.md#clientconfirm) - Confirm Checkout Session from Client
+* [List](docs/sdks/checkouts/README.md#list) - List Checkout Sessions
+* [Create](docs/sdks/checkouts/README.md#create) - Create Checkout Session
+* [Get](docs/sdks/checkouts/README.md#get) - Get Checkout Session
+* [Update](docs/sdks/checkouts/README.md#update) - Update Checkout Session
+* [ClientGet](docs/sdks/checkouts/README.md#clientget) - Get Checkout Session from Client
+* [ClientUpdate](docs/sdks/checkouts/README.md#clientupdate) - Update Checkout Session from Client
+* [ClientConfirm](docs/sdks/checkouts/README.md#clientconfirm) - Confirm Checkout Session from Client
 
 ### [CustomerPortal](docs/sdks/customerportal/README.md)
 

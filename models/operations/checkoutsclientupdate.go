@@ -6,40 +6,40 @@ import (
 	"github.com/polarsource/polar-go/models/components"
 )
 
-type CheckoutsCustomClientUpdateRequest struct {
+type CheckoutsClientUpdateRequest struct {
 	// The checkout session client secret.
 	ClientSecret         string                          `pathParam:"style=simple,explode=false,name=client_secret"`
 	CheckoutUpdatePublic components.CheckoutUpdatePublic `request:"mediaType=application/json"`
 }
 
-func (o *CheckoutsCustomClientUpdateRequest) GetClientSecret() string {
+func (o *CheckoutsClientUpdateRequest) GetClientSecret() string {
 	if o == nil {
 		return ""
 	}
 	return o.ClientSecret
 }
 
-func (o *CheckoutsCustomClientUpdateRequest) GetCheckoutUpdatePublic() components.CheckoutUpdatePublic {
+func (o *CheckoutsClientUpdateRequest) GetCheckoutUpdatePublic() components.CheckoutUpdatePublic {
 	if o == nil {
 		return components.CheckoutUpdatePublic{}
 	}
 	return o.CheckoutUpdatePublic
 }
 
-type CheckoutsCustomClientUpdateResponse struct {
+type CheckoutsClientUpdateResponse struct {
 	HTTPMeta components.HTTPMetadata `json:"-"`
 	// Checkout session updated.
 	CheckoutPublic *components.CheckoutPublic
 }
 
-func (o *CheckoutsCustomClientUpdateResponse) GetHTTPMeta() components.HTTPMetadata {
+func (o *CheckoutsClientUpdateResponse) GetHTTPMeta() components.HTTPMetadata {
 	if o == nil {
 		return components.HTTPMetadata{}
 	}
 	return o.HTTPMeta
 }
 
-func (o *CheckoutsCustomClientUpdateResponse) GetCheckoutPublic() *components.CheckoutPublic {
+func (o *CheckoutsClientUpdateResponse) GetCheckoutPublic() *components.CheckoutPublic {
 	if o == nil {
 		return nil
 	}

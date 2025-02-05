@@ -7,6 +7,7 @@ import (
 )
 
 type CheckoutsGetRequest struct {
+	// The checkout session ID.
 	ID string `pathParam:"style=simple,explode=false,name=id"`
 }
 
@@ -20,7 +21,7 @@ func (o *CheckoutsGetRequest) GetID() string {
 type CheckoutsGetResponse struct {
 	HTTPMeta components.HTTPMetadata `json:"-"`
 	// Successful Response
-	CheckoutLegacy *components.CheckoutLegacy
+	Checkout *components.Checkout
 }
 
 func (o *CheckoutsGetResponse) GetHTTPMeta() components.HTTPMetadata {
@@ -30,9 +31,9 @@ func (o *CheckoutsGetResponse) GetHTTPMeta() components.HTTPMetadata {
 	return o.HTTPMeta
 }
 
-func (o *CheckoutsGetResponse) GetCheckoutLegacy() *components.CheckoutLegacy {
+func (o *CheckoutsGetResponse) GetCheckout() *components.Checkout {
 	if o == nil {
 		return nil
 	}
-	return o.CheckoutLegacy
+	return o.Checkout
 }

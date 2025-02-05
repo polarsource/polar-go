@@ -1,4 +1,4 @@
-# CheckoutsCustomUpdateRequest
+# CheckoutsUpdateRequest
 
 
 ## Fields

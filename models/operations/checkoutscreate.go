@@ -8,8 +8,8 @@ import (
 
 type CheckoutsCreateResponse struct {
 	HTTPMeta components.HTTPMetadata `json:"-"`
-	// Successful Response
-	CheckoutLegacy *components.CheckoutLegacy
+	// Checkout session created.
+	Checkout *components.Checkout
 }
 
 func (o *CheckoutsCreateResponse) GetHTTPMeta() components.HTTPMetadata {
@@ -19,9 +19,9 @@ func (o *CheckoutsCreateResponse) GetHTTPMeta() components.HTTPMetadata {
 	return o.HTTPMeta
 }
 
-func (o *CheckoutsCreateResponse) GetCheckoutLegacy() *components.CheckoutLegacy {
+func (o *CheckoutsCreateResponse) GetCheckout() *components.Checkout {
 	if o == nil {
 		return nil
 	}
-	return o.CheckoutLegacy
+	return o.Checkout
 }

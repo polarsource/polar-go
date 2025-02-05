@@ -6,32 +6,32 @@ import (
 	"github.com/polarsource/polar-go/models/components"
 )
 
-type CheckoutsCustomClientGetRequest struct {
+type CheckoutsClientGetRequest struct {
 	// The checkout session client secret.
 	ClientSecret string `pathParam:"style=simple,explode=false,name=client_secret"`
 }
 
-func (o *CheckoutsCustomClientGetRequest) GetClientSecret() string {
+func (o *CheckoutsClientGetRequest) GetClientSecret() string {
 	if o == nil {
 		return ""
 	}
 	return o.ClientSecret
 }
 
-type CheckoutsCustomClientGetResponse struct {
+type CheckoutsClientGetResponse struct {
 	HTTPMeta components.HTTPMetadata `json:"-"`
 	// Successful Response
 	CheckoutPublic *components.CheckoutPublic
 }
 
-func (o *CheckoutsCustomClientGetResponse) GetHTTPMeta() components.HTTPMetadata {
+func (o *CheckoutsClientGetResponse) GetHTTPMeta() components.HTTPMetadata {
 	if o == nil {
 		return components.HTTPMetadata{}
 	}
 	return o.HTTPMeta
 }
 
-func (o *CheckoutsCustomClientGetResponse) GetCheckoutPublic() *components.CheckoutPublic {
+func (o *CheckoutsClientGetResponse) GetCheckoutPublic() *components.CheckoutPublic {
 	if o == nil {
 		return nil
 	}

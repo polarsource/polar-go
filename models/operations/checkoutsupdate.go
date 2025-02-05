@@ -6,40 +6,40 @@ import (
 	"github.com/polarsource/polar-go/models/components"
 )
 
-type CheckoutsCustomUpdateRequest struct {
+type CheckoutsUpdateRequest struct {
 	// The checkout session ID.
 	ID             string                    `pathParam:"style=simple,explode=false,name=id"`
 	CheckoutUpdate components.CheckoutUpdate `request:"mediaType=application/json"`
 }
 
-func (o *CheckoutsCustomUpdateRequest) GetID() string {
+func (o *CheckoutsUpdateRequest) GetID() string {
 	if o == nil {
 		return ""
 	}
 	return o.ID
 }
 
-func (o *CheckoutsCustomUpdateRequest) GetCheckoutUpdate() components.CheckoutUpdate {
+func (o *CheckoutsUpdateRequest) GetCheckoutUpdate() components.CheckoutUpdate {
 	if o == nil {
 		return components.CheckoutUpdate{}
 	}
 	return o.CheckoutUpdate
 }
 
-type CheckoutsCustomUpdateResponse struct {
+type CheckoutsUpdateResponse struct {
 	HTTPMeta components.HTTPMetadata `json:"-"`
 	// Checkout session updated.
 	Checkout *components.Checkout
 }
 
-func (o *CheckoutsCustomUpdateResponse) GetHTTPMeta() components.HTTPMetadata {
+func (o *CheckoutsUpdateResponse) GetHTTPMeta() components.HTTPMetadata {
 	if o == nil {
 		return components.HTTPMetadata{}
 	}
 	return o.HTTPMeta
 }
 
-func (o *CheckoutsCustomUpdateResponse) GetCheckout() *components.Checkout {
+func (o *CheckoutsUpdateResponse) GetCheckout() *components.Checkout {
 	if o == nil {
 		return nil
 	}

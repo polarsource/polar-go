@@ -5,14 +5,82 @@
 
 ### Available Operations
 
-* [~~Create~~](#create) - Create Checkout :warning: **Deprecated** Use [Create](docs/sdks/custom/README.md#create) instead.
-* [~~Get~~](#get) - Get Checkout :warning: **Deprecated**
+* [List](#list) - List Checkout Sessions
+* [Create](#create) - Create Checkout Session
+* [Get](#get) - Get Checkout Session
+* [Update](#update) - Update Checkout Session
+* [ClientGet](#clientget) - Get Checkout Session from Client
+* [ClientUpdate](#clientupdate) - Update Checkout Session from Client
+* [ClientConfirm](#clientconfirm) - Confirm Checkout Session from Client
 
-## ~~Create~~
+## List
+
+List checkout sessions.
+
+### Example Usage
+
+```go
+package main
+
+import(
+	"context"
+	"os"
+	polargo "github.com/polarsource/polar-go"
+	"github.com/polarsource/polar-go/models/operations"
+	"log"
+)
+
+func main() {
+    ctx := context.Background()
+    
+    s := polargo.New(
+        polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
+    )
+
+    res, err := s.Checkouts.List(ctx, operations.CheckoutsListRequest{})
+    if err != nil {
+        log.Fatal(err)
+    }
+    if res.ListResourceCheckout != nil {
+        for {
+            // handle items
+
+            res, err = res.Next()
+
+            if err != nil {
+                // handle error
+            }
+
+            if res == nil {
+                break
+            }
+        }
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                                          | Type                                                                               | Required                                                                           | Description                                                                        |
+| ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
+| `ctx`                                                                              | [context.Context](https://pkg.go.dev/context#Context)                              | :heavy_check_mark:                                                                 | The context to use for the request.                                                |
+| `request`                                                                          | [operations.CheckoutsListRequest](../../models/operations/checkoutslistrequest.md) | :heavy_check_mark:                                                                 | The request object to use for the request.                                         |
+| `opts`                                                                             | [][operations.Option](../../models/operations/option.md)                           | :heavy_minus_sign:                                                                 | The options for this request.                                                      |
+
+### Response
+
+**[*operations.CheckoutsListResponse](../../models/operations/checkoutslistresponse.md), error**
+
+### Errors
+
+| Error Type                    | Status Code                   | Content Type                  |
+| ----------------------------- | ----------------------------- | ----------------------------- |
+| apierrors.HTTPValidationError | 422                           | application/json              |
+| apierrors.APIError            | 4XX, 5XX                      | \*/\*                         |
+
+## Create
 
 Create a checkout session.
-
-> :warning: **DEPRECATED**: This API is deprecated. We recommend you to use the new custom checkout API, which is more flexible and powerful. Please refer to the documentation for more information.. Use `Create` instead.
 
 ### Example Usage
 
@@ -34,14 +102,16 @@ func main() {
         polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )
 
-    res, err := s.Checkouts.Create(ctx, components.CheckoutLegacyCreate{
-        ProductPriceID: "<value>",
-        SuccessURL: "https://probable-heating.com/",
-    })
+    res, err := s.Checkouts.Create(ctx, components.CreateCheckoutCreateCheckoutPriceCreate(
+        components.CheckoutPriceCreate{
+            SuccessURL: polargo.String("https://probable-heating.com/"),
+            ProductPriceID: "<value>",
+        },
+    ))
     if err != nil {
         log.Fatal(err)
     }
-    if res.CheckoutLegacy != nil {
+    if res.Checkout != nil {
         // handle response
     }
 }
@@ -49,11 +119,11 @@ func main() {
 
 ### Parameters
 
-| Parameter                                                                          | Type                                                                               | Required                                                                           | Description                                                                        |
-| ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
-| `ctx`                                                                              | [context.Context](https://pkg.go.dev/context#Context)                              | :heavy_check_mark:                                                                 | The context to use for the request.                                                |
-| `request`                                                                          | [components.CheckoutLegacyCreate](../../models/components/checkoutlegacycreate.md) | :heavy_check_mark:                                                                 | The request object to use for the request.                                         |
-| `opts`                                                                             | [][operations.Option](../../models/operations/option.md)                           | :heavy_minus_sign:                                                                 | The options for this request.                                                      |
+| Parameter                                                              | Type                                                                   | Required                                                               | Description                                                            |
+| ---------------------------------------------------------------------- | ---------------------------------------------------------------------- | ---------------------------------------------------------------------- | ---------------------------------------------------------------------- |
+| `ctx`                                                                  | [context.Context](https://pkg.go.dev/context#Context)                  | :heavy_check_mark:                                                     | The context to use for the request.                                    |
+| `request`                                                              | [components.CheckoutCreate](../../models/components/checkoutcreate.md) | :heavy_check_mark:                                                     | The request object to use for the request.                             |
+| `opts`                                                                 | [][operations.Option](../../models/operations/option.md)               | :heavy_minus_sign:                                                     | The options for this request.                                          |
 
 ### Response
 
@@ -66,11 +136,9 @@ func main() {
 | apierrors.HTTPValidationError | 422                           | application/json              |
 | apierrors.APIError            | 4XX, 5XX                      | \*/\*                         |
 
-## ~~Get~~
+## Get
 
-Get an active checkout session by ID.
-
-> :warning: **DEPRECATED**: This API is deprecated. We recommend you to use the new custom checkout API, which is more flexible and powerful. Please refer to the documentation for more information..
+Get a checkout session by ID.
 
 ### Example Usage
 
@@ -95,7 +163,7 @@ func main() {
     if err != nil {
         log.Fatal(err)
     }
-    if res.CheckoutLegacy != nil {
+    if res.Checkout != nil {
         // handle response
     }
 }
@@ -106,7 +174,7 @@ func main() {
 | Parameter                                                | Type                                                     | Required                                                 | Description                                              |
 | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- |
 | `ctx`                                                    | [context.Context](https://pkg.go.dev/context#Context)    | :heavy_check_mark:                                       | The context to use for the request.                      |
-| `id`                                                     | *string*                                                 | :heavy_check_mark:                                       | N/A                                                      |
+| `id`                                                     | *string*                                                 | :heavy_check_mark:                                       | The checkout session ID.                                 |
 | `opts`                                                   | [][operations.Option](../../models/operations/option.md) | :heavy_minus_sign:                                       | The options for this request.                            |
 
 ### Response
@@ -117,5 +185,229 @@ func main() {
 
 | Error Type                    | Status Code                   | Content Type                  |
 | ----------------------------- | ----------------------------- | ----------------------------- |
+| apierrors.ResourceNotFound    | 404                           | application/json              |
 | apierrors.HTTPValidationError | 422                           | application/json              |
 | apierrors.APIError            | 4XX, 5XX                      | \*/\*                         |
+
+## Update
+
+Update a checkout session.
+
+### Example Usage
+
+```go
+package main
+
+import(
+	"context"
+	"os"
+	polargo "github.com/polarsource/polar-go"
+	"github.com/polarsource/polar-go/models/components"
+	"log"
+)
+
+func main() {
+    ctx := context.Background()
+    
+    s := polargo.New(
+        polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
+    )
+
+    res, err := s.Checkouts.Update(ctx, "<value>", components.CheckoutUpdate{})
+    if err != nil {
+        log.Fatal(err)
+    }
+    if res.Checkout != nil {
+        // handle response
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                              | Type                                                                   | Required                                                               | Description                                                            |
+| ---------------------------------------------------------------------- | ---------------------------------------------------------------------- | ---------------------------------------------------------------------- | ---------------------------------------------------------------------- |
+| `ctx`                                                                  | [context.Context](https://pkg.go.dev/context#Context)                  | :heavy_check_mark:                                                     | The context to use for the request.                                    |
+| `id`                                                                   | *string*                                                               | :heavy_check_mark:                                                     | The checkout session ID.                                               |
+| `checkoutUpdate`                                                       | [components.CheckoutUpdate](../../models/components/checkoutupdate.md) | :heavy_check_mark:                                                     | N/A                                                                    |
+| `opts`                                                                 | [][operations.Option](../../models/operations/option.md)               | :heavy_minus_sign:                                                     | The options for this request.                                          |
+
+### Response
+
+**[*operations.CheckoutsUpdateResponse](../../models/operations/checkoutsupdateresponse.md), error**
+
+### Errors
+
+| Error Type                               | Status Code                              | Content Type                             |
+| ---------------------------------------- | ---------------------------------------- | ---------------------------------------- |
+| apierrors.AlreadyActiveSubscriptionError | 403                                      | application/json                         |
+| apierrors.ResourceNotFound               | 404                                      | application/json                         |
+| apierrors.HTTPValidationError            | 422                                      | application/json                         |
+| apierrors.APIError                       | 4XX, 5XX                                 | \*/\*                                    |
+
+## ClientGet
+
+Get a checkout session by client secret.
+
+### Example Usage
+
+```go
+package main
+
+import(
+	"context"
+	"os"
+	polargo "github.com/polarsource/polar-go"
+	"log"
+)
+
+func main() {
+    ctx := context.Background()
+    
+    s := polargo.New(
+        polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
+    )
+
+    res, err := s.Checkouts.ClientGet(ctx, "<value>")
+    if err != nil {
+        log.Fatal(err)
+    }
+    if res.CheckoutPublic != nil {
+        // handle response
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                | Type                                                     | Required                                                 | Description                                              |
+| -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- |
+| `ctx`                                                    | [context.Context](https://pkg.go.dev/context#Context)    | :heavy_check_mark:                                       | The context to use for the request.                      |
+| `clientSecret`                                           | *string*                                                 | :heavy_check_mark:                                       | The checkout session client secret.                      |
+| `opts`                                                   | [][operations.Option](../../models/operations/option.md) | :heavy_minus_sign:                                       | The options for this request.                            |
+
+### Response
+
+**[*operations.CheckoutsClientGetResponse](../../models/operations/checkoutsclientgetresponse.md), error**
+
+### Errors
+
+| Error Type                    | Status Code                   | Content Type                  |
+| ----------------------------- | ----------------------------- | ----------------------------- |
+| apierrors.ResourceNotFound    | 404                           | application/json              |
+| apierrors.HTTPValidationError | 422                           | application/json              |
+| apierrors.APIError            | 4XX, 5XX                      | \*/\*                         |
+
+## ClientUpdate
+
+Update a checkout session by client secret.
+
+### Example Usage
+
+```go
+package main
+
+import(
+	"context"
+	"os"
+	polargo "github.com/polarsource/polar-go"
+	"github.com/polarsource/polar-go/models/components"
+	"log"
+)
+
+func main() {
+    ctx := context.Background()
+    
+    s := polargo.New(
+        polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
+    )
+
+    res, err := s.Checkouts.ClientUpdate(ctx, "<value>", components.CheckoutUpdatePublic{})
+    if err != nil {
+        log.Fatal(err)
+    }
+    if res.CheckoutPublic != nil {
+        // handle response
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                                          | Type                                                                               | Required                                                                           | Description                                                                        |
+| ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
+| `ctx`                                                                              | [context.Context](https://pkg.go.dev/context#Context)                              | :heavy_check_mark:                                                                 | The context to use for the request.                                                |
+| `clientSecret`                                                                     | *string*                                                                           | :heavy_check_mark:                                                                 | The checkout session client secret.                                                |
+| `checkoutUpdatePublic`                                                             | [components.CheckoutUpdatePublic](../../models/components/checkoutupdatepublic.md) | :heavy_check_mark:                                                                 | N/A                                                                                |
+| `opts`                                                                             | [][operations.Option](../../models/operations/option.md)                           | :heavy_minus_sign:                                                                 | The options for this request.                                                      |
+
+### Response
+
+**[*operations.CheckoutsClientUpdateResponse](../../models/operations/checkoutsclientupdateresponse.md), error**
+
+### Errors
+
+| Error Type                               | Status Code                              | Content Type                             |
+| ---------------------------------------- | ---------------------------------------- | ---------------------------------------- |
+| apierrors.AlreadyActiveSubscriptionError | 403                                      | application/json                         |
+| apierrors.ResourceNotFound               | 404                                      | application/json                         |
+| apierrors.HTTPValidationError            | 422                                      | application/json                         |
+| apierrors.APIError                       | 4XX, 5XX                                 | \*/\*                                    |
+
+## ClientConfirm
+
+Confirm a checkout session by client secret.
+
+Orders and subscriptions will be processed.
+
+### Example Usage
+
+```go
+package main
+
+import(
+	"context"
+	"os"
+	polargo "github.com/polarsource/polar-go"
+	"github.com/polarsource/polar-go/models/components"
+	"log"
+)
+
+func main() {
+    ctx := context.Background()
+    
+    s := polargo.New(
+        polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
+    )
+
+    res, err := s.Checkouts.ClientConfirm(ctx, "<value>", components.CheckoutConfirmStripe{})
+    if err != nil {
+        log.Fatal(err)
+    }
+    if res.CheckoutPublicConfirmed != nil {
+        // handle response
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                                            | Type                                                                                 | Required                                                                             | Description                                                                          |
+| ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------ |
+| `ctx`                                                                                | [context.Context](https://pkg.go.dev/context#Context)                                | :heavy_check_mark:                                                                   | The context to use for the request.                                                  |
+| `clientSecret`                                                                       | *string*                                                                             | :heavy_check_mark:                                                                   | The checkout session client secret.                                                  |
+| `checkoutConfirmStripe`                                                              | [components.CheckoutConfirmStripe](../../models/components/checkoutconfirmstripe.md) | :heavy_check_mark:                                                                   | N/A                                                                                  |
+| `opts`                                                                               | [][operations.Option](../../models/operations/option.md)                             | :heavy_minus_sign:                                                                   | The options for this request.                                                        |
+
+### Response
+
+**[*operations.CheckoutsClientConfirmResponse](../../models/operations/checkoutsclientconfirmresponse.md), error**
+
+### Errors
+
+| Error Type                               | Status Code                              | Content Type                             |
+| ---------------------------------------- | ---------------------------------------- | ---------------------------------------- |
+| apierrors.AlreadyActiveSubscriptionError | 403                                      | application/json                         |
+| apierrors.ResourceNotFound               | 404                                      | application/json                         |
+| apierrors.HTTPValidationError            | 422                                      | application/json                         |
+| apierrors.APIError                       | 4XX, 5XX                                 | \*/\*                                    |

@@ -1,4 +1,4 @@
-# CheckoutsCustomClientConfirmRequest
+# CheckoutsClientConfirmRequest
 
 
 ## Fields

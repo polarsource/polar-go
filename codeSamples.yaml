@@ -81,48 +81,48 @@ actions:
         - "lang": "go"
           "label": "Go (SDK)"
           "source": "package main\n\nimport(\n\t\"context\"\n\t\"os\"\n\tpolargo \"github.com/polarsource/polar-go\"\n\t\"github.com/polarsource/polar-go/models/components\"\n\t\"log\"\n)\n\nfunc main() {\n    ctx := context.Background()\n    \n    s := polargo.New(\n        polargo.WithSecurity(os.Getenv(\"POLAR_ACCESS_TOKEN\")),\n    )\n\n    res, err := s.CheckoutLinks.Update(ctx, \"<value>\", components.CheckoutLinkUpdate{})\n    if err != nil {\n        log.Fatal(err)\n    }\n    if res.CheckoutLink != nil {\n        // handle response\n    }\n}"
-  - target: $["paths"]["/v1/checkouts/custom/"]["get"]
+  - target: $["paths"]["/v1/checkouts/"]["get"]
     update:
       "x-codeSamples":
         - "lang": "go"
           "label": "Go (SDK)"
-          "source": "package main\n\nimport(\n\t\"context\"\n\t\"os\"\n\tpolargo \"github.com/polarsource/polar-go\"\n\t\"github.com/polarsource/polar-go/models/operations\"\n\t\"log\"\n)\n\nfunc main() {\n    ctx := context.Background()\n    \n    s := polargo.New(\n        polargo.WithSecurity(os.Getenv(\"POLAR_ACCESS_TOKEN\")),\n    )\n\n    res, err := s.Checkouts.Custom.List(ctx, operations.CheckoutsCustomListRequest{})\n    if err != nil {\n        log.Fatal(err)\n    }\n    if res.ListResourceCheckout != nil {\n        for {\n            // handle items\n\n            res, err = res.Next()\n\n            if err != nil {\n                // handle error\n            }\n\n            if res == nil {\n                break\n            }\n        }\n    }\n}"
-  - target: $["paths"]["/v1/checkouts/custom/"]["post"]
+          "source": "package main\n\nimport(\n\t\"context\"\n\t\"os\"\n\tpolargo \"github.com/polarsource/polar-go\"\n\t\"github.com/polarsource/polar-go/models/operations\"\n\t\"log\"\n)\n\nfunc main() {\n    ctx := context.Background()\n    \n    s := polargo.New(\n        polargo.WithSecurity(os.Getenv(\"POLAR_ACCESS_TOKEN\")),\n    )\n\n    res, err := s.Checkouts.List(ctx, operations.CheckoutsListRequest{})\n    if err != nil {\n        log.Fatal(err)\n    }\n    if res.ListResourceCheckout != nil {\n        for {\n            // handle items\n\n            res, err = res.Next()\n\n            if err != nil {\n                // handle error\n            }\n\n            if res == nil {\n                break\n            }\n        }\n    }\n}"
+  - target: $["paths"]["/v1/checkouts/"]["post"]
     update:
       "x-codeSamples":
         - "lang": "go"
           "label": "Go (SDK)"
-          "source": "package main\n\nimport(\n\t\"context\"\n\t\"os\"\n\tpolargo \"github.com/polarsource/polar-go\"\n\t\"github.com/polarsource/polar-go/models/components\"\n\t\"log\"\n)\n\nfunc main() {\n    ctx := context.Background()\n    \n    s := polargo.New(\n        polargo.WithSecurity(os.Getenv(\"POLAR_ACCESS_TOKEN\")),\n    )\n\n    res, err := s.Checkouts.Custom.Create(ctx, components.CreateCheckoutCreateCheckoutProductCreate(\n        components.CheckoutProductCreate{\n            ProductID: \"<value>\",\n        },\n    ))\n    if err != nil {\n        log.Fatal(err)\n    }\n    if res.Checkout != nil {\n        // handle response\n    }\n}"
-  - target: $["paths"]["/v1/checkouts/custom/client/{client_secret}"]["get"]
+          "source": "package main\n\nimport(\n\t\"context\"\n\t\"os\"\n\tpolargo \"github.com/polarsource/polar-go\"\n\t\"github.com/polarsource/polar-go/models/components\"\n\t\"log\"\n)\n\nfunc main() {\n    ctx := context.Background()\n    \n    s := polargo.New(\n        polargo.WithSecurity(os.Getenv(\"POLAR_ACCESS_TOKEN\")),\n    )\n\n    res, err := s.Checkouts.Create(ctx, components.CreateCheckoutCreateCheckoutProductCreate(\n        components.CheckoutProductCreate{\n            ProductID: \"<value>\",\n        },\n    ))\n    if err != nil {\n        log.Fatal(err)\n    }\n    if res.Checkout != nil {\n        // handle response\n    }\n}"
+  - target: $["paths"]["/v1/checkouts/client/{client_secret}"]["get"]
     update:
       "x-codeSamples":
         - "lang": "go"
           "label": "Go (SDK)"
-          "source": "package main\n\nimport(\n\t\"context\"\n\t\"os\"\n\tpolargo \"github.com/polarsource/polar-go\"\n\t\"log\"\n)\n\nfunc main() {\n    ctx := context.Background()\n    \n    s := polargo.New(\n        polargo.WithSecurity(os.Getenv(\"POLAR_ACCESS_TOKEN\")),\n    )\n\n    res, err := s.Checkouts.Custom.ClientGet(ctx, \"<value>\")\n    if err != nil {\n        log.Fatal(err)\n    }\n    if res.CheckoutPublic != nil {\n        // handle response\n    }\n}"
-  - target: $["paths"]["/v1/checkouts/custom/client/{client_secret}"]["patch"]
+          "source": "package main\n\nimport(\n\t\"context\"\n\t\"os\"\n\tpolargo \"github.com/polarsource/polar-go\"\n\t\"log\"\n)\n\nfunc main() {\n    ctx := context.Background()\n    \n    s := polargo.New(\n        polargo.WithSecurity(os.Getenv(\"POLAR_ACCESS_TOKEN\")),\n    )\n\n    res, err := s.Checkouts.ClientGet(ctx, \"<value>\")\n    if err != nil {\n        log.Fatal(err)\n    }\n    if res.CheckoutPublic != nil {\n        // handle response\n    }\n}"
+  - target: $["paths"]["/v1/checkouts/client/{client_secret}"]["patch"]
     update:
       "x-codeSamples":
         - "lang": "go"
           "label": "Go (SDK)"
-          "source": "package main\n\nimport(\n\t\"context\"\n\t\"os\"\n\tpolargo \"github.com/polarsource/polar-go\"\n\t\"github.com/polarsource/polar-go/models/components\"\n\t\"log\"\n)\n\nfunc main() {\n    ctx := context.Background()\n    \n    s := polargo.New(\n        polargo.WithSecurity(os.Getenv(\"POLAR_ACCESS_TOKEN\")),\n    )\n\n    res, err := s.Checkouts.Custom.ClientUpdate(ctx, \"<value>\", components.CheckoutUpdatePublic{})\n    if err != nil {\n        log.Fatal(err)\n    }\n    if res.CheckoutPublic != nil {\n        // handle response\n    }\n}"
-  - target: $["paths"]["/v1/checkouts/custom/client/{client_secret}/confirm"]["post"]
+          "source": "package main\n\nimport(\n\t\"context\"\n\t\"os\"\n\tpolargo \"github.com/polarsource/polar-go\"\n\t\"github.com/polarsource/polar-go/models/components\"\n\t\"log\"\n)\n\nfunc main() {\n    ctx := context.Background()\n    \n    s := polargo.New(\n        polargo.WithSecurity(os.Getenv(\"POLAR_ACCESS_TOKEN\")),\n    )\n\n    res, err := s.Checkouts.ClientUpdate(ctx, \"<value>\", components.CheckoutUpdatePublic{})\n    if err != nil {\n        log.Fatal(err)\n    }\n    if res.CheckoutPublic != nil {\n        // handle response\n    }\n}"
+  - target: $["paths"]["/v1/checkouts/client/{client_secret}/confirm"]["post"]
     update:
       "x-codeSamples":
         - "lang": "go"
           "label": "Go (SDK)"
-          "source": "package main\n\nimport(\n\t\"context\"\n\t\"os\"\n\tpolargo \"github.com/polarsource/polar-go\"\n\t\"github.com/polarsource/polar-go/models/components\"\n\t\"log\"\n)\n\nfunc main() {\n    ctx := context.Background()\n    \n    s := polargo.New(\n        polargo.WithSecurity(os.Getenv(\"POLAR_ACCESS_TOKEN\")),\n    )\n\n    res, err := s.Checkouts.Custom.ClientConfirm(ctx, \"<value>\", components.CheckoutConfirmStripe{})\n    if err != nil {\n        log.Fatal(err)\n    }\n    if res.CheckoutPublicConfirmed != nil {\n        // handle response\n    }\n}"
-  - target: $["paths"]["/v1/checkouts/custom/{id}"]["get"]
+          "source": "package main\n\nimport(\n\t\"context\"\n\t\"os\"\n\tpolargo \"github.com/polarsource/polar-go\"\n\t\"github.com/polarsource/polar-go/models/components\"\n\t\"log\"\n)\n\nfunc main() {\n    ctx := context.Background()\n    \n    s := polargo.New(\n        polargo.WithSecurity(os.Getenv(\"POLAR_ACCESS_TOKEN\")),\n    )\n\n    res, err := s.Checkouts.ClientConfirm(ctx, \"<value>\", components.CheckoutConfirmStripe{})\n    if err != nil {\n        log.Fatal(err)\n    }\n    if res.CheckoutPublicConfirmed != nil {\n        // handle response\n    }\n}"
+  - target: $["paths"]["/v1/checkouts/{id}"]["get"]
     update:
       "x-codeSamples":
         - "lang": "go"
           "label": "Go (SDK)"
-          "source": "package main\n\nimport(\n\t\"context\"\n\t\"os\"\n\tpolargo \"github.com/polarsource/polar-go\"\n\t\"log\"\n)\n\nfunc main() {\n    ctx := context.Background()\n    \n    s := polargo.New(\n        polargo.WithSecurity(os.Getenv(\"POLAR_ACCESS_TOKEN\")),\n    )\n\n    res, err := s.Checkouts.Custom.Get(ctx, \"<value>\")\n    if err != nil {\n        log.Fatal(err)\n    }\n    if res.Checkout != nil {\n        // handle response\n    }\n}"
-  - target: $["paths"]["/v1/checkouts/custom/{id}"]["patch"]
+          "source": "package main\n\nimport(\n\t\"context\"\n\t\"os\"\n\tpolargo \"github.com/polarsource/polar-go\"\n\t\"log\"\n)\n\nfunc main() {\n    ctx := context.Background()\n    \n    s := polargo.New(\n        polargo.WithSecurity(os.Getenv(\"POLAR_ACCESS_TOKEN\")),\n    )\n\n    res, err := s.Checkouts.Get(ctx, \"<value>\")\n    if err != nil {\n        log.Fatal(err)\n    }\n    if res.Checkout != nil {\n        // handle response\n    }\n}"
+  - target: $["paths"]["/v1/checkouts/{id}"]["patch"]
     update:
       "x-codeSamples":
         - "lang": "go"
           "label": "Go (SDK)"
-          "source": "package main\n\nimport(\n\t\"context\"\n\t\"os\"\n\tpolargo \"github.com/polarsource/polar-go\"\n\t\"github.com/polarsource/polar-go/models/components\"\n\t\"log\"\n)\n\nfunc main() {\n    ctx := context.Background()\n    \n    s := polargo.New(\n        polargo.WithSecurity(os.Getenv(\"POLAR_ACCESS_TOKEN\")),\n    )\n\n    res, err := s.Checkouts.Custom.Update(ctx, \"<value>\", components.CheckoutUpdate{})\n    if err != nil {\n        log.Fatal(err)\n    }\n    if res.Checkout != nil {\n        // handle response\n    }\n}"
+          "source": "package main\n\nimport(\n\t\"context\"\n\t\"os\"\n\tpolargo \"github.com/polarsource/polar-go\"\n\t\"github.com/polarsource/polar-go/models/components\"\n\t\"log\"\n)\n\nfunc main() {\n    ctx := context.Background()\n    \n    s := polargo.New(\n        polargo.WithSecurity(os.Getenv(\"POLAR_ACCESS_TOKEN\")),\n    )\n\n    res, err := s.Checkouts.Update(ctx, \"<value>\", components.CheckoutUpdate{})\n    if err != nil {\n        log.Fatal(err)\n    }\n    if res.Checkout != nil {\n        // handle response\n    }\n}"
   - target: $["paths"]["/v1/custom-fields/"]["get"]
     update:
       "x-codeSamples":

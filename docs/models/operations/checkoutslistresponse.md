@@ -1,4 +1,4 @@
-# CheckoutsCustomListResponse
+# CheckoutsListResponse
 
 
 ## Fields

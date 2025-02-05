@@ -1,4 +1,4 @@
-# CheckoutsCustomClientGetRequest
+# CheckoutsClientGetRequest
 
 
 ## Fields

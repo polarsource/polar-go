@@ -6,40 +6,40 @@ import (
 	"github.com/polarsource/polar-go/models/components"
 )
 
-type CheckoutsCustomClientConfirmRequest struct {
+type CheckoutsClientConfirmRequest struct {
 	// The checkout session client secret.
 	ClientSecret          string                           `pathParam:"style=simple,explode=false,name=client_secret"`
 	CheckoutConfirmStripe components.CheckoutConfirmStripe `request:"mediaType=application/json"`
 }
 
-func (o *CheckoutsCustomClientConfirmRequest) GetClientSecret() string {
+func (o *CheckoutsClientConfirmRequest) GetClientSecret() string {
 	if o == nil {
 		return ""
 	}
 	return o.ClientSecret
 }
 
-func (o *CheckoutsCustomClientConfirmRequest) GetCheckoutConfirmStripe() components.CheckoutConfirmStripe {
+func (o *CheckoutsClientConfirmRequest) GetCheckoutConfirmStripe() components.CheckoutConfirmStripe {
 	if o == nil {
 		return components.CheckoutConfirmStripe{}
 	}
 	return o.CheckoutConfirmStripe
 }
 
-type CheckoutsCustomClientConfirmResponse struct {
+type CheckoutsClientConfirmResponse struct {
 	HTTPMeta components.HTTPMetadata `json:"-"`
 	// Checkout session confirmed.
 	CheckoutPublicConfirmed *components.CheckoutPublicConfirmed
 }
 
-func (o *CheckoutsCustomClientConfirmResponse) GetHTTPMeta() components.HTTPMetadata {
+func (o *CheckoutsClientConfirmResponse) GetHTTPMeta() components.HTTPMetadata {
 	if o == nil {
 		return components.HTTPMetadata{}
 	}
 	return o.HTTPMeta
 }
 
-func (o *CheckoutsCustomClientConfirmResponse) GetCheckoutPublicConfirmed() *components.CheckoutPublicConfirmed {
+func (o *CheckoutsClientConfirmResponse) GetCheckoutPublicConfirmed() *components.CheckoutPublicConfirmed {
 	if o == nil {
 		return nil
 	}

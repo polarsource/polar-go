@@ -1,4 +1,4 @@
-# CheckoutsCustomClientUpdateResponse
+# CheckoutsClientUpdateResponse
 
 
 ## Fields
