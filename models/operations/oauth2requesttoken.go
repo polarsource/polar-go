@@ -3,7 +3,6 @@
 package operations
 
 import (
-	"encoding/json"
 	"errors"
 	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
@@ -13,64 +12,48 @@ import (
 type Oauth2RequestTokenRequestBodyType string
 
 const (
-	Oauth2RequestTokenRequestBodyTypeAuthorizationCode Oauth2RequestTokenRequestBodyType = "authorization_code"
-	Oauth2RequestTokenRequestBodyTypeRefreshToken      Oauth2RequestTokenRequestBodyType = "refresh_token"
+	Oauth2RequestTokenRequestBodyTypeAuthorizationCodeTokenRequest Oauth2RequestTokenRequestBodyType = "AuthorizationCodeTokenRequest"
+	Oauth2RequestTokenRequestBodyTypeRefreshTokenRequest           Oauth2RequestTokenRequestBodyType = "RefreshTokenRequest"
 )
 
 type Oauth2RequestTokenRequestBody struct {
-	Onev11oauth21tokenPostXComponentsAuthorizationCodeTokenRequest *components.Onev11oauth21tokenPostXComponentsAuthorizationCodeTokenRequest `queryParam:"inline"`
-	Onev11oauth21tokenPostXComponentsRefreshTokenRequest           *components.Onev11oauth21tokenPostXComponentsRefreshTokenRequest           `queryParam:"inline"`
+	AuthorizationCodeTokenRequest *components.AuthorizationCodeTokenRequest `queryParam:"inline"`
+	RefreshTokenRequest           *components.RefreshTokenRequest           `queryParam:"inline"`
 
 	Type Oauth2RequestTokenRequestBodyType
 }
 
-func CreateOauth2RequestTokenRequestBodyAuthorizationCode(authorizationCode components.Onev11oauth21tokenPostXComponentsAuthorizationCodeTokenRequest) Oauth2RequestTokenRequestBody {
-	typ := Oauth2RequestTokenRequestBodyTypeAuthorizationCode
+func CreateOauth2RequestTokenRequestBodyAuthorizationCodeTokenRequest(authorizationCodeTokenRequest components.AuthorizationCodeTokenRequest) Oauth2RequestTokenRequestBody {
+	typ := Oauth2RequestTokenRequestBodyTypeAuthorizationCodeTokenRequest
 
 	return Oauth2RequestTokenRequestBody{
-		Onev11oauth21tokenPostXComponentsAuthorizationCodeTokenRequest: &authorizationCode,
-		Type: typ,
+		AuthorizationCodeTokenRequest: &authorizationCodeTokenRequest,
+		Type:                          typ,
 	}
 }
 
-func CreateOauth2RequestTokenRequestBodyRefreshToken(refreshToken components.Onev11oauth21tokenPostXComponentsRefreshTokenRequest) Oauth2RequestTokenRequestBody {
-	typ := Oauth2RequestTokenRequestBodyTypeRefreshToken
+func CreateOauth2RequestTokenRequestBodyRefreshTokenRequest(refreshTokenRequest components.RefreshTokenRequest) Oauth2RequestTokenRequestBody {
+	typ := Oauth2RequestTokenRequestBodyTypeRefreshTokenRequest
 
 	return Oauth2RequestTokenRequestBody{
-		Onev11oauth21tokenPostXComponentsRefreshTokenRequest: &refreshToken,
-		Type: typ,
+		RefreshTokenRequest: &refreshTokenRequest,
+		Type:                typ,
 	}
 }
 
 func (u *Oauth2RequestTokenRequestBody) UnmarshalJSON(data []byte) error {
 
-	type discriminator struct {
-		GrantType string `json:"grant_type"`
-	}
-
-	dis := new(discriminator)
-	if err := json.Unmarshal(data, &dis); err != nil {
-		return fmt.Errorf("could not unmarshal discriminator: %w", err)
-	}
-
-	switch dis.GrantType {
-	case "authorization_code":
-		onev11oauth21tokenPostXComponentsAuthorizationCodeTokenRequest := new(components.Onev11oauth21tokenPostXComponentsAuthorizationCodeTokenRequest)
-		if err := utils.UnmarshalJSON(data, &onev11oauth21tokenPostXComponentsAuthorizationCodeTokenRequest, "", true, false); err != nil {
-			return fmt.Errorf("could not unmarshal `%s` into expected (GrantType == authorization_code) type components.Onev11oauth21tokenPostXComponentsAuthorizationCodeTokenRequest within Oauth2RequestTokenRequestBody: %w", string(data), err)
-		}
-
-		u.Onev11oauth21tokenPostXComponentsAuthorizationCodeTokenRequest = onev11oauth21tokenPostXComponentsAuthorizationCodeTokenRequest
-		u.Type = Oauth2RequestTokenRequestBodyTypeAuthorizationCode
+	var refreshTokenRequest components.RefreshTokenRequest = components.RefreshTokenRequest{}
+	if err := utils.UnmarshalJSON(data, &refreshTokenRequest, "", true, true); err == nil {
+		u.RefreshTokenRequest = &refreshTokenRequest
+		u.Type = Oauth2RequestTokenRequestBodyTypeRefreshTokenRequest
 		return nil
-	case "refresh_token":
-		onev11oauth21tokenPostXComponentsRefreshTokenRequest := new(components.Onev11oauth21tokenPostXComponentsRefreshTokenRequest)
-		if err := utils.UnmarshalJSON(data, &onev11oauth21tokenPostXComponentsRefreshTokenRequest, "", true, false); err != nil {
-			return fmt.Errorf("could not unmarshal `%s` into expected (GrantType == refresh_token) type components.Onev11oauth21tokenPostXComponentsRefreshTokenRequest within Oauth2RequestTokenRequestBody: %w", string(data), err)
-		}
+	}
 
-		u.Onev11oauth21tokenPostXComponentsRefreshTokenRequest = onev11oauth21tokenPostXComponentsRefreshTokenRequest
-		u.Type = Oauth2RequestTokenRequestBodyTypeRefreshToken
+	var authorizationCodeTokenRequest components.AuthorizationCodeTokenRequest = components.AuthorizationCodeTokenRequest{}
+	if err := utils.UnmarshalJSON(data, &authorizationCodeTokenRequest, "", true, true); err == nil {
+		u.AuthorizationCodeTokenRequest = &authorizationCodeTokenRequest
+		u.Type = Oauth2RequestTokenRequestBodyTypeAuthorizationCodeTokenRequest
 		return nil
 	}
 
@@ -78,12 +61,12 @@ func (u *Oauth2RequestTokenRequestBody) UnmarshalJSON(data []byte) error {
 }
 
 func (u Oauth2RequestTokenRequestBody) MarshalJSON() ([]byte, error) {
-	if u.Onev11oauth21tokenPostXComponentsAuthorizationCodeTokenRequest != nil {
-		return utils.MarshalJSON(u.Onev11oauth21tokenPostXComponentsAuthorizationCodeTokenRequest, "", true)
+	if u.AuthorizationCodeTokenRequest != nil {
+		return utils.MarshalJSON(u.AuthorizationCodeTokenRequest, "", true)
 	}
 
-	if u.Onev11oauth21tokenPostXComponentsRefreshTokenRequest != nil {
-		return utils.MarshalJSON(u.Onev11oauth21tokenPostXComponentsRefreshTokenRequest, "", true)
+	if u.RefreshTokenRequest != nil {
+		return utils.MarshalJSON(u.RefreshTokenRequest, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type Oauth2RequestTokenRequestBody: all fields are null")

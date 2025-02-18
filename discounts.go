@@ -30,13 +30,6 @@ func newDiscounts(sdkConfig sdkConfiguration) *Discounts {
 // List Discounts
 // List discounts.
 func (s *Discounts) List(ctx context.Context, request operations.DiscountsListRequest, opts ...operations.Option) (*operations.DiscountsListResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "discounts:list",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -58,6 +51,14 @@ func (s *Discounts) List(ctx context.Context, request operations.DiscountsListRe
 	opURL, err := url.JoinPath(baseURL, "/v1/discounts/")
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "discounts:list",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -322,13 +323,6 @@ func (s *Discounts) List(ctx context.Context, request operations.DiscountsListRe
 // Create Discount
 // Create a discount.
 func (s *Discounts) Create(ctx context.Context, request components.DiscountCreate, opts ...operations.Option) (*operations.DiscountsCreateResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "discounts:create",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -352,6 +346,13 @@ func (s *Discounts) Create(ctx context.Context, request components.DiscountCreat
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "discounts:create",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "Request", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -552,13 +553,6 @@ func (s *Discounts) Create(ctx context.Context, request components.DiscountCreat
 // Get Discount
 // Get a discount by ID.
 func (s *Discounts) Get(ctx context.Context, id string, opts ...operations.Option) (*operations.DiscountsGetResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "discounts:get",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	request := operations.DiscountsGetRequest{
 		ID: id,
 	}
@@ -584,6 +578,14 @@ func (s *Discounts) Get(ctx context.Context, id string, opts ...operations.Optio
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/v1/discounts/{id}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "discounts:get",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -799,13 +801,6 @@ func (s *Discounts) Get(ctx context.Context, id string, opts ...operations.Optio
 // Update Discount
 // Update a discount.
 func (s *Discounts) Update(ctx context.Context, id string, discountUpdate components.DiscountUpdate, opts ...operations.Option) (*operations.DiscountsUpdateResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "discounts:update",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	request := operations.DiscountsUpdateRequest{
 		ID:             id,
 		DiscountUpdate: discountUpdate,
@@ -834,6 +829,13 @@ func (s *Discounts) Update(ctx context.Context, id string, discountUpdate compon
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "discounts:update",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "DiscountUpdate", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -1055,13 +1057,6 @@ func (s *Discounts) Update(ctx context.Context, id string, discountUpdate compon
 // Delete Discount
 // Delete a discount.
 func (s *Discounts) Delete(ctx context.Context, id string, opts ...operations.Option) (*operations.DiscountsDeleteResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "discounts:delete",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	request := operations.DiscountsDeleteRequest{
 		ID: id,
 	}
@@ -1087,6 +1082,14 @@ func (s *Discounts) Delete(ctx context.Context, id string, opts ...operations.Op
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/v1/discounts/{id}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "discounts:delete",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout

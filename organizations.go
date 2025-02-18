@@ -30,13 +30,6 @@ func newOrganizations(sdkConfig sdkConfiguration) *Organizations {
 // List Organizations
 // List organizations.
 func (s *Organizations) List(ctx context.Context, slug *string, page *int64, limit *int64, sorting []components.OrganizationSortProperty, opts ...operations.Option) (*operations.OrganizationsListResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "organizations:list",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	request := operations.OrganizationsListRequest{
 		Slug:    slug,
 		Page:    page,
@@ -65,6 +58,14 @@ func (s *Organizations) List(ctx context.Context, slug *string, page *int64, lim
 	opURL, err := url.JoinPath(baseURL, "/v1/organizations/")
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "organizations:list",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -326,13 +327,6 @@ func (s *Organizations) List(ctx context.Context, slug *string, page *int64, lim
 // Create Organization
 // Create an organization.
 func (s *Organizations) Create(ctx context.Context, request components.OrganizationCreate, opts ...operations.Option) (*operations.OrganizationsCreateResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "organizations:create",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -356,6 +350,13 @@ func (s *Organizations) Create(ctx context.Context, request components.Organizat
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "organizations:create",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "Request", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -556,13 +557,6 @@ func (s *Organizations) Create(ctx context.Context, request components.Organizat
 // Get Organization
 // Get an organization by ID.
 func (s *Organizations) Get(ctx context.Context, id string, opts ...operations.Option) (*operations.OrganizationsGetResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "organizations:get",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	request := operations.OrganizationsGetRequest{
 		ID: id,
 	}
@@ -588,6 +582,14 @@ func (s *Organizations) Get(ctx context.Context, id string, opts ...operations.O
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/v1/organizations/{id}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "organizations:get",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -803,13 +805,6 @@ func (s *Organizations) Get(ctx context.Context, id string, opts ...operations.O
 // Update Organization
 // Update an organization.
 func (s *Organizations) Update(ctx context.Context, id string, organizationUpdate components.OrganizationUpdate, opts ...operations.Option) (*operations.OrganizationsUpdateResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "organizations:update",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	request := operations.OrganizationsUpdateRequest{
 		ID:                 id,
 		OrganizationUpdate: organizationUpdate,
@@ -838,6 +833,13 @@ func (s *Organizations) Update(ctx context.Context, id string, organizationUpdat
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "organizations:update",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "OrganizationUpdate", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err

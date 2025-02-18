@@ -30,13 +30,6 @@ func newBenefitGrants(sdkConfig sdkConfiguration) *BenefitGrants {
 // List Benefit Grants
 // List benefits grants of the authenticated customer or user.
 func (s *BenefitGrants) List(ctx context.Context, request operations.CustomerPortalBenefitGrantsListRequest, opts ...operations.Option) (*operations.CustomerPortalBenefitGrantsListResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "customer_portal:benefit-grants:list",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -58,6 +51,14 @@ func (s *BenefitGrants) List(ctx context.Context, request operations.CustomerPor
 	opURL, err := url.JoinPath(baseURL, "/v1/customer-portal/benefit-grants/")
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "customer_portal:benefit-grants:list",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -326,13 +327,6 @@ func (s *BenefitGrants) List(ctx context.Context, request operations.CustomerPor
 // Get Benefit Grant
 // Get a benefit grant by ID for the authenticated customer or user.
 func (s *BenefitGrants) Get(ctx context.Context, id string, opts ...operations.Option) (*operations.CustomerPortalBenefitGrantsGetResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "customer_portal:benefit-grants:get",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	request := operations.CustomerPortalBenefitGrantsGetRequest{
 		ID: id,
 	}
@@ -358,6 +352,14 @@ func (s *BenefitGrants) Get(ctx context.Context, id string, opts ...operations.O
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/v1/customer-portal/benefit-grants/{id}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "customer_portal:benefit-grants:get",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -573,13 +575,6 @@ func (s *BenefitGrants) Get(ctx context.Context, id string, opts ...operations.O
 // Update Benefit Grant
 // Update a benefit grant for the authenticated customer or user.
 func (s *BenefitGrants) Update(ctx context.Context, id string, customerBenefitGrantUpdate components.CustomerBenefitGrantUpdate, opts ...operations.Option) (*operations.CustomerPortalBenefitGrantsUpdateResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "customer_portal:benefit-grants:update",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	request := operations.CustomerPortalBenefitGrantsUpdateRequest{
 		ID:                         id,
 		CustomerBenefitGrantUpdate: customerBenefitGrantUpdate,
@@ -608,6 +603,13 @@ func (s *BenefitGrants) Update(ctx context.Context, id string, customerBenefitGr
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "customer_portal:benefit-grants:update",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "CustomerBenefitGrantUpdate", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err

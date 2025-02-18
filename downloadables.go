@@ -29,13 +29,6 @@ func newDownloadables(sdkConfig sdkConfiguration) *Downloadables {
 
 // List Downloadables
 func (s *Downloadables) List(ctx context.Context, organizationID *operations.CustomerPortalDownloadablesListQueryParamOrganizationIDFilter, benefitID *operations.CustomerPortalDownloadablesListQueryParamBenefitIDFilter, page *int64, limit *int64, opts ...operations.Option) (*operations.CustomerPortalDownloadablesListResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "customer_portal:downloadables:list",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	request := operations.CustomerPortalDownloadablesListRequest{
 		OrganizationID: organizationID,
 		BenefitID:      benefitID,
@@ -64,6 +57,14 @@ func (s *Downloadables) List(ctx context.Context, organizationID *operations.Cus
 	opURL, err := url.JoinPath(baseURL, "/v1/customer-portal/downloadables/")
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "customer_portal:downloadables:list",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -324,13 +325,6 @@ func (s *Downloadables) List(ctx context.Context, organizationID *operations.Cus
 
 // Get Downloadable
 func (s *Downloadables) Get(ctx context.Context, token string, opts ...operations.Option) (*operations.CustomerPortalDownloadablesCustomerPortalDownloadablesGetResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "customer_portal:downloadables:customer_portal.downloadables.get",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	request := operations.CustomerPortalDownloadablesCustomerPortalDownloadablesGetRequest{
 		Token: token,
 	}
@@ -356,6 +350,14 @@ func (s *Downloadables) Get(ctx context.Context, token string, opts ...operation
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/v1/customer-portal/downloadables/{token}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "customer_portal:downloadables:customer_portal.downloadables.get",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout

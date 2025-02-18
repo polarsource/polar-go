@@ -1,4 +1,4 @@
-# Onev11oauth21tokenPostXComponentsAuthorizationCodeTokenRequest
+# AuthorizationCodeTokenRequest
 
 
 ## Fields

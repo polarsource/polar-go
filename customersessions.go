@@ -29,13 +29,6 @@ func newCustomerSessions(sdkConfig sdkConfiguration) *CustomerSessions {
 // Create Customer Session
 // Create a customer session.
 func (s *CustomerSessions) Create(ctx context.Context, request components.CustomerSessionCreate, opts ...operations.Option) (*operations.CustomerSessionsCreateResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "customer-sessions:create",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -59,6 +52,13 @@ func (s *CustomerSessions) Create(ctx context.Context, request components.Custom
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "customer-sessions:create",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "Request", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err

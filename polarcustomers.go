@@ -28,13 +28,6 @@ func newPolarCustomers(sdkConfig sdkConfiguration) *PolarCustomers {
 // Get Customer
 // Get a customer by ID for the authenticated customer or user.
 func (s *PolarCustomers) Get(ctx context.Context, id string, opts ...operations.Option) (*operations.CustomerPortalCustomersGetResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "customer_portal:customers:get",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	request := operations.CustomerPortalCustomersGetRequest{
 		ID: id,
 	}
@@ -60,6 +53,14 @@ func (s *PolarCustomers) Get(ctx context.Context, id string, opts ...operations.
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/v1/customer-portal/customers/{id}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "customer_portal:customers:get",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout

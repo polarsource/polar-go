@@ -30,13 +30,6 @@ func newFiles(sdkConfig sdkConfiguration) *Files {
 // List Files
 // List files.
 func (s *Files) List(ctx context.Context, organizationID *string, ids []string, page *int64, limit *int64, opts ...operations.Option) (*operations.FilesListResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "files:list",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	request := operations.FilesListRequest{
 		OrganizationID: organizationID,
 		Ids:            ids,
@@ -65,6 +58,14 @@ func (s *Files) List(ctx context.Context, organizationID *string, ids []string, 
 	opURL, err := url.JoinPath(baseURL, "/v1/files/")
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "files:list",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -326,13 +327,6 @@ func (s *Files) List(ctx context.Context, organizationID *string, ids []string, 
 // Create File
 // Create a file.
 func (s *Files) Create(ctx context.Context, request components.FileCreate, opts ...operations.Option) (*operations.FilesCreateResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "files:create",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -356,6 +350,13 @@ func (s *Files) Create(ctx context.Context, request components.FileCreate, opts 
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "files:create",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "Request", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -556,13 +557,6 @@ func (s *Files) Create(ctx context.Context, request components.FileCreate, opts 
 // Uploaded - Complete File Upload
 // Complete a file upload.
 func (s *Files) Uploaded(ctx context.Context, id string, fileUploadCompleted components.FileUploadCompleted, opts ...operations.Option) (*operations.FilesUploadedResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "files:uploaded",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	request := operations.FilesUploadedRequest{
 		ID:                  id,
 		FileUploadCompleted: fileUploadCompleted,
@@ -591,6 +585,13 @@ func (s *Files) Uploaded(ctx context.Context, id string, fileUploadCompleted com
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "files:uploaded",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "FileUploadCompleted", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -833,13 +834,6 @@ func (s *Files) Uploaded(ctx context.Context, id string, fileUploadCompleted com
 // Update File
 // Update a file.
 func (s *Files) Update(ctx context.Context, id string, filePatch components.FilePatch, opts ...operations.Option) (*operations.FilesUpdateResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "files:update",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	request := operations.FilesUpdateRequest{
 		ID:        id,
 		FilePatch: filePatch,
@@ -868,6 +862,13 @@ func (s *Files) Update(ctx context.Context, id string, filePatch components.File
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "files:update",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "FilePatch", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -1110,13 +1111,6 @@ func (s *Files) Update(ctx context.Context, id string, filePatch components.File
 // Delete File
 // Delete a file.
 func (s *Files) Delete(ctx context.Context, id string, opts ...operations.Option) (*operations.FilesDeleteResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "files:delete",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	request := operations.FilesDeleteRequest{
 		ID: id,
 	}
@@ -1142,6 +1136,14 @@ func (s *Files) Delete(ctx context.Context, id string, opts ...operations.Option
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/v1/files/{id}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "files:delete",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout

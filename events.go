@@ -30,13 +30,6 @@ func newEvents(sdkConfig sdkConfiguration) *Events {
 // List Events
 // List events.
 func (s *Events) List(ctx context.Context, request operations.EventsListRequest, opts ...operations.Option) (*operations.EventsListResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "events:list",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -58,6 +51,14 @@ func (s *Events) List(ctx context.Context, request operations.EventsListRequest,
 	opURL, err := url.JoinPath(baseURL, "/v1/events/")
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "events:list",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -327,13 +328,6 @@ func (s *Events) List(ctx context.Context, request operations.EventsListRequest,
 // Get Event
 // Get an event by ID.
 func (s *Events) Get(ctx context.Context, id string, opts ...operations.Option) (*operations.EventsGetResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "events:get",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	request := operations.EventsGetRequest{
 		ID: id,
 	}
@@ -359,6 +353,14 @@ func (s *Events) Get(ctx context.Context, id string, opts ...operations.Option) 
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/v1/events/{id}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "events:get",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -574,13 +576,6 @@ func (s *Events) Get(ctx context.Context, id string, opts ...operations.Option) 
 // Ingest Events
 // Ingest batch of events.
 func (s *Events) Ingest(ctx context.Context, request components.EventsIngest, opts ...operations.Option) (*operations.EventsIngestResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "events:ingest",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -604,6 +599,13 @@ func (s *Events) Ingest(ctx context.Context, request components.EventsIngest, op
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "events:ingest",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "Request", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err

@@ -329,6 +329,70 @@ func (u OrdersListQueryParamCustomerIDFilter) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type OrdersListQueryParamCustomerIDFilter: all fields are null")
 }
 
+type CheckoutIDFilterType string
+
+const (
+	CheckoutIDFilterTypeStr        CheckoutIDFilterType = "str"
+	CheckoutIDFilterTypeArrayOfStr CheckoutIDFilterType = "arrayOfStr"
+)
+
+// CheckoutIDFilter - Filter by checkout ID.
+type CheckoutIDFilter struct {
+	Str        *string  `queryParam:"inline"`
+	ArrayOfStr []string `queryParam:"inline"`
+
+	Type CheckoutIDFilterType
+}
+
+func CreateCheckoutIDFilterStr(str string) CheckoutIDFilter {
+	typ := CheckoutIDFilterTypeStr
+
+	return CheckoutIDFilter{
+		Str:  &str,
+		Type: typ,
+	}
+}
+
+func CreateCheckoutIDFilterArrayOfStr(arrayOfStr []string) CheckoutIDFilter {
+	typ := CheckoutIDFilterTypeArrayOfStr
+
+	return CheckoutIDFilter{
+		ArrayOfStr: arrayOfStr,
+		Type:       typ,
+	}
+}
+
+func (u *CheckoutIDFilter) UnmarshalJSON(data []byte) error {
+
+	var str string = ""
+	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
+		u.Str = &str
+		u.Type = CheckoutIDFilterTypeStr
+		return nil
+	}
+
+	var arrayOfStr []string = []string{}
+	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, true); err == nil {
+		u.ArrayOfStr = arrayOfStr
+		u.Type = CheckoutIDFilterTypeArrayOfStr
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for CheckoutIDFilter", string(data))
+}
+
+func (u CheckoutIDFilter) MarshalJSON() ([]byte, error) {
+	if u.Str != nil {
+		return utils.MarshalJSON(u.Str, "", true)
+	}
+
+	if u.ArrayOfStr != nil {
+		return utils.MarshalJSON(u.ArrayOfStr, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type CheckoutIDFilter: all fields are null")
+}
+
 type OrdersListRequest struct {
 	// Filter by organization ID.
 	OrganizationID *OrdersListQueryParamOrganizationIDFilter `queryParam:"style=form,explode=true,name=organization_id"`
@@ -340,6 +404,8 @@ type OrdersListRequest struct {
 	DiscountID *QueryParamDiscountIDFilter `queryParam:"style=form,explode=true,name=discount_id"`
 	// Filter by customer ID.
 	CustomerID *OrdersListQueryParamCustomerIDFilter `queryParam:"style=form,explode=true,name=customer_id"`
+	// Filter by checkout ID.
+	CheckoutID *CheckoutIDFilter `queryParam:"style=form,explode=true,name=checkout_id"`
 	// Page number, defaults to 1.
 	Page *int64 `default:"1" queryParam:"style=form,explode=true,name=page"`
 	// Size of a page, defaults to 10. Maximum is 100.
@@ -392,6 +458,13 @@ func (o *OrdersListRequest) GetCustomerID() *OrdersListQueryParamCustomerIDFilte
 		return nil
 	}
 	return o.CustomerID
+}
+
+func (o *OrdersListRequest) GetCheckoutID() *CheckoutIDFilter {
+	if o == nil {
+		return nil
+	}
+	return o.CheckoutID
 }
 
 func (o *OrdersListRequest) GetPage() *int64 {

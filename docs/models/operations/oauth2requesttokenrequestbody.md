@@ -3,15 +3,15 @@
 
 ## Supported Types
 
-### Onev11oauth21tokenPostXComponentsAuthorizationCodeTokenRequest
+### AuthorizationCodeTokenRequest
 
 ```go
-oauth2RequestTokenRequestBody := operations.CreateOauth2RequestTokenRequestBodyAuthorizationCode(components.Onev11oauth21tokenPostXComponentsAuthorizationCodeTokenRequest{/* values here */})
+oauth2RequestTokenRequestBody := operations.CreateOauth2RequestTokenRequestBodyAuthorizationCodeTokenRequest(components.AuthorizationCodeTokenRequest{/* values here */})
 ```
 
-### Onev11oauth21tokenPostXComponentsRefreshTokenRequest
+### RefreshTokenRequest
 
 ```go
-oauth2RequestTokenRequestBody := operations.CreateOauth2RequestTokenRequestBodyRefreshToken(components.Onev11oauth21tokenPostXComponentsRefreshTokenRequest{/* values here */})
+oauth2RequestTokenRequestBody := operations.CreateOauth2RequestTokenRequestBodyRefreshTokenRequest(components.RefreshTokenRequest{/* values here */})
 ```
 

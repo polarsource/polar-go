@@ -28,13 +28,6 @@ func newPolarOrganizations(sdkConfig sdkConfiguration) *PolarOrganizations {
 // Get Organization
 // Get a customer portal's organization by slug.
 func (s *PolarOrganizations) Get(ctx context.Context, slug string, opts ...operations.Option) (*operations.CustomerPortalOrganizationsGetResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "customer_portal:organizations:get",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	request := operations.CustomerPortalOrganizationsGetRequest{
 		Slug: slug,
 	}
@@ -60,6 +53,14 @@ func (s *PolarOrganizations) Get(ctx context.Context, slug string, opts ...opera
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/v1/customer-portal/organizations/{slug}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "customer_portal:organizations:get",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -193,12 +194,12 @@ func (s *PolarOrganizations) Get(ctx context.Context, slug string, opts ...opera
 				return nil, err
 			}
 
-			var out components.Organization
+			var out components.CustomerOrganization
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.Organization = &out
+			res.CustomerOrganization = &out
 		default:
 			rawBody, err := utils.ConsumeRawBody(httpRes)
 			if err != nil {

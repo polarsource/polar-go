@@ -30,13 +30,6 @@ func newCheckouts(sdkConfig sdkConfiguration) *Checkouts {
 // List Checkout Sessions
 // List checkout sessions.
 func (s *Checkouts) List(ctx context.Context, request operations.CheckoutsListRequest, opts ...operations.Option) (*operations.CheckoutsListResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "checkouts:list",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -58,6 +51,14 @@ func (s *Checkouts) List(ctx context.Context, request operations.CheckoutsListRe
 	opURL, err := url.JoinPath(baseURL, "/v1/checkouts/")
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "checkouts:list",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -322,13 +323,6 @@ func (s *Checkouts) List(ctx context.Context, request operations.CheckoutsListRe
 // Create Checkout Session
 // Create a checkout session.
 func (s *Checkouts) Create(ctx context.Context, request components.CheckoutCreate, opts ...operations.Option) (*operations.CheckoutsCreateResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "checkouts:create",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -352,6 +346,13 @@ func (s *Checkouts) Create(ctx context.Context, request components.CheckoutCreat
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "checkouts:create",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "Request", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -552,13 +553,6 @@ func (s *Checkouts) Create(ctx context.Context, request components.CheckoutCreat
 // Get Checkout Session
 // Get a checkout session by ID.
 func (s *Checkouts) Get(ctx context.Context, id string, opts ...operations.Option) (*operations.CheckoutsGetResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "checkouts:get",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	request := operations.CheckoutsGetRequest{
 		ID: id,
 	}
@@ -584,6 +578,14 @@ func (s *Checkouts) Get(ctx context.Context, id string, opts ...operations.Optio
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/v1/checkouts/{id}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "checkouts:get",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -799,13 +801,6 @@ func (s *Checkouts) Get(ctx context.Context, id string, opts ...operations.Optio
 // Update Checkout Session
 // Update a checkout session.
 func (s *Checkouts) Update(ctx context.Context, id string, checkoutUpdate components.CheckoutUpdate, opts ...operations.Option) (*operations.CheckoutsUpdateResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "checkouts:update",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	request := operations.CheckoutsUpdateRequest{
 		ID:             id,
 		CheckoutUpdate: checkoutUpdate,
@@ -834,6 +829,13 @@ func (s *Checkouts) Update(ctx context.Context, id string, checkoutUpdate compon
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "checkouts:update",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "CheckoutUpdate", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -994,7 +996,7 @@ func (s *Checkouts) Update(ctx context.Context, id string, checkoutUpdate compon
 				return nil, err
 			}
 
-			var out apierrors.AlreadyActiveSubscriptionError
+			var out apierrors.CheckoutForbiddenError
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
@@ -1076,13 +1078,6 @@ func (s *Checkouts) Update(ctx context.Context, id string, checkoutUpdate compon
 // ClientGet - Get Checkout Session from Client
 // Get a checkout session by client secret.
 func (s *Checkouts) ClientGet(ctx context.Context, clientSecret string, opts ...operations.Option) (*operations.CheckoutsClientGetResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "checkouts:client_get",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	request := operations.CheckoutsClientGetRequest{
 		ClientSecret: clientSecret,
 	}
@@ -1108,6 +1103,14 @@ func (s *Checkouts) ClientGet(ctx context.Context, clientSecret string, opts ...
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/v1/checkouts/client/{client_secret}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "checkouts:client_get",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -1323,13 +1326,6 @@ func (s *Checkouts) ClientGet(ctx context.Context, clientSecret string, opts ...
 // ClientUpdate - Update Checkout Session from Client
 // Update a checkout session by client secret.
 func (s *Checkouts) ClientUpdate(ctx context.Context, clientSecret string, checkoutUpdatePublic components.CheckoutUpdatePublic, opts ...operations.Option) (*operations.CheckoutsClientUpdateResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "checkouts:client_update",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	request := operations.CheckoutsClientUpdateRequest{
 		ClientSecret:         clientSecret,
 		CheckoutUpdatePublic: checkoutUpdatePublic,
@@ -1358,6 +1354,13 @@ func (s *Checkouts) ClientUpdate(ctx context.Context, clientSecret string, check
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "checkouts:client_update",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "CheckoutUpdatePublic", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -1518,7 +1521,7 @@ func (s *Checkouts) ClientUpdate(ctx context.Context, clientSecret string, check
 				return nil, err
 			}
 
-			var out apierrors.AlreadyActiveSubscriptionError
+			var out apierrors.CheckoutForbiddenError
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
@@ -1602,13 +1605,6 @@ func (s *Checkouts) ClientUpdate(ctx context.Context, clientSecret string, check
 //
 // Orders and subscriptions will be processed.
 func (s *Checkouts) ClientConfirm(ctx context.Context, clientSecret string, checkoutConfirmStripe components.CheckoutConfirmStripe, opts ...operations.Option) (*operations.CheckoutsClientConfirmResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "checkouts:client_confirm",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	request := operations.CheckoutsClientConfirmRequest{
 		ClientSecret:          clientSecret,
 		CheckoutConfirmStripe: checkoutConfirmStripe,
@@ -1637,6 +1633,13 @@ func (s *Checkouts) ClientConfirm(ctx context.Context, clientSecret string, chec
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "checkouts:client_confirm",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "CheckoutConfirmStripe", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -1745,7 +1748,7 @@ func (s *Checkouts) ClientConfirm(ctx context.Context, clientSecret string, chec
 
 			_, err = s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
 			return nil, err
-		} else if utils.MatchStatusCodes([]string{"403", "404", "422", "4XX", "5XX"}, httpRes.StatusCode) {
+		} else if utils.MatchStatusCodes([]string{"400", "403", "404", "422", "4XX", "5XX"}, httpRes.StatusCode) {
 			_httpRes, err := s.sdkConfiguration.Hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
 			if err != nil {
 				return nil, err
@@ -1789,6 +1792,27 @@ func (s *Checkouts) ClientConfirm(ctx context.Context, clientSecret string, chec
 			}
 			return nil, apierrors.NewAPIError(fmt.Sprintf("unknown content-type received: %s", httpRes.Header.Get("Content-Type")), httpRes.StatusCode, string(rawBody), httpRes)
 		}
+	case httpRes.StatusCode == 400:
+		switch {
+		case utils.MatchContentType(httpRes.Header.Get("Content-Type"), `application/json`):
+			rawBody, err := utils.ConsumeRawBody(httpRes)
+			if err != nil {
+				return nil, err
+			}
+
+			var out apierrors.PaymentError
+			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
+				return nil, err
+			}
+
+			return nil, &out
+		default:
+			rawBody, err := utils.ConsumeRawBody(httpRes)
+			if err != nil {
+				return nil, err
+			}
+			return nil, apierrors.NewAPIError(fmt.Sprintf("unknown content-type received: %s", httpRes.Header.Get("Content-Type")), httpRes.StatusCode, string(rawBody), httpRes)
+		}
 	case httpRes.StatusCode == 403:
 		switch {
 		case utils.MatchContentType(httpRes.Header.Get("Content-Type"), `application/json`):
@@ -1797,7 +1821,7 @@ func (s *Checkouts) ClientConfirm(ctx context.Context, clientSecret string, chec
 				return nil, err
 			}
 
-			var out apierrors.AlreadyActiveSubscriptionError
+			var out apierrors.CheckoutForbiddenError
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}

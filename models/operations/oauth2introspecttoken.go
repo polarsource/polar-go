@@ -3,71 +3,8 @@
 package operations
 
 import (
-	"encoding/json"
-	"fmt"
 	"github.com/polarsource/polar-go/models/components"
 )
-
-type Oauth2IntrospectTokenTokenTypeHint string
-
-const (
-	Oauth2IntrospectTokenTokenTypeHintAccessToken  Oauth2IntrospectTokenTokenTypeHint = "access_token"
-	Oauth2IntrospectTokenTokenTypeHintRefreshToken Oauth2IntrospectTokenTokenTypeHint = "refresh_token"
-)
-
-func (e Oauth2IntrospectTokenTokenTypeHint) ToPointer() *Oauth2IntrospectTokenTokenTypeHint {
-	return &e
-}
-func (e *Oauth2IntrospectTokenTokenTypeHint) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "access_token":
-		fallthrough
-	case "refresh_token":
-		*e = Oauth2IntrospectTokenTokenTypeHint(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for Oauth2IntrospectTokenTokenTypeHint: %v", v)
-	}
-}
-
-type Oauth2IntrospectTokenIntrospectTokenRequest struct {
-	Token         string                              `form:"name=token"`
-	TokenTypeHint *Oauth2IntrospectTokenTokenTypeHint `form:"name=token_type_hint"`
-	ClientID      string                              `form:"name=client_id"`
-	ClientSecret  string                              `form:"name=client_secret"`
-}
-
-func (o *Oauth2IntrospectTokenIntrospectTokenRequest) GetToken() string {
-	if o == nil {
-		return ""
-	}
-	return o.Token
-}
-
-func (o *Oauth2IntrospectTokenIntrospectTokenRequest) GetTokenTypeHint() *Oauth2IntrospectTokenTokenTypeHint {
-	if o == nil {
-		return nil
-	}
-	return o.TokenTypeHint
-}
-
-func (o *Oauth2IntrospectTokenIntrospectTokenRequest) GetClientID() string {
-	if o == nil {
-		return ""
-	}
-	return o.ClientID
-}
-
-func (o *Oauth2IntrospectTokenIntrospectTokenRequest) GetClientSecret() string {
-	if o == nil {
-		return ""
-	}
-	return o.ClientSecret
-}
 
 type Oauth2IntrospectTokenResponse struct {
 	HTTPMeta components.HTTPMetadata `json:"-"`

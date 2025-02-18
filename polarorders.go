@@ -30,13 +30,6 @@ func newPolarOrders(sdkConfig sdkConfiguration) *PolarOrders {
 // List Orders
 // List orders of the authenticated customer or user.
 func (s *PolarOrders) List(ctx context.Context, request operations.CustomerPortalOrdersListRequest, opts ...operations.Option) (*operations.CustomerPortalOrdersListResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "customer_portal:orders:list",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -58,6 +51,14 @@ func (s *PolarOrders) List(ctx context.Context, request operations.CustomerPorta
 	opURL, err := url.JoinPath(baseURL, "/v1/customer-portal/orders/")
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "customer_portal:orders:list",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -325,13 +326,6 @@ func (s *PolarOrders) List(ctx context.Context, request operations.CustomerPorta
 // Get Order
 // Get an order by ID for the authenticated customer or user.
 func (s *PolarOrders) Get(ctx context.Context, id string, opts ...operations.Option) (*operations.CustomerPortalOrdersGetResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "customer_portal:orders:get",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	request := operations.CustomerPortalOrdersGetRequest{
 		ID: id,
 	}
@@ -357,6 +351,14 @@ func (s *PolarOrders) Get(ctx context.Context, id string, opts ...operations.Opt
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/v1/customer-portal/orders/{id}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "customer_portal:orders:get",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -572,13 +574,6 @@ func (s *PolarOrders) Get(ctx context.Context, id string, opts ...operations.Opt
 // Invoice - Get Order Invoice
 // Get an order's invoice data.
 func (s *PolarOrders) Invoice(ctx context.Context, id string, opts ...operations.Option) (*operations.CustomerPortalOrdersInvoiceResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "customer_portal:orders:invoice",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	request := operations.CustomerPortalOrdersInvoiceRequest{
 		ID: id,
 	}
@@ -604,6 +599,14 @@ func (s *PolarOrders) Invoice(ctx context.Context, id string, opts ...operations
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/v1/customer-portal/orders/{id}/invoice", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "customer_portal:orders:invoice",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout

@@ -30,13 +30,6 @@ func newMeters(sdkConfig sdkConfiguration) *Meters {
 // List Meters
 // List meters.
 func (s *Meters) List(ctx context.Context, request operations.MetersListRequest, opts ...operations.Option) (*operations.MetersListResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "meters:list",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -58,6 +51,14 @@ func (s *Meters) List(ctx context.Context, request operations.MetersListRequest,
 	opURL, err := url.JoinPath(baseURL, "/v1/meters/")
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "meters:list",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -323,13 +324,6 @@ func (s *Meters) List(ctx context.Context, request operations.MetersListRequest,
 // Create Meter
 // Create a meter.
 func (s *Meters) Create(ctx context.Context, request components.MeterCreate, opts ...operations.Option) (*operations.MetersCreateResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "meters:create",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -353,6 +347,13 @@ func (s *Meters) Create(ctx context.Context, request components.MeterCreate, opt
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "meters:create",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "Request", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -553,13 +554,6 @@ func (s *Meters) Create(ctx context.Context, request components.MeterCreate, opt
 // Get Meter
 // Get a meter by ID.
 func (s *Meters) Get(ctx context.Context, id string, opts ...operations.Option) (*operations.MetersGetResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "meters:get",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	request := operations.MetersGetRequest{
 		ID: id,
 	}
@@ -585,6 +579,14 @@ func (s *Meters) Get(ctx context.Context, id string, opts ...operations.Option) 
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/v1/meters/{id}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "meters:get",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -800,13 +802,6 @@ func (s *Meters) Get(ctx context.Context, id string, opts ...operations.Option) 
 // Update Meter
 // Update a meter.
 func (s *Meters) Update(ctx context.Context, id string, meterUpdate components.MeterUpdate, opts ...operations.Option) (*operations.MetersUpdateResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "meters:update",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	request := operations.MetersUpdateRequest{
 		ID:          id,
 		MeterUpdate: meterUpdate,
@@ -835,6 +830,13 @@ func (s *Meters) Update(ctx context.Context, id string, meterUpdate components.M
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "meters:update",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "MeterUpdate", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -1056,13 +1058,6 @@ func (s *Meters) Update(ctx context.Context, id string, meterUpdate components.M
 // Events - Get Meter Events
 // Get events matching the filter of a meter.
 func (s *Meters) Events(ctx context.Context, id string, page *int64, limit *int64, opts ...operations.Option) (*operations.MetersEventsResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "meters:events",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	request := operations.MetersEventsRequest{
 		ID:    id,
 		Page:  page,
@@ -1090,6 +1085,14 @@ func (s *Meters) Events(ctx context.Context, id string, page *int64, limit *int6
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/v1/meters/{id}/events", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "meters:events",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -1371,13 +1374,6 @@ func (s *Meters) Events(ctx context.Context, id string, page *int64, limit *int6
 // Quantities - Get Meter Quantities
 // Get quantities of a meter over a time period.
 func (s *Meters) Quantities(ctx context.Context, request operations.MetersQuantitiesRequest, opts ...operations.Option) (*operations.MetersQuantitiesResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "meters:quantities",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -1399,6 +1395,14 @@ func (s *Meters) Quantities(ctx context.Context, request operations.MetersQuanti
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/v1/meters/{id}/quantities", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "meters:quantities",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout

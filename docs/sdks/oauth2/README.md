@@ -86,8 +86,8 @@ func main() {
         polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )
 
-    res, err := s.Oauth2.Token(ctx, operations.CreateOauth2RequestTokenRequestBodyAuthorizationCode(
-        components.Onev11oauth21tokenPostXComponentsAuthorizationCodeTokenRequest{
+    res, err := s.Oauth2.Token(ctx, operations.CreateOauth2RequestTokenRequestBodyAuthorizationCodeTokenRequest(
+        components.AuthorizationCodeTokenRequest{
             ClientID: "<id>",
             ClientSecret: "<value>",
             Code: "<value>",
@@ -134,7 +134,7 @@ import(
 	"context"
 	"os"
 	polargo "github.com/polarsource/polar-go"
-	"github.com/polarsource/polar-go/models/operations"
+	"github.com/polarsource/polar-go/models/components"
 	"log"
 )
 
@@ -145,7 +145,7 @@ func main() {
         polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )
 
-    res, err := s.Oauth2.Revoke(ctx, operations.Oauth2RevokeTokenRevokeTokenRequest{
+    res, err := s.Oauth2.Revoke(ctx, components.RevokeTokenRequest{
         Token: "<value>",
         ClientID: "<id>",
         ClientSecret: "<value>",
@@ -161,11 +161,11 @@ func main() {
 
 ### Parameters
 
-| Parameter                                                                                                        | Type                                                                                                             | Required                                                                                                         | Description                                                                                                      |
-| ---------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
-| `ctx`                                                                                                            | [context.Context](https://pkg.go.dev/context#Context)                                                            | :heavy_check_mark:                                                                                               | The context to use for the request.                                                                              |
-| `request`                                                                                                        | [operations.Oauth2RevokeTokenRevokeTokenRequest](../../models/operations/oauth2revoketokenrevoketokenrequest.md) | :heavy_check_mark:                                                                                               | The request object to use for the request.                                                                       |
-| `opts`                                                                                                           | [][operations.Option](../../models/operations/option.md)                                                         | :heavy_minus_sign:                                                                                               | The options for this request.                                                                                    |
+| Parameter                                                                      | Type                                                                           | Required                                                                       | Description                                                                    |
+| ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ |
+| `ctx`                                                                          | [context.Context](https://pkg.go.dev/context#Context)                          | :heavy_check_mark:                                                             | The context to use for the request.                                            |
+| `request`                                                                      | [components.RevokeTokenRequest](../../models/components/revoketokenrequest.md) | :heavy_check_mark:                                                             | The request object to use for the request.                                     |
+| `opts`                                                                         | [][operations.Option](../../models/operations/option.md)                       | :heavy_minus_sign:                                                             | The options for this request.                                                  |
 
 ### Response
 
@@ -190,7 +190,7 @@ import(
 	"context"
 	"os"
 	polargo "github.com/polarsource/polar-go"
-	"github.com/polarsource/polar-go/models/operations"
+	"github.com/polarsource/polar-go/models/components"
 	"log"
 )
 
@@ -201,7 +201,7 @@ func main() {
         polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )
 
-    res, err := s.Oauth2.Introspect(ctx, operations.Oauth2IntrospectTokenIntrospectTokenRequest{
+    res, err := s.Oauth2.Introspect(ctx, components.IntrospectTokenRequest{
         Token: "<value>",
         ClientID: "<id>",
         ClientSecret: "<value>",
@@ -217,11 +217,11 @@ func main() {
 
 ### Parameters
 
-| Parameter                                                                                                                        | Type                                                                                                                             | Required                                                                                                                         | Description                                                                                                                      |
-| -------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
-| `ctx`                                                                                                                            | [context.Context](https://pkg.go.dev/context#Context)                                                                            | :heavy_check_mark:                                                                                                               | The context to use for the request.                                                                                              |
-| `request`                                                                                                                        | [operations.Oauth2IntrospectTokenIntrospectTokenRequest](../../models/operations/oauth2introspecttokenintrospecttokenrequest.md) | :heavy_check_mark:                                                                                                               | The request object to use for the request.                                                                                       |
-| `opts`                                                                                                                           | [][operations.Option](../../models/operations/option.md)                                                                         | :heavy_minus_sign:                                                                                                               | The options for this request.                                                                                                    |
+| Parameter                                                                              | Type                                                                                   | Required                                                                               | Description                                                                            |
+| -------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
+| `ctx`                                                                                  | [context.Context](https://pkg.go.dev/context#Context)                                  | :heavy_check_mark:                                                                     | The context to use for the request.                                                    |
+| `request`                                                                              | [components.IntrospectTokenRequest](../../models/components/introspecttokenrequest.md) | :heavy_check_mark:                                                                     | The request object to use for the request.                                             |
+| `opts`                                                                                 | [][operations.Option](../../models/operations/option.md)                               | :heavy_minus_sign:                                                                     | The options for this request.                                                          |
 
 ### Response
 

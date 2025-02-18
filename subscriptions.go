@@ -30,13 +30,6 @@ func newSubscriptions(sdkConfig sdkConfiguration) *Subscriptions {
 // List Subscriptions
 // List subscriptions.
 func (s *Subscriptions) List(ctx context.Context, request operations.SubscriptionsListRequest, opts ...operations.Option) (*operations.SubscriptionsListResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "subscriptions:list",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -58,6 +51,14 @@ func (s *Subscriptions) List(ctx context.Context, request operations.Subscriptio
 	opURL, err := url.JoinPath(baseURL, "/v1/subscriptions/")
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "subscriptions:list",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -325,13 +326,6 @@ func (s *Subscriptions) List(ctx context.Context, request operations.Subscriptio
 // Export Subscriptions
 // Export subscriptions as a CSV file.
 func (s *Subscriptions) Export(ctx context.Context, organizationID *operations.OrganizationID, opts ...operations.Option) (*operations.SubscriptionsExportResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "subscriptions:export",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	request := operations.SubscriptionsExportRequest{
 		OrganizationID: organizationID,
 	}
@@ -357,6 +351,14 @@ func (s *Subscriptions) Export(ctx context.Context, organizationID *operations.O
 	opURL, err := url.JoinPath(baseURL, "/v1/subscriptions/export")
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "subscriptions:export",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -555,13 +557,6 @@ func (s *Subscriptions) Export(ctx context.Context, organizationID *operations.O
 // Get Subscription
 // Get a subscription by ID.
 func (s *Subscriptions) Get(ctx context.Context, id string, opts ...operations.Option) (*operations.SubscriptionsGetResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "subscriptions:get",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	request := operations.SubscriptionsGetRequest{
 		ID: id,
 	}
@@ -587,6 +582,14 @@ func (s *Subscriptions) Get(ctx context.Context, id string, opts ...operations.O
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/v1/subscriptions/{id}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "subscriptions:get",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -802,13 +805,6 @@ func (s *Subscriptions) Get(ctx context.Context, id string, opts ...operations.O
 // Update Subscription
 // Update a subscription.
 func (s *Subscriptions) Update(ctx context.Context, id string, subscriptionUpdate components.SubscriptionUpdate, opts ...operations.Option) (*operations.SubscriptionsUpdateResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "subscriptions:update",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	request := operations.SubscriptionsUpdateRequest{
 		ID:                 id,
 		SubscriptionUpdate: subscriptionUpdate,
@@ -837,6 +833,13 @@ func (s *Subscriptions) Update(ctx context.Context, id string, subscriptionUpdat
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "subscriptions:update",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "SubscriptionUpdate", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -1079,13 +1082,6 @@ func (s *Subscriptions) Update(ctx context.Context, id string, subscriptionUpdat
 // Revoke Subscription
 // Revoke a subscription, i.e cancel immediately.
 func (s *Subscriptions) Revoke(ctx context.Context, id string, opts ...operations.Option) (*operations.SubscriptionsRevokeResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "subscriptions:revoke",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	request := operations.SubscriptionsRevokeRequest{
 		ID: id,
 	}
@@ -1111,6 +1107,14 @@ func (s *Subscriptions) Revoke(ctx context.Context, id string, opts ...operation
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/v1/subscriptions/{id}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "subscriptions:revoke",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout

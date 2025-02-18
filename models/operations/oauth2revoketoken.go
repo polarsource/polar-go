@@ -3,71 +3,8 @@
 package operations
 
 import (
-	"encoding/json"
-	"fmt"
 	"github.com/polarsource/polar-go/models/components"
 )
-
-type TokenTypeHint string
-
-const (
-	TokenTypeHintAccessToken  TokenTypeHint = "access_token"
-	TokenTypeHintRefreshToken TokenTypeHint = "refresh_token"
-)
-
-func (e TokenTypeHint) ToPointer() *TokenTypeHint {
-	return &e
-}
-func (e *TokenTypeHint) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "access_token":
-		fallthrough
-	case "refresh_token":
-		*e = TokenTypeHint(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for TokenTypeHint: %v", v)
-	}
-}
-
-type Oauth2RevokeTokenRevokeTokenRequest struct {
-	Token         string         `form:"name=token"`
-	TokenTypeHint *TokenTypeHint `form:"name=token_type_hint"`
-	ClientID      string         `form:"name=client_id"`
-	ClientSecret  string         `form:"name=client_secret"`
-}
-
-func (o *Oauth2RevokeTokenRevokeTokenRequest) GetToken() string {
-	if o == nil {
-		return ""
-	}
-	return o.Token
-}
-
-func (o *Oauth2RevokeTokenRevokeTokenRequest) GetTokenTypeHint() *TokenTypeHint {
-	if o == nil {
-		return nil
-	}
-	return o.TokenTypeHint
-}
-
-func (o *Oauth2RevokeTokenRevokeTokenRequest) GetClientID() string {
-	if o == nil {
-		return ""
-	}
-	return o.ClientID
-}
-
-func (o *Oauth2RevokeTokenRevokeTokenRequest) GetClientSecret() string {
-	if o == nil {
-		return ""
-	}
-	return o.ClientSecret
-}
 
 type Oauth2RevokeTokenResponse struct {
 	HTTPMeta components.HTTPMetadata `json:"-"`

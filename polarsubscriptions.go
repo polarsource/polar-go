@@ -30,13 +30,6 @@ func newPolarSubscriptions(sdkConfig sdkConfiguration) *PolarSubscriptions {
 // List Subscriptions
 // List subscriptions of the authenticated customer or user.
 func (s *PolarSubscriptions) List(ctx context.Context, request operations.CustomerPortalSubscriptionsListRequest, opts ...operations.Option) (*operations.CustomerPortalSubscriptionsListResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "customer_portal:subscriptions:list",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -58,6 +51,14 @@ func (s *PolarSubscriptions) List(ctx context.Context, request operations.Custom
 	opURL, err := url.JoinPath(baseURL, "/v1/customer-portal/subscriptions/")
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "customer_portal:subscriptions:list",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -324,13 +325,6 @@ func (s *PolarSubscriptions) List(ctx context.Context, request operations.Custom
 // Get Subscription
 // Get a subscription for the authenticated customer or user.
 func (s *PolarSubscriptions) Get(ctx context.Context, id string, opts ...operations.Option) (*operations.CustomerPortalSubscriptionsGetResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "customer_portal:subscriptions:get",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	request := operations.CustomerPortalSubscriptionsGetRequest{
 		ID: id,
 	}
@@ -356,6 +350,14 @@ func (s *PolarSubscriptions) Get(ctx context.Context, id string, opts ...operati
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/v1/customer-portal/subscriptions/{id}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "customer_portal:subscriptions:get",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -571,13 +573,6 @@ func (s *PolarSubscriptions) Get(ctx context.Context, id string, opts ...operati
 // Update Subscription
 // Update a subscription of the authenticated customer or user.
 func (s *PolarSubscriptions) Update(ctx context.Context, id string, customerSubscriptionUpdate components.CustomerSubscriptionUpdate, opts ...operations.Option) (*operations.CustomerPortalSubscriptionsUpdateResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "customer_portal:subscriptions:update",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	request := operations.CustomerPortalSubscriptionsUpdateRequest{
 		ID:                         id,
 		CustomerSubscriptionUpdate: customerSubscriptionUpdate,
@@ -606,6 +601,13 @@ func (s *PolarSubscriptions) Update(ctx context.Context, id string, customerSubs
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "customer_portal:subscriptions:update",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "CustomerSubscriptionUpdate", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -848,13 +850,6 @@ func (s *PolarSubscriptions) Update(ctx context.Context, id string, customerSubs
 // Cancel Subscription
 // Cancel a subscription of the authenticated customer or user.
 func (s *PolarSubscriptions) Cancel(ctx context.Context, id string, opts ...operations.Option) (*operations.CustomerPortalSubscriptionsCancelResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "customer_portal:subscriptions:cancel",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	request := operations.CustomerPortalSubscriptionsCancelRequest{
 		ID: id,
 	}
@@ -880,6 +875,14 @@ func (s *PolarSubscriptions) Cancel(ctx context.Context, id string, opts ...oper
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/v1/customer-portal/subscriptions/{id}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "customer_portal:subscriptions:cancel",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout

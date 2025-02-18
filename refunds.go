@@ -30,13 +30,6 @@ func newRefunds(sdkConfig sdkConfiguration) *Refunds {
 // List Refunds
 // List products.
 func (s *Refunds) List(ctx context.Context, request operations.RefundsListRequest, opts ...operations.Option) (*operations.RefundsListResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "refunds:list",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -58,6 +51,14 @@ func (s *Refunds) List(ctx context.Context, request operations.RefundsListReques
 	opURL, err := url.JoinPath(baseURL, "/v1/refunds/")
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "refunds:list",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -326,13 +327,6 @@ func (s *Refunds) List(ctx context.Context, request operations.RefundsListReques
 // Create Refund
 // Create a refund.
 func (s *Refunds) Create(ctx context.Context, request components.RefundCreate, opts ...operations.Option) (*operations.RefundsCreateResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "refunds:create",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -356,6 +350,13 @@ func (s *Refunds) Create(ctx context.Context, request components.RefundCreate, o
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "refunds:create",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "Request", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err

@@ -30,13 +30,6 @@ func newAdvertisements(sdkConfig sdkConfiguration) *Advertisements {
 // List Campaigns
 // List active advertisement campaigns for a benefit.
 func (s *Advertisements) List(ctx context.Context, benefitID string, page *int64, limit *int64, sorting []components.AdvertisementSortProperty, opts ...operations.Option) (*operations.AdvertisementsListResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "advertisements:list",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	request := operations.AdvertisementsListRequest{
 		BenefitID: benefitID,
 		Page:      page,
@@ -65,6 +58,14 @@ func (s *Advertisements) List(ctx context.Context, benefitID string, page *int64
 	opURL, err := url.JoinPath(baseURL, "/v1/advertisements/")
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "advertisements:list",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -326,13 +327,6 @@ func (s *Advertisements) List(ctx context.Context, benefitID string, page *int64
 // Get Campaign
 // Get an advertisement campaign by ID.
 func (s *Advertisements) Get(ctx context.Context, id string, opts ...operations.Option) (*operations.AdvertisementsGetResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "advertisements:get",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	request := operations.AdvertisementsGetRequest{
 		ID: id,
 	}
@@ -358,6 +352,14 @@ func (s *Advertisements) Get(ctx context.Context, id string, opts ...operations.
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/v1/advertisements/{id}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "advertisements:get",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout

@@ -34,7 +34,7 @@ func main() {
     if err != nil {
         log.Fatal(err)
     }
-    if res.Organization != nil {
+    if res.CustomerOrganization != nil {
         // handle response
     }
 }
