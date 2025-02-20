@@ -11,48 +11,66 @@ import (
 type ProductPriceUnionType string
 
 const (
-	ProductPriceUnionTypeProductPriceRecurring ProductPriceUnionType = "ProductPriceRecurring"
-	ProductPriceUnionTypeProductPriceOneTime   ProductPriceUnionType = "ProductPriceOneTime"
+	ProductPriceUnionTypeProductPriceFixed  ProductPriceUnionType = "ProductPriceFixed"
+	ProductPriceUnionTypeProductPriceCustom ProductPriceUnionType = "ProductPriceCustom"
+	ProductPriceUnionTypeProductPriceFree   ProductPriceUnionType = "ProductPriceFree"
 )
 
 type ProductPrice struct {
-	ProductPriceRecurring *ProductPriceRecurring `queryParam:"inline"`
-	ProductPriceOneTime   *ProductPriceOneTime   `queryParam:"inline"`
+	ProductPriceFixed  *ProductPriceFixed  `queryParam:"inline"`
+	ProductPriceCustom *ProductPriceCustom `queryParam:"inline"`
+	ProductPriceFree   *ProductPriceFree   `queryParam:"inline"`
 
 	Type ProductPriceUnionType
 }
 
-func CreateProductPriceProductPriceRecurring(productPriceRecurring ProductPriceRecurring) ProductPrice {
-	typ := ProductPriceUnionTypeProductPriceRecurring
+func CreateProductPriceProductPriceFixed(productPriceFixed ProductPriceFixed) ProductPrice {
+	typ := ProductPriceUnionTypeProductPriceFixed
 
 	return ProductPrice{
-		ProductPriceRecurring: &productPriceRecurring,
-		Type:                  typ,
+		ProductPriceFixed: &productPriceFixed,
+		Type:              typ,
 	}
 }
 
-func CreateProductPriceProductPriceOneTime(productPriceOneTime ProductPriceOneTime) ProductPrice {
-	typ := ProductPriceUnionTypeProductPriceOneTime
+func CreateProductPriceProductPriceCustom(productPriceCustom ProductPriceCustom) ProductPrice {
+	typ := ProductPriceUnionTypeProductPriceCustom
 
 	return ProductPrice{
-		ProductPriceOneTime: &productPriceOneTime,
-		Type:                typ,
+		ProductPriceCustom: &productPriceCustom,
+		Type:               typ,
+	}
+}
+
+func CreateProductPriceProductPriceFree(productPriceFree ProductPriceFree) ProductPrice {
+	typ := ProductPriceUnionTypeProductPriceFree
+
+	return ProductPrice{
+		ProductPriceFree: &productPriceFree,
+		Type:             typ,
 	}
 }
 
 func (u *ProductPrice) UnmarshalJSON(data []byte) error {
 
-	var productPriceRecurring ProductPriceRecurring = ProductPriceRecurring{}
-	if err := utils.UnmarshalJSON(data, &productPriceRecurring, "", true, true); err == nil {
-		u.ProductPriceRecurring = &productPriceRecurring
-		u.Type = ProductPriceUnionTypeProductPriceRecurring
+	var productPriceFree ProductPriceFree = ProductPriceFree{}
+	if err := utils.UnmarshalJSON(data, &productPriceFree, "", true, true); err == nil {
+		u.ProductPriceFree = &productPriceFree
+		u.Type = ProductPriceUnionTypeProductPriceFree
 		return nil
 	}
 
-	var productPriceOneTime ProductPriceOneTime = ProductPriceOneTime{}
-	if err := utils.UnmarshalJSON(data, &productPriceOneTime, "", true, true); err == nil {
-		u.ProductPriceOneTime = &productPriceOneTime
-		u.Type = ProductPriceUnionTypeProductPriceOneTime
+	var productPriceFixed ProductPriceFixed = ProductPriceFixed{}
+	if err := utils.UnmarshalJSON(data, &productPriceFixed, "", true, true); err == nil {
+		u.ProductPriceFixed = &productPriceFixed
+		u.Type = ProductPriceUnionTypeProductPriceFixed
+		return nil
+	}
+
+	var productPriceCustom ProductPriceCustom = ProductPriceCustom{}
+	if err := utils.UnmarshalJSON(data, &productPriceCustom, "", true, true); err == nil {
+		u.ProductPriceCustom = &productPriceCustom
+		u.Type = ProductPriceUnionTypeProductPriceCustom
 		return nil
 	}
 
@@ -60,12 +78,16 @@ func (u *ProductPrice) UnmarshalJSON(data []byte) error {
 }
 
 func (u ProductPrice) MarshalJSON() ([]byte, error) {
-	if u.ProductPriceRecurring != nil {
-		return utils.MarshalJSON(u.ProductPriceRecurring, "", true)
+	if u.ProductPriceFixed != nil {
+		return utils.MarshalJSON(u.ProductPriceFixed, "", true)
 	}
 
-	if u.ProductPriceOneTime != nil {
-		return utils.MarshalJSON(u.ProductPriceOneTime, "", true)
+	if u.ProductPriceCustom != nil {
+		return utils.MarshalJSON(u.ProductPriceCustom, "", true)
+	}
+
+	if u.ProductPriceFree != nil {
+		return utils.MarshalJSON(u.ProductPriceFree, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type ProductPrice: all fields are null")

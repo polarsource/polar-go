@@ -18,7 +18,9 @@ type OrderProduct struct {
 	Name string `json:"name"`
 	// The description of the product.
 	Description *string `json:"description"`
-	// Whether the product is a subscription tier.
+	// The recurring interval of the product. If `None`, the product is a one-time purchase.
+	RecurringInterval *SubscriptionRecurringInterval `json:"recurring_interval"`
+	// Whether the product is a subscription.
 	IsRecurring bool `json:"is_recurring"`
 	// Whether the product is archived and no longer available.
 	IsArchived bool `json:"is_archived"`
@@ -70,6 +72,13 @@ func (o *OrderProduct) GetDescription() *string {
 		return nil
 	}
 	return o.Description
+}
+
+func (o *OrderProduct) GetRecurringInterval() *SubscriptionRecurringInterval {
+	if o == nil {
+		return nil
+	}
+	return o.RecurringInterval
 }
 
 func (o *OrderProduct) GetIsRecurring() bool {

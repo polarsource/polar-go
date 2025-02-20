@@ -3,21 +3,15 @@
 
 ## Supported Types
 
-### ProductPriceOneTimeFixedCreate
+### LegacyRecurringProductPrice
 
 ```go
-prices := components.CreatePricesProductPriceOneTimeFixedCreate(components.ProductPriceOneTimeFixedCreate{/* values here */})
+prices := components.CreatePricesLegacyRecurringProductPrice(components.LegacyRecurringProductPrice{/* values here */})
 ```
 
-### ProductPriceOneTimeCustomCreate
+### ProductPrice
 
 ```go
-prices := components.CreatePricesProductPriceOneTimeCustomCreate(components.ProductPriceOneTimeCustomCreate{/* values here */})
-```
-
-### ProductPriceOneTimeFreeCreate
-
-```go
-prices := components.CreatePricesProductPriceOneTimeFreeCreate(components.ProductPriceOneTimeFreeCreate{/* values here */})
+prices := components.CreatePricesProductPrice(components.ProductPrice{/* values here */})
 ```
 

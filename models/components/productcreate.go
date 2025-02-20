@@ -8,65 +8,257 @@ import (
 	"github.com/polarsource/polar-go/internal/utils"
 )
 
-type ProductCreateType string
+type ProductCreateMetadataType string
 
 const (
-	ProductCreateTypeProductRecurringCreate ProductCreateType = "ProductRecurringCreate"
-	ProductCreateTypeProductOneTimeCreate   ProductCreateType = "ProductOneTimeCreate"
+	ProductCreateMetadataTypeStr     ProductCreateMetadataType = "str"
+	ProductCreateMetadataTypeInteger ProductCreateMetadataType = "integer"
+	ProductCreateMetadataTypeBoolean ProductCreateMetadataType = "boolean"
 )
 
-type ProductCreate struct {
-	ProductRecurringCreate *ProductRecurringCreate `queryParam:"inline"`
-	ProductOneTimeCreate   *ProductOneTimeCreate   `queryParam:"inline"`
+type ProductCreateMetadata struct {
+	Str     *string `queryParam:"inline"`
+	Integer *int64  `queryParam:"inline"`
+	Boolean *bool   `queryParam:"inline"`
 
-	Type ProductCreateType
+	Type ProductCreateMetadataType
 }
 
-func CreateProductCreateProductRecurringCreate(productRecurringCreate ProductRecurringCreate) ProductCreate {
-	typ := ProductCreateTypeProductRecurringCreate
+func CreateProductCreateMetadataStr(str string) ProductCreateMetadata {
+	typ := ProductCreateMetadataTypeStr
 
-	return ProductCreate{
-		ProductRecurringCreate: &productRecurringCreate,
+	return ProductCreateMetadata{
+		Str:  &str,
+		Type: typ,
+	}
+}
+
+func CreateProductCreateMetadataInteger(integer int64) ProductCreateMetadata {
+	typ := ProductCreateMetadataTypeInteger
+
+	return ProductCreateMetadata{
+		Integer: &integer,
+		Type:    typ,
+	}
+}
+
+func CreateProductCreateMetadataBoolean(boolean bool) ProductCreateMetadata {
+	typ := ProductCreateMetadataTypeBoolean
+
+	return ProductCreateMetadata{
+		Boolean: &boolean,
+		Type:    typ,
+	}
+}
+
+func (u *ProductCreateMetadata) UnmarshalJSON(data []byte) error {
+
+	var str string = ""
+	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
+		u.Str = &str
+		u.Type = ProductCreateMetadataTypeStr
+		return nil
+	}
+
+	var integer int64 = int64(0)
+	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
+		u.Integer = &integer
+		u.Type = ProductCreateMetadataTypeInteger
+		return nil
+	}
+
+	var boolean bool = false
+	if err := utils.UnmarshalJSON(data, &boolean, "", true, true); err == nil {
+		u.Boolean = &boolean
+		u.Type = ProductCreateMetadataTypeBoolean
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for ProductCreateMetadata", string(data))
+}
+
+func (u ProductCreateMetadata) MarshalJSON() ([]byte, error) {
+	if u.Str != nil {
+		return utils.MarshalJSON(u.Str, "", true)
+	}
+
+	if u.Integer != nil {
+		return utils.MarshalJSON(u.Integer, "", true)
+	}
+
+	if u.Boolean != nil {
+		return utils.MarshalJSON(u.Boolean, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type ProductCreateMetadata: all fields are null")
+}
+
+type ProductCreatePricesType string
+
+const (
+	ProductCreatePricesTypeProductPriceFixedCreate  ProductCreatePricesType = "ProductPriceFixedCreate"
+	ProductCreatePricesTypeProductPriceCustomCreate ProductCreatePricesType = "ProductPriceCustomCreate"
+	ProductCreatePricesTypeProductPriceFreeCreate   ProductCreatePricesType = "ProductPriceFreeCreate"
+)
+
+type ProductCreatePrices struct {
+	ProductPriceFixedCreate  *ProductPriceFixedCreate  `queryParam:"inline"`
+	ProductPriceCustomCreate *ProductPriceCustomCreate `queryParam:"inline"`
+	ProductPriceFreeCreate   *ProductPriceFreeCreate   `queryParam:"inline"`
+
+	Type ProductCreatePricesType
+}
+
+func CreateProductCreatePricesProductPriceFixedCreate(productPriceFixedCreate ProductPriceFixedCreate) ProductCreatePrices {
+	typ := ProductCreatePricesTypeProductPriceFixedCreate
+
+	return ProductCreatePrices{
+		ProductPriceFixedCreate: &productPriceFixedCreate,
+		Type:                    typ,
+	}
+}
+
+func CreateProductCreatePricesProductPriceCustomCreate(productPriceCustomCreate ProductPriceCustomCreate) ProductCreatePrices {
+	typ := ProductCreatePricesTypeProductPriceCustomCreate
+
+	return ProductCreatePrices{
+		ProductPriceCustomCreate: &productPriceCustomCreate,
+		Type:                     typ,
+	}
+}
+
+func CreateProductCreatePricesProductPriceFreeCreate(productPriceFreeCreate ProductPriceFreeCreate) ProductCreatePrices {
+	typ := ProductCreatePricesTypeProductPriceFreeCreate
+
+	return ProductCreatePrices{
+		ProductPriceFreeCreate: &productPriceFreeCreate,
 		Type:                   typ,
 	}
 }
 
-func CreateProductCreateProductOneTimeCreate(productOneTimeCreate ProductOneTimeCreate) ProductCreate {
-	typ := ProductCreateTypeProductOneTimeCreate
+func (u *ProductCreatePrices) UnmarshalJSON(data []byte) error {
 
-	return ProductCreate{
-		ProductOneTimeCreate: &productOneTimeCreate,
-		Type:                 typ,
-	}
-}
-
-func (u *ProductCreate) UnmarshalJSON(data []byte) error {
-
-	var productRecurringCreate ProductRecurringCreate = ProductRecurringCreate{}
-	if err := utils.UnmarshalJSON(data, &productRecurringCreate, "", true, true); err == nil {
-		u.ProductRecurringCreate = &productRecurringCreate
-		u.Type = ProductCreateTypeProductRecurringCreate
+	var productPriceFreeCreate ProductPriceFreeCreate = ProductPriceFreeCreate{}
+	if err := utils.UnmarshalJSON(data, &productPriceFreeCreate, "", true, true); err == nil {
+		u.ProductPriceFreeCreate = &productPriceFreeCreate
+		u.Type = ProductCreatePricesTypeProductPriceFreeCreate
 		return nil
 	}
 
-	var productOneTimeCreate ProductOneTimeCreate = ProductOneTimeCreate{}
-	if err := utils.UnmarshalJSON(data, &productOneTimeCreate, "", true, true); err == nil {
-		u.ProductOneTimeCreate = &productOneTimeCreate
-		u.Type = ProductCreateTypeProductOneTimeCreate
+	var productPriceFixedCreate ProductPriceFixedCreate = ProductPriceFixedCreate{}
+	if err := utils.UnmarshalJSON(data, &productPriceFixedCreate, "", true, true); err == nil {
+		u.ProductPriceFixedCreate = &productPriceFixedCreate
+		u.Type = ProductCreatePricesTypeProductPriceFixedCreate
 		return nil
 	}
 
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for ProductCreate", string(data))
+	var productPriceCustomCreate ProductPriceCustomCreate = ProductPriceCustomCreate{}
+	if err := utils.UnmarshalJSON(data, &productPriceCustomCreate, "", true, true); err == nil {
+		u.ProductPriceCustomCreate = &productPriceCustomCreate
+		u.Type = ProductCreatePricesTypeProductPriceCustomCreate
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for ProductCreatePrices", string(data))
 }
 
-func (u ProductCreate) MarshalJSON() ([]byte, error) {
-	if u.ProductRecurringCreate != nil {
-		return utils.MarshalJSON(u.ProductRecurringCreate, "", true)
+func (u ProductCreatePrices) MarshalJSON() ([]byte, error) {
+	if u.ProductPriceFixedCreate != nil {
+		return utils.MarshalJSON(u.ProductPriceFixedCreate, "", true)
 	}
 
-	if u.ProductOneTimeCreate != nil {
-		return utils.MarshalJSON(u.ProductOneTimeCreate, "", true)
+	if u.ProductPriceCustomCreate != nil {
+		return utils.MarshalJSON(u.ProductPriceCustomCreate, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type ProductCreate: all fields are null")
+	if u.ProductPriceFreeCreate != nil {
+		return utils.MarshalJSON(u.ProductPriceFreeCreate, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type ProductCreatePrices: all fields are null")
+}
+
+// ProductCreate - Schema to create a product.
+type ProductCreate struct {
+	// Key-value object allowing you to store additional information.
+	//
+	// The key must be a string with a maximum length of **40 characters**.
+	// The value must be either:
+	//
+	// * A string with a maximum length of **500 characters**
+	// * An integer
+	// * A boolean
+	//
+	// You can store up to **50 key-value pairs**.
+	Metadata map[string]ProductCreateMetadata `json:"metadata,omitempty"`
+	// The name of the product.
+	Name string `json:"name"`
+	// The description of the product.
+	Description *string `json:"description,omitempty"`
+	// The recurring interval of the product. If `None`, the product is a one-time purchase.
+	RecurringInterval *SubscriptionRecurringInterval `json:"recurring_interval"`
+	// List of available prices for this product. Currently, only a single price is supported.
+	Prices []ProductCreatePrices `json:"prices"`
+	// List of file IDs. Each one must be on the same organization as the product, of type `product_media` and correctly uploaded.
+	Medias []string `json:"medias,omitempty"`
+	// List of custom fields to attach.
+	AttachedCustomFields []AttachedCustomFieldCreate `json:"attached_custom_fields,omitempty"`
+	// The ID of the organization owning the product. **Required unless you use an organization token.**
+	OrganizationID *string `json:"organization_id,omitempty"`
+}
+
+func (o *ProductCreate) GetMetadata() map[string]ProductCreateMetadata {
+	if o == nil {
+		return nil
+	}
+	return o.Metadata
+}
+
+func (o *ProductCreate) GetName() string {
+	if o == nil {
+		return ""
+	}
+	return o.Name
+}
+
+func (o *ProductCreate) GetDescription() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Description
+}
+
+func (o *ProductCreate) GetRecurringInterval() *SubscriptionRecurringInterval {
+	if o == nil {
+		return nil
+	}
+	return o.RecurringInterval
+}
+
+func (o *ProductCreate) GetPrices() []ProductCreatePrices {
+	if o == nil {
+		return []ProductCreatePrices{}
+	}
+	return o.Prices
+}
+
+func (o *ProductCreate) GetMedias() []string {
+	if o == nil {
+		return nil
+	}
+	return o.Medias
+}
+
+func (o *ProductCreate) GetAttachedCustomFields() []AttachedCustomFieldCreate {
+	if o == nil {
+		return nil
+	}
+	return o.AttachedCustomFields
+}
+
+func (o *ProductCreate) GetOrganizationID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.OrganizationID
 }

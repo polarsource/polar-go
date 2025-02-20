@@ -3,8 +3,96 @@
 package operations
 
 import (
+	"errors"
+	"fmt"
+	"github.com/polarsource/polar-go/internal/utils"
 	"github.com/polarsource/polar-go/models/components"
 )
+
+type CheckoutLinksCreateCheckoutLinkCreateType string
+
+const (
+	CheckoutLinksCreateCheckoutLinkCreateTypeCheckoutLinkCreateProductPrice CheckoutLinksCreateCheckoutLinkCreateType = "CheckoutLinkCreateProductPrice"
+	CheckoutLinksCreateCheckoutLinkCreateTypeCheckoutLinkCreateProduct      CheckoutLinksCreateCheckoutLinkCreateType = "CheckoutLinkCreateProduct"
+	CheckoutLinksCreateCheckoutLinkCreateTypeCheckoutLinkCreateProducts     CheckoutLinksCreateCheckoutLinkCreateType = "CheckoutLinkCreateProducts"
+)
+
+type CheckoutLinksCreateCheckoutLinkCreate struct {
+	CheckoutLinkCreateProductPrice *components.CheckoutLinkCreateProductPrice `queryParam:"inline"`
+	CheckoutLinkCreateProduct      *components.CheckoutLinkCreateProduct      `queryParam:"inline"`
+	CheckoutLinkCreateProducts     *components.CheckoutLinkCreateProducts     `queryParam:"inline"`
+
+	Type CheckoutLinksCreateCheckoutLinkCreateType
+}
+
+func CreateCheckoutLinksCreateCheckoutLinkCreateCheckoutLinkCreateProductPrice(checkoutLinkCreateProductPrice components.CheckoutLinkCreateProductPrice) CheckoutLinksCreateCheckoutLinkCreate {
+	typ := CheckoutLinksCreateCheckoutLinkCreateTypeCheckoutLinkCreateProductPrice
+
+	return CheckoutLinksCreateCheckoutLinkCreate{
+		CheckoutLinkCreateProductPrice: &checkoutLinkCreateProductPrice,
+		Type:                           typ,
+	}
+}
+
+func CreateCheckoutLinksCreateCheckoutLinkCreateCheckoutLinkCreateProduct(checkoutLinkCreateProduct components.CheckoutLinkCreateProduct) CheckoutLinksCreateCheckoutLinkCreate {
+	typ := CheckoutLinksCreateCheckoutLinkCreateTypeCheckoutLinkCreateProduct
+
+	return CheckoutLinksCreateCheckoutLinkCreate{
+		CheckoutLinkCreateProduct: &checkoutLinkCreateProduct,
+		Type:                      typ,
+	}
+}
+
+func CreateCheckoutLinksCreateCheckoutLinkCreateCheckoutLinkCreateProducts(checkoutLinkCreateProducts components.CheckoutLinkCreateProducts) CheckoutLinksCreateCheckoutLinkCreate {
+	typ := CheckoutLinksCreateCheckoutLinkCreateTypeCheckoutLinkCreateProducts
+
+	return CheckoutLinksCreateCheckoutLinkCreate{
+		CheckoutLinkCreateProducts: &checkoutLinkCreateProducts,
+		Type:                       typ,
+	}
+}
+
+func (u *CheckoutLinksCreateCheckoutLinkCreate) UnmarshalJSON(data []byte) error {
+
+	var checkoutLinkCreateProductPrice components.CheckoutLinkCreateProductPrice = components.CheckoutLinkCreateProductPrice{}
+	if err := utils.UnmarshalJSON(data, &checkoutLinkCreateProductPrice, "", true, true); err == nil {
+		u.CheckoutLinkCreateProductPrice = &checkoutLinkCreateProductPrice
+		u.Type = CheckoutLinksCreateCheckoutLinkCreateTypeCheckoutLinkCreateProductPrice
+		return nil
+	}
+
+	var checkoutLinkCreateProduct components.CheckoutLinkCreateProduct = components.CheckoutLinkCreateProduct{}
+	if err := utils.UnmarshalJSON(data, &checkoutLinkCreateProduct, "", true, true); err == nil {
+		u.CheckoutLinkCreateProduct = &checkoutLinkCreateProduct
+		u.Type = CheckoutLinksCreateCheckoutLinkCreateTypeCheckoutLinkCreateProduct
+		return nil
+	}
+
+	var checkoutLinkCreateProducts components.CheckoutLinkCreateProducts = components.CheckoutLinkCreateProducts{}
+	if err := utils.UnmarshalJSON(data, &checkoutLinkCreateProducts, "", true, true); err == nil {
+		u.CheckoutLinkCreateProducts = &checkoutLinkCreateProducts
+		u.Type = CheckoutLinksCreateCheckoutLinkCreateTypeCheckoutLinkCreateProducts
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for CheckoutLinksCreateCheckoutLinkCreate", string(data))
+}
+
+func (u CheckoutLinksCreateCheckoutLinkCreate) MarshalJSON() ([]byte, error) {
+	if u.CheckoutLinkCreateProductPrice != nil {
+		return utils.MarshalJSON(u.CheckoutLinkCreateProductPrice, "", true)
+	}
+
+	if u.CheckoutLinkCreateProduct != nil {
+		return utils.MarshalJSON(u.CheckoutLinkCreateProduct, "", true)
+	}
+
+	if u.CheckoutLinkCreateProducts != nil {
+		return utils.MarshalJSON(u.CheckoutLinkCreateProducts, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type CheckoutLinksCreateCheckoutLinkCreate: all fields are null")
+}
 
 type CheckoutLinksCreateResponse struct {
 	HTTPMeta components.HTTPMetadata `json:"-"`

@@ -100,19 +100,15 @@ func main() {
         polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )
 
-    res, err := s.Products.Create(ctx, components.CreateProductCreateProductRecurringCreate(
-        components.ProductRecurringCreate{
-            Name: "<value>",
-            Prices: components.CreateProductRecurringCreatePricesArrayOfProductPriceRecurringFixedCreate(
-                []components.ProductPriceRecurringFixedCreate{
-                    components.ProductPriceRecurringFixedCreate{
-                        PriceAmount: 796474,
-                        RecurringInterval: components.SubscriptionRecurringIntervalYear,
-                    },
-                },
+    res, err := s.Products.Create(ctx, components.ProductCreate{
+        Name: "<value>",
+        RecurringInterval: components.SubscriptionRecurringIntervalMonth.ToPointer(),
+        Prices: []components.ProductCreatePrices{
+            components.CreateProductCreatePricesProductPriceCustomCreate(
+                components.ProductPriceCustomCreate{},
             ),
         },
-    ))
+    })
     if err != nil {
         log.Fatal(err)
     }

@@ -201,6 +201,69 @@ func (u CustomFieldData) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type CustomFieldData: all fields are null")
 }
 
+type PriceType string
+
+const (
+	PriceTypeLegacyRecurringProductPrice PriceType = "LegacyRecurringProductPrice"
+	PriceTypeProductPrice                PriceType = "ProductPrice"
+)
+
+type Price struct {
+	LegacyRecurringProductPrice *LegacyRecurringProductPrice `queryParam:"inline"`
+	ProductPrice                *ProductPrice                `queryParam:"inline"`
+
+	Type PriceType
+}
+
+func CreatePriceLegacyRecurringProductPrice(legacyRecurringProductPrice LegacyRecurringProductPrice) Price {
+	typ := PriceTypeLegacyRecurringProductPrice
+
+	return Price{
+		LegacyRecurringProductPrice: &legacyRecurringProductPrice,
+		Type:                        typ,
+	}
+}
+
+func CreatePriceProductPrice(productPrice ProductPrice) Price {
+	typ := PriceTypeProductPrice
+
+	return Price{
+		ProductPrice: &productPrice,
+		Type:         typ,
+	}
+}
+
+func (u *Price) UnmarshalJSON(data []byte) error {
+
+	var legacyRecurringProductPrice LegacyRecurringProductPrice = LegacyRecurringProductPrice{}
+	if err := utils.UnmarshalJSON(data, &legacyRecurringProductPrice, "", true, true); err == nil {
+		u.LegacyRecurringProductPrice = &legacyRecurringProductPrice
+		u.Type = PriceTypeLegacyRecurringProductPrice
+		return nil
+	}
+
+	var productPrice ProductPrice = ProductPrice{}
+	if err := utils.UnmarshalJSON(data, &productPrice, "", true, true); err == nil {
+		u.ProductPrice = &productPrice
+		u.Type = PriceTypeProductPrice
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for Price", string(data))
+}
+
+func (u Price) MarshalJSON() ([]byte, error) {
+	if u.LegacyRecurringProductPrice != nil {
+		return utils.MarshalJSON(u.LegacyRecurringProductPrice, "", true)
+	}
+
+	if u.ProductPrice != nil {
+		return utils.MarshalJSON(u.ProductPrice, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type Price: all fields are null")
+}
+
 type SubscriptionDiscountType string
 
 const (
@@ -335,14 +398,14 @@ type Subscription struct {
 	CustomerCancellationComment *string                       `json:"customer_cancellation_comment"`
 	Metadata                    map[string]Metadata           `json:"metadata"`
 	// Key-value object storing custom field values.
-	CustomFieldData map[string]CustomFieldData `json:"custom_field_data,omitempty"`
-	Customer        SubscriptionCustomer       `json:"customer"`
+	CustomFieldData map[string]*CustomFieldData `json:"custom_field_data,omitempty"`
+	Customer        SubscriptionCustomer        `json:"customer"`
 	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
 	UserID string           `json:"user_id"`
 	User   SubscriptionUser `json:"user"`
 	// A product.
 	Product  Product               `json:"product"`
-	Price    ProductPriceRecurring `json:"price"`
+	Price    Price                 `json:"price"`
 	Discount *SubscriptionDiscount `json:"discount"`
 }
 
@@ -511,7 +574,7 @@ func (o *Subscription) GetMetadata() map[string]Metadata {
 	return o.Metadata
 }
 
-func (o *Subscription) GetCustomFieldData() map[string]CustomFieldData {
+func (o *Subscription) GetCustomFieldData() map[string]*CustomFieldData {
 	if o == nil {
 		return nil
 	}
@@ -546,9 +609,9 @@ func (o *Subscription) GetProduct() Product {
 	return o.Product
 }
 
-func (o *Subscription) GetPrice() ProductPriceRecurring {
+func (o *Subscription) GetPrice() Price {
 	if o == nil {
-		return ProductPriceRecurring{}
+		return Price{}
 	}
 	return o.Price
 }

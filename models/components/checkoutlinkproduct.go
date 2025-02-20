@@ -3,9 +3,74 @@
 package components
 
 import (
+	"errors"
+	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
 	"time"
 )
+
+type CheckoutLinkProductPricesType string
+
+const (
+	CheckoutLinkProductPricesTypeLegacyRecurringProductPrice CheckoutLinkProductPricesType = "LegacyRecurringProductPrice"
+	CheckoutLinkProductPricesTypeProductPrice                CheckoutLinkProductPricesType = "ProductPrice"
+)
+
+type CheckoutLinkProductPrices struct {
+	LegacyRecurringProductPrice *LegacyRecurringProductPrice `queryParam:"inline"`
+	ProductPrice                *ProductPrice                `queryParam:"inline"`
+
+	Type CheckoutLinkProductPricesType
+}
+
+func CreateCheckoutLinkProductPricesLegacyRecurringProductPrice(legacyRecurringProductPrice LegacyRecurringProductPrice) CheckoutLinkProductPrices {
+	typ := CheckoutLinkProductPricesTypeLegacyRecurringProductPrice
+
+	return CheckoutLinkProductPrices{
+		LegacyRecurringProductPrice: &legacyRecurringProductPrice,
+		Type:                        typ,
+	}
+}
+
+func CreateCheckoutLinkProductPricesProductPrice(productPrice ProductPrice) CheckoutLinkProductPrices {
+	typ := CheckoutLinkProductPricesTypeProductPrice
+
+	return CheckoutLinkProductPrices{
+		ProductPrice: &productPrice,
+		Type:         typ,
+	}
+}
+
+func (u *CheckoutLinkProductPrices) UnmarshalJSON(data []byte) error {
+
+	var legacyRecurringProductPrice LegacyRecurringProductPrice = LegacyRecurringProductPrice{}
+	if err := utils.UnmarshalJSON(data, &legacyRecurringProductPrice, "", true, true); err == nil {
+		u.LegacyRecurringProductPrice = &legacyRecurringProductPrice
+		u.Type = CheckoutLinkProductPricesTypeLegacyRecurringProductPrice
+		return nil
+	}
+
+	var productPrice ProductPrice = ProductPrice{}
+	if err := utils.UnmarshalJSON(data, &productPrice, "", true, true); err == nil {
+		u.ProductPrice = &productPrice
+		u.Type = CheckoutLinkProductPricesTypeProductPrice
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for CheckoutLinkProductPrices", string(data))
+}
+
+func (u CheckoutLinkProductPrices) MarshalJSON() ([]byte, error) {
+	if u.LegacyRecurringProductPrice != nil {
+		return utils.MarshalJSON(u.LegacyRecurringProductPrice, "", true)
+	}
+
+	if u.ProductPrice != nil {
+		return utils.MarshalJSON(u.ProductPrice, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type CheckoutLinkProductPrices: all fields are null")
+}
 
 // CheckoutLinkProduct - Product data for a checkout link.
 type CheckoutLinkProduct struct {
@@ -19,14 +84,16 @@ type CheckoutLinkProduct struct {
 	Name string `json:"name"`
 	// The description of the product.
 	Description *string `json:"description"`
-	// Whether the product is a subscription tier.
+	// The recurring interval of the product. If `None`, the product is a one-time purchase.
+	RecurringInterval *SubscriptionRecurringInterval `json:"recurring_interval"`
+	// Whether the product is a subscription.
 	IsRecurring bool `json:"is_recurring"`
 	// Whether the product is archived and no longer available.
 	IsArchived bool `json:"is_archived"`
 	// The ID of the organization owning the product.
 	OrganizationID string `json:"organization_id"`
 	// List of prices for this product.
-	Prices []ProductPrice `json:"prices"`
+	Prices []CheckoutLinkProductPrices `json:"prices"`
 	// List of benefits granted by the product.
 	Benefits []BenefitBase `json:"benefits"`
 	// List of medias associated to the product.
@@ -79,6 +146,13 @@ func (o *CheckoutLinkProduct) GetDescription() *string {
 	return o.Description
 }
 
+func (o *CheckoutLinkProduct) GetRecurringInterval() *SubscriptionRecurringInterval {
+	if o == nil {
+		return nil
+	}
+	return o.RecurringInterval
+}
+
 func (o *CheckoutLinkProduct) GetIsRecurring() bool {
 	if o == nil {
 		return false
@@ -100,9 +174,9 @@ func (o *CheckoutLinkProduct) GetOrganizationID() string {
 	return o.OrganizationID
 }
 
-func (o *CheckoutLinkProduct) GetPrices() []ProductPrice {
+func (o *CheckoutLinkProduct) GetPrices() []CheckoutLinkProductPrices {
 	if o == nil {
-		return []ProductPrice{}
+		return []CheckoutLinkProductPrices{}
 	}
 	return o.Prices
 }

@@ -3,9 +3,74 @@
 package components
 
 import (
+	"errors"
+	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
 	"time"
 )
+
+type CustomerOrderProductPriceType string
+
+const (
+	CustomerOrderProductPriceTypeLegacyRecurringProductPrice CustomerOrderProductPriceType = "LegacyRecurringProductPrice"
+	CustomerOrderProductPriceTypeProductPrice                CustomerOrderProductPriceType = "ProductPrice"
+)
+
+type CustomerOrderProductPrice struct {
+	LegacyRecurringProductPrice *LegacyRecurringProductPrice `queryParam:"inline"`
+	ProductPrice                *ProductPrice                `queryParam:"inline"`
+
+	Type CustomerOrderProductPriceType
+}
+
+func CreateCustomerOrderProductPriceLegacyRecurringProductPrice(legacyRecurringProductPrice LegacyRecurringProductPrice) CustomerOrderProductPrice {
+	typ := CustomerOrderProductPriceTypeLegacyRecurringProductPrice
+
+	return CustomerOrderProductPrice{
+		LegacyRecurringProductPrice: &legacyRecurringProductPrice,
+		Type:                        typ,
+	}
+}
+
+func CreateCustomerOrderProductPriceProductPrice(productPrice ProductPrice) CustomerOrderProductPrice {
+	typ := CustomerOrderProductPriceTypeProductPrice
+
+	return CustomerOrderProductPrice{
+		ProductPrice: &productPrice,
+		Type:         typ,
+	}
+}
+
+func (u *CustomerOrderProductPrice) UnmarshalJSON(data []byte) error {
+
+	var legacyRecurringProductPrice LegacyRecurringProductPrice = LegacyRecurringProductPrice{}
+	if err := utils.UnmarshalJSON(data, &legacyRecurringProductPrice, "", true, true); err == nil {
+		u.LegacyRecurringProductPrice = &legacyRecurringProductPrice
+		u.Type = CustomerOrderProductPriceTypeLegacyRecurringProductPrice
+		return nil
+	}
+
+	var productPrice ProductPrice = ProductPrice{}
+	if err := utils.UnmarshalJSON(data, &productPrice, "", true, true); err == nil {
+		u.ProductPrice = &productPrice
+		u.Type = CustomerOrderProductPriceTypeProductPrice
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for CustomerOrderProductPrice", string(data))
+}
+
+func (u CustomerOrderProductPrice) MarshalJSON() ([]byte, error) {
+	if u.LegacyRecurringProductPrice != nil {
+		return utils.MarshalJSON(u.LegacyRecurringProductPrice, "", true)
+	}
+
+	if u.ProductPrice != nil {
+		return utils.MarshalJSON(u.ProductPrice, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type CustomerOrderProductPrice: all fields are null")
+}
 
 type CustomerOrder struct {
 	// Creation timestamp of the object.
@@ -23,7 +88,7 @@ type CustomerOrder struct {
 	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
 	UserID       string                     `json:"user_id"`
 	Product      CustomerOrderProduct       `json:"product"`
-	ProductPrice ProductPrice               `json:"product_price"`
+	ProductPrice CustomerOrderProductPrice  `json:"product_price"`
 	Subscription *CustomerOrderSubscription `json:"subscription"`
 }
 
@@ -122,9 +187,9 @@ func (o *CustomerOrder) GetProduct() CustomerOrderProduct {
 	return o.Product
 }
 
-func (o *CustomerOrder) GetProductPrice() ProductPrice {
+func (o *CustomerOrder) GetProductPrice() CustomerOrderProductPrice {
 	if o == nil {
-		return ProductPrice{}
+		return CustomerOrderProductPrice{}
 	}
 	return o.ProductPrice
 }

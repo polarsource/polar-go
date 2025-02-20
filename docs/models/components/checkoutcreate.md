@@ -3,6 +3,12 @@
 
 ## Supported Types
 
+### CheckoutProductsCreate
+
+```go
+checkoutCreate := components.CreateCheckoutCreateCheckoutProductsCreate(components.CheckoutProductsCreate{/* values here */})
+```
+
 ### CheckoutProductCreate
 
 ```go

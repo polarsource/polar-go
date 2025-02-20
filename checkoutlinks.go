@@ -30,13 +30,6 @@ func newCheckoutLinks(sdkConfig sdkConfiguration) *CheckoutLinks {
 // List Checkout Links
 // List checkout links.
 func (s *CheckoutLinks) List(ctx context.Context, request operations.CheckoutLinksListRequest, opts ...operations.Option) (*operations.CheckoutLinksListResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "checkout-links:list",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -58,6 +51,14 @@ func (s *CheckoutLinks) List(ctx context.Context, request operations.CheckoutLin
 	opURL, err := url.JoinPath(baseURL, "/v1/checkout-links/")
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "checkout-links:list",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -321,14 +322,7 @@ func (s *CheckoutLinks) List(ctx context.Context, request operations.CheckoutLin
 
 // Create Checkout Link
 // Create a checkout link.
-func (s *CheckoutLinks) Create(ctx context.Context, request components.CheckoutLinkCreate, opts ...operations.Option) (*operations.CheckoutLinksCreateResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "checkout-links:create",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
+func (s *CheckoutLinks) Create(ctx context.Context, request operations.CheckoutLinksCreateCheckoutLinkCreate, opts ...operations.Option) (*operations.CheckoutLinksCreateResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -352,6 +346,13 @@ func (s *CheckoutLinks) Create(ctx context.Context, request components.CheckoutL
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "checkout-links:create",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "Request", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -552,13 +553,6 @@ func (s *CheckoutLinks) Create(ctx context.Context, request components.CheckoutL
 // Get Checkout Link
 // Get a checkout link by ID.
 func (s *CheckoutLinks) Get(ctx context.Context, id string, opts ...operations.Option) (*operations.CheckoutLinksGetResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "checkout-links:get",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	request := operations.CheckoutLinksGetRequest{
 		ID: id,
 	}
@@ -584,6 +578,14 @@ func (s *CheckoutLinks) Get(ctx context.Context, id string, opts ...operations.O
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/v1/checkout-links/{id}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "checkout-links:get",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -799,13 +801,6 @@ func (s *CheckoutLinks) Get(ctx context.Context, id string, opts ...operations.O
 // Update Checkout Link
 // Update a checkout link.
 func (s *CheckoutLinks) Update(ctx context.Context, id string, checkoutLinkUpdate components.CheckoutLinkUpdate, opts ...operations.Option) (*operations.CheckoutLinksUpdateResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "checkout-links:update",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	request := operations.CheckoutLinksUpdateRequest{
 		ID:                 id,
 		CheckoutLinkUpdate: checkoutLinkUpdate,
@@ -834,6 +829,13 @@ func (s *CheckoutLinks) Update(ctx context.Context, id string, checkoutLinkUpdat
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "checkout-links:update",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "CheckoutLinkUpdate", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -1055,13 +1057,6 @@ func (s *CheckoutLinks) Update(ctx context.Context, id string, checkoutLinkUpdat
 // Delete Checkout Link
 // Delete a checkout link.
 func (s *CheckoutLinks) Delete(ctx context.Context, id string, opts ...operations.Option) (*operations.CheckoutLinksDeleteResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "checkout-links:delete",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	request := operations.CheckoutLinksDeleteRequest{
 		ID: id,
 	}
@@ -1087,6 +1082,14 @@ func (s *CheckoutLinks) Delete(ctx context.Context, id string, opts ...operation
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/v1/checkout-links/{id}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "checkout-links:delete",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout

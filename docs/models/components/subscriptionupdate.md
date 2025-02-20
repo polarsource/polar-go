@@ -3,10 +3,10 @@
 
 ## Supported Types
 
-### SubscriptionUpdatePrice
+### SubscriptionUpdateProduct
 
 ```go
-subscriptionUpdate := components.CreateSubscriptionUpdateSubscriptionUpdatePrice(components.SubscriptionUpdatePrice{/* values here */})
+subscriptionUpdate := components.CreateSubscriptionUpdateSubscriptionUpdateProduct(components.SubscriptionUpdateProduct{/* values here */})
 ```
 
 ### SubscriptionCancel

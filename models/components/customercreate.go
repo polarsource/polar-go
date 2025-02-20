@@ -171,7 +171,7 @@ type CustomerCreate struct {
 	Email          string                            `json:"email"`
 	Name           *string                           `json:"name,omitempty"`
 	BillingAddress *Address                          `json:"billing_address,omitempty"`
-	TaxID          []CustomerCreateTaxID             `json:"tax_id,omitempty"`
+	TaxID          []*CustomerCreateTaxID            `json:"tax_id,omitempty"`
 	// The ID of the organization owning the customer. **Required unless you use an organization token.**
 	OrganizationID *string `json:"organization_id,omitempty"`
 }
@@ -204,7 +204,7 @@ func (o *CustomerCreate) GetBillingAddress() *Address {
 	return o.BillingAddress
 }
 
-func (o *CustomerCreate) GetTaxID() []CustomerCreateTaxID {
+func (o *CustomerCreate) GetTaxID() []*CustomerCreateTaxID {
 	if o == nil {
 		return nil
 	}

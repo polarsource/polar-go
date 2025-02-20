@@ -29,13 +29,6 @@ func newMetrics(sdkConfig sdkConfiguration) *Metrics {
 // Get Metrics
 // Get metrics about your orders and subscriptions.
 func (s *Metrics) Get(ctx context.Context, request operations.MetricsGetRequest, opts ...operations.Option) (*operations.MetricsGetResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "metrics:get",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -57,6 +50,14 @@ func (s *Metrics) Get(ctx context.Context, request operations.MetricsGetRequest,
 	opURL, err := url.JoinPath(baseURL, "/v1/metrics/")
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "metrics:get",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -255,13 +256,6 @@ func (s *Metrics) Get(ctx context.Context, request operations.MetricsGetRequest,
 // Limits - Get Metrics Limits
 // Get the interval limits for the metrics endpoint.
 func (s *Metrics) Limits(ctx context.Context, opts ...operations.Option) (*operations.MetricsLimitsResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "metrics:limits",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -283,6 +277,14 @@ func (s *Metrics) Limits(ctx context.Context, opts ...operations.Option) (*opera
 	opURL, err := url.JoinPath(baseURL, "/v1/metrics/limits")
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "metrics:limits",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout

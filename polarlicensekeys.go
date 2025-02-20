@@ -29,13 +29,6 @@ func newPolarLicenseKeys(sdkConfig sdkConfiguration) *PolarLicenseKeys {
 
 // List License Keys
 func (s *PolarLicenseKeys) List(ctx context.Context, organizationID *operations.CustomerPortalLicenseKeysListQueryParamOrganizationIDFilter, benefitID *string, page *int64, limit *int64, opts ...operations.Option) (*operations.CustomerPortalLicenseKeysListResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "customer_portal:license_keys:list",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	request := operations.CustomerPortalLicenseKeysListRequest{
 		OrganizationID: organizationID,
 		BenefitID:      benefitID,
@@ -64,6 +57,14 @@ func (s *PolarLicenseKeys) List(ctx context.Context, organizationID *operations.
 	opURL, err := url.JoinPath(baseURL, "/v1/customer-portal/license-keys/")
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "customer_portal:license_keys:list",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -367,13 +368,6 @@ func (s *PolarLicenseKeys) List(ctx context.Context, organizationID *operations.
 // Get License Key
 // Get a license key.
 func (s *PolarLicenseKeys) Get(ctx context.Context, id string, opts ...operations.Option) (*operations.CustomerPortalLicenseKeysGetResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "customer_portal:license_keys:get",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	request := operations.CustomerPortalLicenseKeysGetRequest{
 		ID: id,
 	}
@@ -399,6 +393,14 @@ func (s *PolarLicenseKeys) Get(ctx context.Context, id string, opts ...operation
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/v1/customer-portal/license-keys/{id}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "customer_portal:license_keys:get",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -614,13 +616,6 @@ func (s *PolarLicenseKeys) Get(ctx context.Context, id string, opts ...operation
 // Validate License Key
 // Validate a license key.
 func (s *PolarLicenseKeys) Validate(ctx context.Context, request components.LicenseKeyValidate, opts ...operations.Option) (*operations.CustomerPortalLicenseKeysValidateResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "customer_portal:license_keys:validate",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -644,6 +639,13 @@ func (s *PolarLicenseKeys) Validate(ctx context.Context, request components.Lice
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "customer_portal:license_keys:validate",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "Request", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -865,13 +867,6 @@ func (s *PolarLicenseKeys) Validate(ctx context.Context, request components.Lice
 // Activate License Key
 // Activate a license key instance.
 func (s *PolarLicenseKeys) Activate(ctx context.Context, request components.LicenseKeyActivate, opts ...operations.Option) (*operations.CustomerPortalLicenseKeysActivateResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "customer_portal:license_keys:activate",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -895,6 +890,13 @@ func (s *PolarLicenseKeys) Activate(ctx context.Context, request components.Lice
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "customer_portal:license_keys:activate",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "Request", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -1137,13 +1139,6 @@ func (s *PolarLicenseKeys) Activate(ctx context.Context, request components.Lice
 // Deactivate License Key
 // Deactivate a license key instance.
 func (s *PolarLicenseKeys) Deactivate(ctx context.Context, request components.LicenseKeyDeactivate, opts ...operations.Option) (*operations.CustomerPortalLicenseKeysDeactivateResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "customer_portal:license_keys:deactivate",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -1167,6 +1162,13 @@ func (s *PolarLicenseKeys) Deactivate(ctx context.Context, request components.Li
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "customer_portal:license_keys:deactivate",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "Request", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err

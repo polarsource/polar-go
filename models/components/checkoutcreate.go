@@ -11,15 +11,26 @@ import (
 type CheckoutCreateType string
 
 const (
-	CheckoutCreateTypeCheckoutProductCreate CheckoutCreateType = "CheckoutProductCreate"
-	CheckoutCreateTypeCheckoutPriceCreate   CheckoutCreateType = "CheckoutPriceCreate"
+	CheckoutCreateTypeCheckoutProductsCreate CheckoutCreateType = "CheckoutProductsCreate"
+	CheckoutCreateTypeCheckoutProductCreate  CheckoutCreateType = "CheckoutProductCreate"
+	CheckoutCreateTypeCheckoutPriceCreate    CheckoutCreateType = "CheckoutPriceCreate"
 )
 
 type CheckoutCreate struct {
-	CheckoutProductCreate *CheckoutProductCreate `queryParam:"inline"`
-	CheckoutPriceCreate   *CheckoutPriceCreate   `queryParam:"inline"`
+	CheckoutProductsCreate *CheckoutProductsCreate `queryParam:"inline"`
+	CheckoutProductCreate  *CheckoutProductCreate  `queryParam:"inline"`
+	CheckoutPriceCreate    *CheckoutPriceCreate    `queryParam:"inline"`
 
 	Type CheckoutCreateType
+}
+
+func CreateCheckoutCreateCheckoutProductsCreate(checkoutProductsCreate CheckoutProductsCreate) CheckoutCreate {
+	typ := CheckoutCreateTypeCheckoutProductsCreate
+
+	return CheckoutCreate{
+		CheckoutProductsCreate: &checkoutProductsCreate,
+		Type:                   typ,
+	}
 }
 
 func CreateCheckoutCreateCheckoutProductCreate(checkoutProductCreate CheckoutProductCreate) CheckoutCreate {
@@ -42,6 +53,13 @@ func CreateCheckoutCreateCheckoutPriceCreate(checkoutPriceCreate CheckoutPriceCr
 
 func (u *CheckoutCreate) UnmarshalJSON(data []byte) error {
 
+	var checkoutProductsCreate CheckoutProductsCreate = CheckoutProductsCreate{}
+	if err := utils.UnmarshalJSON(data, &checkoutProductsCreate, "", true, true); err == nil {
+		u.CheckoutProductsCreate = &checkoutProductsCreate
+		u.Type = CheckoutCreateTypeCheckoutProductsCreate
+		return nil
+	}
+
 	var checkoutProductCreate CheckoutProductCreate = CheckoutProductCreate{}
 	if err := utils.UnmarshalJSON(data, &checkoutProductCreate, "", true, true); err == nil {
 		u.CheckoutProductCreate = &checkoutProductCreate
@@ -60,6 +78,10 @@ func (u *CheckoutCreate) UnmarshalJSON(data []byte) error {
 }
 
 func (u CheckoutCreate) MarshalJSON() ([]byte, error) {
+	if u.CheckoutProductsCreate != nil {
+		return utils.MarshalJSON(u.CheckoutProductsCreate, "", true)
+	}
+
 	if u.CheckoutProductCreate != nil {
 		return utils.MarshalJSON(u.CheckoutProductCreate, "", true)
 	}

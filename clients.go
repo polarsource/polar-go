@@ -30,13 +30,6 @@ func newClients(sdkConfig sdkConfiguration) *Clients {
 // List Clients
 // List OAuth2 clients.
 func (s *Clients) List(ctx context.Context, page *int64, limit *int64, opts ...operations.Option) (*operations.Oauth2ClientsListResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "oauth2:clients:list",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	request := operations.Oauth2ClientsListRequest{
 		Page:  page,
 		Limit: limit,
@@ -63,6 +56,14 @@ func (s *Clients) List(ctx context.Context, page *int64, limit *int64, opts ...o
 	opURL, err := url.JoinPath(baseURL, "/v1/oauth2/")
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "oauth2:clients:list",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -322,13 +323,6 @@ func (s *Clients) List(ctx context.Context, page *int64, limit *int64, opts ...o
 // Create Client
 // Create an OAuth2 client.
 func (s *Clients) Create(ctx context.Context, request components.OAuth2ClientConfiguration, opts ...operations.Option) (*operations.Oauth2ClientsOauth2CreateClientResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "oauth2:clients:oauth2:create_client",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -352,6 +346,13 @@ func (s *Clients) Create(ctx context.Context, request components.OAuth2ClientCon
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "oauth2:clients:oauth2:create_client",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "Request", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -552,13 +553,6 @@ func (s *Clients) Create(ctx context.Context, request components.OAuth2ClientCon
 // Get Client
 // Get an OAuth2 client by Client ID.
 func (s *Clients) Get(ctx context.Context, clientID string, opts ...operations.Option) (*operations.Oauth2ClientsOauth2GetClientResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "oauth2:clients:oauth2:get_client",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	request := operations.Oauth2ClientsOauth2GetClientRequest{
 		ClientID: clientID,
 	}
@@ -584,6 +578,14 @@ func (s *Clients) Get(ctx context.Context, clientID string, opts ...operations.O
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/v1/oauth2/register/{client_id}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "oauth2:clients:oauth2:get_client",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -778,13 +780,6 @@ func (s *Clients) Get(ctx context.Context, clientID string, opts ...operations.O
 // Update Client
 // Update an OAuth2 client.
 func (s *Clients) Update(ctx context.Context, clientID string, oAuth2ClientConfigurationUpdate components.OAuth2ClientConfigurationUpdate, opts ...operations.Option) (*operations.Oauth2ClientsOauth2UpdateClientResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "oauth2:clients:oauth2:update_client",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	request := operations.Oauth2ClientsOauth2UpdateClientRequest{
 		ClientID:                        clientID,
 		OAuth2ClientConfigurationUpdate: oAuth2ClientConfigurationUpdate,
@@ -813,6 +808,13 @@ func (s *Clients) Update(ctx context.Context, clientID string, oAuth2ClientConfi
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "oauth2:clients:oauth2:update_client",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "OAuth2ClientConfigurationUpdate", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -1013,13 +1015,6 @@ func (s *Clients) Update(ctx context.Context, clientID string, oAuth2ClientConfi
 // Delete Client
 // Delete an OAuth2 client.
 func (s *Clients) Delete(ctx context.Context, clientID string, opts ...operations.Option) (*operations.Oauth2ClientsOauth2DeleteClientResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "oauth2:clients:oauth2:delete_client",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	request := operations.Oauth2ClientsOauth2DeleteClientRequest{
 		ClientID: clientID,
 	}
@@ -1045,6 +1040,14 @@ func (s *Clients) Delete(ctx context.Context, clientID string, opts ...operation
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/v1/oauth2/register/{client_id}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "oauth2:clients:oauth2:delete_client",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout

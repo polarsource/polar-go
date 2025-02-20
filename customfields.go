@@ -30,13 +30,6 @@ func newCustomFields(sdkConfig sdkConfiguration) *CustomFields {
 // List Custom Fields
 // List custom fields.
 func (s *CustomFields) List(ctx context.Context, request operations.CustomFieldsListRequest, opts ...operations.Option) (*operations.CustomFieldsListResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "custom-fields:list",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -58,6 +51,14 @@ func (s *CustomFields) List(ctx context.Context, request operations.CustomFields
 	opURL, err := url.JoinPath(baseURL, "/v1/custom-fields/")
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "custom-fields:list",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -323,13 +324,6 @@ func (s *CustomFields) List(ctx context.Context, request operations.CustomFields
 // Create Custom Field
 // Create a custom field.
 func (s *CustomFields) Create(ctx context.Context, request components.CustomFieldCreate, opts ...operations.Option) (*operations.CustomFieldsCreateResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "custom-fields:create",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -353,6 +347,13 @@ func (s *CustomFields) Create(ctx context.Context, request components.CustomFiel
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "custom-fields:create",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "Request", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -553,13 +554,6 @@ func (s *CustomFields) Create(ctx context.Context, request components.CustomFiel
 // Get Custom Field
 // Get a custom field by ID.
 func (s *CustomFields) Get(ctx context.Context, id string, opts ...operations.Option) (*operations.CustomFieldsGetResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "custom-fields:get",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	request := operations.CustomFieldsGetRequest{
 		ID: id,
 	}
@@ -585,6 +579,14 @@ func (s *CustomFields) Get(ctx context.Context, id string, opts ...operations.Op
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/v1/custom-fields/{id}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "custom-fields:get",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -800,13 +802,6 @@ func (s *CustomFields) Get(ctx context.Context, id string, opts ...operations.Op
 // Update Custom Field
 // Update a custom field.
 func (s *CustomFields) Update(ctx context.Context, id string, customFieldUpdate components.CustomFieldUpdate, opts ...operations.Option) (*operations.CustomFieldsUpdateResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "custom-fields:update",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	request := operations.CustomFieldsUpdateRequest{
 		ID:                id,
 		CustomFieldUpdate: customFieldUpdate,
@@ -835,6 +830,13 @@ func (s *CustomFields) Update(ctx context.Context, id string, customFieldUpdate 
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "custom-fields:update",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "CustomFieldUpdate", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -1056,13 +1058,6 @@ func (s *CustomFields) Update(ctx context.Context, id string, customFieldUpdate 
 // Delete Custom Field
 // Delete a custom field.
 func (s *CustomFields) Delete(ctx context.Context, id string, opts ...operations.Option) (*operations.CustomFieldsDeleteResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "custom-fields:delete",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	request := operations.CustomFieldsDeleteRequest{
 		ID: id,
 	}
@@ -1088,6 +1083,14 @@ func (s *CustomFields) Delete(ctx context.Context, id string, opts ...operations
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/v1/custom-fields/{id}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "custom-fields:delete",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout

@@ -169,7 +169,7 @@ type LicenseKeyCustomer struct {
 	EmailVerified  bool                                  `json:"email_verified"`
 	Name           *string                               `json:"name"`
 	BillingAddress *Address                              `json:"billing_address"`
-	TaxID          []LicenseKeyCustomerTaxID             `json:"tax_id"`
+	TaxID          []*LicenseKeyCustomerTaxID            `json:"tax_id"`
 	OrganizationID string                                `json:"organization_id"`
 	AvatarURL      string                                `json:"avatar_url"`
 }
@@ -241,7 +241,7 @@ func (o *LicenseKeyCustomer) GetBillingAddress() *Address {
 	return o.BillingAddress
 }
 
-func (o *LicenseKeyCustomer) GetTaxID() []LicenseKeyCustomerTaxID {
+func (o *LicenseKeyCustomer) GetTaxID() []*LicenseKeyCustomerTaxID {
 	if o == nil {
 		return nil
 	}

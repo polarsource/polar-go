@@ -3,9 +3,74 @@
 package components
 
 import (
+	"errors"
+	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
 	"time"
 )
+
+type CheckoutProductPricesType string
+
+const (
+	CheckoutProductPricesTypeLegacyRecurringProductPrice CheckoutProductPricesType = "LegacyRecurringProductPrice"
+	CheckoutProductPricesTypeProductPrice                CheckoutProductPricesType = "ProductPrice"
+)
+
+type CheckoutProductPrices struct {
+	LegacyRecurringProductPrice *LegacyRecurringProductPrice `queryParam:"inline"`
+	ProductPrice                *ProductPrice                `queryParam:"inline"`
+
+	Type CheckoutProductPricesType
+}
+
+func CreateCheckoutProductPricesLegacyRecurringProductPrice(legacyRecurringProductPrice LegacyRecurringProductPrice) CheckoutProductPrices {
+	typ := CheckoutProductPricesTypeLegacyRecurringProductPrice
+
+	return CheckoutProductPrices{
+		LegacyRecurringProductPrice: &legacyRecurringProductPrice,
+		Type:                        typ,
+	}
+}
+
+func CreateCheckoutProductPricesProductPrice(productPrice ProductPrice) CheckoutProductPrices {
+	typ := CheckoutProductPricesTypeProductPrice
+
+	return CheckoutProductPrices{
+		ProductPrice: &productPrice,
+		Type:         typ,
+	}
+}
+
+func (u *CheckoutProductPrices) UnmarshalJSON(data []byte) error {
+
+	var legacyRecurringProductPrice LegacyRecurringProductPrice = LegacyRecurringProductPrice{}
+	if err := utils.UnmarshalJSON(data, &legacyRecurringProductPrice, "", true, true); err == nil {
+		u.LegacyRecurringProductPrice = &legacyRecurringProductPrice
+		u.Type = CheckoutProductPricesTypeLegacyRecurringProductPrice
+		return nil
+	}
+
+	var productPrice ProductPrice = ProductPrice{}
+	if err := utils.UnmarshalJSON(data, &productPrice, "", true, true); err == nil {
+		u.ProductPrice = &productPrice
+		u.Type = CheckoutProductPricesTypeProductPrice
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for CheckoutProductPrices", string(data))
+}
+
+func (u CheckoutProductPrices) MarshalJSON() ([]byte, error) {
+	if u.LegacyRecurringProductPrice != nil {
+		return utils.MarshalJSON(u.LegacyRecurringProductPrice, "", true)
+	}
+
+	if u.ProductPrice != nil {
+		return utils.MarshalJSON(u.ProductPrice, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type CheckoutProductPrices: all fields are null")
+}
 
 // CheckoutProduct - Product data for a checkout session.
 type CheckoutProduct struct {
@@ -19,14 +84,16 @@ type CheckoutProduct struct {
 	Name string `json:"name"`
 	// The description of the product.
 	Description *string `json:"description"`
-	// Whether the product is a subscription tier.
+	// The recurring interval of the product. If `None`, the product is a one-time purchase.
+	RecurringInterval *SubscriptionRecurringInterval `json:"recurring_interval"`
+	// Whether the product is a subscription.
 	IsRecurring bool `json:"is_recurring"`
 	// Whether the product is archived and no longer available.
 	IsArchived bool `json:"is_archived"`
 	// The ID of the organization owning the product.
 	OrganizationID string `json:"organization_id"`
 	// List of prices for this product.
-	Prices []ProductPrice `json:"prices"`
+	Prices []CheckoutProductPrices `json:"prices"`
 	// List of benefits granted by the product.
 	Benefits []BenefitBase `json:"benefits"`
 	// List of medias associated to the product.
@@ -79,6 +146,13 @@ func (o *CheckoutProduct) GetDescription() *string {
 	return o.Description
 }
 
+func (o *CheckoutProduct) GetRecurringInterval() *SubscriptionRecurringInterval {
+	if o == nil {
+		return nil
+	}
+	return o.RecurringInterval
+}
+
 func (o *CheckoutProduct) GetIsRecurring() bool {
 	if o == nil {
 		return false
@@ -100,9 +174,9 @@ func (o *CheckoutProduct) GetOrganizationID() string {
 	return o.OrganizationID
 }
 
-func (o *CheckoutProduct) GetPrices() []ProductPrice {
+func (o *CheckoutProduct) GetPrices() []CheckoutProductPrices {
 	if o == nil {
-		return []ProductPrice{}
+		return []CheckoutProductPrices{}
 	}
 	return o.Prices
 }

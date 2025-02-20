@@ -30,13 +30,6 @@ func newOrders(sdkConfig sdkConfiguration) *Orders {
 // List Orders
 // List orders.
 func (s *Orders) List(ctx context.Context, request operations.OrdersListRequest, opts ...operations.Option) (*operations.OrdersListResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "orders:list",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -58,6 +51,14 @@ func (s *Orders) List(ctx context.Context, request operations.OrdersListRequest,
 	opURL, err := url.JoinPath(baseURL, "/v1/orders/")
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "orders:list",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -247,6 +248,7 @@ func (s *Orders) List(ctx context.Context, request operations.OrdersListRequest,
 				ProductPriceType: request.ProductPriceType,
 				DiscountID:       request.DiscountID,
 				CustomerID:       request.CustomerID,
+				CheckoutID:       request.CheckoutID,
 				Page:             &nP,
 				Limit:            request.Limit,
 				Sorting:          request.Sorting,
@@ -325,13 +327,6 @@ func (s *Orders) List(ctx context.Context, request operations.OrdersListRequest,
 // Get Order
 // Get an order by ID.
 func (s *Orders) Get(ctx context.Context, id string, opts ...operations.Option) (*operations.OrdersGetResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "orders:get",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	request := operations.OrdersGetRequest{
 		ID: id,
 	}
@@ -357,6 +352,14 @@ func (s *Orders) Get(ctx context.Context, id string, opts ...operations.Option) 
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/v1/orders/{id}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "orders:get",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -572,13 +575,6 @@ func (s *Orders) Get(ctx context.Context, id string, opts ...operations.Option) 
 // Invoice - Get Order Invoice
 // Get an order's invoice data.
 func (s *Orders) Invoice(ctx context.Context, id string, opts ...operations.Option) (*operations.OrdersInvoiceResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "orders:invoice",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	request := operations.OrdersInvoiceRequest{
 		ID: id,
 	}
@@ -604,6 +600,14 @@ func (s *Orders) Invoice(ctx context.Context, id string, opts ...operations.Opti
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/v1/orders/{id}/invoice", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "orders:invoice",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout

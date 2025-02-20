@@ -201,6 +201,72 @@ func (u CheckoutLinkDiscount) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type CheckoutLinkDiscount: all fields are null")
 }
 
+type CheckoutLinkProductPriceType string
+
+const (
+	CheckoutLinkProductPriceTypeLegacyRecurringProductPrice CheckoutLinkProductPriceType = "LegacyRecurringProductPrice"
+	CheckoutLinkProductPriceTypeProductPrice                CheckoutLinkProductPriceType = "ProductPrice"
+)
+
+// CheckoutLinkProductPrice
+//
+// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
+type CheckoutLinkProductPrice struct {
+	LegacyRecurringProductPrice *LegacyRecurringProductPrice `queryParam:"inline"`
+	ProductPrice                *ProductPrice                `queryParam:"inline"`
+
+	Type CheckoutLinkProductPriceType
+}
+
+func CreateCheckoutLinkProductPriceLegacyRecurringProductPrice(legacyRecurringProductPrice LegacyRecurringProductPrice) CheckoutLinkProductPrice {
+	typ := CheckoutLinkProductPriceTypeLegacyRecurringProductPrice
+
+	return CheckoutLinkProductPrice{
+		LegacyRecurringProductPrice: &legacyRecurringProductPrice,
+		Type:                        typ,
+	}
+}
+
+func CreateCheckoutLinkProductPriceProductPrice(productPrice ProductPrice) CheckoutLinkProductPrice {
+	typ := CheckoutLinkProductPriceTypeProductPrice
+
+	return CheckoutLinkProductPrice{
+		ProductPrice: &productPrice,
+		Type:         typ,
+	}
+}
+
+func (u *CheckoutLinkProductPrice) UnmarshalJSON(data []byte) error {
+
+	var legacyRecurringProductPrice LegacyRecurringProductPrice = LegacyRecurringProductPrice{}
+	if err := utils.UnmarshalJSON(data, &legacyRecurringProductPrice, "", true, true); err == nil {
+		u.LegacyRecurringProductPrice = &legacyRecurringProductPrice
+		u.Type = CheckoutLinkProductPriceTypeLegacyRecurringProductPrice
+		return nil
+	}
+
+	var productPrice ProductPrice = ProductPrice{}
+	if err := utils.UnmarshalJSON(data, &productPrice, "", true, true); err == nil {
+		u.ProductPrice = &productPrice
+		u.Type = CheckoutLinkProductPriceTypeProductPrice
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for CheckoutLinkProductPrice", string(data))
+}
+
+func (u CheckoutLinkProductPrice) MarshalJSON() ([]byte, error) {
+	if u.LegacyRecurringProductPrice != nil {
+		return utils.MarshalJSON(u.LegacyRecurringProductPrice, "", true)
+	}
+
+	if u.ProductPrice != nil {
+		return utils.MarshalJSON(u.ProductPrice, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type CheckoutLinkProductPrice: all fields are null")
+}
+
 // CheckoutLink - Checkout link data.
 type CheckoutLink struct {
 	// Creation timestamp of the object.
@@ -219,17 +285,21 @@ type CheckoutLink struct {
 	Label *string `json:"label"`
 	// Whether to allow the customer to apply discount codes. If you apply a discount through `discount_id`, it'll still be applied, but the customer won't be able to change it.
 	AllowDiscountCodes bool `json:"allow_discount_codes"`
-	// ID of the product to checkout.
-	ProductID string `json:"product_id"`
-	// ID of the product price to checkout. First available price will be selected unless an explicit price ID is set.
-	ProductPriceID *string `json:"product_price_id"`
 	// ID of the discount to apply to the checkout. If the discount is not applicable anymore when opening the checkout link, it'll be ignored.
 	DiscountID *string `json:"discount_id"`
+	// The organization ID.
+	OrganizationID string                `json:"organization_id"`
+	Products       []CheckoutLinkProduct `json:"products"`
+	Discount       *CheckoutLinkDiscount `json:"discount"`
+	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
+	ProductID string `json:"product_id"`
+	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
+	ProductPriceID string `json:"product_price_id"`
 	// Product data for a checkout link.
-	Product      CheckoutLinkProduct   `json:"product"`
-	ProductPrice *ProductPrice         `json:"product_price"`
-	Discount     *CheckoutLinkDiscount `json:"discount"`
-	URL          string                `json:"url"`
+	Product CheckoutLinkProduct `json:"product"`
+	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
+	ProductPrice CheckoutLinkProductPrice `json:"product_price"`
+	URL          string                   `json:"url"`
 }
 
 func (c CheckoutLink) MarshalJSON() ([]byte, error) {
@@ -306,6 +376,34 @@ func (o *CheckoutLink) GetAllowDiscountCodes() bool {
 	return o.AllowDiscountCodes
 }
 
+func (o *CheckoutLink) GetDiscountID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.DiscountID
+}
+
+func (o *CheckoutLink) GetOrganizationID() string {
+	if o == nil {
+		return ""
+	}
+	return o.OrganizationID
+}
+
+func (o *CheckoutLink) GetProducts() []CheckoutLinkProduct {
+	if o == nil {
+		return []CheckoutLinkProduct{}
+	}
+	return o.Products
+}
+
+func (o *CheckoutLink) GetDiscount() *CheckoutLinkDiscount {
+	if o == nil {
+		return nil
+	}
+	return o.Discount
+}
+
 func (o *CheckoutLink) GetProductID() string {
 	if o == nil {
 		return ""
@@ -313,18 +411,11 @@ func (o *CheckoutLink) GetProductID() string {
 	return o.ProductID
 }
 
-func (o *CheckoutLink) GetProductPriceID() *string {
+func (o *CheckoutLink) GetProductPriceID() string {
 	if o == nil {
-		return nil
+		return ""
 	}
 	return o.ProductPriceID
-}
-
-func (o *CheckoutLink) GetDiscountID() *string {
-	if o == nil {
-		return nil
-	}
-	return o.DiscountID
 }
 
 func (o *CheckoutLink) GetProduct() CheckoutLinkProduct {
@@ -334,18 +425,11 @@ func (o *CheckoutLink) GetProduct() CheckoutLinkProduct {
 	return o.Product
 }
 
-func (o *CheckoutLink) GetProductPrice() *ProductPrice {
+func (o *CheckoutLink) GetProductPrice() CheckoutLinkProductPrice {
 	if o == nil {
-		return nil
+		return CheckoutLinkProductPrice{}
 	}
 	return o.ProductPrice
-}
-
-func (o *CheckoutLink) GetDiscount() *CheckoutLinkDiscount {
-	if o == nil {
-		return nil
-	}
-	return o.Discount
 }
 
 func (o *CheckoutLink) GetURL() string {

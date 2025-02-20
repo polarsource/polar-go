@@ -119,8 +119,12 @@ func (u CheckoutUpdatePublicCustomFieldData) MarshalJSON() ([]byte, error) {
 // CheckoutUpdatePublic - Update an existing checkout session using the client secret.
 type CheckoutUpdatePublic struct {
 	// Key-value object storing custom field values.
-	CustomFieldData map[string]CheckoutUpdatePublicCustomFieldData `json:"custom_field_data,omitempty"`
-	// ID of the product price to checkout. Must correspond to a price linked to the same product.
+	CustomFieldData map[string]*CheckoutUpdatePublicCustomFieldData `json:"custom_field_data,omitempty"`
+	// ID of the product to checkout. Must be present in the checkout's product list.
+	ProductID *string `json:"product_id,omitempty"`
+	// ID of the product price to checkout. Must correspond to a price present in the checkout's product list.
+	//
+	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
 	ProductPriceID         *string  `json:"product_price_id,omitempty"`
 	Amount                 *int64   `json:"amount,omitempty"`
 	CustomerName           *string  `json:"customer_name,omitempty"`
@@ -131,11 +135,18 @@ type CheckoutUpdatePublic struct {
 	DiscountCode *string `json:"discount_code,omitempty"`
 }
 
-func (o *CheckoutUpdatePublic) GetCustomFieldData() map[string]CheckoutUpdatePublicCustomFieldData {
+func (o *CheckoutUpdatePublic) GetCustomFieldData() map[string]*CheckoutUpdatePublicCustomFieldData {
 	if o == nil {
 		return nil
 	}
 	return o.CustomFieldData
+}
+
+func (o *CheckoutUpdatePublic) GetProductID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ProductID
 }
 
 func (o *CheckoutUpdatePublic) GetProductPriceID() *string {

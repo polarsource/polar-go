@@ -30,13 +30,6 @@ func newLicenseKeys(sdkConfig sdkConfiguration) *LicenseKeys {
 // List License Keys
 // Get license keys connected to the given organization & filters.
 func (s *LicenseKeys) List(ctx context.Context, organizationID *operations.LicenseKeysListQueryParamOrganizationIDFilter, benefitID *operations.QueryParamBenefitIDFilter, page *int64, limit *int64, opts ...operations.Option) (*operations.LicenseKeysListResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "license_keys:list",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	request := operations.LicenseKeysListRequest{
 		OrganizationID: organizationID,
 		BenefitID:      benefitID,
@@ -65,6 +58,14 @@ func (s *LicenseKeys) List(ctx context.Context, organizationID *operations.Licen
 	opURL, err := url.JoinPath(baseURL, "/v1/license-keys")
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "license_keys:list",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -368,13 +369,6 @@ func (s *LicenseKeys) List(ctx context.Context, organizationID *operations.Licen
 // Get License Key
 // Get a license key.
 func (s *LicenseKeys) Get(ctx context.Context, id string, opts ...operations.Option) (*operations.LicenseKeysGetResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "license_keys:get",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	request := operations.LicenseKeysGetRequest{
 		ID: id,
 	}
@@ -400,6 +394,14 @@ func (s *LicenseKeys) Get(ctx context.Context, id string, opts ...operations.Opt
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/v1/license-keys/{id}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "license_keys:get",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -636,13 +638,6 @@ func (s *LicenseKeys) Get(ctx context.Context, id string, opts ...operations.Opt
 // Update License Key
 // Update a license key.
 func (s *LicenseKeys) Update(ctx context.Context, id string, licenseKeyUpdate components.LicenseKeyUpdate, opts ...operations.Option) (*operations.LicenseKeysUpdateResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "license_keys:update",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	request := operations.LicenseKeysUpdateRequest{
 		ID:               id,
 		LicenseKeyUpdate: licenseKeyUpdate,
@@ -671,6 +666,13 @@ func (s *LicenseKeys) Update(ctx context.Context, id string, licenseKeyUpdate co
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "license_keys:update",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "LicenseKeyUpdate", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -913,13 +915,6 @@ func (s *LicenseKeys) Update(ctx context.Context, id string, licenseKeyUpdate co
 // GetActivation - Get Activation
 // Get a license key activation.
 func (s *LicenseKeys) GetActivation(ctx context.Context, id string, activationID string, opts ...operations.Option) (*operations.LicenseKeysGetActivationResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "license_keys:get_activation",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	request := operations.LicenseKeysGetActivationRequest{
 		ID:           id,
 		ActivationID: activationID,
@@ -946,6 +941,14 @@ func (s *LicenseKeys) GetActivation(ctx context.Context, id string, activationID
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/v1/license-keys/{id}/activations/{activation_id}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "license_keys:get_activation",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout

@@ -201,6 +201,70 @@ func (u CheckoutMetadata) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type CheckoutMetadata: all fields are null")
 }
 
+type CheckoutProductPriceType string
+
+const (
+	CheckoutProductPriceTypeLegacyRecurringProductPrice CheckoutProductPriceType = "LegacyRecurringProductPrice"
+	CheckoutProductPriceTypeProductPrice                CheckoutProductPriceType = "ProductPrice"
+)
+
+// CheckoutProductPrice - Price of the selected product.
+type CheckoutProductPrice struct {
+	LegacyRecurringProductPrice *LegacyRecurringProductPrice `queryParam:"inline"`
+	ProductPrice                *ProductPrice                `queryParam:"inline"`
+
+	Type CheckoutProductPriceType
+}
+
+func CreateCheckoutProductPriceLegacyRecurringProductPrice(legacyRecurringProductPrice LegacyRecurringProductPrice) CheckoutProductPrice {
+	typ := CheckoutProductPriceTypeLegacyRecurringProductPrice
+
+	return CheckoutProductPrice{
+		LegacyRecurringProductPrice: &legacyRecurringProductPrice,
+		Type:                        typ,
+	}
+}
+
+func CreateCheckoutProductPriceProductPrice(productPrice ProductPrice) CheckoutProductPrice {
+	typ := CheckoutProductPriceTypeProductPrice
+
+	return CheckoutProductPrice{
+		ProductPrice: &productPrice,
+		Type:         typ,
+	}
+}
+
+func (u *CheckoutProductPrice) UnmarshalJSON(data []byte) error {
+
+	var legacyRecurringProductPrice LegacyRecurringProductPrice = LegacyRecurringProductPrice{}
+	if err := utils.UnmarshalJSON(data, &legacyRecurringProductPrice, "", true, true); err == nil {
+		u.LegacyRecurringProductPrice = &legacyRecurringProductPrice
+		u.Type = CheckoutProductPriceTypeLegacyRecurringProductPrice
+		return nil
+	}
+
+	var productPrice ProductPrice = ProductPrice{}
+	if err := utils.UnmarshalJSON(data, &productPrice, "", true, true); err == nil {
+		u.ProductPrice = &productPrice
+		u.Type = CheckoutProductPriceTypeProductPrice
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for CheckoutProductPrice", string(data))
+}
+
+func (u CheckoutProductPrice) MarshalJSON() ([]byte, error) {
+	if u.LegacyRecurringProductPrice != nil {
+		return utils.MarshalJSON(u.LegacyRecurringProductPrice, "", true)
+	}
+
+	if u.ProductPrice != nil {
+		return utils.MarshalJSON(u.ProductPrice, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type CheckoutProductPrice: all fields are null")
+}
+
 type CheckoutDiscountType string
 
 const (
@@ -402,9 +466,9 @@ type Checkout struct {
 	// The ID of the object.
 	ID string `json:"id"`
 	// Key-value object storing custom field values.
-	CustomFieldData  map[string]CheckoutCustomFieldData `json:"custom_field_data,omitempty"`
-	PaymentProcessor PaymentProcessor                   `json:"payment_processor"`
-	Status           CheckoutStatus                     `json:"status"`
+	CustomFieldData  map[string]*CheckoutCustomFieldData `json:"custom_field_data,omitempty"`
+	PaymentProcessor PaymentProcessor                    `json:"payment_processor"`
+	Status           CheckoutStatus                      `json:"status"`
 	// Client secret used to update and complete the checkout session from the client.
 	ClientSecret string `json:"client_secret"`
 	// URL where the customer can access the checkout session.
@@ -452,9 +516,12 @@ type Checkout struct {
 	CustomerTaxID            *string                     `json:"customer_tax_id"`
 	PaymentProcessorMetadata map[string]string           `json:"payment_processor_metadata"`
 	Metadata                 map[string]CheckoutMetadata `json:"metadata"`
+	// List of products available to select.
+	Products []CheckoutProduct `json:"products"`
 	// Product data for a checkout session.
-	Product              CheckoutProduct             `json:"product"`
-	ProductPrice         ProductPrice                `json:"product_price"`
+	Product CheckoutProduct `json:"product"`
+	// Price of the selected product.
+	ProductPrice         CheckoutProductPrice        `json:"product_price"`
 	Discount             *CheckoutDiscount           `json:"discount"`
 	SubscriptionID       *string                     `json:"subscription_id"`
 	AttachedCustomFields []AttachedCustomField       `json:"attached_custom_fields"`
@@ -493,7 +560,7 @@ func (o *Checkout) GetID() string {
 	return o.ID
 }
 
-func (o *Checkout) GetCustomFieldData() map[string]CheckoutCustomFieldData {
+func (o *Checkout) GetCustomFieldData() map[string]*CheckoutCustomFieldData {
 	if o == nil {
 		return nil
 	}
@@ -703,6 +770,13 @@ func (o *Checkout) GetMetadata() map[string]CheckoutMetadata {
 	return o.Metadata
 }
 
+func (o *Checkout) GetProducts() []CheckoutProduct {
+	if o == nil {
+		return []CheckoutProduct{}
+	}
+	return o.Products
+}
+
 func (o *Checkout) GetProduct() CheckoutProduct {
 	if o == nil {
 		return CheckoutProduct{}
@@ -710,9 +784,9 @@ func (o *Checkout) GetProduct() CheckoutProduct {
 	return o.Product
 }
 
-func (o *Checkout) GetProductPrice() ProductPrice {
+func (o *Checkout) GetProductPrice() CheckoutProductPrice {
 	if o == nil {
-		return ProductPrice{}
+		return CheckoutProductPrice{}
 	}
 	return o.ProductPrice
 }

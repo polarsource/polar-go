@@ -161,7 +161,7 @@ type CustomerUpdate struct {
 	Email          *string                           `json:"email,omitempty"`
 	Name           *string                           `json:"name,omitempty"`
 	BillingAddress *Address                          `json:"billing_address,omitempty"`
-	TaxID          []CustomerUpdateTaxID             `json:"tax_id,omitempty"`
+	TaxID          []*CustomerUpdateTaxID            `json:"tax_id,omitempty"`
 }
 
 func (o *CustomerUpdate) GetMetadata() map[string]CustomerUpdateMetadata {
@@ -192,7 +192,7 @@ func (o *CustomerUpdate) GetBillingAddress() *Address {
 	return o.BillingAddress
 }
 
-func (o *CustomerUpdate) GetTaxID() []CustomerUpdateTaxID {
+func (o *CustomerUpdate) GetTaxID() []*CustomerUpdateTaxID {
 	if o == nil {
 		return nil
 	}

@@ -30,13 +30,6 @@ func newCustomers(sdkConfig sdkConfiguration) *Customers {
 // List Customers
 // List customers.
 func (s *Customers) List(ctx context.Context, request operations.CustomersListRequest, opts ...operations.Option) (*operations.CustomersListResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "customers:list",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -58,6 +51,14 @@ func (s *Customers) List(ctx context.Context, request operations.CustomersListRe
 	opURL, err := url.JoinPath(baseURL, "/v1/customers/")
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "customers:list",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -324,13 +325,6 @@ func (s *Customers) List(ctx context.Context, request operations.CustomersListRe
 // Create Customer
 // Create a customer.
 func (s *Customers) Create(ctx context.Context, request components.CustomerCreate, opts ...operations.Option) (*operations.CustomersCreateResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "customers:create",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -354,6 +348,13 @@ func (s *Customers) Create(ctx context.Context, request components.CustomerCreat
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "customers:create",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "Request", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -554,13 +555,6 @@ func (s *Customers) Create(ctx context.Context, request components.CustomerCreat
 // Get Customer
 // Get a customer by ID.
 func (s *Customers) Get(ctx context.Context, id string, opts ...operations.Option) (*operations.CustomersGetResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "customers:get",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	request := operations.CustomersGetRequest{
 		ID: id,
 	}
@@ -586,6 +580,14 @@ func (s *Customers) Get(ctx context.Context, id string, opts ...operations.Optio
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/v1/customers/{id}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "customers:get",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -801,13 +803,6 @@ func (s *Customers) Get(ctx context.Context, id string, opts ...operations.Optio
 // Update Customer
 // Update a customer.
 func (s *Customers) Update(ctx context.Context, id string, customerUpdate components.CustomerUpdate, opts ...operations.Option) (*operations.CustomersUpdateResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "customers:update",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	request := operations.CustomersUpdateRequest{
 		ID:             id,
 		CustomerUpdate: customerUpdate,
@@ -836,6 +831,13 @@ func (s *Customers) Update(ctx context.Context, id string, customerUpdate compon
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "customers:update",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "CustomerUpdate", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -1059,13 +1061,6 @@ func (s *Customers) Update(ctx context.Context, id string, customerUpdate compon
 //
 // Immediately cancels any active subscriptions and revokes any active benefits.
 func (s *Customers) Delete(ctx context.Context, id string, opts ...operations.Option) (*operations.CustomersDeleteResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "customers:delete",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	request := operations.CustomersDeleteRequest{
 		ID: id,
 	}
@@ -1091,6 +1086,14 @@ func (s *Customers) Delete(ctx context.Context, id string, opts ...operations.Op
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/v1/customers/{id}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "customers:delete",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout

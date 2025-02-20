@@ -116,16 +116,302 @@ func main() {
 					"<value>",
 				),
 			},
+			Products: []components.CheckoutProduct{
+				components.CheckoutProduct{
+					CreatedAt:         types.MustTimeFromString("2024-05-27T05:08:06.235Z"),
+					ModifiedAt:        types.MustNewTimeFromString("2025-11-19T15:59:15.588Z"),
+					ID:                "<value>",
+					Name:              "<value>",
+					Description:       polargo.String("brr institute tired rotten relative"),
+					RecurringInterval: components.SubscriptionRecurringIntervalYear.ToPointer(),
+					IsRecurring:       false,
+					IsArchived:        false,
+					OrganizationID:    "<value>",
+					Prices:            []components.CheckoutProductPrices{},
+					Benefits: []components.BenefitBase{
+						components.BenefitBase{
+							CreatedAt:      types.MustTimeFromString("2023-04-26T22:34:57.487Z"),
+							ModifiedAt:     types.MustNewTimeFromString("2023-08-07T19:57:51.694Z"),
+							ID:             "<value>",
+							Type:           components.BenefitTypeDiscord,
+							Description:    "when waterlogged godparent pure solidly content sonar progress pacemaker",
+							Selectable:     true,
+							Deletable:      false,
+							OrganizationID: "<value>",
+						},
+						components.BenefitBase{
+							CreatedAt:      types.MustTimeFromString("2024-10-18T15:45:53.088Z"),
+							ModifiedAt:     types.MustNewTimeFromString("2023-08-08T05:58:49.836Z"),
+							ID:             "<value>",
+							Type:           components.BenefitTypeLicenseKeys,
+							Description:    "language traduce shrill minor hourly which yearly deeply but",
+							Selectable:     false,
+							Deletable:      false,
+							OrganizationID: "<value>",
+						},
+					},
+					Medias: []components.ProductMediaFileRead{
+						components.ProductMediaFileRead{
+							ID:                   "<value>",
+							OrganizationID:       "<value>",
+							Name:                 "<value>",
+							Path:                 "/Applications",
+							MimeType:             "<value>",
+							Size:                 271748,
+							StorageVersion:       polargo.String("<value>"),
+							ChecksumEtag:         polargo.String("<value>"),
+							ChecksumSha256Base64: polargo.String("<value>"),
+							ChecksumSha256Hex:    polargo.String("<value>"),
+							LastModifiedAt:       types.MustNewTimeFromString("2023-03-11T18:00:05.573Z"),
+							Version:              polargo.String("<value>"),
+							IsUploaded:           false,
+							CreatedAt:            types.MustTimeFromString("2025-09-09T13:21:53.200Z"),
+							SizeReadable:         "<value>",
+							PublicURL:            "https://male-season.net/",
+						},
+						components.ProductMediaFileRead{
+							ID:                   "<value>",
+							OrganizationID:       "<value>",
+							Name:                 "<value>",
+							Path:                 "/bin",
+							MimeType:             "<value>",
+							Size:                 187532,
+							StorageVersion:       polargo.String("<value>"),
+							ChecksumEtag:         polargo.String("<value>"),
+							ChecksumSha256Base64: polargo.String("<value>"),
+							ChecksumSha256Hex:    polargo.String("<value>"),
+							LastModifiedAt:       types.MustNewTimeFromString("2023-12-07T16:19:25.811Z"),
+							Version:              polargo.String("<value>"),
+							IsUploaded:           false,
+							CreatedAt:            types.MustTimeFromString("2023-12-31T15:42:50.685Z"),
+							SizeReadable:         "<value>",
+							PublicURL:            "https://squeaky-editor.name",
+						},
+						components.ProductMediaFileRead{
+							ID:                   "<value>",
+							OrganizationID:       "<value>",
+							Name:                 "<value>",
+							Path:                 "/usr/bin",
+							MimeType:             "<value>",
+							Size:                 910846,
+							StorageVersion:       polargo.String("<value>"),
+							ChecksumEtag:         polargo.String("<value>"),
+							ChecksumSha256Base64: polargo.String("<value>"),
+							ChecksumSha256Hex:    polargo.String("<value>"),
+							LastModifiedAt:       types.MustNewTimeFromString("2025-02-19T14:34:23.071Z"),
+							Version:              polargo.String("<value>"),
+							IsUploaded:           true,
+							CreatedAt:            types.MustTimeFromString("2024-07-14T23:53:19.831Z"),
+							SizeReadable:         "<value>",
+							PublicURL:            "https://sad-pupil.info/",
+						},
+					},
+				},
+				components.CheckoutProduct{
+					CreatedAt:         types.MustTimeFromString("2025-09-29T06:23:47.676Z"),
+					ModifiedAt:        types.MustNewTimeFromString("2024-07-02T05:50:09.114Z"),
+					ID:                "<value>",
+					Name:              "<value>",
+					Description:       polargo.String("as weekly drat nor why sparkling"),
+					RecurringInterval: components.SubscriptionRecurringIntervalMonth.ToPointer(),
+					IsRecurring:       false,
+					IsArchived:        false,
+					OrganizationID:    "<value>",
+					Prices: []components.CheckoutProductPrices{
+						components.CreateCheckoutProductPricesProductPrice(
+							components.CreateProductPriceProductPriceFree(
+								components.ProductPriceFree{
+									CreatedAt:         types.MustTimeFromString("2023-09-19T22:46:24.110Z"),
+									ModifiedAt:        types.MustNewTimeFromString("2024-10-23T17:16:18.939Z"),
+									ID:                "<value>",
+									IsArchived:        false,
+									ProductID:         "<value>",
+									Type:              components.ProductPriceTypeOneTime,
+									RecurringInterval: components.SubscriptionRecurringIntervalYear.ToPointer(),
+								},
+							),
+						),
+						components.CreateCheckoutProductPricesProductPrice(
+							components.CreateProductPriceProductPriceCustom(
+								components.ProductPriceCustom{
+									CreatedAt:         types.MustTimeFromString("2025-10-29T00:32:24.235Z"),
+									ModifiedAt:        types.MustNewTimeFromString("2025-04-28T15:46:25.145Z"),
+									ID:                "<value>",
+									IsArchived:        false,
+									ProductID:         "<value>",
+									Type:              components.ProductPriceTypeRecurring,
+									RecurringInterval: components.SubscriptionRecurringIntervalYear.ToPointer(),
+									PriceCurrency:     "<value>",
+									MinimumAmount:     polargo.Int64(634111),
+									MaximumAmount:     polargo.Int64(482040),
+									PresetAmount:      polargo.Int64(134),
+								},
+							),
+						),
+					},
+					Benefits: []components.BenefitBase{
+						components.BenefitBase{
+							CreatedAt:      types.MustTimeFromString("2025-10-16T20:09:46.139Z"),
+							ModifiedAt:     types.MustNewTimeFromString("2023-09-29T18:20:07.088Z"),
+							ID:             "<value>",
+							Type:           components.BenefitTypeAds,
+							Description:    "pupil divine roundabout gah oh hm over equatorial",
+							Selectable:     false,
+							Deletable:      false,
+							OrganizationID: "<value>",
+						},
+					},
+					Medias: []components.ProductMediaFileRead{
+						components.ProductMediaFileRead{
+							ID:                   "<value>",
+							OrganizationID:       "<value>",
+							Name:                 "<value>",
+							Path:                 "/lib",
+							MimeType:             "<value>",
+							Size:                 887018,
+							StorageVersion:       polargo.String("<value>"),
+							ChecksumEtag:         polargo.String("<value>"),
+							ChecksumSha256Base64: polargo.String("<value>"),
+							ChecksumSha256Hex:    polargo.String("<value>"),
+							LastModifiedAt:       types.MustNewTimeFromString("2025-11-07T16:20:25.796Z"),
+							Version:              polargo.String("<value>"),
+							IsUploaded:           true,
+							CreatedAt:            types.MustTimeFromString("2024-11-17T23:09:10.440Z"),
+							SizeReadable:         "<value>",
+							PublicURL:            "https://untimely-information.net/",
+						},
+						components.ProductMediaFileRead{
+							ID:                   "<value>",
+							OrganizationID:       "<value>",
+							Name:                 "<value>",
+							Path:                 "/usr/local/bin",
+							MimeType:             "<value>",
+							Size:                 75636,
+							StorageVersion:       polargo.String("<value>"),
+							ChecksumEtag:         polargo.String("<value>"),
+							ChecksumSha256Base64: polargo.String("<value>"),
+							ChecksumSha256Hex:    polargo.String("<value>"),
+							LastModifiedAt:       types.MustNewTimeFromString("2023-02-06T03:34:19.712Z"),
+							Version:              polargo.String("<value>"),
+							IsUploaded:           true,
+							CreatedAt:            types.MustTimeFromString("2023-03-25T12:20:31.544Z"),
+							SizeReadable:         "<value>",
+							PublicURL:            "https://immense-finer.com/",
+						},
+						components.ProductMediaFileRead{
+							ID:                   "<value>",
+							OrganizationID:       "<value>",
+							Name:                 "<value>",
+							Path:                 "/srv",
+							MimeType:             "<value>",
+							Size:                 544978,
+							StorageVersion:       polargo.String("<value>"),
+							ChecksumEtag:         polargo.String("<value>"),
+							ChecksumSha256Base64: polargo.String("<value>"),
+							ChecksumSha256Hex:    polargo.String("<value>"),
+							LastModifiedAt:       types.MustNewTimeFromString("2024-09-24T17:52:13.602Z"),
+							Version:              polargo.String("<value>"),
+							IsUploaded:           false,
+							CreatedAt:            types.MustTimeFromString("2023-09-28T13:20:26.690Z"),
+							SizeReadable:         "<value>",
+							PublicURL:            "https://pastel-character.info",
+						},
+					},
+				},
+				components.CheckoutProduct{
+					CreatedAt:         types.MustTimeFromString("2023-09-09T06:37:57.046Z"),
+					ModifiedAt:        types.MustNewTimeFromString("2024-12-25T00:01:30.412Z"),
+					ID:                "<value>",
+					Name:              "<value>",
+					Description:       polargo.String("delectable ugh likewise than every how milestone"),
+					RecurringInterval: components.SubscriptionRecurringIntervalYear.ToPointer(),
+					IsRecurring:       true,
+					IsArchived:        false,
+					OrganizationID:    "<value>",
+					Prices: []components.CheckoutProductPrices{
+						components.CreateCheckoutProductPricesLegacyRecurringProductPrice(
+							components.CreateLegacyRecurringProductPriceFree(
+								components.LegacyRecurringProductPriceFree{
+									CreatedAt:         types.MustTimeFromString("2023-10-21T11:52:11.842Z"),
+									ModifiedAt:        types.MustNewTimeFromString("2023-10-09T19:13:38.530Z"),
+									ID:                "<value>",
+									IsArchived:        false,
+									ProductID:         "<value>",
+									RecurringInterval: components.SubscriptionRecurringIntervalYear,
+								},
+							),
+						),
+						components.CreateCheckoutProductPricesProductPrice(
+							components.CreateProductPriceProductPriceCustom(
+								components.ProductPriceCustom{
+									CreatedAt:         types.MustTimeFromString("2024-12-10T06:44:06.426Z"),
+									ModifiedAt:        types.MustNewTimeFromString("2025-11-05T18:06:37.266Z"),
+									ID:                "<value>",
+									IsArchived:        false,
+									ProductID:         "<value>",
+									Type:              components.ProductPriceTypeRecurring,
+									RecurringInterval: components.SubscriptionRecurringIntervalMonth.ToPointer(),
+									PriceCurrency:     "<value>",
+									MinimumAmount:     polargo.Int64(102328),
+									MaximumAmount:     polargo.Int64(332863),
+									PresetAmount:      polargo.Int64(287633),
+								},
+							),
+						),
+						components.CreateCheckoutProductPricesProductPrice(
+							components.CreateProductPriceProductPriceCustom(
+								components.ProductPriceCustom{
+									CreatedAt:         types.MustTimeFromString("2024-09-15T18:10:19.969Z"),
+									ModifiedAt:        types.MustNewTimeFromString("2025-12-08T10:05:37.208Z"),
+									ID:                "<value>",
+									IsArchived:        false,
+									ProductID:         "<value>",
+									Type:              components.ProductPriceTypeRecurring,
+									RecurringInterval: components.SubscriptionRecurringIntervalYear.ToPointer(),
+									PriceCurrency:     "<value>",
+									MinimumAmount:     polargo.Int64(674791),
+									MaximumAmount:     polargo.Int64(138001),
+									PresetAmount:      polargo.Int64(879649),
+								},
+							),
+						),
+					},
+					Benefits: []components.BenefitBase{
+						components.BenefitBase{
+							CreatedAt:      types.MustTimeFromString("2024-04-20T16:45:08.626Z"),
+							ModifiedAt:     types.MustNewTimeFromString("2025-10-27T21:24:45.236Z"),
+							ID:             "<value>",
+							Type:           components.BenefitTypeDiscord,
+							Description:    "until tenderly chapel quantify optimistically excluding aw because amongst emulsify",
+							Selectable:     false,
+							Deletable:      false,
+							OrganizationID: "<value>",
+						},
+						components.BenefitBase{
+							CreatedAt:      types.MustTimeFromString("2023-12-28T12:56:50.963Z"),
+							ModifiedAt:     types.MustNewTimeFromString("2023-07-08T17:24:16.616Z"),
+							ID:             "<value>",
+							Type:           components.BenefitTypeLicenseKeys,
+							Description:    "denitrify um extremely scotch breed rebuild tighten poppy unwritten apostrophize",
+							Selectable:     false,
+							Deletable:      true,
+							OrganizationID: "<value>",
+						},
+					},
+					Medias: []components.ProductMediaFileRead{},
+				},
+			},
 			Product: components.CheckoutProduct{
-				CreatedAt:      types.MustTimeFromString("2024-11-17T19:11:13.132Z"),
-				ModifiedAt:     types.MustNewTimeFromString("2024-02-27T04:46:39.621Z"),
-				ID:             "<value>",
-				Name:           "<value>",
-				Description:    polargo.String("border opposite overload interior shady"),
-				IsRecurring:    false,
-				IsArchived:     true,
-				OrganizationID: "<value>",
-				Prices:         []components.ProductPrice{},
+				CreatedAt:         types.MustTimeFromString("2024-11-17T19:11:13.132Z"),
+				ModifiedAt:        types.MustNewTimeFromString("2024-02-27T04:46:39.621Z"),
+				ID:                "<value>",
+				Name:              "<value>",
+				Description:       polargo.String("border opposite overload interior shady"),
+				RecurringInterval: components.SubscriptionRecurringIntervalYear.ToPointer(),
+				IsRecurring:       false,
+				IsArchived:        true,
+				OrganizationID:    "<value>",
+				Prices:            []components.CheckoutProductPrices{},
 				Benefits: []components.BenefitBase{
 					components.BenefitBase{
 						CreatedAt:      types.MustTimeFromString("2025-08-24T18:28:03.144Z"),
@@ -177,14 +463,18 @@ func main() {
 					},
 				},
 			},
-			ProductPrice: components.CreateProductPriceProductPriceOneTime(
-				components.CreateProductPriceOneTimeProductPriceOneTimeFree(
-					components.ProductPriceOneTimeFree{
-						CreatedAt:  types.MustTimeFromString("2025-06-18T23:55:22.042Z"),
-						ModifiedAt: types.MustNewTimeFromString("2025-07-31T13:25:31.669Z"),
-						ID:         "<value>",
-						IsArchived: false,
-						ProductID:  "<value>",
+			ProductPrice: components.CreateCheckoutProductPriceProductPrice(
+				components.CreateProductPriceProductPriceFixed(
+					components.ProductPriceFixed{
+						CreatedAt:         types.MustTimeFromString("2025-01-07T06:19:30.216Z"),
+						ModifiedAt:        types.MustNewTimeFromString("2025-12-22T08:06:55.176Z"),
+						ID:                "<value>",
+						IsArchived:        false,
+						ProductID:         "<value>",
+						Type:              components.ProductPriceTypeOneTime,
+						RecurringInterval: components.SubscriptionRecurringIntervalYear.ToPointer(),
+						PriceCurrency:     "<value>",
+						PriceAmount:       449076,
 					},
 				),
 			),
@@ -202,20 +492,27 @@ func main() {
 			AttachedCustomFields: []components.AttachedCustomField{
 				components.AttachedCustomField{
 					CustomFieldID: "<value>",
-					CustomField: components.CreateCustomFieldDate(
-						components.CustomFieldDate{
-							CreatedAt:  types.MustTimeFromString("2023-08-29T09:50:00.241Z"),
-							ModifiedAt: types.MustNewTimeFromString("2024-11-17T19:11:13.132Z"),
+					CustomField: components.CreateCustomFieldSelect(
+						components.CustomFieldSelect{
+							CreatedAt:  types.MustTimeFromString("2023-07-01T09:35:23.526Z"),
+							ModifiedAt: types.MustNewTimeFromString("2023-09-05T11:14:58.018Z"),
 							ID:         "<value>",
-							Metadata: map[string]components.CustomFieldDateMetadata{
-								"key": components.CreateCustomFieldDateMetadataInteger(
-									366960,
+							Metadata: map[string]components.CustomFieldSelectMetadata{
+								"key": components.CreateCustomFieldSelectMetadataBoolean(
+									false,
 								),
 							},
 							Slug:           "<value>",
 							Name:           "<value>",
 							OrganizationID: "<value>",
-							Properties:     components.CustomFieldDateProperties{},
+							Properties: components.CustomFieldSelectProperties{
+								Options: []components.CustomFieldSelectOption{
+									components.CustomFieldSelectOption{
+										Value: "<value>",
+										Label: "<value>",
+									},
+								},
+							},
 						},
 					),
 					Order:    169862,
@@ -225,12 +522,12 @@ func main() {
 					CustomFieldID: "<value>",
 					CustomField: components.CreateCustomFieldText(
 						components.CustomFieldText{
-							CreatedAt:  types.MustTimeFromString("2025-01-27T19:10:37.564Z"),
-							ModifiedAt: types.MustNewTimeFromString("2024-07-01T11:31:44.349Z"),
+							CreatedAt:  types.MustTimeFromString("2024-12-03T12:38:50.277Z"),
+							ModifiedAt: types.MustNewTimeFromString("2024-05-21T13:41:47.986Z"),
 							ID:         "<value>",
 							Metadata: map[string]components.CustomFieldTextMetadata{
-								"key": components.CreateCustomFieldTextMetadataStr(
-									"<value>",
+								"key": components.CreateCustomFieldTextMetadataInteger(
+									473941,
 								),
 							},
 							Slug:           "<value>",
@@ -244,20 +541,20 @@ func main() {
 				},
 				components.AttachedCustomField{
 					CustomFieldID: "<value>",
-					CustomField: components.CreateCustomFieldNumber(
-						components.CustomFieldNumber{
-							CreatedAt:  types.MustTimeFromString("2023-04-15T12:36:50.681Z"),
-							ModifiedAt: types.MustNewTimeFromString("2023-04-02T00:05:42.586Z"),
+					CustomField: components.CreateCustomFieldText(
+						components.CustomFieldText{
+							CreatedAt:  types.MustTimeFromString("2023-01-30T18:58:55.355Z"),
+							ModifiedAt: types.MustNewTimeFromString("2024-12-15T18:35:30.312Z"),
 							ID:         "<value>",
-							Metadata: map[string]components.CustomFieldNumberMetadata{
-								"key": components.CreateCustomFieldNumberMetadataInteger(
-									740296,
+							Metadata: map[string]components.CustomFieldTextMetadata{
+								"key": components.CreateCustomFieldTextMetadataInteger(
+									143857,
 								),
 							},
 							Slug:           "<value>",
 							Name:           "<value>",
 							OrganizationID: "<value>",
-							Properties:     components.CustomFieldNumberProperties{},
+							Properties:     components.CustomFieldTextProperties{},
 						},
 					),
 					Order:    187532,
@@ -774,10 +1071,10 @@ func main() {
 
 You can override the default server globally using the `WithServer(server string)` option when initializing the SDK client instance. The selected server will then be used as the default on the operations that use it. This table lists the names associated with the available servers:
 
-| Name         | Server                         |
-| ------------ | ------------------------------ |
-| `production` | `https://api.polar.sh`         |
-| `sandbox`    | `https://sandbox-api.polar.sh` |
+| Name         | Server                         | Description            |
+| ------------ | ------------------------------ | ---------------------- |
+| `production` | `https://api.polar.sh`         | Production environment |
+| `sandbox`    | `https://sandbox-api.polar.sh` | Sandbox environment    |
 
 #### Example
 

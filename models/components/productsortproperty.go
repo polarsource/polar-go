@@ -14,8 +14,6 @@ const (
 	ProductSortPropertyMinusCreatedAt       ProductSortProperty = "-created_at"
 	ProductSortPropertyName                 ProductSortProperty = "name"
 	ProductSortPropertyMinusName            ProductSortProperty = "-name"
-	ProductSortPropertyPriceType            ProductSortProperty = "price_type"
-	ProductSortPropertyMinusPriceType       ProductSortProperty = "-price_type"
 	ProductSortPropertyPriceAmountType      ProductSortProperty = "price_amount_type"
 	ProductSortPropertyMinusPriceAmountType ProductSortProperty = "-price_amount_type"
 	ProductSortPropertyPriceAmount          ProductSortProperty = "price_amount"
@@ -38,10 +36,6 @@ func (e *ProductSortProperty) UnmarshalJSON(data []byte) error {
 	case "name":
 		fallthrough
 	case "-name":
-		fallthrough
-	case "price_type":
-		fallthrough
-	case "-price_type":
 		fallthrough
 	case "price_amount_type":
 		fallthrough

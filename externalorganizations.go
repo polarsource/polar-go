@@ -30,13 +30,6 @@ func newExternalOrganizations(sdkConfig sdkConfiguration) *ExternalOrganizations
 // List External Organizations
 // List external organizations.
 func (s *ExternalOrganizations) List(ctx context.Context, request operations.ExternalOrganizationsListRequest, opts ...operations.Option) (*operations.ExternalOrganizationsListResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "external_organizations:list",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -58,6 +51,14 @@ func (s *ExternalOrganizations) List(ctx context.Context, request operations.Ext
 	opURL, err := url.JoinPath(baseURL, "/v1/external_organizations/")
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "external_organizations:list",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout

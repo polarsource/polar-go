@@ -201,6 +201,69 @@ func (u OrderCustomFieldData) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type OrderCustomFieldData: all fields are null")
 }
 
+type OrderProductPriceType string
+
+const (
+	OrderProductPriceTypeLegacyRecurringProductPrice OrderProductPriceType = "LegacyRecurringProductPrice"
+	OrderProductPriceTypeProductPrice                OrderProductPriceType = "ProductPrice"
+)
+
+type OrderProductPrice struct {
+	LegacyRecurringProductPrice *LegacyRecurringProductPrice `queryParam:"inline"`
+	ProductPrice                *ProductPrice                `queryParam:"inline"`
+
+	Type OrderProductPriceType
+}
+
+func CreateOrderProductPriceLegacyRecurringProductPrice(legacyRecurringProductPrice LegacyRecurringProductPrice) OrderProductPrice {
+	typ := OrderProductPriceTypeLegacyRecurringProductPrice
+
+	return OrderProductPrice{
+		LegacyRecurringProductPrice: &legacyRecurringProductPrice,
+		Type:                        typ,
+	}
+}
+
+func CreateOrderProductPriceProductPrice(productPrice ProductPrice) OrderProductPrice {
+	typ := OrderProductPriceTypeProductPrice
+
+	return OrderProductPrice{
+		ProductPrice: &productPrice,
+		Type:         typ,
+	}
+}
+
+func (u *OrderProductPrice) UnmarshalJSON(data []byte) error {
+
+	var legacyRecurringProductPrice LegacyRecurringProductPrice = LegacyRecurringProductPrice{}
+	if err := utils.UnmarshalJSON(data, &legacyRecurringProductPrice, "", true, true); err == nil {
+		u.LegacyRecurringProductPrice = &legacyRecurringProductPrice
+		u.Type = OrderProductPriceTypeLegacyRecurringProductPrice
+		return nil
+	}
+
+	var productPrice ProductPrice = ProductPrice{}
+	if err := utils.UnmarshalJSON(data, &productPrice, "", true, true); err == nil {
+		u.ProductPrice = &productPrice
+		u.Type = OrderProductPriceTypeProductPrice
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for OrderProductPrice", string(data))
+}
+
+func (u OrderProductPrice) MarshalJSON() ([]byte, error) {
+	if u.LegacyRecurringProductPrice != nil {
+		return utils.MarshalJSON(u.LegacyRecurringProductPrice, "", true)
+	}
+
+	if u.ProductPrice != nil {
+		return utils.MarshalJSON(u.ProductPrice, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type OrderProductPrice: all fields are null")
+}
+
 type OrderDiscountType string
 
 const (
@@ -317,10 +380,10 @@ type Order struct {
 	ID       string                   `json:"id"`
 	Metadata map[string]OrderMetadata `json:"metadata"`
 	// Key-value object storing custom field values.
-	CustomFieldData map[string]OrderCustomFieldData `json:"custom_field_data,omitempty"`
-	Status          string                          `json:"status"`
-	Amount          int64                           `json:"amount"`
-	TaxAmount       int64                           `json:"tax_amount"`
+	CustomFieldData map[string]*OrderCustomFieldData `json:"custom_field_data,omitempty"`
+	Status          string                           `json:"status"`
+	Amount          int64                            `json:"amount"`
+	TaxAmount       int64                            `json:"tax_amount"`
 	// Amount refunded
 	RefundedAmount int64 `json:"refunded_amount"`
 	// Sales tax refunded
@@ -339,7 +402,7 @@ type Order struct {
 	UserID       string             `json:"user_id"`
 	User         OrderUser          `json:"user"`
 	Product      OrderProduct       `json:"product"`
-	ProductPrice ProductPrice       `json:"product_price"`
+	ProductPrice OrderProductPrice  `json:"product_price"`
 	Discount     *OrderDiscount     `json:"discount"`
 	Subscription *OrderSubscription `json:"subscription"`
 }
@@ -383,7 +446,7 @@ func (o *Order) GetMetadata() map[string]OrderMetadata {
 	return o.Metadata
 }
 
-func (o *Order) GetCustomFieldData() map[string]OrderCustomFieldData {
+func (o *Order) GetCustomFieldData() map[string]*OrderCustomFieldData {
 	if o == nil {
 		return nil
 	}
@@ -516,9 +579,9 @@ func (o *Order) GetProduct() OrderProduct {
 	return o.Product
 }
 
-func (o *Order) GetProductPrice() ProductPrice {
+func (o *Order) GetProductPrice() OrderProductPrice {
 	if o == nil {
-		return ProductPrice{}
+		return OrderProductPrice{}
 	}
 	return o.ProductPrice
 }

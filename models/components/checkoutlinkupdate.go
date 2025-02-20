@@ -96,10 +96,11 @@ func (u CheckoutLinkUpdateMetadata) MarshalJSON() ([]byte, error) {
 // CheckoutLinkUpdate - Schema to update an existing checkout link.
 type CheckoutLinkUpdate struct {
 	Metadata map[string]CheckoutLinkUpdateMetadata `json:"metadata,omitempty"`
-	Label    *string                               `json:"label,omitempty"`
+	// List of products that will be available to select at checkout.
+	Products []string `json:"products,omitempty"`
+	Label    *string  `json:"label,omitempty"`
 	// Whether to allow the customer to apply discount codes. If you apply a discount through `discount_id`, it'll still be applied, but the customer won't be able to change it.
-	AllowDiscountCodes *bool   `json:"allow_discount_codes,omitempty"`
-	ProductPriceID     *string `json:"product_price_id,omitempty"`
+	AllowDiscountCodes *bool `json:"allow_discount_codes,omitempty"`
 	// ID of the discount to apply to the checkout. If the discount is not applicable anymore when opening the checkout link, it'll be ignored.
 	DiscountID *string `json:"discount_id,omitempty"`
 	// URL where the customer will be redirected after a successful payment.You can add the `checkout_id={CHECKOUT_ID}` query parameter to retrieve the checkout session id.
@@ -111,6 +112,13 @@ func (o *CheckoutLinkUpdate) GetMetadata() map[string]CheckoutLinkUpdateMetadata
 		return nil
 	}
 	return o.Metadata
+}
+
+func (o *CheckoutLinkUpdate) GetProducts() []string {
+	if o == nil {
+		return nil
+	}
+	return o.Products
 }
 
 func (o *CheckoutLinkUpdate) GetLabel() *string {
@@ -125,13 +133,6 @@ func (o *CheckoutLinkUpdate) GetAllowDiscountCodes() *bool {
 		return nil
 	}
 	return o.AllowDiscountCodes
-}
-
-func (o *CheckoutLinkUpdate) GetProductPriceID() *string {
-	if o == nil {
-		return nil
-	}
-	return o.ProductPriceID
 }
 
 func (o *CheckoutLinkUpdate) GetDiscountID() *string {

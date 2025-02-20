@@ -116,6 +116,70 @@ func (u CheckoutPublicConfirmedCustomFieldData) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type CheckoutPublicConfirmedCustomFieldData: all fields are null")
 }
 
+type CheckoutPublicConfirmedProductPriceType string
+
+const (
+	CheckoutPublicConfirmedProductPriceTypeLegacyRecurringProductPrice CheckoutPublicConfirmedProductPriceType = "LegacyRecurringProductPrice"
+	CheckoutPublicConfirmedProductPriceTypeProductPrice                CheckoutPublicConfirmedProductPriceType = "ProductPrice"
+)
+
+// CheckoutPublicConfirmedProductPrice - Price of the selected product.
+type CheckoutPublicConfirmedProductPrice struct {
+	LegacyRecurringProductPrice *LegacyRecurringProductPrice `queryParam:"inline"`
+	ProductPrice                *ProductPrice                `queryParam:"inline"`
+
+	Type CheckoutPublicConfirmedProductPriceType
+}
+
+func CreateCheckoutPublicConfirmedProductPriceLegacyRecurringProductPrice(legacyRecurringProductPrice LegacyRecurringProductPrice) CheckoutPublicConfirmedProductPrice {
+	typ := CheckoutPublicConfirmedProductPriceTypeLegacyRecurringProductPrice
+
+	return CheckoutPublicConfirmedProductPrice{
+		LegacyRecurringProductPrice: &legacyRecurringProductPrice,
+		Type:                        typ,
+	}
+}
+
+func CreateCheckoutPublicConfirmedProductPriceProductPrice(productPrice ProductPrice) CheckoutPublicConfirmedProductPrice {
+	typ := CheckoutPublicConfirmedProductPriceTypeProductPrice
+
+	return CheckoutPublicConfirmedProductPrice{
+		ProductPrice: &productPrice,
+		Type:         typ,
+	}
+}
+
+func (u *CheckoutPublicConfirmedProductPrice) UnmarshalJSON(data []byte) error {
+
+	var legacyRecurringProductPrice LegacyRecurringProductPrice = LegacyRecurringProductPrice{}
+	if err := utils.UnmarshalJSON(data, &legacyRecurringProductPrice, "", true, true); err == nil {
+		u.LegacyRecurringProductPrice = &legacyRecurringProductPrice
+		u.Type = CheckoutPublicConfirmedProductPriceTypeLegacyRecurringProductPrice
+		return nil
+	}
+
+	var productPrice ProductPrice = ProductPrice{}
+	if err := utils.UnmarshalJSON(data, &productPrice, "", true, true); err == nil {
+		u.ProductPrice = &productPrice
+		u.Type = CheckoutPublicConfirmedProductPriceTypeProductPrice
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for CheckoutPublicConfirmedProductPrice", string(data))
+}
+
+func (u CheckoutPublicConfirmedProductPrice) MarshalJSON() ([]byte, error) {
+	if u.LegacyRecurringProductPrice != nil {
+		return utils.MarshalJSON(u.LegacyRecurringProductPrice, "", true)
+	}
+
+	if u.ProductPrice != nil {
+		return utils.MarshalJSON(u.ProductPrice, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type CheckoutPublicConfirmedProductPrice: all fields are null")
+}
+
 type CheckoutPublicConfirmedDiscountType string
 
 const (
@@ -235,9 +299,9 @@ type CheckoutPublicConfirmed struct {
 	// The ID of the object.
 	ID string `json:"id"`
 	// Key-value object storing custom field values.
-	CustomFieldData  map[string]CheckoutPublicConfirmedCustomFieldData `json:"custom_field_data,omitempty"`
-	PaymentProcessor PaymentProcessor                                  `json:"payment_processor"`
-	status           string                                            `const:"confirmed" json:"status"`
+	CustomFieldData  map[string]*CheckoutPublicConfirmedCustomFieldData `json:"custom_field_data,omitempty"`
+	PaymentProcessor PaymentProcessor                                   `json:"payment_processor"`
+	status           string                                             `const:"confirmed" json:"status"`
 	// Client secret used to update and complete the checkout session from the client.
 	ClientSecret string `json:"client_secret"`
 	// URL where the customer can access the checkout session.
@@ -284,13 +348,16 @@ type CheckoutPublicConfirmed struct {
 	CustomerBillingAddress   *Address          `json:"customer_billing_address"`
 	CustomerTaxID            *string           `json:"customer_tax_id"`
 	PaymentProcessorMetadata map[string]string `json:"payment_processor_metadata"`
+	// List of products available to select.
+	Products []CheckoutProduct `json:"products"`
 	// Product data for a checkout session.
-	Product              CheckoutProduct                  `json:"product"`
-	ProductPrice         ProductPrice                     `json:"product_price"`
-	Discount             *CheckoutPublicConfirmedDiscount `json:"discount"`
-	Organization         Organization                     `json:"organization"`
-	AttachedCustomFields []AttachedCustomField            `json:"attached_custom_fields"`
-	CustomerSessionToken string                           `json:"customer_session_token"`
+	Product CheckoutProduct `json:"product"`
+	// Price of the selected product.
+	ProductPrice         CheckoutPublicConfirmedProductPrice `json:"product_price"`
+	Discount             *CheckoutPublicConfirmedDiscount    `json:"discount"`
+	Organization         Organization                        `json:"organization"`
+	AttachedCustomFields []AttachedCustomField               `json:"attached_custom_fields"`
+	CustomerSessionToken string                              `json:"customer_session_token"`
 }
 
 func (c CheckoutPublicConfirmed) MarshalJSON() ([]byte, error) {
@@ -325,7 +392,7 @@ func (o *CheckoutPublicConfirmed) GetID() string {
 	return o.ID
 }
 
-func (o *CheckoutPublicConfirmed) GetCustomFieldData() map[string]CheckoutPublicConfirmedCustomFieldData {
+func (o *CheckoutPublicConfirmed) GetCustomFieldData() map[string]*CheckoutPublicConfirmedCustomFieldData {
 	if o == nil {
 		return nil
 	}
@@ -525,6 +592,13 @@ func (o *CheckoutPublicConfirmed) GetPaymentProcessorMetadata() map[string]strin
 	return o.PaymentProcessorMetadata
 }
 
+func (o *CheckoutPublicConfirmed) GetProducts() []CheckoutProduct {
+	if o == nil {
+		return []CheckoutProduct{}
+	}
+	return o.Products
+}
+
 func (o *CheckoutPublicConfirmed) GetProduct() CheckoutProduct {
 	if o == nil {
 		return CheckoutProduct{}
@@ -532,9 +606,9 @@ func (o *CheckoutPublicConfirmed) GetProduct() CheckoutProduct {
 	return o.Product
 }
 
-func (o *CheckoutPublicConfirmed) GetProductPrice() ProductPrice {
+func (o *CheckoutPublicConfirmed) GetProductPrice() CheckoutPublicConfirmedProductPrice {
 	if o == nil {
-		return ProductPrice{}
+		return CheckoutPublicConfirmedProductPrice{}
 	}
 	return o.ProductPrice
 }

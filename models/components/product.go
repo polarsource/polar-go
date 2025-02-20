@@ -94,6 +94,69 @@ func (u ProductMetadata) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type ProductMetadata: all fields are null")
 }
 
+type PricesType string
+
+const (
+	PricesTypeLegacyRecurringProductPrice PricesType = "LegacyRecurringProductPrice"
+	PricesTypeProductPrice                PricesType = "ProductPrice"
+)
+
+type Prices struct {
+	LegacyRecurringProductPrice *LegacyRecurringProductPrice `queryParam:"inline"`
+	ProductPrice                *ProductPrice                `queryParam:"inline"`
+
+	Type PricesType
+}
+
+func CreatePricesLegacyRecurringProductPrice(legacyRecurringProductPrice LegacyRecurringProductPrice) Prices {
+	typ := PricesTypeLegacyRecurringProductPrice
+
+	return Prices{
+		LegacyRecurringProductPrice: &legacyRecurringProductPrice,
+		Type:                        typ,
+	}
+}
+
+func CreatePricesProductPrice(productPrice ProductPrice) Prices {
+	typ := PricesTypeProductPrice
+
+	return Prices{
+		ProductPrice: &productPrice,
+		Type:         typ,
+	}
+}
+
+func (u *Prices) UnmarshalJSON(data []byte) error {
+
+	var legacyRecurringProductPrice LegacyRecurringProductPrice = LegacyRecurringProductPrice{}
+	if err := utils.UnmarshalJSON(data, &legacyRecurringProductPrice, "", true, true); err == nil {
+		u.LegacyRecurringProductPrice = &legacyRecurringProductPrice
+		u.Type = PricesTypeLegacyRecurringProductPrice
+		return nil
+	}
+
+	var productPrice ProductPrice = ProductPrice{}
+	if err := utils.UnmarshalJSON(data, &productPrice, "", true, true); err == nil {
+		u.ProductPrice = &productPrice
+		u.Type = PricesTypeProductPrice
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for Prices", string(data))
+}
+
+func (u Prices) MarshalJSON() ([]byte, error) {
+	if u.LegacyRecurringProductPrice != nil {
+		return utils.MarshalJSON(u.LegacyRecurringProductPrice, "", true)
+	}
+
+	if u.ProductPrice != nil {
+		return utils.MarshalJSON(u.ProductPrice, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type Prices: all fields are null")
+}
+
 // Product - A product.
 type Product struct {
 	// Creation timestamp of the object.
@@ -106,7 +169,9 @@ type Product struct {
 	Name string `json:"name"`
 	// The description of the product.
 	Description *string `json:"description"`
-	// Whether the product is a subscription tier.
+	// The recurring interval of the product. If `None`, the product is a one-time purchase.
+	RecurringInterval *SubscriptionRecurringInterval `json:"recurring_interval"`
+	// Whether the product is a subscription.
 	IsRecurring bool `json:"is_recurring"`
 	// Whether the product is archived and no longer available.
 	IsArchived bool `json:"is_archived"`
@@ -114,7 +179,7 @@ type Product struct {
 	OrganizationID string                     `json:"organization_id"`
 	Metadata       map[string]ProductMetadata `json:"metadata"`
 	// List of prices for this product.
-	Prices []ProductPrice `json:"prices"`
+	Prices []Prices `json:"prices"`
 	// List of benefits granted by the product.
 	Benefits []Benefit `json:"benefits"`
 	// List of medias associated to the product.
@@ -169,6 +234,13 @@ func (o *Product) GetDescription() *string {
 	return o.Description
 }
 
+func (o *Product) GetRecurringInterval() *SubscriptionRecurringInterval {
+	if o == nil {
+		return nil
+	}
+	return o.RecurringInterval
+}
+
 func (o *Product) GetIsRecurring() bool {
 	if o == nil {
 		return false
@@ -197,9 +269,9 @@ func (o *Product) GetMetadata() map[string]ProductMetadata {
 	return o.Metadata
 }
 
-func (o *Product) GetPrices() []ProductPrice {
+func (o *Product) GetPrices() []Prices {
 	if o == nil {
-		return []ProductPrice{}
+		return []Prices{}
 	}
 	return o.Prices
 }

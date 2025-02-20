@@ -3,9 +3,74 @@
 package components
 
 import (
+	"errors"
+	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
 	"time"
 )
+
+type CustomerSubscriptionProductPricesType string
+
+const (
+	CustomerSubscriptionProductPricesTypeLegacyRecurringProductPrice CustomerSubscriptionProductPricesType = "LegacyRecurringProductPrice"
+	CustomerSubscriptionProductPricesTypeProductPrice                CustomerSubscriptionProductPricesType = "ProductPrice"
+)
+
+type CustomerSubscriptionProductPrices struct {
+	LegacyRecurringProductPrice *LegacyRecurringProductPrice `queryParam:"inline"`
+	ProductPrice                *ProductPrice                `queryParam:"inline"`
+
+	Type CustomerSubscriptionProductPricesType
+}
+
+func CreateCustomerSubscriptionProductPricesLegacyRecurringProductPrice(legacyRecurringProductPrice LegacyRecurringProductPrice) CustomerSubscriptionProductPrices {
+	typ := CustomerSubscriptionProductPricesTypeLegacyRecurringProductPrice
+
+	return CustomerSubscriptionProductPrices{
+		LegacyRecurringProductPrice: &legacyRecurringProductPrice,
+		Type:                        typ,
+	}
+}
+
+func CreateCustomerSubscriptionProductPricesProductPrice(productPrice ProductPrice) CustomerSubscriptionProductPrices {
+	typ := CustomerSubscriptionProductPricesTypeProductPrice
+
+	return CustomerSubscriptionProductPrices{
+		ProductPrice: &productPrice,
+		Type:         typ,
+	}
+}
+
+func (u *CustomerSubscriptionProductPrices) UnmarshalJSON(data []byte) error {
+
+	var legacyRecurringProductPrice LegacyRecurringProductPrice = LegacyRecurringProductPrice{}
+	if err := utils.UnmarshalJSON(data, &legacyRecurringProductPrice, "", true, true); err == nil {
+		u.LegacyRecurringProductPrice = &legacyRecurringProductPrice
+		u.Type = CustomerSubscriptionProductPricesTypeLegacyRecurringProductPrice
+		return nil
+	}
+
+	var productPrice ProductPrice = ProductPrice{}
+	if err := utils.UnmarshalJSON(data, &productPrice, "", true, true); err == nil {
+		u.ProductPrice = &productPrice
+		u.Type = CustomerSubscriptionProductPricesTypeProductPrice
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for CustomerSubscriptionProductPrices", string(data))
+}
+
+func (u CustomerSubscriptionProductPrices) MarshalJSON() ([]byte, error) {
+	if u.LegacyRecurringProductPrice != nil {
+		return utils.MarshalJSON(u.LegacyRecurringProductPrice, "", true)
+	}
+
+	if u.ProductPrice != nil {
+		return utils.MarshalJSON(u.ProductPrice, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type CustomerSubscriptionProductPrices: all fields are null")
+}
 
 type CustomerSubscriptionProduct struct {
 	// Creation timestamp of the object.
@@ -18,14 +83,16 @@ type CustomerSubscriptionProduct struct {
 	Name string `json:"name"`
 	// The description of the product.
 	Description *string `json:"description"`
-	// Whether the product is a subscription tier.
+	// The recurring interval of the product. If `None`, the product is a one-time purchase.
+	RecurringInterval *SubscriptionRecurringInterval `json:"recurring_interval"`
+	// Whether the product is a subscription.
 	IsRecurring bool `json:"is_recurring"`
 	// Whether the product is archived and no longer available.
 	IsArchived bool `json:"is_archived"`
 	// The ID of the organization owning the product.
 	OrganizationID string `json:"organization_id"`
 	// List of prices for this product.
-	Prices []ProductPrice `json:"prices"`
+	Prices []CustomerSubscriptionProductPrices `json:"prices"`
 	// List of benefits granted by the product.
 	Benefits []BenefitBase `json:"benefits"`
 	// List of medias associated to the product.
@@ -79,6 +146,13 @@ func (o *CustomerSubscriptionProduct) GetDescription() *string {
 	return o.Description
 }
 
+func (o *CustomerSubscriptionProduct) GetRecurringInterval() *SubscriptionRecurringInterval {
+	if o == nil {
+		return nil
+	}
+	return o.RecurringInterval
+}
+
 func (o *CustomerSubscriptionProduct) GetIsRecurring() bool {
 	if o == nil {
 		return false
@@ -100,9 +174,9 @@ func (o *CustomerSubscriptionProduct) GetOrganizationID() string {
 	return o.OrganizationID
 }
 
-func (o *CustomerSubscriptionProduct) GetPrices() []ProductPrice {
+func (o *CustomerSubscriptionProduct) GetPrices() []CustomerSubscriptionProductPrices {
 	if o == nil {
-		return []ProductPrice{}
+		return []CustomerSubscriptionProductPrices{}
 	}
 	return o.Prices
 }

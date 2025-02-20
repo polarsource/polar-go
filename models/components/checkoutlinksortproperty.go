@@ -10,8 +10,14 @@ import (
 type CheckoutLinkSortProperty string
 
 const (
-	CheckoutLinkSortPropertyCreatedAt      CheckoutLinkSortProperty = "created_at"
-	CheckoutLinkSortPropertyMinusCreatedAt CheckoutLinkSortProperty = "-created_at"
+	CheckoutLinkSortPropertyCreatedAt               CheckoutLinkSortProperty = "created_at"
+	CheckoutLinkSortPropertyMinusCreatedAt          CheckoutLinkSortProperty = "-created_at"
+	CheckoutLinkSortPropertyLabel                   CheckoutLinkSortProperty = "label"
+	CheckoutLinkSortPropertyMinusLabel              CheckoutLinkSortProperty = "-label"
+	CheckoutLinkSortPropertySuccessURL              CheckoutLinkSortProperty = "success_url"
+	CheckoutLinkSortPropertyMinusSuccessURL         CheckoutLinkSortProperty = "-success_url"
+	CheckoutLinkSortPropertyAllowDiscountCodes      CheckoutLinkSortProperty = "allow_discount_codes"
+	CheckoutLinkSortPropertyMinusAllowDiscountCodes CheckoutLinkSortProperty = "-allow_discount_codes"
 )
 
 func (e CheckoutLinkSortProperty) ToPointer() *CheckoutLinkSortProperty {
@@ -26,6 +32,18 @@ func (e *CheckoutLinkSortProperty) UnmarshalJSON(data []byte) error {
 	case "created_at":
 		fallthrough
 	case "-created_at":
+		fallthrough
+	case "label":
+		fallthrough
+	case "-label":
+		fallthrough
+	case "success_url":
+		fallthrough
+	case "-success_url":
+		fallthrough
+	case "allow_discount_codes":
+		fallthrough
+	case "-allow_discount_codes":
 		*e = CheckoutLinkSortProperty(v)
 		return nil
 	default:

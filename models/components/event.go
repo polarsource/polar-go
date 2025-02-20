@@ -107,6 +107,8 @@ type Event struct {
 	OrganizationID string `json:"organization_id"`
 	// ID of the customer in your Polar organization associated with the event.
 	CustomerID *string `json:"customer_id"`
+	// The customer associated with the event.
+	Customer *Customer `json:"customer"`
 	// ID of the customer in your system associated with the event.
 	ExternalCustomerID *string `json:"external_customer_id"`
 }
@@ -169,6 +171,13 @@ func (o *Event) GetCustomerID() *string {
 		return nil
 	}
 	return o.CustomerID
+}
+
+func (o *Event) GetCustomer() *Customer {
+	if o == nil {
+		return nil
+	}
+	return o.Customer
 }
 
 func (o *Event) GetExternalCustomerID() *string {

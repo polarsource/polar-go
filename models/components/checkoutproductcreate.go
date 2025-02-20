@@ -288,6 +288,8 @@ func (u CheckoutProductCreateCustomerMetadata) MarshalJSON() ([]byte, error) {
 
 // CheckoutProductCreate - Create a new checkout session from a product.
 //
+// **Deprecated**: Use `CheckoutProductsCreate` instead.
+//
 // Metadata set on the checkout will be copied
 // to the resulting order and/or subscription.
 type CheckoutProductCreate struct {
@@ -303,7 +305,7 @@ type CheckoutProductCreate struct {
 	// You can store up to **50 key-value pairs**.
 	Metadata map[string]CheckoutProductCreateMetadata `json:"metadata,omitempty"`
 	// Key-value object storing custom field values.
-	CustomFieldData map[string]CheckoutProductCreateCustomFieldData `json:"custom_field_data,omitempty"`
+	CustomFieldData map[string]*CheckoutProductCreateCustomFieldData `json:"custom_field_data,omitempty"`
 	// ID of the discount to apply to the checkout.
 	DiscountID *string `json:"discount_id,omitempty"`
 	// Whether to allow the customer to apply discount codes. If you apply a discount through `discount_id`, it'll still be applied, but the customer won't be able to change it.
@@ -355,7 +357,7 @@ func (o *CheckoutProductCreate) GetMetadata() map[string]CheckoutProductCreateMe
 	return o.Metadata
 }
 
-func (o *CheckoutProductCreate) GetCustomFieldData() map[string]CheckoutProductCreateCustomFieldData {
+func (o *CheckoutProductCreate) GetCustomFieldData() map[string]*CheckoutProductCreateCustomFieldData {
 	if o == nil {
 		return nil
 	}

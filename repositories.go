@@ -30,13 +30,6 @@ func newRepositories(sdkConfig sdkConfiguration) *Repositories {
 // List Repositories
 // List repositories.
 func (s *Repositories) List(ctx context.Context, request operations.RepositoriesListRequest, opts ...operations.Option) (*operations.RepositoriesListResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "repositories:list",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -58,6 +51,14 @@ func (s *Repositories) List(ctx context.Context, request operations.Repositories
 	opURL, err := url.JoinPath(baseURL, "/v1/repositories/")
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "repositories:list",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -325,13 +326,6 @@ func (s *Repositories) List(ctx context.Context, request operations.Repositories
 // Get Repository
 // Get a repository by ID.
 func (s *Repositories) Get(ctx context.Context, id string, opts ...operations.Option) (*operations.RepositoriesGetResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "repositories:get",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	request := operations.RepositoriesGetRequest{
 		ID: id,
 	}
@@ -357,6 +351,14 @@ func (s *Repositories) Get(ctx context.Context, id string, opts ...operations.Op
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/v1/repositories/{id}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "repositories:get",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -572,13 +574,6 @@ func (s *Repositories) Get(ctx context.Context, id string, opts ...operations.Op
 // Update Repository
 // Update a repository.
 func (s *Repositories) Update(ctx context.Context, id string, repositoryUpdate components.RepositoryUpdate, opts ...operations.Option) (*operations.RepositoriesUpdateResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "repositories:update",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	request := operations.RepositoriesUpdateRequest{
 		ID:               id,
 		RepositoryUpdate: repositoryUpdate,
@@ -607,6 +602,13 @@ func (s *Repositories) Update(ctx context.Context, id string, repositoryUpdate c
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "repositories:update",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "RepositoryUpdate", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err

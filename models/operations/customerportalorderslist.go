@@ -137,59 +137,59 @@ func (u CustomerPortalOrdersListQueryParamProductIDFilter) MarshalJSON() ([]byte
 	return nil, errors.New("could not marshal union type CustomerPortalOrdersListQueryParamProductIDFilter: all fields are null")
 }
 
-type CustomerPortalOrdersListQueryParamProductPriceTypeFilterType string
+type QueryParamProductPriceTypeFilterType string
 
 const (
-	CustomerPortalOrdersListQueryParamProductPriceTypeFilterTypeProductPriceType        CustomerPortalOrdersListQueryParamProductPriceTypeFilterType = "ProductPriceType"
-	CustomerPortalOrdersListQueryParamProductPriceTypeFilterTypeArrayOfProductPriceType CustomerPortalOrdersListQueryParamProductPriceTypeFilterType = "arrayOfProductPriceType"
+	QueryParamProductPriceTypeFilterTypeProductPriceType        QueryParamProductPriceTypeFilterType = "ProductPriceType"
+	QueryParamProductPriceTypeFilterTypeArrayOfProductPriceType QueryParamProductPriceTypeFilterType = "arrayOfProductPriceType"
 )
 
-// CustomerPortalOrdersListQueryParamProductPriceTypeFilter - Filter by product price type. `recurring` will return orders corresponding to subscriptions creations or renewals. `one_time` will return orders corresponding to one-time purchases.
-type CustomerPortalOrdersListQueryParamProductPriceTypeFilter struct {
+// QueryParamProductPriceTypeFilter - Filter by product price type. `recurring` will return orders corresponding to subscriptions creations or renewals. `one_time` will return orders corresponding to one-time purchases.
+type QueryParamProductPriceTypeFilter struct {
 	ProductPriceType        *components.ProductPriceType  `queryParam:"inline"`
 	ArrayOfProductPriceType []components.ProductPriceType `queryParam:"inline"`
 
-	Type CustomerPortalOrdersListQueryParamProductPriceTypeFilterType
+	Type QueryParamProductPriceTypeFilterType
 }
 
-func CreateCustomerPortalOrdersListQueryParamProductPriceTypeFilterProductPriceType(productPriceType components.ProductPriceType) CustomerPortalOrdersListQueryParamProductPriceTypeFilter {
-	typ := CustomerPortalOrdersListQueryParamProductPriceTypeFilterTypeProductPriceType
+func CreateQueryParamProductPriceTypeFilterProductPriceType(productPriceType components.ProductPriceType) QueryParamProductPriceTypeFilter {
+	typ := QueryParamProductPriceTypeFilterTypeProductPriceType
 
-	return CustomerPortalOrdersListQueryParamProductPriceTypeFilter{
+	return QueryParamProductPriceTypeFilter{
 		ProductPriceType: &productPriceType,
 		Type:             typ,
 	}
 }
 
-func CreateCustomerPortalOrdersListQueryParamProductPriceTypeFilterArrayOfProductPriceType(arrayOfProductPriceType []components.ProductPriceType) CustomerPortalOrdersListQueryParamProductPriceTypeFilter {
-	typ := CustomerPortalOrdersListQueryParamProductPriceTypeFilterTypeArrayOfProductPriceType
+func CreateQueryParamProductPriceTypeFilterArrayOfProductPriceType(arrayOfProductPriceType []components.ProductPriceType) QueryParamProductPriceTypeFilter {
+	typ := QueryParamProductPriceTypeFilterTypeArrayOfProductPriceType
 
-	return CustomerPortalOrdersListQueryParamProductPriceTypeFilter{
+	return QueryParamProductPriceTypeFilter{
 		ArrayOfProductPriceType: arrayOfProductPriceType,
 		Type:                    typ,
 	}
 }
 
-func (u *CustomerPortalOrdersListQueryParamProductPriceTypeFilter) UnmarshalJSON(data []byte) error {
+func (u *QueryParamProductPriceTypeFilter) UnmarshalJSON(data []byte) error {
 
 	var productPriceType components.ProductPriceType = components.ProductPriceType("")
 	if err := utils.UnmarshalJSON(data, &productPriceType, "", true, true); err == nil {
 		u.ProductPriceType = &productPriceType
-		u.Type = CustomerPortalOrdersListQueryParamProductPriceTypeFilterTypeProductPriceType
+		u.Type = QueryParamProductPriceTypeFilterTypeProductPriceType
 		return nil
 	}
 
 	var arrayOfProductPriceType []components.ProductPriceType = []components.ProductPriceType{}
 	if err := utils.UnmarshalJSON(data, &arrayOfProductPriceType, "", true, true); err == nil {
 		u.ArrayOfProductPriceType = arrayOfProductPriceType
-		u.Type = CustomerPortalOrdersListQueryParamProductPriceTypeFilterTypeArrayOfProductPriceType
+		u.Type = QueryParamProductPriceTypeFilterTypeArrayOfProductPriceType
 		return nil
 	}
 
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for CustomerPortalOrdersListQueryParamProductPriceTypeFilter", string(data))
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for QueryParamProductPriceTypeFilter", string(data))
 }
 
-func (u CustomerPortalOrdersListQueryParamProductPriceTypeFilter) MarshalJSON() ([]byte, error) {
+func (u QueryParamProductPriceTypeFilter) MarshalJSON() ([]byte, error) {
 	if u.ProductPriceType != nil {
 		return utils.MarshalJSON(u.ProductPriceType, "", true)
 	}
@@ -198,7 +198,7 @@ func (u CustomerPortalOrdersListQueryParamProductPriceTypeFilter) MarshalJSON() 
 		return utils.MarshalJSON(u.ArrayOfProductPriceType, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type CustomerPortalOrdersListQueryParamProductPriceTypeFilter: all fields are null")
+	return nil, errors.New("could not marshal union type QueryParamProductPriceTypeFilter: all fields are null")
 }
 
 type CustomerPortalOrdersListQueryParamSubscriptionIDFilterType string
@@ -271,7 +271,7 @@ type CustomerPortalOrdersListRequest struct {
 	// Filter by product ID.
 	ProductID *CustomerPortalOrdersListQueryParamProductIDFilter `queryParam:"style=form,explode=true,name=product_id"`
 	// Filter by product price type. `recurring` will return orders corresponding to subscriptions creations or renewals. `one_time` will return orders corresponding to one-time purchases.
-	ProductPriceType *CustomerPortalOrdersListQueryParamProductPriceTypeFilter `queryParam:"style=form,explode=true,name=product_price_type"`
+	ProductPriceType *QueryParamProductPriceTypeFilter `queryParam:"style=form,explode=true,name=product_price_type"`
 	// Filter by subscription ID.
 	SubscriptionID *CustomerPortalOrdersListQueryParamSubscriptionIDFilter `queryParam:"style=form,explode=true,name=subscription_id"`
 	// Search by product or organization name.
@@ -309,7 +309,7 @@ func (o *CustomerPortalOrdersListRequest) GetProductID() *CustomerPortalOrdersLi
 	return o.ProductID
 }
 
-func (o *CustomerPortalOrdersListRequest) GetProductPriceType() *CustomerPortalOrdersListQueryParamProductPriceTypeFilter {
+func (o *CustomerPortalOrdersListRequest) GetProductPriceType() *QueryParamProductPriceTypeFilter {
 	if o == nil {
 		return nil
 	}

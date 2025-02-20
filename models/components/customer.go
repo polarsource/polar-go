@@ -170,7 +170,7 @@ type Customer struct {
 	EmailVerified  bool                         `json:"email_verified"`
 	Name           *string                      `json:"name"`
 	BillingAddress *Address                     `json:"billing_address"`
-	TaxID          []CustomerTaxID              `json:"tax_id"`
+	TaxID          []*CustomerTaxID             `json:"tax_id"`
 	OrganizationID string                       `json:"organization_id"`
 	AvatarURL      string                       `json:"avatar_url"`
 }
@@ -242,7 +242,7 @@ func (o *Customer) GetBillingAddress() *Address {
 	return o.BillingAddress
 }
 
-func (o *Customer) GetTaxID() []CustomerTaxID {
+func (o *Customer) GetTaxID() []*CustomerTaxID {
 	if o == nil {
 		return nil
 	}

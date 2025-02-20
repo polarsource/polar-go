@@ -11,23 +11,23 @@ import (
 type CustomerSubscriptionUpdateType string
 
 const (
-	CustomerSubscriptionUpdateTypeCustomerSubscriptionUpdatePrice CustomerSubscriptionUpdateType = "CustomerSubscriptionUpdatePrice"
-	CustomerSubscriptionUpdateTypeCustomerSubscriptionCancel      CustomerSubscriptionUpdateType = "CustomerSubscriptionCancel"
+	CustomerSubscriptionUpdateTypeCustomerSubscriptionUpdateProduct CustomerSubscriptionUpdateType = "CustomerSubscriptionUpdateProduct"
+	CustomerSubscriptionUpdateTypeCustomerSubscriptionCancel        CustomerSubscriptionUpdateType = "CustomerSubscriptionCancel"
 )
 
 type CustomerSubscriptionUpdate struct {
-	CustomerSubscriptionUpdatePrice *CustomerSubscriptionUpdatePrice `queryParam:"inline"`
-	CustomerSubscriptionCancel      *CustomerSubscriptionCancel      `queryParam:"inline"`
+	CustomerSubscriptionUpdateProduct *CustomerSubscriptionUpdateProduct `queryParam:"inline"`
+	CustomerSubscriptionCancel        *CustomerSubscriptionCancel        `queryParam:"inline"`
 
 	Type CustomerSubscriptionUpdateType
 }
 
-func CreateCustomerSubscriptionUpdateCustomerSubscriptionUpdatePrice(customerSubscriptionUpdatePrice CustomerSubscriptionUpdatePrice) CustomerSubscriptionUpdate {
-	typ := CustomerSubscriptionUpdateTypeCustomerSubscriptionUpdatePrice
+func CreateCustomerSubscriptionUpdateCustomerSubscriptionUpdateProduct(customerSubscriptionUpdateProduct CustomerSubscriptionUpdateProduct) CustomerSubscriptionUpdate {
+	typ := CustomerSubscriptionUpdateTypeCustomerSubscriptionUpdateProduct
 
 	return CustomerSubscriptionUpdate{
-		CustomerSubscriptionUpdatePrice: &customerSubscriptionUpdatePrice,
-		Type:                            typ,
+		CustomerSubscriptionUpdateProduct: &customerSubscriptionUpdateProduct,
+		Type:                              typ,
 	}
 }
 
@@ -42,10 +42,10 @@ func CreateCustomerSubscriptionUpdateCustomerSubscriptionCancel(customerSubscrip
 
 func (u *CustomerSubscriptionUpdate) UnmarshalJSON(data []byte) error {
 
-	var customerSubscriptionUpdatePrice CustomerSubscriptionUpdatePrice = CustomerSubscriptionUpdatePrice{}
-	if err := utils.UnmarshalJSON(data, &customerSubscriptionUpdatePrice, "", true, true); err == nil {
-		u.CustomerSubscriptionUpdatePrice = &customerSubscriptionUpdatePrice
-		u.Type = CustomerSubscriptionUpdateTypeCustomerSubscriptionUpdatePrice
+	var customerSubscriptionUpdateProduct CustomerSubscriptionUpdateProduct = CustomerSubscriptionUpdateProduct{}
+	if err := utils.UnmarshalJSON(data, &customerSubscriptionUpdateProduct, "", true, true); err == nil {
+		u.CustomerSubscriptionUpdateProduct = &customerSubscriptionUpdateProduct
+		u.Type = CustomerSubscriptionUpdateTypeCustomerSubscriptionUpdateProduct
 		return nil
 	}
 
@@ -60,8 +60,8 @@ func (u *CustomerSubscriptionUpdate) UnmarshalJSON(data []byte) error {
 }
 
 func (u CustomerSubscriptionUpdate) MarshalJSON() ([]byte, error) {
-	if u.CustomerSubscriptionUpdatePrice != nil {
-		return utils.MarshalJSON(u.CustomerSubscriptionUpdatePrice, "", true)
+	if u.CustomerSubscriptionUpdateProduct != nil {
+		return utils.MarshalJSON(u.CustomerSubscriptionUpdateProduct, "", true)
 	}
 
 	if u.CustomerSubscriptionCancel != nil {

@@ -30,13 +30,6 @@ func newProducts(sdkConfig sdkConfiguration) *Products {
 // List Products
 // List products.
 func (s *Products) List(ctx context.Context, request operations.ProductsListRequest, opts ...operations.Option) (*operations.ProductsListResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "products:list",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -58,6 +51,14 @@ func (s *Products) List(ctx context.Context, request operations.ProductsListRequ
 	opURL, err := url.JoinPath(baseURL, "/v1/products/")
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "products:list",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -326,13 +327,6 @@ func (s *Products) List(ctx context.Context, request operations.ProductsListRequ
 // Create Product
 // Create a product.
 func (s *Products) Create(ctx context.Context, request components.ProductCreate, opts ...operations.Option) (*operations.ProductsCreateResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "products:create",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -356,6 +350,13 @@ func (s *Products) Create(ctx context.Context, request components.ProductCreate,
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "products:create",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "Request", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -556,13 +557,6 @@ func (s *Products) Create(ctx context.Context, request components.ProductCreate,
 // Get Product
 // Get a product by ID.
 func (s *Products) Get(ctx context.Context, id string, opts ...operations.Option) (*operations.ProductsGetResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "products:get",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	request := operations.ProductsGetRequest{
 		ID: id,
 	}
@@ -588,6 +582,14 @@ func (s *Products) Get(ctx context.Context, id string, opts ...operations.Option
 	opURL, err := utils.GenerateURL(ctx, baseURL, "/v1/products/{id}", request, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "products:get",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -803,13 +805,6 @@ func (s *Products) Get(ctx context.Context, id string, opts ...operations.Option
 // Update Product
 // Update a product.
 func (s *Products) Update(ctx context.Context, id string, productUpdate components.ProductUpdate, opts ...operations.Option) (*operations.ProductsUpdateResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "products:update",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	request := operations.ProductsUpdateRequest{
 		ID:            id,
 		ProductUpdate: productUpdate,
@@ -838,6 +833,13 @@ func (s *Products) Update(ctx context.Context, id string, productUpdate componen
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "products:update",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "ProductUpdate", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
@@ -1080,13 +1082,6 @@ func (s *Products) Update(ctx context.Context, id string, productUpdate componen
 // UpdateBenefits - Update Product Benefits
 // Update benefits granted by a product.
 func (s *Products) UpdateBenefits(ctx context.Context, id string, productBenefitsUpdate components.ProductBenefitsUpdate, opts ...operations.Option) (*operations.ProductsUpdateBenefitsResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "products:update_benefits",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	request := operations.ProductsUpdateBenefitsRequest{
 		ID:                    id,
 		ProductBenefitsUpdate: productBenefitsUpdate,
@@ -1115,6 +1110,13 @@ func (s *Products) UpdateBenefits(ctx context.Context, id string, productBenefit
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "products:update_benefits",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "ProductBenefitsUpdate", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err

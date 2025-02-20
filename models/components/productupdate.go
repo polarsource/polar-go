@@ -96,21 +96,17 @@ func (u ProductUpdateMetadata) MarshalJSON() ([]byte, error) {
 type ProductUpdatePricesType string
 
 const (
-	ProductUpdatePricesTypeExistingProductPrice             ProductUpdatePricesType = "ExistingProductPrice"
-	ProductUpdatePricesTypeProductPriceRecurringFixedCreate ProductUpdatePricesType = "ProductPriceRecurringFixedCreate"
-	ProductUpdatePricesTypeProductPriceRecurringFreeCreate  ProductUpdatePricesType = "ProductPriceRecurringFreeCreate"
-	ProductUpdatePricesTypeProductPriceOneTimeFixedCreate   ProductUpdatePricesType = "ProductPriceOneTimeFixedCreate"
-	ProductUpdatePricesTypeProductPriceOneTimeCustomCreate  ProductUpdatePricesType = "ProductPriceOneTimeCustomCreate"
-	ProductUpdatePricesTypeProductPriceOneTimeFreeCreate    ProductUpdatePricesType = "ProductPriceOneTimeFreeCreate"
+	ProductUpdatePricesTypeExistingProductPrice     ProductUpdatePricesType = "ExistingProductPrice"
+	ProductUpdatePricesTypeProductPriceFixedCreate  ProductUpdatePricesType = "ProductPriceFixedCreate"
+	ProductUpdatePricesTypeProductPriceCustomCreate ProductUpdatePricesType = "ProductPriceCustomCreate"
+	ProductUpdatePricesTypeProductPriceFreeCreate   ProductUpdatePricesType = "ProductPriceFreeCreate"
 )
 
 type ProductUpdatePrices struct {
-	ExistingProductPrice             *ExistingProductPrice             `queryParam:"inline"`
-	ProductPriceRecurringFixedCreate *ProductPriceRecurringFixedCreate `queryParam:"inline"`
-	ProductPriceRecurringFreeCreate  *ProductPriceRecurringFreeCreate  `queryParam:"inline"`
-	ProductPriceOneTimeFixedCreate   *ProductPriceOneTimeFixedCreate   `queryParam:"inline"`
-	ProductPriceOneTimeCustomCreate  *ProductPriceOneTimeCustomCreate  `queryParam:"inline"`
-	ProductPriceOneTimeFreeCreate    *ProductPriceOneTimeFreeCreate    `queryParam:"inline"`
+	ExistingProductPrice     *ExistingProductPrice     `queryParam:"inline"`
+	ProductPriceFixedCreate  *ProductPriceFixedCreate  `queryParam:"inline"`
+	ProductPriceCustomCreate *ProductPriceCustomCreate `queryParam:"inline"`
+	ProductPriceFreeCreate   *ProductPriceFreeCreate   `queryParam:"inline"`
 
 	Type ProductUpdatePricesType
 }
@@ -124,48 +120,30 @@ func CreateProductUpdatePricesExistingProductPrice(existingProductPrice Existing
 	}
 }
 
-func CreateProductUpdatePricesProductPriceRecurringFixedCreate(productPriceRecurringFixedCreate ProductPriceRecurringFixedCreate) ProductUpdatePrices {
-	typ := ProductUpdatePricesTypeProductPriceRecurringFixedCreate
+func CreateProductUpdatePricesProductPriceFixedCreate(productPriceFixedCreate ProductPriceFixedCreate) ProductUpdatePrices {
+	typ := ProductUpdatePricesTypeProductPriceFixedCreate
 
 	return ProductUpdatePrices{
-		ProductPriceRecurringFixedCreate: &productPriceRecurringFixedCreate,
-		Type:                             typ,
+		ProductPriceFixedCreate: &productPriceFixedCreate,
+		Type:                    typ,
 	}
 }
 
-func CreateProductUpdatePricesProductPriceRecurringFreeCreate(productPriceRecurringFreeCreate ProductPriceRecurringFreeCreate) ProductUpdatePrices {
-	typ := ProductUpdatePricesTypeProductPriceRecurringFreeCreate
+func CreateProductUpdatePricesProductPriceCustomCreate(productPriceCustomCreate ProductPriceCustomCreate) ProductUpdatePrices {
+	typ := ProductUpdatePricesTypeProductPriceCustomCreate
 
 	return ProductUpdatePrices{
-		ProductPriceRecurringFreeCreate: &productPriceRecurringFreeCreate,
-		Type:                            typ,
+		ProductPriceCustomCreate: &productPriceCustomCreate,
+		Type:                     typ,
 	}
 }
 
-func CreateProductUpdatePricesProductPriceOneTimeFixedCreate(productPriceOneTimeFixedCreate ProductPriceOneTimeFixedCreate) ProductUpdatePrices {
-	typ := ProductUpdatePricesTypeProductPriceOneTimeFixedCreate
+func CreateProductUpdatePricesProductPriceFreeCreate(productPriceFreeCreate ProductPriceFreeCreate) ProductUpdatePrices {
+	typ := ProductUpdatePricesTypeProductPriceFreeCreate
 
 	return ProductUpdatePrices{
-		ProductPriceOneTimeFixedCreate: &productPriceOneTimeFixedCreate,
-		Type:                           typ,
-	}
-}
-
-func CreateProductUpdatePricesProductPriceOneTimeCustomCreate(productPriceOneTimeCustomCreate ProductPriceOneTimeCustomCreate) ProductUpdatePrices {
-	typ := ProductUpdatePricesTypeProductPriceOneTimeCustomCreate
-
-	return ProductUpdatePrices{
-		ProductPriceOneTimeCustomCreate: &productPriceOneTimeCustomCreate,
-		Type:                            typ,
-	}
-}
-
-func CreateProductUpdatePricesProductPriceOneTimeFreeCreate(productPriceOneTimeFreeCreate ProductPriceOneTimeFreeCreate) ProductUpdatePrices {
-	typ := ProductUpdatePricesTypeProductPriceOneTimeFreeCreate
-
-	return ProductUpdatePrices{
-		ProductPriceOneTimeFreeCreate: &productPriceOneTimeFreeCreate,
-		Type:                          typ,
+		ProductPriceFreeCreate: &productPriceFreeCreate,
+		Type:                   typ,
 	}
 }
 
@@ -178,38 +156,24 @@ func (u *ProductUpdatePrices) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	var productPriceOneTimeFreeCreate ProductPriceOneTimeFreeCreate = ProductPriceOneTimeFreeCreate{}
-	if err := utils.UnmarshalJSON(data, &productPriceOneTimeFreeCreate, "", true, true); err == nil {
-		u.ProductPriceOneTimeFreeCreate = &productPriceOneTimeFreeCreate
-		u.Type = ProductUpdatePricesTypeProductPriceOneTimeFreeCreate
+	var productPriceFreeCreate ProductPriceFreeCreate = ProductPriceFreeCreate{}
+	if err := utils.UnmarshalJSON(data, &productPriceFreeCreate, "", true, true); err == nil {
+		u.ProductPriceFreeCreate = &productPriceFreeCreate
+		u.Type = ProductUpdatePricesTypeProductPriceFreeCreate
 		return nil
 	}
 
-	var productPriceRecurringFreeCreate ProductPriceRecurringFreeCreate = ProductPriceRecurringFreeCreate{}
-	if err := utils.UnmarshalJSON(data, &productPriceRecurringFreeCreate, "", true, true); err == nil {
-		u.ProductPriceRecurringFreeCreate = &productPriceRecurringFreeCreate
-		u.Type = ProductUpdatePricesTypeProductPriceRecurringFreeCreate
+	var productPriceFixedCreate ProductPriceFixedCreate = ProductPriceFixedCreate{}
+	if err := utils.UnmarshalJSON(data, &productPriceFixedCreate, "", true, true); err == nil {
+		u.ProductPriceFixedCreate = &productPriceFixedCreate
+		u.Type = ProductUpdatePricesTypeProductPriceFixedCreate
 		return nil
 	}
 
-	var productPriceOneTimeFixedCreate ProductPriceOneTimeFixedCreate = ProductPriceOneTimeFixedCreate{}
-	if err := utils.UnmarshalJSON(data, &productPriceOneTimeFixedCreate, "", true, true); err == nil {
-		u.ProductPriceOneTimeFixedCreate = &productPriceOneTimeFixedCreate
-		u.Type = ProductUpdatePricesTypeProductPriceOneTimeFixedCreate
-		return nil
-	}
-
-	var productPriceRecurringFixedCreate ProductPriceRecurringFixedCreate = ProductPriceRecurringFixedCreate{}
-	if err := utils.UnmarshalJSON(data, &productPriceRecurringFixedCreate, "", true, true); err == nil {
-		u.ProductPriceRecurringFixedCreate = &productPriceRecurringFixedCreate
-		u.Type = ProductUpdatePricesTypeProductPriceRecurringFixedCreate
-		return nil
-	}
-
-	var productPriceOneTimeCustomCreate ProductPriceOneTimeCustomCreate = ProductPriceOneTimeCustomCreate{}
-	if err := utils.UnmarshalJSON(data, &productPriceOneTimeCustomCreate, "", true, true); err == nil {
-		u.ProductPriceOneTimeCustomCreate = &productPriceOneTimeCustomCreate
-		u.Type = ProductUpdatePricesTypeProductPriceOneTimeCustomCreate
+	var productPriceCustomCreate ProductPriceCustomCreate = ProductPriceCustomCreate{}
+	if err := utils.UnmarshalJSON(data, &productPriceCustomCreate, "", true, true); err == nil {
+		u.ProductPriceCustomCreate = &productPriceCustomCreate
+		u.Type = ProductUpdatePricesTypeProductPriceCustomCreate
 		return nil
 	}
 
@@ -221,24 +185,16 @@ func (u ProductUpdatePrices) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.ExistingProductPrice, "", true)
 	}
 
-	if u.ProductPriceRecurringFixedCreate != nil {
-		return utils.MarshalJSON(u.ProductPriceRecurringFixedCreate, "", true)
+	if u.ProductPriceFixedCreate != nil {
+		return utils.MarshalJSON(u.ProductPriceFixedCreate, "", true)
 	}
 
-	if u.ProductPriceRecurringFreeCreate != nil {
-		return utils.MarshalJSON(u.ProductPriceRecurringFreeCreate, "", true)
+	if u.ProductPriceCustomCreate != nil {
+		return utils.MarshalJSON(u.ProductPriceCustomCreate, "", true)
 	}
 
-	if u.ProductPriceOneTimeFixedCreate != nil {
-		return utils.MarshalJSON(u.ProductPriceOneTimeFixedCreate, "", true)
-	}
-
-	if u.ProductPriceOneTimeCustomCreate != nil {
-		return utils.MarshalJSON(u.ProductPriceOneTimeCustomCreate, "", true)
-	}
-
-	if u.ProductPriceOneTimeFreeCreate != nil {
-		return utils.MarshalJSON(u.ProductPriceOneTimeFreeCreate, "", true)
+	if u.ProductPriceFreeCreate != nil {
+		return utils.MarshalJSON(u.ProductPriceFreeCreate, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type ProductUpdatePrices: all fields are null")
@@ -250,6 +206,8 @@ type ProductUpdate struct {
 	Name     *string                          `json:"name,omitempty"`
 	// The description of the product.
 	Description *string `json:"description,omitempty"`
+	// The recurring interval of the product. If `None`, the product is a one-time purchase. **Can only be set on legacy recurring products. Once set, it can't be changed.**
+	RecurringInterval *SubscriptionRecurringInterval `json:"recurring_interval,omitempty"`
 	// Whether the product is archived. If `true`, the product won't be available for purchase anymore. Existing customers will still have access to their benefits, and subscriptions will continue normally.
 	IsArchived *bool `json:"is_archived,omitempty"`
 	// List of available prices for this product. If you want to keep existing prices, include them in the list as an `ExistingProductPrice` object.
@@ -278,6 +236,13 @@ func (o *ProductUpdate) GetDescription() *string {
 		return nil
 	}
 	return o.Description
+}
+
+func (o *ProductUpdate) GetRecurringInterval() *SubscriptionRecurringInterval {
+	if o == nil {
+		return nil
+	}
+	return o.RecurringInterval
 }
 
 func (o *ProductUpdate) GetIsArchived() *bool {

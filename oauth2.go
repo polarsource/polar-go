@@ -31,13 +31,6 @@ func newOauth2(sdkConfig sdkConfiguration) *Oauth2 {
 
 // Authorize
 func (s *Oauth2) Authorize(ctx context.Context, opts ...operations.Option) (*operations.Oauth2AuthorizeResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "oauth2:authorize",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -59,6 +52,14 @@ func (s *Oauth2) Authorize(ctx context.Context, opts ...operations.Option) (*ope
 	opURL, err := url.JoinPath(baseURL, "/v1/oauth2/authorize")
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "oauth2:authorize",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -232,13 +233,6 @@ func (s *Oauth2) Authorize(ctx context.Context, opts ...operations.Option) (*ope
 // Request Token
 // Request an access token using a valid grant.
 func (s *Oauth2) Token(ctx context.Context, request operations.Oauth2RequestTokenRequestBody, opts ...operations.Option) (*operations.Oauth2RequestTokenResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "oauth2:request_token",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -262,6 +256,13 @@ func (s *Oauth2) Token(ctx context.Context, request operations.Oauth2RequestToke
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "oauth2:request_token",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "Request", "form", `request:"mediaType=application/x-www-form-urlencoded"`)
 	if err != nil {
 		return nil, err
@@ -440,14 +441,7 @@ func (s *Oauth2) Token(ctx context.Context, request operations.Oauth2RequestToke
 
 // Revoke Token
 // Revoke an access token or a refresh token.
-func (s *Oauth2) Revoke(ctx context.Context, request operations.Oauth2RevokeTokenRevokeTokenRequest, opts ...operations.Option) (*operations.Oauth2RevokeTokenResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "oauth2:revoke_token",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
+func (s *Oauth2) Revoke(ctx context.Context, request components.RevokeTokenRequest, opts ...operations.Option) (*operations.Oauth2RevokeTokenResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -471,6 +465,13 @@ func (s *Oauth2) Revoke(ctx context.Context, request operations.Oauth2RevokeToke
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "oauth2:revoke_token",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "Request", "form", `request:"mediaType=application/x-www-form-urlencoded"`)
 	if err != nil {
 		return nil, err
@@ -649,14 +650,7 @@ func (s *Oauth2) Revoke(ctx context.Context, request operations.Oauth2RevokeToke
 
 // Introspect Token
 // Get information about an access token.
-func (s *Oauth2) Introspect(ctx context.Context, request operations.Oauth2IntrospectTokenIntrospectTokenRequest, opts ...operations.Option) (*operations.Oauth2IntrospectTokenResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "oauth2:introspect_token",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
+func (s *Oauth2) Introspect(ctx context.Context, request components.IntrospectTokenRequest, opts ...operations.Option) (*operations.Oauth2IntrospectTokenResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -680,6 +674,13 @@ func (s *Oauth2) Introspect(ctx context.Context, request operations.Oauth2Intros
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
 
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "oauth2:introspect_token",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
+	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "Request", "form", `request:"mediaType=application/x-www-form-urlencoded"`)
 	if err != nil {
 		return nil, err
@@ -859,13 +860,6 @@ func (s *Oauth2) Introspect(ctx context.Context, request operations.Oauth2Intros
 // Userinfo - Get User Info
 // Get information about the authenticated user.
 func (s *Oauth2) Userinfo(ctx context.Context, opts ...operations.Option) (*operations.Oauth2UserinfoResponse, error) {
-	hookCtx := hooks.HookContext{
-		Context:        ctx,
-		OperationID:    "oauth2:userinfo",
-		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
-	}
-
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -887,6 +881,14 @@ func (s *Oauth2) Userinfo(ctx context.Context, opts ...operations.Option) (*oper
 	opURL, err := url.JoinPath(baseURL, "/v1/oauth2/userinfo")
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
+	}
+
+	hookCtx := hooks.HookContext{
+		BaseURL:        baseURL,
+		Context:        ctx,
+		OperationID:    "oauth2:userinfo",
+		OAuth2Scopes:   []string{},
+		SecuritySource: s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout

@@ -9,33 +9,21 @@
 productUpdatePrices := components.CreateProductUpdatePricesExistingProductPrice(components.ExistingProductPrice{/* values here */})
 ```
 
-### ProductPriceRecurringFixedCreate
+### ProductPriceFixedCreate
 
 ```go
-productUpdatePrices := components.CreateProductUpdatePricesProductPriceRecurringFixedCreate(components.ProductPriceRecurringFixedCreate{/* values here */})
+productUpdatePrices := components.CreateProductUpdatePricesProductPriceFixedCreate(components.ProductPriceFixedCreate{/* values here */})
 ```
 
-### ProductPriceRecurringFreeCreate
+### ProductPriceCustomCreate
 
 ```go
-productUpdatePrices := components.CreateProductUpdatePricesProductPriceRecurringFreeCreate(components.ProductPriceRecurringFreeCreate{/* values here */})
+productUpdatePrices := components.CreateProductUpdatePricesProductPriceCustomCreate(components.ProductPriceCustomCreate{/* values here */})
 ```
 
-### ProductPriceOneTimeFixedCreate
+### ProductPriceFreeCreate
 
 ```go
-productUpdatePrices := components.CreateProductUpdatePricesProductPriceOneTimeFixedCreate(components.ProductPriceOneTimeFixedCreate{/* values here */})
-```
-
-### ProductPriceOneTimeCustomCreate
-
-```go
-productUpdatePrices := components.CreateProductUpdatePricesProductPriceOneTimeCustomCreate(components.ProductPriceOneTimeCustomCreate{/* values here */})
-```
-
-### ProductPriceOneTimeFreeCreate
-
-```go
-productUpdatePrices := components.CreateProductUpdatePricesProductPriceOneTimeFreeCreate(components.ProductPriceOneTimeFreeCreate{/* values here */})
+productUpdatePrices := components.CreateProductUpdatePricesProductPriceFreeCreate(components.ProductPriceFreeCreate{/* values here */})
 ```
 
