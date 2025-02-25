@@ -6,6 +6,17 @@ import (
 	"github.com/polarsource/polar-go/models/components"
 )
 
+type CustomerPortalOrdersInvoiceSecurity struct {
+	CustomerSession string `security:"scheme,type=http,subtype=bearer,name=Authorization,env=polar_customer_session"`
+}
+
+func (o *CustomerPortalOrdersInvoiceSecurity) GetCustomerSession() string {
+	if o == nil {
+		return ""
+	}
+	return o.CustomerSession
+}
+
 type CustomerPortalOrdersInvoiceRequest struct {
 	// The order ID.
 	ID string `pathParam:"style=simple,explode=false,name=id"`

@@ -16,6 +16,8 @@
 
 List meters.
 
+**Scopes**: `meters:read` `meters:write`
+
 ### Example Usage
 
 ```go
@@ -80,6 +82,8 @@ func main() {
 ## Create
 
 Create a meter.
+
+**Scopes**: `meters:write`
 
 ### Example Usage
 
@@ -148,6 +152,8 @@ func main() {
 
 Get a meter by ID.
 
+**Scopes**: `meters:read` `meters:write`
+
 ### Example Usage
 
 ```go
@@ -200,6 +206,8 @@ func main() {
 ## Update
 
 Update a meter.
+
+**Scopes**: `meters:write`
 
 ### Example Usage
 
@@ -255,6 +263,8 @@ func main() {
 ## Events
 
 Get events matching the filter of a meter.
+
+**Scopes**: `meters:read` `meters:write`
 
 ### Example Usage
 
@@ -322,6 +332,8 @@ func main() {
 ## Quantities
 
 Get quantities of a meter over a time period.
+
+**Scopes**: `meters:read` `meters:write`
 
 ### Example Usage
 

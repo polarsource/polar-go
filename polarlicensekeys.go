@@ -28,7 +28,8 @@ func newPolarLicenseKeys(sdkConfig sdkConfiguration) *PolarLicenseKeys {
 }
 
 // List License Keys
-func (s *PolarLicenseKeys) List(ctx context.Context, organizationID *operations.CustomerPortalLicenseKeysListQueryParamOrganizationIDFilter, benefitID *string, page *int64, limit *int64, opts ...operations.Option) (*operations.CustomerPortalLicenseKeysListResponse, error) {
+// **Scopes**: `customer_portal:read` `customer_portal:write`
+func (s *PolarLicenseKeys) List(ctx context.Context, security operations.CustomerPortalLicenseKeysListSecurity, organizationID *operations.CustomerPortalLicenseKeysListQueryParamOrganizationIDFilter, benefitID *string, page *int64, limit *int64, opts ...operations.Option) (*operations.CustomerPortalLicenseKeysListResponse, error) {
 	request := operations.CustomerPortalLicenseKeysListRequest{
 		OrganizationID: organizationID,
 		BenefitID:      benefitID,
@@ -64,7 +65,7 @@ func (s *PolarLicenseKeys) List(ctx context.Context, organizationID *operations.
 		Context:        ctx,
 		OperationID:    "customer_portal:license_keys:list",
 		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
+		SecuritySource: utils.AsSecuritySource(security),
 	}
 
 	timeout := o.Timeout
@@ -89,7 +90,7 @@ func (s *PolarLicenseKeys) List(ctx context.Context, organizationID *operations.
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
-	if err := utils.PopulateSecurity(ctx, req, s.sdkConfiguration.Security); err != nil {
+	if err := utils.PopulateSecurity(ctx, req, utils.AsSecuritySource(security)); err != nil {
 		return nil, err
 	}
 
@@ -248,6 +249,7 @@ func (s *PolarLicenseKeys) List(ctx context.Context, organizationID *operations.
 
 		return s.List(
 			ctx,
+			security,
 			organizationID,
 			benefitID,
 			&nP,
@@ -367,7 +369,9 @@ func (s *PolarLicenseKeys) List(ctx context.Context, organizationID *operations.
 
 // Get License Key
 // Get a license key.
-func (s *PolarLicenseKeys) Get(ctx context.Context, id string, opts ...operations.Option) (*operations.CustomerPortalLicenseKeysGetResponse, error) {
+//
+// **Scopes**: `customer_portal:read` `customer_portal:write`
+func (s *PolarLicenseKeys) Get(ctx context.Context, security operations.CustomerPortalLicenseKeysGetSecurity, id string, opts ...operations.Option) (*operations.CustomerPortalLicenseKeysGetResponse, error) {
 	request := operations.CustomerPortalLicenseKeysGetRequest{
 		ID: id,
 	}
@@ -400,7 +404,7 @@ func (s *PolarLicenseKeys) Get(ctx context.Context, id string, opts ...operation
 		Context:        ctx,
 		OperationID:    "customer_portal:license_keys:get",
 		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
+		SecuritySource: utils.AsSecuritySource(security),
 	}
 
 	timeout := o.Timeout
@@ -421,7 +425,7 @@ func (s *PolarLicenseKeys) Get(ctx context.Context, id string, opts ...operation
 	req.Header.Set("Accept", "application/json")
 	req.Header.Set("User-Agent", s.sdkConfiguration.UserAgent)
 
-	if err := utils.PopulateSecurity(ctx, req, s.sdkConfiguration.Security); err != nil {
+	if err := utils.PopulateSecurity(ctx, req, utils.AsSecuritySource(security)); err != nil {
 		return nil, err
 	}
 

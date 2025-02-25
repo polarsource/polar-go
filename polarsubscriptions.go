@@ -28,8 +28,10 @@ func newPolarSubscriptions(sdkConfig sdkConfiguration) *PolarSubscriptions {
 }
 
 // List Subscriptions
-// List subscriptions of the authenticated customer or user.
-func (s *PolarSubscriptions) List(ctx context.Context, request operations.CustomerPortalSubscriptionsListRequest, opts ...operations.Option) (*operations.CustomerPortalSubscriptionsListResponse, error) {
+// List subscriptions of the authenticated customer.
+//
+// **Scopes**: `customer_portal:read` `customer_portal:write`
+func (s *PolarSubscriptions) List(ctx context.Context, request operations.CustomerPortalSubscriptionsListRequest, security operations.CustomerPortalSubscriptionsListSecurity, opts ...operations.Option) (*operations.CustomerPortalSubscriptionsListResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -58,7 +60,7 @@ func (s *PolarSubscriptions) List(ctx context.Context, request operations.Custom
 		Context:        ctx,
 		OperationID:    "customer_portal:subscriptions:list",
 		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
+		SecuritySource: utils.AsSecuritySource(security),
 	}
 
 	timeout := o.Timeout
@@ -83,7 +85,7 @@ func (s *PolarSubscriptions) List(ctx context.Context, request operations.Custom
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
-	if err := utils.PopulateSecurity(ctx, req, s.sdkConfiguration.Security); err != nil {
+	if err := utils.PopulateSecurity(ctx, req, utils.AsSecuritySource(security)); err != nil {
 		return nil, err
 	}
 
@@ -251,6 +253,7 @@ func (s *PolarSubscriptions) List(ctx context.Context, request operations.Custom
 				Limit:          request.Limit,
 				Sorting:        request.Sorting,
 			},
+			security,
 			opts...,
 		)
 	}
@@ -323,8 +326,10 @@ func (s *PolarSubscriptions) List(ctx context.Context, request operations.Custom
 }
 
 // Get Subscription
-// Get a subscription for the authenticated customer or user.
-func (s *PolarSubscriptions) Get(ctx context.Context, id string, opts ...operations.Option) (*operations.CustomerPortalSubscriptionsGetResponse, error) {
+// Get a subscription for the authenticated customer.
+//
+// **Scopes**: `customer_portal:read` `customer_portal:write`
+func (s *PolarSubscriptions) Get(ctx context.Context, security operations.CustomerPortalSubscriptionsGetSecurity, id string, opts ...operations.Option) (*operations.CustomerPortalSubscriptionsGetResponse, error) {
 	request := operations.CustomerPortalSubscriptionsGetRequest{
 		ID: id,
 	}
@@ -357,7 +362,7 @@ func (s *PolarSubscriptions) Get(ctx context.Context, id string, opts ...operati
 		Context:        ctx,
 		OperationID:    "customer_portal:subscriptions:get",
 		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
+		SecuritySource: utils.AsSecuritySource(security),
 	}
 
 	timeout := o.Timeout
@@ -378,7 +383,7 @@ func (s *PolarSubscriptions) Get(ctx context.Context, id string, opts ...operati
 	req.Header.Set("Accept", "application/json")
 	req.Header.Set("User-Agent", s.sdkConfiguration.UserAgent)
 
-	if err := utils.PopulateSecurity(ctx, req, s.sdkConfiguration.Security); err != nil {
+	if err := utils.PopulateSecurity(ctx, req, utils.AsSecuritySource(security)); err != nil {
 		return nil, err
 	}
 
@@ -571,8 +576,10 @@ func (s *PolarSubscriptions) Get(ctx context.Context, id string, opts ...operati
 }
 
 // Update Subscription
-// Update a subscription of the authenticated customer or user.
-func (s *PolarSubscriptions) Update(ctx context.Context, id string, customerSubscriptionUpdate components.CustomerSubscriptionUpdate, opts ...operations.Option) (*operations.CustomerPortalSubscriptionsUpdateResponse, error) {
+// Update a subscription of the authenticated customer.
+//
+// **Scopes**: `customer_portal:write`
+func (s *PolarSubscriptions) Update(ctx context.Context, security operations.CustomerPortalSubscriptionsUpdateSecurity, id string, customerSubscriptionUpdate components.CustomerSubscriptionUpdate, opts ...operations.Option) (*operations.CustomerPortalSubscriptionsUpdateResponse, error) {
 	request := operations.CustomerPortalSubscriptionsUpdateRequest{
 		ID:                         id,
 		CustomerSubscriptionUpdate: customerSubscriptionUpdate,
@@ -606,7 +613,7 @@ func (s *PolarSubscriptions) Update(ctx context.Context, id string, customerSubs
 		Context:        ctx,
 		OperationID:    "customer_portal:subscriptions:update",
 		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
+		SecuritySource: utils.AsSecuritySource(security),
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "CustomerSubscriptionUpdate", "json", `request:"mediaType=application/json"`)
 	if err != nil {
@@ -634,7 +641,7 @@ func (s *PolarSubscriptions) Update(ctx context.Context, id string, customerSubs
 		req.Header.Set("Content-Type", reqContentType)
 	}
 
-	if err := utils.PopulateSecurity(ctx, req, s.sdkConfiguration.Security); err != nil {
+	if err := utils.PopulateSecurity(ctx, req, utils.AsSecuritySource(security)); err != nil {
 		return nil, err
 	}
 
@@ -848,8 +855,10 @@ func (s *PolarSubscriptions) Update(ctx context.Context, id string, customerSubs
 }
 
 // Cancel Subscription
-// Cancel a subscription of the authenticated customer or user.
-func (s *PolarSubscriptions) Cancel(ctx context.Context, id string, opts ...operations.Option) (*operations.CustomerPortalSubscriptionsCancelResponse, error) {
+// Cancel a subscription of the authenticated customer.
+//
+// **Scopes**: `customer_portal:write`
+func (s *PolarSubscriptions) Cancel(ctx context.Context, security operations.CustomerPortalSubscriptionsCancelSecurity, id string, opts ...operations.Option) (*operations.CustomerPortalSubscriptionsCancelResponse, error) {
 	request := operations.CustomerPortalSubscriptionsCancelRequest{
 		ID: id,
 	}
@@ -882,7 +891,7 @@ func (s *PolarSubscriptions) Cancel(ctx context.Context, id string, opts ...oper
 		Context:        ctx,
 		OperationID:    "customer_portal:subscriptions:cancel",
 		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
+		SecuritySource: utils.AsSecuritySource(security),
 	}
 
 	timeout := o.Timeout
@@ -903,7 +912,7 @@ func (s *PolarSubscriptions) Cancel(ctx context.Context, id string, opts ...oper
 	req.Header.Set("Accept", "application/json")
 	req.Header.Set("User-Agent", s.sdkConfiguration.UserAgent)
 
-	if err := utils.PopulateSecurity(ctx, req, s.sdkConfiguration.Security); err != nil {
+	if err := utils.PopulateSecurity(ctx, req, utils.AsSecuritySource(security)); err != nil {
 		return nil, err
 	}
 

@@ -28,8 +28,10 @@ func newPolarOrders(sdkConfig sdkConfiguration) *PolarOrders {
 }
 
 // List Orders
-// List orders of the authenticated customer or user.
-func (s *PolarOrders) List(ctx context.Context, request operations.CustomerPortalOrdersListRequest, opts ...operations.Option) (*operations.CustomerPortalOrdersListResponse, error) {
+// List orders of the authenticated customer.
+//
+// **Scopes**: `customer_portal:read` `customer_portal:write`
+func (s *PolarOrders) List(ctx context.Context, request operations.CustomerPortalOrdersListRequest, security operations.CustomerPortalOrdersListSecurity, opts ...operations.Option) (*operations.CustomerPortalOrdersListResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -58,7 +60,7 @@ func (s *PolarOrders) List(ctx context.Context, request operations.CustomerPorta
 		Context:        ctx,
 		OperationID:    "customer_portal:orders:list",
 		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
+		SecuritySource: utils.AsSecuritySource(security),
 	}
 
 	timeout := o.Timeout
@@ -83,7 +85,7 @@ func (s *PolarOrders) List(ctx context.Context, request operations.CustomerPorta
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
-	if err := utils.PopulateSecurity(ctx, req, s.sdkConfiguration.Security); err != nil {
+	if err := utils.PopulateSecurity(ctx, req, utils.AsSecuritySource(security)); err != nil {
 		return nil, err
 	}
 
@@ -252,6 +254,7 @@ func (s *PolarOrders) List(ctx context.Context, request operations.CustomerPorta
 				Limit:            request.Limit,
 				Sorting:          request.Sorting,
 			},
+			security,
 			opts...,
 		)
 	}
@@ -324,8 +327,10 @@ func (s *PolarOrders) List(ctx context.Context, request operations.CustomerPorta
 }
 
 // Get Order
-// Get an order by ID for the authenticated customer or user.
-func (s *PolarOrders) Get(ctx context.Context, id string, opts ...operations.Option) (*operations.CustomerPortalOrdersGetResponse, error) {
+// Get an order by ID for the authenticated customer.
+//
+// **Scopes**: `customer_portal:read` `customer_portal:write`
+func (s *PolarOrders) Get(ctx context.Context, security operations.CustomerPortalOrdersGetSecurity, id string, opts ...operations.Option) (*operations.CustomerPortalOrdersGetResponse, error) {
 	request := operations.CustomerPortalOrdersGetRequest{
 		ID: id,
 	}
@@ -358,7 +363,7 @@ func (s *PolarOrders) Get(ctx context.Context, id string, opts ...operations.Opt
 		Context:        ctx,
 		OperationID:    "customer_portal:orders:get",
 		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
+		SecuritySource: utils.AsSecuritySource(security),
 	}
 
 	timeout := o.Timeout
@@ -379,7 +384,7 @@ func (s *PolarOrders) Get(ctx context.Context, id string, opts ...operations.Opt
 	req.Header.Set("Accept", "application/json")
 	req.Header.Set("User-Agent", s.sdkConfiguration.UserAgent)
 
-	if err := utils.PopulateSecurity(ctx, req, s.sdkConfiguration.Security); err != nil {
+	if err := utils.PopulateSecurity(ctx, req, utils.AsSecuritySource(security)); err != nil {
 		return nil, err
 	}
 
@@ -573,7 +578,9 @@ func (s *PolarOrders) Get(ctx context.Context, id string, opts ...operations.Opt
 
 // Invoice - Get Order Invoice
 // Get an order's invoice data.
-func (s *PolarOrders) Invoice(ctx context.Context, id string, opts ...operations.Option) (*operations.CustomerPortalOrdersInvoiceResponse, error) {
+//
+// **Scopes**: `customer_portal:read` `customer_portal:write`
+func (s *PolarOrders) Invoice(ctx context.Context, security operations.CustomerPortalOrdersInvoiceSecurity, id string, opts ...operations.Option) (*operations.CustomerPortalOrdersInvoiceResponse, error) {
 	request := operations.CustomerPortalOrdersInvoiceRequest{
 		ID: id,
 	}
@@ -606,7 +613,7 @@ func (s *PolarOrders) Invoice(ctx context.Context, id string, opts ...operations
 		Context:        ctx,
 		OperationID:    "customer_portal:orders:invoice",
 		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
+		SecuritySource: utils.AsSecuritySource(security),
 	}
 
 	timeout := o.Timeout
@@ -627,7 +634,7 @@ func (s *PolarOrders) Invoice(ctx context.Context, id string, opts ...operations
 	req.Header.Set("Accept", "application/json")
 	req.Header.Set("User-Agent", s.sdkConfiguration.UserAgent)
 
-	if err := utils.PopulateSecurity(ctx, req, s.sdkConfiguration.Security); err != nil {
+	if err := utils.PopulateSecurity(ctx, req, utils.AsSecuritySource(security)); err != nil {
 		return nil, err
 	}
 

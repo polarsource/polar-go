@@ -29,6 +29,8 @@ func newBenefits(sdkConfig sdkConfiguration) *Benefits {
 
 // List Benefits
 // List benefits.
+//
+// **Scopes**: `benefits:read` `benefits:write`
 func (s *Benefits) List(ctx context.Context, organizationID *operations.BenefitsListQueryParamOrganizationIDFilter, typeFilter *operations.BenefitTypeFilter, page *int64, limit *int64, opts ...operations.Option) (*operations.BenefitsListResponse, error) {
 	request := operations.BenefitsListRequest{
 		OrganizationID: organizationID,
@@ -326,6 +328,8 @@ func (s *Benefits) List(ctx context.Context, organizationID *operations.Benefits
 
 // Create Benefit
 // Create a benefit.
+//
+// **Scopes**: `benefits:write`
 func (s *Benefits) Create(ctx context.Context, request components.BenefitCreate, opts ...operations.Option) (*operations.BenefitsCreateResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{
@@ -556,6 +560,8 @@ func (s *Benefits) Create(ctx context.Context, request components.BenefitCreate,
 
 // Get Benefit
 // Get a benefit by ID.
+//
+// **Scopes**: `benefits:read` `benefits:write`
 func (s *Benefits) Get(ctx context.Context, id string, opts ...operations.Option) (*operations.BenefitsGetResponse, error) {
 	request := operations.BenefitsGetRequest{
 		ID: id,
@@ -804,6 +810,8 @@ func (s *Benefits) Get(ctx context.Context, id string, opts ...operations.Option
 
 // Update Benefit
 // Update a benefit.
+//
+// **Scopes**: `benefits:write`
 func (s *Benefits) Update(ctx context.Context, id string, requestBody operations.BenefitsUpdateBenefitUpdate, opts ...operations.Option) (*operations.BenefitsUpdateResponse, error) {
 	request := operations.BenefitsUpdateRequest{
 		ID:          id,
@@ -1085,6 +1093,8 @@ func (s *Benefits) Update(ctx context.Context, id string, requestBody operations
 // > [!WARNING]
 // > Every grants associated with the benefit will be revoked.
 // > Users will lose access to the benefit.
+//
+// **Scopes**: `benefits:write`
 func (s *Benefits) Delete(ctx context.Context, id string, opts ...operations.Option) (*operations.BenefitsDeleteResponse, error) {
 	request := operations.BenefitsDeleteRequest{
 		ID: id,
@@ -1336,6 +1346,8 @@ func (s *Benefits) Delete(ctx context.Context, id string, opts ...operations.Opt
 // List the individual grants for a benefit.
 //
 // It's especially useful to check if a user has been granted a benefit.
+//
+// **Scopes**: `benefits:read` `benefits:write`
 func (s *Benefits) Grants(ctx context.Context, request operations.BenefitsGrantsRequest, opts ...operations.Option) (*operations.BenefitsGrantsResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{

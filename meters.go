@@ -29,6 +29,8 @@ func newMeters(sdkConfig sdkConfiguration) *Meters {
 
 // List Meters
 // List meters.
+//
+// **Scopes**: `meters:read` `meters:write`
 func (s *Meters) List(ctx context.Context, request operations.MetersListRequest, opts ...operations.Option) (*operations.MetersListResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{
@@ -323,6 +325,8 @@ func (s *Meters) List(ctx context.Context, request operations.MetersListRequest,
 
 // Create Meter
 // Create a meter.
+//
+// **Scopes**: `meters:write`
 func (s *Meters) Create(ctx context.Context, request components.MeterCreate, opts ...operations.Option) (*operations.MetersCreateResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{
@@ -553,6 +557,8 @@ func (s *Meters) Create(ctx context.Context, request components.MeterCreate, opt
 
 // Get Meter
 // Get a meter by ID.
+//
+// **Scopes**: `meters:read` `meters:write`
 func (s *Meters) Get(ctx context.Context, id string, opts ...operations.Option) (*operations.MetersGetResponse, error) {
 	request := operations.MetersGetRequest{
 		ID: id,
@@ -801,6 +807,8 @@ func (s *Meters) Get(ctx context.Context, id string, opts ...operations.Option) 
 
 // Update Meter
 // Update a meter.
+//
+// **Scopes**: `meters:write`
 func (s *Meters) Update(ctx context.Context, id string, meterUpdate components.MeterUpdate, opts ...operations.Option) (*operations.MetersUpdateResponse, error) {
 	request := operations.MetersUpdateRequest{
 		ID:          id,
@@ -1057,6 +1065,8 @@ func (s *Meters) Update(ctx context.Context, id string, meterUpdate components.M
 
 // Events - Get Meter Events
 // Get events matching the filter of a meter.
+//
+// **Scopes**: `meters:read` `meters:write`
 func (s *Meters) Events(ctx context.Context, id string, page *int64, limit *int64, opts ...operations.Option) (*operations.MetersEventsResponse, error) {
 	request := operations.MetersEventsRequest{
 		ID:    id,
@@ -1373,6 +1383,8 @@ func (s *Meters) Events(ctx context.Context, id string, page *int64, limit *int6
 
 // Quantities - Get Meter Quantities
 // Get quantities of a meter over a time period.
+//
+// **Scopes**: `meters:read` `meters:write`
 func (s *Meters) Quantities(ctx context.Context, request operations.MetersQuantitiesRequest, opts ...operations.Option) (*operations.MetersQuantitiesResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{

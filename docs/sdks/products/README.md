@@ -15,6 +15,8 @@
 
 List products.
 
+**Scopes**: `products:read` `products:write`
+
 ### Example Usage
 
 ```go
@@ -80,6 +82,8 @@ func main() {
 
 Create a product.
 
+**Scopes**: `products:write`
+
 ### Example Usage
 
 ```go
@@ -141,6 +145,8 @@ func main() {
 
 Get a product by ID.
 
+**Scopes**: `products:read` `products:write`
+
 ### Example Usage
 
 ```go
@@ -193,6 +199,8 @@ func main() {
 ## Update
 
 Update a product.
+
+**Scopes**: `products:write`
 
 ### Example Usage
 
@@ -249,6 +257,8 @@ func main() {
 ## UpdateBenefits
 
 Update benefits granted by a product.
+
+**Scopes**: `products:write`
 
 ### Example Usage
 

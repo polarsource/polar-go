@@ -15,6 +15,8 @@
 
 List checkout links.
 
+**Scopes**: `checkout_links:read` `checkout_links:write`
+
 ### Example Usage
 
 ```go
@@ -80,6 +82,8 @@ func main() {
 
 Create a checkout link.
 
+**Scopes**: `checkout_links:write`
+
 ### Example Usage
 
 ```go
@@ -138,6 +142,8 @@ func main() {
 
 Get a checkout link by ID.
 
+**Scopes**: `checkout_links:read` `checkout_links:write`
+
 ### Example Usage
 
 ```go
@@ -190,6 +196,8 @@ func main() {
 ## Update
 
 Update a checkout link.
+
+**Scopes**: `checkout_links:write`
 
 ### Example Usage
 
@@ -245,6 +253,8 @@ func main() {
 ## Delete
 
 Delete a checkout link.
+
+**Scopes**: `checkout_links:write`
 
 ### Example Usage
 

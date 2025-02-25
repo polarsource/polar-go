@@ -15,6 +15,8 @@
 
 List customers.
 
+**Scopes**: `customers:read` `customers:write`
+
 ### Example Usage
 
 ```go
@@ -80,6 +82,8 @@ func main() {
 
 Create a customer.
 
+**Scopes**: `customers:write`
+
 ### Example Usage
 
 ```go
@@ -135,6 +139,8 @@ func main() {
 
 Get a customer by ID.
 
+**Scopes**: `customers:read` `customers:write`
+
 ### Example Usage
 
 ```go
@@ -187,6 +193,8 @@ func main() {
 ## Update
 
 Update a customer.
+
+**Scopes**: `customers:write`
 
 ### Example Usage
 
@@ -244,6 +252,8 @@ func main() {
 Delete a customer.
 
 Immediately cancels any active subscriptions and revokes any active benefits.
+
+**Scopes**: `customers:write`
 
 ### Example Usage
 

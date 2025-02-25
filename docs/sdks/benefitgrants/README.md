@@ -11,7 +11,9 @@
 
 ## List
 
-List benefits grants of the authenticated customer or user.
+List benefits grants of the authenticated customer.
+
+**Scopes**: `customer_portal:read` `customer_portal:write`
 
 ### Example Usage
 
@@ -20,20 +22,20 @@ package main
 
 import(
 	"context"
-	"os"
 	polargo "github.com/polarsource/polar-go"
 	"github.com/polarsource/polar-go/models/operations"
+	"os"
 	"log"
 )
 
 func main() {
     ctx := context.Background()
     
-    s := polargo.New(
-        polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
-    )
+    s := polargo.New()
 
-    res, err := s.CustomerPortal.BenefitGrants.List(ctx, operations.CustomerPortalBenefitGrantsListRequest{})
+    res, err := s.CustomerPortal.BenefitGrants.List(ctx, operations.CustomerPortalBenefitGrantsListRequest{}, operations.CustomerPortalBenefitGrantsListSecurity{
+        CustomerSession: os.Getenv("POLAR_CUSTOMER_SESSION"),
+    })
     if err != nil {
         log.Fatal(err)
     }
@@ -57,11 +59,12 @@ func main() {
 
 ### Parameters
 
-| Parameter                                                                                                              | Type                                                                                                                   | Required                                                                                                               | Description                                                                                                            |
-| ---------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
-| `ctx`                                                                                                                  | [context.Context](https://pkg.go.dev/context#Context)                                                                  | :heavy_check_mark:                                                                                                     | The context to use for the request.                                                                                    |
-| `request`                                                                                                              | [operations.CustomerPortalBenefitGrantsListRequest](../../models/operations/customerportalbenefitgrantslistrequest.md) | :heavy_check_mark:                                                                                                     | The request object to use for the request.                                                                             |
-| `opts`                                                                                                                 | [][operations.Option](../../models/operations/option.md)                                                               | :heavy_minus_sign:                                                                                                     | The options for this request.                                                                                          |
+| Parameter                                                                                                                | Type                                                                                                                     | Required                                                                                                                 | Description                                                                                                              |
+| ------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------ |
+| `ctx`                                                                                                                    | [context.Context](https://pkg.go.dev/context#Context)                                                                    | :heavy_check_mark:                                                                                                       | The context to use for the request.                                                                                      |
+| `request`                                                                                                                | [operations.CustomerPortalBenefitGrantsListRequest](../../models/operations/customerportalbenefitgrantslistrequest.md)   | :heavy_check_mark:                                                                                                       | The request object to use for the request.                                                                               |
+| `security`                                                                                                               | [operations.CustomerPortalBenefitGrantsListSecurity](../../models/operations/customerportalbenefitgrantslistsecurity.md) | :heavy_check_mark:                                                                                                       | The security requirements to use for the request.                                                                        |
+| `opts`                                                                                                                   | [][operations.Option](../../models/operations/option.md)                                                                 | :heavy_minus_sign:                                                                                                       | The options for this request.                                                                                            |
 
 ### Response
 
@@ -76,7 +79,9 @@ func main() {
 
 ## Get
 
-Get a benefit grant by ID for the authenticated customer or user.
+Get a benefit grant by ID for the authenticated customer.
+
+**Scopes**: `customer_portal:read` `customer_portal:write`
 
 ### Example Usage
 
@@ -85,19 +90,20 @@ package main
 
 import(
 	"context"
-	"os"
 	polargo "github.com/polarsource/polar-go"
+	"os"
+	"github.com/polarsource/polar-go/models/operations"
 	"log"
 )
 
 func main() {
     ctx := context.Background()
     
-    s := polargo.New(
-        polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
-    )
+    s := polargo.New()
 
-    res, err := s.CustomerPortal.BenefitGrants.Get(ctx, "<value>")
+    res, err := s.CustomerPortal.BenefitGrants.Get(ctx, operations.CustomerPortalBenefitGrantsGetSecurity{
+        CustomerSession: os.Getenv("POLAR_CUSTOMER_SESSION"),
+    }, "<value>")
     if err != nil {
         log.Fatal(err)
     }
@@ -109,11 +115,12 @@ func main() {
 
 ### Parameters
 
-| Parameter                                                | Type                                                     | Required                                                 | Description                                              |
-| -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- |
-| `ctx`                                                    | [context.Context](https://pkg.go.dev/context#Context)    | :heavy_check_mark:                                       | The context to use for the request.                      |
-| `id`                                                     | *string*                                                 | :heavy_check_mark:                                       | The benefit grant ID.                                    |
-| `opts`                                                   | [][operations.Option](../../models/operations/option.md) | :heavy_minus_sign:                                       | The options for this request.                            |
+| Parameter                                                                                                              | Type                                                                                                                   | Required                                                                                                               | Description                                                                                                            |
+| ---------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| `ctx`                                                                                                                  | [context.Context](https://pkg.go.dev/context#Context)                                                                  | :heavy_check_mark:                                                                                                     | The context to use for the request.                                                                                    |
+| `security`                                                                                                             | [operations.CustomerPortalBenefitGrantsGetSecurity](../../models/operations/customerportalbenefitgrantsgetsecurity.md) | :heavy_check_mark:                                                                                                     | The security requirements to use for the request.                                                                      |
+| `id`                                                                                                                   | *string*                                                                                                               | :heavy_check_mark:                                                                                                     | The benefit grant ID.                                                                                                  |
+| `opts`                                                                                                                 | [][operations.Option](../../models/operations/option.md)                                                               | :heavy_minus_sign:                                                                                                     | The options for this request.                                                                                          |
 
 ### Response
 
@@ -129,7 +136,9 @@ func main() {
 
 ## Update
 
-Update a benefit grant for the authenticated customer or user.
+Update a benefit grant for the authenticated customer.
+
+**Scopes**: `customer_portal:write`
 
 ### Example Usage
 
@@ -138,20 +147,21 @@ package main
 
 import(
 	"context"
-	"os"
 	polargo "github.com/polarsource/polar-go"
 	"github.com/polarsource/polar-go/models/components"
+	"os"
+	"github.com/polarsource/polar-go/models/operations"
 	"log"
 )
 
 func main() {
     ctx := context.Background()
     
-    s := polargo.New(
-        polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
-    )
+    s := polargo.New()
 
-    res, err := s.CustomerPortal.BenefitGrants.Update(ctx, "<value>", components.CreateCustomerBenefitGrantUpdateDownloadables(
+    res, err := s.CustomerPortal.BenefitGrants.Update(ctx, operations.CustomerPortalBenefitGrantsUpdateSecurity{
+        CustomerSession: os.Getenv("POLAR_CUSTOMER_SESSION"),
+    }, "<value>", components.CreateCustomerBenefitGrantUpdateDownloadables(
         components.CustomerBenefitGrantDownloadablesUpdate{},
     ))
     if err != nil {
@@ -165,12 +175,13 @@ func main() {
 
 ### Parameters
 
-| Parameter                                                                                      | Type                                                                                           | Required                                                                                       | Description                                                                                    |
-| ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
-| `ctx`                                                                                          | [context.Context](https://pkg.go.dev/context#Context)                                          | :heavy_check_mark:                                                                             | The context to use for the request.                                                            |
-| `id`                                                                                           | *string*                                                                                       | :heavy_check_mark:                                                                             | The benefit grant ID.                                                                          |
-| `customerBenefitGrantUpdate`                                                                   | [components.CustomerBenefitGrantUpdate](../../models/components/customerbenefitgrantupdate.md) | :heavy_check_mark:                                                                             | N/A                                                                                            |
-| `opts`                                                                                         | [][operations.Option](../../models/operations/option.md)                                       | :heavy_minus_sign:                                                                             | The options for this request.                                                                  |
+| Parameter                                                                                                                    | Type                                                                                                                         | Required                                                                                                                     | Description                                                                                                                  |
+| ---------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| `ctx`                                                                                                                        | [context.Context](https://pkg.go.dev/context#Context)                                                                        | :heavy_check_mark:                                                                                                           | The context to use for the request.                                                                                          |
+| `security`                                                                                                                   | [operations.CustomerPortalBenefitGrantsUpdateSecurity](../../models/operations/customerportalbenefitgrantsupdatesecurity.md) | :heavy_check_mark:                                                                                                           | The security requirements to use for the request.                                                                            |
+| `id`                                                                                                                         | *string*                                                                                                                     | :heavy_check_mark:                                                                                                           | The benefit grant ID.                                                                                                        |
+| `customerBenefitGrantUpdate`                                                                                                 | [components.CustomerBenefitGrantUpdate](../../models/components/customerbenefitgrantupdate.md)                               | :heavy_check_mark:                                                                                                           | N/A                                                                                                                          |
+| `opts`                                                                                                                       | [][operations.Option](../../models/operations/option.md)                                                                     | :heavy_minus_sign:                                                                                                           | The options for this request.                                                                                                |
 
 ### Response
 

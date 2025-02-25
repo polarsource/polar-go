@@ -29,6 +29,8 @@ func newRefunds(sdkConfig sdkConfiguration) *Refunds {
 
 // List Refunds
 // List products.
+//
+// **Scopes**: `refunds:read` `refunds:write`
 func (s *Refunds) List(ctx context.Context, request operations.RefundsListRequest, opts ...operations.Option) (*operations.RefundsListResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{
@@ -326,6 +328,8 @@ func (s *Refunds) List(ctx context.Context, request operations.RefundsListReques
 
 // Create Refund
 // Create a refund.
+//
+// **Scopes**: `refunds:write`
 func (s *Refunds) Create(ctx context.Context, request components.RefundCreate, opts ...operations.Option) (*operations.RefundsCreateResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{

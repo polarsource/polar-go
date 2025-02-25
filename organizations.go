@@ -29,6 +29,8 @@ func newOrganizations(sdkConfig sdkConfiguration) *Organizations {
 
 // List Organizations
 // List organizations.
+//
+// **Scopes**: `organizations:read` `organizations:write`
 func (s *Organizations) List(ctx context.Context, slug *string, page *int64, limit *int64, sorting []components.OrganizationSortProperty, opts ...operations.Option) (*operations.OrganizationsListResponse, error) {
 	request := operations.OrganizationsListRequest{
 		Slug:    slug,
@@ -326,6 +328,8 @@ func (s *Organizations) List(ctx context.Context, slug *string, page *int64, lim
 
 // Create Organization
 // Create an organization.
+//
+// **Scopes**: `organizations:write`
 func (s *Organizations) Create(ctx context.Context, request components.OrganizationCreate, opts ...operations.Option) (*operations.OrganizationsCreateResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{
@@ -556,6 +560,8 @@ func (s *Organizations) Create(ctx context.Context, request components.Organizat
 
 // Get Organization
 // Get an organization by ID.
+//
+// **Scopes**: `organizations:read` `organizations:write`
 func (s *Organizations) Get(ctx context.Context, id string, opts ...operations.Option) (*operations.OrganizationsGetResponse, error) {
 	request := operations.OrganizationsGetRequest{
 		ID: id,
@@ -804,6 +810,8 @@ func (s *Organizations) Get(ctx context.Context, id string, opts ...operations.O
 
 // Update Organization
 // Update an organization.
+//
+// **Scopes**: `organizations:write`
 func (s *Organizations) Update(ctx context.Context, id string, organizationUpdate components.OrganizationUpdate, opts ...operations.Option) (*operations.OrganizationsUpdateResponse, error) {
 	request := operations.OrganizationsUpdateRequest{
 		ID:                 id,

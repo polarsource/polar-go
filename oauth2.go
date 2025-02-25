@@ -30,6 +30,7 @@ func newOauth2(sdkConfig sdkConfiguration) *Oauth2 {
 }
 
 // Authorize
+// **Scopes**:
 func (s *Oauth2) Authorize(ctx context.Context, opts ...operations.Option) (*operations.Oauth2AuthorizeResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{

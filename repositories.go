@@ -29,6 +29,8 @@ func newRepositories(sdkConfig sdkConfiguration) *Repositories {
 
 // List Repositories
 // List repositories.
+//
+// **Scopes**: `repositories:read` `repositories:write`
 func (s *Repositories) List(ctx context.Context, request operations.RepositoriesListRequest, opts ...operations.Option) (*operations.RepositoriesListResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{
@@ -325,6 +327,8 @@ func (s *Repositories) List(ctx context.Context, request operations.Repositories
 
 // Get Repository
 // Get a repository by ID.
+//
+// **Scopes**: `repositories:read` `repositories:write`
 func (s *Repositories) Get(ctx context.Context, id string, opts ...operations.Option) (*operations.RepositoriesGetResponse, error) {
 	request := operations.RepositoriesGetRequest{
 		ID: id,
@@ -573,6 +577,8 @@ func (s *Repositories) Get(ctx context.Context, id string, opts ...operations.Op
 
 // Update Repository
 // Update a repository.
+//
+// **Scopes**: `repositories:write`
 func (s *Repositories) Update(ctx context.Context, id string, repositoryUpdate components.RepositoryUpdate, opts ...operations.Option) (*operations.RepositoriesUpdateResponse, error) {
 	request := operations.RepositoriesUpdateRequest{
 		ID:               id,

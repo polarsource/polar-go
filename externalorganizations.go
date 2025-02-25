@@ -29,6 +29,8 @@ func newExternalOrganizations(sdkConfig sdkConfiguration) *ExternalOrganizations
 
 // List External Organizations
 // List external organizations.
+//
+// **Scopes**: `external_organizations:read`
 func (s *ExternalOrganizations) List(ctx context.Context, request operations.ExternalOrganizationsListRequest, opts ...operations.Option) (*operations.ExternalOrganizationsListResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{

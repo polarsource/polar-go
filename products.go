@@ -29,6 +29,8 @@ func newProducts(sdkConfig sdkConfiguration) *Products {
 
 // List Products
 // List products.
+//
+// **Scopes**: `products:read` `products:write`
 func (s *Products) List(ctx context.Context, request operations.ProductsListRequest, opts ...operations.Option) (*operations.ProductsListResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{
@@ -326,6 +328,8 @@ func (s *Products) List(ctx context.Context, request operations.ProductsListRequ
 
 // Create Product
 // Create a product.
+//
+// **Scopes**: `products:write`
 func (s *Products) Create(ctx context.Context, request components.ProductCreate, opts ...operations.Option) (*operations.ProductsCreateResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{
@@ -556,6 +560,8 @@ func (s *Products) Create(ctx context.Context, request components.ProductCreate,
 
 // Get Product
 // Get a product by ID.
+//
+// **Scopes**: `products:read` `products:write`
 func (s *Products) Get(ctx context.Context, id string, opts ...operations.Option) (*operations.ProductsGetResponse, error) {
 	request := operations.ProductsGetRequest{
 		ID: id,
@@ -804,6 +810,8 @@ func (s *Products) Get(ctx context.Context, id string, opts ...operations.Option
 
 // Update Product
 // Update a product.
+//
+// **Scopes**: `products:write`
 func (s *Products) Update(ctx context.Context, id string, productUpdate components.ProductUpdate, opts ...operations.Option) (*operations.ProductsUpdateResponse, error) {
 	request := operations.ProductsUpdateRequest{
 		ID:            id,
@@ -1081,6 +1089,8 @@ func (s *Products) Update(ctx context.Context, id string, productUpdate componen
 
 // UpdateBenefits - Update Product Benefits
 // Update benefits granted by a product.
+//
+// **Scopes**: `products:write`
 func (s *Products) UpdateBenefits(ctx context.Context, id string, productBenefitsUpdate components.ProductBenefitsUpdate, opts ...operations.Option) (*operations.ProductsUpdateBenefitsResponse, error) {
 	request := operations.ProductsUpdateBenefitsRequest{
 		ID:                    id,

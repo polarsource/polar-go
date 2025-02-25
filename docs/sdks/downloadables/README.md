@@ -10,7 +10,7 @@
 
 ## List
 
-List Downloadables
+**Scopes**: `customer_portal:read` `customer_portal:write`
 
 ### Example Usage
 
@@ -19,19 +19,20 @@ package main
 
 import(
 	"context"
-	"os"
 	polargo "github.com/polarsource/polar-go"
+	"os"
+	"github.com/polarsource/polar-go/models/operations"
 	"log"
 )
 
 func main() {
     ctx := context.Background()
     
-    s := polargo.New(
-        polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
-    )
+    s := polargo.New()
 
-    res, err := s.CustomerPortal.Downloadables.List(ctx, nil, nil, nil, nil)
+    res, err := s.CustomerPortal.Downloadables.List(ctx, operations.CustomerPortalDownloadablesListSecurity{
+        CustomerSession: os.Getenv("POLAR_CUSTOMER_SESSION"),
+    }, nil, nil, nil, nil)
     if err != nil {
         log.Fatal(err)
     }
@@ -58,6 +59,7 @@ func main() {
 | Parameter                                                                                                                                                             | Type                                                                                                                                                                  | Required                                                                                                                                                              | Description                                                                                                                                                           |
 | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `ctx`                                                                                                                                                                 | [context.Context](https://pkg.go.dev/context#Context)                                                                                                                 | :heavy_check_mark:                                                                                                                                                    | The context to use for the request.                                                                                                                                   |
+| `security`                                                                                                                                                            | [operations.CustomerPortalDownloadablesListSecurity](../../models/operations/customerportaldownloadableslistsecurity.md)                                              | :heavy_check_mark:                                                                                                                                                    | The security requirements to use for the request.                                                                                                                     |
 | `organizationID`                                                                                                                                                      | [*operations.CustomerPortalDownloadablesListQueryParamOrganizationIDFilter](../../models/operations/customerportaldownloadableslistqueryparamorganizationidfilter.md) | :heavy_minus_sign:                                                                                                                                                    | Filter by organization ID.                                                                                                                                            |
 | `benefitID`                                                                                                                                                           | [*operations.CustomerPortalDownloadablesListQueryParamBenefitIDFilter](../../models/operations/customerportaldownloadableslistqueryparambenefitidfilter.md)           | :heavy_minus_sign:                                                                                                                                                    | Filter by benefit ID.                                                                                                                                                 |
 | `page`                                                                                                                                                                | **int64*                                                                                                                                                              | :heavy_minus_sign:                                                                                                                                                    | Page number, defaults to 1.                                                                                                                                           |

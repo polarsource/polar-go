@@ -13,6 +13,8 @@
 
 List orders.
 
+**Scopes**: `orders:read`
+
 ### Example Usage
 
 ```go
@@ -78,6 +80,8 @@ func main() {
 
 Get an order by ID.
 
+**Scopes**: `orders:read`
+
 ### Example Usage
 
 ```go
@@ -130,6 +134,8 @@ func main() {
 ## Invoice
 
 Get an order's invoice data.
+
+**Scopes**: `orders:read`
 
 ### Example Usage
 

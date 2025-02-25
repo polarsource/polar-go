@@ -14,6 +14,8 @@
 
 List organizations.
 
+**Scopes**: `organizations:read` `organizations:write`
+
 ### Example Usage
 
 ```go
@@ -81,6 +83,8 @@ func main() {
 
 Create an organization.
 
+**Scopes**: `organizations:write`
+
 ### Example Usage
 
 ```go
@@ -137,6 +141,8 @@ func main() {
 
 Get an organization by ID.
 
+**Scopes**: `organizations:read` `organizations:write`
+
 ### Example Usage
 
 ```go
@@ -189,6 +195,8 @@ func main() {
 ## Update
 
 Update an organization.
+
+**Scopes**: `organizations:write`
 
 ### Example Usage
 

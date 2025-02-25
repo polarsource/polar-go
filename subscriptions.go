@@ -29,6 +29,8 @@ func newSubscriptions(sdkConfig sdkConfiguration) *Subscriptions {
 
 // List Subscriptions
 // List subscriptions.
+//
+// **Scopes**: `subscriptions:read` `subscriptions:write`
 func (s *Subscriptions) List(ctx context.Context, request operations.SubscriptionsListRequest, opts ...operations.Option) (*operations.SubscriptionsListResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{
@@ -325,6 +327,8 @@ func (s *Subscriptions) List(ctx context.Context, request operations.Subscriptio
 
 // Export Subscriptions
 // Export subscriptions as a CSV file.
+//
+// **Scopes**: `subscriptions:read` `subscriptions:write`
 func (s *Subscriptions) Export(ctx context.Context, organizationID *operations.OrganizationID, opts ...operations.Option) (*operations.SubscriptionsExportResponse, error) {
 	request := operations.SubscriptionsExportRequest{
 		OrganizationID: organizationID,
@@ -556,6 +560,8 @@ func (s *Subscriptions) Export(ctx context.Context, organizationID *operations.O
 
 // Get Subscription
 // Get a subscription by ID.
+//
+// **Scopes**: `subscriptions:write`
 func (s *Subscriptions) Get(ctx context.Context, id string, opts ...operations.Option) (*operations.SubscriptionsGetResponse, error) {
 	request := operations.SubscriptionsGetRequest{
 		ID: id,
@@ -804,6 +810,8 @@ func (s *Subscriptions) Get(ctx context.Context, id string, opts ...operations.O
 
 // Update Subscription
 // Update a subscription.
+//
+// **Scopes**: `subscriptions:write`
 func (s *Subscriptions) Update(ctx context.Context, id string, subscriptionUpdate components.SubscriptionUpdate, opts ...operations.Option) (*operations.SubscriptionsUpdateResponse, error) {
 	request := operations.SubscriptionsUpdateRequest{
 		ID:                 id,
@@ -1081,6 +1089,8 @@ func (s *Subscriptions) Update(ctx context.Context, id string, subscriptionUpdat
 
 // Revoke Subscription
 // Revoke a subscription, i.e cancel immediately.
+//
+// **Scopes**: `subscriptions:write`
 func (s *Subscriptions) Revoke(ctx context.Context, id string, opts ...operations.Option) (*operations.SubscriptionsRevokeResponse, error) {
 	request := operations.SubscriptionsRevokeRequest{
 		ID: id,

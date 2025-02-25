@@ -13,7 +13,7 @@
 
 ## List
 
-List License Keys
+**Scopes**: `customer_portal:read` `customer_portal:write`
 
 ### Example Usage
 
@@ -22,19 +22,20 @@ package main
 
 import(
 	"context"
-	"os"
 	polargo "github.com/polarsource/polar-go"
+	"os"
+	"github.com/polarsource/polar-go/models/operations"
 	"log"
 )
 
 func main() {
     ctx := context.Background()
     
-    s := polargo.New(
-        polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
-    )
+    s := polargo.New()
 
-    res, err := s.CustomerPortal.LicenseKeys.List(ctx, nil, nil, nil, nil)
+    res, err := s.CustomerPortal.LicenseKeys.List(ctx, operations.CustomerPortalLicenseKeysListSecurity{
+        CustomerSession: os.Getenv("POLAR_CUSTOMER_SESSION"),
+    }, nil, nil, nil, nil)
     if err != nil {
         log.Fatal(err)
     }
@@ -61,6 +62,7 @@ func main() {
 | Parameter                                                                                                                                                         | Type                                                                                                                                                              | Required                                                                                                                                                          | Description                                                                                                                                                       |
 | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `ctx`                                                                                                                                                             | [context.Context](https://pkg.go.dev/context#Context)                                                                                                             | :heavy_check_mark:                                                                                                                                                | The context to use for the request.                                                                                                                               |
+| `security`                                                                                                                                                        | [operations.CustomerPortalLicenseKeysListSecurity](../../models/operations/customerportallicensekeyslistsecurity.md)                                              | :heavy_check_mark:                                                                                                                                                | The security requirements to use for the request.                                                                                                                 |
 | `organizationID`                                                                                                                                                  | [*operations.CustomerPortalLicenseKeysListQueryParamOrganizationIDFilter](../../models/operations/customerportallicensekeyslistqueryparamorganizationidfilter.md) | :heavy_minus_sign:                                                                                                                                                | Filter by organization ID.                                                                                                                                        |
 | `benefitID`                                                                                                                                                       | **string*                                                                                                                                                         | :heavy_minus_sign:                                                                                                                                                | Filter by a specific benefit                                                                                                                                      |
 | `page`                                                                                                                                                            | **int64*                                                                                                                                                          | :heavy_minus_sign:                                                                                                                                                | Page number, defaults to 1.                                                                                                                                       |
@@ -84,6 +86,8 @@ func main() {
 
 Get a license key.
 
+**Scopes**: `customer_portal:read` `customer_portal:write`
+
 ### Example Usage
 
 ```go
@@ -91,19 +95,20 @@ package main
 
 import(
 	"context"
-	"os"
 	polargo "github.com/polarsource/polar-go"
+	"os"
+	"github.com/polarsource/polar-go/models/operations"
 	"log"
 )
 
 func main() {
     ctx := context.Background()
     
-    s := polargo.New(
-        polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
-    )
+    s := polargo.New()
 
-    res, err := s.CustomerPortal.LicenseKeys.Get(ctx, "<value>")
+    res, err := s.CustomerPortal.LicenseKeys.Get(ctx, operations.CustomerPortalLicenseKeysGetSecurity{
+        CustomerSession: os.Getenv("POLAR_CUSTOMER_SESSION"),
+    }, "<value>")
     if err != nil {
         log.Fatal(err)
     }
@@ -115,11 +120,12 @@ func main() {
 
 ### Parameters
 
-| Parameter                                                | Type                                                     | Required                                                 | Description                                              |
-| -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- |
-| `ctx`                                                    | [context.Context](https://pkg.go.dev/context#Context)    | :heavy_check_mark:                                       | The context to use for the request.                      |
-| `id`                                                     | *string*                                                 | :heavy_check_mark:                                       | N/A                                                      |
-| `opts`                                                   | [][operations.Option](../../models/operations/option.md) | :heavy_minus_sign:                                       | The options for this request.                            |
+| Parameter                                                                                                          | Type                                                                                                               | Required                                                                                                           | Description                                                                                                        |
+| ------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------ |
+| `ctx`                                                                                                              | [context.Context](https://pkg.go.dev/context#Context)                                                              | :heavy_check_mark:                                                                                                 | The context to use for the request.                                                                                |
+| `security`                                                                                                         | [operations.CustomerPortalLicenseKeysGetSecurity](../../models/operations/customerportallicensekeysgetsecurity.md) | :heavy_check_mark:                                                                                                 | The security requirements to use for the request.                                                                  |
+| `id`                                                                                                               | *string*                                                                                                           | :heavy_check_mark:                                                                                                 | N/A                                                                                                                |
+| `opts`                                                                                                             | [][operations.Option](../../models/operations/option.md)                                                           | :heavy_minus_sign:                                                                                                 | The options for this request.                                                                                      |
 
 ### Response
 

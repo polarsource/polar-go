@@ -15,6 +15,8 @@
 
 List OAuth2 clients.
 
+**Scopes**:
+
 ### Example Usage
 
 ```go
@@ -80,6 +82,8 @@ func main() {
 
 Create an OAuth2 client.
 
+**Scopes**:
+
 ### Example Usage
 
 ```go
@@ -138,6 +142,8 @@ func main() {
 
 Get an OAuth2 client by Client ID.
 
+**Scopes**:
+
 ### Example Usage
 
 ```go
@@ -189,6 +195,8 @@ func main() {
 ## Update
 
 Update an OAuth2 client.
+
+**Scopes**:
 
 ### Example Usage
 
@@ -251,6 +259,8 @@ func main() {
 ## Delete
 
 Delete an OAuth2 client.
+
+**Scopes**:
 
 ### Example Usage
 

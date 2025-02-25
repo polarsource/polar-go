@@ -28,7 +28,8 @@ func newDownloadables(sdkConfig sdkConfiguration) *Downloadables {
 }
 
 // List Downloadables
-func (s *Downloadables) List(ctx context.Context, organizationID *operations.CustomerPortalDownloadablesListQueryParamOrganizationIDFilter, benefitID *operations.CustomerPortalDownloadablesListQueryParamBenefitIDFilter, page *int64, limit *int64, opts ...operations.Option) (*operations.CustomerPortalDownloadablesListResponse, error) {
+// **Scopes**: `customer_portal:read` `customer_portal:write`
+func (s *Downloadables) List(ctx context.Context, security operations.CustomerPortalDownloadablesListSecurity, organizationID *operations.CustomerPortalDownloadablesListQueryParamOrganizationIDFilter, benefitID *operations.CustomerPortalDownloadablesListQueryParamBenefitIDFilter, page *int64, limit *int64, opts ...operations.Option) (*operations.CustomerPortalDownloadablesListResponse, error) {
 	request := operations.CustomerPortalDownloadablesListRequest{
 		OrganizationID: organizationID,
 		BenefitID:      benefitID,
@@ -64,7 +65,7 @@ func (s *Downloadables) List(ctx context.Context, organizationID *operations.Cus
 		Context:        ctx,
 		OperationID:    "customer_portal:downloadables:list",
 		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
+		SecuritySource: utils.AsSecuritySource(security),
 	}
 
 	timeout := o.Timeout
@@ -89,7 +90,7 @@ func (s *Downloadables) List(ctx context.Context, organizationID *operations.Cus
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
-	if err := utils.PopulateSecurity(ctx, req, s.sdkConfiguration.Security); err != nil {
+	if err := utils.PopulateSecurity(ctx, req, utils.AsSecuritySource(security)); err != nil {
 		return nil, err
 	}
 
@@ -248,6 +249,7 @@ func (s *Downloadables) List(ctx context.Context, organizationID *operations.Cus
 
 		return s.List(
 			ctx,
+			security,
 			organizationID,
 			benefitID,
 			&nP,

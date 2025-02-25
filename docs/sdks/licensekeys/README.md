@@ -14,6 +14,8 @@
 
 Get license keys connected to the given organization & filters.
 
+**Scopes**: `license_keys:read` `license_keys:write`
+
 ### Example Usage
 
 ```go
@@ -83,6 +85,8 @@ func main() {
 
 Get a license key.
 
+**Scopes**: `license_keys:read` `license_keys:write`
+
 ### Example Usage
 
 ```go
@@ -136,6 +140,8 @@ func main() {
 ## Update
 
 Update a license key.
+
+**Scopes**: `license_keys:write`
 
 ### Example Usage
 
@@ -192,6 +198,8 @@ func main() {
 ## GetActivation
 
 Get a license key activation.
+
+**Scopes**: `license_keys:read` `license_keys:write`
 
 ### Example Usage
 

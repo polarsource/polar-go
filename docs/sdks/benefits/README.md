@@ -16,6 +16,8 @@
 
 List benefits.
 
+**Scopes**: `benefits:read` `benefits:write`
+
 ### Example Usage
 
 ```go
@@ -83,6 +85,8 @@ func main() {
 
 Create a benefit.
 
+**Scopes**: `benefits:write`
+
 ### Example Usage
 
 ```go
@@ -145,6 +149,8 @@ func main() {
 
 Get a benefit by ID.
 
+**Scopes**: `benefits:read` `benefits:write`
+
 ### Example Usage
 
 ```go
@@ -197,6 +203,8 @@ func main() {
 ## Update
 
 Update a benefit.
+
+**Scopes**: `benefits:write`
 
 ### Example Usage
 
@@ -267,6 +275,8 @@ Delete a benefit.
 > Every grants associated with the benefit will be revoked.
 > Users will lose access to the benefit.
 
+**Scopes**: `benefits:write`
+
 ### Example Usage
 
 ```go
@@ -322,6 +332,8 @@ func main() {
 List the individual grants for a benefit.
 
 It's especially useful to check if a user has been granted a benefit.
+
+**Scopes**: `benefits:read` `benefits:write`
 
 ### Example Usage
 

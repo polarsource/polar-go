@@ -29,6 +29,8 @@ func newDiscounts(sdkConfig sdkConfiguration) *Discounts {
 
 // List Discounts
 // List discounts.
+//
+// **Scopes**: `discounts:read` `discounts:write`
 func (s *Discounts) List(ctx context.Context, request operations.DiscountsListRequest, opts ...operations.Option) (*operations.DiscountsListResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{
@@ -322,6 +324,8 @@ func (s *Discounts) List(ctx context.Context, request operations.DiscountsListRe
 
 // Create Discount
 // Create a discount.
+//
+// **Scopes**: `discounts:write`
 func (s *Discounts) Create(ctx context.Context, request components.DiscountCreate, opts ...operations.Option) (*operations.DiscountsCreateResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{
@@ -552,6 +556,8 @@ func (s *Discounts) Create(ctx context.Context, request components.DiscountCreat
 
 // Get Discount
 // Get a discount by ID.
+//
+// **Scopes**: `discounts:read` `discounts:write`
 func (s *Discounts) Get(ctx context.Context, id string, opts ...operations.Option) (*operations.DiscountsGetResponse, error) {
 	request := operations.DiscountsGetRequest{
 		ID: id,
@@ -800,6 +806,8 @@ func (s *Discounts) Get(ctx context.Context, id string, opts ...operations.Optio
 
 // Update Discount
 // Update a discount.
+//
+// **Scopes**: `discounts:write`
 func (s *Discounts) Update(ctx context.Context, id string, discountUpdate components.DiscountUpdate, opts ...operations.Option) (*operations.DiscountsUpdateResponse, error) {
 	request := operations.DiscountsUpdateRequest{
 		ID:             id,
@@ -1056,6 +1064,8 @@ func (s *Discounts) Update(ctx context.Context, id string, discountUpdate compon
 
 // Delete Discount
 // Delete a discount.
+//
+// **Scopes**: `discounts:write`
 func (s *Discounts) Delete(ctx context.Context, id string, opts ...operations.Option) (*operations.DiscountsDeleteResponse, error) {
 	request := operations.DiscountsDeleteRequest{
 		ID: id,

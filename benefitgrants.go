@@ -28,8 +28,10 @@ func newBenefitGrants(sdkConfig sdkConfiguration) *BenefitGrants {
 }
 
 // List Benefit Grants
-// List benefits grants of the authenticated customer or user.
-func (s *BenefitGrants) List(ctx context.Context, request operations.CustomerPortalBenefitGrantsListRequest, opts ...operations.Option) (*operations.CustomerPortalBenefitGrantsListResponse, error) {
+// List benefits grants of the authenticated customer.
+//
+// **Scopes**: `customer_portal:read` `customer_portal:write`
+func (s *BenefitGrants) List(ctx context.Context, request operations.CustomerPortalBenefitGrantsListRequest, security operations.CustomerPortalBenefitGrantsListSecurity, opts ...operations.Option) (*operations.CustomerPortalBenefitGrantsListResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -58,7 +60,7 @@ func (s *BenefitGrants) List(ctx context.Context, request operations.CustomerPor
 		Context:        ctx,
 		OperationID:    "customer_portal:benefit-grants:list",
 		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
+		SecuritySource: utils.AsSecuritySource(security),
 	}
 
 	timeout := o.Timeout
@@ -83,7 +85,7 @@ func (s *BenefitGrants) List(ctx context.Context, request operations.CustomerPor
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
-	if err := utils.PopulateSecurity(ctx, req, s.sdkConfiguration.Security); err != nil {
+	if err := utils.PopulateSecurity(ctx, req, utils.AsSecuritySource(security)); err != nil {
 		return nil, err
 	}
 
@@ -253,6 +255,7 @@ func (s *BenefitGrants) List(ctx context.Context, request operations.CustomerPor
 				Limit:          request.Limit,
 				Sorting:        request.Sorting,
 			},
+			security,
 			opts...,
 		)
 	}
@@ -325,8 +328,10 @@ func (s *BenefitGrants) List(ctx context.Context, request operations.CustomerPor
 }
 
 // Get Benefit Grant
-// Get a benefit grant by ID for the authenticated customer or user.
-func (s *BenefitGrants) Get(ctx context.Context, id string, opts ...operations.Option) (*operations.CustomerPortalBenefitGrantsGetResponse, error) {
+// Get a benefit grant by ID for the authenticated customer.
+//
+// **Scopes**: `customer_portal:read` `customer_portal:write`
+func (s *BenefitGrants) Get(ctx context.Context, security operations.CustomerPortalBenefitGrantsGetSecurity, id string, opts ...operations.Option) (*operations.CustomerPortalBenefitGrantsGetResponse, error) {
 	request := operations.CustomerPortalBenefitGrantsGetRequest{
 		ID: id,
 	}
@@ -359,7 +364,7 @@ func (s *BenefitGrants) Get(ctx context.Context, id string, opts ...operations.O
 		Context:        ctx,
 		OperationID:    "customer_portal:benefit-grants:get",
 		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
+		SecuritySource: utils.AsSecuritySource(security),
 	}
 
 	timeout := o.Timeout
@@ -380,7 +385,7 @@ func (s *BenefitGrants) Get(ctx context.Context, id string, opts ...operations.O
 	req.Header.Set("Accept", "application/json")
 	req.Header.Set("User-Agent", s.sdkConfiguration.UserAgent)
 
-	if err := utils.PopulateSecurity(ctx, req, s.sdkConfiguration.Security); err != nil {
+	if err := utils.PopulateSecurity(ctx, req, utils.AsSecuritySource(security)); err != nil {
 		return nil, err
 	}
 
@@ -573,8 +578,10 @@ func (s *BenefitGrants) Get(ctx context.Context, id string, opts ...operations.O
 }
 
 // Update Benefit Grant
-// Update a benefit grant for the authenticated customer or user.
-func (s *BenefitGrants) Update(ctx context.Context, id string, customerBenefitGrantUpdate components.CustomerBenefitGrantUpdate, opts ...operations.Option) (*operations.CustomerPortalBenefitGrantsUpdateResponse, error) {
+// Update a benefit grant for the authenticated customer.
+//
+// **Scopes**: `customer_portal:write`
+func (s *BenefitGrants) Update(ctx context.Context, security operations.CustomerPortalBenefitGrantsUpdateSecurity, id string, customerBenefitGrantUpdate components.CustomerBenefitGrantUpdate, opts ...operations.Option) (*operations.CustomerPortalBenefitGrantsUpdateResponse, error) {
 	request := operations.CustomerPortalBenefitGrantsUpdateRequest{
 		ID:                         id,
 		CustomerBenefitGrantUpdate: customerBenefitGrantUpdate,
@@ -608,7 +615,7 @@ func (s *BenefitGrants) Update(ctx context.Context, id string, customerBenefitGr
 		Context:        ctx,
 		OperationID:    "customer_portal:benefit-grants:update",
 		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
+		SecuritySource: utils.AsSecuritySource(security),
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "CustomerBenefitGrantUpdate", "json", `request:"mediaType=application/json"`)
 	if err != nil {
@@ -636,7 +643,7 @@ func (s *BenefitGrants) Update(ctx context.Context, id string, customerBenefitGr
 		req.Header.Set("Content-Type", reqContentType)
 	}
 
-	if err := utils.PopulateSecurity(ctx, req, s.sdkConfiguration.Security); err != nil {
+	if err := utils.PopulateSecurity(ctx, req, utils.AsSecuritySource(security)); err != nil {
 		return nil, err
 	}
 

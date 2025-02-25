@@ -15,6 +15,8 @@
 
 List files.
 
+**Scopes**: `files:write`
+
 ### Example Usage
 
 ```go
@@ -81,6 +83,8 @@ func main() {
 ## Create
 
 Create a file.
+
+**Scopes**: `files:write`
 
 ### Example Usage
 
@@ -149,6 +153,8 @@ func main() {
 ## Uploaded
 
 Complete a file upload.
+
+**Scopes**: `files:write`
 
 ### Example Usage
 
@@ -226,6 +232,8 @@ func main() {
 
 Update a file.
 
+**Scopes**: `files:write`
+
 ### Example Usage
 
 ```go
@@ -281,6 +289,8 @@ func main() {
 ## Delete
 
 Delete a file.
+
+**Scopes**: `files:write`
 
 ### Example Usage
 

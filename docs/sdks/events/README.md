@@ -13,6 +13,8 @@
 
 List events.
 
+**Scopes**: `events:read` `events:write`
+
 ### Example Usage
 
 ```go
@@ -78,6 +80,8 @@ func main() {
 
 Get an event by ID.
 
+**Scopes**: `events:read` `events:write`
+
 ### Example Usage
 
 ```go
@@ -130,6 +134,8 @@ func main() {
 ## Ingest
 
 Ingest batch of events.
+
+**Scopes**: `events:write`
 
 ### Example Usage
 

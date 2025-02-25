@@ -17,6 +17,8 @@
 
 List checkout sessions.
 
+**Scopes**: `checkouts:read` `checkouts:write`
+
 ### Example Usage
 
 ```go
@@ -82,6 +84,8 @@ func main() {
 
 Create a checkout session.
 
+**Scopes**: `checkouts:write`
+
 ### Example Usage
 
 ```go
@@ -140,6 +144,8 @@ func main() {
 
 Get a checkout session by ID.
 
+**Scopes**: `checkouts:read` `checkouts:write`
+
 ### Example Usage
 
 ```go
@@ -192,6 +198,8 @@ func main() {
 ## Update
 
 Update a checkout session.
+
+**Scopes**: `checkouts:write`
 
 ### Example Usage
 
@@ -359,6 +367,8 @@ func main() {
 Confirm a checkout session by client secret.
 
 Orders and subscriptions will be processed.
+
+**Scopes**:
 
 ### Example Usage
 

@@ -29,6 +29,8 @@ func newCustomers(sdkConfig sdkConfiguration) *Customers {
 
 // List Customers
 // List customers.
+//
+// **Scopes**: `customers:read` `customers:write`
 func (s *Customers) List(ctx context.Context, request operations.CustomersListRequest, opts ...operations.Option) (*operations.CustomersListResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{
@@ -324,6 +326,8 @@ func (s *Customers) List(ctx context.Context, request operations.CustomersListRe
 
 // Create Customer
 // Create a customer.
+//
+// **Scopes**: `customers:write`
 func (s *Customers) Create(ctx context.Context, request components.CustomerCreate, opts ...operations.Option) (*operations.CustomersCreateResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{
@@ -554,6 +558,8 @@ func (s *Customers) Create(ctx context.Context, request components.CustomerCreat
 
 // Get Customer
 // Get a customer by ID.
+//
+// **Scopes**: `customers:read` `customers:write`
 func (s *Customers) Get(ctx context.Context, id string, opts ...operations.Option) (*operations.CustomersGetResponse, error) {
 	request := operations.CustomersGetRequest{
 		ID: id,
@@ -802,6 +808,8 @@ func (s *Customers) Get(ctx context.Context, id string, opts ...operations.Optio
 
 // Update Customer
 // Update a customer.
+//
+// **Scopes**: `customers:write`
 func (s *Customers) Update(ctx context.Context, id string, customerUpdate components.CustomerUpdate, opts ...operations.Option) (*operations.CustomersUpdateResponse, error) {
 	request := operations.CustomersUpdateRequest{
 		ID:             id,
@@ -1060,6 +1068,8 @@ func (s *Customers) Update(ctx context.Context, id string, customerUpdate compon
 // Delete a customer.
 //
 // Immediately cancels any active subscriptions and revokes any active benefits.
+//
+// **Scopes**: `customers:write`
 func (s *Customers) Delete(ctx context.Context, id string, opts ...operations.Option) (*operations.CustomersDeleteResponse, error) {
 	request := operations.CustomersDeleteRequest{
 		ID: id,

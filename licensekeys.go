@@ -29,6 +29,8 @@ func newLicenseKeys(sdkConfig sdkConfiguration) *LicenseKeys {
 
 // List License Keys
 // Get license keys connected to the given organization & filters.
+//
+// **Scopes**: `license_keys:read` `license_keys:write`
 func (s *LicenseKeys) List(ctx context.Context, organizationID *operations.LicenseKeysListQueryParamOrganizationIDFilter, benefitID *operations.QueryParamBenefitIDFilter, page *int64, limit *int64, opts ...operations.Option) (*operations.LicenseKeysListResponse, error) {
 	request := operations.LicenseKeysListRequest{
 		OrganizationID: organizationID,
@@ -368,6 +370,8 @@ func (s *LicenseKeys) List(ctx context.Context, organizationID *operations.Licen
 
 // Get License Key
 // Get a license key.
+//
+// **Scopes**: `license_keys:read` `license_keys:write`
 func (s *LicenseKeys) Get(ctx context.Context, id string, opts ...operations.Option) (*operations.LicenseKeysGetResponse, error) {
 	request := operations.LicenseKeysGetRequest{
 		ID: id,
@@ -637,6 +641,8 @@ func (s *LicenseKeys) Get(ctx context.Context, id string, opts ...operations.Opt
 
 // Update License Key
 // Update a license key.
+//
+// **Scopes**: `license_keys:write`
 func (s *LicenseKeys) Update(ctx context.Context, id string, licenseKeyUpdate components.LicenseKeyUpdate, opts ...operations.Option) (*operations.LicenseKeysUpdateResponse, error) {
 	request := operations.LicenseKeysUpdateRequest{
 		ID:               id,
@@ -914,6 +920,8 @@ func (s *LicenseKeys) Update(ctx context.Context, id string, licenseKeyUpdate co
 
 // GetActivation - Get Activation
 // Get a license key activation.
+//
+// **Scopes**: `license_keys:read` `license_keys:write`
 func (s *LicenseKeys) GetActivation(ctx context.Context, id string, activationID string, opts ...operations.Option) (*operations.LicenseKeysGetActivationResponse, error) {
 	request := operations.LicenseKeysGetActivationRequest{
 		ID:           id,

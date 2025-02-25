@@ -28,6 +28,8 @@ func newCustomerSessions(sdkConfig sdkConfiguration) *CustomerSessions {
 
 // Create Customer Session
 // Create a customer session.
+//
+// **Scopes**: `customer_sessions:write`
 func (s *CustomerSessions) Create(ctx context.Context, request components.CustomerSessionCreate, opts ...operations.Option) (*operations.CustomerSessionsCreateResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{

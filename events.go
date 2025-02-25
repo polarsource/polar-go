@@ -29,6 +29,8 @@ func newEvents(sdkConfig sdkConfiguration) *Events {
 
 // List Events
 // List events.
+//
+// **Scopes**: `events:read` `events:write`
 func (s *Events) List(ctx context.Context, request operations.EventsListRequest, opts ...operations.Option) (*operations.EventsListResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{
@@ -327,6 +329,8 @@ func (s *Events) List(ctx context.Context, request operations.EventsListRequest,
 
 // Get Event
 // Get an event by ID.
+//
+// **Scopes**: `events:read` `events:write`
 func (s *Events) Get(ctx context.Context, id string, opts ...operations.Option) (*operations.EventsGetResponse, error) {
 	request := operations.EventsGetRequest{
 		ID: id,
@@ -575,6 +579,8 @@ func (s *Events) Get(ctx context.Context, id string, opts ...operations.Option) 
 
 // Ingest Events
 // Ingest batch of events.
+//
+// **Scopes**: `events:write`
 func (s *Events) Ingest(ctx context.Context, request components.EventsIngest, opts ...operations.Option) (*operations.EventsIngestResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{

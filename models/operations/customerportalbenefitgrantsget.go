@@ -6,6 +6,17 @@ import (
 	"github.com/polarsource/polar-go/models/components"
 )
 
+type CustomerPortalBenefitGrantsGetSecurity struct {
+	CustomerSession string `security:"scheme,type=http,subtype=bearer,name=Authorization,env=polar_customer_session"`
+}
+
+func (o *CustomerPortalBenefitGrantsGetSecurity) GetCustomerSession() string {
+	if o == nil {
+		return ""
+	}
+	return o.CustomerSession
+}
+
 type CustomerPortalBenefitGrantsGetRequest struct {
 	// The benefit grant ID.
 	ID string `pathParam:"style=simple,explode=false,name=id"`

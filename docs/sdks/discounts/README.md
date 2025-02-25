@@ -15,6 +15,8 @@
 
 List discounts.
 
+**Scopes**: `discounts:read` `discounts:write`
+
 ### Example Usage
 
 ```go
@@ -80,6 +82,8 @@ func main() {
 
 Create a discount.
 
+**Scopes**: `discounts:write`
+
 ### Example Usage
 
 ```go
@@ -141,6 +145,8 @@ func main() {
 
 Get a discount by ID.
 
+**Scopes**: `discounts:read` `discounts:write`
+
 ### Example Usage
 
 ```go
@@ -193,6 +199,8 @@ func main() {
 ## Update
 
 Update a discount.
+
+**Scopes**: `discounts:write`
 
 ### Example Usage
 
@@ -248,6 +256,8 @@ func main() {
 ## Delete
 
 Delete a discount.
+
+**Scopes**: `discounts:write`
 
 ### Example Usage
 

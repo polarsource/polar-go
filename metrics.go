@@ -28,6 +28,8 @@ func newMetrics(sdkConfig sdkConfiguration) *Metrics {
 
 // Get Metrics
 // Get metrics about your orders and subscriptions.
+//
+// **Scopes**: `metrics:read`
 func (s *Metrics) Get(ctx context.Context, request operations.MetricsGetRequest, opts ...operations.Option) (*operations.MetricsGetResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{
@@ -255,6 +257,8 @@ func (s *Metrics) Get(ctx context.Context, request operations.MetricsGetRequest,
 
 // Limits - Get Metrics Limits
 // Get the interval limits for the metrics endpoint.
+//
+// **Scopes**: `metrics:read`
 func (s *Metrics) Limits(ctx context.Context, opts ...operations.Option) (*operations.MetricsLimitsResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{

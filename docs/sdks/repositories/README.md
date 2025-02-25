@@ -13,6 +13,8 @@
 
 List repositories.
 
+**Scopes**: `repositories:read` `repositories:write`
+
 ### Example Usage
 
 ```go
@@ -78,6 +80,8 @@ func main() {
 
 Get a repository by ID.
 
+**Scopes**: `repositories:read` `repositories:write`
+
 ### Example Usage
 
 ```go
@@ -130,6 +134,8 @@ func main() {
 ## Update
 
 Update a repository.
+
+**Scopes**: `repositories:write`
 
 ### Example Usage
 

@@ -29,6 +29,8 @@ func newCheckoutLinks(sdkConfig sdkConfiguration) *CheckoutLinks {
 
 // List Checkout Links
 // List checkout links.
+//
+// **Scopes**: `checkout_links:read` `checkout_links:write`
 func (s *CheckoutLinks) List(ctx context.Context, request operations.CheckoutLinksListRequest, opts ...operations.Option) (*operations.CheckoutLinksListResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{
@@ -322,6 +324,8 @@ func (s *CheckoutLinks) List(ctx context.Context, request operations.CheckoutLin
 
 // Create Checkout Link
 // Create a checkout link.
+//
+// **Scopes**: `checkout_links:write`
 func (s *CheckoutLinks) Create(ctx context.Context, request operations.CheckoutLinksCreateCheckoutLinkCreate, opts ...operations.Option) (*operations.CheckoutLinksCreateResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{
@@ -552,6 +556,8 @@ func (s *CheckoutLinks) Create(ctx context.Context, request operations.CheckoutL
 
 // Get Checkout Link
 // Get a checkout link by ID.
+//
+// **Scopes**: `checkout_links:read` `checkout_links:write`
 func (s *CheckoutLinks) Get(ctx context.Context, id string, opts ...operations.Option) (*operations.CheckoutLinksGetResponse, error) {
 	request := operations.CheckoutLinksGetRequest{
 		ID: id,
@@ -800,6 +806,8 @@ func (s *CheckoutLinks) Get(ctx context.Context, id string, opts ...operations.O
 
 // Update Checkout Link
 // Update a checkout link.
+//
+// **Scopes**: `checkout_links:write`
 func (s *CheckoutLinks) Update(ctx context.Context, id string, checkoutLinkUpdate components.CheckoutLinkUpdate, opts ...operations.Option) (*operations.CheckoutLinksUpdateResponse, error) {
 	request := operations.CheckoutLinksUpdateRequest{
 		ID:                 id,
@@ -1056,6 +1064,8 @@ func (s *CheckoutLinks) Update(ctx context.Context, id string, checkoutLinkUpdat
 
 // Delete Checkout Link
 // Delete a checkout link.
+//
+// **Scopes**: `checkout_links:write`
 func (s *CheckoutLinks) Delete(ctx context.Context, id string, opts ...operations.Option) (*operations.CheckoutLinksDeleteResponse, error) {
 	request := operations.CheckoutLinksDeleteRequest{
 		ID: id,

@@ -6,16 +6,15 @@ import (
 	"github.com/polarsource/polar-go/models/components"
 )
 
-type CustomerPortalCustomersGetRequest struct {
-	// The customer ID.
-	ID string `pathParam:"style=simple,explode=false,name=id"`
+type CustomerPortalCustomersGetSecurity struct {
+	CustomerSession string `security:"scheme,type=http,subtype=bearer,name=Authorization,env=polar_customer_session"`
 }
 
-func (o *CustomerPortalCustomersGetRequest) GetID() string {
+func (o *CustomerPortalCustomersGetSecurity) GetCustomerSession() string {
 	if o == nil {
 		return ""
 	}
-	return o.ID
+	return o.CustomerSession
 }
 
 type CustomerPortalCustomersGetResponse struct {

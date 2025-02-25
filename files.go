@@ -29,6 +29,8 @@ func newFiles(sdkConfig sdkConfiguration) *Files {
 
 // List Files
 // List files.
+//
+// **Scopes**: `files:write`
 func (s *Files) List(ctx context.Context, organizationID *string, ids []string, page *int64, limit *int64, opts ...operations.Option) (*operations.FilesListResponse, error) {
 	request := operations.FilesListRequest{
 		OrganizationID: organizationID,
@@ -326,6 +328,8 @@ func (s *Files) List(ctx context.Context, organizationID *string, ids []string, 
 
 // Create File
 // Create a file.
+//
+// **Scopes**: `files:write`
 func (s *Files) Create(ctx context.Context, request components.FileCreate, opts ...operations.Option) (*operations.FilesCreateResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{
@@ -556,6 +560,8 @@ func (s *Files) Create(ctx context.Context, request components.FileCreate, opts 
 
 // Uploaded - Complete File Upload
 // Complete a file upload.
+//
+// **Scopes**: `files:write`
 func (s *Files) Uploaded(ctx context.Context, id string, fileUploadCompleted components.FileUploadCompleted, opts ...operations.Option) (*operations.FilesUploadedResponse, error) {
 	request := operations.FilesUploadedRequest{
 		ID:                  id,
@@ -833,6 +839,8 @@ func (s *Files) Uploaded(ctx context.Context, id string, fileUploadCompleted com
 
 // Update File
 // Update a file.
+//
+// **Scopes**: `files:write`
 func (s *Files) Update(ctx context.Context, id string, filePatch components.FilePatch, opts ...operations.Option) (*operations.FilesUpdateResponse, error) {
 	request := operations.FilesUpdateRequest{
 		ID:        id,
@@ -1110,6 +1118,8 @@ func (s *Files) Update(ctx context.Context, id string, filePatch components.File
 
 // Delete File
 // Delete a file.
+//
+// **Scopes**: `files:write`
 func (s *Files) Delete(ctx context.Context, id string, opts ...operations.Option) (*operations.FilesDeleteResponse, error) {
 	request := operations.FilesDeleteRequest{
 		ID: id,

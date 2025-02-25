@@ -29,6 +29,8 @@ func newCustomFields(sdkConfig sdkConfiguration) *CustomFields {
 
 // List Custom Fields
 // List custom fields.
+//
+// **Scopes**: `custom_fields:read` `custom_fields:write`
 func (s *CustomFields) List(ctx context.Context, request operations.CustomFieldsListRequest, opts ...operations.Option) (*operations.CustomFieldsListResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{
@@ -323,6 +325,8 @@ func (s *CustomFields) List(ctx context.Context, request operations.CustomFields
 
 // Create Custom Field
 // Create a custom field.
+//
+// **Scopes**: `custom_fields:write`
 func (s *CustomFields) Create(ctx context.Context, request components.CustomFieldCreate, opts ...operations.Option) (*operations.CustomFieldsCreateResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{
@@ -553,6 +557,8 @@ func (s *CustomFields) Create(ctx context.Context, request components.CustomFiel
 
 // Get Custom Field
 // Get a custom field by ID.
+//
+// **Scopes**: `custom_fields:read` `custom_fields:write`
 func (s *CustomFields) Get(ctx context.Context, id string, opts ...operations.Option) (*operations.CustomFieldsGetResponse, error) {
 	request := operations.CustomFieldsGetRequest{
 		ID: id,
@@ -801,6 +807,8 @@ func (s *CustomFields) Get(ctx context.Context, id string, opts ...operations.Op
 
 // Update Custom Field
 // Update a custom field.
+//
+// **Scopes**: `custom_fields:write`
 func (s *CustomFields) Update(ctx context.Context, id string, customFieldUpdate components.CustomFieldUpdate, opts ...operations.Option) (*operations.CustomFieldsUpdateResponse, error) {
 	request := operations.CustomFieldsUpdateRequest{
 		ID:                id,
@@ -1057,6 +1065,8 @@ func (s *CustomFields) Update(ctx context.Context, id string, customFieldUpdate 
 
 // Delete Custom Field
 // Delete a custom field.
+//
+// **Scopes**: `custom_fields:write`
 func (s *CustomFields) Delete(ctx context.Context, id string, opts ...operations.Option) (*operations.CustomFieldsDeleteResponse, error) {
 	request := operations.CustomFieldsDeleteRequest{
 		ID: id,

@@ -12,6 +12,8 @@
 
 Get metrics about your orders and subscriptions.
 
+**Scopes**: `metrics:read`
+
 ### Example Usage
 
 ```go
@@ -70,6 +72,8 @@ func main() {
 ## Limits
 
 Get the interval limits for the metrics endpoint.
+
+**Scopes**: `metrics:read`
 
 ### Example Usage
 

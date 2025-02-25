@@ -12,6 +12,8 @@
 
 List products.
 
+**Scopes**: `refunds:read` `refunds:write`
+
 ### Example Usage
 
 ```go
@@ -76,6 +78,8 @@ func main() {
 ## Create
 
 Create a refund.
+
+**Scopes**: `refunds:write`
 
 ### Example Usage
 

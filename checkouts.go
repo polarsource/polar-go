@@ -29,6 +29,8 @@ func newCheckouts(sdkConfig sdkConfiguration) *Checkouts {
 
 // List Checkout Sessions
 // List checkout sessions.
+//
+// **Scopes**: `checkouts:read` `checkouts:write`
 func (s *Checkouts) List(ctx context.Context, request operations.CheckoutsListRequest, opts ...operations.Option) (*operations.CheckoutsListResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{
@@ -322,6 +324,8 @@ func (s *Checkouts) List(ctx context.Context, request operations.CheckoutsListRe
 
 // Create Checkout Session
 // Create a checkout session.
+//
+// **Scopes**: `checkouts:write`
 func (s *Checkouts) Create(ctx context.Context, request components.CheckoutCreate, opts ...operations.Option) (*operations.CheckoutsCreateResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{
@@ -552,6 +556,8 @@ func (s *Checkouts) Create(ctx context.Context, request components.CheckoutCreat
 
 // Get Checkout Session
 // Get a checkout session by ID.
+//
+// **Scopes**: `checkouts:read` `checkouts:write`
 func (s *Checkouts) Get(ctx context.Context, id string, opts ...operations.Option) (*operations.CheckoutsGetResponse, error) {
 	request := operations.CheckoutsGetRequest{
 		ID: id,
@@ -800,6 +806,8 @@ func (s *Checkouts) Get(ctx context.Context, id string, opts ...operations.Optio
 
 // Update Checkout Session
 // Update a checkout session.
+//
+// **Scopes**: `checkouts:write`
 func (s *Checkouts) Update(ctx context.Context, id string, checkoutUpdate components.CheckoutUpdate, opts ...operations.Option) (*operations.CheckoutsUpdateResponse, error) {
 	request := operations.CheckoutsUpdateRequest{
 		ID:             id,
@@ -1604,6 +1612,8 @@ func (s *Checkouts) ClientUpdate(ctx context.Context, clientSecret string, check
 // Confirm a checkout session by client secret.
 //
 // Orders and subscriptions will be processed.
+//
+// **Scopes**:
 func (s *Checkouts) ClientConfirm(ctx context.Context, clientSecret string, checkoutConfirmStripe components.CheckoutConfirmStripe, opts ...operations.Option) (*operations.CheckoutsClientConfirmResponse, error) {
 	request := operations.CheckoutsClientConfirmRequest{
 		ClientSecret:          clientSecret,

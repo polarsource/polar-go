@@ -15,6 +15,8 @@
 
 List custom fields.
 
+**Scopes**: `custom_fields:read` `custom_fields:write`
+
 ### Example Usage
 
 ```go
@@ -79,6 +81,8 @@ func main() {
 ## Create
 
 Create a custom field.
+
+**Scopes**: `custom_fields:write`
 
 ### Example Usage
 
@@ -146,6 +150,8 @@ func main() {
 
 Get a custom field by ID.
 
+**Scopes**: `custom_fields:read` `custom_fields:write`
+
 ### Example Usage
 
 ```go
@@ -198,6 +204,8 @@ func main() {
 ## Update
 
 Update a custom field.
+
+**Scopes**: `custom_fields:write`
 
 ### Example Usage
 
@@ -255,6 +263,8 @@ func main() {
 ## Delete
 
 Delete a custom field.
+
+**Scopes**: `custom_fields:write`
 
 ### Example Usage
 

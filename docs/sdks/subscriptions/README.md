@@ -15,6 +15,8 @@
 
 List subscriptions.
 
+**Scopes**: `subscriptions:read` `subscriptions:write`
+
 ### Example Usage
 
 ```go
@@ -80,6 +82,8 @@ func main() {
 
 Export subscriptions as a CSV file.
 
+**Scopes**: `subscriptions:read` `subscriptions:write`
+
 ### Example Usage
 
 ```go
@@ -131,6 +135,8 @@ func main() {
 ## Get
 
 Get a subscription by ID.
+
+**Scopes**: `subscriptions:write`
 
 ### Example Usage
 
@@ -184,6 +190,8 @@ func main() {
 ## Update
 
 Update a subscription.
+
+**Scopes**: `subscriptions:write`
 
 ### Example Usage
 
@@ -242,6 +250,8 @@ func main() {
 ## Revoke
 
 Revoke a subscription, i.e cancel immediately.
+
+**Scopes**: `subscriptions:write`
 
 ### Example Usage
 

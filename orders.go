@@ -29,6 +29,8 @@ func newOrders(sdkConfig sdkConfiguration) *Orders {
 
 // List Orders
 // List orders.
+//
+// **Scopes**: `orders:read`
 func (s *Orders) List(ctx context.Context, request operations.OrdersListRequest, opts ...operations.Option) (*operations.OrdersListResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{
@@ -326,6 +328,8 @@ func (s *Orders) List(ctx context.Context, request operations.OrdersListRequest,
 
 // Get Order
 // Get an order by ID.
+//
+// **Scopes**: `orders:read`
 func (s *Orders) Get(ctx context.Context, id string, opts ...operations.Option) (*operations.OrdersGetResponse, error) {
 	request := operations.OrdersGetRequest{
 		ID: id,
@@ -574,6 +578,8 @@ func (s *Orders) Get(ctx context.Context, id string, opts ...operations.Option) 
 
 // Invoice - Get Order Invoice
 // Get an order's invoice data.
+//
+// **Scopes**: `orders:read`
 func (s *Orders) Invoice(ctx context.Context, id string, opts ...operations.Option) (*operations.OrdersInvoiceResponse, error) {
 	request := operations.OrdersInvoiceRequest{
 		ID: id,

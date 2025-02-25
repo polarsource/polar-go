@@ -634,6 +634,50 @@ func main() {
 }
 
 ```
+
+### Per-Operation Security Schemes
+
+Some operations in this SDK require the security scheme to be specified at the request level. For example:
+```go
+package main
+
+import (
+	"context"
+	polargo "github.com/polarsource/polar-go"
+	"github.com/polarsource/polar-go/models/operations"
+	"log"
+	"os"
+)
+
+func main() {
+	ctx := context.Background()
+
+	s := polargo.New()
+
+	res, err := s.CustomerPortal.BenefitGrants.List(ctx, operations.CustomerPortalBenefitGrantsListRequest{}, operations.CustomerPortalBenefitGrantsListSecurity{
+		CustomerSession: os.Getenv("POLAR_CUSTOMER_SESSION"),
+	})
+	if err != nil {
+		log.Fatal(err)
+	}
+	if res.ListResourceCustomerBenefitGrant != nil {
+		for {
+			// handle items
+
+			res, err = res.Next()
+
+			if err != nil {
+				// handle error
+			}
+
+			if res == nil {
+				break
+			}
+		}
+	}
+}
+
+```
 <!-- End Authentication [security] -->
 
 <!-- Start Available Resources and Operations [operations] -->
@@ -686,6 +730,10 @@ func main() {
 #### [CustomerPortal.Customers](docs/sdks/polarcustomers/README.md)
 
 * [Get](docs/sdks/polarcustomers/README.md#get) - Get Customer
+* [Update](docs/sdks/polarcustomers/README.md#update) - Update Customer
+* [GetPaymentMethods](docs/sdks/polarcustomers/README.md#getpaymentmethods) - Get Customer Payment Methods
+* [AddPaymentMethod](docs/sdks/polarcustomers/README.md#addpaymentmethod) - Add Customer Payment Method
+* [DeletePaymentMethod](docs/sdks/polarcustomers/README.md#deletepaymentmethod) - Delete Customer Payment Method
 
 #### [CustomerPortal.Downloadables](docs/sdks/downloadables/README.md)
 
