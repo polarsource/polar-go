@@ -34,7 +34,7 @@ import(
 
 func main() {
     ctx := context.Background()
-    
+
     s := polargo.New(
         polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )
@@ -101,7 +101,7 @@ import(
 
 func main() {
     ctx := context.Background()
-    
+
     s := polargo.New(
         polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )
@@ -160,7 +160,7 @@ import(
 
 func main() {
     ctx := context.Background()
-    
+
     s := polargo.New(
         polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )
@@ -216,7 +216,7 @@ import(
 
 func main() {
     ctx := context.Background()
-    
+
     s := polargo.New(
         polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )
@@ -271,7 +271,7 @@ import(
 
 func main() {
     ctx := context.Background()
-    
+
     s := polargo.New(
         polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )
@@ -325,7 +325,7 @@ import(
 
 func main() {
     ctx := context.Background()
-    
+
     s := polargo.New(
         polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )
@@ -368,8 +368,6 @@ Confirm a checkout session by client secret.
 
 Orders and subscriptions will be processed.
 
-**Scopes**:
-
 ### Example Usage
 
 ```go
@@ -385,7 +383,7 @@ import(
 
 func main() {
     ctx := context.Background()
-    
+
     s := polargo.New(
         polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )

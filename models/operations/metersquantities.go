@@ -150,7 +150,7 @@ type MetersQuantitiesRequest struct {
 	// Filter by customer ID.
 	CustomerID *MetersQuantitiesQueryParamCustomerIDFilter `queryParam:"style=form,explode=true,name=customer_id"`
 	// Filter by external customer ID.
-	ExernalCustomerID *QueryParamExternalCustomerIDFilter `queryParam:"style=form,explode=true,name=exernal_customer_id"`
+	ExternalCustomerID *QueryParamExternalCustomerIDFilter `queryParam:"style=form,explode=true,name=external_customer_id"`
 }
 
 func (m MetersQuantitiesRequest) MarshalJSON() ([]byte, error) {
@@ -199,11 +199,11 @@ func (o *MetersQuantitiesRequest) GetCustomerID() *MetersQuantitiesQueryParamCus
 	return o.CustomerID
 }
 
-func (o *MetersQuantitiesRequest) GetExernalCustomerID() *QueryParamExternalCustomerIDFilter {
+func (o *MetersQuantitiesRequest) GetExternalCustomerID() *QueryParamExternalCustomerIDFilter {
 	if o == nil {
 		return nil
 	}
-	return o.ExernalCustomerID
+	return o.ExternalCustomerID
 }
 
 type MetersQuantitiesResponse struct {

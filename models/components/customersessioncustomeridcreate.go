@@ -2,13 +2,13 @@
 
 package components
 
-// CustomerSessionCreate - Schema for creating a customer session.
-type CustomerSessionCreate struct {
+// CustomerSessionCustomerIDCreate - Schema for creating a customer session using a customer ID.
+type CustomerSessionCustomerIDCreate struct {
 	// ID of the customer to create a session for.
 	CustomerID string `json:"customer_id"`
 }
 
-func (o *CustomerSessionCreate) GetCustomerID() string {
+func (o *CustomerSessionCustomerIDCreate) GetCustomerID() string {
 	if o == nil {
 		return ""
 	}

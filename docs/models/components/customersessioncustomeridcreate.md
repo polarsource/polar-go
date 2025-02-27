@@ -1,6 +1,6 @@
-# CustomerSessionCreate
+# CustomerSessionCustomerIDCreate
 
-Schema for creating a customer session.
+Schema for creating a customer session using a customer ID.
 
 
 ## Fields

@@ -23,19 +23,22 @@ import(
 	"os"
 	polargo "github.com/polarsource/polar-go"
 	"github.com/polarsource/polar-go/models/components"
+	"github.com/polarsource/polar-go/models/operations"
 	"log"
 )
 
 func main() {
     ctx := context.Background()
-    
+
     s := polargo.New(
         polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )
 
-    res, err := s.CustomerSessions.Create(ctx, components.CustomerSessionCreate{
-        CustomerID: "<value>",
-    })
+    res, err := s.CustomerSessions.Create(ctx, operations.CreateCustomerSessionsCreateCustomerSessionCreateCustomerSessionCustomerIDCreate(
+        components.CustomerSessionCustomerIDCreate{
+            CustomerID: "<value>",
+        },
+    ))
     if err != nil {
         log.Fatal(err)
     }
@@ -47,11 +50,11 @@ func main() {
 
 ### Parameters
 
-| Parameter                                                                            | Type                                                                                 | Required                                                                             | Description                                                                          |
-| ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------ |
-| `ctx`                                                                                | [context.Context](https://pkg.go.dev/context#Context)                                | :heavy_check_mark:                                                                   | The context to use for the request.                                                  |
-| `request`                                                                            | [components.CustomerSessionCreate](../../models/components/customersessioncreate.md) | :heavy_check_mark:                                                                   | The request object to use for the request.                                           |
-| `opts`                                                                               | [][operations.Option](../../models/operations/option.md)                             | :heavy_minus_sign:                                                                   | The options for this request.                                                        |
+| Parameter                                                                                                                        | Type                                                                                                                             | Required                                                                                                                         | Description                                                                                                                      |
+| -------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| `ctx`                                                                                                                            | [context.Context](https://pkg.go.dev/context#Context)                                                                            | :heavy_check_mark:                                                                                                               | The context to use for the request.                                                                                              |
+| `request`                                                                                                                        | [operations.CustomerSessionsCreateCustomerSessionCreate](../../models/operations/customersessionscreatecustomersessioncreate.md) | :heavy_check_mark:                                                                                                               | The request object to use for the request.                                                                                       |
+| `opts`                                                                                                                           | [][operations.Option](../../models/operations/option.md)                                                                         | :heavy_minus_sign:                                                                                                               | The options for this request.                                                                                                    |
 
 ### Response
 

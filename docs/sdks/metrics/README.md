@@ -12,6 +12,8 @@
 
 Get metrics about your orders and subscriptions.
 
+Currency values are output in cents.
+
 **Scopes**: `metrics:read`
 
 ### Example Usage
@@ -31,7 +33,7 @@ import(
 
 func main() {
     ctx := context.Background()
-    
+
     s := polargo.New(
         polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )
@@ -89,7 +91,7 @@ import(
 
 func main() {
     ctx := context.Background()
-    
+
     s := polargo.New(
         polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )

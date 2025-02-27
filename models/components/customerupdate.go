@@ -157,11 +157,14 @@ func (u CustomerUpdateTaxID) MarshalJSON() ([]byte, error) {
 }
 
 type CustomerUpdate struct {
-	Metadata       map[string]CustomerUpdateMetadata `json:"metadata,omitempty"`
-	Email          *string                           `json:"email,omitempty"`
-	Name           *string                           `json:"name,omitempty"`
-	BillingAddress *Address                          `json:"billing_address,omitempty"`
-	TaxID          []*CustomerUpdateTaxID            `json:"tax_id,omitempty"`
+	Metadata map[string]CustomerUpdateMetadata `json:"metadata,omitempty"`
+	// The ID of the customer in your system. This must be unique within the organization. Once set, it can't be updated.
+	ExternalID *string `json:"external_id,omitempty"`
+	// The email address of the customer. This must be unique within the organization.
+	Email          *string                `json:"email,omitempty"`
+	Name           *string                `json:"name,omitempty"`
+	BillingAddress *Address               `json:"billing_address,omitempty"`
+	TaxID          []*CustomerUpdateTaxID `json:"tax_id,omitempty"`
 }
 
 func (o *CustomerUpdate) GetMetadata() map[string]CustomerUpdateMetadata {
@@ -169,6 +172,13 @@ func (o *CustomerUpdate) GetMetadata() map[string]CustomerUpdateMetadata {
 		return nil
 	}
 	return o.Metadata
+}
+
+func (o *CustomerUpdate) GetExternalID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ExternalID
 }
 
 func (o *CustomerUpdate) GetEmail() *string {

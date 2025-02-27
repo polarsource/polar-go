@@ -29,6 +29,8 @@ func newMetrics(sdkConfig sdkConfiguration) *Metrics {
 // Get Metrics
 // Get metrics about your orders and subscriptions.
 //
+// Currency values are output in cents.
+//
 // **Scopes**: `metrics:read`
 func (s *Metrics) Get(ctx context.Context, request operations.MetricsGetRequest, opts ...operations.Option) (*operations.MetricsGetResponse, error) {
 	o := operations.Options{}

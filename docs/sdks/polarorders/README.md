@@ -30,7 +30,7 @@ import(
 
 func main() {
     ctx := context.Background()
-    
+
     s := polargo.New()
 
     res, err := s.CustomerPortal.Orders.List(ctx, operations.CustomerPortalOrdersListRequest{}, operations.CustomerPortalOrdersListSecurity{
@@ -98,7 +98,7 @@ import(
 
 func main() {
     ctx := context.Background()
-    
+
     s := polargo.New()
 
     res, err := s.CustomerPortal.Orders.Get(ctx, operations.CustomerPortalOrdersGetSecurity{
@@ -155,7 +155,7 @@ import(
 
 func main() {
     ctx := context.Background()
-    
+
     s := polargo.New()
 
     res, err := s.CustomerPortal.Orders.Invoice(ctx, operations.CustomerPortalOrdersInvoiceSecurity{

@@ -1612,8 +1612,6 @@ func (s *Checkouts) ClientUpdate(ctx context.Context, clientSecret string, check
 // Confirm a checkout session by client secret.
 //
 // Orders and subscriptions will be processed.
-//
-// **Scopes**:
 func (s *Checkouts) ClientConfirm(ctx context.Context, clientSecret string, checkoutConfirmStripe components.CheckoutConfirmStripe, opts ...operations.Option) (*operations.CheckoutsClientConfirmResponse, error) {
 	request := operations.CheckoutsClientConfirmRequest{
 		ClientSecret:          clientSecret,

@@ -772,6 +772,9 @@ func main() {
 * [Get](docs/sdks/customers/README.md#get) - Get Customer
 * [Update](docs/sdks/customers/README.md#update) - Update Customer
 * [Delete](docs/sdks/customers/README.md#delete) - Delete Customer
+* [GetExternal](docs/sdks/customers/README.md#getexternal) - Get Customer by External ID
+* [UpdateExternal](docs/sdks/customers/README.md#updateexternal) - Update Customer by External ID
+* [DeleteExternal](docs/sdks/customers/README.md#deleteexternal) - Delete Customer by External ID
 
 ### [CustomerSessions](docs/sdks/customersessions/README.md)
 

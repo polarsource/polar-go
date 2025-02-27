@@ -30,7 +30,7 @@ import(
 
 func main() {
     ctx := context.Background()
-    
+
     s := polargo.New()
 
     res, err := s.CustomerPortal.BenefitGrants.List(ctx, operations.CustomerPortalBenefitGrantsListRequest{}, operations.CustomerPortalBenefitGrantsListSecurity{
@@ -98,7 +98,7 @@ import(
 
 func main() {
     ctx := context.Background()
-    
+
     s := polargo.New()
 
     res, err := s.CustomerPortal.BenefitGrants.Get(ctx, operations.CustomerPortalBenefitGrantsGetSecurity{
@@ -156,7 +156,7 @@ import(
 
 func main() {
     ctx := context.Background()
-    
+
     s := polargo.New()
 
     res, err := s.CustomerPortal.BenefitGrants.Update(ctx, operations.CustomerPortalBenefitGrantsUpdateSecurity{

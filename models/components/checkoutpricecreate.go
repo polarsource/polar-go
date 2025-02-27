@@ -312,7 +312,9 @@ type CheckoutPriceCreate struct {
 	AllowDiscountCodes *bool  `default:"true" json:"allow_discount_codes"`
 	Amount             *int64 `json:"amount,omitempty"`
 	// ID of an existing customer in the organization. The customer data will be pre-filled in the checkout form. The resulting order will be linked to this customer.
-	CustomerID             *string  `json:"customer_id,omitempty"`
+	CustomerID *string `json:"customer_id,omitempty"`
+	// ID of the customer in your system. If a matching customer exists on Polar, the resulting order will be linked to this customer. Otherwise, a new customer will be created with this external ID set.
+	CustomerExternalID     *string  `json:"customer_external_id,omitempty"`
 	CustomerName           *string  `json:"customer_name,omitempty"`
 	CustomerEmail          *string  `json:"customer_email,omitempty"`
 	CustomerIPAddress      *string  `json:"customer_ip_address,omitempty"`
@@ -390,6 +392,13 @@ func (o *CheckoutPriceCreate) GetCustomerID() *string {
 		return nil
 	}
 	return o.CustomerID
+}
+
+func (o *CheckoutPriceCreate) GetCustomerExternalID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.CustomerExternalID
 }
 
 func (o *CheckoutPriceCreate) GetCustomerName() *string {

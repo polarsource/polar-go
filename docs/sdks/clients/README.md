@@ -15,8 +15,6 @@
 
 List OAuth2 clients.
 
-**Scopes**:
-
 ### Example Usage
 
 ```go
@@ -31,7 +29,7 @@ import(
 
 func main() {
     ctx := context.Background()
-    
+
     s := polargo.New(
         polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )
@@ -82,8 +80,6 @@ func main() {
 
 Create an OAuth2 client.
 
-**Scopes**:
-
 ### Example Usage
 
 ```go
@@ -99,7 +95,7 @@ import(
 
 func main() {
     ctx := context.Background()
-    
+
     s := polargo.New(
         polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )
@@ -142,8 +138,6 @@ func main() {
 
 Get an OAuth2 client by Client ID.
 
-**Scopes**:
-
 ### Example Usage
 
 ```go
@@ -158,7 +152,7 @@ import(
 
 func main() {
     ctx := context.Background()
-    
+
     s := polargo.New(
         polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )
@@ -196,8 +190,6 @@ func main() {
 
 Update an OAuth2 client.
 
-**Scopes**:
-
 ### Example Usage
 
 ```go
@@ -213,7 +205,7 @@ import(
 
 func main() {
     ctx := context.Background()
-    
+
     s := polargo.New(
         polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )
@@ -260,8 +252,6 @@ func main() {
 
 Delete an OAuth2 client.
 
-**Scopes**:
-
 ### Example Usage
 
 ```go
@@ -276,7 +266,7 @@ import(
 
 func main() {
     ctx := context.Background()
-    
+
     s := polargo.New(
         polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )

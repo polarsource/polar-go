@@ -29,8 +29,6 @@ func newClients(sdkConfig sdkConfiguration) *Clients {
 
 // List Clients
 // List OAuth2 clients.
-//
-// **Scopes**:
 func (s *Clients) List(ctx context.Context, page *int64, limit *int64, opts ...operations.Option) (*operations.Oauth2ClientsListResponse, error) {
 	request := operations.Oauth2ClientsListRequest{
 		Page:  page,
@@ -324,8 +322,6 @@ func (s *Clients) List(ctx context.Context, page *int64, limit *int64, opts ...o
 
 // Create Client
 // Create an OAuth2 client.
-//
-// **Scopes**:
 func (s *Clients) Create(ctx context.Context, request components.OAuth2ClientConfiguration, opts ...operations.Option) (*operations.Oauth2ClientsOauth2CreateClientResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{
@@ -556,8 +552,6 @@ func (s *Clients) Create(ctx context.Context, request components.OAuth2ClientCon
 
 // Get Client
 // Get an OAuth2 client by Client ID.
-//
-// **Scopes**:
 func (s *Clients) Get(ctx context.Context, clientID string, opts ...operations.Option) (*operations.Oauth2ClientsOauth2GetClientResponse, error) {
 	request := operations.Oauth2ClientsOauth2GetClientRequest{
 		ClientID: clientID,
@@ -785,8 +779,6 @@ func (s *Clients) Get(ctx context.Context, clientID string, opts ...operations.O
 
 // Update Client
 // Update an OAuth2 client.
-//
-// **Scopes**:
 func (s *Clients) Update(ctx context.Context, clientID string, oAuth2ClientConfigurationUpdate components.OAuth2ClientConfigurationUpdate, opts ...operations.Option) (*operations.Oauth2ClientsOauth2UpdateClientResponse, error) {
 	request := operations.Oauth2ClientsOauth2UpdateClientRequest{
 		ClientID:                        clientID,
@@ -1022,8 +1014,6 @@ func (s *Clients) Update(ctx context.Context, clientID string, oAuth2ClientConfi
 
 // Delete Client
 // Delete an OAuth2 client.
-//
-// **Scopes**:
 func (s *Clients) Delete(ctx context.Context, clientID string, opts ...operations.Option) (*operations.Oauth2ClientsOauth2DeleteClientResponse, error) {
 	request := operations.Oauth2ClientsOauth2DeleteClientRequest{
 		ClientID: clientID,

@@ -167,11 +167,14 @@ type CustomerCreate struct {
 	// * A boolean
 	//
 	// You can store up to **50 key-value pairs**.
-	Metadata       map[string]CustomerCreateMetadata `json:"metadata,omitempty"`
-	Email          string                            `json:"email"`
-	Name           *string                           `json:"name,omitempty"`
-	BillingAddress *Address                          `json:"billing_address,omitempty"`
-	TaxID          []*CustomerCreateTaxID            `json:"tax_id,omitempty"`
+	Metadata map[string]CustomerCreateMetadata `json:"metadata,omitempty"`
+	// The ID of the customer in your system. This must be unique within the organization. Once set, it can't be updated.
+	ExternalID *string `json:"external_id,omitempty"`
+	// The email address of the customer. This must be unique within the organization.
+	Email          string                 `json:"email"`
+	Name           *string                `json:"name,omitempty"`
+	BillingAddress *Address               `json:"billing_address,omitempty"`
+	TaxID          []*CustomerCreateTaxID `json:"tax_id,omitempty"`
 	// The ID of the organization owning the customer. **Required unless you use an organization token.**
 	OrganizationID *string `json:"organization_id,omitempty"`
 }
@@ -181,6 +184,13 @@ func (o *CustomerCreate) GetMetadata() map[string]CustomerCreateMetadata {
 		return nil
 	}
 	return o.Metadata
+}
+
+func (o *CustomerCreate) GetExternalID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ExternalID
 }
 
 func (o *CustomerCreate) GetEmail() string {

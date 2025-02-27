@@ -3,8 +3,74 @@
 package operations
 
 import (
+	"errors"
+	"fmt"
+	"github.com/polarsource/polar-go/internal/utils"
 	"github.com/polarsource/polar-go/models/components"
 )
+
+type CustomerSessionsCreateCustomerSessionCreateType string
+
+const (
+	CustomerSessionsCreateCustomerSessionCreateTypeCustomerSessionCustomerIDCreate         CustomerSessionsCreateCustomerSessionCreateType = "CustomerSessionCustomerIDCreate"
+	CustomerSessionsCreateCustomerSessionCreateTypeCustomerSessionCustomerExternalIDCreate CustomerSessionsCreateCustomerSessionCreateType = "CustomerSessionCustomerExternalIDCreate"
+)
+
+type CustomerSessionsCreateCustomerSessionCreate struct {
+	CustomerSessionCustomerIDCreate         *components.CustomerSessionCustomerIDCreate         `queryParam:"inline"`
+	CustomerSessionCustomerExternalIDCreate *components.CustomerSessionCustomerExternalIDCreate `queryParam:"inline"`
+
+	Type CustomerSessionsCreateCustomerSessionCreateType
+}
+
+func CreateCustomerSessionsCreateCustomerSessionCreateCustomerSessionCustomerIDCreate(customerSessionCustomerIDCreate components.CustomerSessionCustomerIDCreate) CustomerSessionsCreateCustomerSessionCreate {
+	typ := CustomerSessionsCreateCustomerSessionCreateTypeCustomerSessionCustomerIDCreate
+
+	return CustomerSessionsCreateCustomerSessionCreate{
+		CustomerSessionCustomerIDCreate: &customerSessionCustomerIDCreate,
+		Type:                            typ,
+	}
+}
+
+func CreateCustomerSessionsCreateCustomerSessionCreateCustomerSessionCustomerExternalIDCreate(customerSessionCustomerExternalIDCreate components.CustomerSessionCustomerExternalIDCreate) CustomerSessionsCreateCustomerSessionCreate {
+	typ := CustomerSessionsCreateCustomerSessionCreateTypeCustomerSessionCustomerExternalIDCreate
+
+	return CustomerSessionsCreateCustomerSessionCreate{
+		CustomerSessionCustomerExternalIDCreate: &customerSessionCustomerExternalIDCreate,
+		Type:                                    typ,
+	}
+}
+
+func (u *CustomerSessionsCreateCustomerSessionCreate) UnmarshalJSON(data []byte) error {
+
+	var customerSessionCustomerIDCreate components.CustomerSessionCustomerIDCreate = components.CustomerSessionCustomerIDCreate{}
+	if err := utils.UnmarshalJSON(data, &customerSessionCustomerIDCreate, "", true, true); err == nil {
+		u.CustomerSessionCustomerIDCreate = &customerSessionCustomerIDCreate
+		u.Type = CustomerSessionsCreateCustomerSessionCreateTypeCustomerSessionCustomerIDCreate
+		return nil
+	}
+
+	var customerSessionCustomerExternalIDCreate components.CustomerSessionCustomerExternalIDCreate = components.CustomerSessionCustomerExternalIDCreate{}
+	if err := utils.UnmarshalJSON(data, &customerSessionCustomerExternalIDCreate, "", true, true); err == nil {
+		u.CustomerSessionCustomerExternalIDCreate = &customerSessionCustomerExternalIDCreate
+		u.Type = CustomerSessionsCreateCustomerSessionCreateTypeCustomerSessionCustomerExternalIDCreate
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for CustomerSessionsCreateCustomerSessionCreate", string(data))
+}
+
+func (u CustomerSessionsCreateCustomerSessionCreate) MarshalJSON() ([]byte, error) {
+	if u.CustomerSessionCustomerIDCreate != nil {
+		return utils.MarshalJSON(u.CustomerSessionCustomerIDCreate, "", true)
+	}
+
+	if u.CustomerSessionCustomerExternalIDCreate != nil {
+		return utils.MarshalJSON(u.CustomerSessionCustomerExternalIDCreate, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type CustomerSessionsCreateCustomerSessionCreate: all fields are null")
+}
 
 type CustomerSessionsCreateResponse struct {
 	HTTPMeta components.HTTPMetadata `json:"-"`

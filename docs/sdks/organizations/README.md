@@ -30,7 +30,7 @@ import(
 
 func main() {
     ctx := context.Background()
-    
+
     s := polargo.New(
         polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )
@@ -100,7 +100,7 @@ import(
 
 func main() {
     ctx := context.Background()
-    
+
     s := polargo.New(
         polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )
@@ -157,7 +157,7 @@ import(
 
 func main() {
     ctx := context.Background()
-    
+
     s := polargo.New(
         polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )
@@ -213,7 +213,7 @@ import(
 
 func main() {
     ctx := context.Background()
-    
+
     s := polargo.New(
         polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )

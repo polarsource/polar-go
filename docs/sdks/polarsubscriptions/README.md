@@ -31,7 +31,7 @@ import(
 
 func main() {
     ctx := context.Background()
-    
+
     s := polargo.New()
 
     res, err := s.CustomerPortal.Subscriptions.List(ctx, operations.CustomerPortalSubscriptionsListRequest{}, operations.CustomerPortalSubscriptionsListSecurity{
@@ -99,7 +99,7 @@ import(
 
 func main() {
     ctx := context.Background()
-    
+
     s := polargo.New()
 
     res, err := s.CustomerPortal.Subscriptions.Get(ctx, operations.CustomerPortalSubscriptionsGetSecurity{
@@ -157,7 +157,7 @@ import(
 
 func main() {
     ctx := context.Background()
-    
+
     s := polargo.New()
 
     res, err := s.CustomerPortal.Subscriptions.Update(ctx, operations.CustomerPortalSubscriptionsUpdateSecurity{
@@ -218,7 +218,7 @@ import(
 
 func main() {
     ctx := context.Background()
-    
+
     s := polargo.New()
 
     res, err := s.CustomerPortal.Subscriptions.Cancel(ctx, operations.CustomerPortalSubscriptionsCancelSecurity{

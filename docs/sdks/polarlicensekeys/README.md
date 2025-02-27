@@ -30,7 +30,7 @@ import(
 
 func main() {
     ctx := context.Background()
-    
+
     s := polargo.New()
 
     res, err := s.CustomerPortal.LicenseKeys.List(ctx, operations.CustomerPortalLicenseKeysListSecurity{
@@ -103,7 +103,7 @@ import(
 
 func main() {
     ctx := context.Background()
-    
+
     s := polargo.New()
 
     res, err := s.CustomerPortal.LicenseKeys.Get(ctx, operations.CustomerPortalLicenseKeysGetSecurity{
@@ -158,7 +158,7 @@ import(
 
 func main() {
     ctx := context.Background()
-    
+
     s := polargo.New(
         polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )
@@ -215,7 +215,7 @@ import(
 
 func main() {
     ctx := context.Background()
-    
+
     s := polargo.New(
         polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )
@@ -274,7 +274,7 @@ import(
 
 func main() {
     ctx := context.Background()
-    
+
     s := polargo.New(
         polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )

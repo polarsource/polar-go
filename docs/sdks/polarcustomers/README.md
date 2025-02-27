@@ -32,7 +32,7 @@ import(
 
 func main() {
     ctx := context.Background()
-    
+
     s := polargo.New()
 
     res, err := s.CustomerPortal.Customers.Get(ctx, operations.CustomerPortalCustomersGetSecurity{
@@ -87,7 +87,7 @@ import(
 
 func main() {
     ctx := context.Background()
-    
+
     s := polargo.New()
 
     res, err := s.CustomerPortal.Customers.Update(ctx, components.CustomerPortalCustomerUpdate{}, operations.CustomerPortalCustomersUpdateSecurity{
@@ -143,7 +143,7 @@ import(
 
 func main() {
     ctx := context.Background()
-    
+
     s := polargo.New()
 
     res, err := s.CustomerPortal.Customers.GetPaymentMethods(ctx, operations.CustomerPortalCustomersGetPaymentMethodsSecurity{
@@ -213,7 +213,7 @@ import(
 
 func main() {
     ctx := context.Background()
-    
+
     s := polargo.New()
 
     res, err := s.CustomerPortal.Customers.AddPaymentMethod(ctx, components.CustomerPaymentMethodCreate{
@@ -273,7 +273,7 @@ import(
 
 func main() {
     ctx := context.Background()
-    
+
     s := polargo.New()
 
     res, err := s.CustomerPortal.Customers.DeletePaymentMethod(ctx, operations.CustomerPortalCustomersDeletePaymentMethodSecurity{
