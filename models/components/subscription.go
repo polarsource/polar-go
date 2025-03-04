@@ -9,76 +9,76 @@ import (
 	"time"
 )
 
-type MetadataType string
+type SubscriptionMetadataType string
 
 const (
-	MetadataTypeStr     MetadataType = "str"
-	MetadataTypeInteger MetadataType = "integer"
-	MetadataTypeBoolean MetadataType = "boolean"
+	SubscriptionMetadataTypeStr     SubscriptionMetadataType = "str"
+	SubscriptionMetadataTypeInteger SubscriptionMetadataType = "integer"
+	SubscriptionMetadataTypeBoolean SubscriptionMetadataType = "boolean"
 )
 
-type Metadata struct {
+type SubscriptionMetadata struct {
 	Str     *string `queryParam:"inline"`
 	Integer *int64  `queryParam:"inline"`
 	Boolean *bool   `queryParam:"inline"`
 
-	Type MetadataType
+	Type SubscriptionMetadataType
 }
 
-func CreateMetadataStr(str string) Metadata {
-	typ := MetadataTypeStr
+func CreateSubscriptionMetadataStr(str string) SubscriptionMetadata {
+	typ := SubscriptionMetadataTypeStr
 
-	return Metadata{
+	return SubscriptionMetadata{
 		Str:  &str,
 		Type: typ,
 	}
 }
 
-func CreateMetadataInteger(integer int64) Metadata {
-	typ := MetadataTypeInteger
+func CreateSubscriptionMetadataInteger(integer int64) SubscriptionMetadata {
+	typ := SubscriptionMetadataTypeInteger
 
-	return Metadata{
+	return SubscriptionMetadata{
 		Integer: &integer,
 		Type:    typ,
 	}
 }
 
-func CreateMetadataBoolean(boolean bool) Metadata {
-	typ := MetadataTypeBoolean
+func CreateSubscriptionMetadataBoolean(boolean bool) SubscriptionMetadata {
+	typ := SubscriptionMetadataTypeBoolean
 
-	return Metadata{
+	return SubscriptionMetadata{
 		Boolean: &boolean,
 		Type:    typ,
 	}
 }
 
-func (u *Metadata) UnmarshalJSON(data []byte) error {
+func (u *SubscriptionMetadata) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
 	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
 		u.Str = &str
-		u.Type = MetadataTypeStr
+		u.Type = SubscriptionMetadataTypeStr
 		return nil
 	}
 
 	var integer int64 = int64(0)
 	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
 		u.Integer = &integer
-		u.Type = MetadataTypeInteger
+		u.Type = SubscriptionMetadataTypeInteger
 		return nil
 	}
 
 	var boolean bool = false
 	if err := utils.UnmarshalJSON(data, &boolean, "", true, true); err == nil {
 		u.Boolean = &boolean
-		u.Type = MetadataTypeBoolean
+		u.Type = SubscriptionMetadataTypeBoolean
 		return nil
 	}
 
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for Metadata", string(data))
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SubscriptionMetadata", string(data))
 }
 
-func (u Metadata) MarshalJSON() ([]byte, error) {
+func (u SubscriptionMetadata) MarshalJSON() ([]byte, error) {
 	if u.Str != nil {
 		return utils.MarshalJSON(u.Str, "", true)
 	}
@@ -91,97 +91,97 @@ func (u Metadata) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.Boolean, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type Metadata: all fields are null")
+	return nil, errors.New("could not marshal union type SubscriptionMetadata: all fields are null")
 }
 
-type CustomFieldDataType string
+type SubscriptionCustomFieldDataType string
 
 const (
-	CustomFieldDataTypeStr      CustomFieldDataType = "str"
-	CustomFieldDataTypeInteger  CustomFieldDataType = "integer"
-	CustomFieldDataTypeBoolean  CustomFieldDataType = "boolean"
-	CustomFieldDataTypeDateTime CustomFieldDataType = "date-time"
+	SubscriptionCustomFieldDataTypeStr      SubscriptionCustomFieldDataType = "str"
+	SubscriptionCustomFieldDataTypeInteger  SubscriptionCustomFieldDataType = "integer"
+	SubscriptionCustomFieldDataTypeBoolean  SubscriptionCustomFieldDataType = "boolean"
+	SubscriptionCustomFieldDataTypeDateTime SubscriptionCustomFieldDataType = "date-time"
 )
 
-type CustomFieldData struct {
+type SubscriptionCustomFieldData struct {
 	Str      *string    `queryParam:"inline"`
 	Integer  *int64     `queryParam:"inline"`
 	Boolean  *bool      `queryParam:"inline"`
 	DateTime *time.Time `queryParam:"inline"`
 
-	Type CustomFieldDataType
+	Type SubscriptionCustomFieldDataType
 }
 
-func CreateCustomFieldDataStr(str string) CustomFieldData {
-	typ := CustomFieldDataTypeStr
+func CreateSubscriptionCustomFieldDataStr(str string) SubscriptionCustomFieldData {
+	typ := SubscriptionCustomFieldDataTypeStr
 
-	return CustomFieldData{
+	return SubscriptionCustomFieldData{
 		Str:  &str,
 		Type: typ,
 	}
 }
 
-func CreateCustomFieldDataInteger(integer int64) CustomFieldData {
-	typ := CustomFieldDataTypeInteger
+func CreateSubscriptionCustomFieldDataInteger(integer int64) SubscriptionCustomFieldData {
+	typ := SubscriptionCustomFieldDataTypeInteger
 
-	return CustomFieldData{
+	return SubscriptionCustomFieldData{
 		Integer: &integer,
 		Type:    typ,
 	}
 }
 
-func CreateCustomFieldDataBoolean(boolean bool) CustomFieldData {
-	typ := CustomFieldDataTypeBoolean
+func CreateSubscriptionCustomFieldDataBoolean(boolean bool) SubscriptionCustomFieldData {
+	typ := SubscriptionCustomFieldDataTypeBoolean
 
-	return CustomFieldData{
+	return SubscriptionCustomFieldData{
 		Boolean: &boolean,
 		Type:    typ,
 	}
 }
 
-func CreateCustomFieldDataDateTime(dateTime time.Time) CustomFieldData {
-	typ := CustomFieldDataTypeDateTime
+func CreateSubscriptionCustomFieldDataDateTime(dateTime time.Time) SubscriptionCustomFieldData {
+	typ := SubscriptionCustomFieldDataTypeDateTime
 
-	return CustomFieldData{
+	return SubscriptionCustomFieldData{
 		DateTime: &dateTime,
 		Type:     typ,
 	}
 }
 
-func (u *CustomFieldData) UnmarshalJSON(data []byte) error {
+func (u *SubscriptionCustomFieldData) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
 	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
 		u.Str = &str
-		u.Type = CustomFieldDataTypeStr
+		u.Type = SubscriptionCustomFieldDataTypeStr
 		return nil
 	}
 
 	var integer int64 = int64(0)
 	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
 		u.Integer = &integer
-		u.Type = CustomFieldDataTypeInteger
+		u.Type = SubscriptionCustomFieldDataTypeInteger
 		return nil
 	}
 
 	var boolean bool = false
 	if err := utils.UnmarshalJSON(data, &boolean, "", true, true); err == nil {
 		u.Boolean = &boolean
-		u.Type = CustomFieldDataTypeBoolean
+		u.Type = SubscriptionCustomFieldDataTypeBoolean
 		return nil
 	}
 
 	var dateTime time.Time = time.Time{}
 	if err := utils.UnmarshalJSON(data, &dateTime, "", true, true); err == nil {
 		u.DateTime = &dateTime
-		u.Type = CustomFieldDataTypeDateTime
+		u.Type = SubscriptionCustomFieldDataTypeDateTime
 		return nil
 	}
 
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for CustomFieldData", string(data))
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SubscriptionCustomFieldData", string(data))
 }
 
-func (u CustomFieldData) MarshalJSON() ([]byte, error) {
+func (u SubscriptionCustomFieldData) MarshalJSON() ([]byte, error) {
 	if u.Str != nil {
 		return utils.MarshalJSON(u.Str, "", true)
 	}
@@ -198,61 +198,61 @@ func (u CustomFieldData) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.DateTime, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type CustomFieldData: all fields are null")
+	return nil, errors.New("could not marshal union type SubscriptionCustomFieldData: all fields are null")
 }
 
-type PriceType string
+type SubscriptionPriceType string
 
 const (
-	PriceTypeLegacyRecurringProductPrice PriceType = "LegacyRecurringProductPrice"
-	PriceTypeProductPrice                PriceType = "ProductPrice"
+	SubscriptionPriceTypeLegacyRecurringProductPrice SubscriptionPriceType = "LegacyRecurringProductPrice"
+	SubscriptionPriceTypeProductPrice                SubscriptionPriceType = "ProductPrice"
 )
 
-type Price struct {
+type SubscriptionPrice struct {
 	LegacyRecurringProductPrice *LegacyRecurringProductPrice `queryParam:"inline"`
 	ProductPrice                *ProductPrice                `queryParam:"inline"`
 
-	Type PriceType
+	Type SubscriptionPriceType
 }
 
-func CreatePriceLegacyRecurringProductPrice(legacyRecurringProductPrice LegacyRecurringProductPrice) Price {
-	typ := PriceTypeLegacyRecurringProductPrice
+func CreateSubscriptionPriceLegacyRecurringProductPrice(legacyRecurringProductPrice LegacyRecurringProductPrice) SubscriptionPrice {
+	typ := SubscriptionPriceTypeLegacyRecurringProductPrice
 
-	return Price{
+	return SubscriptionPrice{
 		LegacyRecurringProductPrice: &legacyRecurringProductPrice,
 		Type:                        typ,
 	}
 }
 
-func CreatePriceProductPrice(productPrice ProductPrice) Price {
-	typ := PriceTypeProductPrice
+func CreateSubscriptionPriceProductPrice(productPrice ProductPrice) SubscriptionPrice {
+	typ := SubscriptionPriceTypeProductPrice
 
-	return Price{
+	return SubscriptionPrice{
 		ProductPrice: &productPrice,
 		Type:         typ,
 	}
 }
 
-func (u *Price) UnmarshalJSON(data []byte) error {
+func (u *SubscriptionPrice) UnmarshalJSON(data []byte) error {
 
 	var legacyRecurringProductPrice LegacyRecurringProductPrice = LegacyRecurringProductPrice{}
 	if err := utils.UnmarshalJSON(data, &legacyRecurringProductPrice, "", true, true); err == nil {
 		u.LegacyRecurringProductPrice = &legacyRecurringProductPrice
-		u.Type = PriceTypeLegacyRecurringProductPrice
+		u.Type = SubscriptionPriceTypeLegacyRecurringProductPrice
 		return nil
 	}
 
 	var productPrice ProductPrice = ProductPrice{}
 	if err := utils.UnmarshalJSON(data, &productPrice, "", true, true); err == nil {
 		u.ProductPrice = &productPrice
-		u.Type = PriceTypeProductPrice
+		u.Type = SubscriptionPriceTypeProductPrice
 		return nil
 	}
 
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for Price", string(data))
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SubscriptionPrice", string(data))
 }
 
-func (u Price) MarshalJSON() ([]byte, error) {
+func (u SubscriptionPrice) MarshalJSON() ([]byte, error) {
 	if u.LegacyRecurringProductPrice != nil {
 		return utils.MarshalJSON(u.LegacyRecurringProductPrice, "", true)
 	}
@@ -261,7 +261,7 @@ func (u Price) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.ProductPrice, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type Price: all fields are null")
+	return nil, errors.New("could not marshal union type SubscriptionPrice: all fields are null")
 }
 
 type SubscriptionDiscountType string
@@ -377,35 +377,35 @@ type Subscription struct {
 	// Last modification timestamp of the object.
 	ModifiedAt *time.Time `json:"modified_at"`
 	// The ID of the object.
-	ID                          string                        `json:"id"`
-	Amount                      *int64                        `json:"amount"`
-	Currency                    *string                       `json:"currency"`
-	RecurringInterval           SubscriptionRecurringInterval `json:"recurring_interval"`
-	Status                      SubscriptionStatus            `json:"status"`
-	CurrentPeriodStart          time.Time                     `json:"current_period_start"`
-	CurrentPeriodEnd            *time.Time                    `json:"current_period_end"`
-	CancelAtPeriodEnd           bool                          `json:"cancel_at_period_end"`
-	CanceledAt                  *time.Time                    `json:"canceled_at"`
-	StartedAt                   *time.Time                    `json:"started_at"`
-	EndsAt                      *time.Time                    `json:"ends_at"`
-	EndedAt                     *time.Time                    `json:"ended_at"`
-	CustomerID                  string                        `json:"customer_id"`
-	ProductID                   string                        `json:"product_id"`
-	PriceID                     string                        `json:"price_id"`
-	DiscountID                  *string                       `json:"discount_id"`
-	CheckoutID                  *string                       `json:"checkout_id"`
-	CustomerCancellationReason  *CustomerCancellationReason   `json:"customer_cancellation_reason"`
-	CustomerCancellationComment *string                       `json:"customer_cancellation_comment"`
-	Metadata                    map[string]Metadata           `json:"metadata"`
+	ID                          string                          `json:"id"`
+	Amount                      *int64                          `json:"amount"`
+	Currency                    *string                         `json:"currency"`
+	RecurringInterval           SubscriptionRecurringInterval   `json:"recurring_interval"`
+	Status                      SubscriptionStatus              `json:"status"`
+	CurrentPeriodStart          time.Time                       `json:"current_period_start"`
+	CurrentPeriodEnd            *time.Time                      `json:"current_period_end"`
+	CancelAtPeriodEnd           bool                            `json:"cancel_at_period_end"`
+	CanceledAt                  *time.Time                      `json:"canceled_at"`
+	StartedAt                   *time.Time                      `json:"started_at"`
+	EndsAt                      *time.Time                      `json:"ends_at"`
+	EndedAt                     *time.Time                      `json:"ended_at"`
+	CustomerID                  string                          `json:"customer_id"`
+	ProductID                   string                          `json:"product_id"`
+	PriceID                     string                          `json:"price_id"`
+	DiscountID                  *string                         `json:"discount_id"`
+	CheckoutID                  *string                         `json:"checkout_id"`
+	CustomerCancellationReason  *CustomerCancellationReason     `json:"customer_cancellation_reason"`
+	CustomerCancellationComment *string                         `json:"customer_cancellation_comment"`
+	Metadata                    map[string]SubscriptionMetadata `json:"metadata"`
 	// Key-value object storing custom field values.
-	CustomFieldData map[string]*CustomFieldData `json:"custom_field_data,omitempty"`
-	Customer        SubscriptionCustomer        `json:"customer"`
+	CustomFieldData map[string]*SubscriptionCustomFieldData `json:"custom_field_data,omitempty"`
+	Customer        SubscriptionCustomer                    `json:"customer"`
 	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
 	UserID string           `json:"user_id"`
 	User   SubscriptionUser `json:"user"`
 	// A product.
 	Product  Product               `json:"product"`
-	Price    Price                 `json:"price"`
+	Price    SubscriptionPrice     `json:"price"`
 	Discount *SubscriptionDiscount `json:"discount"`
 }
 
@@ -567,14 +567,14 @@ func (o *Subscription) GetCustomerCancellationComment() *string {
 	return o.CustomerCancellationComment
 }
 
-func (o *Subscription) GetMetadata() map[string]Metadata {
+func (o *Subscription) GetMetadata() map[string]SubscriptionMetadata {
 	if o == nil {
-		return map[string]Metadata{}
+		return map[string]SubscriptionMetadata{}
 	}
 	return o.Metadata
 }
 
-func (o *Subscription) GetCustomFieldData() map[string]*CustomFieldData {
+func (o *Subscription) GetCustomFieldData() map[string]*SubscriptionCustomFieldData {
 	if o == nil {
 		return nil
 	}
@@ -609,9 +609,9 @@ func (o *Subscription) GetProduct() Product {
 	return o.Product
 }
 
-func (o *Subscription) GetPrice() Price {
+func (o *Subscription) GetPrice() SubscriptionPrice {
 	if o == nil {
-		return Price{}
+		return SubscriptionPrice{}
 	}
 	return o.Price
 }

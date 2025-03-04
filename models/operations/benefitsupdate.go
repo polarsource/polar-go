@@ -12,7 +12,6 @@ import (
 type BenefitsUpdateBenefitUpdateType string
 
 const (
-	BenefitsUpdateBenefitUpdateTypeBenefitAdsUpdate              BenefitsUpdateBenefitUpdateType = "BenefitAdsUpdate"
 	BenefitsUpdateBenefitUpdateTypeBenefitCustomUpdate           BenefitsUpdateBenefitUpdateType = "BenefitCustomUpdate"
 	BenefitsUpdateBenefitUpdateTypeBenefitDiscordUpdate          BenefitsUpdateBenefitUpdateType = "BenefitDiscordUpdate"
 	BenefitsUpdateBenefitUpdateTypeBenefitGitHubRepositoryUpdate BenefitsUpdateBenefitUpdateType = "BenefitGitHubRepositoryUpdate"
@@ -21,7 +20,6 @@ const (
 )
 
 type BenefitsUpdateBenefitUpdate struct {
-	BenefitAdsUpdate              *components.BenefitAdsUpdate              `queryParam:"inline"`
 	BenefitCustomUpdate           *components.BenefitCustomUpdate           `queryParam:"inline"`
 	BenefitDiscordUpdate          *components.BenefitDiscordUpdate          `queryParam:"inline"`
 	BenefitGitHubRepositoryUpdate *components.BenefitGitHubRepositoryUpdate `queryParam:"inline"`
@@ -29,15 +27,6 @@ type BenefitsUpdateBenefitUpdate struct {
 	BenefitLicenseKeysUpdate      *components.BenefitLicenseKeysUpdate      `queryParam:"inline"`
 
 	Type BenefitsUpdateBenefitUpdateType
-}
-
-func CreateBenefitsUpdateBenefitUpdateBenefitAdsUpdate(benefitAdsUpdate components.BenefitAdsUpdate) BenefitsUpdateBenefitUpdate {
-	typ := BenefitsUpdateBenefitUpdateTypeBenefitAdsUpdate
-
-	return BenefitsUpdateBenefitUpdate{
-		BenefitAdsUpdate: &benefitAdsUpdate,
-		Type:             typ,
-	}
 }
 
 func CreateBenefitsUpdateBenefitUpdateBenefitCustomUpdate(benefitCustomUpdate components.BenefitCustomUpdate) BenefitsUpdateBenefitUpdate {
@@ -87,13 +76,6 @@ func CreateBenefitsUpdateBenefitUpdateBenefitLicenseKeysUpdate(benefitLicenseKey
 
 func (u *BenefitsUpdateBenefitUpdate) UnmarshalJSON(data []byte) error {
 
-	var benefitAdsUpdate components.BenefitAdsUpdate = components.BenefitAdsUpdate{}
-	if err := utils.UnmarshalJSON(data, &benefitAdsUpdate, "", true, true); err == nil {
-		u.BenefitAdsUpdate = &benefitAdsUpdate
-		u.Type = BenefitsUpdateBenefitUpdateTypeBenefitAdsUpdate
-		return nil
-	}
-
 	var benefitCustomUpdate components.BenefitCustomUpdate = components.BenefitCustomUpdate{}
 	if err := utils.UnmarshalJSON(data, &benefitCustomUpdate, "", true, true); err == nil {
 		u.BenefitCustomUpdate = &benefitCustomUpdate
@@ -133,10 +115,6 @@ func (u *BenefitsUpdateBenefitUpdate) UnmarshalJSON(data []byte) error {
 }
 
 func (u BenefitsUpdateBenefitUpdate) MarshalJSON() ([]byte, error) {
-	if u.BenefitAdsUpdate != nil {
-		return utils.MarshalJSON(u.BenefitAdsUpdate, "", true)
-	}
-
 	if u.BenefitCustomUpdate != nil {
 		return utils.MarshalJSON(u.BenefitCustomUpdate, "", true)
 	}

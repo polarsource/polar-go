@@ -30,7 +30,7 @@ func newFiles(sdkConfig sdkConfiguration) *Files {
 // List Files
 // List files.
 //
-// **Scopes**: `files:write`
+// **Scopes**: `files:read` `files:write`
 func (s *Files) List(ctx context.Context, organizationID *string, ids []string, page *int64, limit *int64, opts ...operations.Option) (*operations.FilesListResponse, error) {
 	request := operations.FilesListRequest{
 		OrganizationID: organizationID,

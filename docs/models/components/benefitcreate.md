@@ -3,12 +3,6 @@
 
 ## Supported Types
 
-### BenefitAdsCreate
-
-```go
-benefitCreate := components.CreateBenefitCreateAds(components.BenefitAdsCreate{/* values here */})
-```
-
 ### BenefitCustomCreate
 
 ```go

@@ -94,58 +94,58 @@ func (u LicenseKeyCustomerMetadata) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type LicenseKeyCustomerMetadata: all fields are null")
 }
 
-type LicenseKeyCustomerTaxIDType string
+type TaxIDType string
 
 const (
-	LicenseKeyCustomerTaxIDTypeStr         LicenseKeyCustomerTaxIDType = "str"
-	LicenseKeyCustomerTaxIDTypeTaxIDFormat LicenseKeyCustomerTaxIDType = "TaxIDFormat"
+	TaxIDTypeStr         TaxIDType = "str"
+	TaxIDTypeTaxIDFormat TaxIDType = "TaxIDFormat"
 )
 
-type LicenseKeyCustomerTaxID struct {
+type TaxID struct {
 	Str         *string      `queryParam:"inline"`
 	TaxIDFormat *TaxIDFormat `queryParam:"inline"`
 
-	Type LicenseKeyCustomerTaxIDType
+	Type TaxIDType
 }
 
-func CreateLicenseKeyCustomerTaxIDStr(str string) LicenseKeyCustomerTaxID {
-	typ := LicenseKeyCustomerTaxIDTypeStr
+func CreateTaxIDStr(str string) TaxID {
+	typ := TaxIDTypeStr
 
-	return LicenseKeyCustomerTaxID{
+	return TaxID{
 		Str:  &str,
 		Type: typ,
 	}
 }
 
-func CreateLicenseKeyCustomerTaxIDTaxIDFormat(taxIDFormat TaxIDFormat) LicenseKeyCustomerTaxID {
-	typ := LicenseKeyCustomerTaxIDTypeTaxIDFormat
+func CreateTaxIDTaxIDFormat(taxIDFormat TaxIDFormat) TaxID {
+	typ := TaxIDTypeTaxIDFormat
 
-	return LicenseKeyCustomerTaxID{
+	return TaxID{
 		TaxIDFormat: &taxIDFormat,
 		Type:        typ,
 	}
 }
 
-func (u *LicenseKeyCustomerTaxID) UnmarshalJSON(data []byte) error {
+func (u *TaxID) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
 	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
 		u.Str = &str
-		u.Type = LicenseKeyCustomerTaxIDTypeStr
+		u.Type = TaxIDTypeStr
 		return nil
 	}
 
 	var taxIDFormat TaxIDFormat = TaxIDFormat("")
 	if err := utils.UnmarshalJSON(data, &taxIDFormat, "", true, true); err == nil {
 		u.TaxIDFormat = &taxIDFormat
-		u.Type = LicenseKeyCustomerTaxIDTypeTaxIDFormat
+		u.Type = TaxIDTypeTaxIDFormat
 		return nil
 	}
 
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for LicenseKeyCustomerTaxID", string(data))
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for TaxID", string(data))
 }
 
-func (u LicenseKeyCustomerTaxID) MarshalJSON() ([]byte, error) {
+func (u TaxID) MarshalJSON() ([]byte, error) {
 	if u.Str != nil {
 		return utils.MarshalJSON(u.Str, "", true)
 	}
@@ -154,7 +154,7 @@ func (u LicenseKeyCustomerTaxID) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.TaxIDFormat, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type LicenseKeyCustomerTaxID: all fields are null")
+	return nil, errors.New("could not marshal union type TaxID: all fields are null")
 }
 
 type LicenseKeyCustomer struct {
@@ -170,12 +170,12 @@ type LicenseKeyCustomer struct {
 	// The email address of the customer. This must be unique within the organization.
 	Email string `json:"email"`
 	// Whether the customer email address is verified. The address is automatically verified when the customer accesses the customer portal using their email address.
-	EmailVerified  bool                       `json:"email_verified"`
-	Name           *string                    `json:"name"`
-	BillingAddress *Address                   `json:"billing_address"`
-	TaxID          []*LicenseKeyCustomerTaxID `json:"tax_id"`
-	OrganizationID string                     `json:"organization_id"`
-	AvatarURL      string                     `json:"avatar_url"`
+	EmailVerified  bool     `json:"email_verified"`
+	Name           *string  `json:"name"`
+	BillingAddress *Address `json:"billing_address"`
+	TaxID          []*TaxID `json:"tax_id"`
+	OrganizationID string   `json:"organization_id"`
+	AvatarURL      string   `json:"avatar_url"`
 }
 
 func (l LicenseKeyCustomer) MarshalJSON() ([]byte, error) {
@@ -252,7 +252,7 @@ func (o *LicenseKeyCustomer) GetBillingAddress() *Address {
 	return o.BillingAddress
 }
 
-func (o *LicenseKeyCustomer) GetTaxID() []*LicenseKeyCustomerTaxID {
+func (o *LicenseKeyCustomer) GetTaxID() []*TaxID {
 	if o == nil {
 		return nil
 	}

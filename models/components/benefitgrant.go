@@ -16,7 +16,6 @@ const (
 	PropertiesTypeBenefitGrantGitHubRepositoryProperties PropertiesType = "BenefitGrantGitHubRepositoryProperties"
 	PropertiesTypeBenefitGrantDownloadablesProperties    PropertiesType = "BenefitGrantDownloadablesProperties"
 	PropertiesTypeBenefitGrantLicenseKeysProperties      PropertiesType = "BenefitGrantLicenseKeysProperties"
-	PropertiesTypeBenefitGrantAdsProperties              PropertiesType = "BenefitGrantAdsProperties"
 	PropertiesTypeBenefitGrantCustomProperties           PropertiesType = "BenefitGrantCustomProperties"
 )
 
@@ -25,7 +24,6 @@ type Properties struct {
 	BenefitGrantGitHubRepositoryProperties *BenefitGrantGitHubRepositoryProperties `queryParam:"inline"`
 	BenefitGrantDownloadablesProperties    *BenefitGrantDownloadablesProperties    `queryParam:"inline"`
 	BenefitGrantLicenseKeysProperties      *BenefitGrantLicenseKeysProperties      `queryParam:"inline"`
-	BenefitGrantAdsProperties              *BenefitGrantAdsProperties              `queryParam:"inline"`
 	BenefitGrantCustomProperties           *BenefitGrantCustomProperties           `queryParam:"inline"`
 
 	Type PropertiesType
@@ -67,15 +65,6 @@ func CreatePropertiesBenefitGrantLicenseKeysProperties(benefitGrantLicenseKeysPr
 	}
 }
 
-func CreatePropertiesBenefitGrantAdsProperties(benefitGrantAdsProperties BenefitGrantAdsProperties) Properties {
-	typ := PropertiesTypeBenefitGrantAdsProperties
-
-	return Properties{
-		BenefitGrantAdsProperties: &benefitGrantAdsProperties,
-		Type:                      typ,
-	}
-}
-
 func CreatePropertiesBenefitGrantCustomProperties(benefitGrantCustomProperties BenefitGrantCustomProperties) Properties {
 	typ := PropertiesTypeBenefitGrantCustomProperties
 
@@ -98,13 +87,6 @@ func (u *Properties) UnmarshalJSON(data []byte) error {
 	if err := utils.UnmarshalJSON(data, &benefitGrantDownloadablesProperties, "", true, true); err == nil {
 		u.BenefitGrantDownloadablesProperties = &benefitGrantDownloadablesProperties
 		u.Type = PropertiesTypeBenefitGrantDownloadablesProperties
-		return nil
-	}
-
-	var benefitGrantAdsProperties BenefitGrantAdsProperties = BenefitGrantAdsProperties{}
-	if err := utils.UnmarshalJSON(data, &benefitGrantAdsProperties, "", true, true); err == nil {
-		u.BenefitGrantAdsProperties = &benefitGrantAdsProperties
-		u.Type = PropertiesTypeBenefitGrantAdsProperties
 		return nil
 	}
 
@@ -147,10 +129,6 @@ func (u Properties) MarshalJSON() ([]byte, error) {
 
 	if u.BenefitGrantLicenseKeysProperties != nil {
 		return utils.MarshalJSON(u.BenefitGrantLicenseKeysProperties, "", true)
-	}
-
-	if u.BenefitGrantAdsProperties != nil {
-		return utils.MarshalJSON(u.BenefitGrantAdsProperties, "", true)
 	}
 
 	if u.BenefitGrantCustomProperties != nil {

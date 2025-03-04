@@ -148,6 +148,70 @@ func (u CustomerPortalOrdersListQueryParamProductIDFilter) MarshalJSON() ([]byte
 	return nil, errors.New("could not marshal union type CustomerPortalOrdersListQueryParamProductIDFilter: all fields are null")
 }
 
+type CustomerPortalOrdersListQueryParamProductBillingTypeFilterType string
+
+const (
+	CustomerPortalOrdersListQueryParamProductBillingTypeFilterTypeProductBillingType        CustomerPortalOrdersListQueryParamProductBillingTypeFilterType = "ProductBillingType"
+	CustomerPortalOrdersListQueryParamProductBillingTypeFilterTypeArrayOfProductBillingType CustomerPortalOrdersListQueryParamProductBillingTypeFilterType = "arrayOfProductBillingType"
+)
+
+// CustomerPortalOrdersListQueryParamProductBillingTypeFilter - Filter by product billing type. `recurring` will filter data corresponding to subscriptions creations or renewals. `one_time` will filter data corresponding to one-time purchases.
+type CustomerPortalOrdersListQueryParamProductBillingTypeFilter struct {
+	ProductBillingType        *components.ProductBillingType  `queryParam:"inline"`
+	ArrayOfProductBillingType []components.ProductBillingType `queryParam:"inline"`
+
+	Type CustomerPortalOrdersListQueryParamProductBillingTypeFilterType
+}
+
+func CreateCustomerPortalOrdersListQueryParamProductBillingTypeFilterProductBillingType(productBillingType components.ProductBillingType) CustomerPortalOrdersListQueryParamProductBillingTypeFilter {
+	typ := CustomerPortalOrdersListQueryParamProductBillingTypeFilterTypeProductBillingType
+
+	return CustomerPortalOrdersListQueryParamProductBillingTypeFilter{
+		ProductBillingType: &productBillingType,
+		Type:               typ,
+	}
+}
+
+func CreateCustomerPortalOrdersListQueryParamProductBillingTypeFilterArrayOfProductBillingType(arrayOfProductBillingType []components.ProductBillingType) CustomerPortalOrdersListQueryParamProductBillingTypeFilter {
+	typ := CustomerPortalOrdersListQueryParamProductBillingTypeFilterTypeArrayOfProductBillingType
+
+	return CustomerPortalOrdersListQueryParamProductBillingTypeFilter{
+		ArrayOfProductBillingType: arrayOfProductBillingType,
+		Type:                      typ,
+	}
+}
+
+func (u *CustomerPortalOrdersListQueryParamProductBillingTypeFilter) UnmarshalJSON(data []byte) error {
+
+	var productBillingType components.ProductBillingType = components.ProductBillingType("")
+	if err := utils.UnmarshalJSON(data, &productBillingType, "", true, true); err == nil {
+		u.ProductBillingType = &productBillingType
+		u.Type = CustomerPortalOrdersListQueryParamProductBillingTypeFilterTypeProductBillingType
+		return nil
+	}
+
+	var arrayOfProductBillingType []components.ProductBillingType = []components.ProductBillingType{}
+	if err := utils.UnmarshalJSON(data, &arrayOfProductBillingType, "", true, true); err == nil {
+		u.ArrayOfProductBillingType = arrayOfProductBillingType
+		u.Type = CustomerPortalOrdersListQueryParamProductBillingTypeFilterTypeArrayOfProductBillingType
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for CustomerPortalOrdersListQueryParamProductBillingTypeFilter", string(data))
+}
+
+func (u CustomerPortalOrdersListQueryParamProductBillingTypeFilter) MarshalJSON() ([]byte, error) {
+	if u.ProductBillingType != nil {
+		return utils.MarshalJSON(u.ProductBillingType, "", true)
+	}
+
+	if u.ArrayOfProductBillingType != nil {
+		return utils.MarshalJSON(u.ArrayOfProductBillingType, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type CustomerPortalOrdersListQueryParamProductBillingTypeFilter: all fields are null")
+}
+
 type QueryParamProductPriceTypeFilterType string
 
 const (
@@ -155,7 +219,6 @@ const (
 	QueryParamProductPriceTypeFilterTypeArrayOfProductPriceType QueryParamProductPriceTypeFilterType = "arrayOfProductPriceType"
 )
 
-// QueryParamProductPriceTypeFilter - Filter by product price type. `recurring` will return orders corresponding to subscriptions creations or renewals. `one_time` will return orders corresponding to one-time purchases.
 type QueryParamProductPriceTypeFilter struct {
 	ProductPriceType        *components.ProductPriceType  `queryParam:"inline"`
 	ArrayOfProductPriceType []components.ProductPriceType `queryParam:"inline"`
@@ -281,7 +344,9 @@ type CustomerPortalOrdersListRequest struct {
 	OrganizationID *CustomerPortalOrdersListQueryParamOrganizationIDFilter `queryParam:"style=form,explode=true,name=organization_id"`
 	// Filter by product ID.
 	ProductID *CustomerPortalOrdersListQueryParamProductIDFilter `queryParam:"style=form,explode=true,name=product_id"`
-	// Filter by product price type. `recurring` will return orders corresponding to subscriptions creations or renewals. `one_time` will return orders corresponding to one-time purchases.
+	// Filter by product billing type. `recurring` will filter data corresponding to subscriptions creations or renewals. `one_time` will filter data corresponding to one-time purchases.
+	ProductBillingType *CustomerPortalOrdersListQueryParamProductBillingTypeFilter `queryParam:"style=form,explode=true,name=product_billing_type"`
+	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
 	ProductPriceType *QueryParamProductPriceTypeFilter `queryParam:"style=form,explode=true,name=product_price_type"`
 	// Filter by subscription ID.
 	SubscriptionID *CustomerPortalOrdersListQueryParamSubscriptionIDFilter `queryParam:"style=form,explode=true,name=subscription_id"`
@@ -318,6 +383,13 @@ func (o *CustomerPortalOrdersListRequest) GetProductID() *CustomerPortalOrdersLi
 		return nil
 	}
 	return o.ProductID
+}
+
+func (o *CustomerPortalOrdersListRequest) GetProductBillingType() *CustomerPortalOrdersListQueryParamProductBillingTypeFilter {
+	if o == nil {
+		return nil
+	}
+	return o.ProductBillingType
 }
 
 func (o *CustomerPortalOrdersListRequest) GetProductPriceType() *QueryParamProductPriceTypeFilter {

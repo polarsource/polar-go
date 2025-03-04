@@ -37,10 +37,6 @@ func (o *CustomerPortalBenefitGrantsUpdateRequest) GetCustomerBenefitGrantUpdate
 	return o.CustomerBenefitGrantUpdate
 }
 
-func (o *CustomerPortalBenefitGrantsUpdateRequest) GetCustomerBenefitGrantUpdateAds() *components.CustomerBenefitGrantAdsUpdate {
-	return o.GetCustomerBenefitGrantUpdate().CustomerBenefitGrantAdsUpdate
-}
-
 func (o *CustomerPortalBenefitGrantsUpdateRequest) GetCustomerBenefitGrantUpdateCustom() *components.CustomerBenefitGrantCustomUpdate {
 	return o.GetCustomerBenefitGrantUpdate().CustomerBenefitGrantCustomUpdate
 }

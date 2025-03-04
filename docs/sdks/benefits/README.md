@@ -232,7 +232,7 @@ func main() {
             Properties: &components.BenefitGitHubRepositoryCreateProperties{
                 RepositoryOwner: "polarsource",
                 RepositoryName: "private_repo",
-                Permission: components.BenefitGitHubRepositoryCreatePropertiesPermissionTriage,
+                Permission: components.PermissionTriage,
             },
         },
     ))

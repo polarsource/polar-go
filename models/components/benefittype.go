@@ -11,7 +11,6 @@ type BenefitType string
 
 const (
 	BenefitTypeCustom           BenefitType = "custom"
-	BenefitTypeAds              BenefitType = "ads"
 	BenefitTypeDiscord          BenefitType = "discord"
 	BenefitTypeGithubRepository BenefitType = "github_repository"
 	BenefitTypeDownloadables    BenefitType = "downloadables"
@@ -28,8 +27,6 @@ func (e *BenefitType) UnmarshalJSON(data []byte) error {
 	}
 	switch v {
 	case "custom":
-		fallthrough
-	case "ads":
 		fallthrough
 	case "discord":
 		fallthrough

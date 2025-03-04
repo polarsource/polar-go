@@ -3,12 +3,6 @@
 
 ## Supported Types
 
-### CustomerBenefitGrantAdsUpdate
-
-```go
-customerBenefitGrantUpdate := components.CreateCustomerBenefitGrantUpdateAds(components.CustomerBenefitGrantAdsUpdate{/* values here */})
-```
-
 ### CustomerBenefitGrantCustomUpdate
 
 ```go

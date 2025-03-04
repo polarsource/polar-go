@@ -12,7 +12,6 @@ import (
 type BenefitCreateType string
 
 const (
-	BenefitCreateTypeAds              BenefitCreateType = "ads"
 	BenefitCreateTypeCustom           BenefitCreateType = "custom"
 	BenefitCreateTypeDiscord          BenefitCreateType = "discord"
 	BenefitCreateTypeDownloadables    BenefitCreateType = "downloadables"
@@ -22,22 +21,12 @@ const (
 
 type BenefitCreate struct {
 	BenefitCustomCreate           *BenefitCustomCreate           `queryParam:"inline"`
-	BenefitAdsCreate              *BenefitAdsCreate              `queryParam:"inline"`
 	BenefitDiscordCreate          *BenefitDiscordCreate          `queryParam:"inline"`
 	BenefitGitHubRepositoryCreate *BenefitGitHubRepositoryCreate `queryParam:"inline"`
 	BenefitDownloadablesCreate    *BenefitDownloadablesCreate    `queryParam:"inline"`
 	BenefitLicenseKeysCreate      *BenefitLicenseKeysCreate      `queryParam:"inline"`
 
 	Type BenefitCreateType
-}
-
-func CreateBenefitCreateAds(ads BenefitAdsCreate) BenefitCreate {
-	typ := BenefitCreateTypeAds
-
-	return BenefitCreate{
-		BenefitAdsCreate: &ads,
-		Type:             typ,
-	}
 }
 
 func CreateBenefitCreateCustom(custom BenefitCustomCreate) BenefitCreate {
@@ -97,15 +86,6 @@ func (u *BenefitCreate) UnmarshalJSON(data []byte) error {
 	}
 
 	switch dis.Type {
-	case "ads":
-		benefitAdsCreate := new(BenefitAdsCreate)
-		if err := utils.UnmarshalJSON(data, &benefitAdsCreate, "", true, false); err != nil {
-			return fmt.Errorf("could not unmarshal `%s` into expected (Type == ads) type BenefitAdsCreate within BenefitCreate: %w", string(data), err)
-		}
-
-		u.BenefitAdsCreate = benefitAdsCreate
-		u.Type = BenefitCreateTypeAds
-		return nil
 	case "custom":
 		benefitCustomCreate := new(BenefitCustomCreate)
 		if err := utils.UnmarshalJSON(data, &benefitCustomCreate, "", true, false); err != nil {
@@ -159,10 +139,6 @@ func (u *BenefitCreate) UnmarshalJSON(data []byte) error {
 func (u BenefitCreate) MarshalJSON() ([]byte, error) {
 	if u.BenefitCustomCreate != nil {
 		return utils.MarshalJSON(u.BenefitCustomCreate, "", true)
-	}
-
-	if u.BenefitAdsCreate != nil {
-		return utils.MarshalJSON(u.BenefitAdsCreate, "", true)
 	}
 
 	if u.BenefitDiscordCreate != nil {

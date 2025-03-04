@@ -12,7 +12,6 @@ import (
 type CustomerBenefitGrantUpdateType string
 
 const (
-	CustomerBenefitGrantUpdateTypeAds              CustomerBenefitGrantUpdateType = "ads"
 	CustomerBenefitGrantUpdateTypeCustom           CustomerBenefitGrantUpdateType = "custom"
 	CustomerBenefitGrantUpdateTypeDiscord          CustomerBenefitGrantUpdateType = "discord"
 	CustomerBenefitGrantUpdateTypeDownloadables    CustomerBenefitGrantUpdateType = "downloadables"
@@ -25,19 +24,9 @@ type CustomerBenefitGrantUpdate struct {
 	CustomerBenefitGrantGitHubRepositoryUpdate *CustomerBenefitGrantGitHubRepositoryUpdate `queryParam:"inline"`
 	CustomerBenefitGrantDownloadablesUpdate    *CustomerBenefitGrantDownloadablesUpdate    `queryParam:"inline"`
 	CustomerBenefitGrantLicenseKeysUpdate      *CustomerBenefitGrantLicenseKeysUpdate      `queryParam:"inline"`
-	CustomerBenefitGrantAdsUpdate              *CustomerBenefitGrantAdsUpdate              `queryParam:"inline"`
 	CustomerBenefitGrantCustomUpdate           *CustomerBenefitGrantCustomUpdate           `queryParam:"inline"`
 
 	Type CustomerBenefitGrantUpdateType
-}
-
-func CreateCustomerBenefitGrantUpdateAds(ads CustomerBenefitGrantAdsUpdate) CustomerBenefitGrantUpdate {
-	typ := CustomerBenefitGrantUpdateTypeAds
-
-	return CustomerBenefitGrantUpdate{
-		CustomerBenefitGrantAdsUpdate: &ads,
-		Type:                          typ,
-	}
 }
 
 func CreateCustomerBenefitGrantUpdateCustom(custom CustomerBenefitGrantCustomUpdate) CustomerBenefitGrantUpdate {
@@ -97,15 +86,6 @@ func (u *CustomerBenefitGrantUpdate) UnmarshalJSON(data []byte) error {
 	}
 
 	switch dis.BenefitType {
-	case "ads":
-		customerBenefitGrantAdsUpdate := new(CustomerBenefitGrantAdsUpdate)
-		if err := utils.UnmarshalJSON(data, &customerBenefitGrantAdsUpdate, "", true, false); err != nil {
-			return fmt.Errorf("could not unmarshal `%s` into expected (BenefitType == ads) type CustomerBenefitGrantAdsUpdate within CustomerBenefitGrantUpdate: %w", string(data), err)
-		}
-
-		u.CustomerBenefitGrantAdsUpdate = customerBenefitGrantAdsUpdate
-		u.Type = CustomerBenefitGrantUpdateTypeAds
-		return nil
 	case "custom":
 		customerBenefitGrantCustomUpdate := new(CustomerBenefitGrantCustomUpdate)
 		if err := utils.UnmarshalJSON(data, &customerBenefitGrantCustomUpdate, "", true, false); err != nil {
@@ -171,10 +151,6 @@ func (u CustomerBenefitGrantUpdate) MarshalJSON() ([]byte, error) {
 
 	if u.CustomerBenefitGrantLicenseKeysUpdate != nil {
 		return utils.MarshalJSON(u.CustomerBenefitGrantLicenseKeysUpdate, "", true)
-	}
-
-	if u.CustomerBenefitGrantAdsUpdate != nil {
-		return utils.MarshalJSON(u.CustomerBenefitGrantAdsUpdate, "", true)
 	}
 
 	if u.CustomerBenefitGrantCustomUpdate != nil {

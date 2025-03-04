@@ -7,21 +7,21 @@ import (
 	"fmt"
 )
 
-// Permission - The permission level to grant. Read more about roles and their permissions on [GitHub documentation](https://docs.github.com/en/organizations/managing-user-access-to-your-organizations-repositories/managing-repository-roles/repository-roles-for-an-organization#permissions-for-each-role).
-type Permission string
+// BenefitGitHubRepositoryPropertiesPermission - The permission level to grant. Read more about roles and their permissions on [GitHub documentation](https://docs.github.com/en/organizations/managing-user-access-to-your-organizations-repositories/managing-repository-roles/repository-roles-for-an-organization#permissions-for-each-role).
+type BenefitGitHubRepositoryPropertiesPermission string
 
 const (
-	PermissionPull     Permission = "pull"
-	PermissionTriage   Permission = "triage"
-	PermissionPush     Permission = "push"
-	PermissionMaintain Permission = "maintain"
-	PermissionAdmin    Permission = "admin"
+	BenefitGitHubRepositoryPropertiesPermissionPull     BenefitGitHubRepositoryPropertiesPermission = "pull"
+	BenefitGitHubRepositoryPropertiesPermissionTriage   BenefitGitHubRepositoryPropertiesPermission = "triage"
+	BenefitGitHubRepositoryPropertiesPermissionPush     BenefitGitHubRepositoryPropertiesPermission = "push"
+	BenefitGitHubRepositoryPropertiesPermissionMaintain BenefitGitHubRepositoryPropertiesPermission = "maintain"
+	BenefitGitHubRepositoryPropertiesPermissionAdmin    BenefitGitHubRepositoryPropertiesPermission = "admin"
 )
 
-func (e Permission) ToPointer() *Permission {
+func (e BenefitGitHubRepositoryPropertiesPermission) ToPointer() *BenefitGitHubRepositoryPropertiesPermission {
 	return &e
 }
-func (e *Permission) UnmarshalJSON(data []byte) error {
+func (e *BenefitGitHubRepositoryPropertiesPermission) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -36,10 +36,10 @@ func (e *Permission) UnmarshalJSON(data []byte) error {
 	case "maintain":
 		fallthrough
 	case "admin":
-		*e = Permission(v)
+		*e = BenefitGitHubRepositoryPropertiesPermission(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for Permission: %v", v)
+		return fmt.Errorf("invalid value for BenefitGitHubRepositoryPropertiesPermission: %v", v)
 	}
 }
 
@@ -50,7 +50,7 @@ type BenefitGitHubRepositoryProperties struct {
 	// The name of the repository.
 	RepositoryName string `json:"repository_name"`
 	// The permission level to grant. Read more about roles and their permissions on [GitHub documentation](https://docs.github.com/en/organizations/managing-user-access-to-your-organizations-repositories/managing-repository-roles/repository-roles-for-an-organization#permissions-for-each-role).
-	Permission Permission `json:"permission"`
+	Permission BenefitGitHubRepositoryPropertiesPermission `json:"permission"`
 	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
 	RepositoryID *string `json:"repository_id,omitempty"`
 }
@@ -69,9 +69,9 @@ func (o *BenefitGitHubRepositoryProperties) GetRepositoryName() string {
 	return o.RepositoryName
 }
 
-func (o *BenefitGitHubRepositoryProperties) GetPermission() Permission {
+func (o *BenefitGitHubRepositoryProperties) GetPermission() BenefitGitHubRepositoryPropertiesPermission {
 	if o == nil {
-		return Permission("")
+		return BenefitGitHubRepositoryPropertiesPermission("")
 	}
 	return o.Permission
 }

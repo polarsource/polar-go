@@ -16,7 +16,6 @@ const (
 	BenefitGrantWebhookPropertiesTypeBenefitGrantGitHubRepositoryProperties BenefitGrantWebhookPropertiesType = "BenefitGrantGitHubRepositoryProperties"
 	BenefitGrantWebhookPropertiesTypeBenefitGrantDownloadablesProperties    BenefitGrantWebhookPropertiesType = "BenefitGrantDownloadablesProperties"
 	BenefitGrantWebhookPropertiesTypeBenefitGrantLicenseKeysProperties      BenefitGrantWebhookPropertiesType = "BenefitGrantLicenseKeysProperties"
-	BenefitGrantWebhookPropertiesTypeBenefitGrantAdsProperties              BenefitGrantWebhookPropertiesType = "BenefitGrantAdsProperties"
 	BenefitGrantWebhookPropertiesTypeBenefitGrantCustomProperties           BenefitGrantWebhookPropertiesType = "BenefitGrantCustomProperties"
 )
 
@@ -25,7 +24,6 @@ type BenefitGrantWebhookProperties struct {
 	BenefitGrantGitHubRepositoryProperties *BenefitGrantGitHubRepositoryProperties `queryParam:"inline"`
 	BenefitGrantDownloadablesProperties    *BenefitGrantDownloadablesProperties    `queryParam:"inline"`
 	BenefitGrantLicenseKeysProperties      *BenefitGrantLicenseKeysProperties      `queryParam:"inline"`
-	BenefitGrantAdsProperties              *BenefitGrantAdsProperties              `queryParam:"inline"`
 	BenefitGrantCustomProperties           *BenefitGrantCustomProperties           `queryParam:"inline"`
 
 	Type BenefitGrantWebhookPropertiesType
@@ -67,15 +65,6 @@ func CreateBenefitGrantWebhookPropertiesBenefitGrantLicenseKeysProperties(benefi
 	}
 }
 
-func CreateBenefitGrantWebhookPropertiesBenefitGrantAdsProperties(benefitGrantAdsProperties BenefitGrantAdsProperties) BenefitGrantWebhookProperties {
-	typ := BenefitGrantWebhookPropertiesTypeBenefitGrantAdsProperties
-
-	return BenefitGrantWebhookProperties{
-		BenefitGrantAdsProperties: &benefitGrantAdsProperties,
-		Type:                      typ,
-	}
-}
-
 func CreateBenefitGrantWebhookPropertiesBenefitGrantCustomProperties(benefitGrantCustomProperties BenefitGrantCustomProperties) BenefitGrantWebhookProperties {
 	typ := BenefitGrantWebhookPropertiesTypeBenefitGrantCustomProperties
 
@@ -98,13 +87,6 @@ func (u *BenefitGrantWebhookProperties) UnmarshalJSON(data []byte) error {
 	if err := utils.UnmarshalJSON(data, &benefitGrantDownloadablesProperties, "", true, true); err == nil {
 		u.BenefitGrantDownloadablesProperties = &benefitGrantDownloadablesProperties
 		u.Type = BenefitGrantWebhookPropertiesTypeBenefitGrantDownloadablesProperties
-		return nil
-	}
-
-	var benefitGrantAdsProperties BenefitGrantAdsProperties = BenefitGrantAdsProperties{}
-	if err := utils.UnmarshalJSON(data, &benefitGrantAdsProperties, "", true, true); err == nil {
-		u.BenefitGrantAdsProperties = &benefitGrantAdsProperties
-		u.Type = BenefitGrantWebhookPropertiesTypeBenefitGrantAdsProperties
 		return nil
 	}
 
@@ -149,10 +131,6 @@ func (u BenefitGrantWebhookProperties) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.BenefitGrantLicenseKeysProperties, "", true)
 	}
 
-	if u.BenefitGrantAdsProperties != nil {
-		return utils.MarshalJSON(u.BenefitGrantAdsProperties, "", true)
-	}
-
 	if u.BenefitGrantCustomProperties != nil {
 		return utils.MarshalJSON(u.BenefitGrantCustomProperties, "", true)
 	}
@@ -167,7 +145,6 @@ const (
 	PreviousPropertiesTypeBenefitGrantGitHubRepositoryProperties PreviousPropertiesType = "BenefitGrantGitHubRepositoryProperties"
 	PreviousPropertiesTypeBenefitGrantDownloadablesProperties    PreviousPropertiesType = "BenefitGrantDownloadablesProperties"
 	PreviousPropertiesTypeBenefitGrantLicenseKeysProperties      PreviousPropertiesType = "BenefitGrantLicenseKeysProperties"
-	PreviousPropertiesTypeBenefitGrantAdsProperties              PreviousPropertiesType = "BenefitGrantAdsProperties"
 	PreviousPropertiesTypeBenefitGrantCustomProperties           PreviousPropertiesType = "BenefitGrantCustomProperties"
 )
 
@@ -176,7 +153,6 @@ type PreviousProperties struct {
 	BenefitGrantGitHubRepositoryProperties *BenefitGrantGitHubRepositoryProperties `queryParam:"inline"`
 	BenefitGrantDownloadablesProperties    *BenefitGrantDownloadablesProperties    `queryParam:"inline"`
 	BenefitGrantLicenseKeysProperties      *BenefitGrantLicenseKeysProperties      `queryParam:"inline"`
-	BenefitGrantAdsProperties              *BenefitGrantAdsProperties              `queryParam:"inline"`
 	BenefitGrantCustomProperties           *BenefitGrantCustomProperties           `queryParam:"inline"`
 
 	Type PreviousPropertiesType
@@ -218,15 +194,6 @@ func CreatePreviousPropertiesBenefitGrantLicenseKeysProperties(benefitGrantLicen
 	}
 }
 
-func CreatePreviousPropertiesBenefitGrantAdsProperties(benefitGrantAdsProperties BenefitGrantAdsProperties) PreviousProperties {
-	typ := PreviousPropertiesTypeBenefitGrantAdsProperties
-
-	return PreviousProperties{
-		BenefitGrantAdsProperties: &benefitGrantAdsProperties,
-		Type:                      typ,
-	}
-}
-
 func CreatePreviousPropertiesBenefitGrantCustomProperties(benefitGrantCustomProperties BenefitGrantCustomProperties) PreviousProperties {
 	typ := PreviousPropertiesTypeBenefitGrantCustomProperties
 
@@ -249,13 +216,6 @@ func (u *PreviousProperties) UnmarshalJSON(data []byte) error {
 	if err := utils.UnmarshalJSON(data, &benefitGrantDownloadablesProperties, "", true, true); err == nil {
 		u.BenefitGrantDownloadablesProperties = &benefitGrantDownloadablesProperties
 		u.Type = PreviousPropertiesTypeBenefitGrantDownloadablesProperties
-		return nil
-	}
-
-	var benefitGrantAdsProperties BenefitGrantAdsProperties = BenefitGrantAdsProperties{}
-	if err := utils.UnmarshalJSON(data, &benefitGrantAdsProperties, "", true, true); err == nil {
-		u.BenefitGrantAdsProperties = &benefitGrantAdsProperties
-		u.Type = PreviousPropertiesTypeBenefitGrantAdsProperties
 		return nil
 	}
 
@@ -298,10 +258,6 @@ func (u PreviousProperties) MarshalJSON() ([]byte, error) {
 
 	if u.BenefitGrantLicenseKeysProperties != nil {
 		return utils.MarshalJSON(u.BenefitGrantLicenseKeysProperties, "", true)
-	}
-
-	if u.BenefitGrantAdsProperties != nil {
-		return utils.MarshalJSON(u.BenefitGrantAdsProperties, "", true)
 	}
 
 	if u.BenefitGrantCustomProperties != nil {

@@ -27,12 +27,6 @@ previousProperties := components.CreatePreviousPropertiesBenefitGrantDownloadabl
 previousProperties := components.CreatePreviousPropertiesBenefitGrantLicenseKeysProperties(components.BenefitGrantLicenseKeysProperties{/* values here */})
 ```
 
-### BenefitGrantAdsProperties
-
-```go
-previousProperties := components.CreatePreviousPropertiesBenefitGrantAdsProperties(components.BenefitGrantAdsProperties{/* values here */})
-```
-
 ### BenefitGrantCustomProperties
 
 ```go

@@ -150,7 +150,6 @@ package main
 
 import(
 	"context"
-	"os"
 	polargo "github.com/polarsource/polar-go"
 	"github.com/polarsource/polar-go/models/components"
 	"log"
@@ -159,9 +158,7 @@ import(
 func main() {
     ctx := context.Background()
 
-    s := polargo.New(
-        polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
-    )
+    s := polargo.New()
 
     res, err := s.CustomerPortal.LicenseKeys.Validate(ctx, components.LicenseKeyValidate{
         Key: "<key>",
@@ -207,7 +204,6 @@ package main
 
 import(
 	"context"
-	"os"
 	polargo "github.com/polarsource/polar-go"
 	"github.com/polarsource/polar-go/models/components"
 	"log"
@@ -216,9 +212,7 @@ import(
 func main() {
     ctx := context.Background()
 
-    s := polargo.New(
-        polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
-    )
+    s := polargo.New()
 
     res, err := s.CustomerPortal.LicenseKeys.Activate(ctx, components.LicenseKeyActivate{
         Key: "<key>",
@@ -266,7 +260,6 @@ package main
 
 import(
 	"context"
-	"os"
 	polargo "github.com/polarsource/polar-go"
 	"github.com/polarsource/polar-go/models/components"
 	"log"
@@ -275,9 +268,7 @@ import(
 func main() {
     ctx := context.Background()
 
-    s := polargo.New(
-        polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
-    )
+    s := polargo.New()
 
     res, err := s.CustomerPortal.LicenseKeys.Deactivate(ctx, components.LicenseKeyDeactivate{
         Key: "<key>",

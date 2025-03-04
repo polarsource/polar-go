@@ -27,12 +27,6 @@ properties := components.CreatePropertiesBenefitGrantDownloadablesProperties(com
 properties := components.CreatePropertiesBenefitGrantLicenseKeysProperties(components.BenefitGrantLicenseKeysProperties{/* values here */})
 ```
 
-### BenefitGrantAdsProperties
-
-```go
-properties := components.CreatePropertiesBenefitGrantAdsProperties(components.BenefitGrantAdsProperties{/* values here */})
-```
-
 ### BenefitGrantCustomProperties
 
 ```go

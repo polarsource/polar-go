@@ -3,12 +3,6 @@
 
 ## Supported Types
 
-### BenefitAdsUpdate
-
-```go
-benefitsUpdateBenefitUpdate := operations.CreateBenefitsUpdateBenefitUpdateBenefitAdsUpdate(components.BenefitAdsUpdate{/* values here */})
-```
-
 ### BenefitCustomUpdate
 
 ```go

@@ -86,7 +86,6 @@ type Polar struct {
 	Repositories          *Repositories
 	Organizations         *Organizations
 	Subscriptions         *Subscriptions
-	Advertisements        *Advertisements
 	Oauth2                *Oauth2
 	Benefits              *Benefits
 	Products              *Products
@@ -183,9 +182,9 @@ func New(opts ...SDKOption) *Polar {
 		sdkConfiguration: sdkConfiguration{
 			Language:          "go",
 			OpenAPIDocVersion: "0.1.0",
-			SDKVersion:        "0.4.1",
-			GenVersion:        "2.531.3",
-			UserAgent:         "speakeasy-sdk/go 0.4.1 2.531.3 0.1.0 github.com/polarsource/polar-go",
+			SDKVersion:        "0.4.2",
+			GenVersion:        "2.539.1",
+			UserAgent:         "speakeasy-sdk/go 0.4.2 2.539.1 0.1.0 github.com/polarsource/polar-go",
 			Hooks:             hooks.New(),
 		},
 	}
@@ -219,8 +218,6 @@ func New(opts ...SDKOption) *Polar {
 	sdk.Organizations = newOrganizations(sdk.sdkConfiguration)
 
 	sdk.Subscriptions = newSubscriptions(sdk.sdkConfiguration)
-
-	sdk.Advertisements = newAdvertisements(sdk.sdkConfiguration)
 
 	sdk.Oauth2 = newOauth2(sdk.sdkConfiguration)
 

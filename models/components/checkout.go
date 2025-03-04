@@ -372,76 +372,76 @@ func (u CheckoutDiscount) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type CheckoutDiscount: all fields are null")
 }
 
-type CustomerMetadataType string
+type CheckoutCustomerMetadataType string
 
 const (
-	CustomerMetadataTypeStr     CustomerMetadataType = "str"
-	CustomerMetadataTypeInteger CustomerMetadataType = "integer"
-	CustomerMetadataTypeBoolean CustomerMetadataType = "boolean"
+	CheckoutCustomerMetadataTypeStr     CheckoutCustomerMetadataType = "str"
+	CheckoutCustomerMetadataTypeInteger CheckoutCustomerMetadataType = "integer"
+	CheckoutCustomerMetadataTypeBoolean CheckoutCustomerMetadataType = "boolean"
 )
 
-type CustomerMetadata struct {
+type CheckoutCustomerMetadata struct {
 	Str     *string `queryParam:"inline"`
 	Integer *int64  `queryParam:"inline"`
 	Boolean *bool   `queryParam:"inline"`
 
-	Type CustomerMetadataType
+	Type CheckoutCustomerMetadataType
 }
 
-func CreateCustomerMetadataStr(str string) CustomerMetadata {
-	typ := CustomerMetadataTypeStr
+func CreateCheckoutCustomerMetadataStr(str string) CheckoutCustomerMetadata {
+	typ := CheckoutCustomerMetadataTypeStr
 
-	return CustomerMetadata{
+	return CheckoutCustomerMetadata{
 		Str:  &str,
 		Type: typ,
 	}
 }
 
-func CreateCustomerMetadataInteger(integer int64) CustomerMetadata {
-	typ := CustomerMetadataTypeInteger
+func CreateCheckoutCustomerMetadataInteger(integer int64) CheckoutCustomerMetadata {
+	typ := CheckoutCustomerMetadataTypeInteger
 
-	return CustomerMetadata{
+	return CheckoutCustomerMetadata{
 		Integer: &integer,
 		Type:    typ,
 	}
 }
 
-func CreateCustomerMetadataBoolean(boolean bool) CustomerMetadata {
-	typ := CustomerMetadataTypeBoolean
+func CreateCheckoutCustomerMetadataBoolean(boolean bool) CheckoutCustomerMetadata {
+	typ := CheckoutCustomerMetadataTypeBoolean
 
-	return CustomerMetadata{
+	return CheckoutCustomerMetadata{
 		Boolean: &boolean,
 		Type:    typ,
 	}
 }
 
-func (u *CustomerMetadata) UnmarshalJSON(data []byte) error {
+func (u *CheckoutCustomerMetadata) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
 	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
 		u.Str = &str
-		u.Type = CustomerMetadataTypeStr
+		u.Type = CheckoutCustomerMetadataTypeStr
 		return nil
 	}
 
 	var integer int64 = int64(0)
 	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
 		u.Integer = &integer
-		u.Type = CustomerMetadataTypeInteger
+		u.Type = CheckoutCustomerMetadataTypeInteger
 		return nil
 	}
 
 	var boolean bool = false
 	if err := utils.UnmarshalJSON(data, &boolean, "", true, true); err == nil {
 		u.Boolean = &boolean
-		u.Type = CustomerMetadataTypeBoolean
+		u.Type = CheckoutCustomerMetadataTypeBoolean
 		return nil
 	}
 
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for CustomerMetadata", string(data))
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for CheckoutCustomerMetadata", string(data))
 }
 
-func (u CustomerMetadata) MarshalJSON() ([]byte, error) {
+func (u CheckoutCustomerMetadata) MarshalJSON() ([]byte, error) {
 	if u.Str != nil {
 		return utils.MarshalJSON(u.Str, "", true)
 	}
@@ -454,7 +454,7 @@ func (u CustomerMetadata) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.Boolean, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type CustomerMetadata: all fields are null")
+	return nil, errors.New("could not marshal union type CheckoutCustomerMetadata: all fields are null")
 }
 
 // Checkout session data retrieved using an access token.
@@ -521,11 +521,11 @@ type Checkout struct {
 	// Product data for a checkout session.
 	Product CheckoutProduct `json:"product"`
 	// Price of the selected product.
-	ProductPrice         CheckoutProductPrice        `json:"product_price"`
-	Discount             *CheckoutDiscount           `json:"discount"`
-	SubscriptionID       *string                     `json:"subscription_id"`
-	AttachedCustomFields []AttachedCustomField       `json:"attached_custom_fields"`
-	CustomerMetadata     map[string]CustomerMetadata `json:"customer_metadata"`
+	ProductPrice         CheckoutProductPrice                `json:"product_price"`
+	Discount             *CheckoutDiscount                   `json:"discount"`
+	SubscriptionID       *string                             `json:"subscription_id"`
+	AttachedCustomFields []AttachedCustomField               `json:"attached_custom_fields"`
+	CustomerMetadata     map[string]CheckoutCustomerMetadata `json:"customer_metadata"`
 }
 
 func (c Checkout) MarshalJSON() ([]byte, error) {
@@ -812,9 +812,9 @@ func (o *Checkout) GetAttachedCustomFields() []AttachedCustomField {
 	return o.AttachedCustomFields
 }
 
-func (o *Checkout) GetCustomerMetadata() map[string]CustomerMetadata {
+func (o *Checkout) GetCustomerMetadata() map[string]CheckoutCustomerMetadata {
 	if o == nil {
-		return map[string]CustomerMetadata{}
+		return map[string]CheckoutCustomerMetadata{}
 	}
 	return o.CustomerMetadata
 }

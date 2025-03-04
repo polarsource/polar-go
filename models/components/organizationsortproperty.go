@@ -12,6 +12,8 @@ type OrganizationSortProperty string
 const (
 	OrganizationSortPropertyCreatedAt      OrganizationSortProperty = "created_at"
 	OrganizationSortPropertyMinusCreatedAt OrganizationSortProperty = "-created_at"
+	OrganizationSortPropertySlug           OrganizationSortProperty = "slug"
+	OrganizationSortPropertyMinusSlug      OrganizationSortProperty = "-slug"
 	OrganizationSortPropertyName           OrganizationSortProperty = "name"
 	OrganizationSortPropertyMinusName      OrganizationSortProperty = "-name"
 )
@@ -28,6 +30,10 @@ func (e *OrganizationSortProperty) UnmarshalJSON(data []byte) error {
 	case "created_at":
 		fallthrough
 	case "-created_at":
+		fallthrough
+	case "slug":
+		fallthrough
+	case "-slug":
 		fallthrough
 	case "name":
 		fallthrough

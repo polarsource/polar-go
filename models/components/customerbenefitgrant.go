@@ -15,7 +15,6 @@ const (
 	CustomerBenefitGrantTypeCustomerBenefitGrantGitHubRepository CustomerBenefitGrantType = "CustomerBenefitGrantGitHubRepository"
 	CustomerBenefitGrantTypeCustomerBenefitGrantDownloadables    CustomerBenefitGrantType = "CustomerBenefitGrantDownloadables"
 	CustomerBenefitGrantTypeCustomerBenefitGrantLicenseKeys      CustomerBenefitGrantType = "CustomerBenefitGrantLicenseKeys"
-	CustomerBenefitGrantTypeCustomerBenefitGrantAds              CustomerBenefitGrantType = "CustomerBenefitGrantAds"
 	CustomerBenefitGrantTypeCustomerBenefitGrantCustom           CustomerBenefitGrantType = "CustomerBenefitGrantCustom"
 )
 
@@ -24,7 +23,6 @@ type CustomerBenefitGrant struct {
 	CustomerBenefitGrantGitHubRepository *CustomerBenefitGrantGitHubRepository `queryParam:"inline"`
 	CustomerBenefitGrantDownloadables    *CustomerBenefitGrantDownloadables    `queryParam:"inline"`
 	CustomerBenefitGrantLicenseKeys      *CustomerBenefitGrantLicenseKeys      `queryParam:"inline"`
-	CustomerBenefitGrantAds              *CustomerBenefitGrantAds              `queryParam:"inline"`
 	CustomerBenefitGrantCustom           *CustomerBenefitGrantCustom           `queryParam:"inline"`
 
 	Type CustomerBenefitGrantType
@@ -63,15 +61,6 @@ func CreateCustomerBenefitGrantCustomerBenefitGrantLicenseKeys(customerBenefitGr
 	return CustomerBenefitGrant{
 		CustomerBenefitGrantLicenseKeys: &customerBenefitGrantLicenseKeys,
 		Type:                            typ,
-	}
-}
-
-func CreateCustomerBenefitGrantCustomerBenefitGrantAds(customerBenefitGrantAds CustomerBenefitGrantAds) CustomerBenefitGrant {
-	typ := CustomerBenefitGrantTypeCustomerBenefitGrantAds
-
-	return CustomerBenefitGrant{
-		CustomerBenefitGrantAds: &customerBenefitGrantAds,
-		Type:                    typ,
 	}
 }
 
@@ -114,13 +103,6 @@ func (u *CustomerBenefitGrant) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	var customerBenefitGrantAds CustomerBenefitGrantAds = CustomerBenefitGrantAds{}
-	if err := utils.UnmarshalJSON(data, &customerBenefitGrantAds, "", true, true); err == nil {
-		u.CustomerBenefitGrantAds = &customerBenefitGrantAds
-		u.Type = CustomerBenefitGrantTypeCustomerBenefitGrantAds
-		return nil
-	}
-
 	var customerBenefitGrantCustom CustomerBenefitGrantCustom = CustomerBenefitGrantCustom{}
 	if err := utils.UnmarshalJSON(data, &customerBenefitGrantCustom, "", true, true); err == nil {
 		u.CustomerBenefitGrantCustom = &customerBenefitGrantCustom
@@ -146,10 +128,6 @@ func (u CustomerBenefitGrant) MarshalJSON() ([]byte, error) {
 
 	if u.CustomerBenefitGrantLicenseKeys != nil {
 		return utils.MarshalJSON(u.CustomerBenefitGrantLicenseKeys, "", true)
-	}
-
-	if u.CustomerBenefitGrantAds != nil {
-		return utils.MarshalJSON(u.CustomerBenefitGrantAds, "", true)
 	}
 
 	if u.CustomerBenefitGrantCustom != nil {

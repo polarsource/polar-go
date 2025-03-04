@@ -9,58 +9,58 @@ import (
 	"time"
 )
 
-type CustomerSubscriptionPriceType string
+type PriceType string
 
 const (
-	CustomerSubscriptionPriceTypeLegacyRecurringProductPrice CustomerSubscriptionPriceType = "LegacyRecurringProductPrice"
-	CustomerSubscriptionPriceTypeProductPrice                CustomerSubscriptionPriceType = "ProductPrice"
+	PriceTypeLegacyRecurringProductPrice PriceType = "LegacyRecurringProductPrice"
+	PriceTypeProductPrice                PriceType = "ProductPrice"
 )
 
-type CustomerSubscriptionPrice struct {
+type Price struct {
 	LegacyRecurringProductPrice *LegacyRecurringProductPrice `queryParam:"inline"`
 	ProductPrice                *ProductPrice                `queryParam:"inline"`
 
-	Type CustomerSubscriptionPriceType
+	Type PriceType
 }
 
-func CreateCustomerSubscriptionPriceLegacyRecurringProductPrice(legacyRecurringProductPrice LegacyRecurringProductPrice) CustomerSubscriptionPrice {
-	typ := CustomerSubscriptionPriceTypeLegacyRecurringProductPrice
+func CreatePriceLegacyRecurringProductPrice(legacyRecurringProductPrice LegacyRecurringProductPrice) Price {
+	typ := PriceTypeLegacyRecurringProductPrice
 
-	return CustomerSubscriptionPrice{
+	return Price{
 		LegacyRecurringProductPrice: &legacyRecurringProductPrice,
 		Type:                        typ,
 	}
 }
 
-func CreateCustomerSubscriptionPriceProductPrice(productPrice ProductPrice) CustomerSubscriptionPrice {
-	typ := CustomerSubscriptionPriceTypeProductPrice
+func CreatePriceProductPrice(productPrice ProductPrice) Price {
+	typ := PriceTypeProductPrice
 
-	return CustomerSubscriptionPrice{
+	return Price{
 		ProductPrice: &productPrice,
 		Type:         typ,
 	}
 }
 
-func (u *CustomerSubscriptionPrice) UnmarshalJSON(data []byte) error {
+func (u *Price) UnmarshalJSON(data []byte) error {
 
 	var legacyRecurringProductPrice LegacyRecurringProductPrice = LegacyRecurringProductPrice{}
 	if err := utils.UnmarshalJSON(data, &legacyRecurringProductPrice, "", true, true); err == nil {
 		u.LegacyRecurringProductPrice = &legacyRecurringProductPrice
-		u.Type = CustomerSubscriptionPriceTypeLegacyRecurringProductPrice
+		u.Type = PriceTypeLegacyRecurringProductPrice
 		return nil
 	}
 
 	var productPrice ProductPrice = ProductPrice{}
 	if err := utils.UnmarshalJSON(data, &productPrice, "", true, true); err == nil {
 		u.ProductPrice = &productPrice
-		u.Type = CustomerSubscriptionPriceTypeProductPrice
+		u.Type = PriceTypeProductPrice
 		return nil
 	}
 
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for CustomerSubscriptionPrice", string(data))
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for Price", string(data))
 }
 
-func (u CustomerSubscriptionPrice) MarshalJSON() ([]byte, error) {
+func (u Price) MarshalJSON() ([]byte, error) {
 	if u.LegacyRecurringProductPrice != nil {
 		return utils.MarshalJSON(u.LegacyRecurringProductPrice, "", true)
 	}
@@ -69,7 +69,7 @@ func (u CustomerSubscriptionPrice) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.ProductPrice, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type CustomerSubscriptionPrice: all fields are null")
+	return nil, errors.New("could not marshal union type Price: all fields are null")
 }
 
 type CustomerSubscription struct {
@@ -100,7 +100,7 @@ type CustomerSubscription struct {
 	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
 	UserID  string                      `json:"user_id"`
 	Product CustomerSubscriptionProduct `json:"product"`
-	Price   CustomerSubscriptionPrice   `json:"price"`
+	Price   Price                       `json:"price"`
 }
 
 func (c CustomerSubscription) MarshalJSON() ([]byte, error) {
@@ -275,9 +275,9 @@ func (o *CustomerSubscription) GetProduct() CustomerSubscriptionProduct {
 	return o.Product
 }
 
-func (o *CustomerSubscription) GetPrice() CustomerSubscriptionPrice {
+func (o *CustomerSubscription) GetPrice() Price {
 	if o == nil {
-		return CustomerSubscriptionPrice{}
+		return Price{}
 	}
 	return o.Price
 }

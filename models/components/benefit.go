@@ -11,7 +11,6 @@ import (
 type BenefitUnionType string
 
 const (
-	BenefitUnionTypeBenefitAds              BenefitUnionType = "BenefitAds"
 	BenefitUnionTypeBenefitCustom           BenefitUnionType = "BenefitCustom"
 	BenefitUnionTypeBenefitDiscord          BenefitUnionType = "BenefitDiscord"
 	BenefitUnionTypeBenefitGitHubRepository BenefitUnionType = "BenefitGitHubRepository"
@@ -20,7 +19,6 @@ const (
 )
 
 type Benefit struct {
-	BenefitAds              *BenefitAds              `queryParam:"inline"`
 	BenefitCustom           *BenefitCustom           `queryParam:"inline"`
 	BenefitDiscord          *BenefitDiscord          `queryParam:"inline"`
 	BenefitGitHubRepository *BenefitGitHubRepository `queryParam:"inline"`
@@ -28,15 +26,6 @@ type Benefit struct {
 	BenefitLicenseKeys      *BenefitLicenseKeys      `queryParam:"inline"`
 
 	Type BenefitUnionType
-}
-
-func CreateBenefitBenefitAds(benefitAds BenefitAds) Benefit {
-	typ := BenefitUnionTypeBenefitAds
-
-	return Benefit{
-		BenefitAds: &benefitAds,
-		Type:       typ,
-	}
 }
 
 func CreateBenefitBenefitCustom(benefitCustom BenefitCustom) Benefit {
@@ -86,13 +75,6 @@ func CreateBenefitBenefitLicenseKeys(benefitLicenseKeys BenefitLicenseKeys) Bene
 
 func (u *Benefit) UnmarshalJSON(data []byte) error {
 
-	var benefitAds BenefitAds = BenefitAds{}
-	if err := utils.UnmarshalJSON(data, &benefitAds, "", true, true); err == nil {
-		u.BenefitAds = &benefitAds
-		u.Type = BenefitUnionTypeBenefitAds
-		return nil
-	}
-
 	var benefitDiscord BenefitDiscord = BenefitDiscord{}
 	if err := utils.UnmarshalJSON(data, &benefitDiscord, "", true, true); err == nil {
 		u.BenefitDiscord = &benefitDiscord
@@ -132,10 +114,6 @@ func (u *Benefit) UnmarshalJSON(data []byte) error {
 }
 
 func (u Benefit) MarshalJSON() ([]byte, error) {
-	if u.BenefitAds != nil {
-		return utils.MarshalJSON(u.BenefitAds, "", true)
-	}
-
 	if u.BenefitCustom != nil {
 		return utils.MarshalJSON(u.BenefitCustom, "", true)
 	}

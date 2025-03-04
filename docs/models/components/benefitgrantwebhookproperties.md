@@ -27,12 +27,6 @@ benefitGrantWebhookProperties := components.CreateBenefitGrantWebhookPropertiesB
 benefitGrantWebhookProperties := components.CreateBenefitGrantWebhookPropertiesBenefitGrantLicenseKeysProperties(components.BenefitGrantLicenseKeysProperties{/* values here */})
 ```
 
-### BenefitGrantAdsProperties
-
-```go
-benefitGrantWebhookProperties := components.CreateBenefitGrantWebhookPropertiesBenefitGrantAdsProperties(components.BenefitGrantAdsProperties{/* values here */})
-```
-
 ### BenefitGrantCustomProperties
 
 ```go

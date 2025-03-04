@@ -359,7 +359,7 @@ func (s *Downloadables) Get(ctx context.Context, token string, opts ...operation
 		Context:        ctx,
 		OperationID:    "customer_portal:downloadables:customer_portal.downloadables.get",
 		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
+		SecuritySource: nil,
 	}
 
 	timeout := o.Timeout
@@ -379,10 +379,6 @@ func (s *Downloadables) Get(ctx context.Context, token string, opts ...operation
 	}
 	req.Header.Set("Accept", "application/json")
 	req.Header.Set("User-Agent", s.sdkConfiguration.UserAgent)
-
-	if err := utils.PopulateSecurity(ctx, req, s.sdkConfiguration.Security); err != nil {
-		return nil, err
-	}
 
 	for k, v := range o.SetHeaders {
 		req.Header.Set(k, v)

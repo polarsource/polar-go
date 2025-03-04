@@ -138,59 +138,59 @@ func (u MetricsGetQueryParamProductIDFilter) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type MetricsGetQueryParamProductIDFilter: all fields are null")
 }
 
-type ProductBillingTypeFilterType string
+type QueryParamProductBillingTypeFilterType string
 
 const (
-	ProductBillingTypeFilterTypeProductBillingType        ProductBillingTypeFilterType = "ProductBillingType"
-	ProductBillingTypeFilterTypeArrayOfProductBillingType ProductBillingTypeFilterType = "arrayOfProductBillingType"
+	QueryParamProductBillingTypeFilterTypeProductBillingType        QueryParamProductBillingTypeFilterType = "ProductBillingType"
+	QueryParamProductBillingTypeFilterTypeArrayOfProductBillingType QueryParamProductBillingTypeFilterType = "arrayOfProductBillingType"
 )
 
-// ProductBillingTypeFilter - Filter by billing type. `recurring` will filter data corresponding to subscriptions creations or renewals. `one_time` will filter data corresponding to one-time purchases.
-type ProductBillingTypeFilter struct {
+// QueryParamProductBillingTypeFilter - Filter by billing type. `recurring` will filter data corresponding to subscriptions creations or renewals. `one_time` will filter data corresponding to one-time purchases.
+type QueryParamProductBillingTypeFilter struct {
 	ProductBillingType        *components.ProductBillingType  `queryParam:"inline"`
 	ArrayOfProductBillingType []components.ProductBillingType `queryParam:"inline"`
 
-	Type ProductBillingTypeFilterType
+	Type QueryParamProductBillingTypeFilterType
 }
 
-func CreateProductBillingTypeFilterProductBillingType(productBillingType components.ProductBillingType) ProductBillingTypeFilter {
-	typ := ProductBillingTypeFilterTypeProductBillingType
+func CreateQueryParamProductBillingTypeFilterProductBillingType(productBillingType components.ProductBillingType) QueryParamProductBillingTypeFilter {
+	typ := QueryParamProductBillingTypeFilterTypeProductBillingType
 
-	return ProductBillingTypeFilter{
+	return QueryParamProductBillingTypeFilter{
 		ProductBillingType: &productBillingType,
 		Type:               typ,
 	}
 }
 
-func CreateProductBillingTypeFilterArrayOfProductBillingType(arrayOfProductBillingType []components.ProductBillingType) ProductBillingTypeFilter {
-	typ := ProductBillingTypeFilterTypeArrayOfProductBillingType
+func CreateQueryParamProductBillingTypeFilterArrayOfProductBillingType(arrayOfProductBillingType []components.ProductBillingType) QueryParamProductBillingTypeFilter {
+	typ := QueryParamProductBillingTypeFilterTypeArrayOfProductBillingType
 
-	return ProductBillingTypeFilter{
+	return QueryParamProductBillingTypeFilter{
 		ArrayOfProductBillingType: arrayOfProductBillingType,
 		Type:                      typ,
 	}
 }
 
-func (u *ProductBillingTypeFilter) UnmarshalJSON(data []byte) error {
+func (u *QueryParamProductBillingTypeFilter) UnmarshalJSON(data []byte) error {
 
 	var productBillingType components.ProductBillingType = components.ProductBillingType("")
 	if err := utils.UnmarshalJSON(data, &productBillingType, "", true, true); err == nil {
 		u.ProductBillingType = &productBillingType
-		u.Type = ProductBillingTypeFilterTypeProductBillingType
+		u.Type = QueryParamProductBillingTypeFilterTypeProductBillingType
 		return nil
 	}
 
 	var arrayOfProductBillingType []components.ProductBillingType = []components.ProductBillingType{}
 	if err := utils.UnmarshalJSON(data, &arrayOfProductBillingType, "", true, true); err == nil {
 		u.ArrayOfProductBillingType = arrayOfProductBillingType
-		u.Type = ProductBillingTypeFilterTypeArrayOfProductBillingType
+		u.Type = QueryParamProductBillingTypeFilterTypeArrayOfProductBillingType
 		return nil
 	}
 
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for ProductBillingTypeFilter", string(data))
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for QueryParamProductBillingTypeFilter", string(data))
 }
 
-func (u ProductBillingTypeFilter) MarshalJSON() ([]byte, error) {
+func (u QueryParamProductBillingTypeFilter) MarshalJSON() ([]byte, error) {
 	if u.ProductBillingType != nil {
 		return utils.MarshalJSON(u.ProductBillingType, "", true)
 	}
@@ -199,7 +199,7 @@ func (u ProductBillingTypeFilter) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.ArrayOfProductBillingType, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type ProductBillingTypeFilter: all fields are null")
+	return nil, errors.New("could not marshal union type QueryParamProductBillingTypeFilter: all fields are null")
 }
 
 type MetricsGetQueryParamCustomerIDFilterType string
@@ -278,7 +278,7 @@ type MetricsGetRequest struct {
 	// Filter by product ID.
 	ProductID *MetricsGetQueryParamProductIDFilter `queryParam:"style=form,explode=true,name=product_id"`
 	// Filter by billing type. `recurring` will filter data corresponding to subscriptions creations or renewals. `one_time` will filter data corresponding to one-time purchases.
-	BillingType *ProductBillingTypeFilter `queryParam:"style=form,explode=true,name=billing_type"`
+	BillingType *QueryParamProductBillingTypeFilter `queryParam:"style=form,explode=true,name=billing_type"`
 	// Filter by customer ID.
 	CustomerID *MetricsGetQueryParamCustomerIDFilter `queryParam:"style=form,explode=true,name=customer_id"`
 }
@@ -329,7 +329,7 @@ func (o *MetricsGetRequest) GetProductID() *MetricsGetQueryParamProductIDFilter 
 	return o.ProductID
 }
 
-func (o *MetricsGetRequest) GetBillingType() *ProductBillingTypeFilter {
+func (o *MetricsGetRequest) GetBillingType() *QueryParamProductBillingTypeFilter {
 	if o == nil {
 		return nil
 	}

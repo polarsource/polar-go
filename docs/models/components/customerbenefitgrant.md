@@ -27,12 +27,6 @@ customerBenefitGrant := components.CreateCustomerBenefitGrantCustomerBenefitGran
 customerBenefitGrant := components.CreateCustomerBenefitGrantCustomerBenefitGrantLicenseKeys(components.CustomerBenefitGrantLicenseKeys{/* values here */})
 ```
 
-### CustomerBenefitGrantAds
-
-```go
-customerBenefitGrant := components.CreateCustomerBenefitGrantCustomerBenefitGrantAds(components.CustomerBenefitGrantAds{/* values here */})
-```
-
 ### CustomerBenefitGrantCustom
 
 ```go

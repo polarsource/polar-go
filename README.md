@@ -254,7 +254,7 @@ func main() {
 							CreatedAt:      types.MustTimeFromString("2025-10-16T20:09:46.139Z"),
 							ModifiedAt:     types.MustNewTimeFromString("2023-09-29T18:20:07.088Z"),
 							ID:             "<value>",
-							Type:           components.BenefitTypeAds,
+							Type:           components.BenefitTypeGithubRepository,
 							Description:    "pupil divine roundabout gah oh hm over equatorial",
 							Selectable:     false,
 							Deletable:      false,
@@ -417,7 +417,7 @@ func main() {
 						CreatedAt:      types.MustTimeFromString("2025-08-24T18:28:03.144Z"),
 						ModifiedAt:     types.MustNewTimeFromString("2023-10-21T11:52:11.842Z"),
 						ID:             "<value>",
-						Type:           components.BenefitTypeAds,
+						Type:           components.BenefitTypeCustom,
 						Description:    "certainly these restfully geez who countess happily gym",
 						Selectable:     false,
 						Deletable:      false,
@@ -561,11 +561,11 @@ func main() {
 					Required: true,
 				},
 			},
-			CustomerMetadata: map[string]components.CustomerMetadata{
-				"key": components.CreateCustomerMetadataStr(
+			CustomerMetadata: map[string]components.CheckoutCustomerMetadata{
+				"key": components.CreateCheckoutCustomerMetadataStr(
 					"<value>",
 				),
-				"key1": components.CreateCustomerMetadataInteger(
+				"key1": components.CreateCheckoutCustomerMetadataInteger(
 					790078,
 				),
 			},
@@ -685,11 +685,6 @@ func main() {
 
 <details open>
 <summary>Available methods</summary>
-
-### [Advertisements](docs/sdks/advertisements/README.md)
-
-* [List](docs/sdks/advertisements/README.md#list) - List Campaigns
-* [Get](docs/sdks/advertisements/README.md#get) - Get Campaign
 
 ### [Benefits](docs/sdks/benefits/README.md)
 

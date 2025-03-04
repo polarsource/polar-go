@@ -1118,7 +1118,7 @@ func (s *Checkouts) ClientGet(ctx context.Context, clientSecret string, opts ...
 		Context:        ctx,
 		OperationID:    "checkouts:client_get",
 		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
+		SecuritySource: nil,
 	}
 
 	timeout := o.Timeout
@@ -1138,10 +1138,6 @@ func (s *Checkouts) ClientGet(ctx context.Context, clientSecret string, opts ...
 	}
 	req.Header.Set("Accept", "application/json")
 	req.Header.Set("User-Agent", s.sdkConfiguration.UserAgent)
-
-	if err := utils.PopulateSecurity(ctx, req, s.sdkConfiguration.Security); err != nil {
-		return nil, err
-	}
 
 	for k, v := range o.SetHeaders {
 		req.Header.Set(k, v)
@@ -1367,7 +1363,7 @@ func (s *Checkouts) ClientUpdate(ctx context.Context, clientSecret string, check
 		Context:        ctx,
 		OperationID:    "checkouts:client_update",
 		OAuth2Scopes:   []string{},
-		SecuritySource: s.sdkConfiguration.Security,
+		SecuritySource: nil,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "CheckoutUpdatePublic", "json", `request:"mediaType=application/json"`)
 	if err != nil {
@@ -1393,10 +1389,6 @@ func (s *Checkouts) ClientUpdate(ctx context.Context, clientSecret string, check
 	req.Header.Set("User-Agent", s.sdkConfiguration.UserAgent)
 	if reqContentType != "" {
 		req.Header.Set("Content-Type", reqContentType)
-	}
-
-	if err := utils.PopulateSecurity(ctx, req, s.sdkConfiguration.Security); err != nil {
-		return nil, err
 	}
 
 	for k, v := range o.SetHeaders {

@@ -6,7 +6,6 @@
 | Name                          | Value                         |
 | ----------------------------- | ----------------------------- |
 | `BenefitTypeCustom`           | custom                        |
-| `BenefitTypeAds`              | ads                           |
 | `BenefitTypeDiscord`          | discord                       |
 | `BenefitTypeGithubRepository` | github_repository             |
 | `BenefitTypeDownloadables`    | downloadables                 |

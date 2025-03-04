@@ -94,58 +94,58 @@ func (u SubscriptionCustomerMetadata) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type SubscriptionCustomerMetadata: all fields are null")
 }
 
-type TaxIDType string
+type SubscriptionCustomerTaxIDType string
 
 const (
-	TaxIDTypeStr         TaxIDType = "str"
-	TaxIDTypeTaxIDFormat TaxIDType = "TaxIDFormat"
+	SubscriptionCustomerTaxIDTypeStr         SubscriptionCustomerTaxIDType = "str"
+	SubscriptionCustomerTaxIDTypeTaxIDFormat SubscriptionCustomerTaxIDType = "TaxIDFormat"
 )
 
-type TaxID struct {
+type SubscriptionCustomerTaxID struct {
 	Str         *string      `queryParam:"inline"`
 	TaxIDFormat *TaxIDFormat `queryParam:"inline"`
 
-	Type TaxIDType
+	Type SubscriptionCustomerTaxIDType
 }
 
-func CreateTaxIDStr(str string) TaxID {
-	typ := TaxIDTypeStr
+func CreateSubscriptionCustomerTaxIDStr(str string) SubscriptionCustomerTaxID {
+	typ := SubscriptionCustomerTaxIDTypeStr
 
-	return TaxID{
+	return SubscriptionCustomerTaxID{
 		Str:  &str,
 		Type: typ,
 	}
 }
 
-func CreateTaxIDTaxIDFormat(taxIDFormat TaxIDFormat) TaxID {
-	typ := TaxIDTypeTaxIDFormat
+func CreateSubscriptionCustomerTaxIDTaxIDFormat(taxIDFormat TaxIDFormat) SubscriptionCustomerTaxID {
+	typ := SubscriptionCustomerTaxIDTypeTaxIDFormat
 
-	return TaxID{
+	return SubscriptionCustomerTaxID{
 		TaxIDFormat: &taxIDFormat,
 		Type:        typ,
 	}
 }
 
-func (u *TaxID) UnmarshalJSON(data []byte) error {
+func (u *SubscriptionCustomerTaxID) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
 	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
 		u.Str = &str
-		u.Type = TaxIDTypeStr
+		u.Type = SubscriptionCustomerTaxIDTypeStr
 		return nil
 	}
 
 	var taxIDFormat TaxIDFormat = TaxIDFormat("")
 	if err := utils.UnmarshalJSON(data, &taxIDFormat, "", true, true); err == nil {
 		u.TaxIDFormat = &taxIDFormat
-		u.Type = TaxIDTypeTaxIDFormat
+		u.Type = SubscriptionCustomerTaxIDTypeTaxIDFormat
 		return nil
 	}
 
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for TaxID", string(data))
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SubscriptionCustomerTaxID", string(data))
 }
 
-func (u TaxID) MarshalJSON() ([]byte, error) {
+func (u SubscriptionCustomerTaxID) MarshalJSON() ([]byte, error) {
 	if u.Str != nil {
 		return utils.MarshalJSON(u.Str, "", true)
 	}
@@ -154,7 +154,7 @@ func (u TaxID) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.TaxIDFormat, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type TaxID: all fields are null")
+	return nil, errors.New("could not marshal union type SubscriptionCustomerTaxID: all fields are null")
 }
 
 type SubscriptionCustomer struct {
@@ -170,12 +170,12 @@ type SubscriptionCustomer struct {
 	// The email address of the customer. This must be unique within the organization.
 	Email string `json:"email"`
 	// Whether the customer email address is verified. The address is automatically verified when the customer accesses the customer portal using their email address.
-	EmailVerified  bool     `json:"email_verified"`
-	Name           *string  `json:"name"`
-	BillingAddress *Address `json:"billing_address"`
-	TaxID          []*TaxID `json:"tax_id"`
-	OrganizationID string   `json:"organization_id"`
-	AvatarURL      string   `json:"avatar_url"`
+	EmailVerified  bool                         `json:"email_verified"`
+	Name           *string                      `json:"name"`
+	BillingAddress *Address                     `json:"billing_address"`
+	TaxID          []*SubscriptionCustomerTaxID `json:"tax_id"`
+	OrganizationID string                       `json:"organization_id"`
+	AvatarURL      string                       `json:"avatar_url"`
 }
 
 func (s SubscriptionCustomer) MarshalJSON() ([]byte, error) {
@@ -252,7 +252,7 @@ func (o *SubscriptionCustomer) GetBillingAddress() *Address {
 	return o.BillingAddress
 }
 
-func (o *SubscriptionCustomer) GetTaxID() []*TaxID {
+func (o *SubscriptionCustomer) GetTaxID() []*SubscriptionCustomerTaxID {
 	if o == nil {
 		return nil
 	}
