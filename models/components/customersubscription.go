@@ -78,25 +78,28 @@ type CustomerSubscription struct {
 	// Last modification timestamp of the object.
 	ModifiedAt *time.Time `json:"modified_at"`
 	// The ID of the object.
-	ID                          string                        `json:"id"`
-	Amount                      *int64                        `json:"amount"`
-	Currency                    *string                       `json:"currency"`
-	RecurringInterval           SubscriptionRecurringInterval `json:"recurring_interval"`
-	Status                      SubscriptionStatus            `json:"status"`
-	CurrentPeriodStart          time.Time                     `json:"current_period_start"`
-	CurrentPeriodEnd            *time.Time                    `json:"current_period_end"`
-	CancelAtPeriodEnd           bool                          `json:"cancel_at_period_end"`
-	CanceledAt                  *time.Time                    `json:"canceled_at"`
-	StartedAt                   *time.Time                    `json:"started_at"`
-	EndsAt                      *time.Time                    `json:"ends_at"`
-	EndedAt                     *time.Time                    `json:"ended_at"`
-	CustomerID                  string                        `json:"customer_id"`
-	ProductID                   string                        `json:"product_id"`
-	PriceID                     string                        `json:"price_id"`
-	DiscountID                  *string                       `json:"discount_id"`
-	CheckoutID                  *string                       `json:"checkout_id"`
-	CustomerCancellationReason  *CustomerCancellationReason   `json:"customer_cancellation_reason"`
-	CustomerCancellationComment *string                       `json:"customer_cancellation_comment"`
+	ID string `json:"id"`
+	// The amount of the subscription.
+	Amount *int64 `json:"amount"`
+	// The currency of the subscription.
+	Currency           *string                       `json:"currency"`
+	RecurringInterval  SubscriptionRecurringInterval `json:"recurring_interval"`
+	Status             SubscriptionStatus            `json:"status"`
+	CurrentPeriodStart time.Time                     `json:"current_period_start"`
+	CurrentPeriodEnd   *time.Time                    `json:"current_period_end"`
+	CancelAtPeriodEnd  bool                          `json:"cancel_at_period_end"`
+	CanceledAt         *time.Time                    `json:"canceled_at"`
+	StartedAt          *time.Time                    `json:"started_at"`
+	EndsAt             *time.Time                    `json:"ends_at"`
+	EndedAt            *time.Time                    `json:"ended_at"`
+	CustomerID         string                        `json:"customer_id"`
+	ProductID          string                        `json:"product_id"`
+	PriceID            string                        `json:"price_id"`
+	// The ID of the applied discount, if any.
+	DiscountID                  *string                     `json:"discount_id"`
+	CheckoutID                  *string                     `json:"checkout_id"`
+	CustomerCancellationReason  *CustomerCancellationReason `json:"customer_cancellation_reason"`
+	CustomerCancellationComment *string                     `json:"customer_cancellation_comment"`
 	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
 	UserID  string                      `json:"user_id"`
 	Product CustomerSubscriptionProduct `json:"product"`

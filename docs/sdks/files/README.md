@@ -36,7 +36,7 @@ func main() {
         polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )
 
-    res, err := s.Files.List(ctx, nil, nil, nil, nil)
+    res, err := s.Files.List(ctx, polargo.String("1dbfc517-0bbf-4301-9ba8-555ca42b9737"), nil, nil, nil)
     if err != nil {
         log.Fatal(err)
     }
@@ -60,14 +60,14 @@ func main() {
 
 ### Parameters
 
-| Parameter                                                | Type                                                     | Required                                                 | Description                                              |
-| -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- |
-| `ctx`                                                    | [context.Context](https://pkg.go.dev/context#Context)    | :heavy_check_mark:                                       | The context to use for the request.                      |
-| `organizationID`                                         | **string*                                                | :heavy_minus_sign:                                       | N/A                                                      |
-| `ids`                                                    | []*string*                                               | :heavy_minus_sign:                                       | List of file IDs to get.                                 |
-| `page`                                                   | **int64*                                                 | :heavy_minus_sign:                                       | Page number, defaults to 1.                              |
-| `limit`                                                  | **int64*                                                 | :heavy_minus_sign:                                       | Size of a page, defaults to 10. Maximum is 100.          |
-| `opts`                                                   | [][operations.Option](../../models/operations/option.md) | :heavy_minus_sign:                                       | The options for this request.                            |
+| Parameter                                                | Type                                                     | Required                                                 | Description                                              | Example                                                  |
+| -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- |
+| `ctx`                                                    | [context.Context](https://pkg.go.dev/context#Context)    | :heavy_check_mark:                                       | The context to use for the request.                      |                                                          |
+| `organizationID`                                         | **string*                                                | :heavy_minus_sign:                                       | N/A                                                      | 1dbfc517-0bbf-4301-9ba8-555ca42b9737                     |
+| `ids`                                                    | []*string*                                               | :heavy_minus_sign:                                       | List of file IDs to get.                                 |                                                          |
+| `page`                                                   | **int64*                                                 | :heavy_minus_sign:                                       | Page number, defaults to 1.                              |                                                          |
+| `limit`                                                  | **int64*                                                 | :heavy_minus_sign:                                       | Size of a page, defaults to 10. Maximum is 100.          |                                                          |
+| `opts`                                                   | [][operations.Option](../../models/operations/option.md) | :heavy_minus_sign:                                       | The options for this request.                            |                                                          |
 
 ### Response
 
@@ -108,6 +108,7 @@ func main() {
 
     res, err := s.Files.Create(ctx, components.CreateFileCreateProductMedia(
         components.ProductMediaFileCreate{
+            OrganizationID: polargo.String("1dbfc517-0bbf-4301-9ba8-555ca42b9737"),
             Name: "<value>",
             MimeType: "<value>",
             Size: 951062,

@@ -103,7 +103,7 @@ func main() {
 			CustomerEmail:          polargo.String("<value>"),
 			CustomerIPAddress:      polargo.String("<value>"),
 			CustomerBillingAddress: &components.Address{
-				Country: "Solomon Islands",
+				Country: "FR",
 			},
 			CustomerTaxID: polargo.String("<id>"),
 			PaymentProcessorMetadata: map[string]string{
@@ -504,7 +504,7 @@ func main() {
 							},
 							Slug:           "<value>",
 							Name:           "<value>",
-							OrganizationID: "<value>",
+							OrganizationID: "1dbfc517-0bbf-4301-9ba8-555ca42b9737",
 							Properties: components.CustomFieldSelectProperties{
 								Options: []components.CustomFieldSelectOption{
 									components.CustomFieldSelectOption{
@@ -532,7 +532,7 @@ func main() {
 							},
 							Slug:           "<value>",
 							Name:           "<value>",
-							OrganizationID: "<value>",
+							OrganizationID: "1dbfc517-0bbf-4301-9ba8-555ca42b9737",
 							Properties:     components.CustomFieldTextProperties{},
 						},
 					),
@@ -553,7 +553,7 @@ func main() {
 							},
 							Slug:           "<value>",
 							Name:           "<value>",
-							OrganizationID: "<value>",
+							OrganizationID: "1dbfc517-0bbf-4301-9ba8-555ca42b9737",
 							Properties:     components.CustomFieldTextProperties{},
 						},
 					),
@@ -612,7 +612,13 @@ func main() {
 		polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
 	)
 
-	res, err := s.ExternalOrganizations.List(ctx, operations.ExternalOrganizationsListRequest{})
+	res, err := s.ExternalOrganizations.List(ctx, operations.ExternalOrganizationsListRequest{
+		OrganizationID: polargo.Pointer(operations.CreateOrganizationIDFilterArrayOfStr(
+			[]string{
+				"1dbfc517-0bbf-4301-9ba8-555ca42b9737",
+			},
+		)),
+	})
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -654,7 +660,13 @@ func main() {
 
 	s := polargo.New()
 
-	res, err := s.CustomerPortal.BenefitGrants.List(ctx, operations.CustomerPortalBenefitGrantsListRequest{}, operations.CustomerPortalBenefitGrantsListSecurity{
+	res, err := s.CustomerPortal.BenefitGrants.List(ctx, operations.CustomerPortalBenefitGrantsListRequest{
+		OrganizationID: polargo.Pointer(operations.CreateCustomerPortalBenefitGrantsListQueryParamOrganizationIDFilterArrayOfStr(
+			[]string{
+				"1dbfc517-0bbf-4301-9ba8-555ca42b9737",
+			},
+		)),
+	}, operations.CustomerPortalBenefitGrantsListSecurity{
 		CustomerSession: os.Getenv("POLAR_CUSTOMER_SESSION"),
 	})
 	if err != nil {
@@ -770,6 +782,8 @@ func main() {
 * [GetExternal](docs/sdks/customers/README.md#getexternal) - Get Customer by External ID
 * [UpdateExternal](docs/sdks/customers/README.md#updateexternal) - Update Customer by External ID
 * [DeleteExternal](docs/sdks/customers/README.md#deleteexternal) - Delete Customer by External ID
+* [GetState](docs/sdks/customers/README.md#getstate) - Get Customer State
+* [GetStateExternal](docs/sdks/customers/README.md#getstateexternal) - Get Customer State by External ID
 
 ### [CustomerSessions](docs/sdks/customersessions/README.md)
 
@@ -916,7 +930,13 @@ func main() {
 		polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
 	)
 
-	res, err := s.ExternalOrganizations.List(ctx, operations.ExternalOrganizationsListRequest{})
+	res, err := s.ExternalOrganizations.List(ctx, operations.ExternalOrganizationsListRequest{
+		OrganizationID: polargo.Pointer(operations.CreateOrganizationIDFilterArrayOfStr(
+			[]string{
+				"1dbfc517-0bbf-4301-9ba8-555ca42b9737",
+			},
+		)),
+	})
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -966,7 +986,13 @@ func main() {
 		polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
 	)
 
-	res, err := s.ExternalOrganizations.List(ctx, operations.ExternalOrganizationsListRequest{}, operations.WithRetries(
+	res, err := s.ExternalOrganizations.List(ctx, operations.ExternalOrganizationsListRequest{
+		OrganizationID: polargo.Pointer(operations.CreateOrganizationIDFilterArrayOfStr(
+			[]string{
+				"1dbfc517-0bbf-4301-9ba8-555ca42b9737",
+			},
+		)),
+	}, operations.WithRetries(
 		retry.Config{
 			Strategy: "backoff",
 			Backoff: &retry.BackoffStrategy{
@@ -1030,7 +1056,13 @@ func main() {
 		polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
 	)
 
-	res, err := s.ExternalOrganizations.List(ctx, operations.ExternalOrganizationsListRequest{})
+	res, err := s.ExternalOrganizations.List(ctx, operations.ExternalOrganizationsListRequest{
+		OrganizationID: polargo.Pointer(operations.CreateOrganizationIDFilterArrayOfStr(
+			[]string{
+				"1dbfc517-0bbf-4301-9ba8-555ca42b9737",
+			},
+		)),
+	})
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -1090,7 +1122,13 @@ func main() {
 		polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
 	)
 
-	res, err := s.ExternalOrganizations.List(ctx, operations.ExternalOrganizationsListRequest{})
+	res, err := s.ExternalOrganizations.List(ctx, operations.ExternalOrganizationsListRequest{
+		OrganizationID: polargo.Pointer(operations.CreateOrganizationIDFilterArrayOfStr(
+			[]string{
+				"1dbfc517-0bbf-4301-9ba8-555ca42b9737",
+			},
+		)),
+	})
 	if err != nil {
 
 		var e *apierrors.HTTPValidationError
@@ -1143,7 +1181,13 @@ func main() {
 		polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
 	)
 
-	res, err := s.ExternalOrganizations.List(ctx, operations.ExternalOrganizationsListRequest{})
+	res, err := s.ExternalOrganizations.List(ctx, operations.ExternalOrganizationsListRequest{
+		OrganizationID: polargo.Pointer(operations.CreateOrganizationIDFilterArrayOfStr(
+			[]string{
+				"1dbfc517-0bbf-4301-9ba8-555ca42b9737",
+			},
+		)),
+	})
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -1188,7 +1232,13 @@ func main() {
 		polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
 	)
 
-	res, err := s.ExternalOrganizations.List(ctx, operations.ExternalOrganizationsListRequest{})
+	res, err := s.ExternalOrganizations.List(ctx, operations.ExternalOrganizationsListRequest{
+		OrganizationID: polargo.Pointer(operations.CreateOrganizationIDFilterArrayOfStr(
+			[]string{
+				"1dbfc517-0bbf-4301-9ba8-555ca42b9737",
+			},
+		)),
+	})
 	if err != nil {
 		log.Fatal(err)
 	}

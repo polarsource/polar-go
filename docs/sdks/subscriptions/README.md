@@ -37,7 +37,13 @@ func main() {
         polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )
 
-    res, err := s.Subscriptions.List(ctx, operations.SubscriptionsListRequest{})
+    res, err := s.Subscriptions.List(ctx, operations.SubscriptionsListRequest{
+        OrganizationID: polargo.Pointer(operations.CreateSubscriptionsListQueryParamOrganizationIDFilterArrayOfStr(
+            []string{
+                "1dbfc517-0bbf-4301-9ba8-555ca42b9737",
+            },
+        )),
+    })
     if err != nil {
         log.Fatal(err)
     }
@@ -93,6 +99,7 @@ import(
 	"context"
 	"os"
 	polargo "github.com/polarsource/polar-go"
+	"github.com/polarsource/polar-go/models/operations"
 	"log"
 )
 
@@ -103,7 +110,11 @@ func main() {
         polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )
 
-    res, err := s.Subscriptions.Export(ctx, nil)
+    res, err := s.Subscriptions.Export(ctx, polargo.Pointer(operations.CreateOrganizationIDArrayOfStr(
+        []string{
+            "1dbfc517-0bbf-4301-9ba8-555ca42b9737",
+        },
+    )))
     if err != nil {
         log.Fatal(err)
     }

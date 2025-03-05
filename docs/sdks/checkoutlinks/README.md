@@ -37,7 +37,13 @@ func main() {
         polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )
 
-    res, err := s.CheckoutLinks.List(ctx, operations.CheckoutLinksListRequest{})
+    res, err := s.CheckoutLinks.List(ctx, operations.CheckoutLinksListRequest{
+        OrganizationID: polargo.Pointer(operations.CreateCheckoutLinksListQueryParamOrganizationIDFilterArrayOfStr(
+            []string{
+                "1dbfc517-0bbf-4301-9ba8-555ca42b9737",
+            },
+        )),
+    })
     if err != nil {
         log.Fatal(err)
     }

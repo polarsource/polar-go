@@ -7,7 +7,7 @@ Sent when a new benefit is created.
 
 ## Fields
 
-| Field                                                    | Type                                                     | Required                                                 | Description                                              |
-| -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- |
-| `Type`                                                   | *string*                                                 | :heavy_check_mark:                                       | N/A                                                      |
-| `Data`                                                   | [components.Benefit](../../models/components/benefit.md) | :heavy_check_mark:                                       | N/A                                                      |
+| Field                                                    | Type                                                     | Required                                                 | Description                                              | Example                                                  |
+| -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- |
+| `Type`                                                   | *string*                                                 | :heavy_check_mark:                                       | N/A                                                      | benefit.created                                          |
+| `Data`                                                   | [components.Benefit](../../models/components/benefit.md) | :heavy_check_mark:                                       | N/A                                                      |                                                          |

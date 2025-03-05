@@ -33,7 +33,13 @@ func main() {
 
     s := polargo.New()
 
-    res, err := s.CustomerPortal.Orders.List(ctx, operations.CustomerPortalOrdersListRequest{}, operations.CustomerPortalOrdersListSecurity{
+    res, err := s.CustomerPortal.Orders.List(ctx, operations.CustomerPortalOrdersListRequest{
+        OrganizationID: polargo.Pointer(operations.CreateCustomerPortalOrdersListQueryParamOrganizationIDFilterArrayOfStr(
+            []string{
+                "1dbfc517-0bbf-4301-9ba8-555ca42b9737",
+            },
+        )),
+    }, operations.CustomerPortalOrdersListSecurity{
         CustomerSession: os.Getenv("POLAR_CUSTOMER_SESSION"),
     })
     if err != nil {

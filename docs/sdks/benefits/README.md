@@ -27,6 +27,7 @@ import(
 	"context"
 	"os"
 	polargo "github.com/polarsource/polar-go"
+	"github.com/polarsource/polar-go/models/operations"
 	"log"
 )
 
@@ -37,7 +38,11 @@ func main() {
         polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )
 
-    res, err := s.Benefits.List(ctx, nil, nil, nil, nil)
+    res, err := s.Benefits.List(ctx, polargo.Pointer(operations.CreateBenefitsListQueryParamOrganizationIDFilterArrayOfStr(
+        []string{
+            "1dbfc517-0bbf-4301-9ba8-555ca42b9737",
+        },
+    )), nil, nil, nil)
     if err != nil {
         log.Fatal(err)
     }
@@ -110,6 +115,7 @@ func main() {
     res, err := s.Benefits.Create(ctx, components.CreateBenefitCreateDownloadables(
         components.BenefitDownloadablesCreate{
             Description: "yuck forager beneath please shadowy foodstuffs welcome",
+            OrganizationID: polargo.String("1dbfc517-0bbf-4301-9ba8-555ca42b9737"),
             Properties: components.BenefitDownloadablesCreateProperties{
                 Files: []string{
                     "<value>",

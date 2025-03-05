@@ -37,7 +37,13 @@ func main() {
         polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )
 
-    res, err := s.CustomFields.List(ctx, operations.CustomFieldsListRequest{})
+    res, err := s.CustomFields.List(ctx, operations.CustomFieldsListRequest{
+        OrganizationID: polargo.Pointer(operations.CreateCustomFieldsListQueryParamOrganizationIDFilterArrayOfStr(
+            []string{
+                "1dbfc517-0bbf-4301-9ba8-555ca42b9737",
+            },
+        )),
+    })
     if err != nil {
         log.Fatal(err)
     }
@@ -108,6 +114,7 @@ func main() {
         components.CustomFieldCreateSelect{
             Slug: "<value>",
             Name: "<value>",
+            OrganizationID: polargo.String("1dbfc517-0bbf-4301-9ba8-555ca42b9737"),
             Properties: components.CustomFieldSelectProperties{
                 Options: []components.CustomFieldSelectOption{
                     components.CustomFieldSelectOption{

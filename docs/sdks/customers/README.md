@@ -13,6 +13,8 @@
 * [GetExternal](#getexternal) - Get Customer by External ID
 * [UpdateExternal](#updateexternal) - Update Customer by External ID
 * [DeleteExternal](#deleteexternal) - Delete Customer by External ID
+* [GetState](#getstate) - Get Customer State
+* [GetStateExternal](#getstateexternal) - Get Customer State by External ID
 
 ## List
 
@@ -40,7 +42,13 @@ func main() {
         polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )
 
-    res, err := s.Customers.List(ctx, operations.CustomersListRequest{})
+    res, err := s.Customers.List(ctx, operations.CustomersListRequest{
+        OrganizationID: polargo.Pointer(operations.CreateCustomersListQueryParamOrganizationIDFilterArrayOfStr(
+            []string{
+                "1dbfc517-0bbf-4301-9ba8-555ca42b9737",
+            },
+        )),
+    })
     if err != nil {
         log.Fatal(err)
     }
@@ -108,7 +116,21 @@ func main() {
     )
 
     res, err := s.Customers.Create(ctx, components.CustomerCreate{
-        Email: "Loyal79@yahoo.com",
+        ExternalID: polargo.String("usr_1337"),
+        Email: "customer@example.com",
+        Name: polargo.String("John Doe"),
+        BillingAddress: &components.Address{
+            Country: "SE",
+        },
+        TaxID: []*components.CustomerCreateTaxID{
+            polargo.Pointer(components.CreateCustomerCreateTaxIDStr(
+                "FR61954506077",
+            )),
+            polargo.Pointer(components.CreateCustomerCreateTaxIDStr(
+                "eu_vat",
+            )),
+        },
+        OrganizationID: polargo.String("1dbfc517-0bbf-4301-9ba8-555ca42b9737"),
     })
     if err != nil {
         log.Fatal(err)
@@ -467,6 +489,128 @@ func main() {
 ### Response
 
 **[*operations.CustomersDeleteExternalResponse](../../models/operations/customersdeleteexternalresponse.md), error**
+
+### Errors
+
+| Error Type                    | Status Code                   | Content Type                  |
+| ----------------------------- | ----------------------------- | ----------------------------- |
+| apierrors.ResourceNotFound    | 404                           | application/json              |
+| apierrors.HTTPValidationError | 422                           | application/json              |
+| apierrors.APIError            | 4XX, 5XX                      | \*/\*                         |
+
+## GetState
+
+Get a customer state by ID.
+
+The customer state includes information about
+the customer's active subscriptions and benefits.
+
+It's the ideal endpoint to use when you need to get a full overview
+of a customer's status.
+
+**Scopes**: `customers:read` `customers:write`
+
+### Example Usage
+
+```go
+package main
+
+import(
+	"context"
+	"os"
+	polargo "github.com/polarsource/polar-go"
+	"log"
+)
+
+func main() {
+    ctx := context.Background()
+
+    s := polargo.New(
+        polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
+    )
+
+    res, err := s.Customers.GetState(ctx, "<value>")
+    if err != nil {
+        log.Fatal(err)
+    }
+    if res.CustomerState != nil {
+        // handle response
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                | Type                                                     | Required                                                 | Description                                              |
+| -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- |
+| `ctx`                                                    | [context.Context](https://pkg.go.dev/context#Context)    | :heavy_check_mark:                                       | The context to use for the request.                      |
+| `id`                                                     | *string*                                                 | :heavy_check_mark:                                       | The customer ID.                                         |
+| `opts`                                                   | [][operations.Option](../../models/operations/option.md) | :heavy_minus_sign:                                       | The options for this request.                            |
+
+### Response
+
+**[*operations.CustomersGetStateResponse](../../models/operations/customersgetstateresponse.md), error**
+
+### Errors
+
+| Error Type                    | Status Code                   | Content Type                  |
+| ----------------------------- | ----------------------------- | ----------------------------- |
+| apierrors.ResourceNotFound    | 404                           | application/json              |
+| apierrors.HTTPValidationError | 422                           | application/json              |
+| apierrors.APIError            | 4XX, 5XX                      | \*/\*                         |
+
+## GetStateExternal
+
+Get a customer state by external ID.
+
+The customer state includes information about
+the customer's active subscriptions and benefits.
+
+It's the ideal endpoint to use when you need to get a full overview
+of a customer's status.
+
+**Scopes**: `customers:read` `customers:write`
+
+### Example Usage
+
+```go
+package main
+
+import(
+	"context"
+	"os"
+	polargo "github.com/polarsource/polar-go"
+	"log"
+)
+
+func main() {
+    ctx := context.Background()
+
+    s := polargo.New(
+        polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
+    )
+
+    res, err := s.Customers.GetStateExternal(ctx, "<id>")
+    if err != nil {
+        log.Fatal(err)
+    }
+    if res.CustomerState != nil {
+        // handle response
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                | Type                                                     | Required                                                 | Description                                              |
+| -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- |
+| `ctx`                                                    | [context.Context](https://pkg.go.dev/context#Context)    | :heavy_check_mark:                                       | The context to use for the request.                      |
+| `externalID`                                             | *string*                                                 | :heavy_check_mark:                                       | The customer external ID.                                |
+| `opts`                                                   | [][operations.Option](../../models/operations/option.md) | :heavy_minus_sign:                                       | The options for this request.                            |
+
+### Response
+
+**[*operations.CustomersGetStateExternalResponse](../../models/operations/customersgetstateexternalresponse.md), error**
 
 ### Errors
 

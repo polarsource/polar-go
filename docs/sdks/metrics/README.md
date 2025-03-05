@@ -42,6 +42,11 @@ func main() {
         StartDate: types.MustDateFromString("2025-02-06"),
         EndDate: types.MustDateFromString("2024-09-04"),
         Interval: components.TimeIntervalWeek,
+        OrganizationID: polargo.Pointer(operations.CreateMetricsGetQueryParamOrganizationIDFilterArrayOfStr(
+            []string{
+                "1dbfc517-0bbf-4301-9ba8-555ca42b9737",
+            },
+        )),
     })
     if err != nil {
         log.Fatal(err)

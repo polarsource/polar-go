@@ -7,7 +7,7 @@ Sent when a benefit is updated.
 
 ## Fields
 
-| Field                                                    | Type                                                     | Required                                                 | Description                                              |
-| -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- |
-| `Type`                                                   | *string*                                                 | :heavy_check_mark:                                       | N/A                                                      |
-| `Data`                                                   | [components.Benefit](../../models/components/benefit.md) | :heavy_check_mark:                                       | N/A                                                      |
+| Field                                                    | Type                                                     | Required                                                 | Description                                              | Example                                                  |
+| -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- |
+| `Type`                                                   | *string*                                                 | :heavy_check_mark:                                       | N/A                                                      | benefit.updated                                          |
+| `Data`                                                   | [components.Benefit](../../models/components/benefit.md) | :heavy_check_mark:                                       | N/A                                                      |                                                          |

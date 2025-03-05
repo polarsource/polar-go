@@ -13,25 +13,38 @@ type CustomerOrderSubscription struct {
 	// Last modification timestamp of the object.
 	ModifiedAt *time.Time `json:"modified_at"`
 	// The ID of the object.
-	ID                          string                        `json:"id"`
-	Amount                      *int64                        `json:"amount"`
-	Currency                    *string                       `json:"currency"`
-	RecurringInterval           SubscriptionRecurringInterval `json:"recurring_interval"`
-	Status                      SubscriptionStatus            `json:"status"`
-	CurrentPeriodStart          time.Time                     `json:"current_period_start"`
-	CurrentPeriodEnd            *time.Time                    `json:"current_period_end"`
-	CancelAtPeriodEnd           bool                          `json:"cancel_at_period_end"`
-	CanceledAt                  *time.Time                    `json:"canceled_at"`
-	StartedAt                   *time.Time                    `json:"started_at"`
-	EndsAt                      *time.Time                    `json:"ends_at"`
-	EndedAt                     *time.Time                    `json:"ended_at"`
-	CustomerID                  string                        `json:"customer_id"`
-	ProductID                   string                        `json:"product_id"`
-	PriceID                     string                        `json:"price_id"`
-	DiscountID                  *string                       `json:"discount_id"`
-	CheckoutID                  *string                       `json:"checkout_id"`
-	CustomerCancellationReason  *CustomerCancellationReason   `json:"customer_cancellation_reason"`
-	CustomerCancellationComment *string                       `json:"customer_cancellation_comment"`
+	ID string `json:"id"`
+	// The amount of the subscription.
+	Amount *int64 `json:"amount"`
+	// The currency of the subscription.
+	Currency          *string                       `json:"currency"`
+	RecurringInterval SubscriptionRecurringInterval `json:"recurring_interval"`
+	Status            SubscriptionStatus            `json:"status"`
+	// The start timestamp of the current billing period.
+	CurrentPeriodStart time.Time `json:"current_period_start"`
+	// The end timestamp of the current billing period.
+	CurrentPeriodEnd *time.Time `json:"current_period_end"`
+	// Whether the subscription will be canceled at the end of the current period.
+	CancelAtPeriodEnd bool `json:"cancel_at_period_end"`
+	// The timestamp when the subscription was canceled. The subscription might still be active if `cancel_at_period_end` is `true`.
+	CanceledAt *time.Time `json:"canceled_at"`
+	// The timestamp when the subscription started.
+	StartedAt *time.Time `json:"started_at"`
+	// The timestamp when the subscription will end.
+	EndsAt *time.Time `json:"ends_at"`
+	// The timestamp when the subscription ended.
+	EndedAt *time.Time `json:"ended_at"`
+	// The ID of the subscribed customer.
+	CustomerID string `json:"customer_id"`
+	// The ID of the subscribed product.
+	ProductID string `json:"product_id"`
+	// The ID of the subscribed price.
+	PriceID string `json:"price_id"`
+	// The ID of the applied discount, if any.
+	DiscountID                  *string                     `json:"discount_id"`
+	CheckoutID                  *string                     `json:"checkout_id"`
+	CustomerCancellationReason  *CustomerCancellationReason `json:"customer_cancellation_reason"`
+	CustomerCancellationComment *string                     `json:"customer_cancellation_comment"`
 }
 
 func (c CustomerOrderSubscription) MarshalJSON() ([]byte, error) {

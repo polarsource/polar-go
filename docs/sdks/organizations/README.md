@@ -162,7 +162,7 @@ func main() {
         polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )
 
-    res, err := s.Organizations.Get(ctx, "<value>")
+    res, err := s.Organizations.Get(ctx, "1dbfc517-0bbf-4301-9ba8-555ca42b9737")
     if err != nil {
         log.Fatal(err)
     }
@@ -174,11 +174,11 @@ func main() {
 
 ### Parameters
 
-| Parameter                                                | Type                                                     | Required                                                 | Description                                              |
-| -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- |
-| `ctx`                                                    | [context.Context](https://pkg.go.dev/context#Context)    | :heavy_check_mark:                                       | The context to use for the request.                      |
-| `id`                                                     | *string*                                                 | :heavy_check_mark:                                       | N/A                                                      |
-| `opts`                                                   | [][operations.Option](../../models/operations/option.md) | :heavy_minus_sign:                                       | The options for this request.                            |
+| Parameter                                                | Type                                                     | Required                                                 | Description                                              | Example                                                  |
+| -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- |
+| `ctx`                                                    | [context.Context](https://pkg.go.dev/context#Context)    | :heavy_check_mark:                                       | The context to use for the request.                      |                                                          |
+| `id`                                                     | *string*                                                 | :heavy_check_mark:                                       | N/A                                                      | 1dbfc517-0bbf-4301-9ba8-555ca42b9737                     |
+| `opts`                                                   | [][operations.Option](../../models/operations/option.md) | :heavy_minus_sign:                                       | The options for this request.                            |                                                          |
 
 ### Response
 
@@ -218,7 +218,7 @@ func main() {
         polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )
 
-    res, err := s.Organizations.Update(ctx, "<value>", components.OrganizationUpdate{})
+    res, err := s.Organizations.Update(ctx, "1dbfc517-0bbf-4301-9ba8-555ca42b9737", components.OrganizationUpdate{})
     if err != nil {
         log.Fatal(err)
     }
@@ -230,12 +230,12 @@ func main() {
 
 ### Parameters
 
-| Parameter                                                                      | Type                                                                           | Required                                                                       | Description                                                                    |
-| ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ |
-| `ctx`                                                                          | [context.Context](https://pkg.go.dev/context#Context)                          | :heavy_check_mark:                                                             | The context to use for the request.                                            |
-| `id`                                                                           | *string*                                                                       | :heavy_check_mark:                                                             | N/A                                                                            |
-| `organizationUpdate`                                                           | [components.OrganizationUpdate](../../models/components/organizationupdate.md) | :heavy_check_mark:                                                             | N/A                                                                            |
-| `opts`                                                                         | [][operations.Option](../../models/operations/option.md)                       | :heavy_minus_sign:                                                             | The options for this request.                                                  |
+| Parameter                                                                      | Type                                                                           | Required                                                                       | Description                                                                    | Example                                                                        |
+| ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ |
+| `ctx`                                                                          | [context.Context](https://pkg.go.dev/context#Context)                          | :heavy_check_mark:                                                             | The context to use for the request.                                            |                                                                                |
+| `id`                                                                           | *string*                                                                       | :heavy_check_mark:                                                             | N/A                                                                            | 1dbfc517-0bbf-4301-9ba8-555ca42b9737                                           |
+| `organizationUpdate`                                                           | [components.OrganizationUpdate](../../models/components/organizationupdate.md) | :heavy_check_mark:                                                             | N/A                                                                            |                                                                                |
+| `opts`                                                                         | [][operations.Option](../../models/operations/option.md)                       | :heavy_minus_sign:                                                             | The options for this request.                                                  |                                                                                |
 
 ### Response
 

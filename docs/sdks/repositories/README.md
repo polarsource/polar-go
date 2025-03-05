@@ -35,7 +35,13 @@ func main() {
         polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )
 
-    res, err := s.Repositories.List(ctx, operations.RepositoriesListRequest{})
+    res, err := s.Repositories.List(ctx, operations.RepositoriesListRequest{
+        OrganizationID: polargo.Pointer(operations.CreateQueryParamOrganizationIDFilterArrayOfStr(
+            []string{
+                "1dbfc517-0bbf-4301-9ba8-555ca42b9737",
+            },
+        )),
+    })
     if err != nil {
         log.Fatal(err)
     }

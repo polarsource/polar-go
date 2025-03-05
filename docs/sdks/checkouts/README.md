@@ -39,7 +39,13 @@ func main() {
         polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )
 
-    res, err := s.Checkouts.List(ctx, operations.CheckoutsListRequest{})
+    res, err := s.Checkouts.List(ctx, operations.CheckoutsListRequest{
+        OrganizationID: polargo.Pointer(operations.CreateCheckoutsListQueryParamOrganizationIDFilterArrayOfStr(
+            []string{
+                "1dbfc517-0bbf-4301-9ba8-555ca42b9737",
+            },
+        )),
+    })
     if err != nil {
         log.Fatal(err)
     }
@@ -108,6 +114,9 @@ func main() {
 
     res, err := s.Checkouts.Create(ctx, components.CreateCheckoutCreateCheckoutPriceCreate(
         components.CheckoutPriceCreate{
+            CustomerBillingAddress: &components.Address{
+                Country: "SE",
+            },
             SuccessURL: polargo.String("https://probable-heating.com/"),
             ProductPriceID: "<value>",
         },

@@ -35,7 +35,13 @@ func main() {
         polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )
 
-    res, err := s.Events.List(ctx, operations.EventsListRequest{})
+    res, err := s.Events.List(ctx, operations.EventsListRequest{
+        OrganizationID: polargo.Pointer(operations.CreateEventsListQueryParamOrganizationIDFilterArrayOfStr(
+            []string{
+                "1dbfc517-0bbf-4301-9ba8-555ca42b9737",
+            },
+        )),
+    })
     if err != nil {
         log.Fatal(err)
     }
@@ -162,12 +168,14 @@ func main() {
             components.CreateEventsEventCreateCustomer(
                 components.EventCreateCustomer{
                     Name: "<value>",
+                    OrganizationID: polargo.String("1dbfc517-0bbf-4301-9ba8-555ca42b9737"),
                     CustomerID: "<value>",
                 },
             ),
             components.CreateEventsEventCreateExternalCustomer(
                 components.EventCreateExternalCustomer{
                     Name: "<value>",
+                    OrganizationID: polargo.String("1dbfc517-0bbf-4301-9ba8-555ca42b9737"),
                     ExternalCustomerID: "<id>",
                 },
             ),

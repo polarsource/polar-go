@@ -159,24 +159,26 @@ func (u CustomerTaxID) MarshalJSON() ([]byte, error) {
 
 // Customer - A customer in an organization.
 type Customer struct {
+	// The ID of the customer.
+	ID string `json:"id"`
 	// Creation timestamp of the object.
 	CreatedAt time.Time `json:"created_at"`
 	// Last modification timestamp of the object.
-	ModifiedAt *time.Time `json:"modified_at"`
-	// The ID of the object.
-	ID       string                       `json:"id"`
-	Metadata map[string]CustomerMetadata1 `json:"metadata"`
+	ModifiedAt *time.Time                   `json:"modified_at"`
+	Metadata   map[string]CustomerMetadata1 `json:"metadata"`
 	// The ID of the customer in your system. This must be unique within the organization. Once set, it can't be updated.
 	ExternalID *string `json:"external_id"`
 	// The email address of the customer. This must be unique within the organization.
 	Email string `json:"email"`
 	// Whether the customer email address is verified. The address is automatically verified when the customer accesses the customer portal using their email address.
-	EmailVerified  bool             `json:"email_verified"`
+	EmailVerified bool `json:"email_verified"`
+	// The name of the customer.
 	Name           *string          `json:"name"`
 	BillingAddress *Address         `json:"billing_address"`
 	TaxID          []*CustomerTaxID `json:"tax_id"`
-	OrganizationID string           `json:"organization_id"`
-	AvatarURL      string           `json:"avatar_url"`
+	// The ID of the organization owning the customer.
+	OrganizationID string `json:"organization_id"`
+	AvatarURL      string `json:"avatar_url"`
 }
 
 func (c Customer) MarshalJSON() ([]byte, error) {
@@ -188,6 +190,13 @@ func (c *Customer) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
+}
+
+func (o *Customer) GetID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ID
 }
 
 func (o *Customer) GetCreatedAt() time.Time {
@@ -202,13 +211,6 @@ func (o *Customer) GetModifiedAt() *time.Time {
 		return nil
 	}
 	return o.ModifiedAt
-}
-
-func (o *Customer) GetID() string {
-	if o == nil {
-		return ""
-	}
-	return o.ID
 }
 
 func (o *Customer) GetMetadata() map[string]CustomerMetadata1 {
