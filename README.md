@@ -116,6 +116,7 @@ func main() {
 					"<value>",
 				),
 			},
+			CustomerExternalID: polargo.String("<id>"),
 			Products: []components.CheckoutProduct{
 				components.CheckoutProduct{
 					CreatedAt:         types.MustTimeFromString("2024-05-27T05:08:06.235Z"),
