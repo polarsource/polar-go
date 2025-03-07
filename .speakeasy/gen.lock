@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: e7f2de70-a9ae-48d3-92f6-da15e6733a27
 management:
-  docChecksum: d46974a8f679476a3e514e7380f08ad9
+  docChecksum: a245d0e8fa1b557ee953898ee04f11ae
   docVersion: 0.1.0
-  speakeasyVersion: 1.510.0
-  generationVersion: 2.541.0
-  releaseVersion: 0.4.4
-  configChecksum: eace0267e06809e7643d2bd63055dd47
+  speakeasyVersion: 1.513.2
+  generationVersion: 2.545.2
+  releaseVersion: 0.4.5
+  configChecksum: bede3c31e01545c502048128aef4abe6
   repoURL: https://github.com/polarsource/polar-go.git
   installationURL: https://github.com/polarsource/polar-go
 features:
@@ -29,7 +29,7 @@ features:
     methodSecurity: 2.82.3
     nameOverrides: 2.81.2
     nullables: 0.1.1
-    pagination: 2.82.3
+    pagination: 2.82.4
     responseFormat: 0.1.2
     retries: 2.83.2
     sdkHooks: 0.1.0
@@ -3168,7 +3168,7 @@ examples:
   _endpointcustomer_updated_post:
     speakeasy-default-endpointcustomer-updated-post:
       requestBody:
-        application/json: {"data": {"id": "992fae2a-2a17-4b7a-8d9e-e287cf90131b", "created_at": "2023-10-11T01:52:16.669Z", "modified_at": "2024-07-17T00:54:05.167Z", "metadata": {"key": 906944, "key1": "<value>"}, "external_id": "usr_1337", "email": "customer@example.com", "email_verified": true, "name": "John Doe", "billing_address": {"country": "SE"}, "tax_id": ["FR61954506077", "eu_vat"], "organization_id": "1dbfc517-0bbf-4301-9ba8-555ca42b9737", "avatar_url": "https://www.gravatar.com/avatar/xxx?d=blank"}}
+        application/json: {"data": {"id": "992fae2a-2a17-4b7a-8d9e-e287cf90131b", "created_at": "2023-10-11T01:52:16.669Z", "modified_at": "2024-07-17T00:54:05.167Z", "metadata": {"key": 906944, "key1": "<value>"}, "external_id": "usr_1337", "email": "customer@example.com", "email_verified": true, "name": "John Doe", "billing_address": {"country": "US"}, "tax_id": ["FR61954506077", "eu_vat"], "organization_id": "1dbfc517-0bbf-4301-9ba8-555ca42b9737", "avatar_url": "https://www.gravatar.com/avatar/xxx?d=blank"}}
       responses:
         "200":
           application/json: "<value>"
