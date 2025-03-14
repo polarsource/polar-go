@@ -214,9 +214,9 @@ type CustomerStateSubscription struct {
 	Metadata        map[string]CustomerStateSubscriptionMetadata         `json:"metadata"`
 	status          string                                               `const:"active" json:"status"`
 	// The amount of the subscription.
-	Amount *int64 `json:"amount"`
+	Amount int64 `json:"amount"`
 	// The currency of the subscription.
-	Currency          *string                       `json:"currency"`
+	Currency          string                        `json:"currency"`
 	RecurringInterval SubscriptionRecurringInterval `json:"recurring_interval"`
 	// The start timestamp of the current billing period.
 	CurrentPeriodStart time.Time `json:"current_period_start"`
@@ -232,10 +232,10 @@ type CustomerStateSubscription struct {
 	EndsAt *time.Time `json:"ends_at"`
 	// The ID of the subscribed product.
 	ProductID string `json:"product_id"`
-	// The ID of the subscribed price.
-	PriceID string `json:"price_id"`
 	// The ID of the applied discount, if any.
 	DiscountID *string `json:"discount_id"`
+	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
+	PriceID string `json:"price_id"`
 }
 
 func (c CustomerStateSubscription) MarshalJSON() ([]byte, error) {
@@ -288,16 +288,16 @@ func (o *CustomerStateSubscription) GetStatus() string {
 	return "active"
 }
 
-func (o *CustomerStateSubscription) GetAmount() *int64 {
+func (o *CustomerStateSubscription) GetAmount() int64 {
 	if o == nil {
-		return nil
+		return 0
 	}
 	return o.Amount
 }
 
-func (o *CustomerStateSubscription) GetCurrency() *string {
+func (o *CustomerStateSubscription) GetCurrency() string {
 	if o == nil {
-		return nil
+		return ""
 	}
 	return o.Currency
 }
@@ -358,16 +358,16 @@ func (o *CustomerStateSubscription) GetProductID() string {
 	return o.ProductID
 }
 
-func (o *CustomerStateSubscription) GetPriceID() string {
-	if o == nil {
-		return ""
-	}
-	return o.PriceID
-}
-
 func (o *CustomerStateSubscription) GetDiscountID() *string {
 	if o == nil {
 		return nil
 	}
 	return o.DiscountID
+}
+
+func (o *CustomerStateSubscription) GetPriceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.PriceID
 }

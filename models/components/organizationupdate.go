@@ -7,18 +7,34 @@ import (
 )
 
 type OrganizationUpdate struct {
-	Name                              *string                           `json:"name,omitempty"`
-	AvatarURL                         *string                           `json:"avatar_url,omitempty"`
-	DefaultUpfrontSplitToContributors *int64                            `json:"default_upfront_split_to_contributors,omitempty"`
-	PledgeBadgeShowAmount             *bool                             `default:"false" json:"pledge_badge_show_amount"`
-	BillingEmail                      *string                           `json:"billing_email,omitempty"`
-	DefaultBadgeCustomContent         *string                           `json:"default_badge_custom_content,omitempty"`
-	PledgeMinimumAmount               *int64                            `default:"2000" json:"pledge_minimum_amount"`
-	TotalMonthlySpendingLimit         *int64                            `json:"total_monthly_spending_limit,omitempty"`
-	PerUserMonthlySpendingLimit       *int64                            `json:"per_user_monthly_spending_limit,omitempty"`
-	ProfileSettings                   *OrganizationProfileSettings      `json:"profile_settings,omitempty"`
-	FeatureSettings                   *OrganizationFeatureSettings      `json:"feature_settings,omitempty"`
-	SubscriptionSettings              *OrganizationSubscriptionSettings `json:"subscription_settings,omitempty"`
+	Name      *string `json:"name,omitempty"`
+	AvatarURL *string `json:"avatar_url,omitempty"`
+	// Public support email.
+	Email *string `json:"email,omitempty"`
+	// Official website of the organization.
+	Website *string `json:"website,omitempty"`
+	// Links to social profiles.
+	Socials []OrganizationSocialLink `json:"socials,omitempty"`
+	// Additional, private, business details Polar needs about active organizations for compliance (KYC).
+	Details              *OrganizationDetails              `json:"details,omitempty"`
+	FeatureSettings      *OrganizationFeatureSettings      `json:"feature_settings,omitempty"`
+	SubscriptionSettings *OrganizationSubscriptionSettings `json:"subscription_settings,omitempty"`
+	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
+	DefaultUpfrontSplitToContributors *int64 `json:"default_upfront_split_to_contributors,omitempty"`
+	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
+	PledgeBadgeShowAmount *bool `default:"false" json:"pledge_badge_show_amount"`
+	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
+	BillingEmail *string `json:"billing_email,omitempty"`
+	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
+	DefaultBadgeCustomContent *string `json:"default_badge_custom_content,omitempty"`
+	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
+	PledgeMinimumAmount *int64 `default:"2000" json:"pledge_minimum_amount"`
+	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
+	TotalMonthlySpendingLimit *int64 `json:"total_monthly_spending_limit,omitempty"`
+	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
+	PerUserMonthlySpendingLimit *int64 `json:"per_user_monthly_spending_limit,omitempty"`
+	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
+	ProfileSettings *OrganizationProfileSettings `json:"profile_settings,omitempty"`
 }
 
 func (o OrganizationUpdate) MarshalJSON() ([]byte, error) {
@@ -44,6 +60,48 @@ func (o *OrganizationUpdate) GetAvatarURL() *string {
 		return nil
 	}
 	return o.AvatarURL
+}
+
+func (o *OrganizationUpdate) GetEmail() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Email
+}
+
+func (o *OrganizationUpdate) GetWebsite() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Website
+}
+
+func (o *OrganizationUpdate) GetSocials() []OrganizationSocialLink {
+	if o == nil {
+		return nil
+	}
+	return o.Socials
+}
+
+func (o *OrganizationUpdate) GetDetails() *OrganizationDetails {
+	if o == nil {
+		return nil
+	}
+	return o.Details
+}
+
+func (o *OrganizationUpdate) GetFeatureSettings() *OrganizationFeatureSettings {
+	if o == nil {
+		return nil
+	}
+	return o.FeatureSettings
+}
+
+func (o *OrganizationUpdate) GetSubscriptionSettings() *OrganizationSubscriptionSettings {
+	if o == nil {
+		return nil
+	}
+	return o.SubscriptionSettings
 }
 
 func (o *OrganizationUpdate) GetDefaultUpfrontSplitToContributors() *int64 {
@@ -100,18 +158,4 @@ func (o *OrganizationUpdate) GetProfileSettings() *OrganizationProfileSettings {
 		return nil
 	}
 	return o.ProfileSettings
-}
-
-func (o *OrganizationUpdate) GetFeatureSettings() *OrganizationFeatureSettings {
-	if o == nil {
-		return nil
-	}
-	return o.FeatureSettings
-}
-
-func (o *OrganizationUpdate) GetSubscriptionSettings() *OrganizationSubscriptionSettings {
-	if o == nil {
-		return nil
-	}
-	return o.SubscriptionSettings
 }

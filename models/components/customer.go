@@ -178,7 +178,9 @@ type Customer struct {
 	TaxID          []*CustomerTaxID `json:"tax_id"`
 	// The ID of the organization owning the customer.
 	OrganizationID string `json:"organization_id"`
-	AvatarURL      string `json:"avatar_url"`
+	// Timestamp for when the customer was soft deleted.
+	DeletedAt *time.Time `json:"deleted_at"`
+	AvatarURL string     `json:"avatar_url"`
 }
 
 func (c Customer) MarshalJSON() ([]byte, error) {
@@ -267,6 +269,13 @@ func (o *Customer) GetOrganizationID() string {
 		return ""
 	}
 	return o.OrganizationID
+}
+
+func (o *Customer) GetDeletedAt() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.DeletedAt
 }
 
 func (o *Customer) GetAvatarURL() string {

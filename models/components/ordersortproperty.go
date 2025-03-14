@@ -14,6 +14,8 @@ const (
 	OrderSortPropertyMinusCreatedAt    OrderSortProperty = "-created_at"
 	OrderSortPropertyAmount            OrderSortProperty = "amount"
 	OrderSortPropertyMinusAmount       OrderSortProperty = "-amount"
+	OrderSortPropertyNetAmount         OrderSortProperty = "net_amount"
+	OrderSortPropertyMinusNetAmount    OrderSortProperty = "-net_amount"
 	OrderSortPropertyCustomer          OrderSortProperty = "customer"
 	OrderSortPropertyMinusCustomer     OrderSortProperty = "-customer"
 	OrderSortPropertyProduct           OrderSortProperty = "product"
@@ -40,6 +42,10 @@ func (e *OrderSortProperty) UnmarshalJSON(data []byte) error {
 	case "amount":
 		fallthrough
 	case "-amount":
+		fallthrough
+	case "net_amount":
+		fallthrough
+	case "-net_amount":
 		fallthrough
 	case "customer":
 		fallthrough

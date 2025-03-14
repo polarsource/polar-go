@@ -562,11 +562,11 @@ func main() {
 					Required: true,
 				},
 			},
-			CustomerMetadata: map[string]components.CheckoutCustomerMetadata{
-				"key": components.CreateCheckoutCustomerMetadataStr(
+			CustomerMetadata: map[string]components.CustomerMetadata{
+				"key": components.CreateCustomerMetadataStr(
 					"<value>",
 				),
-				"key1": components.CreateCheckoutCustomerMetadataInteger(
+				"key1": components.CreateCustomerMetadataInteger(
 					790078,
 				),
 			},

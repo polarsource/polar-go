@@ -16,6 +16,9 @@ const (
 	CustomerOrderProductPriceTypeProductPrice                CustomerOrderProductPriceType = "ProductPrice"
 )
 
+// CustomerOrderProductPrice
+//
+// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
 type CustomerOrderProductPrice struct {
 	LegacyRecurringProductPrice *LegacyRecurringProductPrice `queryParam:"inline"`
 	ProductPrice                *ProductPrice                `queryParam:"inline"`
@@ -76,20 +79,40 @@ type CustomerOrder struct {
 	// Creation timestamp of the object.
 	CreatedAt time.Time `json:"created_at"`
 	// Last modification timestamp of the object.
-	ModifiedAt     *time.Time `json:"modified_at"`
-	ID             string     `json:"id"`
-	Amount         int64      `json:"amount"`
-	TaxAmount      int64      `json:"tax_amount"`
-	Currency       string     `json:"currency"`
-	CustomerID     string     `json:"customer_id"`
-	ProductID      string     `json:"product_id"`
-	ProductPriceID string     `json:"product_price_id"`
-	SubscriptionID *string    `json:"subscription_id"`
+	ModifiedAt *time.Time `json:"modified_at"`
+	ID         string     `json:"id"`
+	// Amount in cents, before discounts and taxes.
+	SubtotalAmount int64 `json:"subtotal_amount"`
+	// Discount amount in cents.
+	DiscountAmount int64 `json:"discount_amount"`
+	// Amount in cents, after discounts but before taxes.
+	NetAmount int64 `json:"net_amount"`
+	// Amount in cents, after discounts but before taxes.
+	//
 	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
-	UserID       string                     `json:"user_id"`
-	Product      CustomerOrderProduct       `json:"product"`
+	Amount int64 `json:"amount"`
+	// Sales tax amount in cents.
+	TaxAmount int64 `json:"tax_amount"`
+	// Amount in cents, after discounts and taxes.
+	TotalAmount int64 `json:"total_amount"`
+	// Amount refunded in cents.
+	RefundedAmount int64 `json:"refunded_amount"`
+	// Sales tax refunded in cents.
+	RefundedTaxAmount int64  `json:"refunded_tax_amount"`
+	Currency          string `json:"currency"`
+	CustomerID        string `json:"customer_id"`
+	ProductID         string `json:"product_id"`
+	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
+	ProductPriceID string  `json:"product_price_id"`
+	SubscriptionID *string `json:"subscription_id"`
+	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
+	UserID  string               `json:"user_id"`
+	Product CustomerOrderProduct `json:"product"`
+	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
 	ProductPrice CustomerOrderProductPrice  `json:"product_price"`
 	Subscription *CustomerOrderSubscription `json:"subscription"`
+	// Line items composing the order.
+	Items []OrderItemSchema `json:"items"`
 }
 
 func (c CustomerOrder) MarshalJSON() ([]byte, error) {
@@ -124,6 +147,27 @@ func (o *CustomerOrder) GetID() string {
 	return o.ID
 }
 
+func (o *CustomerOrder) GetSubtotalAmount() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.SubtotalAmount
+}
+
+func (o *CustomerOrder) GetDiscountAmount() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.DiscountAmount
+}
+
+func (o *CustomerOrder) GetNetAmount() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.NetAmount
+}
+
 func (o *CustomerOrder) GetAmount() int64 {
 	if o == nil {
 		return 0
@@ -136,6 +180,27 @@ func (o *CustomerOrder) GetTaxAmount() int64 {
 		return 0
 	}
 	return o.TaxAmount
+}
+
+func (o *CustomerOrder) GetTotalAmount() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.TotalAmount
+}
+
+func (o *CustomerOrder) GetRefundedAmount() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.RefundedAmount
+}
+
+func (o *CustomerOrder) GetRefundedTaxAmount() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.RefundedTaxAmount
 }
 
 func (o *CustomerOrder) GetCurrency() string {
@@ -199,4 +264,11 @@ func (o *CustomerOrder) GetSubscription() *CustomerOrderSubscription {
 		return nil
 	}
 	return o.Subscription
+}
+
+func (o *CustomerOrder) GetItems() []OrderItemSchema {
+	if o == nil {
+		return []OrderItemSchema{}
+	}
+	return o.Items
 }

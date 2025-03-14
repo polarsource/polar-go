@@ -181,6 +181,8 @@ type CustomerState struct {
 	TaxID          []*CustomerStateTaxID `json:"tax_id"`
 	// The ID of the organization owning the customer.
 	OrganizationID string `json:"organization_id"`
+	// Timestamp for when the customer was soft deleted.
+	DeletedAt *time.Time `json:"deleted_at"`
 	// The customer's active subscriptions.
 	ActiveSubscriptions []CustomerStateSubscription `json:"active_subscriptions"`
 	// The customer's active benefit grants.
@@ -274,6 +276,13 @@ func (o *CustomerState) GetOrganizationID() string {
 		return ""
 	}
 	return o.OrganizationID
+}
+
+func (o *CustomerState) GetDeletedAt() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.DeletedAt
 }
 
 func (o *CustomerState) GetActiveSubscriptions() []CustomerStateSubscription {

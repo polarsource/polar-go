@@ -142,6 +142,8 @@ type BenefitsListRequest struct {
 	OrganizationID *BenefitsListQueryParamOrganizationIDFilter `queryParam:"style=form,explode=true,name=organization_id"`
 	// Filter by benefit type.
 	TypeFilter *BenefitTypeFilter `queryParam:"style=form,explode=true,name=type"`
+	// Filter by description.
+	Query *string `queryParam:"style=form,explode=true,name=query"`
 	// Page number, defaults to 1.
 	Page *int64 `default:"1" queryParam:"style=form,explode=true,name=page"`
 	// Size of a page, defaults to 10. Maximum is 100.
@@ -171,6 +173,13 @@ func (o *BenefitsListRequest) GetTypeFilter() *BenefitTypeFilter {
 		return nil
 	}
 	return o.TypeFilter
+}
+
+func (o *BenefitsListRequest) GetQuery() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Query
 }
 
 func (o *BenefitsListRequest) GetPage() *int64 {

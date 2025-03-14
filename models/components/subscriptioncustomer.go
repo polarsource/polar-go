@@ -94,58 +94,58 @@ func (u SubscriptionCustomerMetadata) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type SubscriptionCustomerMetadata: all fields are null")
 }
 
-type SubscriptionCustomerTaxIDType string
+type TaxIDType string
 
 const (
-	SubscriptionCustomerTaxIDTypeStr         SubscriptionCustomerTaxIDType = "str"
-	SubscriptionCustomerTaxIDTypeTaxIDFormat SubscriptionCustomerTaxIDType = "TaxIDFormat"
+	TaxIDTypeStr         TaxIDType = "str"
+	TaxIDTypeTaxIDFormat TaxIDType = "TaxIDFormat"
 )
 
-type SubscriptionCustomerTaxID struct {
+type TaxID struct {
 	Str         *string      `queryParam:"inline"`
 	TaxIDFormat *TaxIDFormat `queryParam:"inline"`
 
-	Type SubscriptionCustomerTaxIDType
+	Type TaxIDType
 }
 
-func CreateSubscriptionCustomerTaxIDStr(str string) SubscriptionCustomerTaxID {
-	typ := SubscriptionCustomerTaxIDTypeStr
+func CreateTaxIDStr(str string) TaxID {
+	typ := TaxIDTypeStr
 
-	return SubscriptionCustomerTaxID{
+	return TaxID{
 		Str:  &str,
 		Type: typ,
 	}
 }
 
-func CreateSubscriptionCustomerTaxIDTaxIDFormat(taxIDFormat TaxIDFormat) SubscriptionCustomerTaxID {
-	typ := SubscriptionCustomerTaxIDTypeTaxIDFormat
+func CreateTaxIDTaxIDFormat(taxIDFormat TaxIDFormat) TaxID {
+	typ := TaxIDTypeTaxIDFormat
 
-	return SubscriptionCustomerTaxID{
+	return TaxID{
 		TaxIDFormat: &taxIDFormat,
 		Type:        typ,
 	}
 }
 
-func (u *SubscriptionCustomerTaxID) UnmarshalJSON(data []byte) error {
+func (u *TaxID) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
 	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
 		u.Str = &str
-		u.Type = SubscriptionCustomerTaxIDTypeStr
+		u.Type = TaxIDTypeStr
 		return nil
 	}
 
 	var taxIDFormat TaxIDFormat = TaxIDFormat("")
 	if err := utils.UnmarshalJSON(data, &taxIDFormat, "", true, true); err == nil {
 		u.TaxIDFormat = &taxIDFormat
-		u.Type = SubscriptionCustomerTaxIDTypeTaxIDFormat
+		u.Type = TaxIDTypeTaxIDFormat
 		return nil
 	}
 
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SubscriptionCustomerTaxID", string(data))
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for TaxID", string(data))
 }
 
-func (u SubscriptionCustomerTaxID) MarshalJSON() ([]byte, error) {
+func (u TaxID) MarshalJSON() ([]byte, error) {
 	if u.Str != nil {
 		return utils.MarshalJSON(u.Str, "", true)
 	}
@@ -154,7 +154,7 @@ func (u SubscriptionCustomerTaxID) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.TaxIDFormat, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type SubscriptionCustomerTaxID: all fields are null")
+	return nil, errors.New("could not marshal union type TaxID: all fields are null")
 }
 
 type SubscriptionCustomer struct {
@@ -172,12 +172,14 @@ type SubscriptionCustomer struct {
 	// Whether the customer email address is verified. The address is automatically verified when the customer accesses the customer portal using their email address.
 	EmailVerified bool `json:"email_verified"`
 	// The name of the customer.
-	Name           *string                      `json:"name"`
-	BillingAddress *Address                     `json:"billing_address"`
-	TaxID          []*SubscriptionCustomerTaxID `json:"tax_id"`
+	Name           *string  `json:"name"`
+	BillingAddress *Address `json:"billing_address"`
+	TaxID          []*TaxID `json:"tax_id"`
 	// The ID of the organization owning the customer.
 	OrganizationID string `json:"organization_id"`
-	AvatarURL      string `json:"avatar_url"`
+	// Timestamp for when the customer was soft deleted.
+	DeletedAt *time.Time `json:"deleted_at"`
+	AvatarURL string     `json:"avatar_url"`
 }
 
 func (s SubscriptionCustomer) MarshalJSON() ([]byte, error) {
@@ -254,7 +256,7 @@ func (o *SubscriptionCustomer) GetBillingAddress() *Address {
 	return o.BillingAddress
 }
 
-func (o *SubscriptionCustomer) GetTaxID() []*SubscriptionCustomerTaxID {
+func (o *SubscriptionCustomer) GetTaxID() []*TaxID {
 	if o == nil {
 		return nil
 	}
@@ -266,6 +268,13 @@ func (o *SubscriptionCustomer) GetOrganizationID() string {
 		return ""
 	}
 	return o.OrganizationID
+}
+
+func (o *SubscriptionCustomer) GetDeletedAt() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.DeletedAt
 }
 
 func (o *SubscriptionCustomer) GetAvatarURL() string {

@@ -13,24 +13,44 @@ type Organization struct {
 	// Last modification timestamp of the object.
 	ModifiedAt *time.Time `json:"modified_at"`
 	// The organization ID.
-	ID                                string  `json:"id"`
-	Name                              string  `json:"name"`
-	Slug                              string  `json:"slug"`
-	AvatarURL                         *string `json:"avatar_url"`
-	Bio                               *string `json:"bio"`
-	Company                           *string `json:"company"`
-	Blog                              *string `json:"blog"`
-	Location                          *string `json:"location"`
-	Email                             *string `json:"email"`
-	TwitterUsername                   *string `json:"twitter_username"`
-	PledgeMinimumAmount               int64   `json:"pledge_minimum_amount"`
-	PledgeBadgeShowAmount             bool    `json:"pledge_badge_show_amount"`
-	DefaultUpfrontSplitToContributors *int64  `json:"default_upfront_split_to_contributors"`
-	// Settings for the organization profile
-	ProfileSettings *OrganizationProfileSettings `json:"profile_settings"`
-	// Settings for the organization features
+	ID string `json:"id"`
+	// Organization name shown in checkout, customer portal, emails etc.
+	Name string `json:"name"`
+	// Unique organization slug in checkout, customer portal and credit card statements.
+	Slug string `json:"slug"`
+	// Avatar URL shown in checkout, customer portal, emails etc.
+	AvatarURL *string `json:"avatar_url"`
+	// Public support email.
+	Email *string `json:"email"`
+	// Official website of the organization.
+	Website *string `json:"website"`
+	// Links to social profiles.
+	Socials []OrganizationSocialLink `json:"socials"`
+	// When the business details were submitted.
+	DetailsSubmittedAt *time.Time `json:"details_submitted_at"`
+	// Organization feature settings
 	FeatureSettings      *OrganizationFeatureSettings     `json:"feature_settings"`
 	SubscriptionSettings OrganizationSubscriptionSettings `json:"subscription_settings"`
+	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
+	Bio *string `json:"bio"`
+	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
+	Company *string `json:"company"`
+	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
+	Blog *string `json:"blog"`
+	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
+	Location *string `json:"location"`
+	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
+	TwitterUsername *string `json:"twitter_username"`
+	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
+	PledgeMinimumAmount int64 `json:"pledge_minimum_amount"`
+	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
+	PledgeBadgeShowAmount bool `json:"pledge_badge_show_amount"`
+	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
+	DefaultUpfrontSplitToContributors *int64 `json:"default_upfront_split_to_contributors"`
+	// Settings for the organization profile
+	//
+	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
+	ProfileSettings *OrganizationProfileSettings `json:"profile_settings"`
 }
 
 func (o Organization) MarshalJSON() ([]byte, error) {
@@ -86,6 +106,48 @@ func (o *Organization) GetAvatarURL() *string {
 	return o.AvatarURL
 }
 
+func (o *Organization) GetEmail() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Email
+}
+
+func (o *Organization) GetWebsite() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Website
+}
+
+func (o *Organization) GetSocials() []OrganizationSocialLink {
+	if o == nil {
+		return []OrganizationSocialLink{}
+	}
+	return o.Socials
+}
+
+func (o *Organization) GetDetailsSubmittedAt() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.DetailsSubmittedAt
+}
+
+func (o *Organization) GetFeatureSettings() *OrganizationFeatureSettings {
+	if o == nil {
+		return nil
+	}
+	return o.FeatureSettings
+}
+
+func (o *Organization) GetSubscriptionSettings() OrganizationSubscriptionSettings {
+	if o == nil {
+		return OrganizationSubscriptionSettings{}
+	}
+	return o.SubscriptionSettings
+}
+
 func (o *Organization) GetBio() *string {
 	if o == nil {
 		return nil
@@ -112,13 +174,6 @@ func (o *Organization) GetLocation() *string {
 		return nil
 	}
 	return o.Location
-}
-
-func (o *Organization) GetEmail() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Email
 }
 
 func (o *Organization) GetTwitterUsername() *string {
@@ -154,18 +209,4 @@ func (o *Organization) GetProfileSettings() *OrganizationProfileSettings {
 		return nil
 	}
 	return o.ProfileSettings
-}
-
-func (o *Organization) GetFeatureSettings() *OrganizationFeatureSettings {
-	if o == nil {
-		return nil
-	}
-	return o.FeatureSettings
-}
-
-func (o *Organization) GetSubscriptionSettings() OrganizationSubscriptionSettings {
-	if o == nil {
-		return OrganizationSubscriptionSettings{}
-	}
-	return o.SubscriptionSettings
 }

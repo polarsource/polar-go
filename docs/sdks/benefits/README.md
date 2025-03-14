@@ -38,11 +38,13 @@ func main() {
         polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )
 
-    res, err := s.Benefits.List(ctx, polargo.Pointer(operations.CreateBenefitsListQueryParamOrganizationIDFilterArrayOfStr(
-        []string{
-            "1dbfc517-0bbf-4301-9ba8-555ca42b9737",
-        },
-    )), nil, nil, nil)
+    res, err := s.Benefits.List(ctx, operations.BenefitsListRequest{
+        OrganizationID: polargo.Pointer(operations.CreateBenefitsListQueryParamOrganizationIDFilterArrayOfStr(
+            []string{
+                "1dbfc517-0bbf-4301-9ba8-555ca42b9737",
+            },
+        )),
+    })
     if err != nil {
         log.Fatal(err)
     }
@@ -66,14 +68,11 @@ func main() {
 
 ### Parameters
 
-| Parameter                                                                                                                       | Type                                                                                                                            | Required                                                                                                                        | Description                                                                                                                     |
-| ------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
-| `ctx`                                                                                                                           | [context.Context](https://pkg.go.dev/context#Context)                                                                           | :heavy_check_mark:                                                                                                              | The context to use for the request.                                                                                             |
-| `organizationID`                                                                                                                | [*operations.BenefitsListQueryParamOrganizationIDFilter](../../models/operations/benefitslistqueryparamorganizationidfilter.md) | :heavy_minus_sign:                                                                                                              | Filter by organization ID.                                                                                                      |
-| `typeFilter`                                                                                                                    | [*operations.BenefitTypeFilter](../../models/operations/benefittypefilter.md)                                                   | :heavy_minus_sign:                                                                                                              | Filter by benefit type.                                                                                                         |
-| `page`                                                                                                                          | **int64*                                                                                                                        | :heavy_minus_sign:                                                                                                              | Page number, defaults to 1.                                                                                                     |
-| `limit`                                                                                                                         | **int64*                                                                                                                        | :heavy_minus_sign:                                                                                                              | Size of a page, defaults to 10. Maximum is 100.                                                                                 |
-| `opts`                                                                                                                          | [][operations.Option](../../models/operations/option.md)                                                                        | :heavy_minus_sign:                                                                                                              | The options for this request.                                                                                                   |
+| Parameter                                                                        | Type                                                                             | Required                                                                         | Description                                                                      |
+| -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
+| `ctx`                                                                            | [context.Context](https://pkg.go.dev/context#Context)                            | :heavy_check_mark:                                                               | The context to use for the request.                                              |
+| `request`                                                                        | [operations.BenefitsListRequest](../../models/operations/benefitslistrequest.md) | :heavy_check_mark:                                                               | The request object to use for the request.                                       |
+| `opts`                                                                           | [][operations.Option](../../models/operations/option.md)                         | :heavy_minus_sign:                                                               | The options for this request.                                                    |
 
 ### Response
 
@@ -238,7 +237,7 @@ func main() {
             Properties: &components.BenefitGitHubRepositoryCreateProperties{
                 RepositoryOwner: "polarsource",
                 RepositoryName: "private_repo",
-                Permission: components.PermissionTriage,
+                Permission: components.BenefitGitHubRepositoryCreatePropertiesPermissionTriage,
             },
         },
     ))

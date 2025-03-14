@@ -3,9 +3,17 @@
 package components
 
 type OrganizationCreate struct {
-	Name                 string                            `json:"name"`
-	Slug                 string                            `json:"slug"`
-	AvatarURL            *string                           `json:"avatar_url,omitempty"`
+	Name      string  `json:"name"`
+	Slug      string  `json:"slug"`
+	AvatarURL *string `json:"avatar_url,omitempty"`
+	// Public support email.
+	Email *string `json:"email,omitempty"`
+	// Official website of the organization.
+	Website *string `json:"website,omitempty"`
+	// Link to social profiles.
+	Socials []OrganizationSocialLink `json:"socials,omitempty"`
+	// Additional, private, business details Polar needs about active organizations for compliance (KYC).
+	Details              *OrganizationDetails              `json:"details,omitempty"`
 	FeatureSettings      *OrganizationFeatureSettings      `json:"feature_settings,omitempty"`
 	SubscriptionSettings *OrganizationSubscriptionSettings `json:"subscription_settings,omitempty"`
 }
@@ -29,6 +37,34 @@ func (o *OrganizationCreate) GetAvatarURL() *string {
 		return nil
 	}
 	return o.AvatarURL
+}
+
+func (o *OrganizationCreate) GetEmail() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Email
+}
+
+func (o *OrganizationCreate) GetWebsite() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Website
+}
+
+func (o *OrganizationCreate) GetSocials() []OrganizationSocialLink {
+	if o == nil {
+		return nil
+	}
+	return o.Socials
+}
+
+func (o *OrganizationCreate) GetDetails() *OrganizationDetails {
+	if o == nil {
+		return nil
+	}
+	return o.Details
 }
 
 func (o *OrganizationCreate) GetFeatureSettings() *OrganizationFeatureSettings {

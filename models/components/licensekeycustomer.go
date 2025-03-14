@@ -94,58 +94,58 @@ func (u LicenseKeyCustomerMetadata) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type LicenseKeyCustomerMetadata: all fields are null")
 }
 
-type TaxIDType string
+type LicenseKeyCustomerTaxIDType string
 
 const (
-	TaxIDTypeStr         TaxIDType = "str"
-	TaxIDTypeTaxIDFormat TaxIDType = "TaxIDFormat"
+	LicenseKeyCustomerTaxIDTypeStr         LicenseKeyCustomerTaxIDType = "str"
+	LicenseKeyCustomerTaxIDTypeTaxIDFormat LicenseKeyCustomerTaxIDType = "TaxIDFormat"
 )
 
-type TaxID struct {
+type LicenseKeyCustomerTaxID struct {
 	Str         *string      `queryParam:"inline"`
 	TaxIDFormat *TaxIDFormat `queryParam:"inline"`
 
-	Type TaxIDType
+	Type LicenseKeyCustomerTaxIDType
 }
 
-func CreateTaxIDStr(str string) TaxID {
-	typ := TaxIDTypeStr
+func CreateLicenseKeyCustomerTaxIDStr(str string) LicenseKeyCustomerTaxID {
+	typ := LicenseKeyCustomerTaxIDTypeStr
 
-	return TaxID{
+	return LicenseKeyCustomerTaxID{
 		Str:  &str,
 		Type: typ,
 	}
 }
 
-func CreateTaxIDTaxIDFormat(taxIDFormat TaxIDFormat) TaxID {
-	typ := TaxIDTypeTaxIDFormat
+func CreateLicenseKeyCustomerTaxIDTaxIDFormat(taxIDFormat TaxIDFormat) LicenseKeyCustomerTaxID {
+	typ := LicenseKeyCustomerTaxIDTypeTaxIDFormat
 
-	return TaxID{
+	return LicenseKeyCustomerTaxID{
 		TaxIDFormat: &taxIDFormat,
 		Type:        typ,
 	}
 }
 
-func (u *TaxID) UnmarshalJSON(data []byte) error {
+func (u *LicenseKeyCustomerTaxID) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
 	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
 		u.Str = &str
-		u.Type = TaxIDTypeStr
+		u.Type = LicenseKeyCustomerTaxIDTypeStr
 		return nil
 	}
 
 	var taxIDFormat TaxIDFormat = TaxIDFormat("")
 	if err := utils.UnmarshalJSON(data, &taxIDFormat, "", true, true); err == nil {
 		u.TaxIDFormat = &taxIDFormat
-		u.Type = TaxIDTypeTaxIDFormat
+		u.Type = LicenseKeyCustomerTaxIDTypeTaxIDFormat
 		return nil
 	}
 
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for TaxID", string(data))
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for LicenseKeyCustomerTaxID", string(data))
 }
 
-func (u TaxID) MarshalJSON() ([]byte, error) {
+func (u LicenseKeyCustomerTaxID) MarshalJSON() ([]byte, error) {
 	if u.Str != nil {
 		return utils.MarshalJSON(u.Str, "", true)
 	}
@@ -154,7 +154,7 @@ func (u TaxID) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.TaxIDFormat, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type TaxID: all fields are null")
+	return nil, errors.New("could not marshal union type LicenseKeyCustomerTaxID: all fields are null")
 }
 
 type LicenseKeyCustomer struct {
@@ -172,12 +172,14 @@ type LicenseKeyCustomer struct {
 	// Whether the customer email address is verified. The address is automatically verified when the customer accesses the customer portal using their email address.
 	EmailVerified bool `json:"email_verified"`
 	// The name of the customer.
-	Name           *string  `json:"name"`
-	BillingAddress *Address `json:"billing_address"`
-	TaxID          []*TaxID `json:"tax_id"`
+	Name           *string                    `json:"name"`
+	BillingAddress *Address                   `json:"billing_address"`
+	TaxID          []*LicenseKeyCustomerTaxID `json:"tax_id"`
 	// The ID of the organization owning the customer.
 	OrganizationID string `json:"organization_id"`
-	AvatarURL      string `json:"avatar_url"`
+	// Timestamp for when the customer was soft deleted.
+	DeletedAt *time.Time `json:"deleted_at"`
+	AvatarURL string     `json:"avatar_url"`
 }
 
 func (l LicenseKeyCustomer) MarshalJSON() ([]byte, error) {
@@ -254,7 +256,7 @@ func (o *LicenseKeyCustomer) GetBillingAddress() *Address {
 	return o.BillingAddress
 }
 
-func (o *LicenseKeyCustomer) GetTaxID() []*TaxID {
+func (o *LicenseKeyCustomer) GetTaxID() []*LicenseKeyCustomerTaxID {
 	if o == nil {
 		return nil
 	}
@@ -266,6 +268,13 @@ func (o *LicenseKeyCustomer) GetOrganizationID() string {
 		return ""
 	}
 	return o.OrganizationID
+}
+
+func (o *LicenseKeyCustomer) GetDeletedAt() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.DeletedAt
 }
 
 func (o *LicenseKeyCustomer) GetAvatarURL() string {

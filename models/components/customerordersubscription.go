@@ -15,9 +15,9 @@ type CustomerOrderSubscription struct {
 	// The ID of the object.
 	ID string `json:"id"`
 	// The amount of the subscription.
-	Amount *int64 `json:"amount"`
+	Amount int64 `json:"amount"`
 	// The currency of the subscription.
-	Currency          *string                       `json:"currency"`
+	Currency          string                        `json:"currency"`
 	RecurringInterval SubscriptionRecurringInterval `json:"recurring_interval"`
 	Status            SubscriptionStatus            `json:"status"`
 	// The start timestamp of the current billing period.
@@ -38,13 +38,13 @@ type CustomerOrderSubscription struct {
 	CustomerID string `json:"customer_id"`
 	// The ID of the subscribed product.
 	ProductID string `json:"product_id"`
-	// The ID of the subscribed price.
-	PriceID string `json:"price_id"`
 	// The ID of the applied discount, if any.
 	DiscountID                  *string                     `json:"discount_id"`
 	CheckoutID                  *string                     `json:"checkout_id"`
 	CustomerCancellationReason  *CustomerCancellationReason `json:"customer_cancellation_reason"`
 	CustomerCancellationComment *string                     `json:"customer_cancellation_comment"`
+	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
+	PriceID string `json:"price_id"`
 }
 
 func (c CustomerOrderSubscription) MarshalJSON() ([]byte, error) {
@@ -79,16 +79,16 @@ func (o *CustomerOrderSubscription) GetID() string {
 	return o.ID
 }
 
-func (o *CustomerOrderSubscription) GetAmount() *int64 {
+func (o *CustomerOrderSubscription) GetAmount() int64 {
 	if o == nil {
-		return nil
+		return 0
 	}
 	return o.Amount
 }
 
-func (o *CustomerOrderSubscription) GetCurrency() *string {
+func (o *CustomerOrderSubscription) GetCurrency() string {
 	if o == nil {
-		return nil
+		return ""
 	}
 	return o.Currency
 }
@@ -170,13 +170,6 @@ func (o *CustomerOrderSubscription) GetProductID() string {
 	return o.ProductID
 }
 
-func (o *CustomerOrderSubscription) GetPriceID() string {
-	if o == nil {
-		return ""
-	}
-	return o.PriceID
-}
-
 func (o *CustomerOrderSubscription) GetDiscountID() *string {
 	if o == nil {
 		return nil
@@ -203,4 +196,11 @@ func (o *CustomerOrderSubscription) GetCustomerCancellationComment() *string {
 		return nil
 	}
 	return o.CustomerCancellationComment
+}
+
+func (o *CustomerOrderSubscription) GetPriceID() string {
+	if o == nil {
+		return ""
+	}
+	return o.PriceID
 }

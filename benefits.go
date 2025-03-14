@@ -31,14 +31,7 @@ func newBenefits(sdkConfig sdkConfiguration) *Benefits {
 // List benefits.
 //
 // **Scopes**: `benefits:read` `benefits:write`
-func (s *Benefits) List(ctx context.Context, organizationID *operations.BenefitsListQueryParamOrganizationIDFilter, typeFilter *operations.BenefitTypeFilter, page *int64, limit *int64, opts ...operations.Option) (*operations.BenefitsListResponse, error) {
-	request := operations.BenefitsListRequest{
-		OrganizationID: organizationID,
-		TypeFilter:     typeFilter,
-		Page:           page,
-		Limit:          limit,
-	}
-
+func (s *Benefits) List(ctx context.Context, request operations.BenefitsListRequest, opts ...operations.Option) (*operations.BenefitsListResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -206,8 +199,8 @@ func (s *Benefits) List(ctx context.Context, organizationID *operations.Benefits
 			return nil, err
 		}
 		var p int64 = 1
-		if page != nil {
-			p = *page
+		if request.Page != nil {
+			p = *request.Page
 		}
 		nP := int64(p + 1)
 		nPs, err := ajson.Eval(b, "$.pagination.max_page")
@@ -242,8 +235,8 @@ func (s *Benefits) List(ctx context.Context, organizationID *operations.Benefits
 		}
 
 		l := 0
-		if limit != nil {
-			l = int(*limit)
+		if request.Limit != nil {
+			l = int(*request.Limit)
 		}
 		if len(arr) < l {
 			return nil, nil
@@ -251,10 +244,13 @@ func (s *Benefits) List(ctx context.Context, organizationID *operations.Benefits
 
 		return s.List(
 			ctx,
-			organizationID,
-			typeFilter,
-			&nP,
-			limit,
+			operations.BenefitsListRequest{
+				OrganizationID: request.OrganizationID,
+				TypeFilter:     request.TypeFilter,
+				Query:          request.Query,
+				Page:           &nP,
+				Limit:          request.Limit,
+			},
 			opts...,
 		)
 	}

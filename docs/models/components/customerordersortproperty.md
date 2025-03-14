@@ -9,8 +9,8 @@
 | `CustomerOrderSortPropertyMinusCreatedAt`    | -created_at                                  |
 | `CustomerOrderSortPropertyAmount`            | amount                                       |
 | `CustomerOrderSortPropertyMinusAmount`       | -amount                                      |
-| `CustomerOrderSortPropertyOrganization`      | organization                                 |
-| `CustomerOrderSortPropertyMinusOrganization` | -organization                                |
+| `CustomerOrderSortPropertyNetAmount`         | net_amount                                   |
+| `CustomerOrderSortPropertyMinusNetAmount`    | -net_amount                                  |
 | `CustomerOrderSortPropertyProduct`           | product                                      |
 | `CustomerOrderSortPropertyMinusProduct`      | -product                                     |
 | `CustomerOrderSortPropertySubscription`      | subscription                                 |

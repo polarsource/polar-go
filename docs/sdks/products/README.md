@@ -113,8 +113,8 @@ func main() {
     res, err := s.Products.Create(ctx, components.ProductCreate{
         Name: "<value>",
         RecurringInterval: components.SubscriptionRecurringIntervalMonth.ToPointer(),
-        Prices: []components.Prices{
-            components.CreatePricesProductPriceCustomCreate(
+        Prices: []components.ProductCreatePrices{
+            components.CreateProductCreatePricesProductPriceCustomCreate(
                 components.ProductPriceCustomCreate{},
             ),
         },
