@@ -384,7 +384,9 @@ type Order struct {
 	Metadata map[string]OrderMetadata `json:"metadata"`
 	// Key-value object storing custom field values.
 	CustomFieldData map[string]*OrderCustomFieldData `json:"custom_field_data,omitempty"`
-	Status          string                           `json:"status"`
+	Status          OrderStatus                      `json:"status"`
+	// Whether the order has been paid for.
+	Paid bool `json:"paid"`
 	// Amount in cents, before discounts and taxes.
 	SubtotalAmount int64 `json:"subtotal_amount"`
 	// Discount amount in cents.
@@ -472,11 +474,18 @@ func (o *Order) GetCustomFieldData() map[string]*OrderCustomFieldData {
 	return o.CustomFieldData
 }
 
-func (o *Order) GetStatus() string {
+func (o *Order) GetStatus() OrderStatus {
 	if o == nil {
-		return ""
+		return OrderStatus("")
 	}
 	return o.Status
+}
+
+func (o *Order) GetPaid() bool {
+	if o == nil {
+		return false
+	}
+	return o.Paid
 }
 
 func (o *Order) GetSubtotalAmount() int64 {

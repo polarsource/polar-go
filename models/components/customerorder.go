@@ -79,8 +79,11 @@ type CustomerOrder struct {
 	// Creation timestamp of the object.
 	CreatedAt time.Time `json:"created_at"`
 	// Last modification timestamp of the object.
-	ModifiedAt *time.Time `json:"modified_at"`
-	ID         string     `json:"id"`
+	ModifiedAt *time.Time  `json:"modified_at"`
+	ID         string      `json:"id"`
+	Status     OrderStatus `json:"status"`
+	// Whether the order has been paid for.
+	Paid bool `json:"paid"`
 	// Amount in cents, before discounts and taxes.
 	SubtotalAmount int64 `json:"subtotal_amount"`
 	// Discount amount in cents.
@@ -145,6 +148,20 @@ func (o *CustomerOrder) GetID() string {
 		return ""
 	}
 	return o.ID
+}
+
+func (o *CustomerOrder) GetStatus() OrderStatus {
+	if o == nil {
+		return OrderStatus("")
+	}
+	return o.Status
+}
+
+func (o *CustomerOrder) GetPaid() bool {
+	if o == nil {
+		return false
+	}
+	return o.Paid
 }
 
 func (o *CustomerOrder) GetSubtotalAmount() int64 {

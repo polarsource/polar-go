@@ -107,7 +107,8 @@ type RefundCreate struct {
 	Metadata map[string]RefundCreateMetadata `json:"metadata,omitempty"`
 	OrderID  string                          `json:"order_id"`
 	Reason   RefundReason                    `json:"reason"`
-	Amount   int64                           `json:"amount"`
+	// Amount to refund in cents. Minimum is 1.
+	Amount int64 `json:"amount"`
 	// An internal comment about the refund.
 	Comment *string `json:"comment,omitempty"`
 	// Should this refund trigger the associated customer benefits to be revoked?
