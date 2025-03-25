@@ -96,6 +96,16 @@ func (u DiscountUpdateMetadata) MarshalJSON() ([]byte, error) {
 
 // DiscountUpdate - Schema to update a discount.
 type DiscountUpdate struct {
+	// Key-value object allowing you to store additional information.
+	//
+	// The key must be a string with a maximum length of **40 characters**.
+	// The value must be either:
+	//
+	// * A string with a maximum length of **500 characters**
+	// * An integer
+	// * A boolean
+	//
+	// You can store up to **50 key-value pairs**.
 	Metadata         map[string]DiscountUpdateMetadata `json:"metadata,omitempty"`
 	Name             *string                           `json:"name,omitempty"`
 	Code             *string                           `json:"code,omitempty"`

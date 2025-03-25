@@ -313,14 +313,16 @@ type CheckoutPublicConfirmed struct {
 	// When checkout is embedded, represents the Origin of the page embedding the checkout. Used as a security measure to send messages only to the embedding page.
 	EmbedOrigin *string `json:"embed_origin"`
 	Amount      *int64  `json:"amount"`
-	// Computed tax amount to pay in cents.
+	// Discount amount in cents.
+	DiscountAmount *int64 `json:"discount_amount"`
+	// Amount in cents, after discounts but before taxes.
+	NetAmount *int64 `json:"net_amount"`
+	// Sales tax amount in cents.
 	TaxAmount *int64 `json:"tax_amount"`
+	// Amount in cents, after discounts and taxes.
+	TotalAmount *int64 `json:"total_amount"`
 	// Currency code of the checkout session.
 	Currency *string `json:"currency"`
-	// Subtotal amount in cents, including discounts and before tax.
-	SubtotalAmount *int64 `json:"subtotal_amount"`
-	// Total amount to pay in cents, including discounts and after tax.
-	TotalAmount *int64 `json:"total_amount"`
 	// ID of the product to checkout.
 	ProductID string `json:"product_id"`
 	// ID of the product price to checkout.
@@ -348,6 +350,8 @@ type CheckoutPublicConfirmed struct {
 	CustomerBillingAddress   *Address          `json:"customer_billing_address"`
 	CustomerTaxID            *string           `json:"customer_tax_id"`
 	PaymentProcessorMetadata map[string]string `json:"payment_processor_metadata"`
+	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
+	SubtotalAmount *int64 `json:"subtotal_amount"`
 	// List of products available to select.
 	Products []CheckoutProduct `json:"products"`
 	// Product data for a checkout session.
@@ -452,6 +456,20 @@ func (o *CheckoutPublicConfirmed) GetAmount() *int64 {
 	return o.Amount
 }
 
+func (o *CheckoutPublicConfirmed) GetDiscountAmount() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.DiscountAmount
+}
+
+func (o *CheckoutPublicConfirmed) GetNetAmount() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.NetAmount
+}
+
 func (o *CheckoutPublicConfirmed) GetTaxAmount() *int64 {
 	if o == nil {
 		return nil
@@ -459,25 +477,18 @@ func (o *CheckoutPublicConfirmed) GetTaxAmount() *int64 {
 	return o.TaxAmount
 }
 
-func (o *CheckoutPublicConfirmed) GetCurrency() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Currency
-}
-
-func (o *CheckoutPublicConfirmed) GetSubtotalAmount() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.SubtotalAmount
-}
-
 func (o *CheckoutPublicConfirmed) GetTotalAmount() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.TotalAmount
+}
+
+func (o *CheckoutPublicConfirmed) GetCurrency() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Currency
 }
 
 func (o *CheckoutPublicConfirmed) GetProductID() string {
@@ -590,6 +601,13 @@ func (o *CheckoutPublicConfirmed) GetPaymentProcessorMetadata() map[string]strin
 		return map[string]string{}
 	}
 	return o.PaymentProcessorMetadata
+}
+
+func (o *CheckoutPublicConfirmed) GetSubtotalAmount() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.SubtotalAmount
 }
 
 func (o *CheckoutPublicConfirmed) GetProducts() []CheckoutProduct {

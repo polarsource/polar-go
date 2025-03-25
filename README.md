@@ -85,10 +85,11 @@ func main() {
 			SuccessURL:             "https://sardonic-final.info/",
 			EmbedOrigin:            polargo.String("<value>"),
 			Amount:                 polargo.Int64(962818),
+			DiscountAmount:         polargo.Int64(954929),
+			NetAmount:              polargo.Int64(467348),
 			TaxAmount:              polargo.Int64(6400),
-			Currency:               polargo.String("Yen"),
-			SubtotalAmount:         polargo.Int64(648726),
 			TotalAmount:            polargo.Int64(210702),
+			Currency:               polargo.String("Yen"),
 			ProductID:              "<value>",
 			ProductPriceID:         "<value>",
 			DiscountID:             polargo.String("<value>"),
@@ -111,6 +112,7 @@ func main() {
 				"key1": "<value>",
 				"key2": "<value>",
 			},
+			SubtotalAmount: polargo.Int64(648726),
 			Metadata: map[string]components.CheckoutMetadata{
 				"key": components.CreateCheckoutMetadataStr(
 					"<value>",
@@ -220,32 +222,41 @@ func main() {
 					OrganizationID:    "<value>",
 					Prices: []components.CheckoutProductPrices{
 						components.CreateCheckoutProductPricesProductPrice(
-							components.CreateProductPriceProductPriceFree(
-								components.ProductPriceFree{
-									CreatedAt:         types.MustTimeFromString("2023-09-19T22:46:24.110Z"),
-									ModifiedAt:        types.MustNewTimeFromString("2024-10-23T17:16:18.939Z"),
-									ID:                "<value>",
-									IsArchived:        false,
-									ProductID:         "<value>",
-									Type:              components.ProductPriceTypeOneTime,
-									RecurringInterval: components.SubscriptionRecurringIntervalYear.ToPointer(),
-								},
-							),
-						),
-						components.CreateCheckoutProductPricesProductPrice(
-							components.CreateProductPriceProductPriceCustom(
-								components.ProductPriceCustom{
-									CreatedAt:         types.MustTimeFromString("2025-10-29T00:32:24.235Z"),
-									ModifiedAt:        types.MustNewTimeFromString("2025-04-28T15:46:25.145Z"),
+							components.CreateProductPriceProductPriceMeteredUnit(
+								components.ProductPriceMeteredUnit{
+									CreatedAt:         types.MustTimeFromString("2025-04-28T15:46:25.145Z"),
+									ModifiedAt:        types.MustNewTimeFromString("2024-08-13T03:41:03.035Z"),
 									ID:                "<value>",
 									IsArchived:        false,
 									ProductID:         "<value>",
 									Type:              components.ProductPriceTypeRecurring,
 									RecurringInterval: components.SubscriptionRecurringIntervalYear.ToPointer(),
 									PriceCurrency:     "<value>",
-									MinimumAmount:     polargo.Int64(634111),
-									MaximumAmount:     polargo.Int64(482040),
-									PresetAmount:      polargo.Int64(134),
+									UnitAmount:        482040,
+									IncludedUnits:     134,
+									CapAmount:         polargo.Int64(383315),
+									MeterID:           "<value>",
+									Meter: components.ProductPriceMeter{
+										ID:   "<value>",
+										Name: "<value>",
+									},
+								},
+							),
+						),
+						components.CreateCheckoutProductPricesProductPrice(
+							components.CreateProductPriceProductPriceCustom(
+								components.ProductPriceCustom{
+									CreatedAt:         types.MustTimeFromString("2023-10-09T19:13:38.530Z"),
+									ModifiedAt:        types.MustNewTimeFromString("2025-03-10T05:19:02.590Z"),
+									ID:                "<value>",
+									IsArchived:        false,
+									ProductID:         "<value>",
+									Type:              components.ProductPriceTypeRecurring,
+									RecurringInterval: components.SubscriptionRecurringIntervalYear.ToPointer(),
+									PriceCurrency:     "<value>",
+									MinimumAmount:     polargo.Int64(647154),
+									MaximumAmount:     polargo.Int64(948682),
+									PresetAmount:      polargo.Int64(780456),
 								},
 							),
 						),
@@ -331,48 +342,43 @@ func main() {
 					OrganizationID:    "<value>",
 					Prices: []components.CheckoutProductPrices{
 						components.CreateCheckoutProductPricesLegacyRecurringProductPrice(
-							components.CreateLegacyRecurringProductPriceFree(
-								components.LegacyRecurringProductPriceFree{
-									CreatedAt:         types.MustTimeFromString("2023-10-21T11:52:11.842Z"),
-									ModifiedAt:        types.MustNewTimeFromString("2023-10-09T19:13:38.530Z"),
+							components.CreateLegacyRecurringProductPriceCustom(
+								components.LegacyRecurringProductPriceCustom{
+									CreatedAt:         types.MustTimeFromString("2023-12-31T19:37:54.401Z"),
+									ModifiedAt:        types.MustNewTimeFromString("2023-11-12T05:54:16.026Z"),
 									ID:                "<value>",
 									IsArchived:        false,
 									ProductID:         "<value>",
 									RecurringInterval: components.SubscriptionRecurringIntervalYear,
-								},
-							),
-						),
-						components.CreateCheckoutProductPricesProductPrice(
-							components.CreateProductPriceProductPriceCustom(
-								components.ProductPriceCustom{
-									CreatedAt:         types.MustTimeFromString("2024-12-10T06:44:06.426Z"),
-									ModifiedAt:        types.MustNewTimeFromString("2025-11-05T18:06:37.266Z"),
-									ID:                "<value>",
-									IsArchived:        false,
-									ProductID:         "<value>",
-									Type:              components.ProductPriceTypeRecurring,
-									RecurringInterval: components.SubscriptionRecurringIntervalMonth.ToPointer(),
 									PriceCurrency:     "<value>",
-									MinimumAmount:     polargo.Int64(102328),
-									MaximumAmount:     polargo.Int64(332863),
-									PresetAmount:      polargo.Int64(287633),
+									MinimumAmount:     polargo.Int64(513402),
+									MaximumAmount:     polargo.Int64(569122),
+									PresetAmount:      polargo.Int64(978486),
 								},
 							),
 						),
 						components.CreateCheckoutProductPricesProductPrice(
-							components.CreateProductPriceProductPriceCustom(
-								components.ProductPriceCustom{
-									CreatedAt:         types.MustTimeFromString("2024-09-15T18:10:19.969Z"),
-									ModifiedAt:        types.MustNewTimeFromString("2025-12-08T10:05:37.208Z"),
+							components.CreateProductPriceProductPriceFree(
+								components.ProductPriceFree{
+									CreatedAt:         types.MustTimeFromString("2025-01-09T13:42:03.592Z"),
+									ModifiedAt:        types.MustNewTimeFromString("2023-06-01T05:58:41.763Z"),
 									ID:                "<value>",
 									IsArchived:        false,
 									ProductID:         "<value>",
 									Type:              components.ProductPriceTypeRecurring,
 									RecurringInterval: components.SubscriptionRecurringIntervalYear.ToPointer(),
-									PriceCurrency:     "<value>",
-									MinimumAmount:     polargo.Int64(674791),
-									MaximumAmount:     polargo.Int64(138001),
-									PresetAmount:      polargo.Int64(879649),
+								},
+							),
+						),
+						components.CreateCheckoutProductPricesLegacyRecurringProductPrice(
+							components.CreateLegacyRecurringProductPriceFree(
+								components.LegacyRecurringProductPriceFree{
+									CreatedAt:         types.MustTimeFromString("2025-12-22T08:06:55.176Z"),
+									ModifiedAt:        types.MustNewTimeFromString("2024-06-16T08:01:15.524Z"),
+									ID:                "<value>",
+									IsArchived:        false,
+									ProductID:         "<value>",
+									RecurringInterval: components.SubscriptionRecurringIntervalYear,
 								},
 							),
 						),
@@ -464,18 +470,15 @@ func main() {
 					},
 				},
 			},
-			ProductPrice: components.CreateCheckoutProductPriceProductPrice(
-				components.CreateProductPriceProductPriceFixed(
-					components.ProductPriceFixed{
-						CreatedAt:         types.MustTimeFromString("2025-01-07T06:19:30.216Z"),
-						ModifiedAt:        types.MustNewTimeFromString("2025-12-22T08:06:55.176Z"),
+			ProductPrice: components.CreateCheckoutProductPriceLegacyRecurringProductPrice(
+				components.CreateLegacyRecurringProductPriceFree(
+					components.LegacyRecurringProductPriceFree{
+						CreatedAt:         types.MustTimeFromString("2023-07-01T09:35:23.526Z"),
+						ModifiedAt:        types.MustNewTimeFromString("2023-09-05T11:14:58.018Z"),
 						ID:                "<value>",
 						IsArchived:        false,
 						ProductID:         "<value>",
-						Type:              components.ProductPriceTypeOneTime,
-						RecurringInterval: components.SubscriptionRecurringIntervalYear.ToPointer(),
-						PriceCurrency:     "<value>",
-						PriceAmount:       449076,
+						RecurringInterval: components.SubscriptionRecurringIntervalYear,
 					},
 				),
 			),
@@ -491,34 +494,6 @@ func main() {
 			)),
 			SubscriptionID: polargo.String("<value>"),
 			AttachedCustomFields: []components.AttachedCustomField{
-				components.AttachedCustomField{
-					CustomFieldID: "<value>",
-					CustomField: components.CreateCustomFieldSelect(
-						components.CustomFieldSelect{
-							CreatedAt:  types.MustTimeFromString("2023-07-01T09:35:23.526Z"),
-							ModifiedAt: types.MustNewTimeFromString("2023-09-05T11:14:58.018Z"),
-							ID:         "<value>",
-							Metadata: map[string]components.CustomFieldSelectMetadata{
-								"key": components.CreateCustomFieldSelectMetadataBoolean(
-									false,
-								),
-							},
-							Slug:           "<value>",
-							Name:           "<value>",
-							OrganizationID: "1dbfc517-0bbf-4301-9ba8-555ca42b9737",
-							Properties: components.CustomFieldSelectProperties{
-								Options: []components.CustomFieldSelectOption{
-									components.CustomFieldSelectOption{
-										Value: "<value>",
-										Label: "<value>",
-									},
-								},
-							},
-						},
-					),
-					Order:    169862,
-					Required: true,
-				},
 				components.AttachedCustomField{
 					CustomFieldID: "<value>",
 					CustomField: components.CreateCustomFieldText(
@@ -537,7 +512,7 @@ func main() {
 							Properties:     components.CustomFieldTextProperties{},
 						},
 					),
-					Order:    918364,
+					Order:    169862,
 					Required: true,
 				},
 				components.AttachedCustomField{
@@ -556,6 +531,34 @@ func main() {
 							Name:           "<value>",
 							OrganizationID: "1dbfc517-0bbf-4301-9ba8-555ca42b9737",
 							Properties:     components.CustomFieldTextProperties{},
+						},
+					),
+					Order:    918364,
+					Required: true,
+				},
+				components.AttachedCustomField{
+					CustomFieldID: "<value>",
+					CustomField: components.CreateCustomFieldSelect(
+						components.CustomFieldSelect{
+							CreatedAt:  types.MustTimeFromString("2024-10-18T15:45:53.088Z"),
+							ModifiedAt: types.MustNewTimeFromString("2023-08-08T05:58:49.836Z"),
+							ID:         "<value>",
+							Metadata: map[string]components.CustomFieldSelectMetadata{
+								"key": components.CreateCustomFieldSelectMetadataBoolean(
+									false,
+								),
+							},
+							Slug:           "<value>",
+							Name:           "<value>",
+							OrganizationID: "1dbfc517-0bbf-4301-9ba8-555ca42b9737",
+							Properties: components.CustomFieldSelectProperties{
+								Options: []components.CustomFieldSelectOption{
+									components.CustomFieldSelectOption{
+										Value: "<value>",
+										Label: "<value>",
+									},
+								},
+							},
 						},
 					),
 					Order:    187532,

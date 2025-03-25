@@ -11,15 +11,17 @@ import (
 type ProductPriceUnionType string
 
 const (
-	ProductPriceUnionTypeProductPriceFixed  ProductPriceUnionType = "ProductPriceFixed"
-	ProductPriceUnionTypeProductPriceCustom ProductPriceUnionType = "ProductPriceCustom"
-	ProductPriceUnionTypeProductPriceFree   ProductPriceUnionType = "ProductPriceFree"
+	ProductPriceUnionTypeProductPriceFixed       ProductPriceUnionType = "ProductPriceFixed"
+	ProductPriceUnionTypeProductPriceCustom      ProductPriceUnionType = "ProductPriceCustom"
+	ProductPriceUnionTypeProductPriceFree        ProductPriceUnionType = "ProductPriceFree"
+	ProductPriceUnionTypeProductPriceMeteredUnit ProductPriceUnionType = "ProductPriceMeteredUnit"
 )
 
 type ProductPrice struct {
-	ProductPriceFixed  *ProductPriceFixed  `queryParam:"inline"`
-	ProductPriceCustom *ProductPriceCustom `queryParam:"inline"`
-	ProductPriceFree   *ProductPriceFree   `queryParam:"inline"`
+	ProductPriceFixed       *ProductPriceFixed       `queryParam:"inline"`
+	ProductPriceCustom      *ProductPriceCustom      `queryParam:"inline"`
+	ProductPriceFree        *ProductPriceFree        `queryParam:"inline"`
+	ProductPriceMeteredUnit *ProductPriceMeteredUnit `queryParam:"inline"`
 
 	Type ProductPriceUnionType
 }
@@ -51,6 +53,15 @@ func CreateProductPriceProductPriceFree(productPriceFree ProductPriceFree) Produ
 	}
 }
 
+func CreateProductPriceProductPriceMeteredUnit(productPriceMeteredUnit ProductPriceMeteredUnit) ProductPrice {
+	typ := ProductPriceUnionTypeProductPriceMeteredUnit
+
+	return ProductPrice{
+		ProductPriceMeteredUnit: &productPriceMeteredUnit,
+		Type:                    typ,
+	}
+}
+
 func (u *ProductPrice) UnmarshalJSON(data []byte) error {
 
 	var productPriceFree ProductPriceFree = ProductPriceFree{}
@@ -74,6 +85,13 @@ func (u *ProductPrice) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
+	var productPriceMeteredUnit ProductPriceMeteredUnit = ProductPriceMeteredUnit{}
+	if err := utils.UnmarshalJSON(data, &productPriceMeteredUnit, "", true, true); err == nil {
+		u.ProductPriceMeteredUnit = &productPriceMeteredUnit
+		u.Type = ProductPriceUnionTypeProductPriceMeteredUnit
+		return nil
+	}
+
 	return fmt.Errorf("could not unmarshal `%s` into any supported union types for ProductPrice", string(data))
 }
 
@@ -88,6 +106,10 @@ func (u ProductPrice) MarshalJSON() ([]byte, error) {
 
 	if u.ProductPriceFree != nil {
 		return utils.MarshalJSON(u.ProductPriceFree, "", true)
+	}
+
+	if u.ProductPriceMeteredUnit != nil {
+		return utils.MarshalJSON(u.ProductPriceMeteredUnit, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type ProductPrice: all fields are null")

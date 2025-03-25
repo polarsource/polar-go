@@ -95,6 +95,16 @@ func (u CustomFieldUpdateSelectMetadata) MarshalJSON() ([]byte, error) {
 
 // CustomFieldUpdateSelect - Schema to update a custom field of type select.
 type CustomFieldUpdateSelect struct {
+	// Key-value object allowing you to store additional information.
+	//
+	// The key must be a string with a maximum length of **40 characters**.
+	// The value must be either:
+	//
+	// * A string with a maximum length of **500 characters**
+	// * An integer
+	// * A boolean
+	//
+	// You can store up to **50 key-value pairs**.
 	Metadata   map[string]CustomFieldUpdateSelectMetadata `json:"metadata,omitempty"`
 	Name       *string                                    `json:"name,omitempty"`
 	Slug       *string                                    `json:"slug,omitempty"`

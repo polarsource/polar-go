@@ -157,6 +157,16 @@ func (u CustomerUpdateTaxID) MarshalJSON() ([]byte, error) {
 }
 
 type CustomerUpdate struct {
+	// Key-value object allowing you to store additional information.
+	//
+	// The key must be a string with a maximum length of **40 characters**.
+	// The value must be either:
+	//
+	// * A string with a maximum length of **500 characters**
+	// * An integer
+	// * A boolean
+	//
+	// You can store up to **50 key-value pairs**.
 	Metadata map[string]CustomerUpdateMetadata `json:"metadata,omitempty"`
 	// The ID of the customer in your system. This must be unique within the organization. Once set, it can't be updated.
 	ExternalID *string `json:"external_id,omitempty"`

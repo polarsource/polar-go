@@ -202,6 +202,16 @@ func (u ProductUpdatePrices) MarshalJSON() ([]byte, error) {
 
 // ProductUpdate - Schema to update a product.
 type ProductUpdate struct {
+	// Key-value object allowing you to store additional information.
+	//
+	// The key must be a string with a maximum length of **40 characters**.
+	// The value must be either:
+	//
+	// * A string with a maximum length of **500 characters**
+	// * An integer
+	// * A boolean
+	//
+	// You can store up to **50 key-value pairs**.
 	Metadata map[string]ProductUpdateMetadata `json:"metadata,omitempty"`
 	Name     *string                          `json:"name,omitempty"`
 	// The description of the product.

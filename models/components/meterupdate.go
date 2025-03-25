@@ -243,6 +243,16 @@ func (u Aggregation) MarshalJSON() ([]byte, error) {
 }
 
 type MeterUpdate struct {
+	// Key-value object allowing you to store additional information.
+	//
+	// The key must be a string with a maximum length of **40 characters**.
+	// The value must be either:
+	//
+	// * A string with a maximum length of **500 characters**
+	// * An integer
+	// * A boolean
+	//
+	// You can store up to **50 key-value pairs**.
 	Metadata map[string]MeterUpdateMetadata `json:"metadata,omitempty"`
 	// The name of the meter. Will be shown on customer's invoices and usage.
 	Name *string `json:"name,omitempty"`
