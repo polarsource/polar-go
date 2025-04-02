@@ -84,11 +84,11 @@ func main() {
 			ExpiresAt:              types.MustTimeFromString("2023-02-25T02:26:48.460Z"),
 			SuccessURL:             "https://sardonic-final.info/",
 			EmbedOrigin:            polargo.String("<value>"),
-			Amount:                 polargo.Int64(962818),
-			DiscountAmount:         polargo.Int64(954929),
-			NetAmount:              polargo.Int64(467348),
+			Amount:                 962818,
+			DiscountAmount:         954929,
+			NetAmount:              467348,
 			TaxAmount:              polargo.Int64(6400),
-			TotalAmount:            polargo.Int64(210702),
+			TotalAmount:            210702,
 			Currency:               polargo.String("Yen"),
 			ProductID:              "<value>",
 			ProductPriceID:         "<value>",
@@ -233,8 +233,7 @@ func main() {
 									RecurringInterval: components.SubscriptionRecurringIntervalYear.ToPointer(),
 									PriceCurrency:     "<value>",
 									UnitAmount:        482040,
-									IncludedUnits:     134,
-									CapAmount:         polargo.Int64(383315),
+									CapAmount:         polargo.Int64(134),
 									MeterID:           "<value>",
 									Meter: components.ProductPriceMeter{
 										ID:   "<value>",
@@ -243,20 +242,15 @@ func main() {
 								},
 							),
 						),
-						components.CreateCheckoutProductPricesProductPrice(
-							components.CreateProductPriceProductPriceCustom(
-								components.ProductPriceCustom{
-									CreatedAt:         types.MustTimeFromString("2023-10-09T19:13:38.530Z"),
-									ModifiedAt:        types.MustNewTimeFromString("2025-03-10T05:19:02.590Z"),
+						components.CreateCheckoutProductPricesLegacyRecurringProductPrice(
+							components.CreateLegacyRecurringProductPriceFree(
+								components.LegacyRecurringProductPriceFree{
+									CreatedAt:         types.MustTimeFromString("2023-10-21T11:52:11.842Z"),
+									ModifiedAt:        types.MustNewTimeFromString("2023-10-09T19:13:38.530Z"),
 									ID:                "<value>",
 									IsArchived:        false,
 									ProductID:         "<value>",
-									Type:              components.ProductPriceTypeRecurring,
-									RecurringInterval: components.SubscriptionRecurringIntervalYear.ToPointer(),
-									PriceCurrency:     "<value>",
-									MinimumAmount:     polargo.Int64(647154),
-									MaximumAmount:     polargo.Int64(948682),
-									PresetAmount:      polargo.Int64(780456),
+									RecurringInterval: components.SubscriptionRecurringIntervalYear,
 								},
 							),
 						),
@@ -341,44 +335,45 @@ func main() {
 					IsArchived:        false,
 					OrganizationID:    "<value>",
 					Prices: []components.CheckoutProductPrices{
+						components.CreateCheckoutProductPricesProductPrice(
+							components.CreateProductPriceProductPriceFree(
+								components.ProductPriceFree{
+									CreatedAt:         types.MustTimeFromString("2024-12-10T06:44:06.426Z"),
+									ModifiedAt:        types.MustNewTimeFromString("2025-11-05T18:06:37.266Z"),
+									ID:                "<value>",
+									IsArchived:        false,
+									ProductID:         "<value>",
+									Type:              components.ProductPriceTypeRecurring,
+									RecurringInterval: components.SubscriptionRecurringIntervalMonth.ToPointer(),
+								},
+							),
+						),
 						components.CreateCheckoutProductPricesLegacyRecurringProductPrice(
 							components.CreateLegacyRecurringProductPriceCustom(
 								components.LegacyRecurringProductPriceCustom{
-									CreatedAt:         types.MustTimeFromString("2023-12-31T19:37:54.401Z"),
-									ModifiedAt:        types.MustNewTimeFromString("2023-11-12T05:54:16.026Z"),
+									CreatedAt:         types.MustTimeFromString("2023-11-12T05:54:16.026Z"),
+									ModifiedAt:        types.MustNewTimeFromString("2025-04-10T00:12:46.713Z"),
 									ID:                "<value>",
 									IsArchived:        false,
 									ProductID:         "<value>",
 									RecurringInterval: components.SubscriptionRecurringIntervalYear,
 									PriceCurrency:     "<value>",
-									MinimumAmount:     polargo.Int64(513402),
-									MaximumAmount:     polargo.Int64(569122),
-									PresetAmount:      polargo.Int64(978486),
+									MinimumAmount:     polargo.Int64(569122),
+									MaximumAmount:     polargo.Int64(978486),
+									PresetAmount:      polargo.Int64(847995),
 								},
 							),
 						),
 						components.CreateCheckoutProductPricesProductPrice(
 							components.CreateProductPriceProductPriceFree(
 								components.ProductPriceFree{
-									CreatedAt:         types.MustTimeFromString("2025-01-09T13:42:03.592Z"),
-									ModifiedAt:        types.MustNewTimeFromString("2023-06-01T05:58:41.763Z"),
+									CreatedAt:         types.MustTimeFromString("2023-06-01T05:58:41.763Z"),
+									ModifiedAt:        types.MustNewTimeFromString("2025-08-22T02:17:20.661Z"),
 									ID:                "<value>",
 									IsArchived:        false,
 									ProductID:         "<value>",
 									Type:              components.ProductPriceTypeRecurring,
-									RecurringInterval: components.SubscriptionRecurringIntervalYear.ToPointer(),
-								},
-							),
-						),
-						components.CreateCheckoutProductPricesLegacyRecurringProductPrice(
-							components.CreateLegacyRecurringProductPriceFree(
-								components.LegacyRecurringProductPriceFree{
-									CreatedAt:         types.MustTimeFromString("2025-12-22T08:06:55.176Z"),
-									ModifiedAt:        types.MustNewTimeFromString("2024-06-16T08:01:15.524Z"),
-									ID:                "<value>",
-									IsArchived:        false,
-									ProductID:         "<value>",
-									RecurringInterval: components.SubscriptionRecurringIntervalYear,
+									RecurringInterval: components.SubscriptionRecurringIntervalMonth.ToPointer(),
 								},
 							),
 						),
@@ -470,15 +465,24 @@ func main() {
 					},
 				},
 			},
-			ProductPrice: components.CreateCheckoutProductPriceLegacyRecurringProductPrice(
-				components.CreateLegacyRecurringProductPriceFree(
-					components.LegacyRecurringProductPriceFree{
-						CreatedAt:         types.MustTimeFromString("2023-07-01T09:35:23.526Z"),
-						ModifiedAt:        types.MustNewTimeFromString("2023-09-05T11:14:58.018Z"),
+			ProductPrice: components.CreateCheckoutProductPriceProductPrice(
+				components.CreateProductPriceProductPriceMeteredUnit(
+					components.ProductPriceMeteredUnit{
+						CreatedAt:         types.MustTimeFromString("2024-06-16T08:01:15.524Z"),
+						ModifiedAt:        types.MustNewTimeFromString("2025-06-29T02:23:28.661Z"),
 						ID:                "<value>",
 						IsArchived:        false,
 						ProductID:         "<value>",
-						RecurringInterval: components.SubscriptionRecurringIntervalYear,
+						Type:              components.ProductPriceTypeOneTime,
+						RecurringInterval: components.SubscriptionRecurringIntervalYear.ToPointer(),
+						PriceCurrency:     "<value>",
+						UnitAmount:        165510,
+						CapAmount:         polargo.Int64(225792),
+						MeterID:           "<value>",
+						Meter: components.ProductPriceMeter{
+							ID:   "<value>",
+							Name: "<value>",
+						},
 					},
 				),
 			),
@@ -498,12 +502,12 @@ func main() {
 					CustomFieldID: "<value>",
 					CustomField: components.CreateCustomFieldText(
 						components.CustomFieldText{
-							CreatedAt:  types.MustTimeFromString("2024-12-03T12:38:50.277Z"),
-							ModifiedAt: types.MustNewTimeFromString("2024-05-21T13:41:47.986Z"),
+							CreatedAt:  types.MustTimeFromString("2025-08-21T23:33:05.774Z"),
+							ModifiedAt: types.MustNewTimeFromString("2024-12-03T12:38:50.277Z"),
 							ID:         "<value>",
 							Metadata: map[string]components.CustomFieldTextMetadata{
 								"key": components.CreateCustomFieldTextMetadataInteger(
-									473941,
+									545650,
 								),
 							},
 							Slug:           "<value>",
@@ -517,20 +521,20 @@ func main() {
 				},
 				components.AttachedCustomField{
 					CustomFieldID: "<value>",
-					CustomField: components.CreateCustomFieldText(
-						components.CustomFieldText{
-							CreatedAt:  types.MustTimeFromString("2023-01-30T18:58:55.355Z"),
-							ModifiedAt: types.MustNewTimeFromString("2024-12-15T18:35:30.312Z"),
+					CustomField: components.CreateCustomFieldNumber(
+						components.CustomFieldNumber{
+							CreatedAt:  types.MustTimeFromString("2025-10-01T00:10:58.922Z"),
+							ModifiedAt: types.MustNewTimeFromString("2023-01-30T18:58:55.355Z"),
 							ID:         "<value>",
-							Metadata: map[string]components.CustomFieldTextMetadata{
-								"key": components.CreateCustomFieldTextMetadataInteger(
-									143857,
+							Metadata: map[string]components.CustomFieldNumberMetadata{
+								"key": components.CreateCustomFieldNumberMetadataInteger(
+									637515,
 								),
 							},
 							Slug:           "<value>",
 							Name:           "<value>",
 							OrganizationID: "1dbfc517-0bbf-4301-9ba8-555ca42b9737",
-							Properties:     components.CustomFieldTextProperties{},
+							Properties:     components.CustomFieldNumberProperties{},
 						},
 					),
 					Order:    918364,
@@ -538,27 +542,20 @@ func main() {
 				},
 				components.AttachedCustomField{
 					CustomFieldID: "<value>",
-					CustomField: components.CreateCustomFieldSelect(
-						components.CustomFieldSelect{
-							CreatedAt:  types.MustTimeFromString("2024-10-18T15:45:53.088Z"),
-							ModifiedAt: types.MustNewTimeFromString("2023-08-08T05:58:49.836Z"),
+					CustomField: components.CreateCustomFieldCheckbox(
+						components.CustomFieldCheckbox{
+							CreatedAt:  types.MustTimeFromString("2024-12-10T04:39:21.164Z"),
+							ModifiedAt: types.MustNewTimeFromString("2024-10-18T15:45:53.088Z"),
 							ID:         "<value>",
-							Metadata: map[string]components.CustomFieldSelectMetadata{
-								"key": components.CreateCustomFieldSelectMetadataBoolean(
-									false,
+							Metadata: map[string]components.CustomFieldCheckboxMetadata{
+								"key": components.CreateCustomFieldCheckboxMetadataStr(
+									"<value>",
 								),
 							},
 							Slug:           "<value>",
 							Name:           "<value>",
 							OrganizationID: "1dbfc517-0bbf-4301-9ba8-555ca42b9737",
-							Properties: components.CustomFieldSelectProperties{
-								Options: []components.CustomFieldSelectOption{
-									components.CustomFieldSelectOption{
-										Value: "<value>",
-										Label: "<value>",
-									},
-								},
-							},
+							Properties:     components.CustomFieldCheckboxProperties{},
 						},
 					),
 					Order:    187532,

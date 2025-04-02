@@ -21,3 +21,9 @@ productCreatePrices := components.CreateProductCreatePricesProductPriceCustomCre
 productCreatePrices := components.CreateProductCreatePricesProductPriceFreeCreate(components.ProductPriceFreeCreate{/* values here */})
 ```
 
+### ProductPriceMeteredUnitCreate
+
+```go
+productCreatePrices := components.CreateProductCreatePricesProductPriceMeteredUnitCreate(components.ProductPriceMeteredUnitCreate{/* values here */})
+```
+

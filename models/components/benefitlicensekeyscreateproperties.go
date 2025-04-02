@@ -3,10 +3,10 @@
 package components
 
 type BenefitLicenseKeysCreateProperties struct {
-	Prefix      *string                                `json:"prefix,omitempty"`
-	Expires     *BenefitLicenseKeyExpirationProperties `json:"expires,omitempty"`
-	Activations *BenefitLicenseKeyActivationProperties `json:"activations,omitempty"`
-	LimitUsage  *int64                                 `json:"limit_usage,omitempty"`
+	Prefix      *string                                      `json:"prefix,omitempty"`
+	Expires     *BenefitLicenseKeyExpirationProperties       `json:"expires,omitempty"`
+	Activations *BenefitLicenseKeyActivationCreateProperties `json:"activations,omitempty"`
+	LimitUsage  *int64                                       `json:"limit_usage,omitempty"`
 }
 
 func (o *BenefitLicenseKeysCreateProperties) GetPrefix() *string {
@@ -23,7 +23,7 @@ func (o *BenefitLicenseKeysCreateProperties) GetExpires() *BenefitLicenseKeyExpi
 	return o.Expires
 }
 
-func (o *BenefitLicenseKeysCreateProperties) GetActivations() *BenefitLicenseKeyActivationProperties {
+func (o *BenefitLicenseKeysCreateProperties) GetActivations() *BenefitLicenseKeyActivationCreateProperties {
 	if o == nil {
 		return nil
 	}

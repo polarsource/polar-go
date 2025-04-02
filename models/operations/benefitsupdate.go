@@ -17,6 +17,7 @@ const (
 	BenefitsUpdateBenefitUpdateTypeBenefitGitHubRepositoryUpdate BenefitsUpdateBenefitUpdateType = "BenefitGitHubRepositoryUpdate"
 	BenefitsUpdateBenefitUpdateTypeBenefitDownloadablesUpdate    BenefitsUpdateBenefitUpdateType = "BenefitDownloadablesUpdate"
 	BenefitsUpdateBenefitUpdateTypeBenefitLicenseKeysUpdate      BenefitsUpdateBenefitUpdateType = "BenefitLicenseKeysUpdate"
+	BenefitsUpdateBenefitUpdateTypeBenefitMeterCreditUpdate      BenefitsUpdateBenefitUpdateType = "BenefitMeterCreditUpdate"
 )
 
 type BenefitsUpdateBenefitUpdate struct {
@@ -25,6 +26,7 @@ type BenefitsUpdateBenefitUpdate struct {
 	BenefitGitHubRepositoryUpdate *components.BenefitGitHubRepositoryUpdate `queryParam:"inline"`
 	BenefitDownloadablesUpdate    *components.BenefitDownloadablesUpdate    `queryParam:"inline"`
 	BenefitLicenseKeysUpdate      *components.BenefitLicenseKeysUpdate      `queryParam:"inline"`
+	BenefitMeterCreditUpdate      *components.BenefitMeterCreditUpdate      `queryParam:"inline"`
 
 	Type BenefitsUpdateBenefitUpdateType
 }
@@ -74,6 +76,15 @@ func CreateBenefitsUpdateBenefitUpdateBenefitLicenseKeysUpdate(benefitLicenseKey
 	}
 }
 
+func CreateBenefitsUpdateBenefitUpdateBenefitMeterCreditUpdate(benefitMeterCreditUpdate components.BenefitMeterCreditUpdate) BenefitsUpdateBenefitUpdate {
+	typ := BenefitsUpdateBenefitUpdateTypeBenefitMeterCreditUpdate
+
+	return BenefitsUpdateBenefitUpdate{
+		BenefitMeterCreditUpdate: &benefitMeterCreditUpdate,
+		Type:                     typ,
+	}
+}
+
 func (u *BenefitsUpdateBenefitUpdate) UnmarshalJSON(data []byte) error {
 
 	var benefitCustomUpdate components.BenefitCustomUpdate = components.BenefitCustomUpdate{}
@@ -111,6 +122,13 @@ func (u *BenefitsUpdateBenefitUpdate) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
+	var benefitMeterCreditUpdate components.BenefitMeterCreditUpdate = components.BenefitMeterCreditUpdate{}
+	if err := utils.UnmarshalJSON(data, &benefitMeterCreditUpdate, "", true, true); err == nil {
+		u.BenefitMeterCreditUpdate = &benefitMeterCreditUpdate
+		u.Type = BenefitsUpdateBenefitUpdateTypeBenefitMeterCreditUpdate
+		return nil
+	}
+
 	return fmt.Errorf("could not unmarshal `%s` into any supported union types for BenefitsUpdateBenefitUpdate", string(data))
 }
 
@@ -133,6 +151,10 @@ func (u BenefitsUpdateBenefitUpdate) MarshalJSON() ([]byte, error) {
 
 	if u.BenefitLicenseKeysUpdate != nil {
 		return utils.MarshalJSON(u.BenefitLicenseKeysUpdate, "", true)
+	}
+
+	if u.BenefitMeterCreditUpdate != nil {
+		return utils.MarshalJSON(u.BenefitMeterCreditUpdate, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type BenefitsUpdateBenefitUpdate: all fields are null")

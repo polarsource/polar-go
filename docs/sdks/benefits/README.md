@@ -111,14 +111,14 @@ func main() {
         polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )
 
-    res, err := s.Benefits.Create(ctx, components.CreateBenefitCreateDownloadables(
-        components.BenefitDownloadablesCreate{
+    res, err := s.Benefits.Create(ctx, components.CreateBenefitCreateGithubRepository(
+        components.BenefitGitHubRepositoryCreate{
             Description: "yuck forager beneath please shadowy foodstuffs welcome",
             OrganizationID: polargo.String("1dbfc517-0bbf-4301-9ba8-555ca42b9737"),
-            Properties: components.BenefitDownloadablesCreateProperties{
-                Files: []string{
-                    "<value>",
-                },
+            Properties: components.BenefitGitHubRepositoryCreateProperties{
+                RepositoryOwner: "polarsource",
+                RepositoryName: "private_repo",
+                Permission: components.BenefitGitHubRepositoryCreatePropertiesPermissionTriage,
             },
         },
     ))
@@ -232,14 +232,8 @@ func main() {
         polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )
 
-    res, err := s.Benefits.Update(ctx, "<value>", operations.CreateBenefitsUpdateBenefitUpdateBenefitGitHubRepositoryUpdate(
-        components.BenefitGitHubRepositoryUpdate{
-            Properties: &components.BenefitGitHubRepositoryCreateProperties{
-                RepositoryOwner: "polarsource",
-                RepositoryName: "private_repo",
-                Permission: components.BenefitGitHubRepositoryCreatePropertiesPermissionTriage,
-            },
-        },
+    res, err := s.Benefits.Update(ctx, "<value>", operations.CreateBenefitsUpdateBenefitUpdateBenefitDownloadablesUpdate(
+        components.BenefitDownloadablesUpdate{},
     ))
     if err != nil {
         log.Fatal(err)
@@ -267,7 +261,6 @@ func main() {
 
 | Error Type                    | Status Code                   | Content Type                  |
 | ----------------------------- | ----------------------------- | ----------------------------- |
-| apierrors.NotPermitted        | 403                           | application/json              |
 | apierrors.ResourceNotFound    | 404                           | application/json              |
 | apierrors.HTTPValidationError | 422                           | application/json              |
 | apierrors.APIError            | 4XX, 5XX                      | \*/\*                         |

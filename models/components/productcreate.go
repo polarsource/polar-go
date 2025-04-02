@@ -96,15 +96,17 @@ func (u ProductCreateMetadata) MarshalJSON() ([]byte, error) {
 type ProductCreatePricesType string
 
 const (
-	ProductCreatePricesTypeProductPriceFixedCreate  ProductCreatePricesType = "ProductPriceFixedCreate"
-	ProductCreatePricesTypeProductPriceCustomCreate ProductCreatePricesType = "ProductPriceCustomCreate"
-	ProductCreatePricesTypeProductPriceFreeCreate   ProductCreatePricesType = "ProductPriceFreeCreate"
+	ProductCreatePricesTypeProductPriceFixedCreate       ProductCreatePricesType = "ProductPriceFixedCreate"
+	ProductCreatePricesTypeProductPriceCustomCreate      ProductCreatePricesType = "ProductPriceCustomCreate"
+	ProductCreatePricesTypeProductPriceFreeCreate        ProductCreatePricesType = "ProductPriceFreeCreate"
+	ProductCreatePricesTypeProductPriceMeteredUnitCreate ProductCreatePricesType = "ProductPriceMeteredUnitCreate"
 )
 
 type ProductCreatePrices struct {
-	ProductPriceFixedCreate  *ProductPriceFixedCreate  `queryParam:"inline"`
-	ProductPriceCustomCreate *ProductPriceCustomCreate `queryParam:"inline"`
-	ProductPriceFreeCreate   *ProductPriceFreeCreate   `queryParam:"inline"`
+	ProductPriceFixedCreate       *ProductPriceFixedCreate       `queryParam:"inline"`
+	ProductPriceCustomCreate      *ProductPriceCustomCreate      `queryParam:"inline"`
+	ProductPriceFreeCreate        *ProductPriceFreeCreate        `queryParam:"inline"`
+	ProductPriceMeteredUnitCreate *ProductPriceMeteredUnitCreate `queryParam:"inline"`
 
 	Type ProductCreatePricesType
 }
@@ -136,6 +138,15 @@ func CreateProductCreatePricesProductPriceFreeCreate(productPriceFreeCreate Prod
 	}
 }
 
+func CreateProductCreatePricesProductPriceMeteredUnitCreate(productPriceMeteredUnitCreate ProductPriceMeteredUnitCreate) ProductCreatePrices {
+	typ := ProductCreatePricesTypeProductPriceMeteredUnitCreate
+
+	return ProductCreatePrices{
+		ProductPriceMeteredUnitCreate: &productPriceMeteredUnitCreate,
+		Type:                          typ,
+	}
+}
+
 func (u *ProductCreatePrices) UnmarshalJSON(data []byte) error {
 
 	var productPriceFreeCreate ProductPriceFreeCreate = ProductPriceFreeCreate{}
@@ -159,6 +170,13 @@ func (u *ProductCreatePrices) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
+	var productPriceMeteredUnitCreate ProductPriceMeteredUnitCreate = ProductPriceMeteredUnitCreate{}
+	if err := utils.UnmarshalJSON(data, &productPriceMeteredUnitCreate, "", true, true); err == nil {
+		u.ProductPriceMeteredUnitCreate = &productPriceMeteredUnitCreate
+		u.Type = ProductCreatePricesTypeProductPriceMeteredUnitCreate
+		return nil
+	}
+
 	return fmt.Errorf("could not unmarshal `%s` into any supported union types for ProductCreatePrices", string(data))
 }
 
@@ -173,6 +191,10 @@ func (u ProductCreatePrices) MarshalJSON() ([]byte, error) {
 
 	if u.ProductPriceFreeCreate != nil {
 		return utils.MarshalJSON(u.ProductPriceFreeCreate, "", true)
+	}
+
+	if u.ProductPriceMeteredUnitCreate != nil {
+		return utils.MarshalJSON(u.ProductPriceMeteredUnitCreate, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type ProductCreatePrices: all fields are null")

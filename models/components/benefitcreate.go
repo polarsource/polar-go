@@ -17,6 +17,7 @@ const (
 	BenefitCreateTypeDownloadables    BenefitCreateType = "downloadables"
 	BenefitCreateTypeGithubRepository BenefitCreateType = "github_repository"
 	BenefitCreateTypeLicenseKeys      BenefitCreateType = "license_keys"
+	BenefitCreateTypeMeterCredit      BenefitCreateType = "meter_credit"
 )
 
 type BenefitCreate struct {
@@ -25,6 +26,7 @@ type BenefitCreate struct {
 	BenefitGitHubRepositoryCreate *BenefitGitHubRepositoryCreate `queryParam:"inline"`
 	BenefitDownloadablesCreate    *BenefitDownloadablesCreate    `queryParam:"inline"`
 	BenefitLicenseKeysCreate      *BenefitLicenseKeysCreate      `queryParam:"inline"`
+	BenefitMeterCreditCreate      *BenefitMeterCreditCreate      `queryParam:"inline"`
 
 	Type BenefitCreateType
 }
@@ -70,6 +72,15 @@ func CreateBenefitCreateLicenseKeys(licenseKeys BenefitLicenseKeysCreate) Benefi
 
 	return BenefitCreate{
 		BenefitLicenseKeysCreate: &licenseKeys,
+		Type:                     typ,
+	}
+}
+
+func CreateBenefitCreateMeterCredit(meterCredit BenefitMeterCreditCreate) BenefitCreate {
+	typ := BenefitCreateTypeMeterCredit
+
+	return BenefitCreate{
+		BenefitMeterCreditCreate: &meterCredit,
 		Type:                     typ,
 	}
 }
@@ -131,6 +142,15 @@ func (u *BenefitCreate) UnmarshalJSON(data []byte) error {
 		u.BenefitLicenseKeysCreate = benefitLicenseKeysCreate
 		u.Type = BenefitCreateTypeLicenseKeys
 		return nil
+	case "meter_credit":
+		benefitMeterCreditCreate := new(BenefitMeterCreditCreate)
+		if err := utils.UnmarshalJSON(data, &benefitMeterCreditCreate, "", true, false); err != nil {
+			return fmt.Errorf("could not unmarshal `%s` into expected (Type == meter_credit) type BenefitMeterCreditCreate within BenefitCreate: %w", string(data), err)
+		}
+
+		u.BenefitMeterCreditCreate = benefitMeterCreditCreate
+		u.Type = BenefitCreateTypeMeterCredit
+		return nil
 	}
 
 	return fmt.Errorf("could not unmarshal `%s` into any supported union types for BenefitCreate", string(data))
@@ -155,6 +175,10 @@ func (u BenefitCreate) MarshalJSON() ([]byte, error) {
 
 	if u.BenefitLicenseKeysCreate != nil {
 		return utils.MarshalJSON(u.BenefitLicenseKeysCreate, "", true)
+	}
+
+	if u.BenefitMeterCreditCreate != nil {
+		return utils.MarshalJSON(u.BenefitMeterCreditCreate, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type BenefitCreate: all fields are null")

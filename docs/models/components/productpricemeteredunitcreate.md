@@ -1,0 +1,14 @@
+# ProductPriceMeteredUnitCreate
+
+Schema to create a metered price with a fixed unit price.
+
+
+## Fields
+
+| Field                                                                                             | Type                                                                                              | Required                                                                                          | Description                                                                                       |
+| ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| `AmountType`                                                                                      | *string*                                                                                          | :heavy_check_mark:                                                                                | N/A                                                                                               |
+| `MeterID`                                                                                         | *string*                                                                                          | :heavy_check_mark:                                                                                | The ID of the meter associated to the price.                                                      |
+| `PriceCurrency`                                                                                   | **string*                                                                                         | :heavy_minus_sign:                                                                                | The currency. Currently, only `usd` is supported.                                                 |
+| `UnitAmount`                                                                                      | *int64*                                                                                           | :heavy_check_mark:                                                                                | The price per unit in cents.                                                                      |
+| `CapAmount`                                                                                       | **int64*                                                                                          | :heavy_minus_sign:                                                                                | Optional maximum amount in cents that can be charged, regardless of the number of units consumed. |

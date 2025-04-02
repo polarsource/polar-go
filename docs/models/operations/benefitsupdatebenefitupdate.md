@@ -33,3 +33,9 @@ benefitsUpdateBenefitUpdate := operations.CreateBenefitsUpdateBenefitUpdateBenef
 benefitsUpdateBenefitUpdate := operations.CreateBenefitsUpdateBenefitUpdateBenefitLicenseKeysUpdate(components.BenefitLicenseKeysUpdate{/* values here */})
 ```
 
+### BenefitMeterCreditUpdate
+
+```go
+benefitsUpdateBenefitUpdate := operations.CreateBenefitsUpdateBenefitUpdateBenefitMeterCreditUpdate(components.BenefitMeterCreditUpdate{/* values here */})
+```
+

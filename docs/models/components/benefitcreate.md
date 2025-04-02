@@ -33,3 +33,9 @@ benefitCreate := components.CreateBenefitCreateGithubRepository(components.Benef
 benefitCreate := components.CreateBenefitCreateLicenseKeys(components.BenefitLicenseKeysCreate{/* values here */})
 ```
 
+### BenefitMeterCreditCreate
+
+```go
+benefitCreate := components.CreateBenefitCreateMeterCredit(components.BenefitMeterCreditCreate{/* values here */})
+```
+

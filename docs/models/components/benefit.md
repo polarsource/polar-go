@@ -33,3 +33,9 @@ benefit := components.CreateBenefitBenefitDownloadables(components.BenefitDownlo
 benefit := components.CreateBenefitBenefitLicenseKeys(components.BenefitLicenseKeys{/* values here */})
 ```
 
+### BenefitMeterCredit
+
+```go
+benefit := components.CreateBenefitBenefitMeterCredit(components.BenefitMeterCredit{/* values here */})
+```
+

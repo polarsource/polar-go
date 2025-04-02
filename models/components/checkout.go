@@ -479,15 +479,16 @@ type Checkout struct {
 	SuccessURL string `json:"success_url"`
 	// When checkout is embedded, represents the Origin of the page embedding the checkout. Used as a security measure to send messages only to the embedding page.
 	EmbedOrigin *string `json:"embed_origin"`
-	Amount      *int64  `json:"amount"`
+	// Amount in cents, before discounts and taxes.
+	Amount int64 `json:"amount"`
 	// Discount amount in cents.
-	DiscountAmount *int64 `json:"discount_amount"`
+	DiscountAmount int64 `json:"discount_amount"`
 	// Amount in cents, after discounts but before taxes.
-	NetAmount *int64 `json:"net_amount"`
-	// Sales tax amount in cents.
+	NetAmount int64 `json:"net_amount"`
+	// Sales tax amount in cents. If `null`, it means there is no enough information yet to calculate it.
 	TaxAmount *int64 `json:"tax_amount"`
 	// Amount in cents, after discounts and taxes.
-	TotalAmount *int64 `json:"total_amount"`
+	TotalAmount int64 `json:"total_amount"`
 	// Currency code of the checkout session.
 	Currency *string `json:"currency"`
 	// ID of the product to checkout.
@@ -622,23 +623,23 @@ func (o *Checkout) GetEmbedOrigin() *string {
 	return o.EmbedOrigin
 }
 
-func (o *Checkout) GetAmount() *int64 {
+func (o *Checkout) GetAmount() int64 {
 	if o == nil {
-		return nil
+		return 0
 	}
 	return o.Amount
 }
 
-func (o *Checkout) GetDiscountAmount() *int64 {
+func (o *Checkout) GetDiscountAmount() int64 {
 	if o == nil {
-		return nil
+		return 0
 	}
 	return o.DiscountAmount
 }
 
-func (o *Checkout) GetNetAmount() *int64 {
+func (o *Checkout) GetNetAmount() int64 {
 	if o == nil {
-		return nil
+		return 0
 	}
 	return o.NetAmount
 }
@@ -650,9 +651,9 @@ func (o *Checkout) GetTaxAmount() *int64 {
 	return o.TaxAmount
 }
 
-func (o *Checkout) GetTotalAmount() *int64 {
+func (o *Checkout) GetTotalAmount() int64 {
 	if o == nil {
-		return nil
+		return 0
 	}
 	return o.TotalAmount
 }

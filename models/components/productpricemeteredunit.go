@@ -27,8 +27,6 @@ type ProductPriceMeteredUnit struct {
 	PriceCurrency string `json:"price_currency"`
 	// The price per unit in cents.
 	UnitAmount int64 `json:"unit_amount"`
-	// The number of units included in the price. They will be deducted from the total.
-	IncludedUnits int64 `json:"included_units"`
 	// The maximum amount in cents that can be charged, regardless of the number of units consumed.
 	CapAmount *int64 `json:"cap_amount"`
 	// The ID of the meter associated to the price.
@@ -113,13 +111,6 @@ func (o *ProductPriceMeteredUnit) GetUnitAmount() int64 {
 		return 0
 	}
 	return o.UnitAmount
-}
-
-func (o *ProductPriceMeteredUnit) GetIncludedUnits() int64 {
-	if o == nil {
-		return 0
-	}
-	return o.IncludedUnits
 }
 
 func (o *ProductPriceMeteredUnit) GetCapAmount() *int64 {

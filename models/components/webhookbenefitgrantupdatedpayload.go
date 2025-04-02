@@ -6,7 +6,7 @@ import (
 	"github.com/polarsource/polar-go/internal/utils"
 )
 
-// WebhookBenefitGrantUpdatedPayload - Sent when a new benefit grant is updated.
+// WebhookBenefitGrantUpdatedPayload - Sent when a benefit grant is updated.
 //
 // **Discord & Slack support:** Basic
 type WebhookBenefitGrantUpdatedPayload struct {

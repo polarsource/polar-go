@@ -16,6 +16,7 @@ const (
 	BenefitUnionTypeBenefitGitHubRepository BenefitUnionType = "BenefitGitHubRepository"
 	BenefitUnionTypeBenefitDownloadables    BenefitUnionType = "BenefitDownloadables"
 	BenefitUnionTypeBenefitLicenseKeys      BenefitUnionType = "BenefitLicenseKeys"
+	BenefitUnionTypeBenefitMeterCredit      BenefitUnionType = "BenefitMeterCredit"
 )
 
 type Benefit struct {
@@ -24,6 +25,7 @@ type Benefit struct {
 	BenefitGitHubRepository *BenefitGitHubRepository `queryParam:"inline"`
 	BenefitDownloadables    *BenefitDownloadables    `queryParam:"inline"`
 	BenefitLicenseKeys      *BenefitLicenseKeys      `queryParam:"inline"`
+	BenefitMeterCredit      *BenefitMeterCredit      `queryParam:"inline"`
 
 	Type BenefitUnionType
 }
@@ -73,6 +75,15 @@ func CreateBenefitBenefitLicenseKeys(benefitLicenseKeys BenefitLicenseKeys) Bene
 	}
 }
 
+func CreateBenefitBenefitMeterCredit(benefitMeterCredit BenefitMeterCredit) Benefit {
+	typ := BenefitUnionTypeBenefitMeterCredit
+
+	return Benefit{
+		BenefitMeterCredit: &benefitMeterCredit,
+		Type:               typ,
+	}
+}
+
 func (u *Benefit) UnmarshalJSON(data []byte) error {
 
 	var benefitDiscord BenefitDiscord = BenefitDiscord{}
@@ -100,6 +111,13 @@ func (u *Benefit) UnmarshalJSON(data []byte) error {
 	if err := utils.UnmarshalJSON(data, &benefitLicenseKeys, "", true, true); err == nil {
 		u.BenefitLicenseKeys = &benefitLicenseKeys
 		u.Type = BenefitUnionTypeBenefitLicenseKeys
+		return nil
+	}
+
+	var benefitMeterCredit BenefitMeterCredit = BenefitMeterCredit{}
+	if err := utils.UnmarshalJSON(data, &benefitMeterCredit, "", true, true); err == nil {
+		u.BenefitMeterCredit = &benefitMeterCredit
+		u.Type = BenefitUnionTypeBenefitMeterCredit
 		return nil
 	}
 
@@ -132,6 +150,10 @@ func (u Benefit) MarshalJSON() ([]byte, error) {
 
 	if u.BenefitLicenseKeys != nil {
 		return utils.MarshalJSON(u.BenefitLicenseKeys, "", true)
+	}
+
+	if u.BenefitMeterCredit != nil {
+		return utils.MarshalJSON(u.BenefitMeterCredit, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type Benefit: all fields are null")
