@@ -4,15 +4,15 @@ package components
 
 // BenefitMeterCreditCreateProperties - Properties for creating a benefit of type `meter_unit`.
 type BenefitMeterCreditCreateProperties struct {
-	Unit    int64  `json:"unit"`
+	Units   int64  `json:"units"`
 	MeterID string `json:"meter_id"`
 }
 
-func (o *BenefitMeterCreditCreateProperties) GetUnit() int64 {
+func (o *BenefitMeterCreditCreateProperties) GetUnits() int64 {
 	if o == nil {
 		return 0
 	}
-	return o.Unit
+	return o.Units
 }
 
 func (o *BenefitMeterCreditCreateProperties) GetMeterID() string {

@@ -103,6 +103,7 @@ type Polar struct {
 	CustomerSessions      *CustomerSessions
 	Events                *Events
 	Meters                *Meters
+	CustomerMeters        *CustomerMeters
 
 	sdkConfiguration sdkConfiguration
 }
@@ -182,9 +183,9 @@ func New(opts ...SDKOption) *Polar {
 		sdkConfiguration: sdkConfiguration{
 			Language:          "go",
 			OpenAPIDocVersion: "0.1.0",
-			SDKVersion:        "0.4.9",
-			GenVersion:        "2.564.5",
-			UserAgent:         "speakeasy-sdk/go 0.4.9 2.564.5 0.1.0 github.com/polarsource/polar-go",
+			SDKVersion:        "0.4.10",
+			GenVersion:        "2.570.3",
+			UserAgent:         "speakeasy-sdk/go 0.4.10 2.570.3 0.1.0 github.com/polarsource/polar-go",
 			Hooks:             hooks.New(),
 		},
 	}
@@ -252,6 +253,8 @@ func New(opts ...SDKOption) *Polar {
 	sdk.Events = newEvents(sdk.sdkConfiguration)
 
 	sdk.Meters = newMeters(sdk.sdkConfiguration)
+
+	sdk.CustomerMeters = newCustomerMeters(sdk.sdkConfiguration)
 
 	return sdk
 }

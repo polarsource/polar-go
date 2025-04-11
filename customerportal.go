@@ -3,13 +3,14 @@
 package polargo
 
 type CustomerPortal struct {
-	BenefitGrants *BenefitGrants
-	Customers     *PolarCustomers
-	Downloadables *Downloadables
-	LicenseKeys   *PolarLicenseKeys
-	Orders        *PolarOrders
-	Organizations *PolarOrganizations
-	Subscriptions *PolarSubscriptions
+	BenefitGrants  *BenefitGrants
+	Customers      *PolarCustomers
+	CustomerMeters *PolarCustomerMeters
+	Downloadables  *Downloadables
+	LicenseKeys    *PolarLicenseKeys
+	Orders         *PolarOrders
+	Organizations  *PolarOrganizations
+	Subscriptions  *PolarSubscriptions
 
 	sdkConfiguration sdkConfiguration
 }
@@ -19,6 +20,7 @@ func newCustomerPortal(sdkConfig sdkConfiguration) *CustomerPortal {
 		sdkConfiguration: sdkConfig,
 		BenefitGrants:    newBenefitGrants(sdkConfig),
 		Customers:        newPolarCustomers(sdkConfig),
+		CustomerMeters:   newPolarCustomerMeters(sdkConfig),
 		Downloadables:    newDownloadables(sdkConfig),
 		LicenseKeys:      newPolarLicenseKeys(sdkConfig),
 		Orders:           newPolarOrders(sdkConfig),

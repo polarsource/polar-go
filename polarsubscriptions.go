@@ -59,7 +59,7 @@ func (s *PolarSubscriptions) List(ctx context.Context, request operations.Custom
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "customer_portal:subscriptions:list",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: utils.AsSecuritySource(security),
 	}
 
@@ -361,7 +361,7 @@ func (s *PolarSubscriptions) Get(ctx context.Context, security operations.Custom
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "customer_portal:subscriptions:get",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: utils.AsSecuritySource(security),
 	}
 
@@ -612,7 +612,7 @@ func (s *PolarSubscriptions) Update(ctx context.Context, security operations.Cus
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "customer_portal:subscriptions:update",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: utils.AsSecuritySource(security),
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "CustomerSubscriptionUpdate", "json", `request:"mediaType=application/json"`)
@@ -890,7 +890,7 @@ func (s *PolarSubscriptions) Cancel(ctx context.Context, security operations.Cus
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "customer_portal:subscriptions:cancel",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: utils.AsSecuritySource(security),
 	}
 

@@ -4,6 +4,8 @@ package components
 
 type MeterQuantities struct {
 	Quantities []MeterQuantity `json:"quantities"`
+	// The total quantity for the period.
+	Total float64 `json:"total"`
 }
 
 func (o *MeterQuantities) GetQuantities() []MeterQuantity {
@@ -11,4 +13,11 @@ func (o *MeterQuantities) GetQuantities() []MeterQuantity {
 		return []MeterQuantity{}
 	}
 	return o.Quantities
+}
+
+func (o *MeterQuantities) GetTotal() float64 {
+	if o == nil {
+		return 0.0
+	}
+	return o.Total
 }

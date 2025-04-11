@@ -320,7 +320,7 @@ type CheckoutPublic struct {
 	// Amount in cents, after discounts and taxes.
 	TotalAmount int64 `json:"total_amount"`
 	// Currency code of the checkout session.
-	Currency *string `json:"currency"`
+	Currency string `json:"currency"`
 	// ID of the product to checkout.
 	ProductID string `json:"product_id"`
 	// ID of the product price to checkout.
@@ -484,9 +484,9 @@ func (o *CheckoutPublic) GetTotalAmount() int64 {
 	return o.TotalAmount
 }
 
-func (o *CheckoutPublic) GetCurrency() *string {
+func (o *CheckoutPublic) GetCurrency() string {
 	if o == nil {
-		return nil
+		return ""
 	}
 	return o.Currency
 }

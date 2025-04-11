@@ -64,7 +64,7 @@ func (s *PolarLicenseKeys) List(ctx context.Context, security operations.Custome
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "customer_portal:license_keys:list",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: utils.AsSecuritySource(security),
 	}
 
@@ -403,7 +403,7 @@ func (s *PolarLicenseKeys) Get(ctx context.Context, security operations.Customer
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "customer_portal:license_keys:get",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: utils.AsSecuritySource(security),
 	}
 

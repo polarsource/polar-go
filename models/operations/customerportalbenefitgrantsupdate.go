@@ -57,6 +57,10 @@ func (o *CustomerPortalBenefitGrantsUpdateRequest) GetCustomerBenefitGrantUpdate
 	return o.GetCustomerBenefitGrantUpdate().CustomerBenefitGrantLicenseKeysUpdate
 }
 
+func (o *CustomerPortalBenefitGrantsUpdateRequest) GetCustomerBenefitGrantUpdateMeterCredit() *components.CustomerBenefitGrantMeterCreditUpdate {
+	return o.GetCustomerBenefitGrantUpdate().CustomerBenefitGrantMeterCreditUpdate
+}
+
 type CustomerPortalBenefitGrantsUpdateResponse struct {
 	HTTPMeta components.HTTPMetadata `json:"-"`
 	// Benefit grant updated.

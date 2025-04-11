@@ -33,3 +33,9 @@ customerBenefitGrant := components.CreateCustomerBenefitGrantCustomerBenefitGran
 customerBenefitGrant := components.CreateCustomerBenefitGrantCustomerBenefitGrantCustom(components.CustomerBenefitGrantCustom{/* values here */})
 ```
 
+### CustomerBenefitGrantMeterCredit
+
+```go
+customerBenefitGrant := components.CreateCustomerBenefitGrantCustomerBenefitGrantMeterCredit(components.CustomerBenefitGrantMeterCredit{/* values here */})
+```
+

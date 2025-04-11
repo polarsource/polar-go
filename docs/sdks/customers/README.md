@@ -241,7 +241,22 @@ func main() {
         polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )
 
-    res, err := s.Customers.Update(ctx, "<value>", components.CustomerUpdate{})
+    res, err := s.Customers.Update(ctx, "<value>", components.CustomerUpdate{
+        ExternalID: polargo.String("usr_1337"),
+        Email: polargo.String("customer@example.com"),
+        Name: polargo.String("John Doe"),
+        BillingAddress: &components.Address{
+            Country: "FR",
+        },
+        TaxID: []*components.CustomerUpdateTaxID{
+            polargo.Pointer(components.CreateCustomerUpdateTaxIDStr(
+                "FR61954506077",
+            )),
+            polargo.Pointer(components.CreateCustomerUpdateTaxIDStr(
+                "eu_vat",
+            )),
+        },
+    })
     if err != nil {
         log.Fatal(err)
     }
@@ -420,7 +435,22 @@ func main() {
         polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )
 
-    res, err := s.Customers.UpdateExternal(ctx, "<id>", components.CustomerUpdate{})
+    res, err := s.Customers.UpdateExternal(ctx, "<id>", components.CustomerUpdate{
+        ExternalID: polargo.String("usr_1337"),
+        Email: polargo.String("customer@example.com"),
+        Name: polargo.String("John Doe"),
+        BillingAddress: &components.Address{
+            Country: "US",
+        },
+        TaxID: []*components.CustomerUpdateTaxID{
+            polargo.Pointer(components.CreateCustomerUpdateTaxIDStr(
+                "FR61954506077",
+            )),
+            polargo.Pointer(components.CreateCustomerUpdateTaxIDStr(
+                "eu_vat",
+            )),
+        },
+    })
     if err != nil {
         log.Fatal(err)
     }

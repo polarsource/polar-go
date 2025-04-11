@@ -20,7 +20,8 @@ type WebhookCustomerStateChangedPayload struct {
 	// A customer along with additional state information:
 	//
 	// * Active subscriptions
-	// * Active benefits
+	// * Granted benefits
+	// * Active meters
 	Data CustomerState `json:"data"`
 }
 

@@ -202,6 +202,70 @@ func (u ExternalCustomerIDFilter) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type ExternalCustomerIDFilter: all fields are null")
 }
 
+type NameFilterType string
+
+const (
+	NameFilterTypeStr        NameFilterType = "str"
+	NameFilterTypeArrayOfStr NameFilterType = "arrayOfStr"
+)
+
+// NameFilter - Filter by event name.
+type NameFilter struct {
+	Str        *string  `queryParam:"inline"`
+	ArrayOfStr []string `queryParam:"inline"`
+
+	Type NameFilterType
+}
+
+func CreateNameFilterStr(str string) NameFilter {
+	typ := NameFilterTypeStr
+
+	return NameFilter{
+		Str:  &str,
+		Type: typ,
+	}
+}
+
+func CreateNameFilterArrayOfStr(arrayOfStr []string) NameFilter {
+	typ := NameFilterTypeArrayOfStr
+
+	return NameFilter{
+		ArrayOfStr: arrayOfStr,
+		Type:       typ,
+	}
+}
+
+func (u *NameFilter) UnmarshalJSON(data []byte) error {
+
+	var str string = ""
+	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
+		u.Str = &str
+		u.Type = NameFilterTypeStr
+		return nil
+	}
+
+	var arrayOfStr []string = []string{}
+	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, true); err == nil {
+		u.ArrayOfStr = arrayOfStr
+		u.Type = NameFilterTypeArrayOfStr
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for NameFilter", string(data))
+}
+
+func (u NameFilter) MarshalJSON() ([]byte, error) {
+	if u.Str != nil {
+		return utils.MarshalJSON(u.Str, "", true)
+	}
+
+	if u.ArrayOfStr != nil {
+		return utils.MarshalJSON(u.ArrayOfStr, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type NameFilter: all fields are null")
+}
+
 type SourceFilterType string
 
 const (
@@ -277,6 +341,10 @@ type EventsListRequest struct {
 	CustomerID *EventsListQueryParamCustomerIDFilter `queryParam:"style=form,explode=true,name=customer_id"`
 	// Filter by external customer ID.
 	ExternalCustomerID *ExternalCustomerIDFilter `queryParam:"style=form,explode=true,name=external_customer_id"`
+	// Filter by a meter filter clause.
+	MeterID *string `queryParam:"style=form,explode=true,name=meter_id"`
+	// Filter by event name.
+	Name *NameFilter `queryParam:"style=form,explode=true,name=name"`
 	// Filter by event source.
 	Source *SourceFilter `queryParam:"style=form,explode=true,name=source"`
 	// Page number, defaults to 1.
@@ -333,6 +401,20 @@ func (o *EventsListRequest) GetExternalCustomerID() *ExternalCustomerIDFilter {
 		return nil
 	}
 	return o.ExternalCustomerID
+}
+
+func (o *EventsListRequest) GetMeterID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.MeterID
+}
+
+func (o *EventsListRequest) GetName() *NameFilter {
+	if o == nil {
+		return nil
+	}
+	return o.Name
 }
 
 func (o *EventsListRequest) GetSource() *SourceFilter {

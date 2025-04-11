@@ -160,7 +160,8 @@ func (u CustomerStateTaxID) MarshalJSON() ([]byte, error) {
 // CustomerState - A customer along with additional state information:
 //
 // * Active subscriptions
-// * Active benefits
+// * Granted benefits
+// * Active meters
 type CustomerState struct {
 	// The ID of the customer.
 	ID string `json:"id"`
@@ -187,7 +188,9 @@ type CustomerState struct {
 	ActiveSubscriptions []CustomerStateSubscription `json:"active_subscriptions"`
 	// The customer's active benefit grants.
 	GrantedBenefits []CustomerStateBenefitGrant `json:"granted_benefits"`
-	AvatarURL       string                      `json:"avatar_url"`
+	// The customer's active meters.
+	ActiveMeters []CustomerStateMeter `json:"active_meters"`
+	AvatarURL    string               `json:"avatar_url"`
 }
 
 func (c CustomerState) MarshalJSON() ([]byte, error) {
@@ -297,6 +300,13 @@ func (o *CustomerState) GetGrantedBenefits() []CustomerStateBenefitGrant {
 		return []CustomerStateBenefitGrant{}
 	}
 	return o.GrantedBenefits
+}
+
+func (o *CustomerState) GetActiveMeters() []CustomerStateMeter {
+	if o == nil {
+		return []CustomerStateMeter{}
+	}
+	return o.ActiveMeters
 }
 
 func (o *CustomerState) GetAvatarURL() string {

@@ -59,7 +59,7 @@ func (s *BenefitGrants) List(ctx context.Context, request operations.CustomerPor
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "customer_portal:benefit-grants:list",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: utils.AsSecuritySource(security),
 	}
 
@@ -363,7 +363,7 @@ func (s *BenefitGrants) Get(ctx context.Context, security operations.CustomerPor
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "customer_portal:benefit-grants:get",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: utils.AsSecuritySource(security),
 	}
 
@@ -614,7 +614,7 @@ func (s *BenefitGrants) Update(ctx context.Context, security operations.Customer
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "customer_portal:benefit-grants:update",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: utils.AsSecuritySource(security),
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "CustomerBenefitGrantUpdate", "json", `request:"mediaType=application/json"`)

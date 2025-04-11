@@ -59,7 +59,7 @@ func (s *PolarCustomers) Get(ctx context.Context, security operations.CustomerPo
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "customer_portal:customers:get",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: utils.AsSecuritySource(security),
 	}
 
@@ -263,7 +263,7 @@ func (s *PolarCustomers) Update(ctx context.Context, request components.Customer
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "customer_portal:customers:update",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: utils.AsSecuritySource(security),
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "Request", "json", `request:"mediaType=application/json"`)
@@ -500,7 +500,7 @@ func (s *PolarCustomers) GetPaymentMethods(ctx context.Context, security operati
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "customer_portal:customers:get_payment_methods",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: utils.AsSecuritySource(security),
 	}
 
@@ -791,7 +791,7 @@ func (s *PolarCustomers) AddPaymentMethod(ctx context.Context, request component
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "customer_portal:customers:add_payment_method",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: utils.AsSecuritySource(security),
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "Request", "json", `request:"mediaType=application/json"`)
@@ -1027,7 +1027,7 @@ func (s *PolarCustomers) DeletePaymentMethod(ctx context.Context, security opera
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "customer_portal:customers:delete_payment_method",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: utils.AsSecuritySource(security),
 	}
 

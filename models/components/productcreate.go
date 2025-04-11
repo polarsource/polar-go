@@ -219,7 +219,7 @@ type ProductCreate struct {
 	Description *string `json:"description,omitempty"`
 	// The recurring interval of the product. If `None`, the product is a one-time purchase.
 	RecurringInterval *SubscriptionRecurringInterval `json:"recurring_interval"`
-	// List of available prices for this product. Currently, only a single price is supported.
+	// List of available prices for this product. It should contain at most one static price (fixed, custom or free), and any number of metered prices. Metered prices are not supported on one-time purchase products.
 	Prices []ProductCreatePrices `json:"prices"`
 	// List of file IDs. Each one must be on the same organization as the product, of type `product_media` and correctly uploaded.
 	Medias []string `json:"medias,omitempty"`

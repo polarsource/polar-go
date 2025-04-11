@@ -90,7 +90,11 @@ func main() {
 
     s := polargo.New()
 
-    res, err := s.CustomerPortal.Customers.Update(ctx, components.CustomerPortalCustomerUpdate{}, operations.CustomerPortalCustomersUpdateSecurity{
+    res, err := s.CustomerPortal.Customers.Update(ctx, components.CustomerPortalCustomerUpdate{
+        BillingAddress: &components.Address{
+            Country: "FR",
+        },
+    }, operations.CustomerPortalCustomersUpdateSecurity{
         CustomerSession: os.Getenv("POLAR_CUSTOMER_SESSION"),
     })
     if err != nil {

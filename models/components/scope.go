@@ -10,52 +10,55 @@ import (
 type Scope string
 
 const (
-	ScopeOpenid                    Scope = "openid"
-	ScopeProfile                   Scope = "profile"
-	ScopeEmail                     Scope = "email"
-	ScopeUserRead                  Scope = "user:read"
-	ScopeAdmin                     Scope = "admin"
-	ScopeWebDefault                Scope = "web_default"
-	ScopeOrganizationsRead         Scope = "organizations:read"
-	ScopeOrganizationsWrite        Scope = "organizations:write"
-	ScopeCustomFieldsRead          Scope = "custom_fields:read"
-	ScopeCustomFieldsWrite         Scope = "custom_fields:write"
-	ScopeDiscountsRead             Scope = "discounts:read"
-	ScopeDiscountsWrite            Scope = "discounts:write"
-	ScopeCheckoutLinksRead         Scope = "checkout_links:read"
-	ScopeCheckoutLinksWrite        Scope = "checkout_links:write"
-	ScopeCheckoutsRead             Scope = "checkouts:read"
-	ScopeCheckoutsWrite            Scope = "checkouts:write"
-	ScopeProductsRead              Scope = "products:read"
-	ScopeProductsWrite             Scope = "products:write"
-	ScopeBenefitsRead              Scope = "benefits:read"
-	ScopeBenefitsWrite             Scope = "benefits:write"
-	ScopeEventsRead                Scope = "events:read"
-	ScopeEventsWrite               Scope = "events:write"
-	ScopeMetersRead                Scope = "meters:read"
-	ScopeMetersWrite               Scope = "meters:write"
-	ScopeFilesRead                 Scope = "files:read"
-	ScopeFilesWrite                Scope = "files:write"
-	ScopeSubscriptionsRead         Scope = "subscriptions:read"
-	ScopeSubscriptionsWrite        Scope = "subscriptions:write"
-	ScopeCustomersRead             Scope = "customers:read"
-	ScopeCustomersWrite            Scope = "customers:write"
-	ScopeCustomerSessionsWrite     Scope = "customer_sessions:write"
-	ScopeOrdersRead                Scope = "orders:read"
-	ScopeRefundsRead               Scope = "refunds:read"
-	ScopeRefundsWrite              Scope = "refunds:write"
-	ScopeMetricsRead               Scope = "metrics:read"
-	ScopeWebhooksRead              Scope = "webhooks:read"
-	ScopeWebhooksWrite             Scope = "webhooks:write"
-	ScopeExternalOrganizationsRead Scope = "external_organizations:read"
-	ScopeLicenseKeysRead           Scope = "license_keys:read"
-	ScopeLicenseKeysWrite          Scope = "license_keys:write"
-	ScopeRepositoriesRead          Scope = "repositories:read"
-	ScopeRepositoriesWrite         Scope = "repositories:write"
-	ScopeIssuesRead                Scope = "issues:read"
-	ScopeIssuesWrite               Scope = "issues:write"
-	ScopeCustomerPortalRead        Scope = "customer_portal:read"
-	ScopeCustomerPortalWrite       Scope = "customer_portal:write"
+	ScopeOpenid                      Scope = "openid"
+	ScopeProfile                     Scope = "profile"
+	ScopeEmail                       Scope = "email"
+	ScopeUserRead                    Scope = "user:read"
+	ScopeAdmin                       Scope = "admin"
+	ScopeWebDefault                  Scope = "web_default"
+	ScopeOrganizationsRead           Scope = "organizations:read"
+	ScopeOrganizationsWrite          Scope = "organizations:write"
+	ScopeCustomFieldsRead            Scope = "custom_fields:read"
+	ScopeCustomFieldsWrite           Scope = "custom_fields:write"
+	ScopeDiscountsRead               Scope = "discounts:read"
+	ScopeDiscountsWrite              Scope = "discounts:write"
+	ScopeCheckoutLinksRead           Scope = "checkout_links:read"
+	ScopeCheckoutLinksWrite          Scope = "checkout_links:write"
+	ScopeCheckoutsRead               Scope = "checkouts:read"
+	ScopeCheckoutsWrite              Scope = "checkouts:write"
+	ScopeProductsRead                Scope = "products:read"
+	ScopeProductsWrite               Scope = "products:write"
+	ScopeBenefitsRead                Scope = "benefits:read"
+	ScopeBenefitsWrite               Scope = "benefits:write"
+	ScopeEventsRead                  Scope = "events:read"
+	ScopeEventsWrite                 Scope = "events:write"
+	ScopeMetersRead                  Scope = "meters:read"
+	ScopeMetersWrite                 Scope = "meters:write"
+	ScopeFilesRead                   Scope = "files:read"
+	ScopeFilesWrite                  Scope = "files:write"
+	ScopeSubscriptionsRead           Scope = "subscriptions:read"
+	ScopeSubscriptionsWrite          Scope = "subscriptions:write"
+	ScopeCustomersRead               Scope = "customers:read"
+	ScopeCustomersWrite              Scope = "customers:write"
+	ScopeCustomerMetersRead          Scope = "customer_meters:read"
+	ScopeCustomerSessionsWrite       Scope = "customer_sessions:write"
+	ScopeOrdersRead                  Scope = "orders:read"
+	ScopeRefundsRead                 Scope = "refunds:read"
+	ScopeRefundsWrite                Scope = "refunds:write"
+	ScopeMetricsRead                 Scope = "metrics:read"
+	ScopeWebhooksRead                Scope = "webhooks:read"
+	ScopeWebhooksWrite               Scope = "webhooks:write"
+	ScopeExternalOrganizationsRead   Scope = "external_organizations:read"
+	ScopeLicenseKeysRead             Scope = "license_keys:read"
+	ScopeLicenseKeysWrite            Scope = "license_keys:write"
+	ScopeRepositoriesRead            Scope = "repositories:read"
+	ScopeRepositoriesWrite           Scope = "repositories:write"
+	ScopeIssuesRead                  Scope = "issues:read"
+	ScopeIssuesWrite                 Scope = "issues:write"
+	ScopeCustomerPortalRead          Scope = "customer_portal:read"
+	ScopeCustomerPortalWrite         Scope = "customer_portal:write"
+	ScopeNotificationRecipientsRead  Scope = "notification_recipients:read"
+	ScopeNotificationRecipientsWrite Scope = "notification_recipients:write"
 )
 
 func (e Scope) ToPointer() *Scope {
@@ -127,6 +130,8 @@ func (e *Scope) UnmarshalJSON(data []byte) error {
 		fallthrough
 	case "customers:write":
 		fallthrough
+	case "customer_meters:read":
+		fallthrough
 	case "customer_sessions:write":
 		fallthrough
 	case "orders:read":
@@ -158,6 +163,10 @@ func (e *Scope) UnmarshalJSON(data []byte) error {
 	case "customer_portal:read":
 		fallthrough
 	case "customer_portal:write":
+		fallthrough
+	case "notification_recipients:read":
+		fallthrough
+	case "notification_recipients:write":
 		*e = Scope(v)
 		return nil
 	default:

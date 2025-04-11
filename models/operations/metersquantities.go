@@ -74,59 +74,59 @@ func (u MetersQuantitiesQueryParamCustomerIDFilter) MarshalJSON() ([]byte, error
 	return nil, errors.New("could not marshal union type MetersQuantitiesQueryParamCustomerIDFilter: all fields are null")
 }
 
-type QueryParamExternalCustomerIDFilterType string
+type MetersQuantitiesQueryParamExternalCustomerIDFilterType string
 
 const (
-	QueryParamExternalCustomerIDFilterTypeStr        QueryParamExternalCustomerIDFilterType = "str"
-	QueryParamExternalCustomerIDFilterTypeArrayOfStr QueryParamExternalCustomerIDFilterType = "arrayOfStr"
+	MetersQuantitiesQueryParamExternalCustomerIDFilterTypeStr        MetersQuantitiesQueryParamExternalCustomerIDFilterType = "str"
+	MetersQuantitiesQueryParamExternalCustomerIDFilterTypeArrayOfStr MetersQuantitiesQueryParamExternalCustomerIDFilterType = "arrayOfStr"
 )
 
-// QueryParamExternalCustomerIDFilter - Filter by external customer ID.
-type QueryParamExternalCustomerIDFilter struct {
+// MetersQuantitiesQueryParamExternalCustomerIDFilter - Filter by external customer ID.
+type MetersQuantitiesQueryParamExternalCustomerIDFilter struct {
 	Str        *string  `queryParam:"inline"`
 	ArrayOfStr []string `queryParam:"inline"`
 
-	Type QueryParamExternalCustomerIDFilterType
+	Type MetersQuantitiesQueryParamExternalCustomerIDFilterType
 }
 
-func CreateQueryParamExternalCustomerIDFilterStr(str string) QueryParamExternalCustomerIDFilter {
-	typ := QueryParamExternalCustomerIDFilterTypeStr
+func CreateMetersQuantitiesQueryParamExternalCustomerIDFilterStr(str string) MetersQuantitiesQueryParamExternalCustomerIDFilter {
+	typ := MetersQuantitiesQueryParamExternalCustomerIDFilterTypeStr
 
-	return QueryParamExternalCustomerIDFilter{
+	return MetersQuantitiesQueryParamExternalCustomerIDFilter{
 		Str:  &str,
 		Type: typ,
 	}
 }
 
-func CreateQueryParamExternalCustomerIDFilterArrayOfStr(arrayOfStr []string) QueryParamExternalCustomerIDFilter {
-	typ := QueryParamExternalCustomerIDFilterTypeArrayOfStr
+func CreateMetersQuantitiesQueryParamExternalCustomerIDFilterArrayOfStr(arrayOfStr []string) MetersQuantitiesQueryParamExternalCustomerIDFilter {
+	typ := MetersQuantitiesQueryParamExternalCustomerIDFilterTypeArrayOfStr
 
-	return QueryParamExternalCustomerIDFilter{
+	return MetersQuantitiesQueryParamExternalCustomerIDFilter{
 		ArrayOfStr: arrayOfStr,
 		Type:       typ,
 	}
 }
 
-func (u *QueryParamExternalCustomerIDFilter) UnmarshalJSON(data []byte) error {
+func (u *MetersQuantitiesQueryParamExternalCustomerIDFilter) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
 	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
 		u.Str = &str
-		u.Type = QueryParamExternalCustomerIDFilterTypeStr
+		u.Type = MetersQuantitiesQueryParamExternalCustomerIDFilterTypeStr
 		return nil
 	}
 
 	var arrayOfStr []string = []string{}
 	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, true); err == nil {
 		u.ArrayOfStr = arrayOfStr
-		u.Type = QueryParamExternalCustomerIDFilterTypeArrayOfStr
+		u.Type = MetersQuantitiesQueryParamExternalCustomerIDFilterTypeArrayOfStr
 		return nil
 	}
 
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for QueryParamExternalCustomerIDFilter", string(data))
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for MetersQuantitiesQueryParamExternalCustomerIDFilter", string(data))
 }
 
-func (u QueryParamExternalCustomerIDFilter) MarshalJSON() ([]byte, error) {
+func (u MetersQuantitiesQueryParamExternalCustomerIDFilter) MarshalJSON() ([]byte, error) {
 	if u.Str != nil {
 		return utils.MarshalJSON(u.Str, "", true)
 	}
@@ -135,7 +135,7 @@ func (u QueryParamExternalCustomerIDFilter) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.ArrayOfStr, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type QueryParamExternalCustomerIDFilter: all fields are null")
+	return nil, errors.New("could not marshal union type MetersQuantitiesQueryParamExternalCustomerIDFilter: all fields are null")
 }
 
 type MetersQuantitiesRequest struct {
@@ -150,7 +150,7 @@ type MetersQuantitiesRequest struct {
 	// Filter by customer ID.
 	CustomerID *MetersQuantitiesQueryParamCustomerIDFilter `queryParam:"style=form,explode=true,name=customer_id"`
 	// Filter by external customer ID.
-	ExternalCustomerID *QueryParamExternalCustomerIDFilter `queryParam:"style=form,explode=true,name=external_customer_id"`
+	ExternalCustomerID *MetersQuantitiesQueryParamExternalCustomerIDFilter `queryParam:"style=form,explode=true,name=external_customer_id"`
 }
 
 func (m MetersQuantitiesRequest) MarshalJSON() ([]byte, error) {
@@ -199,7 +199,7 @@ func (o *MetersQuantitiesRequest) GetCustomerID() *MetersQuantitiesQueryParamCus
 	return o.CustomerID
 }
 
-func (o *MetersQuantitiesRequest) GetExternalCustomerID() *QueryParamExternalCustomerIDFilter {
+func (o *MetersQuantitiesRequest) GetExternalCustomerID() *MetersQuantitiesQueryParamExternalCustomerIDFilter {
 	if o == nil {
 		return nil
 	}

@@ -3,8 +3,74 @@
 package components
 
 import (
+	"errors"
+	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
 )
+
+type UnitAmountType string
+
+const (
+	UnitAmountTypeNumber UnitAmountType = "number"
+	UnitAmountTypeStr    UnitAmountType = "str"
+)
+
+// UnitAmount - The price per unit in cents. Supports up to 12 decimal places.
+type UnitAmount struct {
+	Number *float64 `queryParam:"inline"`
+	Str    *string  `queryParam:"inline"`
+
+	Type UnitAmountType
+}
+
+func CreateUnitAmountNumber(number float64) UnitAmount {
+	typ := UnitAmountTypeNumber
+
+	return UnitAmount{
+		Number: &number,
+		Type:   typ,
+	}
+}
+
+func CreateUnitAmountStr(str string) UnitAmount {
+	typ := UnitAmountTypeStr
+
+	return UnitAmount{
+		Str:  &str,
+		Type: typ,
+	}
+}
+
+func (u *UnitAmount) UnmarshalJSON(data []byte) error {
+
+	var number float64 = float64(0)
+	if err := utils.UnmarshalJSON(data, &number, "", true, true); err == nil {
+		u.Number = &number
+		u.Type = UnitAmountTypeNumber
+		return nil
+	}
+
+	var str string = ""
+	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
+		u.Str = &str
+		u.Type = UnitAmountTypeStr
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for UnitAmount", string(data))
+}
+
+func (u UnitAmount) MarshalJSON() ([]byte, error) {
+	if u.Number != nil {
+		return utils.MarshalJSON(u.Number, "", true)
+	}
+
+	if u.Str != nil {
+		return utils.MarshalJSON(u.Str, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type UnitAmount: all fields are null")
+}
 
 // ProductPriceMeteredUnitCreate - Schema to create a metered price with a fixed unit price.
 type ProductPriceMeteredUnitCreate struct {
@@ -13,8 +79,8 @@ type ProductPriceMeteredUnitCreate struct {
 	MeterID string `json:"meter_id"`
 	// The currency. Currently, only `usd` is supported.
 	PriceCurrency *string `default:"usd" json:"price_currency"`
-	// The price per unit in cents.
-	UnitAmount int64 `json:"unit_amount"`
+	// The price per unit in cents. Supports up to 12 decimal places.
+	UnitAmount UnitAmount `json:"unit_amount"`
 	// Optional maximum amount in cents that can be charged, regardless of the number of units consumed.
 	CapAmount *int64 `json:"cap_amount,omitempty"`
 }
@@ -48,9 +114,9 @@ func (o *ProductPriceMeteredUnitCreate) GetPriceCurrency() *string {
 	return o.PriceCurrency
 }
 
-func (o *ProductPriceMeteredUnitCreate) GetUnitAmount() int64 {
+func (o *ProductPriceMeteredUnitCreate) GetUnitAmount() UnitAmount {
 	if o == nil {
-		return 0
+		return UnitAmount{}
 	}
 	return o.UnitAmount
 }

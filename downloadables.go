@@ -64,7 +64,7 @@ func (s *Downloadables) List(ctx context.Context, security operations.CustomerPo
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "customer_portal:downloadables:list",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: utils.AsSecuritySource(security),
 	}
 

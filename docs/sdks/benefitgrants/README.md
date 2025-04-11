@@ -167,8 +167,12 @@ func main() {
 
     res, err := s.CustomerPortal.BenefitGrants.Update(ctx, operations.CustomerPortalBenefitGrantsUpdateSecurity{
         CustomerSession: os.Getenv("POLAR_CUSTOMER_SESSION"),
-    }, "<value>", components.CreateCustomerBenefitGrantUpdateDownloadables(
-        components.CustomerBenefitGrantDownloadablesUpdate{},
+    }, "<value>", components.CreateCustomerBenefitGrantUpdateGithubRepository(
+        components.CustomerBenefitGrantGitHubRepositoryUpdate{
+            Properties: components.CustomerBenefitGrantGitHubRepositoryPropertiesUpdate{
+                AccountID: "<id>",
+            },
+        },
     ))
     if err != nil {
         log.Fatal(err)

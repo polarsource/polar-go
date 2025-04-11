@@ -59,7 +59,7 @@ func (s *PolarOrders) List(ctx context.Context, request operations.CustomerPorta
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "customer_portal:orders:list",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: utils.AsSecuritySource(security),
 	}
 
@@ -363,7 +363,7 @@ func (s *PolarOrders) Get(ctx context.Context, security operations.CustomerPorta
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "customer_portal:orders:get",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: utils.AsSecuritySource(security),
 	}
 
@@ -613,7 +613,7 @@ func (s *PolarOrders) Invoice(ctx context.Context, security operations.CustomerP
 		BaseURL:        baseURL,
 		Context:        ctx,
 		OperationID:    "customer_portal:orders:invoice",
-		OAuth2Scopes:   []string{},
+		OAuth2Scopes:   nil,
 		SecuritySource: utils.AsSecuritySource(security),
 	}
 

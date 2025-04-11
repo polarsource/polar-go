@@ -33,3 +33,9 @@ customerBenefitGrantUpdate := components.CreateCustomerBenefitGrantUpdateGithubR
 customerBenefitGrantUpdate := components.CreateCustomerBenefitGrantUpdateLicenseKeys(components.CustomerBenefitGrantLicenseKeysUpdate{/* values here */})
 ```
 
+### CustomerBenefitGrantMeterCreditUpdate
+
+```go
+customerBenefitGrantUpdate := components.CreateCustomerBenefitGrantUpdateMeterCredit(components.CustomerBenefitGrantMeterCreditUpdate{/* values here */})
+```
+

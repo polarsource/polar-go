@@ -17,6 +17,7 @@ const (
 	CustomerBenefitGrantUpdateTypeDownloadables    CustomerBenefitGrantUpdateType = "downloadables"
 	CustomerBenefitGrantUpdateTypeGithubRepository CustomerBenefitGrantUpdateType = "github_repository"
 	CustomerBenefitGrantUpdateTypeLicenseKeys      CustomerBenefitGrantUpdateType = "license_keys"
+	CustomerBenefitGrantUpdateTypeMeterCredit      CustomerBenefitGrantUpdateType = "meter_credit"
 )
 
 type CustomerBenefitGrantUpdate struct {
@@ -25,6 +26,7 @@ type CustomerBenefitGrantUpdate struct {
 	CustomerBenefitGrantDownloadablesUpdate    *CustomerBenefitGrantDownloadablesUpdate    `queryParam:"inline"`
 	CustomerBenefitGrantLicenseKeysUpdate      *CustomerBenefitGrantLicenseKeysUpdate      `queryParam:"inline"`
 	CustomerBenefitGrantCustomUpdate           *CustomerBenefitGrantCustomUpdate           `queryParam:"inline"`
+	CustomerBenefitGrantMeterCreditUpdate      *CustomerBenefitGrantMeterCreditUpdate      `queryParam:"inline"`
 
 	Type CustomerBenefitGrantUpdateType
 }
@@ -70,6 +72,15 @@ func CreateCustomerBenefitGrantUpdateLicenseKeys(licenseKeys CustomerBenefitGran
 
 	return CustomerBenefitGrantUpdate{
 		CustomerBenefitGrantLicenseKeysUpdate: &licenseKeys,
+		Type:                                  typ,
+	}
+}
+
+func CreateCustomerBenefitGrantUpdateMeterCredit(meterCredit CustomerBenefitGrantMeterCreditUpdate) CustomerBenefitGrantUpdate {
+	typ := CustomerBenefitGrantUpdateTypeMeterCredit
+
+	return CustomerBenefitGrantUpdate{
+		CustomerBenefitGrantMeterCreditUpdate: &meterCredit,
 		Type:                                  typ,
 	}
 }
@@ -131,6 +142,15 @@ func (u *CustomerBenefitGrantUpdate) UnmarshalJSON(data []byte) error {
 		u.CustomerBenefitGrantLicenseKeysUpdate = customerBenefitGrantLicenseKeysUpdate
 		u.Type = CustomerBenefitGrantUpdateTypeLicenseKeys
 		return nil
+	case "meter_credit":
+		customerBenefitGrantMeterCreditUpdate := new(CustomerBenefitGrantMeterCreditUpdate)
+		if err := utils.UnmarshalJSON(data, &customerBenefitGrantMeterCreditUpdate, "", true, false); err != nil {
+			return fmt.Errorf("could not unmarshal `%s` into expected (BenefitType == meter_credit) type CustomerBenefitGrantMeterCreditUpdate within CustomerBenefitGrantUpdate: %w", string(data), err)
+		}
+
+		u.CustomerBenefitGrantMeterCreditUpdate = customerBenefitGrantMeterCreditUpdate
+		u.Type = CustomerBenefitGrantUpdateTypeMeterCredit
+		return nil
 	}
 
 	return fmt.Errorf("could not unmarshal `%s` into any supported union types for CustomerBenefitGrantUpdate", string(data))
@@ -155,6 +175,10 @@ func (u CustomerBenefitGrantUpdate) MarshalJSON() ([]byte, error) {
 
 	if u.CustomerBenefitGrantCustomUpdate != nil {
 		return utils.MarshalJSON(u.CustomerBenefitGrantCustomUpdate, "", true)
+	}
+
+	if u.CustomerBenefitGrantMeterCreditUpdate != nil {
+		return utils.MarshalJSON(u.CustomerBenefitGrantMeterCreditUpdate, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type CustomerBenefitGrantUpdate: all fields are null")

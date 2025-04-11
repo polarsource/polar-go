@@ -112,13 +112,12 @@ func main() {
         polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )
 
-    res, err := s.Checkouts.Create(ctx, components.CreateCheckoutCreateCheckoutPriceCreate(
-        components.CheckoutPriceCreate{
+    res, err := s.Checkouts.Create(ctx, components.CreateCheckoutCreateCheckoutProductCreate(
+        components.CheckoutProductCreate{
             CustomerBillingAddress: &components.Address{
                 Country: "SE",
             },
-            SuccessURL: polargo.String("https://probable-heating.com/"),
-            ProductPriceID: "<value>",
+            ProductID: "<value>",
         },
     ))
     if err != nil {
@@ -174,7 +173,7 @@ func main() {
         polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )
 
-    res, err := s.Checkouts.Get(ctx, "<id>")
+    res, err := s.Checkouts.Get(ctx, "<value>")
     if err != nil {
         log.Fatal(err)
     }
@@ -230,7 +229,11 @@ func main() {
         polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )
 
-    res, err := s.Checkouts.Update(ctx, "<value>", components.CheckoutUpdate{})
+    res, err := s.Checkouts.Update(ctx, "<value>", components.CheckoutUpdate{
+        CustomerBillingAddress: &components.Address{
+            Country: "FR",
+        },
+    })
     if err != nil {
         log.Fatal(err)
     }
@@ -306,11 +309,12 @@ func main() {
 
 ### Errors
 
-| Error Type                    | Status Code                   | Content Type                  |
-| ----------------------------- | ----------------------------- | ----------------------------- |
-| apierrors.ResourceNotFound    | 404                           | application/json              |
-| apierrors.HTTPValidationError | 422                           | application/json              |
-| apierrors.APIError            | 4XX, 5XX                      | \*/\*                         |
+| Error Type                     | Status Code                    | Content Type                   |
+| ------------------------------ | ------------------------------ | ------------------------------ |
+| apierrors.ResourceNotFound     | 404                            | application/json               |
+| apierrors.ExpiredCheckoutError | 410                            | application/json               |
+| apierrors.HTTPValidationError  | 422                            | application/json               |
+| apierrors.APIError             | 4XX, 5XX                       | \*/\*                          |
 
 ## ClientUpdate
 
@@ -333,7 +337,11 @@ func main() {
 
     s := polargo.New()
 
-    res, err := s.Checkouts.ClientUpdate(ctx, "<value>", components.CheckoutUpdatePublic{})
+    res, err := s.Checkouts.ClientUpdate(ctx, "<value>", components.CheckoutUpdatePublic{
+        CustomerBillingAddress: &components.Address{
+            Country: "FR",
+        },
+    })
     if err != nil {
         log.Fatal(err)
     }
@@ -362,6 +370,7 @@ func main() {
 | -------------------------------- | -------------------------------- | -------------------------------- |
 | apierrors.CheckoutForbiddenError | 403                              | application/json                 |
 | apierrors.ResourceNotFound       | 404                              | application/json                 |
+| apierrors.ExpiredCheckoutError   | 410                              | application/json                 |
 | apierrors.HTTPValidationError    | 422                              | application/json                 |
 | apierrors.APIError               | 4XX, 5XX                         | \*/\*                            |
 
@@ -391,7 +400,11 @@ func main() {
         polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )
 
-    res, err := s.Checkouts.ClientConfirm(ctx, "<value>", components.CheckoutConfirmStripe{})
+    res, err := s.Checkouts.ClientConfirm(ctx, "<value>", components.CheckoutConfirmStripe{
+        CustomerBillingAddress: &components.Address{
+            Country: "FR",
+        },
+    })
     if err != nil {
         log.Fatal(err)
     }
@@ -421,5 +434,6 @@ func main() {
 | apierrors.PaymentError           | 400                              | application/json                 |
 | apierrors.CheckoutForbiddenError | 403                              | application/json                 |
 | apierrors.ResourceNotFound       | 404                              | application/json                 |
+| apierrors.ExpiredCheckoutError   | 410                              | application/json                 |
 | apierrors.HTTPValidationError    | 422                              | application/json                 |
 | apierrors.APIError               | 4XX, 5XX                         | \*/\*                            |

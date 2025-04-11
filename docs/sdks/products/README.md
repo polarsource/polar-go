@@ -114,8 +114,13 @@ func main() {
         Name: "<value>",
         RecurringInterval: components.SubscriptionRecurringIntervalMonth.ToPointer(),
         Prices: []components.ProductCreatePrices{
-            components.CreateProductCreatePricesProductPriceFreeCreate(
-                components.ProductPriceFreeCreate{},
+            components.CreateProductCreatePricesProductPriceCustomCreate(
+                components.ProductPriceCustomCreate{},
+            ),
+            components.CreateProductCreatePricesProductPriceFixedCreate(
+                components.ProductPriceFixedCreate{
+                    PriceAmount: 69025,
+                },
             ),
         },
         OrganizationID: polargo.String("1dbfc517-0bbf-4301-9ba8-555ca42b9737"),

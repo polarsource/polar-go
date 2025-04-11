@@ -26,7 +26,7 @@ type ProductPriceMeteredUnit struct {
 	// The currency.
 	PriceCurrency string `json:"price_currency"`
 	// The price per unit in cents.
-	UnitAmount int64 `json:"unit_amount"`
+	UnitAmount string `json:"unit_amount"`
 	// The maximum amount in cents that can be charged, regardless of the number of units consumed.
 	CapAmount *int64 `json:"cap_amount"`
 	// The ID of the meter associated to the price.
@@ -106,9 +106,9 @@ func (o *ProductPriceMeteredUnit) GetPriceCurrency() string {
 	return o.PriceCurrency
 }
 
-func (o *ProductPriceMeteredUnit) GetUnitAmount() int64 {
+func (o *ProductPriceMeteredUnit) GetUnitAmount() string {
 	if o == nil {
-		return 0
+		return ""
 	}
 	return o.UnitAmount
 }
