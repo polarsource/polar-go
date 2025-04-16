@@ -2,10 +2,6 @@
 
 package components
 
-import (
-	"github.com/polarsource/polar-go/internal/utils"
-)
-
 type OrganizationUpdate struct {
 	Name      *string `json:"name,omitempty"`
 	AvatarURL *string `json:"avatar_url,omitempty"`
@@ -19,33 +15,6 @@ type OrganizationUpdate struct {
 	Details              *OrganizationDetails              `json:"details,omitempty"`
 	FeatureSettings      *OrganizationFeatureSettings      `json:"feature_settings,omitempty"`
 	SubscriptionSettings *OrganizationSubscriptionSettings `json:"subscription_settings,omitempty"`
-	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
-	DefaultUpfrontSplitToContributors *int64 `json:"default_upfront_split_to_contributors,omitempty"`
-	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
-	PledgeBadgeShowAmount *bool `default:"false" json:"pledge_badge_show_amount"`
-	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
-	BillingEmail *string `json:"billing_email,omitempty"`
-	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
-	DefaultBadgeCustomContent *string `json:"default_badge_custom_content,omitempty"`
-	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
-	PledgeMinimumAmount *int64 `default:"2000" json:"pledge_minimum_amount"`
-	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
-	TotalMonthlySpendingLimit *int64 `json:"total_monthly_spending_limit,omitempty"`
-	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
-	PerUserMonthlySpendingLimit *int64 `json:"per_user_monthly_spending_limit,omitempty"`
-	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
-	ProfileSettings *OrganizationProfileSettings `json:"profile_settings,omitempty"`
-}
-
-func (o OrganizationUpdate) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(o, "", false)
-}
-
-func (o *OrganizationUpdate) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &o, "", false, false); err != nil {
-		return err
-	}
-	return nil
 }
 
 func (o *OrganizationUpdate) GetName() *string {
@@ -102,60 +71,4 @@ func (o *OrganizationUpdate) GetSubscriptionSettings() *OrganizationSubscription
 		return nil
 	}
 	return o.SubscriptionSettings
-}
-
-func (o *OrganizationUpdate) GetDefaultUpfrontSplitToContributors() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.DefaultUpfrontSplitToContributors
-}
-
-func (o *OrganizationUpdate) GetPledgeBadgeShowAmount() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.PledgeBadgeShowAmount
-}
-
-func (o *OrganizationUpdate) GetBillingEmail() *string {
-	if o == nil {
-		return nil
-	}
-	return o.BillingEmail
-}
-
-func (o *OrganizationUpdate) GetDefaultBadgeCustomContent() *string {
-	if o == nil {
-		return nil
-	}
-	return o.DefaultBadgeCustomContent
-}
-
-func (o *OrganizationUpdate) GetPledgeMinimumAmount() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.PledgeMinimumAmount
-}
-
-func (o *OrganizationUpdate) GetTotalMonthlySpendingLimit() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.TotalMonthlySpendingLimit
-}
-
-func (o *OrganizationUpdate) GetPerUserMonthlySpendingLimit() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.PerUserMonthlySpendingLimit
-}
-
-func (o *OrganizationUpdate) GetProfileSettings() *OrganizationProfileSettings {
-	if o == nil {
-		return nil
-	}
-	return o.ProfileSettings
 }

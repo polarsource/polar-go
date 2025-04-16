@@ -245,6 +245,7 @@ func (s *Events) List(ctx context.Context, request operations.EventsListRequest,
 		return s.List(
 			ctx,
 			operations.EventsListRequest{
+				Filter:             request.Filter,
 				StartTimestamp:     request.StartTimestamp,
 				EndTimestamp:       request.EndTimestamp,
 				OrganizationID:     request.OrganizationID,

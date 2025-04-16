@@ -9,59 +9,59 @@ import (
 	"github.com/polarsource/polar-go/models/components"
 )
 
-type BenefitsListQueryParamOrganizationIDFilterType string
+type QueryParamOrganizationIDFilterType string
 
 const (
-	BenefitsListQueryParamOrganizationIDFilterTypeStr        BenefitsListQueryParamOrganizationIDFilterType = "str"
-	BenefitsListQueryParamOrganizationIDFilterTypeArrayOfStr BenefitsListQueryParamOrganizationIDFilterType = "arrayOfStr"
+	QueryParamOrganizationIDFilterTypeStr        QueryParamOrganizationIDFilterType = "str"
+	QueryParamOrganizationIDFilterTypeArrayOfStr QueryParamOrganizationIDFilterType = "arrayOfStr"
 )
 
-// BenefitsListQueryParamOrganizationIDFilter - Filter by organization ID.
-type BenefitsListQueryParamOrganizationIDFilter struct {
+// QueryParamOrganizationIDFilter - Filter by organization ID.
+type QueryParamOrganizationIDFilter struct {
 	Str        *string  `queryParam:"inline"`
 	ArrayOfStr []string `queryParam:"inline"`
 
-	Type BenefitsListQueryParamOrganizationIDFilterType
+	Type QueryParamOrganizationIDFilterType
 }
 
-func CreateBenefitsListQueryParamOrganizationIDFilterStr(str string) BenefitsListQueryParamOrganizationIDFilter {
-	typ := BenefitsListQueryParamOrganizationIDFilterTypeStr
+func CreateQueryParamOrganizationIDFilterStr(str string) QueryParamOrganizationIDFilter {
+	typ := QueryParamOrganizationIDFilterTypeStr
 
-	return BenefitsListQueryParamOrganizationIDFilter{
+	return QueryParamOrganizationIDFilter{
 		Str:  &str,
 		Type: typ,
 	}
 }
 
-func CreateBenefitsListQueryParamOrganizationIDFilterArrayOfStr(arrayOfStr []string) BenefitsListQueryParamOrganizationIDFilter {
-	typ := BenefitsListQueryParamOrganizationIDFilterTypeArrayOfStr
+func CreateQueryParamOrganizationIDFilterArrayOfStr(arrayOfStr []string) QueryParamOrganizationIDFilter {
+	typ := QueryParamOrganizationIDFilterTypeArrayOfStr
 
-	return BenefitsListQueryParamOrganizationIDFilter{
+	return QueryParamOrganizationIDFilter{
 		ArrayOfStr: arrayOfStr,
 		Type:       typ,
 	}
 }
 
-func (u *BenefitsListQueryParamOrganizationIDFilter) UnmarshalJSON(data []byte) error {
+func (u *QueryParamOrganizationIDFilter) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
 	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
 		u.Str = &str
-		u.Type = BenefitsListQueryParamOrganizationIDFilterTypeStr
+		u.Type = QueryParamOrganizationIDFilterTypeStr
 		return nil
 	}
 
 	var arrayOfStr []string = []string{}
 	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, true); err == nil {
 		u.ArrayOfStr = arrayOfStr
-		u.Type = BenefitsListQueryParamOrganizationIDFilterTypeArrayOfStr
+		u.Type = QueryParamOrganizationIDFilterTypeArrayOfStr
 		return nil
 	}
 
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for BenefitsListQueryParamOrganizationIDFilter", string(data))
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for QueryParamOrganizationIDFilter", string(data))
 }
 
-func (u BenefitsListQueryParamOrganizationIDFilter) MarshalJSON() ([]byte, error) {
+func (u QueryParamOrganizationIDFilter) MarshalJSON() ([]byte, error) {
 	if u.Str != nil {
 		return utils.MarshalJSON(u.Str, "", true)
 	}
@@ -70,7 +70,7 @@ func (u BenefitsListQueryParamOrganizationIDFilter) MarshalJSON() ([]byte, error
 		return utils.MarshalJSON(u.ArrayOfStr, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type BenefitsListQueryParamOrganizationIDFilter: all fields are null")
+	return nil, errors.New("could not marshal union type QueryParamOrganizationIDFilter: all fields are null")
 }
 
 type BenefitTypeFilterType string
@@ -139,7 +139,7 @@ func (u BenefitTypeFilter) MarshalJSON() ([]byte, error) {
 
 type BenefitsListRequest struct {
 	// Filter by organization ID.
-	OrganizationID *BenefitsListQueryParamOrganizationIDFilter `queryParam:"style=form,explode=true,name=organization_id"`
+	OrganizationID *QueryParamOrganizationIDFilter `queryParam:"style=form,explode=true,name=organization_id"`
 	// Filter by benefit type.
 	TypeFilter *BenefitTypeFilter `queryParam:"style=form,explode=true,name=type"`
 	// Filter by description.
@@ -163,7 +163,7 @@ func (b *BenefitsListRequest) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *BenefitsListRequest) GetOrganizationID() *BenefitsListQueryParamOrganizationIDFilter {
+func (o *BenefitsListRequest) GetOrganizationID() *QueryParamOrganizationIDFilter {
 	if o == nil {
 		return nil
 	}

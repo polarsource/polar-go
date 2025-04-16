@@ -9,7 +9,8 @@ import (
 
 type EventName struct {
 	// The name of the event.
-	Name string `json:"name"`
+	Name   string      `json:"name"`
+	Source EventSource `json:"source"`
 	// Number of times the event has occurred.
 	Occurrences int64 `json:"occurrences"`
 	// The first time the event occurred.
@@ -34,6 +35,13 @@ func (o *EventName) GetName() string {
 		return ""
 	}
 	return o.Name
+}
+
+func (o *EventName) GetSource() EventSource {
+	if o == nil {
+		return EventSource("")
+	}
+	return o.Source
 }
 
 func (o *EventName) GetOccurrences() int64 {

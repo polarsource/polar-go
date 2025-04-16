@@ -38,7 +38,7 @@ func main() {
     )
 
     res, err := s.Subscriptions.List(ctx, operations.SubscriptionsListRequest{
-        OrganizationID: polargo.Pointer(operations.CreateSubscriptionsListQueryParamOrganizationIDFilterArrayOfStr(
+        OrganizationID: polargo.Pointer(operations.CreateOrganizationIDFilterArrayOfStr(
             []string{
                 "1dbfc517-0bbf-4301-9ba8-555ca42b9737",
             },

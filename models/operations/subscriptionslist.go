@@ -9,59 +9,59 @@ import (
 	"github.com/polarsource/polar-go/models/components"
 )
 
-type SubscriptionsListQueryParamOrganizationIDFilterType string
+type OrganizationIDFilterType string
 
 const (
-	SubscriptionsListQueryParamOrganizationIDFilterTypeStr        SubscriptionsListQueryParamOrganizationIDFilterType = "str"
-	SubscriptionsListQueryParamOrganizationIDFilterTypeArrayOfStr SubscriptionsListQueryParamOrganizationIDFilterType = "arrayOfStr"
+	OrganizationIDFilterTypeStr        OrganizationIDFilterType = "str"
+	OrganizationIDFilterTypeArrayOfStr OrganizationIDFilterType = "arrayOfStr"
 )
 
-// SubscriptionsListQueryParamOrganizationIDFilter - Filter by organization ID.
-type SubscriptionsListQueryParamOrganizationIDFilter struct {
+// OrganizationIDFilter - Filter by organization ID.
+type OrganizationIDFilter struct {
 	Str        *string  `queryParam:"inline"`
 	ArrayOfStr []string `queryParam:"inline"`
 
-	Type SubscriptionsListQueryParamOrganizationIDFilterType
+	Type OrganizationIDFilterType
 }
 
-func CreateSubscriptionsListQueryParamOrganizationIDFilterStr(str string) SubscriptionsListQueryParamOrganizationIDFilter {
-	typ := SubscriptionsListQueryParamOrganizationIDFilterTypeStr
+func CreateOrganizationIDFilterStr(str string) OrganizationIDFilter {
+	typ := OrganizationIDFilterTypeStr
 
-	return SubscriptionsListQueryParamOrganizationIDFilter{
+	return OrganizationIDFilter{
 		Str:  &str,
 		Type: typ,
 	}
 }
 
-func CreateSubscriptionsListQueryParamOrganizationIDFilterArrayOfStr(arrayOfStr []string) SubscriptionsListQueryParamOrganizationIDFilter {
-	typ := SubscriptionsListQueryParamOrganizationIDFilterTypeArrayOfStr
+func CreateOrganizationIDFilterArrayOfStr(arrayOfStr []string) OrganizationIDFilter {
+	typ := OrganizationIDFilterTypeArrayOfStr
 
-	return SubscriptionsListQueryParamOrganizationIDFilter{
+	return OrganizationIDFilter{
 		ArrayOfStr: arrayOfStr,
 		Type:       typ,
 	}
 }
 
-func (u *SubscriptionsListQueryParamOrganizationIDFilter) UnmarshalJSON(data []byte) error {
+func (u *OrganizationIDFilter) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
 	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
 		u.Str = &str
-		u.Type = SubscriptionsListQueryParamOrganizationIDFilterTypeStr
+		u.Type = OrganizationIDFilterTypeStr
 		return nil
 	}
 
 	var arrayOfStr []string = []string{}
 	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, true); err == nil {
 		u.ArrayOfStr = arrayOfStr
-		u.Type = SubscriptionsListQueryParamOrganizationIDFilterTypeArrayOfStr
+		u.Type = OrganizationIDFilterTypeArrayOfStr
 		return nil
 	}
 
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SubscriptionsListQueryParamOrganizationIDFilter", string(data))
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for OrganizationIDFilter", string(data))
 }
 
-func (u SubscriptionsListQueryParamOrganizationIDFilter) MarshalJSON() ([]byte, error) {
+func (u OrganizationIDFilter) MarshalJSON() ([]byte, error) {
 	if u.Str != nil {
 		return utils.MarshalJSON(u.Str, "", true)
 	}
@@ -70,7 +70,7 @@ func (u SubscriptionsListQueryParamOrganizationIDFilter) MarshalJSON() ([]byte, 
 		return utils.MarshalJSON(u.ArrayOfStr, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type SubscriptionsListQueryParamOrganizationIDFilter: all fields are null")
+	return nil, errors.New("could not marshal union type OrganizationIDFilter: all fields are null")
 }
 
 type ProductIDFilterType string
@@ -267,7 +267,7 @@ func (u DiscountIDFilter) MarshalJSON() ([]byte, error) {
 
 type SubscriptionsListRequest struct {
 	// Filter by organization ID.
-	OrganizationID *SubscriptionsListQueryParamOrganizationIDFilter `queryParam:"style=form,explode=true,name=organization_id"`
+	OrganizationID *OrganizationIDFilter `queryParam:"style=form,explode=true,name=organization_id"`
 	// Filter by product ID.
 	ProductID *ProductIDFilter `queryParam:"style=form,explode=true,name=product_id"`
 	// Filter by customer ID.
@@ -295,7 +295,7 @@ func (s *SubscriptionsListRequest) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SubscriptionsListRequest) GetOrganizationID() *SubscriptionsListQueryParamOrganizationIDFilter {
+func (o *SubscriptionsListRequest) GetOrganizationID() *OrganizationIDFilter {
 	if o == nil {
 		return nil
 	}

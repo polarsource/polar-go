@@ -183,6 +183,8 @@ type CustomerSubscription struct {
 	Price CustomerSubscriptionPrice `json:"price"`
 	// List of enabled prices for the subscription.
 	Prices []CustomerSubscriptionPrices `json:"prices"`
+	// List of meters associated with the subscription.
+	Meters []CustomerSubscriptionMeter `json:"meters"`
 }
 
 func (c CustomerSubscription) MarshalJSON() ([]byte, error) {
@@ -369,4 +371,11 @@ func (o *CustomerSubscription) GetPrices() []CustomerSubscriptionPrices {
 		return []CustomerSubscriptionPrices{}
 	}
 	return o.Prices
+}
+
+func (o *CustomerSubscription) GetMeters() []CustomerSubscriptionMeter {
+	if o == nil {
+		return []CustomerSubscriptionMeter{}
+	}
+	return o.Meters
 }

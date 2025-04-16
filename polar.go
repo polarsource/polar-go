@@ -82,28 +82,26 @@ func (c *sdkConfiguration) GetServerDetails() (string, map[string]string) {
 // Polar API: Polar HTTP and Webhooks API
 // Read the docs at https://docs.polar.sh/api-reference
 type Polar struct {
-	ExternalOrganizations *ExternalOrganizations
-	Repositories          *Repositories
-	Organizations         *Organizations
-	Subscriptions         *Subscriptions
-	Oauth2                *Oauth2
-	Benefits              *Benefits
-	Products              *Products
-	Orders                *Orders
-	Refunds               *Refunds
-	Checkouts             *Checkouts
-	Files                 *Files
-	Metrics               *Metrics
-	LicenseKeys           *LicenseKeys
-	CheckoutLinks         *CheckoutLinks
-	CustomFields          *CustomFields
-	Discounts             *Discounts
-	Customers             *Customers
-	CustomerPortal        *CustomerPortal
-	CustomerSessions      *CustomerSessions
-	Events                *Events
-	Meters                *Meters
-	CustomerMeters        *CustomerMeters
+	Organizations    *Organizations
+	Subscriptions    *Subscriptions
+	Oauth2           *Oauth2
+	Benefits         *Benefits
+	Products         *Products
+	Orders           *Orders
+	Refunds          *Refunds
+	Checkouts        *Checkouts
+	Files            *Files
+	Metrics          *Metrics
+	LicenseKeys      *LicenseKeys
+	CheckoutLinks    *CheckoutLinks
+	CustomFields     *CustomFields
+	Discounts        *Discounts
+	Customers        *Customers
+	CustomerPortal   *CustomerPortal
+	CustomerSessions *CustomerSessions
+	Events           *Events
+	Meters           *Meters
+	CustomerMeters   *CustomerMeters
 
 	sdkConfiguration sdkConfiguration
 }
@@ -183,9 +181,9 @@ func New(opts ...SDKOption) *Polar {
 		sdkConfiguration: sdkConfiguration{
 			Language:          "go",
 			OpenAPIDocVersion: "0.1.0",
-			SDKVersion:        "0.4.10",
-			GenVersion:        "2.570.3",
-			UserAgent:         "speakeasy-sdk/go 0.4.10 2.570.3 0.1.0 github.com/polarsource/polar-go",
+			SDKVersion:        "0.4.11",
+			GenVersion:        "2.578.0",
+			UserAgent:         "speakeasy-sdk/go 0.4.11 2.578.0 0.1.0 github.com/polarsource/polar-go",
 			Hooks:             hooks.New(),
 		},
 	}
@@ -211,10 +209,6 @@ func New(opts ...SDKOption) *Polar {
 	if serverURL != currentServerURL {
 		sdk.sdkConfiguration.ServerURL = serverURL
 	}
-
-	sdk.ExternalOrganizations = newExternalOrganizations(sdk.sdkConfiguration)
-
-	sdk.Repositories = newRepositories(sdk.sdkConfiguration)
 
 	sdk.Organizations = newOrganizations(sdk.sdkConfiguration)
 

@@ -116,7 +116,7 @@ func main() {
 					366960,
 				),
 				"key1": components.CreateCheckoutMetadataInteger(
-					95370,
+					961375,
 				),
 			},
 			CustomerExternalID: polargo.String("<id>"),
@@ -132,31 +132,36 @@ func main() {
 					IsArchived:        false,
 					OrganizationID:    "<value>",
 					Prices: []components.CheckoutProductPrices{
-						components.CreateCheckoutProductPricesLegacyRecurringProductPrice(
-							components.CreateLegacyRecurringProductPriceFixed(
-								components.LegacyRecurringProductPriceFixed{
-									CreatedAt:         types.MustTimeFromString("2025-03-22T08:44:11.595Z"),
-									ModifiedAt:        types.MustNewTimeFromString("2024-09-02T09:05:14.886Z"),
+						components.CreateCheckoutProductPricesProductPrice(
+							components.CreateProductPriceProductPriceMeteredUnit(
+								components.ProductPriceMeteredUnit{
+									CreatedAt:         types.MustTimeFromString("2024-12-13T18:25:33.693Z"),
+									ModifiedAt:        types.MustNewTimeFromString("2023-01-09T04:38:53.436Z"),
 									ID:                "<value>",
 									IsArchived:        false,
 									ProductID:         "<value>",
-									RecurringInterval: components.SubscriptionRecurringIntervalYear,
+									Type:              components.ProductPriceTypeRecurring,
+									RecurringInterval: components.SubscriptionRecurringIntervalMonth.ToPointer(),
 									PriceCurrency:     "<value>",
-									PriceAmount:       650336,
+									UnitAmount:        "<value>",
+									CapAmount:         polargo.Int64(199664),
+									MeterID:           "<value>",
+									Meter: components.ProductPriceMeter{
+										ID:   "<value>",
+										Name: "<value>",
+									},
 								},
 							),
 						),
 						components.CreateCheckoutProductPricesLegacyRecurringProductPrice(
-							components.CreateLegacyRecurringProductPriceFixed(
-								components.LegacyRecurringProductPriceFixed{
-									CreatedAt:         types.MustTimeFromString("2023-04-26T22:34:57.487Z"),
-									ModifiedAt:        types.MustNewTimeFromString("2023-08-07T19:57:51.694Z"),
+							components.CreateLegacyRecurringProductPriceFree(
+								components.LegacyRecurringProductPriceFree{
+									CreatedAt:         types.MustTimeFromString("2023-01-25T05:44:56.791Z"),
+									ModifiedAt:        types.MustNewTimeFromString("2025-05-25T15:20:50.694Z"),
 									ID:                "<value>",
 									IsArchived:        false,
 									ProductID:         "<value>",
-									RecurringInterval: components.SubscriptionRecurringIntervalMonth,
-									PriceCurrency:     "<value>",
-									PriceAmount:       856200,
+									RecurringInterval: components.SubscriptionRecurringIntervalYear,
 								},
 							),
 						),
@@ -248,15 +253,20 @@ func main() {
 					},
 				},
 			},
-			ProductPrice: components.CreateCheckoutProductPriceLegacyRecurringProductPrice(
-				components.CreateLegacyRecurringProductPriceFree(
-					components.LegacyRecurringProductPriceFree{
-						CreatedAt:         types.MustTimeFromString("2024-11-27T14:29:40.329Z"),
-						ModifiedAt:        types.MustNewTimeFromString("2025-12-25T02:24:08.035Z"),
+			ProductPrice: components.CreateCheckoutProductPriceProductPrice(
+				components.CreateProductPriceProductPriceCustom(
+					components.ProductPriceCustom{
+						CreatedAt:         types.MustTimeFromString("2024-12-18T06:26:25.293Z"),
+						ModifiedAt:        types.MustNewTimeFromString("2025-03-28T00:06:24.086Z"),
 						ID:                "<value>",
 						IsArchived:        false,
 						ProductID:         "<value>",
-						RecurringInterval: components.SubscriptionRecurringIntervalMonth,
+						Type:              components.ProductPriceTypeOneTime,
+						RecurringInterval: components.SubscriptionRecurringIntervalYear.ToPointer(),
+						PriceCurrency:     "<value>",
+						MinimumAmount:     polargo.Int64(476477),
+						MaximumAmount:     polargo.Int64(729611),
+						PresetAmount:      polargo.Int64(905974),
 					},
 				),
 			),
@@ -275,27 +285,20 @@ func main() {
 			AttachedCustomFields: []components.AttachedCustomField{
 				components.AttachedCustomField{
 					CustomFieldID: "<value>",
-					CustomField: components.CreateCustomFieldSelect(
-						components.CustomFieldSelect{
-							CreatedAt:  types.MustTimeFromString("2025-03-28T00:06:24.086Z"),
-							ModifiedAt: types.MustNewTimeFromString("2023-09-19T22:46:24.110Z"),
+					CustomField: components.CreateCustomFieldNumber(
+						components.CustomFieldNumber{
+							CreatedAt:  types.MustTimeFromString("2025-10-29T00:32:24.235Z"),
+							ModifiedAt: types.MustNewTimeFromString("2025-04-28T15:46:25.145Z"),
 							ID:         "<value>",
-							Metadata: map[string]components.CustomFieldSelectMetadata{
-								"key": components.CreateCustomFieldSelectMetadataInteger(
-									476477,
+							Metadata: map[string]components.CustomFieldNumberMetadata{
+								"key": components.CreateCustomFieldNumberMetadataInteger(
+									729540,
 								),
 							},
 							Slug:           "<value>",
 							Name:           "<value>",
 							OrganizationID: "1dbfc517-0bbf-4301-9ba8-555ca42b9737",
-							Properties: components.CustomFieldSelectProperties{
-								Options: []components.CustomFieldSelectOption{
-									components.CustomFieldSelectOption{
-										Value: "<value>",
-										Label: "<value>",
-									},
-								},
-							},
+							Properties:     components.CustomFieldNumberProperties{},
 						},
 					),
 					Order:    192934,
@@ -305,12 +308,12 @@ func main() {
 					CustomFieldID: "<value>",
 					CustomField: components.CreateCustomFieldSelect(
 						components.CustomFieldSelect{
-							CreatedAt:  types.MustTimeFromString("2025-09-19T22:43:39.176Z"),
-							ModifiedAt: types.MustNewTimeFromString("2024-08-10T14:02:02.989Z"),
+							CreatedAt:  types.MustTimeFromString("2024-06-12T07:35:26.368Z"),
+							ModifiedAt: types.MustNewTimeFromString("2023-01-01T03:32:54.177Z"),
 							ID:         "<value>",
 							Metadata: map[string]components.CustomFieldSelectMetadata{
-								"key": components.CreateCustomFieldSelectMetadataBoolean(
-									false,
+								"key": components.CreateCustomFieldSelectMetadataInteger(
+									882089,
 								),
 							},
 							Slug:           "<value>",
@@ -331,27 +334,20 @@ func main() {
 				},
 				components.AttachedCustomField{
 					CustomFieldID: "<value>",
-					CustomField: components.CreateCustomFieldSelect(
-						components.CustomFieldSelect{
-							CreatedAt:  types.MustTimeFromString("2024-08-13T03:41:03.035Z"),
-							ModifiedAt: types.MustNewTimeFromString("2025-03-10T13:49:13.967Z"),
+					CustomField: components.CreateCustomFieldDate(
+						components.CustomFieldDate{
+							CreatedAt:  types.MustTimeFromString("2023-10-09T19:13:38.530Z"),
+							ModifiedAt: types.MustNewTimeFromString("2025-03-10T05:19:02.590Z"),
 							ID:         "<value>",
-							Metadata: map[string]components.CustomFieldSelectMetadata{
-								"key": components.CreateCustomFieldSelectMetadataInteger(
-									482040,
+							Metadata: map[string]components.CustomFieldDateMetadata{
+								"key": components.CreateCustomFieldDateMetadataInteger(
+									624425,
 								),
 							},
 							Slug:           "<value>",
 							Name:           "<value>",
 							OrganizationID: "1dbfc517-0bbf-4301-9ba8-555ca42b9737",
-							Properties: components.CustomFieldSelectProperties{
-								Options: []components.CustomFieldSelectOption{
-									components.CustomFieldSelectOption{
-										Value: "<value>",
-										Label: "<value>",
-									},
-								},
-							},
+							Properties:     components.CustomFieldDateProperties{},
 						},
 					),
 					Order:    660585,
@@ -394,7 +390,6 @@ package main
 import (
 	"context"
 	polargo "github.com/polarsource/polar-go"
-	"github.com/polarsource/polar-go/models/operations"
 	"log"
 	"os"
 )
@@ -406,17 +401,11 @@ func main() {
 		polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
 	)
 
-	res, err := s.ExternalOrganizations.List(ctx, operations.ExternalOrganizationsListRequest{
-		OrganizationID: polargo.Pointer(operations.CreateOrganizationIDFilterArrayOfStr(
-			[]string{
-				"1dbfc517-0bbf-4301-9ba8-555ca42b9737",
-			},
-		)),
-	})
+	res, err := s.Organizations.List(ctx, nil, nil, nil, nil)
 	if err != nil {
 		log.Fatal(err)
 	}
-	if res.ListResourceExternalOrganization != nil {
+	if res.ListResourceOrganization != nil {
 		for {
 			// handle items
 
@@ -616,10 +605,6 @@ func main() {
 * [Get](docs/sdks/events/README.md#get) - Get Event
 * [Ingest](docs/sdks/events/README.md#ingest) - Ingest Events
 
-### [ExternalOrganizations](docs/sdks/externalorganizations/README.md)
-
-* [List](docs/sdks/externalorganizations/README.md#list) - List External Organizations
-
 ### [Files](docs/sdks/files/README.md)
 
 * [List](docs/sdks/files/README.md#list) - List Files
@@ -691,12 +676,6 @@ func main() {
 * [List](docs/sdks/refunds/README.md#list) - List Refunds
 * [Create](docs/sdks/refunds/README.md#create) - Create Refund
 
-### [Repositories](docs/sdks/repositories/README.md)
-
-* [List](docs/sdks/repositories/README.md#list) - List Repositories
-* [Get](docs/sdks/repositories/README.md#get) - Get Repository
-* [Update](docs/sdks/repositories/README.md#update) - Update Repository
-
 ### [Subscriptions](docs/sdks/subscriptions/README.md)
 
 * [List](docs/sdks/subscriptions/README.md#list) - List Subscriptions
@@ -722,7 +701,6 @@ package main
 import (
 	"context"
 	polargo "github.com/polarsource/polar-go"
-	"github.com/polarsource/polar-go/models/operations"
 	"log"
 	"os"
 )
@@ -734,17 +712,11 @@ func main() {
 		polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
 	)
 
-	res, err := s.ExternalOrganizations.List(ctx, operations.ExternalOrganizationsListRequest{
-		OrganizationID: polargo.Pointer(operations.CreateOrganizationIDFilterArrayOfStr(
-			[]string{
-				"1dbfc517-0bbf-4301-9ba8-555ca42b9737",
-			},
-		)),
-	})
+	res, err := s.Organizations.List(ctx, nil, nil, nil, nil)
 	if err != nil {
 		log.Fatal(err)
 	}
-	if res.ListResourceExternalOrganization != nil {
+	if res.ListResourceOrganization != nil {
 		for {
 			// handle items
 
@@ -776,7 +748,6 @@ package main
 import (
 	"context"
 	polargo "github.com/polarsource/polar-go"
-	"github.com/polarsource/polar-go/models/operations"
 	"github.com/polarsource/polar-go/retry"
 	"log"
 	"models/operations"
@@ -790,13 +761,7 @@ func main() {
 		polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
 	)
 
-	res, err := s.ExternalOrganizations.List(ctx, operations.ExternalOrganizationsListRequest{
-		OrganizationID: polargo.Pointer(operations.CreateOrganizationIDFilterArrayOfStr(
-			[]string{
-				"1dbfc517-0bbf-4301-9ba8-555ca42b9737",
-			},
-		)),
-	}, operations.WithRetries(
+	res, err := s.Organizations.List(ctx, nil, nil, nil, nil, operations.WithRetries(
 		retry.Config{
 			Strategy: "backoff",
 			Backoff: &retry.BackoffStrategy{
@@ -810,7 +775,7 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	if res.ListResourceExternalOrganization != nil {
+	if res.ListResourceOrganization != nil {
 		for {
 			// handle items
 
@@ -836,7 +801,6 @@ package main
 import (
 	"context"
 	polargo "github.com/polarsource/polar-go"
-	"github.com/polarsource/polar-go/models/operations"
 	"github.com/polarsource/polar-go/retry"
 	"log"
 	"os"
@@ -860,17 +824,11 @@ func main() {
 		polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
 	)
 
-	res, err := s.ExternalOrganizations.List(ctx, operations.ExternalOrganizationsListRequest{
-		OrganizationID: polargo.Pointer(operations.CreateOrganizationIDFilterArrayOfStr(
-			[]string{
-				"1dbfc517-0bbf-4301-9ba8-555ca42b9737",
-			},
-		)),
-	})
+	res, err := s.Organizations.List(ctx, nil, nil, nil, nil)
 	if err != nil {
 		log.Fatal(err)
 	}
-	if res.ListResourceExternalOrganization != nil {
+	if res.ListResourceOrganization != nil {
 		for {
 			// handle items
 
@@ -914,7 +872,6 @@ import (
 	"errors"
 	polargo "github.com/polarsource/polar-go"
 	"github.com/polarsource/polar-go/models/apierrors"
-	"github.com/polarsource/polar-go/models/operations"
 	"log"
 	"os"
 )
@@ -926,13 +883,7 @@ func main() {
 		polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
 	)
 
-	res, err := s.ExternalOrganizations.List(ctx, operations.ExternalOrganizationsListRequest{
-		OrganizationID: polargo.Pointer(operations.CreateOrganizationIDFilterArrayOfStr(
-			[]string{
-				"1dbfc517-0bbf-4301-9ba8-555ca42b9737",
-			},
-		)),
-	})
+	res, err := s.Organizations.List(ctx, nil, nil, nil, nil)
 	if err != nil {
 
 		var e *apierrors.HTTPValidationError
@@ -972,7 +923,6 @@ package main
 import (
 	"context"
 	polargo "github.com/polarsource/polar-go"
-	"github.com/polarsource/polar-go/models/operations"
 	"log"
 	"os"
 )
@@ -985,17 +935,11 @@ func main() {
 		polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
 	)
 
-	res, err := s.ExternalOrganizations.List(ctx, operations.ExternalOrganizationsListRequest{
-		OrganizationID: polargo.Pointer(operations.CreateOrganizationIDFilterArrayOfStr(
-			[]string{
-				"1dbfc517-0bbf-4301-9ba8-555ca42b9737",
-			},
-		)),
-	})
+	res, err := s.Organizations.List(ctx, nil, nil, nil, nil)
 	if err != nil {
 		log.Fatal(err)
 	}
-	if res.ListResourceExternalOrganization != nil {
+	if res.ListResourceOrganization != nil {
 		for {
 			// handle items
 
@@ -1023,7 +967,6 @@ package main
 import (
 	"context"
 	polargo "github.com/polarsource/polar-go"
-	"github.com/polarsource/polar-go/models/operations"
 	"log"
 	"os"
 )
@@ -1036,17 +979,11 @@ func main() {
 		polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
 	)
 
-	res, err := s.ExternalOrganizations.List(ctx, operations.ExternalOrganizationsListRequest{
-		OrganizationID: polargo.Pointer(operations.CreateOrganizationIDFilterArrayOfStr(
-			[]string{
-				"1dbfc517-0bbf-4301-9ba8-555ca42b9737",
-			},
-		)),
-	})
+	res, err := s.Organizations.List(ctx, nil, nil, nil, nil)
 	if err != nil {
 		log.Fatal(err)
 	}
-	if res.ListResourceExternalOrganization != nil {
+	if res.ListResourceOrganization != nil {
 		for {
 			// handle items
 

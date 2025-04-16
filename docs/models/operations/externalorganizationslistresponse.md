@@ -1,9 +1,0 @@
-# ExternalOrganizationsListResponse
-
-
-## Fields
-
-| Field                                                                                                       | Type                                                                                                        | Required                                                                                                    | Description                                                                                                 |
-| ----------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
-| `HTTPMeta`                                                                                                  | [components.HTTPMetadata](../../models/components/httpmetadata.md)                                          | :heavy_check_mark:                                                                                          | N/A                                                                                                         |
-| `ListResourceExternalOrganization`                                                                          | [*components.ListResourceExternalOrganization](../../models/components/listresourceexternalorganization.md) | :heavy_minus_sign:                                                                                          | Successful Response                                                                                         |

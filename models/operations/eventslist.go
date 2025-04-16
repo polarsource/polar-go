@@ -331,6 +331,8 @@ func (u SourceFilter) MarshalJSON() ([]byte, error) {
 }
 
 type EventsListRequest struct {
+	// Filter events following filter clauses. JSON string following the same schema a meter filter clause.
+	Filter *string `queryParam:"style=form,explode=true,name=filter"`
 	// Filter events after this timestamp.
 	StartTimestamp *time.Time `queryParam:"style=form,explode=true,name=start_timestamp"`
 	// Filter events before this timestamp.
@@ -366,6 +368,13 @@ func (e *EventsListRequest) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
+}
+
+func (o *EventsListRequest) GetFilter() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Filter
 }
 
 func (o *EventsListRequest) GetStartTimestamp() *time.Time {

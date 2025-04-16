@@ -5,7 +5,6 @@ package main
 import (
 	"context"
 	polargo "github.com/polarsource/polar-go"
-	"github.com/polarsource/polar-go/models/operations"
 	"log"
 	"os"
 )
@@ -17,17 +16,11 @@ func main() {
 		polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
 	)
 
-	res, err := s.ExternalOrganizations.List(ctx, operations.ExternalOrganizationsListRequest{
-		OrganizationID: polargo.Pointer(operations.CreateOrganizationIDFilterArrayOfStr(
-			[]string{
-				"1dbfc517-0bbf-4301-9ba8-555ca42b9737",
-			},
-		)),
-	})
+	res, err := s.Organizations.List(ctx, nil, nil, nil, nil)
 	if err != nil {
 		log.Fatal(err)
 	}
-	if res.ListResourceExternalOrganization != nil {
+	if res.ListResourceOrganization != nil {
 		for {
 			// handle items
 

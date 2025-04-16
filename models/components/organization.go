@@ -41,16 +41,6 @@ type Organization struct {
 	Location *string `json:"location"`
 	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
 	TwitterUsername *string `json:"twitter_username"`
-	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
-	PledgeMinimumAmount int64 `json:"pledge_minimum_amount"`
-	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
-	PledgeBadgeShowAmount bool `json:"pledge_badge_show_amount"`
-	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
-	DefaultUpfrontSplitToContributors *int64 `json:"default_upfront_split_to_contributors"`
-	// Settings for the organization profile
-	//
-	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
-	ProfileSettings *OrganizationProfileSettings `json:"profile_settings"`
 }
 
 func (o Organization) MarshalJSON() ([]byte, error) {
@@ -181,32 +171,4 @@ func (o *Organization) GetTwitterUsername() *string {
 		return nil
 	}
 	return o.TwitterUsername
-}
-
-func (o *Organization) GetPledgeMinimumAmount() int64 {
-	if o == nil {
-		return 0
-	}
-	return o.PledgeMinimumAmount
-}
-
-func (o *Organization) GetPledgeBadgeShowAmount() bool {
-	if o == nil {
-		return false
-	}
-	return o.PledgeBadgeShowAmount
-}
-
-func (o *Organization) GetDefaultUpfrontSplitToContributors() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.DefaultUpfrontSplitToContributors
-}
-
-func (o *Organization) GetProfileSettings() *OrganizationProfileSettings {
-	if o == nil {
-		return nil
-	}
-	return o.ProfileSettings
 }

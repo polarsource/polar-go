@@ -236,6 +236,8 @@ type CustomerStateSubscription struct {
 	DiscountID *string `json:"discount_id"`
 	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
 	PriceID string `json:"price_id"`
+	// List of meters associated with the subscription.
+	Meters []CustomerStateSubscriptionMeter `json:"meters"`
 }
 
 func (c CustomerStateSubscription) MarshalJSON() ([]byte, error) {
@@ -370,4 +372,11 @@ func (o *CustomerStateSubscription) GetPriceID() string {
 		return ""
 	}
 	return o.PriceID
+}
+
+func (o *CustomerStateSubscription) GetMeters() []CustomerStateSubscriptionMeter {
+	if o == nil {
+		return []CustomerStateSubscriptionMeter{}
+	}
+	return o.Meters
 }
