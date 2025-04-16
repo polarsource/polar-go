@@ -18,6 +18,12 @@ orderCustomerMetadata := components.CreateOrderCustomerMetadataInteger(int64{/* 
 ### 
 
 ```go
+orderCustomerMetadata := components.CreateOrderCustomerMetadataNumber(float64{/* values here */})
+```
+
+### 
+
+```go
 orderCustomerMetadata := components.CreateOrderCustomerMetadataBoolean(bool{/* values here */})
 ```
 

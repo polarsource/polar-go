@@ -18,6 +18,12 @@ discountFixedRepeatDurationCreateMetadata := components.CreateDiscountFixedRepea
 ### 
 
 ```go
+discountFixedRepeatDurationCreateMetadata := components.CreateDiscountFixedRepeatDurationCreateMetadataNumber(float64{/* values here */})
+```
+
+### 
+
+```go
 discountFixedRepeatDurationCreateMetadata := components.CreateDiscountFixedRepeatDurationCreateMetadataBoolean(bool{/* values here */})
 ```
 

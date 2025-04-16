@@ -3,10 +3,131 @@
 package components
 
 import (
+	"errors"
+	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
 )
 
+type BenefitDownloadablesUpdateMetadataType string
+
+const (
+	BenefitDownloadablesUpdateMetadataTypeStr     BenefitDownloadablesUpdateMetadataType = "str"
+	BenefitDownloadablesUpdateMetadataTypeInteger BenefitDownloadablesUpdateMetadataType = "integer"
+	BenefitDownloadablesUpdateMetadataTypeNumber  BenefitDownloadablesUpdateMetadataType = "number"
+	BenefitDownloadablesUpdateMetadataTypeBoolean BenefitDownloadablesUpdateMetadataType = "boolean"
+)
+
+type BenefitDownloadablesUpdateMetadata struct {
+	Str     *string  `queryParam:"inline"`
+	Integer *int64   `queryParam:"inline"`
+	Number  *float64 `queryParam:"inline"`
+	Boolean *bool    `queryParam:"inline"`
+
+	Type BenefitDownloadablesUpdateMetadataType
+}
+
+func CreateBenefitDownloadablesUpdateMetadataStr(str string) BenefitDownloadablesUpdateMetadata {
+	typ := BenefitDownloadablesUpdateMetadataTypeStr
+
+	return BenefitDownloadablesUpdateMetadata{
+		Str:  &str,
+		Type: typ,
+	}
+}
+
+func CreateBenefitDownloadablesUpdateMetadataInteger(integer int64) BenefitDownloadablesUpdateMetadata {
+	typ := BenefitDownloadablesUpdateMetadataTypeInteger
+
+	return BenefitDownloadablesUpdateMetadata{
+		Integer: &integer,
+		Type:    typ,
+	}
+}
+
+func CreateBenefitDownloadablesUpdateMetadataNumber(number float64) BenefitDownloadablesUpdateMetadata {
+	typ := BenefitDownloadablesUpdateMetadataTypeNumber
+
+	return BenefitDownloadablesUpdateMetadata{
+		Number: &number,
+		Type:   typ,
+	}
+}
+
+func CreateBenefitDownloadablesUpdateMetadataBoolean(boolean bool) BenefitDownloadablesUpdateMetadata {
+	typ := BenefitDownloadablesUpdateMetadataTypeBoolean
+
+	return BenefitDownloadablesUpdateMetadata{
+		Boolean: &boolean,
+		Type:    typ,
+	}
+}
+
+func (u *BenefitDownloadablesUpdateMetadata) UnmarshalJSON(data []byte) error {
+
+	var str string = ""
+	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
+		u.Str = &str
+		u.Type = BenefitDownloadablesUpdateMetadataTypeStr
+		return nil
+	}
+
+	var integer int64 = int64(0)
+	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
+		u.Integer = &integer
+		u.Type = BenefitDownloadablesUpdateMetadataTypeInteger
+		return nil
+	}
+
+	var number float64 = float64(0)
+	if err := utils.UnmarshalJSON(data, &number, "", true, true); err == nil {
+		u.Number = &number
+		u.Type = BenefitDownloadablesUpdateMetadataTypeNumber
+		return nil
+	}
+
+	var boolean bool = false
+	if err := utils.UnmarshalJSON(data, &boolean, "", true, true); err == nil {
+		u.Boolean = &boolean
+		u.Type = BenefitDownloadablesUpdateMetadataTypeBoolean
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for BenefitDownloadablesUpdateMetadata", string(data))
+}
+
+func (u BenefitDownloadablesUpdateMetadata) MarshalJSON() ([]byte, error) {
+	if u.Str != nil {
+		return utils.MarshalJSON(u.Str, "", true)
+	}
+
+	if u.Integer != nil {
+		return utils.MarshalJSON(u.Integer, "", true)
+	}
+
+	if u.Number != nil {
+		return utils.MarshalJSON(u.Number, "", true)
+	}
+
+	if u.Boolean != nil {
+		return utils.MarshalJSON(u.Boolean, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type BenefitDownloadablesUpdateMetadata: all fields are null")
+}
+
 type BenefitDownloadablesUpdate struct {
+	// Key-value object allowing you to store additional information.
+	//
+	// The key must be a string with a maximum length of **40 characters**.
+	// The value must be either:
+	//
+	// * A string with a maximum length of **500 characters**
+	// * An integer
+	// * A floating-point number
+	// * A boolean
+	//
+	// You can store up to **50 key-value pairs**.
+	Metadata map[string]BenefitDownloadablesUpdateMetadata `json:"metadata,omitempty"`
 	// The description of the benefit. Will be displayed on products having this benefit.
 	Description *string                               `json:"description,omitempty"`
 	type_       string                                `const:"downloadables" json:"type"`
@@ -22,6 +143,13 @@ func (b *BenefitDownloadablesUpdate) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
+}
+
+func (o *BenefitDownloadablesUpdate) GetMetadata() map[string]BenefitDownloadablesUpdateMetadata {
+	if o == nil {
+		return nil
+	}
+	return o.Metadata
 }
 
 func (o *BenefitDownloadablesUpdate) GetDescription() *string {

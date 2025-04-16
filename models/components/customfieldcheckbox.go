@@ -14,13 +14,15 @@ type CustomFieldCheckboxMetadataType string
 const (
 	CustomFieldCheckboxMetadataTypeStr     CustomFieldCheckboxMetadataType = "str"
 	CustomFieldCheckboxMetadataTypeInteger CustomFieldCheckboxMetadataType = "integer"
+	CustomFieldCheckboxMetadataTypeNumber  CustomFieldCheckboxMetadataType = "number"
 	CustomFieldCheckboxMetadataTypeBoolean CustomFieldCheckboxMetadataType = "boolean"
 )
 
 type CustomFieldCheckboxMetadata struct {
-	Str     *string `queryParam:"inline"`
-	Integer *int64  `queryParam:"inline"`
-	Boolean *bool   `queryParam:"inline"`
+	Str     *string  `queryParam:"inline"`
+	Integer *int64   `queryParam:"inline"`
+	Number  *float64 `queryParam:"inline"`
+	Boolean *bool    `queryParam:"inline"`
 
 	Type CustomFieldCheckboxMetadataType
 }
@@ -40,6 +42,15 @@ func CreateCustomFieldCheckboxMetadataInteger(integer int64) CustomFieldCheckbox
 	return CustomFieldCheckboxMetadata{
 		Integer: &integer,
 		Type:    typ,
+	}
+}
+
+func CreateCustomFieldCheckboxMetadataNumber(number float64) CustomFieldCheckboxMetadata {
+	typ := CustomFieldCheckboxMetadataTypeNumber
+
+	return CustomFieldCheckboxMetadata{
+		Number: &number,
+		Type:   typ,
 	}
 }
 
@@ -68,6 +79,13 @@ func (u *CustomFieldCheckboxMetadata) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
+	var number float64 = float64(0)
+	if err := utils.UnmarshalJSON(data, &number, "", true, true); err == nil {
+		u.Number = &number
+		u.Type = CustomFieldCheckboxMetadataTypeNumber
+		return nil
+	}
+
 	var boolean bool = false
 	if err := utils.UnmarshalJSON(data, &boolean, "", true, true); err == nil {
 		u.Boolean = &boolean
@@ -85,6 +103,10 @@ func (u CustomFieldCheckboxMetadata) MarshalJSON() ([]byte, error) {
 
 	if u.Integer != nil {
 		return utils.MarshalJSON(u.Integer, "", true)
+	}
+
+	if u.Number != nil {
+		return utils.MarshalJSON(u.Number, "", true)
 	}
 
 	if u.Boolean != nil {

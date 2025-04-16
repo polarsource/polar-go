@@ -18,6 +18,12 @@ productUpdateMetadata := components.CreateProductUpdateMetadataInteger(int64{/* 
 ### 
 
 ```go
+productUpdateMetadata := components.CreateProductUpdateMetadataNumber(float64{/* values here */})
+```
+
+### 
+
+```go
 productUpdateMetadata := components.CreateProductUpdateMetadataBoolean(bool{/* values here */})
 ```
 

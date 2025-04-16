@@ -3,18 +3,128 @@
 package components
 
 import (
+	"errors"
+	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
 	"time"
 )
 
+type BenefitCustomSubscriberMetadataType string
+
+const (
+	BenefitCustomSubscriberMetadataTypeStr     BenefitCustomSubscriberMetadataType = "str"
+	BenefitCustomSubscriberMetadataTypeInteger BenefitCustomSubscriberMetadataType = "integer"
+	BenefitCustomSubscriberMetadataTypeNumber  BenefitCustomSubscriberMetadataType = "number"
+	BenefitCustomSubscriberMetadataTypeBoolean BenefitCustomSubscriberMetadataType = "boolean"
+)
+
+type BenefitCustomSubscriberMetadata struct {
+	Str     *string  `queryParam:"inline"`
+	Integer *int64   `queryParam:"inline"`
+	Number  *float64 `queryParam:"inline"`
+	Boolean *bool    `queryParam:"inline"`
+
+	Type BenefitCustomSubscriberMetadataType
+}
+
+func CreateBenefitCustomSubscriberMetadataStr(str string) BenefitCustomSubscriberMetadata {
+	typ := BenefitCustomSubscriberMetadataTypeStr
+
+	return BenefitCustomSubscriberMetadata{
+		Str:  &str,
+		Type: typ,
+	}
+}
+
+func CreateBenefitCustomSubscriberMetadataInteger(integer int64) BenefitCustomSubscriberMetadata {
+	typ := BenefitCustomSubscriberMetadataTypeInteger
+
+	return BenefitCustomSubscriberMetadata{
+		Integer: &integer,
+		Type:    typ,
+	}
+}
+
+func CreateBenefitCustomSubscriberMetadataNumber(number float64) BenefitCustomSubscriberMetadata {
+	typ := BenefitCustomSubscriberMetadataTypeNumber
+
+	return BenefitCustomSubscriberMetadata{
+		Number: &number,
+		Type:   typ,
+	}
+}
+
+func CreateBenefitCustomSubscriberMetadataBoolean(boolean bool) BenefitCustomSubscriberMetadata {
+	typ := BenefitCustomSubscriberMetadataTypeBoolean
+
+	return BenefitCustomSubscriberMetadata{
+		Boolean: &boolean,
+		Type:    typ,
+	}
+}
+
+func (u *BenefitCustomSubscriberMetadata) UnmarshalJSON(data []byte) error {
+
+	var str string = ""
+	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
+		u.Str = &str
+		u.Type = BenefitCustomSubscriberMetadataTypeStr
+		return nil
+	}
+
+	var integer int64 = int64(0)
+	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
+		u.Integer = &integer
+		u.Type = BenefitCustomSubscriberMetadataTypeInteger
+		return nil
+	}
+
+	var number float64 = float64(0)
+	if err := utils.UnmarshalJSON(data, &number, "", true, true); err == nil {
+		u.Number = &number
+		u.Type = BenefitCustomSubscriberMetadataTypeNumber
+		return nil
+	}
+
+	var boolean bool = false
+	if err := utils.UnmarshalJSON(data, &boolean, "", true, true); err == nil {
+		u.Boolean = &boolean
+		u.Type = BenefitCustomSubscriberMetadataTypeBoolean
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for BenefitCustomSubscriberMetadata", string(data))
+}
+
+func (u BenefitCustomSubscriberMetadata) MarshalJSON() ([]byte, error) {
+	if u.Str != nil {
+		return utils.MarshalJSON(u.Str, "", true)
+	}
+
+	if u.Integer != nil {
+		return utils.MarshalJSON(u.Integer, "", true)
+	}
+
+	if u.Number != nil {
+		return utils.MarshalJSON(u.Number, "", true)
+	}
+
+	if u.Boolean != nil {
+		return utils.MarshalJSON(u.Boolean, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type BenefitCustomSubscriberMetadata: all fields are null")
+}
+
 type BenefitCustomSubscriber struct {
+	// The ID of the benefit.
+	ID string `json:"id"`
 	// Creation timestamp of the object.
 	CreatedAt time.Time `json:"created_at"`
 	// Last modification timestamp of the object.
-	ModifiedAt *time.Time `json:"modified_at"`
-	// The ID of the benefit.
-	ID    string `json:"id"`
-	type_ string `const:"custom" json:"type"`
+	ModifiedAt *time.Time                                 `json:"modified_at"`
+	Metadata   map[string]BenefitCustomSubscriberMetadata `json:"metadata"`
+	type_      string                                     `const:"custom" json:"type"`
 	// The description of the benefit.
 	Description string `json:"description"`
 	// Whether the benefit is selectable when creating a product.
@@ -39,6 +149,13 @@ func (b *BenefitCustomSubscriber) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (o *BenefitCustomSubscriber) GetID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ID
+}
+
 func (o *BenefitCustomSubscriber) GetCreatedAt() time.Time {
 	if o == nil {
 		return time.Time{}
@@ -53,11 +170,11 @@ func (o *BenefitCustomSubscriber) GetModifiedAt() *time.Time {
 	return o.ModifiedAt
 }
 
-func (o *BenefitCustomSubscriber) GetID() string {
+func (o *BenefitCustomSubscriber) GetMetadata() map[string]BenefitCustomSubscriberMetadata {
 	if o == nil {
-		return ""
+		return map[string]BenefitCustomSubscriberMetadata{}
 	}
-	return o.ID
+	return o.Metadata
 }
 
 func (o *BenefitCustomSubscriber) GetType() string {

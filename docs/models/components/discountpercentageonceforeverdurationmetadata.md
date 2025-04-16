@@ -18,6 +18,12 @@ discountPercentageOnceForeverDurationMetadata := components.CreateDiscountPercen
 ### 
 
 ```go
+discountPercentageOnceForeverDurationMetadata := components.CreateDiscountPercentageOnceForeverDurationMetadataNumber(float64{/* values here */})
+```
+
+### 
+
+```go
 discountPercentageOnceForeverDurationMetadata := components.CreateDiscountPercentageOnceForeverDurationMetadataBoolean(bool{/* values here */})
 ```
 

@@ -18,6 +18,12 @@ orderMetadata := components.CreateOrderMetadataInteger(int64{/* values here */})
 ### 
 
 ```go
+orderMetadata := components.CreateOrderMetadataNumber(float64{/* values here */})
+```
+
+### 
+
+```go
 orderMetadata := components.CreateOrderMetadataBoolean(bool{/* values here */})
 ```
 

@@ -18,6 +18,12 @@ customFieldCheckboxMetadata := components.CreateCustomFieldCheckboxMetadataInteg
 ### 
 
 ```go
+customFieldCheckboxMetadata := components.CreateCustomFieldCheckboxMetadataNumber(float64{/* values here */})
+```
+
+### 
+
+```go
 customFieldCheckboxMetadata := components.CreateCustomFieldCheckboxMetadataBoolean(bool{/* values here */})
 ```
 

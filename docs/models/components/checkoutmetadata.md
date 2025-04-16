@@ -18,6 +18,12 @@ checkoutMetadata := components.CreateCheckoutMetadataInteger(int64{/* values her
 ### 
 
 ```go
+checkoutMetadata := components.CreateCheckoutMetadataNumber(float64{/* values here */})
+```
+
+### 
+
+```go
 checkoutMetadata := components.CreateCheckoutMetadataBoolean(bool{/* values here */})
 ```
 

@@ -18,6 +18,12 @@ checkoutProductsCreateCustomerMetadata := components.CreateCheckoutProductsCreat
 ### 
 
 ```go
+checkoutProductsCreateCustomerMetadata := components.CreateCheckoutProductsCreateCustomerMetadataNumber(float64{/* values here */})
+```
+
+### 
+
+```go
 checkoutProductsCreateCustomerMetadata := components.CreateCheckoutProductsCreateCustomerMetadataBoolean(bool{/* values here */})
 ```
 

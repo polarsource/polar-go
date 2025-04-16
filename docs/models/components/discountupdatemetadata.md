@@ -18,6 +18,12 @@ discountUpdateMetadata := components.CreateDiscountUpdateMetadataInteger(int64{/
 ### 
 
 ```go
+discountUpdateMetadata := components.CreateDiscountUpdateMetadataNumber(float64{/* values here */})
+```
+
+### 
+
+```go
 discountUpdateMetadata := components.CreateDiscountUpdateMetadataBoolean(bool{/* values here */})
 ```
 

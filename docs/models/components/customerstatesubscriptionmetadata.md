@@ -18,6 +18,12 @@ customerStateSubscriptionMetadata := components.CreateCustomerStateSubscriptionM
 ### 
 
 ```go
+customerStateSubscriptionMetadata := components.CreateCustomerStateSubscriptionMetadataNumber(float64{/* values here */})
+```
+
+### 
+
+```go
 customerStateSubscriptionMetadata := components.CreateCustomerStateSubscriptionMetadataBoolean(bool{/* values here */})
 ```
 

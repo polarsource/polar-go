@@ -18,6 +18,12 @@ customFieldDateMetadata := components.CreateCustomFieldDateMetadataInteger(int64
 ### 
 
 ```go
+customFieldDateMetadata := components.CreateCustomFieldDateMetadataNumber(float64{/* values here */})
+```
+
+### 
+
+```go
 customFieldDateMetadata := components.CreateCustomFieldDateMetadataBoolean(bool{/* values here */})
 ```
 

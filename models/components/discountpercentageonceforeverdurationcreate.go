@@ -14,13 +14,15 @@ type DiscountPercentageOnceForeverDurationCreateMetadataType string
 const (
 	DiscountPercentageOnceForeverDurationCreateMetadataTypeStr     DiscountPercentageOnceForeverDurationCreateMetadataType = "str"
 	DiscountPercentageOnceForeverDurationCreateMetadataTypeInteger DiscountPercentageOnceForeverDurationCreateMetadataType = "integer"
+	DiscountPercentageOnceForeverDurationCreateMetadataTypeNumber  DiscountPercentageOnceForeverDurationCreateMetadataType = "number"
 	DiscountPercentageOnceForeverDurationCreateMetadataTypeBoolean DiscountPercentageOnceForeverDurationCreateMetadataType = "boolean"
 )
 
 type DiscountPercentageOnceForeverDurationCreateMetadata struct {
-	Str     *string `queryParam:"inline"`
-	Integer *int64  `queryParam:"inline"`
-	Boolean *bool   `queryParam:"inline"`
+	Str     *string  `queryParam:"inline"`
+	Integer *int64   `queryParam:"inline"`
+	Number  *float64 `queryParam:"inline"`
+	Boolean *bool    `queryParam:"inline"`
 
 	Type DiscountPercentageOnceForeverDurationCreateMetadataType
 }
@@ -40,6 +42,15 @@ func CreateDiscountPercentageOnceForeverDurationCreateMetadataInteger(integer in
 	return DiscountPercentageOnceForeverDurationCreateMetadata{
 		Integer: &integer,
 		Type:    typ,
+	}
+}
+
+func CreateDiscountPercentageOnceForeverDurationCreateMetadataNumber(number float64) DiscountPercentageOnceForeverDurationCreateMetadata {
+	typ := DiscountPercentageOnceForeverDurationCreateMetadataTypeNumber
+
+	return DiscountPercentageOnceForeverDurationCreateMetadata{
+		Number: &number,
+		Type:   typ,
 	}
 }
 
@@ -68,6 +79,13 @@ func (u *DiscountPercentageOnceForeverDurationCreateMetadata) UnmarshalJSON(data
 		return nil
 	}
 
+	var number float64 = float64(0)
+	if err := utils.UnmarshalJSON(data, &number, "", true, true); err == nil {
+		u.Number = &number
+		u.Type = DiscountPercentageOnceForeverDurationCreateMetadataTypeNumber
+		return nil
+	}
+
 	var boolean bool = false
 	if err := utils.UnmarshalJSON(data, &boolean, "", true, true); err == nil {
 		u.Boolean = &boolean
@@ -85,6 +103,10 @@ func (u DiscountPercentageOnceForeverDurationCreateMetadata) MarshalJSON() ([]by
 
 	if u.Integer != nil {
 		return utils.MarshalJSON(u.Integer, "", true)
+	}
+
+	if u.Number != nil {
+		return utils.MarshalJSON(u.Number, "", true)
 	}
 
 	if u.Boolean != nil {
@@ -110,6 +132,7 @@ type DiscountPercentageOnceForeverDurationCreate struct {
 	//
 	// * A string with a maximum length of **500 characters**
 	// * An integer
+	// * A floating-point number
 	// * A boolean
 	//
 	// You can store up to **50 key-value pairs**.

@@ -13,13 +13,15 @@ type CustomFieldCreateNumberMetadataType string
 const (
 	CustomFieldCreateNumberMetadataTypeStr     CustomFieldCreateNumberMetadataType = "str"
 	CustomFieldCreateNumberMetadataTypeInteger CustomFieldCreateNumberMetadataType = "integer"
+	CustomFieldCreateNumberMetadataTypeNumber  CustomFieldCreateNumberMetadataType = "number"
 	CustomFieldCreateNumberMetadataTypeBoolean CustomFieldCreateNumberMetadataType = "boolean"
 )
 
 type CustomFieldCreateNumberMetadata struct {
-	Str     *string `queryParam:"inline"`
-	Integer *int64  `queryParam:"inline"`
-	Boolean *bool   `queryParam:"inline"`
+	Str     *string  `queryParam:"inline"`
+	Integer *int64   `queryParam:"inline"`
+	Number  *float64 `queryParam:"inline"`
+	Boolean *bool    `queryParam:"inline"`
 
 	Type CustomFieldCreateNumberMetadataType
 }
@@ -39,6 +41,15 @@ func CreateCustomFieldCreateNumberMetadataInteger(integer int64) CustomFieldCrea
 	return CustomFieldCreateNumberMetadata{
 		Integer: &integer,
 		Type:    typ,
+	}
+}
+
+func CreateCustomFieldCreateNumberMetadataNumber(number float64) CustomFieldCreateNumberMetadata {
+	typ := CustomFieldCreateNumberMetadataTypeNumber
+
+	return CustomFieldCreateNumberMetadata{
+		Number: &number,
+		Type:   typ,
 	}
 }
 
@@ -67,6 +78,13 @@ func (u *CustomFieldCreateNumberMetadata) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
+	var number float64 = float64(0)
+	if err := utils.UnmarshalJSON(data, &number, "", true, true); err == nil {
+		u.Number = &number
+		u.Type = CustomFieldCreateNumberMetadataTypeNumber
+		return nil
+	}
+
 	var boolean bool = false
 	if err := utils.UnmarshalJSON(data, &boolean, "", true, true); err == nil {
 		u.Boolean = &boolean
@@ -86,6 +104,10 @@ func (u CustomFieldCreateNumberMetadata) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.Integer, "", true)
 	}
 
+	if u.Number != nil {
+		return utils.MarshalJSON(u.Number, "", true)
+	}
+
 	if u.Boolean != nil {
 		return utils.MarshalJSON(u.Boolean, "", true)
 	}
@@ -102,6 +124,7 @@ type CustomFieldCreateNumber struct {
 	//
 	// * A string with a maximum length of **500 characters**
 	// * An integer
+	// * A floating-point number
 	// * A boolean
 	//
 	// You can store up to **50 key-value pairs**.

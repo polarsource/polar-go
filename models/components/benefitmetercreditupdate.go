@@ -3,10 +3,131 @@
 package components
 
 import (
+	"errors"
+	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
 )
 
+type BenefitMeterCreditUpdateMetadataType string
+
+const (
+	BenefitMeterCreditUpdateMetadataTypeStr     BenefitMeterCreditUpdateMetadataType = "str"
+	BenefitMeterCreditUpdateMetadataTypeInteger BenefitMeterCreditUpdateMetadataType = "integer"
+	BenefitMeterCreditUpdateMetadataTypeNumber  BenefitMeterCreditUpdateMetadataType = "number"
+	BenefitMeterCreditUpdateMetadataTypeBoolean BenefitMeterCreditUpdateMetadataType = "boolean"
+)
+
+type BenefitMeterCreditUpdateMetadata struct {
+	Str     *string  `queryParam:"inline"`
+	Integer *int64   `queryParam:"inline"`
+	Number  *float64 `queryParam:"inline"`
+	Boolean *bool    `queryParam:"inline"`
+
+	Type BenefitMeterCreditUpdateMetadataType
+}
+
+func CreateBenefitMeterCreditUpdateMetadataStr(str string) BenefitMeterCreditUpdateMetadata {
+	typ := BenefitMeterCreditUpdateMetadataTypeStr
+
+	return BenefitMeterCreditUpdateMetadata{
+		Str:  &str,
+		Type: typ,
+	}
+}
+
+func CreateBenefitMeterCreditUpdateMetadataInteger(integer int64) BenefitMeterCreditUpdateMetadata {
+	typ := BenefitMeterCreditUpdateMetadataTypeInteger
+
+	return BenefitMeterCreditUpdateMetadata{
+		Integer: &integer,
+		Type:    typ,
+	}
+}
+
+func CreateBenefitMeterCreditUpdateMetadataNumber(number float64) BenefitMeterCreditUpdateMetadata {
+	typ := BenefitMeterCreditUpdateMetadataTypeNumber
+
+	return BenefitMeterCreditUpdateMetadata{
+		Number: &number,
+		Type:   typ,
+	}
+}
+
+func CreateBenefitMeterCreditUpdateMetadataBoolean(boolean bool) BenefitMeterCreditUpdateMetadata {
+	typ := BenefitMeterCreditUpdateMetadataTypeBoolean
+
+	return BenefitMeterCreditUpdateMetadata{
+		Boolean: &boolean,
+		Type:    typ,
+	}
+}
+
+func (u *BenefitMeterCreditUpdateMetadata) UnmarshalJSON(data []byte) error {
+
+	var str string = ""
+	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
+		u.Str = &str
+		u.Type = BenefitMeterCreditUpdateMetadataTypeStr
+		return nil
+	}
+
+	var integer int64 = int64(0)
+	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
+		u.Integer = &integer
+		u.Type = BenefitMeterCreditUpdateMetadataTypeInteger
+		return nil
+	}
+
+	var number float64 = float64(0)
+	if err := utils.UnmarshalJSON(data, &number, "", true, true); err == nil {
+		u.Number = &number
+		u.Type = BenefitMeterCreditUpdateMetadataTypeNumber
+		return nil
+	}
+
+	var boolean bool = false
+	if err := utils.UnmarshalJSON(data, &boolean, "", true, true); err == nil {
+		u.Boolean = &boolean
+		u.Type = BenefitMeterCreditUpdateMetadataTypeBoolean
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for BenefitMeterCreditUpdateMetadata", string(data))
+}
+
+func (u BenefitMeterCreditUpdateMetadata) MarshalJSON() ([]byte, error) {
+	if u.Str != nil {
+		return utils.MarshalJSON(u.Str, "", true)
+	}
+
+	if u.Integer != nil {
+		return utils.MarshalJSON(u.Integer, "", true)
+	}
+
+	if u.Number != nil {
+		return utils.MarshalJSON(u.Number, "", true)
+	}
+
+	if u.Boolean != nil {
+		return utils.MarshalJSON(u.Boolean, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type BenefitMeterCreditUpdateMetadata: all fields are null")
+}
+
 type BenefitMeterCreditUpdate struct {
+	// Key-value object allowing you to store additional information.
+	//
+	// The key must be a string with a maximum length of **40 characters**.
+	// The value must be either:
+	//
+	// * A string with a maximum length of **500 characters**
+	// * An integer
+	// * A floating-point number
+	// * A boolean
+	//
+	// You can store up to **50 key-value pairs**.
+	Metadata map[string]BenefitMeterCreditUpdateMetadata `json:"metadata,omitempty"`
 	// The description of the benefit. Will be displayed on products having this benefit.
 	Description *string                             `json:"description,omitempty"`
 	type_       string                              `const:"meter_credit" json:"type"`
@@ -22,6 +143,13 @@ func (b *BenefitMeterCreditUpdate) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
+}
+
+func (o *BenefitMeterCreditUpdate) GetMetadata() map[string]BenefitMeterCreditUpdateMetadata {
+	if o == nil {
+		return nil
+	}
+	return o.Metadata
 }
 
 func (o *BenefitMeterCreditUpdate) GetDescription() *string {

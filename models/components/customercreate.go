@@ -13,13 +13,15 @@ type CustomerCreateMetadataType string
 const (
 	CustomerCreateMetadataTypeStr     CustomerCreateMetadataType = "str"
 	CustomerCreateMetadataTypeInteger CustomerCreateMetadataType = "integer"
+	CustomerCreateMetadataTypeNumber  CustomerCreateMetadataType = "number"
 	CustomerCreateMetadataTypeBoolean CustomerCreateMetadataType = "boolean"
 )
 
 type CustomerCreateMetadata struct {
-	Str     *string `queryParam:"inline"`
-	Integer *int64  `queryParam:"inline"`
-	Boolean *bool   `queryParam:"inline"`
+	Str     *string  `queryParam:"inline"`
+	Integer *int64   `queryParam:"inline"`
+	Number  *float64 `queryParam:"inline"`
+	Boolean *bool    `queryParam:"inline"`
 
 	Type CustomerCreateMetadataType
 }
@@ -39,6 +41,15 @@ func CreateCustomerCreateMetadataInteger(integer int64) CustomerCreateMetadata {
 	return CustomerCreateMetadata{
 		Integer: &integer,
 		Type:    typ,
+	}
+}
+
+func CreateCustomerCreateMetadataNumber(number float64) CustomerCreateMetadata {
+	typ := CustomerCreateMetadataTypeNumber
+
+	return CustomerCreateMetadata{
+		Number: &number,
+		Type:   typ,
 	}
 }
 
@@ -67,6 +78,13 @@ func (u *CustomerCreateMetadata) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
+	var number float64 = float64(0)
+	if err := utils.UnmarshalJSON(data, &number, "", true, true); err == nil {
+		u.Number = &number
+		u.Type = CustomerCreateMetadataTypeNumber
+		return nil
+	}
+
 	var boolean bool = false
 	if err := utils.UnmarshalJSON(data, &boolean, "", true, true); err == nil {
 		u.Boolean = &boolean
@@ -84,6 +102,10 @@ func (u CustomerCreateMetadata) MarshalJSON() ([]byte, error) {
 
 	if u.Integer != nil {
 		return utils.MarshalJSON(u.Integer, "", true)
+	}
+
+	if u.Number != nil {
+		return utils.MarshalJSON(u.Number, "", true)
 	}
 
 	if u.Boolean != nil {
@@ -164,6 +186,7 @@ type CustomerCreate struct {
 	//
 	// * A string with a maximum length of **500 characters**
 	// * An integer
+	// * A floating-point number
 	// * A boolean
 	//
 	// You can store up to **50 key-value pairs**.

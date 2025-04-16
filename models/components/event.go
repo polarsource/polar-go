@@ -14,13 +14,15 @@ type EventMetadataType string
 const (
 	EventMetadataTypeStr     EventMetadataType = "str"
 	EventMetadataTypeInteger EventMetadataType = "integer"
+	EventMetadataTypeNumber  EventMetadataType = "number"
 	EventMetadataTypeBoolean EventMetadataType = "boolean"
 )
 
 type EventMetadata struct {
-	Str     *string `queryParam:"inline"`
-	Integer *int64  `queryParam:"inline"`
-	Boolean *bool   `queryParam:"inline"`
+	Str     *string  `queryParam:"inline"`
+	Integer *int64   `queryParam:"inline"`
+	Number  *float64 `queryParam:"inline"`
+	Boolean *bool    `queryParam:"inline"`
 
 	Type EventMetadataType
 }
@@ -40,6 +42,15 @@ func CreateEventMetadataInteger(integer int64) EventMetadata {
 	return EventMetadata{
 		Integer: &integer,
 		Type:    typ,
+	}
+}
+
+func CreateEventMetadataNumber(number float64) EventMetadata {
+	typ := EventMetadataTypeNumber
+
+	return EventMetadata{
+		Number: &number,
+		Type:   typ,
 	}
 }
 
@@ -68,6 +79,13 @@ func (u *EventMetadata) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
+	var number float64 = float64(0)
+	if err := utils.UnmarshalJSON(data, &number, "", true, true); err == nil {
+		u.Number = &number
+		u.Type = EventMetadataTypeNumber
+		return nil
+	}
+
 	var boolean bool = false
 	if err := utils.UnmarshalJSON(data, &boolean, "", true, true); err == nil {
 		u.Boolean = &boolean
@@ -85,6 +103,10 @@ func (u EventMetadata) MarshalJSON() ([]byte, error) {
 
 	if u.Integer != nil {
 		return utils.MarshalJSON(u.Integer, "", true)
+	}
+
+	if u.Number != nil {
+		return utils.MarshalJSON(u.Number, "", true)
 	}
 
 	if u.Boolean != nil {

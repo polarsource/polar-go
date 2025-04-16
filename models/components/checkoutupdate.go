@@ -121,13 +121,15 @@ type CheckoutUpdateMetadataType string
 const (
 	CheckoutUpdateMetadataTypeStr     CheckoutUpdateMetadataType = "str"
 	CheckoutUpdateMetadataTypeInteger CheckoutUpdateMetadataType = "integer"
+	CheckoutUpdateMetadataTypeNumber  CheckoutUpdateMetadataType = "number"
 	CheckoutUpdateMetadataTypeBoolean CheckoutUpdateMetadataType = "boolean"
 )
 
 type CheckoutUpdateMetadata struct {
-	Str     *string `queryParam:"inline"`
-	Integer *int64  `queryParam:"inline"`
-	Boolean *bool   `queryParam:"inline"`
+	Str     *string  `queryParam:"inline"`
+	Integer *int64   `queryParam:"inline"`
+	Number  *float64 `queryParam:"inline"`
+	Boolean *bool    `queryParam:"inline"`
 
 	Type CheckoutUpdateMetadataType
 }
@@ -147,6 +149,15 @@ func CreateCheckoutUpdateMetadataInteger(integer int64) CheckoutUpdateMetadata {
 	return CheckoutUpdateMetadata{
 		Integer: &integer,
 		Type:    typ,
+	}
+}
+
+func CreateCheckoutUpdateMetadataNumber(number float64) CheckoutUpdateMetadata {
+	typ := CheckoutUpdateMetadataTypeNumber
+
+	return CheckoutUpdateMetadata{
+		Number: &number,
+		Type:   typ,
 	}
 }
 
@@ -175,6 +186,13 @@ func (u *CheckoutUpdateMetadata) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
+	var number float64 = float64(0)
+	if err := utils.UnmarshalJSON(data, &number, "", true, true); err == nil {
+		u.Number = &number
+		u.Type = CheckoutUpdateMetadataTypeNumber
+		return nil
+	}
+
 	var boolean bool = false
 	if err := utils.UnmarshalJSON(data, &boolean, "", true, true); err == nil {
 		u.Boolean = &boolean
@@ -194,6 +212,10 @@ func (u CheckoutUpdateMetadata) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.Integer, "", true)
 	}
 
+	if u.Number != nil {
+		return utils.MarshalJSON(u.Number, "", true)
+	}
+
 	if u.Boolean != nil {
 		return utils.MarshalJSON(u.Boolean, "", true)
 	}
@@ -206,13 +228,15 @@ type CheckoutUpdateCustomerMetadataType string
 const (
 	CheckoutUpdateCustomerMetadataTypeStr     CheckoutUpdateCustomerMetadataType = "str"
 	CheckoutUpdateCustomerMetadataTypeInteger CheckoutUpdateCustomerMetadataType = "integer"
+	CheckoutUpdateCustomerMetadataTypeNumber  CheckoutUpdateCustomerMetadataType = "number"
 	CheckoutUpdateCustomerMetadataTypeBoolean CheckoutUpdateCustomerMetadataType = "boolean"
 )
 
 type CheckoutUpdateCustomerMetadata struct {
-	Str     *string `queryParam:"inline"`
-	Integer *int64  `queryParam:"inline"`
-	Boolean *bool   `queryParam:"inline"`
+	Str     *string  `queryParam:"inline"`
+	Integer *int64   `queryParam:"inline"`
+	Number  *float64 `queryParam:"inline"`
+	Boolean *bool    `queryParam:"inline"`
 
 	Type CheckoutUpdateCustomerMetadataType
 }
@@ -232,6 +256,15 @@ func CreateCheckoutUpdateCustomerMetadataInteger(integer int64) CheckoutUpdateCu
 	return CheckoutUpdateCustomerMetadata{
 		Integer: &integer,
 		Type:    typ,
+	}
+}
+
+func CreateCheckoutUpdateCustomerMetadataNumber(number float64) CheckoutUpdateCustomerMetadata {
+	typ := CheckoutUpdateCustomerMetadataTypeNumber
+
+	return CheckoutUpdateCustomerMetadata{
+		Number: &number,
+		Type:   typ,
 	}
 }
 
@@ -260,6 +293,13 @@ func (u *CheckoutUpdateCustomerMetadata) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
+	var number float64 = float64(0)
+	if err := utils.UnmarshalJSON(data, &number, "", true, true); err == nil {
+		u.Number = &number
+		u.Type = CheckoutUpdateCustomerMetadataTypeNumber
+		return nil
+	}
+
 	var boolean bool = false
 	if err := utils.UnmarshalJSON(data, &boolean, "", true, true); err == nil {
 		u.Boolean = &boolean
@@ -277,6 +317,10 @@ func (u CheckoutUpdateCustomerMetadata) MarshalJSON() ([]byte, error) {
 
 	if u.Integer != nil {
 		return utils.MarshalJSON(u.Integer, "", true)
+	}
+
+	if u.Number != nil {
+		return utils.MarshalJSON(u.Number, "", true)
 	}
 
 	if u.Boolean != nil {
@@ -308,6 +352,7 @@ type CheckoutUpdate struct {
 	//
 	// * A string with a maximum length of **500 characters**
 	// * An integer
+	// * A floating-point number
 	// * A boolean
 	//
 	// You can store up to **50 key-value pairs**.
@@ -324,6 +369,7 @@ type CheckoutUpdate struct {
 	//
 	// * A string with a maximum length of **500 characters**
 	// * An integer
+	// * A floating-point number
 	// * A boolean
 	//
 	// You can store up to **50 key-value pairs**.

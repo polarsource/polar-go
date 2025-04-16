@@ -18,6 +18,12 @@ licenseKeyCustomerMetadata := components.CreateLicenseKeyCustomerMetadataInteger
 ### 
 
 ```go
+licenseKeyCustomerMetadata := components.CreateLicenseKeyCustomerMetadataNumber(float64{/* values here */})
+```
+
+### 
+
+```go
 licenseKeyCustomerMetadata := components.CreateLicenseKeyCustomerMetadataBoolean(bool{/* values here */})
 ```
 

@@ -18,6 +18,12 @@ refundCreateMetadata := components.CreateRefundCreateMetadataInteger(int64{/* va
 ### 
 
 ```go
+refundCreateMetadata := components.CreateRefundCreateMetadataNumber(float64{/* values here */})
+```
+
+### 
+
+```go
 refundCreateMetadata := components.CreateRefundCreateMetadataBoolean(bool{/* values here */})
 ```
 

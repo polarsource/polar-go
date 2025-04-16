@@ -18,6 +18,12 @@ customerUpdateMetadata := components.CreateCustomerUpdateMetadataInteger(int64{/
 ### 
 
 ```go
+customerUpdateMetadata := components.CreateCustomerUpdateMetadataNumber(float64{/* values here */})
+```
+
+### 
+
+```go
 customerUpdateMetadata := components.CreateCustomerUpdateMetadataBoolean(bool{/* values here */})
 ```
 

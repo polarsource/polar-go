@@ -121,13 +121,15 @@ type CheckoutMetadataType string
 const (
 	CheckoutMetadataTypeStr     CheckoutMetadataType = "str"
 	CheckoutMetadataTypeInteger CheckoutMetadataType = "integer"
+	CheckoutMetadataTypeNumber  CheckoutMetadataType = "number"
 	CheckoutMetadataTypeBoolean CheckoutMetadataType = "boolean"
 )
 
 type CheckoutMetadata struct {
-	Str     *string `queryParam:"inline"`
-	Integer *int64  `queryParam:"inline"`
-	Boolean *bool   `queryParam:"inline"`
+	Str     *string  `queryParam:"inline"`
+	Integer *int64   `queryParam:"inline"`
+	Number  *float64 `queryParam:"inline"`
+	Boolean *bool    `queryParam:"inline"`
 
 	Type CheckoutMetadataType
 }
@@ -147,6 +149,15 @@ func CreateCheckoutMetadataInteger(integer int64) CheckoutMetadata {
 	return CheckoutMetadata{
 		Integer: &integer,
 		Type:    typ,
+	}
+}
+
+func CreateCheckoutMetadataNumber(number float64) CheckoutMetadata {
+	typ := CheckoutMetadataTypeNumber
+
+	return CheckoutMetadata{
+		Number: &number,
+		Type:   typ,
 	}
 }
 
@@ -175,6 +186,13 @@ func (u *CheckoutMetadata) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
+	var number float64 = float64(0)
+	if err := utils.UnmarshalJSON(data, &number, "", true, true); err == nil {
+		u.Number = &number
+		u.Type = CheckoutMetadataTypeNumber
+		return nil
+	}
+
 	var boolean bool = false
 	if err := utils.UnmarshalJSON(data, &boolean, "", true, true); err == nil {
 		u.Boolean = &boolean
@@ -192,6 +210,10 @@ func (u CheckoutMetadata) MarshalJSON() ([]byte, error) {
 
 	if u.Integer != nil {
 		return utils.MarshalJSON(u.Integer, "", true)
+	}
+
+	if u.Number != nil {
+		return utils.MarshalJSON(u.Number, "", true)
 	}
 
 	if u.Boolean != nil {

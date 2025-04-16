@@ -14,13 +14,15 @@ type DiscountFixedOnceForeverDurationCreateMetadataType string
 const (
 	DiscountFixedOnceForeverDurationCreateMetadataTypeStr     DiscountFixedOnceForeverDurationCreateMetadataType = "str"
 	DiscountFixedOnceForeverDurationCreateMetadataTypeInteger DiscountFixedOnceForeverDurationCreateMetadataType = "integer"
+	DiscountFixedOnceForeverDurationCreateMetadataTypeNumber  DiscountFixedOnceForeverDurationCreateMetadataType = "number"
 	DiscountFixedOnceForeverDurationCreateMetadataTypeBoolean DiscountFixedOnceForeverDurationCreateMetadataType = "boolean"
 )
 
 type DiscountFixedOnceForeverDurationCreateMetadata struct {
-	Str     *string `queryParam:"inline"`
-	Integer *int64  `queryParam:"inline"`
-	Boolean *bool   `queryParam:"inline"`
+	Str     *string  `queryParam:"inline"`
+	Integer *int64   `queryParam:"inline"`
+	Number  *float64 `queryParam:"inline"`
+	Boolean *bool    `queryParam:"inline"`
 
 	Type DiscountFixedOnceForeverDurationCreateMetadataType
 }
@@ -40,6 +42,15 @@ func CreateDiscountFixedOnceForeverDurationCreateMetadataInteger(integer int64) 
 	return DiscountFixedOnceForeverDurationCreateMetadata{
 		Integer: &integer,
 		Type:    typ,
+	}
+}
+
+func CreateDiscountFixedOnceForeverDurationCreateMetadataNumber(number float64) DiscountFixedOnceForeverDurationCreateMetadata {
+	typ := DiscountFixedOnceForeverDurationCreateMetadataTypeNumber
+
+	return DiscountFixedOnceForeverDurationCreateMetadata{
+		Number: &number,
+		Type:   typ,
 	}
 }
 
@@ -68,6 +79,13 @@ func (u *DiscountFixedOnceForeverDurationCreateMetadata) UnmarshalJSON(data []by
 		return nil
 	}
 
+	var number float64 = float64(0)
+	if err := utils.UnmarshalJSON(data, &number, "", true, true); err == nil {
+		u.Number = &number
+		u.Type = DiscountFixedOnceForeverDurationCreateMetadataTypeNumber
+		return nil
+	}
+
 	var boolean bool = false
 	if err := utils.UnmarshalJSON(data, &boolean, "", true, true); err == nil {
 		u.Boolean = &boolean
@@ -85,6 +103,10 @@ func (u DiscountFixedOnceForeverDurationCreateMetadata) MarshalJSON() ([]byte, e
 
 	if u.Integer != nil {
 		return utils.MarshalJSON(u.Integer, "", true)
+	}
+
+	if u.Number != nil {
+		return utils.MarshalJSON(u.Number, "", true)
 	}
 
 	if u.Boolean != nil {
@@ -109,6 +131,7 @@ type DiscountFixedOnceForeverDurationCreate struct {
 	//
 	// * A string with a maximum length of **500 characters**
 	// * An integer
+	// * A floating-point number
 	// * A boolean
 	//
 	// You can store up to **50 key-value pairs**.

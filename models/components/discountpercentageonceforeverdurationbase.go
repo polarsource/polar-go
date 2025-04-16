@@ -14,13 +14,15 @@ type DiscountPercentageOnceForeverDurationBaseMetadataType string
 const (
 	DiscountPercentageOnceForeverDurationBaseMetadataTypeStr     DiscountPercentageOnceForeverDurationBaseMetadataType = "str"
 	DiscountPercentageOnceForeverDurationBaseMetadataTypeInteger DiscountPercentageOnceForeverDurationBaseMetadataType = "integer"
+	DiscountPercentageOnceForeverDurationBaseMetadataTypeNumber  DiscountPercentageOnceForeverDurationBaseMetadataType = "number"
 	DiscountPercentageOnceForeverDurationBaseMetadataTypeBoolean DiscountPercentageOnceForeverDurationBaseMetadataType = "boolean"
 )
 
 type DiscountPercentageOnceForeverDurationBaseMetadata struct {
-	Str     *string `queryParam:"inline"`
-	Integer *int64  `queryParam:"inline"`
-	Boolean *bool   `queryParam:"inline"`
+	Str     *string  `queryParam:"inline"`
+	Integer *int64   `queryParam:"inline"`
+	Number  *float64 `queryParam:"inline"`
+	Boolean *bool    `queryParam:"inline"`
 
 	Type DiscountPercentageOnceForeverDurationBaseMetadataType
 }
@@ -40,6 +42,15 @@ func CreateDiscountPercentageOnceForeverDurationBaseMetadataInteger(integer int6
 	return DiscountPercentageOnceForeverDurationBaseMetadata{
 		Integer: &integer,
 		Type:    typ,
+	}
+}
+
+func CreateDiscountPercentageOnceForeverDurationBaseMetadataNumber(number float64) DiscountPercentageOnceForeverDurationBaseMetadata {
+	typ := DiscountPercentageOnceForeverDurationBaseMetadataTypeNumber
+
+	return DiscountPercentageOnceForeverDurationBaseMetadata{
+		Number: &number,
+		Type:   typ,
 	}
 }
 
@@ -68,6 +79,13 @@ func (u *DiscountPercentageOnceForeverDurationBaseMetadata) UnmarshalJSON(data [
 		return nil
 	}
 
+	var number float64 = float64(0)
+	if err := utils.UnmarshalJSON(data, &number, "", true, true); err == nil {
+		u.Number = &number
+		u.Type = DiscountPercentageOnceForeverDurationBaseMetadataTypeNumber
+		return nil
+	}
+
 	var boolean bool = false
 	if err := utils.UnmarshalJSON(data, &boolean, "", true, true); err == nil {
 		u.Boolean = &boolean
@@ -85,6 +103,10 @@ func (u DiscountPercentageOnceForeverDurationBaseMetadata) MarshalJSON() ([]byte
 
 	if u.Integer != nil {
 		return utils.MarshalJSON(u.Integer, "", true)
+	}
+
+	if u.Number != nil {
+		return utils.MarshalJSON(u.Number, "", true)
 	}
 
 	if u.Boolean != nil {

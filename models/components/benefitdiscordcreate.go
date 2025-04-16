@@ -3,11 +3,132 @@
 package components
 
 import (
+	"errors"
+	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
 )
 
+type BenefitDiscordCreateMetadataType string
+
+const (
+	BenefitDiscordCreateMetadataTypeStr     BenefitDiscordCreateMetadataType = "str"
+	BenefitDiscordCreateMetadataTypeInteger BenefitDiscordCreateMetadataType = "integer"
+	BenefitDiscordCreateMetadataTypeNumber  BenefitDiscordCreateMetadataType = "number"
+	BenefitDiscordCreateMetadataTypeBoolean BenefitDiscordCreateMetadataType = "boolean"
+)
+
+type BenefitDiscordCreateMetadata struct {
+	Str     *string  `queryParam:"inline"`
+	Integer *int64   `queryParam:"inline"`
+	Number  *float64 `queryParam:"inline"`
+	Boolean *bool    `queryParam:"inline"`
+
+	Type BenefitDiscordCreateMetadataType
+}
+
+func CreateBenefitDiscordCreateMetadataStr(str string) BenefitDiscordCreateMetadata {
+	typ := BenefitDiscordCreateMetadataTypeStr
+
+	return BenefitDiscordCreateMetadata{
+		Str:  &str,
+		Type: typ,
+	}
+}
+
+func CreateBenefitDiscordCreateMetadataInteger(integer int64) BenefitDiscordCreateMetadata {
+	typ := BenefitDiscordCreateMetadataTypeInteger
+
+	return BenefitDiscordCreateMetadata{
+		Integer: &integer,
+		Type:    typ,
+	}
+}
+
+func CreateBenefitDiscordCreateMetadataNumber(number float64) BenefitDiscordCreateMetadata {
+	typ := BenefitDiscordCreateMetadataTypeNumber
+
+	return BenefitDiscordCreateMetadata{
+		Number: &number,
+		Type:   typ,
+	}
+}
+
+func CreateBenefitDiscordCreateMetadataBoolean(boolean bool) BenefitDiscordCreateMetadata {
+	typ := BenefitDiscordCreateMetadataTypeBoolean
+
+	return BenefitDiscordCreateMetadata{
+		Boolean: &boolean,
+		Type:    typ,
+	}
+}
+
+func (u *BenefitDiscordCreateMetadata) UnmarshalJSON(data []byte) error {
+
+	var str string = ""
+	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
+		u.Str = &str
+		u.Type = BenefitDiscordCreateMetadataTypeStr
+		return nil
+	}
+
+	var integer int64 = int64(0)
+	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
+		u.Integer = &integer
+		u.Type = BenefitDiscordCreateMetadataTypeInteger
+		return nil
+	}
+
+	var number float64 = float64(0)
+	if err := utils.UnmarshalJSON(data, &number, "", true, true); err == nil {
+		u.Number = &number
+		u.Type = BenefitDiscordCreateMetadataTypeNumber
+		return nil
+	}
+
+	var boolean bool = false
+	if err := utils.UnmarshalJSON(data, &boolean, "", true, true); err == nil {
+		u.Boolean = &boolean
+		u.Type = BenefitDiscordCreateMetadataTypeBoolean
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for BenefitDiscordCreateMetadata", string(data))
+}
+
+func (u BenefitDiscordCreateMetadata) MarshalJSON() ([]byte, error) {
+	if u.Str != nil {
+		return utils.MarshalJSON(u.Str, "", true)
+	}
+
+	if u.Integer != nil {
+		return utils.MarshalJSON(u.Integer, "", true)
+	}
+
+	if u.Number != nil {
+		return utils.MarshalJSON(u.Number, "", true)
+	}
+
+	if u.Boolean != nil {
+		return utils.MarshalJSON(u.Boolean, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type BenefitDiscordCreateMetadata: all fields are null")
+}
+
 type BenefitDiscordCreate struct {
-	type_ string `const:"discord" json:"type"`
+	// Key-value object allowing you to store additional information.
+	//
+	// The key must be a string with a maximum length of **40 characters**.
+	// The value must be either:
+	//
+	// * A string with a maximum length of **500 characters**
+	// * An integer
+	// * A floating-point number
+	// * A boolean
+	//
+	// You can store up to **50 key-value pairs**.
+	Metadata map[string]BenefitDiscordCreateMetadata `json:"metadata,omitempty"`
+	type_    string                                  `const:"discord" json:"type"`
 	// The description of the benefit. Will be displayed on products having this benefit.
 	Description string `json:"description"`
 	// The ID of the organization owning the benefit. **Required unless you use an organization token.**
@@ -25,6 +146,13 @@ func (b *BenefitDiscordCreate) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
+}
+
+func (o *BenefitDiscordCreate) GetMetadata() map[string]BenefitDiscordCreateMetadata {
+	if o == nil {
+		return nil
+	}
+	return o.Metadata
 }
 
 func (o *BenefitDiscordCreate) GetType() string {

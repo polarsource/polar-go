@@ -3,21 +3,131 @@
 package components
 
 import (
+	"errors"
+	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
 	"time"
 )
+
+type BenefitCustomMetadataType string
+
+const (
+	BenefitCustomMetadataTypeStr     BenefitCustomMetadataType = "str"
+	BenefitCustomMetadataTypeInteger BenefitCustomMetadataType = "integer"
+	BenefitCustomMetadataTypeNumber  BenefitCustomMetadataType = "number"
+	BenefitCustomMetadataTypeBoolean BenefitCustomMetadataType = "boolean"
+)
+
+type BenefitCustomMetadata struct {
+	Str     *string  `queryParam:"inline"`
+	Integer *int64   `queryParam:"inline"`
+	Number  *float64 `queryParam:"inline"`
+	Boolean *bool    `queryParam:"inline"`
+
+	Type BenefitCustomMetadataType
+}
+
+func CreateBenefitCustomMetadataStr(str string) BenefitCustomMetadata {
+	typ := BenefitCustomMetadataTypeStr
+
+	return BenefitCustomMetadata{
+		Str:  &str,
+		Type: typ,
+	}
+}
+
+func CreateBenefitCustomMetadataInteger(integer int64) BenefitCustomMetadata {
+	typ := BenefitCustomMetadataTypeInteger
+
+	return BenefitCustomMetadata{
+		Integer: &integer,
+		Type:    typ,
+	}
+}
+
+func CreateBenefitCustomMetadataNumber(number float64) BenefitCustomMetadata {
+	typ := BenefitCustomMetadataTypeNumber
+
+	return BenefitCustomMetadata{
+		Number: &number,
+		Type:   typ,
+	}
+}
+
+func CreateBenefitCustomMetadataBoolean(boolean bool) BenefitCustomMetadata {
+	typ := BenefitCustomMetadataTypeBoolean
+
+	return BenefitCustomMetadata{
+		Boolean: &boolean,
+		Type:    typ,
+	}
+}
+
+func (u *BenefitCustomMetadata) UnmarshalJSON(data []byte) error {
+
+	var str string = ""
+	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
+		u.Str = &str
+		u.Type = BenefitCustomMetadataTypeStr
+		return nil
+	}
+
+	var integer int64 = int64(0)
+	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
+		u.Integer = &integer
+		u.Type = BenefitCustomMetadataTypeInteger
+		return nil
+	}
+
+	var number float64 = float64(0)
+	if err := utils.UnmarshalJSON(data, &number, "", true, true); err == nil {
+		u.Number = &number
+		u.Type = BenefitCustomMetadataTypeNumber
+		return nil
+	}
+
+	var boolean bool = false
+	if err := utils.UnmarshalJSON(data, &boolean, "", true, true); err == nil {
+		u.Boolean = &boolean
+		u.Type = BenefitCustomMetadataTypeBoolean
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for BenefitCustomMetadata", string(data))
+}
+
+func (u BenefitCustomMetadata) MarshalJSON() ([]byte, error) {
+	if u.Str != nil {
+		return utils.MarshalJSON(u.Str, "", true)
+	}
+
+	if u.Integer != nil {
+		return utils.MarshalJSON(u.Integer, "", true)
+	}
+
+	if u.Number != nil {
+		return utils.MarshalJSON(u.Number, "", true)
+	}
+
+	if u.Boolean != nil {
+		return utils.MarshalJSON(u.Boolean, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type BenefitCustomMetadata: all fields are null")
+}
 
 // BenefitCustom - A benefit of type `custom`.
 //
 // Use it to grant any kind of benefit that doesn't fit in the other types.
 type BenefitCustom struct {
+	// The ID of the benefit.
+	ID string `json:"id"`
 	// Creation timestamp of the object.
 	CreatedAt time.Time `json:"created_at"`
 	// Last modification timestamp of the object.
-	ModifiedAt *time.Time `json:"modified_at"`
-	// The ID of the benefit.
-	ID    string `json:"id"`
-	type_ string `const:"custom" json:"type"`
+	ModifiedAt *time.Time                       `json:"modified_at"`
+	Metadata   map[string]BenefitCustomMetadata `json:"metadata"`
+	type_      string                           `const:"custom" json:"type"`
 	// The description of the benefit.
 	Description string `json:"description"`
 	// Whether the benefit is selectable when creating a product.
@@ -43,6 +153,13 @@ func (b *BenefitCustom) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (o *BenefitCustom) GetID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ID
+}
+
 func (o *BenefitCustom) GetCreatedAt() time.Time {
 	if o == nil {
 		return time.Time{}
@@ -57,11 +174,11 @@ func (o *BenefitCustom) GetModifiedAt() *time.Time {
 	return o.ModifiedAt
 }
 
-func (o *BenefitCustom) GetID() string {
+func (o *BenefitCustom) GetMetadata() map[string]BenefitCustomMetadata {
 	if o == nil {
-		return ""
+		return map[string]BenefitCustomMetadata{}
 	}
-	return o.ID
+	return o.Metadata
 }
 
 func (o *BenefitCustom) GetType() string {

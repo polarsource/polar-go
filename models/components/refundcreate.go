@@ -13,13 +13,15 @@ type RefundCreateMetadataType string
 const (
 	RefundCreateMetadataTypeStr     RefundCreateMetadataType = "str"
 	RefundCreateMetadataTypeInteger RefundCreateMetadataType = "integer"
+	RefundCreateMetadataTypeNumber  RefundCreateMetadataType = "number"
 	RefundCreateMetadataTypeBoolean RefundCreateMetadataType = "boolean"
 )
 
 type RefundCreateMetadata struct {
-	Str     *string `queryParam:"inline"`
-	Integer *int64  `queryParam:"inline"`
-	Boolean *bool   `queryParam:"inline"`
+	Str     *string  `queryParam:"inline"`
+	Integer *int64   `queryParam:"inline"`
+	Number  *float64 `queryParam:"inline"`
+	Boolean *bool    `queryParam:"inline"`
 
 	Type RefundCreateMetadataType
 }
@@ -39,6 +41,15 @@ func CreateRefundCreateMetadataInteger(integer int64) RefundCreateMetadata {
 	return RefundCreateMetadata{
 		Integer: &integer,
 		Type:    typ,
+	}
+}
+
+func CreateRefundCreateMetadataNumber(number float64) RefundCreateMetadata {
+	typ := RefundCreateMetadataTypeNumber
+
+	return RefundCreateMetadata{
+		Number: &number,
+		Type:   typ,
 	}
 }
 
@@ -67,6 +78,13 @@ func (u *RefundCreateMetadata) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
+	var number float64 = float64(0)
+	if err := utils.UnmarshalJSON(data, &number, "", true, true); err == nil {
+		u.Number = &number
+		u.Type = RefundCreateMetadataTypeNumber
+		return nil
+	}
+
 	var boolean bool = false
 	if err := utils.UnmarshalJSON(data, &boolean, "", true, true); err == nil {
 		u.Boolean = &boolean
@@ -86,6 +104,10 @@ func (u RefundCreateMetadata) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.Integer, "", true)
 	}
 
+	if u.Number != nil {
+		return utils.MarshalJSON(u.Number, "", true)
+	}
+
 	if u.Boolean != nil {
 		return utils.MarshalJSON(u.Boolean, "", true)
 	}
@@ -101,6 +123,7 @@ type RefundCreate struct {
 	//
 	// * A string with a maximum length of **500 characters**
 	// * An integer
+	// * A floating-point number
 	// * A boolean
 	//
 	// You can store up to **50 key-value pairs**.

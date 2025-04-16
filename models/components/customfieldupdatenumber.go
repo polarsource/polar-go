@@ -13,13 +13,15 @@ type CustomFieldUpdateNumberMetadataType string
 const (
 	CustomFieldUpdateNumberMetadataTypeStr     CustomFieldUpdateNumberMetadataType = "str"
 	CustomFieldUpdateNumberMetadataTypeInteger CustomFieldUpdateNumberMetadataType = "integer"
+	CustomFieldUpdateNumberMetadataTypeNumber  CustomFieldUpdateNumberMetadataType = "number"
 	CustomFieldUpdateNumberMetadataTypeBoolean CustomFieldUpdateNumberMetadataType = "boolean"
 )
 
 type CustomFieldUpdateNumberMetadata struct {
-	Str     *string `queryParam:"inline"`
-	Integer *int64  `queryParam:"inline"`
-	Boolean *bool   `queryParam:"inline"`
+	Str     *string  `queryParam:"inline"`
+	Integer *int64   `queryParam:"inline"`
+	Number  *float64 `queryParam:"inline"`
+	Boolean *bool    `queryParam:"inline"`
 
 	Type CustomFieldUpdateNumberMetadataType
 }
@@ -39,6 +41,15 @@ func CreateCustomFieldUpdateNumberMetadataInteger(integer int64) CustomFieldUpda
 	return CustomFieldUpdateNumberMetadata{
 		Integer: &integer,
 		Type:    typ,
+	}
+}
+
+func CreateCustomFieldUpdateNumberMetadataNumber(number float64) CustomFieldUpdateNumberMetadata {
+	typ := CustomFieldUpdateNumberMetadataTypeNumber
+
+	return CustomFieldUpdateNumberMetadata{
+		Number: &number,
+		Type:   typ,
 	}
 }
 
@@ -67,6 +78,13 @@ func (u *CustomFieldUpdateNumberMetadata) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
+	var number float64 = float64(0)
+	if err := utils.UnmarshalJSON(data, &number, "", true, true); err == nil {
+		u.Number = &number
+		u.Type = CustomFieldUpdateNumberMetadataTypeNumber
+		return nil
+	}
+
 	var boolean bool = false
 	if err := utils.UnmarshalJSON(data, &boolean, "", true, true); err == nil {
 		u.Boolean = &boolean
@@ -86,6 +104,10 @@ func (u CustomFieldUpdateNumberMetadata) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.Integer, "", true)
 	}
 
+	if u.Number != nil {
+		return utils.MarshalJSON(u.Number, "", true)
+	}
+
 	if u.Boolean != nil {
 		return utils.MarshalJSON(u.Boolean, "", true)
 	}
@@ -102,6 +124,7 @@ type CustomFieldUpdateNumber struct {
 	//
 	// * A string with a maximum length of **500 characters**
 	// * An integer
+	// * A floating-point number
 	// * A boolean
 	//
 	// You can store up to **50 key-value pairs**.

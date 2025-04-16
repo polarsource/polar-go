@@ -3,10 +3,131 @@
 package components
 
 import (
+	"errors"
+	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
 )
 
+type BenefitLicenseKeysUpdateMetadataType string
+
+const (
+	BenefitLicenseKeysUpdateMetadataTypeStr     BenefitLicenseKeysUpdateMetadataType = "str"
+	BenefitLicenseKeysUpdateMetadataTypeInteger BenefitLicenseKeysUpdateMetadataType = "integer"
+	BenefitLicenseKeysUpdateMetadataTypeNumber  BenefitLicenseKeysUpdateMetadataType = "number"
+	BenefitLicenseKeysUpdateMetadataTypeBoolean BenefitLicenseKeysUpdateMetadataType = "boolean"
+)
+
+type BenefitLicenseKeysUpdateMetadata struct {
+	Str     *string  `queryParam:"inline"`
+	Integer *int64   `queryParam:"inline"`
+	Number  *float64 `queryParam:"inline"`
+	Boolean *bool    `queryParam:"inline"`
+
+	Type BenefitLicenseKeysUpdateMetadataType
+}
+
+func CreateBenefitLicenseKeysUpdateMetadataStr(str string) BenefitLicenseKeysUpdateMetadata {
+	typ := BenefitLicenseKeysUpdateMetadataTypeStr
+
+	return BenefitLicenseKeysUpdateMetadata{
+		Str:  &str,
+		Type: typ,
+	}
+}
+
+func CreateBenefitLicenseKeysUpdateMetadataInteger(integer int64) BenefitLicenseKeysUpdateMetadata {
+	typ := BenefitLicenseKeysUpdateMetadataTypeInteger
+
+	return BenefitLicenseKeysUpdateMetadata{
+		Integer: &integer,
+		Type:    typ,
+	}
+}
+
+func CreateBenefitLicenseKeysUpdateMetadataNumber(number float64) BenefitLicenseKeysUpdateMetadata {
+	typ := BenefitLicenseKeysUpdateMetadataTypeNumber
+
+	return BenefitLicenseKeysUpdateMetadata{
+		Number: &number,
+		Type:   typ,
+	}
+}
+
+func CreateBenefitLicenseKeysUpdateMetadataBoolean(boolean bool) BenefitLicenseKeysUpdateMetadata {
+	typ := BenefitLicenseKeysUpdateMetadataTypeBoolean
+
+	return BenefitLicenseKeysUpdateMetadata{
+		Boolean: &boolean,
+		Type:    typ,
+	}
+}
+
+func (u *BenefitLicenseKeysUpdateMetadata) UnmarshalJSON(data []byte) error {
+
+	var str string = ""
+	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
+		u.Str = &str
+		u.Type = BenefitLicenseKeysUpdateMetadataTypeStr
+		return nil
+	}
+
+	var integer int64 = int64(0)
+	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
+		u.Integer = &integer
+		u.Type = BenefitLicenseKeysUpdateMetadataTypeInteger
+		return nil
+	}
+
+	var number float64 = float64(0)
+	if err := utils.UnmarshalJSON(data, &number, "", true, true); err == nil {
+		u.Number = &number
+		u.Type = BenefitLicenseKeysUpdateMetadataTypeNumber
+		return nil
+	}
+
+	var boolean bool = false
+	if err := utils.UnmarshalJSON(data, &boolean, "", true, true); err == nil {
+		u.Boolean = &boolean
+		u.Type = BenefitLicenseKeysUpdateMetadataTypeBoolean
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for BenefitLicenseKeysUpdateMetadata", string(data))
+}
+
+func (u BenefitLicenseKeysUpdateMetadata) MarshalJSON() ([]byte, error) {
+	if u.Str != nil {
+		return utils.MarshalJSON(u.Str, "", true)
+	}
+
+	if u.Integer != nil {
+		return utils.MarshalJSON(u.Integer, "", true)
+	}
+
+	if u.Number != nil {
+		return utils.MarshalJSON(u.Number, "", true)
+	}
+
+	if u.Boolean != nil {
+		return utils.MarshalJSON(u.Boolean, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type BenefitLicenseKeysUpdateMetadata: all fields are null")
+}
+
 type BenefitLicenseKeysUpdate struct {
+	// Key-value object allowing you to store additional information.
+	//
+	// The key must be a string with a maximum length of **40 characters**.
+	// The value must be either:
+	//
+	// * A string with a maximum length of **500 characters**
+	// * An integer
+	// * A floating-point number
+	// * A boolean
+	//
+	// You can store up to **50 key-value pairs**.
+	Metadata map[string]BenefitLicenseKeysUpdateMetadata `json:"metadata,omitempty"`
 	// The description of the benefit. Will be displayed on products having this benefit.
 	Description *string                             `json:"description,omitempty"`
 	type_       string                              `const:"license_keys" json:"type"`
@@ -22,6 +143,13 @@ func (b *BenefitLicenseKeysUpdate) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
+}
+
+func (o *BenefitLicenseKeysUpdate) GetMetadata() map[string]BenefitLicenseKeysUpdateMetadata {
+	if o == nil {
+		return nil
+	}
+	return o.Metadata
 }
 
 func (o *BenefitLicenseKeysUpdate) GetDescription() *string {

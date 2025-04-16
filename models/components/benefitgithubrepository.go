@@ -3,21 +3,131 @@
 package components
 
 import (
+	"errors"
+	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
 	"time"
 )
+
+type BenefitGitHubRepositoryMetadataType string
+
+const (
+	BenefitGitHubRepositoryMetadataTypeStr     BenefitGitHubRepositoryMetadataType = "str"
+	BenefitGitHubRepositoryMetadataTypeInteger BenefitGitHubRepositoryMetadataType = "integer"
+	BenefitGitHubRepositoryMetadataTypeNumber  BenefitGitHubRepositoryMetadataType = "number"
+	BenefitGitHubRepositoryMetadataTypeBoolean BenefitGitHubRepositoryMetadataType = "boolean"
+)
+
+type BenefitGitHubRepositoryMetadata struct {
+	Str     *string  `queryParam:"inline"`
+	Integer *int64   `queryParam:"inline"`
+	Number  *float64 `queryParam:"inline"`
+	Boolean *bool    `queryParam:"inline"`
+
+	Type BenefitGitHubRepositoryMetadataType
+}
+
+func CreateBenefitGitHubRepositoryMetadataStr(str string) BenefitGitHubRepositoryMetadata {
+	typ := BenefitGitHubRepositoryMetadataTypeStr
+
+	return BenefitGitHubRepositoryMetadata{
+		Str:  &str,
+		Type: typ,
+	}
+}
+
+func CreateBenefitGitHubRepositoryMetadataInteger(integer int64) BenefitGitHubRepositoryMetadata {
+	typ := BenefitGitHubRepositoryMetadataTypeInteger
+
+	return BenefitGitHubRepositoryMetadata{
+		Integer: &integer,
+		Type:    typ,
+	}
+}
+
+func CreateBenefitGitHubRepositoryMetadataNumber(number float64) BenefitGitHubRepositoryMetadata {
+	typ := BenefitGitHubRepositoryMetadataTypeNumber
+
+	return BenefitGitHubRepositoryMetadata{
+		Number: &number,
+		Type:   typ,
+	}
+}
+
+func CreateBenefitGitHubRepositoryMetadataBoolean(boolean bool) BenefitGitHubRepositoryMetadata {
+	typ := BenefitGitHubRepositoryMetadataTypeBoolean
+
+	return BenefitGitHubRepositoryMetadata{
+		Boolean: &boolean,
+		Type:    typ,
+	}
+}
+
+func (u *BenefitGitHubRepositoryMetadata) UnmarshalJSON(data []byte) error {
+
+	var str string = ""
+	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
+		u.Str = &str
+		u.Type = BenefitGitHubRepositoryMetadataTypeStr
+		return nil
+	}
+
+	var integer int64 = int64(0)
+	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
+		u.Integer = &integer
+		u.Type = BenefitGitHubRepositoryMetadataTypeInteger
+		return nil
+	}
+
+	var number float64 = float64(0)
+	if err := utils.UnmarshalJSON(data, &number, "", true, true); err == nil {
+		u.Number = &number
+		u.Type = BenefitGitHubRepositoryMetadataTypeNumber
+		return nil
+	}
+
+	var boolean bool = false
+	if err := utils.UnmarshalJSON(data, &boolean, "", true, true); err == nil {
+		u.Boolean = &boolean
+		u.Type = BenefitGitHubRepositoryMetadataTypeBoolean
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for BenefitGitHubRepositoryMetadata", string(data))
+}
+
+func (u BenefitGitHubRepositoryMetadata) MarshalJSON() ([]byte, error) {
+	if u.Str != nil {
+		return utils.MarshalJSON(u.Str, "", true)
+	}
+
+	if u.Integer != nil {
+		return utils.MarshalJSON(u.Integer, "", true)
+	}
+
+	if u.Number != nil {
+		return utils.MarshalJSON(u.Number, "", true)
+	}
+
+	if u.Boolean != nil {
+		return utils.MarshalJSON(u.Boolean, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type BenefitGitHubRepositoryMetadata: all fields are null")
+}
 
 // BenefitGitHubRepository - A benefit of type `github_repository`.
 //
 // Use it to automatically invite your backers to a private GitHub repository.
 type BenefitGitHubRepository struct {
+	// The ID of the benefit.
+	ID string `json:"id"`
 	// Creation timestamp of the object.
 	CreatedAt time.Time `json:"created_at"`
 	// Last modification timestamp of the object.
-	ModifiedAt *time.Time `json:"modified_at"`
-	// The ID of the benefit.
-	ID    string `json:"id"`
-	type_ string `const:"github_repository" json:"type"`
+	ModifiedAt *time.Time                                 `json:"modified_at"`
+	Metadata   map[string]BenefitGitHubRepositoryMetadata `json:"metadata"`
+	type_      string                                     `const:"github_repository" json:"type"`
 	// The description of the benefit.
 	Description string `json:"description"`
 	// Whether the benefit is selectable when creating a product.
@@ -41,6 +151,13 @@ func (b *BenefitGitHubRepository) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (o *BenefitGitHubRepository) GetID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ID
+}
+
 func (o *BenefitGitHubRepository) GetCreatedAt() time.Time {
 	if o == nil {
 		return time.Time{}
@@ -55,11 +172,11 @@ func (o *BenefitGitHubRepository) GetModifiedAt() *time.Time {
 	return o.ModifiedAt
 }
 
-func (o *BenefitGitHubRepository) GetID() string {
+func (o *BenefitGitHubRepository) GetMetadata() map[string]BenefitGitHubRepositoryMetadata {
 	if o == nil {
-		return ""
+		return map[string]BenefitGitHubRepositoryMetadata{}
 	}
-	return o.ID
+	return o.Metadata
 }
 
 func (o *BenefitGitHubRepository) GetType() string {

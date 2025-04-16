@@ -18,6 +18,12 @@ orderSubscriptionMetadata := components.CreateOrderSubscriptionMetadataInteger(i
 ### 
 
 ```go
+orderSubscriptionMetadata := components.CreateOrderSubscriptionMetadataNumber(float64{/* values here */})
+```
+
+### 
+
+```go
 orderSubscriptionMetadata := components.CreateOrderSubscriptionMetadataBoolean(bool{/* values here */})
 ```
 

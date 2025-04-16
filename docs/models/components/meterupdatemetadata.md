@@ -18,6 +18,12 @@ meterUpdateMetadata := components.CreateMeterUpdateMetadataInteger(int64{/* valu
 ### 
 
 ```go
+meterUpdateMetadata := components.CreateMeterUpdateMetadataNumber(float64{/* values here */})
+```
+
+### 
+
+```go
 meterUpdateMetadata := components.CreateMeterUpdateMetadataBoolean(bool{/* values here */})
 ```
 

@@ -14,13 +14,15 @@ type OrderCustomerMetadataType string
 const (
 	OrderCustomerMetadataTypeStr     OrderCustomerMetadataType = "str"
 	OrderCustomerMetadataTypeInteger OrderCustomerMetadataType = "integer"
+	OrderCustomerMetadataTypeNumber  OrderCustomerMetadataType = "number"
 	OrderCustomerMetadataTypeBoolean OrderCustomerMetadataType = "boolean"
 )
 
 type OrderCustomerMetadata struct {
-	Str     *string `queryParam:"inline"`
-	Integer *int64  `queryParam:"inline"`
-	Boolean *bool   `queryParam:"inline"`
+	Str     *string  `queryParam:"inline"`
+	Integer *int64   `queryParam:"inline"`
+	Number  *float64 `queryParam:"inline"`
+	Boolean *bool    `queryParam:"inline"`
 
 	Type OrderCustomerMetadataType
 }
@@ -40,6 +42,15 @@ func CreateOrderCustomerMetadataInteger(integer int64) OrderCustomerMetadata {
 	return OrderCustomerMetadata{
 		Integer: &integer,
 		Type:    typ,
+	}
+}
+
+func CreateOrderCustomerMetadataNumber(number float64) OrderCustomerMetadata {
+	typ := OrderCustomerMetadataTypeNumber
+
+	return OrderCustomerMetadata{
+		Number: &number,
+		Type:   typ,
 	}
 }
 
@@ -68,6 +79,13 @@ func (u *OrderCustomerMetadata) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
+	var number float64 = float64(0)
+	if err := utils.UnmarshalJSON(data, &number, "", true, true); err == nil {
+		u.Number = &number
+		u.Type = OrderCustomerMetadataTypeNumber
+		return nil
+	}
+
 	var boolean bool = false
 	if err := utils.UnmarshalJSON(data, &boolean, "", true, true); err == nil {
 		u.Boolean = &boolean
@@ -85,6 +103,10 @@ func (u OrderCustomerMetadata) MarshalJSON() ([]byte, error) {
 
 	if u.Integer != nil {
 		return utils.MarshalJSON(u.Integer, "", true)
+	}
+
+	if u.Number != nil {
+		return utils.MarshalJSON(u.Number, "", true)
 	}
 
 	if u.Boolean != nil {

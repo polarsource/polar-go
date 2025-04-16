@@ -14,13 +14,15 @@ type EventCreateCustomerMetadataType string
 const (
 	EventCreateCustomerMetadataTypeStr     EventCreateCustomerMetadataType = "str"
 	EventCreateCustomerMetadataTypeInteger EventCreateCustomerMetadataType = "integer"
+	EventCreateCustomerMetadataTypeNumber  EventCreateCustomerMetadataType = "number"
 	EventCreateCustomerMetadataTypeBoolean EventCreateCustomerMetadataType = "boolean"
 )
 
 type EventCreateCustomerMetadata struct {
-	Str     *string `queryParam:"inline"`
-	Integer *int64  `queryParam:"inline"`
-	Boolean *bool   `queryParam:"inline"`
+	Str     *string  `queryParam:"inline"`
+	Integer *int64   `queryParam:"inline"`
+	Number  *float64 `queryParam:"inline"`
+	Boolean *bool    `queryParam:"inline"`
 
 	Type EventCreateCustomerMetadataType
 }
@@ -40,6 +42,15 @@ func CreateEventCreateCustomerMetadataInteger(integer int64) EventCreateCustomer
 	return EventCreateCustomerMetadata{
 		Integer: &integer,
 		Type:    typ,
+	}
+}
+
+func CreateEventCreateCustomerMetadataNumber(number float64) EventCreateCustomerMetadata {
+	typ := EventCreateCustomerMetadataTypeNumber
+
+	return EventCreateCustomerMetadata{
+		Number: &number,
+		Type:   typ,
 	}
 }
 
@@ -68,6 +79,13 @@ func (u *EventCreateCustomerMetadata) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
+	var number float64 = float64(0)
+	if err := utils.UnmarshalJSON(data, &number, "", true, true); err == nil {
+		u.Number = &number
+		u.Type = EventCreateCustomerMetadataTypeNumber
+		return nil
+	}
+
 	var boolean bool = false
 	if err := utils.UnmarshalJSON(data, &boolean, "", true, true); err == nil {
 		u.Boolean = &boolean
@@ -87,6 +105,10 @@ func (u EventCreateCustomerMetadata) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.Integer, "", true)
 	}
 
+	if u.Number != nil {
+		return utils.MarshalJSON(u.Number, "", true)
+	}
+
 	if u.Boolean != nil {
 		return utils.MarshalJSON(u.Boolean, "", true)
 	}
@@ -102,6 +124,7 @@ type EventCreateCustomer struct {
 	//
 	// * A string with a maximum length of **500 characters**
 	// * An integer
+	// * A floating-point number
 	// * A boolean
 	//
 	// You can store up to **50 key-value pairs**.

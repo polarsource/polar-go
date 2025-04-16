@@ -3,10 +3,131 @@
 package components
 
 import (
+	"errors"
+	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
 )
 
+type BenefitCustomUpdateMetadataType string
+
+const (
+	BenefitCustomUpdateMetadataTypeStr     BenefitCustomUpdateMetadataType = "str"
+	BenefitCustomUpdateMetadataTypeInteger BenefitCustomUpdateMetadataType = "integer"
+	BenefitCustomUpdateMetadataTypeNumber  BenefitCustomUpdateMetadataType = "number"
+	BenefitCustomUpdateMetadataTypeBoolean BenefitCustomUpdateMetadataType = "boolean"
+)
+
+type BenefitCustomUpdateMetadata struct {
+	Str     *string  `queryParam:"inline"`
+	Integer *int64   `queryParam:"inline"`
+	Number  *float64 `queryParam:"inline"`
+	Boolean *bool    `queryParam:"inline"`
+
+	Type BenefitCustomUpdateMetadataType
+}
+
+func CreateBenefitCustomUpdateMetadataStr(str string) BenefitCustomUpdateMetadata {
+	typ := BenefitCustomUpdateMetadataTypeStr
+
+	return BenefitCustomUpdateMetadata{
+		Str:  &str,
+		Type: typ,
+	}
+}
+
+func CreateBenefitCustomUpdateMetadataInteger(integer int64) BenefitCustomUpdateMetadata {
+	typ := BenefitCustomUpdateMetadataTypeInteger
+
+	return BenefitCustomUpdateMetadata{
+		Integer: &integer,
+		Type:    typ,
+	}
+}
+
+func CreateBenefitCustomUpdateMetadataNumber(number float64) BenefitCustomUpdateMetadata {
+	typ := BenefitCustomUpdateMetadataTypeNumber
+
+	return BenefitCustomUpdateMetadata{
+		Number: &number,
+		Type:   typ,
+	}
+}
+
+func CreateBenefitCustomUpdateMetadataBoolean(boolean bool) BenefitCustomUpdateMetadata {
+	typ := BenefitCustomUpdateMetadataTypeBoolean
+
+	return BenefitCustomUpdateMetadata{
+		Boolean: &boolean,
+		Type:    typ,
+	}
+}
+
+func (u *BenefitCustomUpdateMetadata) UnmarshalJSON(data []byte) error {
+
+	var str string = ""
+	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
+		u.Str = &str
+		u.Type = BenefitCustomUpdateMetadataTypeStr
+		return nil
+	}
+
+	var integer int64 = int64(0)
+	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
+		u.Integer = &integer
+		u.Type = BenefitCustomUpdateMetadataTypeInteger
+		return nil
+	}
+
+	var number float64 = float64(0)
+	if err := utils.UnmarshalJSON(data, &number, "", true, true); err == nil {
+		u.Number = &number
+		u.Type = BenefitCustomUpdateMetadataTypeNumber
+		return nil
+	}
+
+	var boolean bool = false
+	if err := utils.UnmarshalJSON(data, &boolean, "", true, true); err == nil {
+		u.Boolean = &boolean
+		u.Type = BenefitCustomUpdateMetadataTypeBoolean
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for BenefitCustomUpdateMetadata", string(data))
+}
+
+func (u BenefitCustomUpdateMetadata) MarshalJSON() ([]byte, error) {
+	if u.Str != nil {
+		return utils.MarshalJSON(u.Str, "", true)
+	}
+
+	if u.Integer != nil {
+		return utils.MarshalJSON(u.Integer, "", true)
+	}
+
+	if u.Number != nil {
+		return utils.MarshalJSON(u.Number, "", true)
+	}
+
+	if u.Boolean != nil {
+		return utils.MarshalJSON(u.Boolean, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type BenefitCustomUpdateMetadata: all fields are null")
+}
+
 type BenefitCustomUpdate struct {
+	// Key-value object allowing you to store additional information.
+	//
+	// The key must be a string with a maximum length of **40 characters**.
+	// The value must be either:
+	//
+	// * A string with a maximum length of **500 characters**
+	// * An integer
+	// * A floating-point number
+	// * A boolean
+	//
+	// You can store up to **50 key-value pairs**.
+	Metadata map[string]BenefitCustomUpdateMetadata `json:"metadata,omitempty"`
 	// The description of the benefit. Will be displayed on products having this benefit.
 	Description *string                  `json:"description,omitempty"`
 	type_       string                   `const:"custom" json:"type"`
@@ -22,6 +143,13 @@ func (b *BenefitCustomUpdate) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
+}
+
+func (o *BenefitCustomUpdate) GetMetadata() map[string]BenefitCustomUpdateMetadata {
+	if o == nil {
+		return nil
+	}
+	return o.Metadata
 }
 
 func (o *BenefitCustomUpdate) GetDescription() *string {

@@ -14,13 +14,15 @@ type CheckoutProductsCreateMetadataType string
 const (
 	CheckoutProductsCreateMetadataTypeStr     CheckoutProductsCreateMetadataType = "str"
 	CheckoutProductsCreateMetadataTypeInteger CheckoutProductsCreateMetadataType = "integer"
+	CheckoutProductsCreateMetadataTypeNumber  CheckoutProductsCreateMetadataType = "number"
 	CheckoutProductsCreateMetadataTypeBoolean CheckoutProductsCreateMetadataType = "boolean"
 )
 
 type CheckoutProductsCreateMetadata struct {
-	Str     *string `queryParam:"inline"`
-	Integer *int64  `queryParam:"inline"`
-	Boolean *bool   `queryParam:"inline"`
+	Str     *string  `queryParam:"inline"`
+	Integer *int64   `queryParam:"inline"`
+	Number  *float64 `queryParam:"inline"`
+	Boolean *bool    `queryParam:"inline"`
 
 	Type CheckoutProductsCreateMetadataType
 }
@@ -40,6 +42,15 @@ func CreateCheckoutProductsCreateMetadataInteger(integer int64) CheckoutProducts
 	return CheckoutProductsCreateMetadata{
 		Integer: &integer,
 		Type:    typ,
+	}
+}
+
+func CreateCheckoutProductsCreateMetadataNumber(number float64) CheckoutProductsCreateMetadata {
+	typ := CheckoutProductsCreateMetadataTypeNumber
+
+	return CheckoutProductsCreateMetadata{
+		Number: &number,
+		Type:   typ,
 	}
 }
 
@@ -68,6 +79,13 @@ func (u *CheckoutProductsCreateMetadata) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
+	var number float64 = float64(0)
+	if err := utils.UnmarshalJSON(data, &number, "", true, true); err == nil {
+		u.Number = &number
+		u.Type = CheckoutProductsCreateMetadataTypeNumber
+		return nil
+	}
+
 	var boolean bool = false
 	if err := utils.UnmarshalJSON(data, &boolean, "", true, true); err == nil {
 		u.Boolean = &boolean
@@ -85,6 +103,10 @@ func (u CheckoutProductsCreateMetadata) MarshalJSON() ([]byte, error) {
 
 	if u.Integer != nil {
 		return utils.MarshalJSON(u.Integer, "", true)
+	}
+
+	if u.Number != nil {
+		return utils.MarshalJSON(u.Number, "", true)
 	}
 
 	if u.Boolean != nil {
@@ -206,13 +228,15 @@ type CheckoutProductsCreateCustomerMetadataType string
 const (
 	CheckoutProductsCreateCustomerMetadataTypeStr     CheckoutProductsCreateCustomerMetadataType = "str"
 	CheckoutProductsCreateCustomerMetadataTypeInteger CheckoutProductsCreateCustomerMetadataType = "integer"
+	CheckoutProductsCreateCustomerMetadataTypeNumber  CheckoutProductsCreateCustomerMetadataType = "number"
 	CheckoutProductsCreateCustomerMetadataTypeBoolean CheckoutProductsCreateCustomerMetadataType = "boolean"
 )
 
 type CheckoutProductsCreateCustomerMetadata struct {
-	Str     *string `queryParam:"inline"`
-	Integer *int64  `queryParam:"inline"`
-	Boolean *bool   `queryParam:"inline"`
+	Str     *string  `queryParam:"inline"`
+	Integer *int64   `queryParam:"inline"`
+	Number  *float64 `queryParam:"inline"`
+	Boolean *bool    `queryParam:"inline"`
 
 	Type CheckoutProductsCreateCustomerMetadataType
 }
@@ -232,6 +256,15 @@ func CreateCheckoutProductsCreateCustomerMetadataInteger(integer int64) Checkout
 	return CheckoutProductsCreateCustomerMetadata{
 		Integer: &integer,
 		Type:    typ,
+	}
+}
+
+func CreateCheckoutProductsCreateCustomerMetadataNumber(number float64) CheckoutProductsCreateCustomerMetadata {
+	typ := CheckoutProductsCreateCustomerMetadataTypeNumber
+
+	return CheckoutProductsCreateCustomerMetadata{
+		Number: &number,
+		Type:   typ,
 	}
 }
 
@@ -260,6 +293,13 @@ func (u *CheckoutProductsCreateCustomerMetadata) UnmarshalJSON(data []byte) erro
 		return nil
 	}
 
+	var number float64 = float64(0)
+	if err := utils.UnmarshalJSON(data, &number, "", true, true); err == nil {
+		u.Number = &number
+		u.Type = CheckoutProductsCreateCustomerMetadataTypeNumber
+		return nil
+	}
+
 	var boolean bool = false
 	if err := utils.UnmarshalJSON(data, &boolean, "", true, true); err == nil {
 		u.Boolean = &boolean
@@ -277,6 +317,10 @@ func (u CheckoutProductsCreateCustomerMetadata) MarshalJSON() ([]byte, error) {
 
 	if u.Integer != nil {
 		return utils.MarshalJSON(u.Integer, "", true)
+	}
+
+	if u.Number != nil {
+		return utils.MarshalJSON(u.Number, "", true)
 	}
 
 	if u.Boolean != nil {
@@ -299,6 +343,7 @@ type CheckoutProductsCreate struct {
 	//
 	// * A string with a maximum length of **500 characters**
 	// * An integer
+	// * A floating-point number
 	// * A boolean
 	//
 	// You can store up to **50 key-value pairs**.
@@ -326,6 +371,7 @@ type CheckoutProductsCreate struct {
 	//
 	// * A string with a maximum length of **500 characters**
 	// * An integer
+	// * A floating-point number
 	// * A boolean
 	//
 	// You can store up to **50 key-value pairs**.

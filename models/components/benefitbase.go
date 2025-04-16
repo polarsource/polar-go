@@ -3,18 +3,128 @@
 package components
 
 import (
+	"errors"
+	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
 	"time"
 )
 
+type BenefitBaseMetadataType string
+
+const (
+	BenefitBaseMetadataTypeStr     BenefitBaseMetadataType = "str"
+	BenefitBaseMetadataTypeInteger BenefitBaseMetadataType = "integer"
+	BenefitBaseMetadataTypeNumber  BenefitBaseMetadataType = "number"
+	BenefitBaseMetadataTypeBoolean BenefitBaseMetadataType = "boolean"
+)
+
+type BenefitBaseMetadata struct {
+	Str     *string  `queryParam:"inline"`
+	Integer *int64   `queryParam:"inline"`
+	Number  *float64 `queryParam:"inline"`
+	Boolean *bool    `queryParam:"inline"`
+
+	Type BenefitBaseMetadataType
+}
+
+func CreateBenefitBaseMetadataStr(str string) BenefitBaseMetadata {
+	typ := BenefitBaseMetadataTypeStr
+
+	return BenefitBaseMetadata{
+		Str:  &str,
+		Type: typ,
+	}
+}
+
+func CreateBenefitBaseMetadataInteger(integer int64) BenefitBaseMetadata {
+	typ := BenefitBaseMetadataTypeInteger
+
+	return BenefitBaseMetadata{
+		Integer: &integer,
+		Type:    typ,
+	}
+}
+
+func CreateBenefitBaseMetadataNumber(number float64) BenefitBaseMetadata {
+	typ := BenefitBaseMetadataTypeNumber
+
+	return BenefitBaseMetadata{
+		Number: &number,
+		Type:   typ,
+	}
+}
+
+func CreateBenefitBaseMetadataBoolean(boolean bool) BenefitBaseMetadata {
+	typ := BenefitBaseMetadataTypeBoolean
+
+	return BenefitBaseMetadata{
+		Boolean: &boolean,
+		Type:    typ,
+	}
+}
+
+func (u *BenefitBaseMetadata) UnmarshalJSON(data []byte) error {
+
+	var str string = ""
+	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
+		u.Str = &str
+		u.Type = BenefitBaseMetadataTypeStr
+		return nil
+	}
+
+	var integer int64 = int64(0)
+	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
+		u.Integer = &integer
+		u.Type = BenefitBaseMetadataTypeInteger
+		return nil
+	}
+
+	var number float64 = float64(0)
+	if err := utils.UnmarshalJSON(data, &number, "", true, true); err == nil {
+		u.Number = &number
+		u.Type = BenefitBaseMetadataTypeNumber
+		return nil
+	}
+
+	var boolean bool = false
+	if err := utils.UnmarshalJSON(data, &boolean, "", true, true); err == nil {
+		u.Boolean = &boolean
+		u.Type = BenefitBaseMetadataTypeBoolean
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for BenefitBaseMetadata", string(data))
+}
+
+func (u BenefitBaseMetadata) MarshalJSON() ([]byte, error) {
+	if u.Str != nil {
+		return utils.MarshalJSON(u.Str, "", true)
+	}
+
+	if u.Integer != nil {
+		return utils.MarshalJSON(u.Integer, "", true)
+	}
+
+	if u.Number != nil {
+		return utils.MarshalJSON(u.Number, "", true)
+	}
+
+	if u.Boolean != nil {
+		return utils.MarshalJSON(u.Boolean, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type BenefitBaseMetadata: all fields are null")
+}
+
 type BenefitBase struct {
+	// The ID of the benefit.
+	ID string `json:"id"`
 	// Creation timestamp of the object.
 	CreatedAt time.Time `json:"created_at"`
 	// Last modification timestamp of the object.
-	ModifiedAt *time.Time `json:"modified_at"`
-	// The ID of the benefit.
-	ID   string      `json:"id"`
-	Type BenefitType `json:"type"`
+	ModifiedAt *time.Time                     `json:"modified_at"`
+	Metadata   map[string]BenefitBaseMetadata `json:"metadata"`
+	Type       BenefitType                    `json:"type"`
 	// The description of the benefit.
 	Description string `json:"description"`
 	// Whether the benefit is selectable when creating a product.
@@ -36,6 +146,13 @@ func (b *BenefitBase) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (o *BenefitBase) GetID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ID
+}
+
 func (o *BenefitBase) GetCreatedAt() time.Time {
 	if o == nil {
 		return time.Time{}
@@ -50,11 +167,11 @@ func (o *BenefitBase) GetModifiedAt() *time.Time {
 	return o.ModifiedAt
 }
 
-func (o *BenefitBase) GetID() string {
+func (o *BenefitBase) GetMetadata() map[string]BenefitBaseMetadata {
 	if o == nil {
-		return ""
+		return map[string]BenefitBaseMetadata{}
 	}
-	return o.ID
+	return o.Metadata
 }
 
 func (o *BenefitBase) GetType() BenefitType {

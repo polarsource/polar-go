@@ -3,11 +3,132 @@
 package components
 
 import (
+	"errors"
+	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
 )
 
+type BenefitDownloadablesCreateMetadataType string
+
+const (
+	BenefitDownloadablesCreateMetadataTypeStr     BenefitDownloadablesCreateMetadataType = "str"
+	BenefitDownloadablesCreateMetadataTypeInteger BenefitDownloadablesCreateMetadataType = "integer"
+	BenefitDownloadablesCreateMetadataTypeNumber  BenefitDownloadablesCreateMetadataType = "number"
+	BenefitDownloadablesCreateMetadataTypeBoolean BenefitDownloadablesCreateMetadataType = "boolean"
+)
+
+type BenefitDownloadablesCreateMetadata struct {
+	Str     *string  `queryParam:"inline"`
+	Integer *int64   `queryParam:"inline"`
+	Number  *float64 `queryParam:"inline"`
+	Boolean *bool    `queryParam:"inline"`
+
+	Type BenefitDownloadablesCreateMetadataType
+}
+
+func CreateBenefitDownloadablesCreateMetadataStr(str string) BenefitDownloadablesCreateMetadata {
+	typ := BenefitDownloadablesCreateMetadataTypeStr
+
+	return BenefitDownloadablesCreateMetadata{
+		Str:  &str,
+		Type: typ,
+	}
+}
+
+func CreateBenefitDownloadablesCreateMetadataInteger(integer int64) BenefitDownloadablesCreateMetadata {
+	typ := BenefitDownloadablesCreateMetadataTypeInteger
+
+	return BenefitDownloadablesCreateMetadata{
+		Integer: &integer,
+		Type:    typ,
+	}
+}
+
+func CreateBenefitDownloadablesCreateMetadataNumber(number float64) BenefitDownloadablesCreateMetadata {
+	typ := BenefitDownloadablesCreateMetadataTypeNumber
+
+	return BenefitDownloadablesCreateMetadata{
+		Number: &number,
+		Type:   typ,
+	}
+}
+
+func CreateBenefitDownloadablesCreateMetadataBoolean(boolean bool) BenefitDownloadablesCreateMetadata {
+	typ := BenefitDownloadablesCreateMetadataTypeBoolean
+
+	return BenefitDownloadablesCreateMetadata{
+		Boolean: &boolean,
+		Type:    typ,
+	}
+}
+
+func (u *BenefitDownloadablesCreateMetadata) UnmarshalJSON(data []byte) error {
+
+	var str string = ""
+	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
+		u.Str = &str
+		u.Type = BenefitDownloadablesCreateMetadataTypeStr
+		return nil
+	}
+
+	var integer int64 = int64(0)
+	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
+		u.Integer = &integer
+		u.Type = BenefitDownloadablesCreateMetadataTypeInteger
+		return nil
+	}
+
+	var number float64 = float64(0)
+	if err := utils.UnmarshalJSON(data, &number, "", true, true); err == nil {
+		u.Number = &number
+		u.Type = BenefitDownloadablesCreateMetadataTypeNumber
+		return nil
+	}
+
+	var boolean bool = false
+	if err := utils.UnmarshalJSON(data, &boolean, "", true, true); err == nil {
+		u.Boolean = &boolean
+		u.Type = BenefitDownloadablesCreateMetadataTypeBoolean
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for BenefitDownloadablesCreateMetadata", string(data))
+}
+
+func (u BenefitDownloadablesCreateMetadata) MarshalJSON() ([]byte, error) {
+	if u.Str != nil {
+		return utils.MarshalJSON(u.Str, "", true)
+	}
+
+	if u.Integer != nil {
+		return utils.MarshalJSON(u.Integer, "", true)
+	}
+
+	if u.Number != nil {
+		return utils.MarshalJSON(u.Number, "", true)
+	}
+
+	if u.Boolean != nil {
+		return utils.MarshalJSON(u.Boolean, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type BenefitDownloadablesCreateMetadata: all fields are null")
+}
+
 type BenefitDownloadablesCreate struct {
-	type_ string `const:"downloadables" json:"type"`
+	// Key-value object allowing you to store additional information.
+	//
+	// The key must be a string with a maximum length of **40 characters**.
+	// The value must be either:
+	//
+	// * A string with a maximum length of **500 characters**
+	// * An integer
+	// * A floating-point number
+	// * A boolean
+	//
+	// You can store up to **50 key-value pairs**.
+	Metadata map[string]BenefitDownloadablesCreateMetadata `json:"metadata,omitempty"`
+	type_    string                                        `const:"downloadables" json:"type"`
 	// The description of the benefit. Will be displayed on products having this benefit.
 	Description string `json:"description"`
 	// The ID of the organization owning the benefit. **Required unless you use an organization token.**
@@ -24,6 +145,13 @@ func (b *BenefitDownloadablesCreate) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
+}
+
+func (o *BenefitDownloadablesCreate) GetMetadata() map[string]BenefitDownloadablesCreateMetadata {
+	if o == nil {
+		return nil
+	}
+	return o.Metadata
 }
 
 func (o *BenefitDownloadablesCreate) GetType() string {

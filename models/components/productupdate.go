@@ -13,13 +13,15 @@ type ProductUpdateMetadataType string
 const (
 	ProductUpdateMetadataTypeStr     ProductUpdateMetadataType = "str"
 	ProductUpdateMetadataTypeInteger ProductUpdateMetadataType = "integer"
+	ProductUpdateMetadataTypeNumber  ProductUpdateMetadataType = "number"
 	ProductUpdateMetadataTypeBoolean ProductUpdateMetadataType = "boolean"
 )
 
 type ProductUpdateMetadata struct {
-	Str     *string `queryParam:"inline"`
-	Integer *int64  `queryParam:"inline"`
-	Boolean *bool   `queryParam:"inline"`
+	Str     *string  `queryParam:"inline"`
+	Integer *int64   `queryParam:"inline"`
+	Number  *float64 `queryParam:"inline"`
+	Boolean *bool    `queryParam:"inline"`
 
 	Type ProductUpdateMetadataType
 }
@@ -39,6 +41,15 @@ func CreateProductUpdateMetadataInteger(integer int64) ProductUpdateMetadata {
 	return ProductUpdateMetadata{
 		Integer: &integer,
 		Type:    typ,
+	}
+}
+
+func CreateProductUpdateMetadataNumber(number float64) ProductUpdateMetadata {
+	typ := ProductUpdateMetadataTypeNumber
+
+	return ProductUpdateMetadata{
+		Number: &number,
+		Type:   typ,
 	}
 }
 
@@ -67,6 +78,13 @@ func (u *ProductUpdateMetadata) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
+	var number float64 = float64(0)
+	if err := utils.UnmarshalJSON(data, &number, "", true, true); err == nil {
+		u.Number = &number
+		u.Type = ProductUpdateMetadataTypeNumber
+		return nil
+	}
+
 	var boolean bool = false
 	if err := utils.UnmarshalJSON(data, &boolean, "", true, true); err == nil {
 		u.Boolean = &boolean
@@ -84,6 +102,10 @@ func (u ProductUpdateMetadata) MarshalJSON() ([]byte, error) {
 
 	if u.Integer != nil {
 		return utils.MarshalJSON(u.Integer, "", true)
+	}
+
+	if u.Number != nil {
+		return utils.MarshalJSON(u.Number, "", true)
 	}
 
 	if u.Boolean != nil {
@@ -231,6 +253,7 @@ type ProductUpdate struct {
 	//
 	// * A string with a maximum length of **500 characters**
 	// * An integer
+	// * A floating-point number
 	// * A boolean
 	//
 	// You can store up to **50 key-value pairs**.

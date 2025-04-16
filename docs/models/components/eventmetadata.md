@@ -18,6 +18,12 @@ eventMetadata := components.CreateEventMetadataInteger(int64{/* values here */})
 ### 
 
 ```go
+eventMetadata := components.CreateEventMetadataNumber(float64{/* values here */})
+```
+
+### 
+
+```go
 eventMetadata := components.CreateEventMetadataBoolean(bool{/* values here */})
 ```
 

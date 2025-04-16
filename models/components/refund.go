@@ -14,13 +14,15 @@ type RefundMetadataType string
 const (
 	RefundMetadataTypeStr     RefundMetadataType = "str"
 	RefundMetadataTypeInteger RefundMetadataType = "integer"
+	RefundMetadataTypeNumber  RefundMetadataType = "number"
 	RefundMetadataTypeBoolean RefundMetadataType = "boolean"
 )
 
 type RefundMetadata struct {
-	Str     *string `queryParam:"inline"`
-	Integer *int64  `queryParam:"inline"`
-	Boolean *bool   `queryParam:"inline"`
+	Str     *string  `queryParam:"inline"`
+	Integer *int64   `queryParam:"inline"`
+	Number  *float64 `queryParam:"inline"`
+	Boolean *bool    `queryParam:"inline"`
 
 	Type RefundMetadataType
 }
@@ -40,6 +42,15 @@ func CreateRefundMetadataInteger(integer int64) RefundMetadata {
 	return RefundMetadata{
 		Integer: &integer,
 		Type:    typ,
+	}
+}
+
+func CreateRefundMetadataNumber(number float64) RefundMetadata {
+	typ := RefundMetadataTypeNumber
+
+	return RefundMetadata{
+		Number: &number,
+		Type:   typ,
 	}
 }
 
@@ -68,6 +79,13 @@ func (u *RefundMetadata) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
+	var number float64 = float64(0)
+	if err := utils.UnmarshalJSON(data, &number, "", true, true); err == nil {
+		u.Number = &number
+		u.Type = RefundMetadataTypeNumber
+		return nil
+	}
+
 	var boolean bool = false
 	if err := utils.UnmarshalJSON(data, &boolean, "", true, true); err == nil {
 		u.Boolean = &boolean
@@ -85,6 +103,10 @@ func (u RefundMetadata) MarshalJSON() ([]byte, error) {
 
 	if u.Integer != nil {
 		return utils.MarshalJSON(u.Integer, "", true)
+	}
+
+	if u.Number != nil {
+		return utils.MarshalJSON(u.Number, "", true)
 	}
 
 	if u.Boolean != nil {

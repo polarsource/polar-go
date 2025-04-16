@@ -14,13 +14,15 @@ type DiscountPercentageOnceForeverDurationMetadataType string
 const (
 	DiscountPercentageOnceForeverDurationMetadataTypeStr     DiscountPercentageOnceForeverDurationMetadataType = "str"
 	DiscountPercentageOnceForeverDurationMetadataTypeInteger DiscountPercentageOnceForeverDurationMetadataType = "integer"
+	DiscountPercentageOnceForeverDurationMetadataTypeNumber  DiscountPercentageOnceForeverDurationMetadataType = "number"
 	DiscountPercentageOnceForeverDurationMetadataTypeBoolean DiscountPercentageOnceForeverDurationMetadataType = "boolean"
 )
 
 type DiscountPercentageOnceForeverDurationMetadata struct {
-	Str     *string `queryParam:"inline"`
-	Integer *int64  `queryParam:"inline"`
-	Boolean *bool   `queryParam:"inline"`
+	Str     *string  `queryParam:"inline"`
+	Integer *int64   `queryParam:"inline"`
+	Number  *float64 `queryParam:"inline"`
+	Boolean *bool    `queryParam:"inline"`
 
 	Type DiscountPercentageOnceForeverDurationMetadataType
 }
@@ -40,6 +42,15 @@ func CreateDiscountPercentageOnceForeverDurationMetadataInteger(integer int64) D
 	return DiscountPercentageOnceForeverDurationMetadata{
 		Integer: &integer,
 		Type:    typ,
+	}
+}
+
+func CreateDiscountPercentageOnceForeverDurationMetadataNumber(number float64) DiscountPercentageOnceForeverDurationMetadata {
+	typ := DiscountPercentageOnceForeverDurationMetadataTypeNumber
+
+	return DiscountPercentageOnceForeverDurationMetadata{
+		Number: &number,
+		Type:   typ,
 	}
 }
 
@@ -68,6 +79,13 @@ func (u *DiscountPercentageOnceForeverDurationMetadata) UnmarshalJSON(data []byt
 		return nil
 	}
 
+	var number float64 = float64(0)
+	if err := utils.UnmarshalJSON(data, &number, "", true, true); err == nil {
+		u.Number = &number
+		u.Type = DiscountPercentageOnceForeverDurationMetadataTypeNumber
+		return nil
+	}
+
 	var boolean bool = false
 	if err := utils.UnmarshalJSON(data, &boolean, "", true, true); err == nil {
 		u.Boolean = &boolean
@@ -85,6 +103,10 @@ func (u DiscountPercentageOnceForeverDurationMetadata) MarshalJSON() ([]byte, er
 
 	if u.Integer != nil {
 		return utils.MarshalJSON(u.Integer, "", true)
+	}
+
+	if u.Number != nil {
+		return utils.MarshalJSON(u.Number, "", true)
 	}
 
 	if u.Boolean != nil {

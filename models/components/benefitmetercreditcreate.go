@@ -3,12 +3,133 @@
 package components
 
 import (
+	"errors"
+	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
 )
 
+type BenefitMeterCreditCreateMetadataType string
+
+const (
+	BenefitMeterCreditCreateMetadataTypeStr     BenefitMeterCreditCreateMetadataType = "str"
+	BenefitMeterCreditCreateMetadataTypeInteger BenefitMeterCreditCreateMetadataType = "integer"
+	BenefitMeterCreditCreateMetadataTypeNumber  BenefitMeterCreditCreateMetadataType = "number"
+	BenefitMeterCreditCreateMetadataTypeBoolean BenefitMeterCreditCreateMetadataType = "boolean"
+)
+
+type BenefitMeterCreditCreateMetadata struct {
+	Str     *string  `queryParam:"inline"`
+	Integer *int64   `queryParam:"inline"`
+	Number  *float64 `queryParam:"inline"`
+	Boolean *bool    `queryParam:"inline"`
+
+	Type BenefitMeterCreditCreateMetadataType
+}
+
+func CreateBenefitMeterCreditCreateMetadataStr(str string) BenefitMeterCreditCreateMetadata {
+	typ := BenefitMeterCreditCreateMetadataTypeStr
+
+	return BenefitMeterCreditCreateMetadata{
+		Str:  &str,
+		Type: typ,
+	}
+}
+
+func CreateBenefitMeterCreditCreateMetadataInteger(integer int64) BenefitMeterCreditCreateMetadata {
+	typ := BenefitMeterCreditCreateMetadataTypeInteger
+
+	return BenefitMeterCreditCreateMetadata{
+		Integer: &integer,
+		Type:    typ,
+	}
+}
+
+func CreateBenefitMeterCreditCreateMetadataNumber(number float64) BenefitMeterCreditCreateMetadata {
+	typ := BenefitMeterCreditCreateMetadataTypeNumber
+
+	return BenefitMeterCreditCreateMetadata{
+		Number: &number,
+		Type:   typ,
+	}
+}
+
+func CreateBenefitMeterCreditCreateMetadataBoolean(boolean bool) BenefitMeterCreditCreateMetadata {
+	typ := BenefitMeterCreditCreateMetadataTypeBoolean
+
+	return BenefitMeterCreditCreateMetadata{
+		Boolean: &boolean,
+		Type:    typ,
+	}
+}
+
+func (u *BenefitMeterCreditCreateMetadata) UnmarshalJSON(data []byte) error {
+
+	var str string = ""
+	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
+		u.Str = &str
+		u.Type = BenefitMeterCreditCreateMetadataTypeStr
+		return nil
+	}
+
+	var integer int64 = int64(0)
+	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
+		u.Integer = &integer
+		u.Type = BenefitMeterCreditCreateMetadataTypeInteger
+		return nil
+	}
+
+	var number float64 = float64(0)
+	if err := utils.UnmarshalJSON(data, &number, "", true, true); err == nil {
+		u.Number = &number
+		u.Type = BenefitMeterCreditCreateMetadataTypeNumber
+		return nil
+	}
+
+	var boolean bool = false
+	if err := utils.UnmarshalJSON(data, &boolean, "", true, true); err == nil {
+		u.Boolean = &boolean
+		u.Type = BenefitMeterCreditCreateMetadataTypeBoolean
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for BenefitMeterCreditCreateMetadata", string(data))
+}
+
+func (u BenefitMeterCreditCreateMetadata) MarshalJSON() ([]byte, error) {
+	if u.Str != nil {
+		return utils.MarshalJSON(u.Str, "", true)
+	}
+
+	if u.Integer != nil {
+		return utils.MarshalJSON(u.Integer, "", true)
+	}
+
+	if u.Number != nil {
+		return utils.MarshalJSON(u.Number, "", true)
+	}
+
+	if u.Boolean != nil {
+		return utils.MarshalJSON(u.Boolean, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type BenefitMeterCreditCreateMetadata: all fields are null")
+}
+
 // BenefitMeterCreditCreate - Schema to create a benefit of type `meter_unit`.
 type BenefitMeterCreditCreate struct {
-	type_ string `const:"meter_credit" json:"type"`
+	// Key-value object allowing you to store additional information.
+	//
+	// The key must be a string with a maximum length of **40 characters**.
+	// The value must be either:
+	//
+	// * A string with a maximum length of **500 characters**
+	// * An integer
+	// * A floating-point number
+	// * A boolean
+	//
+	// You can store up to **50 key-value pairs**.
+	Metadata map[string]BenefitMeterCreditCreateMetadata `json:"metadata,omitempty"`
+	type_    string                                      `const:"meter_credit" json:"type"`
 	// The description of the benefit. Will be displayed on products having this benefit.
 	Description string `json:"description"`
 	// The ID of the organization owning the benefit. **Required unless you use an organization token.**
@@ -26,6 +147,13 @@ func (b *BenefitMeterCreditCreate) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
+}
+
+func (o *BenefitMeterCreditCreate) GetMetadata() map[string]BenefitMeterCreditCreateMetadata {
+	if o == nil {
+		return nil
+	}
+	return o.Metadata
 }
 
 func (o *BenefitMeterCreditCreate) GetType() string {

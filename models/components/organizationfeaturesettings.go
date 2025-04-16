@@ -9,6 +9,8 @@ import (
 type OrganizationFeatureSettings struct {
 	// If this organization has issue funding enabled
 	IssueFundingEnabled *bool `default:"false" json:"issue_funding_enabled"`
+	// If this organization has usage-based billing enabled
+	UsageBasedBillingEnabled *bool `default:"false" json:"usage_based_billing_enabled"`
 }
 
 func (o OrganizationFeatureSettings) MarshalJSON() ([]byte, error) {
@@ -27,4 +29,11 @@ func (o *OrganizationFeatureSettings) GetIssueFundingEnabled() *bool {
 		return nil
 	}
 	return o.IssueFundingEnabled
+}
+
+func (o *OrganizationFeatureSettings) GetUsageBasedBillingEnabled() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.UsageBasedBillingEnabled
 }

@@ -551,6 +551,7 @@ func (s *Events) ListNames(ctx context.Context, request operations.EventsListNam
 				OrganizationID:     request.OrganizationID,
 				CustomerID:         request.CustomerID,
 				ExternalCustomerID: request.ExternalCustomerID,
+				Source:             request.Source,
 				Query:              request.Query,
 				Page:               &nP,
 				Limit:              request.Limit,

@@ -14,13 +14,15 @@ type MeterCreateMetadataType string
 const (
 	MeterCreateMetadataTypeStr     MeterCreateMetadataType = "str"
 	MeterCreateMetadataTypeInteger MeterCreateMetadataType = "integer"
+	MeterCreateMetadataTypeNumber  MeterCreateMetadataType = "number"
 	MeterCreateMetadataTypeBoolean MeterCreateMetadataType = "boolean"
 )
 
 type MeterCreateMetadata struct {
-	Str     *string `queryParam:"inline"`
-	Integer *int64  `queryParam:"inline"`
-	Boolean *bool   `queryParam:"inline"`
+	Str     *string  `queryParam:"inline"`
+	Integer *int64   `queryParam:"inline"`
+	Number  *float64 `queryParam:"inline"`
+	Boolean *bool    `queryParam:"inline"`
 
 	Type MeterCreateMetadataType
 }
@@ -40,6 +42,15 @@ func CreateMeterCreateMetadataInteger(integer int64) MeterCreateMetadata {
 	return MeterCreateMetadata{
 		Integer: &integer,
 		Type:    typ,
+	}
+}
+
+func CreateMeterCreateMetadataNumber(number float64) MeterCreateMetadata {
+	typ := MeterCreateMetadataTypeNumber
+
+	return MeterCreateMetadata{
+		Number: &number,
+		Type:   typ,
 	}
 }
 
@@ -68,6 +79,13 @@ func (u *MeterCreateMetadata) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
+	var number float64 = float64(0)
+	if err := utils.UnmarshalJSON(data, &number, "", true, true); err == nil {
+		u.Number = &number
+		u.Type = MeterCreateMetadataTypeNumber
+		return nil
+	}
+
 	var boolean bool = false
 	if err := utils.UnmarshalJSON(data, &boolean, "", true, true); err == nil {
 		u.Boolean = &boolean
@@ -85,6 +103,10 @@ func (u MeterCreateMetadata) MarshalJSON() ([]byte, error) {
 
 	if u.Integer != nil {
 		return utils.MarshalJSON(u.Integer, "", true)
+	}
+
+	if u.Number != nil {
+		return utils.MarshalJSON(u.Number, "", true)
 	}
 
 	if u.Boolean != nil {
@@ -251,6 +273,7 @@ type MeterCreate struct {
 	//
 	// * A string with a maximum length of **500 characters**
 	// * An integer
+	// * A floating-point number
 	// * A boolean
 	//
 	// You can store up to **50 key-value pairs**.

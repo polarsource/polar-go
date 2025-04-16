@@ -13,13 +13,15 @@ type CustomFieldUpdateTextMetadataType string
 const (
 	CustomFieldUpdateTextMetadataTypeStr     CustomFieldUpdateTextMetadataType = "str"
 	CustomFieldUpdateTextMetadataTypeInteger CustomFieldUpdateTextMetadataType = "integer"
+	CustomFieldUpdateTextMetadataTypeNumber  CustomFieldUpdateTextMetadataType = "number"
 	CustomFieldUpdateTextMetadataTypeBoolean CustomFieldUpdateTextMetadataType = "boolean"
 )
 
 type CustomFieldUpdateTextMetadata struct {
-	Str     *string `queryParam:"inline"`
-	Integer *int64  `queryParam:"inline"`
-	Boolean *bool   `queryParam:"inline"`
+	Str     *string  `queryParam:"inline"`
+	Integer *int64   `queryParam:"inline"`
+	Number  *float64 `queryParam:"inline"`
+	Boolean *bool    `queryParam:"inline"`
 
 	Type CustomFieldUpdateTextMetadataType
 }
@@ -39,6 +41,15 @@ func CreateCustomFieldUpdateTextMetadataInteger(integer int64) CustomFieldUpdate
 	return CustomFieldUpdateTextMetadata{
 		Integer: &integer,
 		Type:    typ,
+	}
+}
+
+func CreateCustomFieldUpdateTextMetadataNumber(number float64) CustomFieldUpdateTextMetadata {
+	typ := CustomFieldUpdateTextMetadataTypeNumber
+
+	return CustomFieldUpdateTextMetadata{
+		Number: &number,
+		Type:   typ,
 	}
 }
 
@@ -67,6 +78,13 @@ func (u *CustomFieldUpdateTextMetadata) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
+	var number float64 = float64(0)
+	if err := utils.UnmarshalJSON(data, &number, "", true, true); err == nil {
+		u.Number = &number
+		u.Type = CustomFieldUpdateTextMetadataTypeNumber
+		return nil
+	}
+
 	var boolean bool = false
 	if err := utils.UnmarshalJSON(data, &boolean, "", true, true); err == nil {
 		u.Boolean = &boolean
@@ -86,6 +104,10 @@ func (u CustomFieldUpdateTextMetadata) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.Integer, "", true)
 	}
 
+	if u.Number != nil {
+		return utils.MarshalJSON(u.Number, "", true)
+	}
+
 	if u.Boolean != nil {
 		return utils.MarshalJSON(u.Boolean, "", true)
 	}
@@ -102,6 +124,7 @@ type CustomFieldUpdateText struct {
 	//
 	// * A string with a maximum length of **500 characters**
 	// * An integer
+	// * A floating-point number
 	// * A boolean
 	//
 	// You can store up to **50 key-value pairs**.

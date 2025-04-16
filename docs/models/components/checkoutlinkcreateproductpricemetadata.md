@@ -18,6 +18,12 @@ checkoutLinkCreateProductPriceMetadata := components.CreateCheckoutLinkCreatePro
 ### 
 
 ```go
+checkoutLinkCreateProductPriceMetadata := components.CreateCheckoutLinkCreateProductPriceMetadataNumber(float64{/* values here */})
+```
+
+### 
+
+```go
 checkoutLinkCreateProductPriceMetadata := components.CreateCheckoutLinkCreateProductPriceMetadataBoolean(bool{/* values here */})
 ```
 

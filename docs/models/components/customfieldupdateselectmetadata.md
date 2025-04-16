@@ -18,6 +18,12 @@ customFieldUpdateSelectMetadata := components.CreateCustomFieldUpdateSelectMetad
 ### 
 
 ```go
+customFieldUpdateSelectMetadata := components.CreateCustomFieldUpdateSelectMetadataNumber(float64{/* values here */})
+```
+
+### 
+
+```go
 customFieldUpdateSelectMetadata := components.CreateCustomFieldUpdateSelectMetadataBoolean(bool{/* values here */})
 ```
 

@@ -18,6 +18,12 @@ productCreateMetadata := components.CreateProductCreateMetadataInteger(int64{/* 
 ### 
 
 ```go
+productCreateMetadata := components.CreateProductCreateMetadataNumber(float64{/* values here */})
+```
+
+### 
+
+```go
 productCreateMetadata := components.CreateProductCreateMetadataBoolean(bool{/* values here */})
 ```
 

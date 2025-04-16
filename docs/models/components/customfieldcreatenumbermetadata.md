@@ -18,6 +18,12 @@ customFieldCreateNumberMetadata := components.CreateCustomFieldCreateNumberMetad
 ### 
 
 ```go
+customFieldCreateNumberMetadata := components.CreateCustomFieldCreateNumberMetadataNumber(float64{/* values here */})
+```
+
+### 
+
+```go
 customFieldCreateNumberMetadata := components.CreateCustomFieldCreateNumberMetadataBoolean(bool{/* values here */})
 ```
 

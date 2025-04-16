@@ -14,13 +14,15 @@ type CustomFieldDateMetadataType string
 const (
 	CustomFieldDateMetadataTypeStr     CustomFieldDateMetadataType = "str"
 	CustomFieldDateMetadataTypeInteger CustomFieldDateMetadataType = "integer"
+	CustomFieldDateMetadataTypeNumber  CustomFieldDateMetadataType = "number"
 	CustomFieldDateMetadataTypeBoolean CustomFieldDateMetadataType = "boolean"
 )
 
 type CustomFieldDateMetadata struct {
-	Str     *string `queryParam:"inline"`
-	Integer *int64  `queryParam:"inline"`
-	Boolean *bool   `queryParam:"inline"`
+	Str     *string  `queryParam:"inline"`
+	Integer *int64   `queryParam:"inline"`
+	Number  *float64 `queryParam:"inline"`
+	Boolean *bool    `queryParam:"inline"`
 
 	Type CustomFieldDateMetadataType
 }
@@ -40,6 +42,15 @@ func CreateCustomFieldDateMetadataInteger(integer int64) CustomFieldDateMetadata
 	return CustomFieldDateMetadata{
 		Integer: &integer,
 		Type:    typ,
+	}
+}
+
+func CreateCustomFieldDateMetadataNumber(number float64) CustomFieldDateMetadata {
+	typ := CustomFieldDateMetadataTypeNumber
+
+	return CustomFieldDateMetadata{
+		Number: &number,
+		Type:   typ,
 	}
 }
 
@@ -68,6 +79,13 @@ func (u *CustomFieldDateMetadata) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
+	var number float64 = float64(0)
+	if err := utils.UnmarshalJSON(data, &number, "", true, true); err == nil {
+		u.Number = &number
+		u.Type = CustomFieldDateMetadataTypeNumber
+		return nil
+	}
+
 	var boolean bool = false
 	if err := utils.UnmarshalJSON(data, &boolean, "", true, true); err == nil {
 		u.Boolean = &boolean
@@ -85,6 +103,10 @@ func (u CustomFieldDateMetadata) MarshalJSON() ([]byte, error) {
 
 	if u.Integer != nil {
 		return utils.MarshalJSON(u.Integer, "", true)
+	}
+
+	if u.Number != nil {
+		return utils.MarshalJSON(u.Number, "", true)
 	}
 
 	if u.Boolean != nil {

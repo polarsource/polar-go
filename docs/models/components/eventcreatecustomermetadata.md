@@ -18,6 +18,12 @@ eventCreateCustomerMetadata := components.CreateEventCreateCustomerMetadataInteg
 ### 
 
 ```go
+eventCreateCustomerMetadata := components.CreateEventCreateCustomerMetadataNumber(float64{/* values here */})
+```
+
+### 
+
+```go
 eventCreateCustomerMetadata := components.CreateEventCreateCustomerMetadataBoolean(bool{/* values here */})
 ```
 

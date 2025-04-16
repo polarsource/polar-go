@@ -15,13 +15,15 @@ type MeterMetadataType string
 const (
 	MeterMetadataTypeStr     MeterMetadataType = "str"
 	MeterMetadataTypeInteger MeterMetadataType = "integer"
+	MeterMetadataTypeNumber  MeterMetadataType = "number"
 	MeterMetadataTypeBoolean MeterMetadataType = "boolean"
 )
 
 type MeterMetadata struct {
-	Str     *string `queryParam:"inline"`
-	Integer *int64  `queryParam:"inline"`
-	Boolean *bool   `queryParam:"inline"`
+	Str     *string  `queryParam:"inline"`
+	Integer *int64   `queryParam:"inline"`
+	Number  *float64 `queryParam:"inline"`
+	Boolean *bool    `queryParam:"inline"`
 
 	Type MeterMetadataType
 }
@@ -41,6 +43,15 @@ func CreateMeterMetadataInteger(integer int64) MeterMetadata {
 	return MeterMetadata{
 		Integer: &integer,
 		Type:    typ,
+	}
+}
+
+func CreateMeterMetadataNumber(number float64) MeterMetadata {
+	typ := MeterMetadataTypeNumber
+
+	return MeterMetadata{
+		Number: &number,
+		Type:   typ,
 	}
 }
 
@@ -69,6 +80,13 @@ func (u *MeterMetadata) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
+	var number float64 = float64(0)
+	if err := utils.UnmarshalJSON(data, &number, "", true, true); err == nil {
+		u.Number = &number
+		u.Type = MeterMetadataTypeNumber
+		return nil
+	}
+
 	var boolean bool = false
 	if err := utils.UnmarshalJSON(data, &boolean, "", true, true); err == nil {
 		u.Boolean = &boolean
@@ -86,6 +104,10 @@ func (u MeterMetadata) MarshalJSON() ([]byte, error) {
 
 	if u.Integer != nil {
 		return utils.MarshalJSON(u.Integer, "", true)
+	}
+
+	if u.Number != nil {
+		return utils.MarshalJSON(u.Number, "", true)
 	}
 
 	if u.Boolean != nil {

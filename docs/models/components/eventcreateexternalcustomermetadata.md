@@ -18,6 +18,12 @@ eventCreateExternalCustomerMetadata := components.CreateEventCreateExternalCusto
 ### 
 
 ```go
+eventCreateExternalCustomerMetadata := components.CreateEventCreateExternalCustomerMetadataNumber(float64{/* values here */})
+```
+
+### 
+
+```go
 eventCreateExternalCustomerMetadata := components.CreateEventCreateExternalCustomerMetadataBoolean(bool{/* values here */})
 ```
 
