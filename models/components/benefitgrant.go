@@ -159,8 +159,6 @@ type BenefitGrant struct {
 	OrderID *string `json:"order_id"`
 	// The ID of the customer concerned by this grant.
 	CustomerID string `json:"customer_id"`
-	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
-	UserID string `json:"user_id"`
 	// The ID of the benefit concerned by this grant.
 	BenefitID string `json:"benefit_id"`
 	// A customer in an organization.
@@ -247,13 +245,6 @@ func (o *BenefitGrant) GetCustomerID() string {
 		return ""
 	}
 	return o.CustomerID
-}
-
-func (o *BenefitGrant) GetUserID() string {
-	if o == nil {
-		return ""
-	}
-	return o.UserID
 }
 
 func (o *BenefitGrant) GetBenefitID() string {

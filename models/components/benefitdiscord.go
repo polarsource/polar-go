@@ -125,9 +125,8 @@ type BenefitDiscord struct {
 	// Creation timestamp of the object.
 	CreatedAt time.Time `json:"created_at"`
 	// Last modification timestamp of the object.
-	ModifiedAt *time.Time                        `json:"modified_at"`
-	Metadata   map[string]BenefitDiscordMetadata `json:"metadata"`
-	type_      string                            `const:"discord" json:"type"`
+	ModifiedAt *time.Time `json:"modified_at"`
+	type_      string     `const:"discord" json:"type"`
 	// The description of the benefit.
 	Description string `json:"description"`
 	// Whether the benefit is selectable when creating a product.
@@ -135,7 +134,8 @@ type BenefitDiscord struct {
 	// Whether the benefit is deletable.
 	Deletable bool `json:"deletable"`
 	// The ID of the organization owning the benefit.
-	OrganizationID string `json:"organization_id"`
+	OrganizationID string                            `json:"organization_id"`
+	Metadata       map[string]BenefitDiscordMetadata `json:"metadata"`
 	// Properties for a benefit of type `discord`.
 	Properties BenefitDiscordProperties `json:"properties"`
 }
@@ -172,13 +172,6 @@ func (o *BenefitDiscord) GetModifiedAt() *time.Time {
 	return o.ModifiedAt
 }
 
-func (o *BenefitDiscord) GetMetadata() map[string]BenefitDiscordMetadata {
-	if o == nil {
-		return map[string]BenefitDiscordMetadata{}
-	}
-	return o.Metadata
-}
-
 func (o *BenefitDiscord) GetType() string {
 	return "discord"
 }
@@ -209,6 +202,13 @@ func (o *BenefitDiscord) GetOrganizationID() string {
 		return ""
 	}
 	return o.OrganizationID
+}
+
+func (o *BenefitDiscord) GetMetadata() map[string]BenefitDiscordMetadata {
+	if o == nil {
+		return map[string]BenefitDiscordMetadata{}
+	}
+	return o.Metadata
 }
 
 func (o *BenefitDiscord) GetProperties() BenefitDiscordProperties {

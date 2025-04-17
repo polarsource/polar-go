@@ -122,9 +122,8 @@ type BenefitDiscordSubscriber struct {
 	// Creation timestamp of the object.
 	CreatedAt time.Time `json:"created_at"`
 	// Last modification timestamp of the object.
-	ModifiedAt *time.Time                                  `json:"modified_at"`
-	Metadata   map[string]BenefitDiscordSubscriberMetadata `json:"metadata"`
-	type_      string                                      `const:"discord" json:"type"`
+	ModifiedAt *time.Time `json:"modified_at"`
+	type_      string     `const:"discord" json:"type"`
 	// The description of the benefit.
 	Description string `json:"description"`
 	// Whether the benefit is selectable when creating a product.
@@ -132,8 +131,9 @@ type BenefitDiscordSubscriber struct {
 	// Whether the benefit is deletable.
 	Deletable bool `json:"deletable"`
 	// The ID of the organization owning the benefit.
-	OrganizationID string       `json:"organization_id"`
-	Organization   Organization `json:"organization"`
+	OrganizationID string                                      `json:"organization_id"`
+	Metadata       map[string]BenefitDiscordSubscriberMetadata `json:"metadata"`
+	Organization   Organization                                `json:"organization"`
 	// Properties available to subscribers for a benefit of type `discord`.
 	Properties BenefitDiscordSubscriberProperties `json:"properties"`
 }
@@ -170,13 +170,6 @@ func (o *BenefitDiscordSubscriber) GetModifiedAt() *time.Time {
 	return o.ModifiedAt
 }
 
-func (o *BenefitDiscordSubscriber) GetMetadata() map[string]BenefitDiscordSubscriberMetadata {
-	if o == nil {
-		return map[string]BenefitDiscordSubscriberMetadata{}
-	}
-	return o.Metadata
-}
-
 func (o *BenefitDiscordSubscriber) GetType() string {
 	return "discord"
 }
@@ -207,6 +200,13 @@ func (o *BenefitDiscordSubscriber) GetOrganizationID() string {
 		return ""
 	}
 	return o.OrganizationID
+}
+
+func (o *BenefitDiscordSubscriber) GetMetadata() map[string]BenefitDiscordSubscriberMetadata {
+	if o == nil {
+		return map[string]BenefitDiscordSubscriberMetadata{}
+	}
+	return o.Metadata
 }
 
 func (o *BenefitDiscordSubscriber) GetOrganization() Organization {

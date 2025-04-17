@@ -223,72 +223,6 @@ func (u CheckoutLinkDiscount) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type CheckoutLinkDiscount: all fields are null")
 }
 
-type CheckoutLinkProductPriceType string
-
-const (
-	CheckoutLinkProductPriceTypeLegacyRecurringProductPrice CheckoutLinkProductPriceType = "LegacyRecurringProductPrice"
-	CheckoutLinkProductPriceTypeProductPrice                CheckoutLinkProductPriceType = "ProductPrice"
-)
-
-// CheckoutLinkProductPrice
-//
-// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
-type CheckoutLinkProductPrice struct {
-	LegacyRecurringProductPrice *LegacyRecurringProductPrice `queryParam:"inline"`
-	ProductPrice                *ProductPrice                `queryParam:"inline"`
-
-	Type CheckoutLinkProductPriceType
-}
-
-func CreateCheckoutLinkProductPriceLegacyRecurringProductPrice(legacyRecurringProductPrice LegacyRecurringProductPrice) CheckoutLinkProductPrice {
-	typ := CheckoutLinkProductPriceTypeLegacyRecurringProductPrice
-
-	return CheckoutLinkProductPrice{
-		LegacyRecurringProductPrice: &legacyRecurringProductPrice,
-		Type:                        typ,
-	}
-}
-
-func CreateCheckoutLinkProductPriceProductPrice(productPrice ProductPrice) CheckoutLinkProductPrice {
-	typ := CheckoutLinkProductPriceTypeProductPrice
-
-	return CheckoutLinkProductPrice{
-		ProductPrice: &productPrice,
-		Type:         typ,
-	}
-}
-
-func (u *CheckoutLinkProductPrice) UnmarshalJSON(data []byte) error {
-
-	var legacyRecurringProductPrice LegacyRecurringProductPrice = LegacyRecurringProductPrice{}
-	if err := utils.UnmarshalJSON(data, &legacyRecurringProductPrice, "", true, true); err == nil {
-		u.LegacyRecurringProductPrice = &legacyRecurringProductPrice
-		u.Type = CheckoutLinkProductPriceTypeLegacyRecurringProductPrice
-		return nil
-	}
-
-	var productPrice ProductPrice = ProductPrice{}
-	if err := utils.UnmarshalJSON(data, &productPrice, "", true, true); err == nil {
-		u.ProductPrice = &productPrice
-		u.Type = CheckoutLinkProductPriceTypeProductPrice
-		return nil
-	}
-
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for CheckoutLinkProductPrice", string(data))
-}
-
-func (u CheckoutLinkProductPrice) MarshalJSON() ([]byte, error) {
-	if u.LegacyRecurringProductPrice != nil {
-		return utils.MarshalJSON(u.LegacyRecurringProductPrice, "", true)
-	}
-
-	if u.ProductPrice != nil {
-		return utils.MarshalJSON(u.ProductPrice, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type CheckoutLinkProductPrice: all fields are null")
-}
-
 // CheckoutLink - Checkout link data.
 type CheckoutLink struct {
 	// Creation timestamp of the object.
@@ -313,15 +247,7 @@ type CheckoutLink struct {
 	OrganizationID string                `json:"organization_id"`
 	Products       []CheckoutLinkProduct `json:"products"`
 	Discount       *CheckoutLinkDiscount `json:"discount"`
-	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
-	ProductID string `json:"product_id"`
-	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
-	ProductPriceID string `json:"product_price_id"`
-	// Product data for a checkout link.
-	Product CheckoutLinkProduct `json:"product"`
-	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
-	ProductPrice CheckoutLinkProductPrice `json:"product_price"`
-	URL          string                   `json:"url"`
+	URL            string                `json:"url"`
 }
 
 func (c CheckoutLink) MarshalJSON() ([]byte, error) {
@@ -424,34 +350,6 @@ func (o *CheckoutLink) GetDiscount() *CheckoutLinkDiscount {
 		return nil
 	}
 	return o.Discount
-}
-
-func (o *CheckoutLink) GetProductID() string {
-	if o == nil {
-		return ""
-	}
-	return o.ProductID
-}
-
-func (o *CheckoutLink) GetProductPriceID() string {
-	if o == nil {
-		return ""
-	}
-	return o.ProductPriceID
-}
-
-func (o *CheckoutLink) GetProduct() CheckoutLinkProduct {
-	if o == nil {
-		return CheckoutLinkProduct{}
-	}
-	return o.Product
-}
-
-func (o *CheckoutLink) GetProductPrice() CheckoutLinkProductPrice {
-	if o == nil {
-		return CheckoutLinkProductPrice{}
-	}
-	return o.ProductPrice
 }
 
 func (o *CheckoutLink) GetURL() string {

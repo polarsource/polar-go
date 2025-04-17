@@ -125,9 +125,8 @@ type BenefitGitHubRepository struct {
 	// Creation timestamp of the object.
 	CreatedAt time.Time `json:"created_at"`
 	// Last modification timestamp of the object.
-	ModifiedAt *time.Time                                 `json:"modified_at"`
-	Metadata   map[string]BenefitGitHubRepositoryMetadata `json:"metadata"`
-	type_      string                                     `const:"github_repository" json:"type"`
+	ModifiedAt *time.Time `json:"modified_at"`
+	type_      string     `const:"github_repository" json:"type"`
 	// The description of the benefit.
 	Description string `json:"description"`
 	// Whether the benefit is selectable when creating a product.
@@ -135,7 +134,8 @@ type BenefitGitHubRepository struct {
 	// Whether the benefit is deletable.
 	Deletable bool `json:"deletable"`
 	// The ID of the organization owning the benefit.
-	OrganizationID string `json:"organization_id"`
+	OrganizationID string                                     `json:"organization_id"`
+	Metadata       map[string]BenefitGitHubRepositoryMetadata `json:"metadata"`
 	// Properties for a benefit of type `github_repository`.
 	Properties BenefitGitHubRepositoryProperties `json:"properties"`
 }
@@ -172,13 +172,6 @@ func (o *BenefitGitHubRepository) GetModifiedAt() *time.Time {
 	return o.ModifiedAt
 }
 
-func (o *BenefitGitHubRepository) GetMetadata() map[string]BenefitGitHubRepositoryMetadata {
-	if o == nil {
-		return map[string]BenefitGitHubRepositoryMetadata{}
-	}
-	return o.Metadata
-}
-
 func (o *BenefitGitHubRepository) GetType() string {
 	return "github_repository"
 }
@@ -209,6 +202,13 @@ func (o *BenefitGitHubRepository) GetOrganizationID() string {
 		return ""
 	}
 	return o.OrganizationID
+}
+
+func (o *BenefitGitHubRepository) GetMetadata() map[string]BenefitGitHubRepositoryMetadata {
+	if o == nil {
+		return map[string]BenefitGitHubRepositoryMetadata{}
+	}
+	return o.Metadata
 }
 
 func (o *BenefitGitHubRepository) GetProperties() BenefitGitHubRepositoryProperties {

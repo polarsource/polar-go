@@ -43,8 +43,6 @@ type CustomerOrderSubscription struct {
 	CheckoutID                  *string                     `json:"checkout_id"`
 	CustomerCancellationReason  *CustomerCancellationReason `json:"customer_cancellation_reason"`
 	CustomerCancellationComment *string                     `json:"customer_cancellation_comment"`
-	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
-	PriceID string `json:"price_id"`
 }
 
 func (c CustomerOrderSubscription) MarshalJSON() ([]byte, error) {
@@ -196,11 +194,4 @@ func (o *CustomerOrderSubscription) GetCustomerCancellationComment() *string {
 		return nil
 	}
 	return o.CustomerCancellationComment
-}
-
-func (o *CustomerOrderSubscription) GetPriceID() string {
-	if o == nil {
-		return ""
-	}
-	return o.PriceID
 }

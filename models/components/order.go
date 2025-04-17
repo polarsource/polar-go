@@ -223,72 +223,6 @@ func (u OrderCustomFieldData) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type OrderCustomFieldData: all fields are null")
 }
 
-type OrderProductPriceType string
-
-const (
-	OrderProductPriceTypeLegacyRecurringProductPrice OrderProductPriceType = "LegacyRecurringProductPrice"
-	OrderProductPriceTypeProductPrice                OrderProductPriceType = "ProductPrice"
-)
-
-// OrderProductPrice
-//
-// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
-type OrderProductPrice struct {
-	LegacyRecurringProductPrice *LegacyRecurringProductPrice `queryParam:"inline"`
-	ProductPrice                *ProductPrice                `queryParam:"inline"`
-
-	Type OrderProductPriceType
-}
-
-func CreateOrderProductPriceLegacyRecurringProductPrice(legacyRecurringProductPrice LegacyRecurringProductPrice) OrderProductPrice {
-	typ := OrderProductPriceTypeLegacyRecurringProductPrice
-
-	return OrderProductPrice{
-		LegacyRecurringProductPrice: &legacyRecurringProductPrice,
-		Type:                        typ,
-	}
-}
-
-func CreateOrderProductPriceProductPrice(productPrice ProductPrice) OrderProductPrice {
-	typ := OrderProductPriceTypeProductPrice
-
-	return OrderProductPrice{
-		ProductPrice: &productPrice,
-		Type:         typ,
-	}
-}
-
-func (u *OrderProductPrice) UnmarshalJSON(data []byte) error {
-
-	var legacyRecurringProductPrice LegacyRecurringProductPrice = LegacyRecurringProductPrice{}
-	if err := utils.UnmarshalJSON(data, &legacyRecurringProductPrice, "", true, true); err == nil {
-		u.LegacyRecurringProductPrice = &legacyRecurringProductPrice
-		u.Type = OrderProductPriceTypeLegacyRecurringProductPrice
-		return nil
-	}
-
-	var productPrice ProductPrice = ProductPrice{}
-	if err := utils.UnmarshalJSON(data, &productPrice, "", true, true); err == nil {
-		u.ProductPrice = &productPrice
-		u.Type = OrderProductPriceTypeProductPrice
-		return nil
-	}
-
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for OrderProductPrice", string(data))
-}
-
-func (u OrderProductPrice) MarshalJSON() ([]byte, error) {
-	if u.LegacyRecurringProductPrice != nil {
-		return utils.MarshalJSON(u.LegacyRecurringProductPrice, "", true)
-	}
-
-	if u.ProductPrice != nil {
-		return utils.MarshalJSON(u.ProductPrice, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type OrderProductPrice: all fields are null")
-}
-
 type OrderDiscountType string
 
 const (
@@ -432,18 +366,13 @@ type Order struct {
 	BillingAddress    *Address           `json:"billing_address"`
 	CustomerID        string             `json:"customer_id"`
 	ProductID         string             `json:"product_id"`
+	DiscountID        *string            `json:"discount_id"`
+	SubscriptionID    *string            `json:"subscription_id"`
+	CheckoutID        *string            `json:"checkout_id"`
+	Customer          OrderCustomer      `json:"customer"`
 	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
-	ProductPriceID string        `json:"product_price_id"`
-	DiscountID     *string       `json:"discount_id"`
-	SubscriptionID *string       `json:"subscription_id"`
-	CheckoutID     *string       `json:"checkout_id"`
-	Customer       OrderCustomer `json:"customer"`
-	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
-	UserID  string       `json:"user_id"`
-	User    OrderUser    `json:"user"`
-	Product OrderProduct `json:"product"`
-	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
-	ProductPrice OrderProductPrice  `json:"product_price"`
+	UserID       string             `json:"user_id"`
+	Product      OrderProduct       `json:"product"`
 	Discount     *OrderDiscount     `json:"discount"`
 	Subscription *OrderSubscription `json:"subscription"`
 	// Line items composing the order.
@@ -601,13 +530,6 @@ func (o *Order) GetProductID() string {
 	return o.ProductID
 }
 
-func (o *Order) GetProductPriceID() string {
-	if o == nil {
-		return ""
-	}
-	return o.ProductPriceID
-}
-
 func (o *Order) GetDiscountID() *string {
 	if o == nil {
 		return nil
@@ -643,25 +565,11 @@ func (o *Order) GetUserID() string {
 	return o.UserID
 }
 
-func (o *Order) GetUser() OrderUser {
-	if o == nil {
-		return OrderUser{}
-	}
-	return o.User
-}
-
 func (o *Order) GetProduct() OrderProduct {
 	if o == nil {
 		return OrderProduct{}
 	}
 	return o.Product
-}
-
-func (o *Order) GetProductPrice() OrderProductPrice {
-	if o == nil {
-		return OrderProductPrice{}
-	}
-	return o.ProductPrice
 }
 
 func (o *Order) GetDiscount() *OrderDiscount {

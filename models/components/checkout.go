@@ -535,14 +535,12 @@ type Checkout struct {
 	// Name of the customer.
 	CustomerName *string `json:"customer_name"`
 	// Email address of the customer.
-	CustomerEmail            *string           `json:"customer_email"`
-	CustomerIPAddress        *string           `json:"customer_ip_address"`
-	CustomerBillingAddress   *Address          `json:"customer_billing_address"`
-	CustomerTaxID            *string           `json:"customer_tax_id"`
-	PaymentProcessorMetadata map[string]string `json:"payment_processor_metadata"`
-	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
-	SubtotalAmount *int64                      `json:"subtotal_amount"`
-	Metadata       map[string]CheckoutMetadata `json:"metadata"`
+	CustomerEmail            *string                     `json:"customer_email"`
+	CustomerIPAddress        *string                     `json:"customer_ip_address"`
+	CustomerBillingAddress   *Address                    `json:"customer_billing_address"`
+	CustomerTaxID            *string                     `json:"customer_tax_id"`
+	PaymentProcessorMetadata map[string]string           `json:"payment_processor_metadata"`
+	Metadata                 map[string]CheckoutMetadata `json:"metadata"`
 	// ID of the customer in your system. If a matching customer exists on Polar, the resulting order will be linked to this customer. Otherwise, a new customer will be created with this external ID set.
 	CustomerExternalID *string `json:"customer_external_id"`
 	// List of products available to select.
@@ -797,13 +795,6 @@ func (o *Checkout) GetPaymentProcessorMetadata() map[string]string {
 		return map[string]string{}
 	}
 	return o.PaymentProcessorMetadata
-}
-
-func (o *Checkout) GetSubtotalAmount() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.SubtotalAmount
 }
 
 func (o *Checkout) GetMetadata() map[string]CheckoutMetadata {

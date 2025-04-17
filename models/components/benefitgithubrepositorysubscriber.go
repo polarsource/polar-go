@@ -122,9 +122,8 @@ type BenefitGitHubRepositorySubscriber struct {
 	// Creation timestamp of the object.
 	CreatedAt time.Time `json:"created_at"`
 	// Last modification timestamp of the object.
-	ModifiedAt *time.Time                                           `json:"modified_at"`
-	Metadata   map[string]BenefitGitHubRepositorySubscriberMetadata `json:"metadata"`
-	type_      string                                               `const:"github_repository" json:"type"`
+	ModifiedAt *time.Time `json:"modified_at"`
+	type_      string     `const:"github_repository" json:"type"`
 	// The description of the benefit.
 	Description string `json:"description"`
 	// Whether the benefit is selectable when creating a product.
@@ -132,8 +131,9 @@ type BenefitGitHubRepositorySubscriber struct {
 	// Whether the benefit is deletable.
 	Deletable bool `json:"deletable"`
 	// The ID of the organization owning the benefit.
-	OrganizationID string       `json:"organization_id"`
-	Organization   Organization `json:"organization"`
+	OrganizationID string                                               `json:"organization_id"`
+	Metadata       map[string]BenefitGitHubRepositorySubscriberMetadata `json:"metadata"`
+	Organization   Organization                                         `json:"organization"`
 	// Properties available to subscribers for a benefit of type `github_repository`.
 	Properties BenefitGitHubRepositorySubscriberProperties `json:"properties"`
 }
@@ -170,13 +170,6 @@ func (o *BenefitGitHubRepositorySubscriber) GetModifiedAt() *time.Time {
 	return o.ModifiedAt
 }
 
-func (o *BenefitGitHubRepositorySubscriber) GetMetadata() map[string]BenefitGitHubRepositorySubscriberMetadata {
-	if o == nil {
-		return map[string]BenefitGitHubRepositorySubscriberMetadata{}
-	}
-	return o.Metadata
-}
-
 func (o *BenefitGitHubRepositorySubscriber) GetType() string {
 	return "github_repository"
 }
@@ -207,6 +200,13 @@ func (o *BenefitGitHubRepositorySubscriber) GetOrganizationID() string {
 		return ""
 	}
 	return o.OrganizationID
+}
+
+func (o *BenefitGitHubRepositorySubscriber) GetMetadata() map[string]BenefitGitHubRepositorySubscriberMetadata {
+	if o == nil {
+		return map[string]BenefitGitHubRepositorySubscriberMetadata{}
+	}
+	return o.Metadata
 }
 
 func (o *BenefitGitHubRepositorySubscriber) GetOrganization() Organization {

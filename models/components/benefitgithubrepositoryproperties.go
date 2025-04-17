@@ -51,8 +51,6 @@ type BenefitGitHubRepositoryProperties struct {
 	RepositoryName string `json:"repository_name"`
 	// The permission level to grant. Read more about roles and their permissions on [GitHub documentation](https://docs.github.com/en/organizations/managing-user-access-to-your-organizations-repositories/managing-repository-roles/repository-roles-for-an-organization#permissions-for-each-role).
 	Permission Permission `json:"permission"`
-	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
-	RepositoryID *string `json:"repository_id,omitempty"`
 }
 
 func (o *BenefitGitHubRepositoryProperties) GetRepositoryOwner() string {
@@ -74,11 +72,4 @@ func (o *BenefitGitHubRepositoryProperties) GetPermission() Permission {
 		return Permission("")
 	}
 	return o.Permission
-}
-
-func (o *BenefitGitHubRepositoryProperties) GetRepositoryID() *string {
-	if o == nil {
-		return nil
-	}
-	return o.RepositoryID
 }

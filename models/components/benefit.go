@@ -86,6 +86,13 @@ func CreateBenefitBenefitMeterCredit(benefitMeterCredit BenefitMeterCredit) Bene
 
 func (u *Benefit) UnmarshalJSON(data []byte) error {
 
+	var benefitCustom BenefitCustom = BenefitCustom{}
+	if err := utils.UnmarshalJSON(data, &benefitCustom, "", true, true); err == nil {
+		u.BenefitCustom = &benefitCustom
+		u.Type = BenefitUnionTypeBenefitCustom
+		return nil
+	}
+
 	var benefitDiscord BenefitDiscord = BenefitDiscord{}
 	if err := utils.UnmarshalJSON(data, &benefitDiscord, "", true, true); err == nil {
 		u.BenefitDiscord = &benefitDiscord
@@ -118,13 +125,6 @@ func (u *Benefit) UnmarshalJSON(data []byte) error {
 	if err := utils.UnmarshalJSON(data, &benefitMeterCredit, "", true, true); err == nil {
 		u.BenefitMeterCredit = &benefitMeterCredit
 		u.Type = BenefitUnionTypeBenefitMeterCredit
-		return nil
-	}
-
-	var benefitCustom BenefitCustom = BenefitCustom{}
-	if err := utils.UnmarshalJSON(data, &benefitCustom, "", true, true); err == nil {
-		u.BenefitCustom = &benefitCustom
-		u.Type = BenefitUnionTypeBenefitCustom
 		return nil
 	}
 

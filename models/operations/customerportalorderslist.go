@@ -212,69 +212,6 @@ func (u CustomerPortalOrdersListQueryParamProductBillingTypeFilter) MarshalJSON(
 	return nil, errors.New("could not marshal union type CustomerPortalOrdersListQueryParamProductBillingTypeFilter: all fields are null")
 }
 
-type QueryParamProductPriceTypeFilterType string
-
-const (
-	QueryParamProductPriceTypeFilterTypeProductPriceType        QueryParamProductPriceTypeFilterType = "ProductPriceType"
-	QueryParamProductPriceTypeFilterTypeArrayOfProductPriceType QueryParamProductPriceTypeFilterType = "arrayOfProductPriceType"
-)
-
-type QueryParamProductPriceTypeFilter struct {
-	ProductPriceType        *components.ProductPriceType  `queryParam:"inline"`
-	ArrayOfProductPriceType []components.ProductPriceType `queryParam:"inline"`
-
-	Type QueryParamProductPriceTypeFilterType
-}
-
-func CreateQueryParamProductPriceTypeFilterProductPriceType(productPriceType components.ProductPriceType) QueryParamProductPriceTypeFilter {
-	typ := QueryParamProductPriceTypeFilterTypeProductPriceType
-
-	return QueryParamProductPriceTypeFilter{
-		ProductPriceType: &productPriceType,
-		Type:             typ,
-	}
-}
-
-func CreateQueryParamProductPriceTypeFilterArrayOfProductPriceType(arrayOfProductPriceType []components.ProductPriceType) QueryParamProductPriceTypeFilter {
-	typ := QueryParamProductPriceTypeFilterTypeArrayOfProductPriceType
-
-	return QueryParamProductPriceTypeFilter{
-		ArrayOfProductPriceType: arrayOfProductPriceType,
-		Type:                    typ,
-	}
-}
-
-func (u *QueryParamProductPriceTypeFilter) UnmarshalJSON(data []byte) error {
-
-	var productPriceType components.ProductPriceType = components.ProductPriceType("")
-	if err := utils.UnmarshalJSON(data, &productPriceType, "", true, true); err == nil {
-		u.ProductPriceType = &productPriceType
-		u.Type = QueryParamProductPriceTypeFilterTypeProductPriceType
-		return nil
-	}
-
-	var arrayOfProductPriceType []components.ProductPriceType = []components.ProductPriceType{}
-	if err := utils.UnmarshalJSON(data, &arrayOfProductPriceType, "", true, true); err == nil {
-		u.ArrayOfProductPriceType = arrayOfProductPriceType
-		u.Type = QueryParamProductPriceTypeFilterTypeArrayOfProductPriceType
-		return nil
-	}
-
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for QueryParamProductPriceTypeFilter", string(data))
-}
-
-func (u QueryParamProductPriceTypeFilter) MarshalJSON() ([]byte, error) {
-	if u.ProductPriceType != nil {
-		return utils.MarshalJSON(u.ProductPriceType, "", true)
-	}
-
-	if u.ArrayOfProductPriceType != nil {
-		return utils.MarshalJSON(u.ArrayOfProductPriceType, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type QueryParamProductPriceTypeFilter: all fields are null")
-}
-
 type CustomerPortalOrdersListQueryParamSubscriptionIDFilterType string
 
 const (
@@ -346,8 +283,6 @@ type CustomerPortalOrdersListRequest struct {
 	ProductID *CustomerPortalOrdersListQueryParamProductIDFilter `queryParam:"style=form,explode=true,name=product_id"`
 	// Filter by product billing type. `recurring` will filter data corresponding to subscriptions creations or renewals. `one_time` will filter data corresponding to one-time purchases.
 	ProductBillingType *CustomerPortalOrdersListQueryParamProductBillingTypeFilter `queryParam:"style=form,explode=true,name=product_billing_type"`
-	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
-	ProductPriceType *QueryParamProductPriceTypeFilter `queryParam:"style=form,explode=true,name=product_price_type"`
 	// Filter by subscription ID.
 	SubscriptionID *CustomerPortalOrdersListQueryParamSubscriptionIDFilter `queryParam:"style=form,explode=true,name=subscription_id"`
 	// Search by product or organization name.
@@ -390,13 +325,6 @@ func (o *CustomerPortalOrdersListRequest) GetProductBillingType() *CustomerPorta
 		return nil
 	}
 	return o.ProductBillingType
-}
-
-func (o *CustomerPortalOrdersListRequest) GetProductPriceType() *QueryParamProductPriceTypeFilter {
-	if o == nil {
-		return nil
-	}
-	return o.ProductPriceType
 }
 
 func (o *CustomerPortalOrdersListRequest) GetSubscriptionID() *CustomerPortalOrdersListQueryParamSubscriptionIDFilter {

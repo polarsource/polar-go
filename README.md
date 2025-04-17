@@ -110,7 +110,6 @@ func main() {
 			PaymentProcessorMetadata: map[string]string{
 				"key": "<value>",
 			},
-			SubtotalAmount: polargo.Int64(219352),
 			Metadata: map[string]components.CheckoutMetadata{
 				"key": components.CreateCheckoutMetadataInteger(
 					366960,
@@ -133,34 +132,40 @@ func main() {
 					OrganizationID:    "<value>",
 					Prices: []components.CheckoutProductPrices{
 						components.CreateCheckoutProductPricesProductPrice(
-							components.CreateProductPriceProductPriceFixed(
-								components.ProductPriceFixed{
-									CreatedAt:         types.MustTimeFromString("2024-12-24T07:52:43.518Z"),
-									ModifiedAt:        types.MustNewTimeFromString("2023-04-26T22:34:57.487Z"),
+							components.CreateProductPriceProductPriceMeteredUnit(
+								components.ProductPriceMeteredUnit{
+									CreatedAt:         types.MustTimeFromString("2024-12-13T18:25:33.693Z"),
+									ModifiedAt:        types.MustNewTimeFromString("2023-01-09T04:38:53.436Z"),
 									ID:                "<value>",
 									IsArchived:        false,
 									ProductID:         "<value>",
-									Type:              components.ProductPriceTypeOneTime,
+									Type:              components.ProductPriceTypeRecurring,
 									RecurringInterval: components.SubscriptionRecurringIntervalMonth.ToPointer(),
 									PriceCurrency:     "<value>",
-									PriceAmount:       856200,
+									UnitAmount:        "<value>",
+									CapAmount:         polargo.Int64(199664),
+									MeterID:           "<value>",
+									Meter: components.ProductPriceMeter{
+										ID:   "<value>",
+										Name: "<value>",
+									},
 								},
 							),
 						),
 						components.CreateCheckoutProductPricesLegacyRecurringProductPrice(
 							components.CreateLegacyRecurringProductPriceFree(
 								components.LegacyRecurringProductPriceFree{
-									CreatedAt:         types.MustTimeFromString("2024-11-27T14:29:40.329Z"),
-									ModifiedAt:        types.MustNewTimeFromString("2025-12-25T02:24:08.035Z"),
+									CreatedAt:         types.MustTimeFromString("2023-01-25T05:44:56.791Z"),
+									ModifiedAt:        types.MustNewTimeFromString("2025-05-25T15:20:50.694Z"),
 									ID:                "<value>",
 									IsArchived:        false,
 									ProductID:         "<value>",
-									RecurringInterval: components.SubscriptionRecurringIntervalMonth,
+									RecurringInterval: components.SubscriptionRecurringIntervalYear,
 								},
 							),
 						),
 					},
-					Benefits: []components.BenefitBase{},
+					Benefits: []components.BenefitPublic{},
 					Medias: []components.ProductMediaFileRead{
 						components.ProductMediaFileRead{
 							ID:                   "<value>",
@@ -194,49 +199,31 @@ func main() {
 				IsArchived:        false,
 				OrganizationID:    "<value>",
 				Prices:            []components.CheckoutProductPrices{},
-				Benefits: []components.BenefitBase{
-					components.BenefitBase{
-						ID:         "<value>",
-						CreatedAt:  types.MustTimeFromString("2025-11-18T07:12:26.749Z"),
-						ModifiedAt: types.MustNewTimeFromString("2024-08-14T14:29:29.201Z"),
-						Metadata: map[string]components.BenefitBaseMetadata{
-							"key": components.CreateBenefitBaseMetadataNumber(
-								2107.02,
-							),
-						},
+				Benefits: []components.BenefitPublic{
+					components.BenefitPublic{
+						ID:             "<value>",
+						CreatedAt:      types.MustTimeFromString("2025-11-18T07:12:26.749Z"),
+						ModifiedAt:     types.MustNewTimeFromString("2024-08-14T14:29:29.201Z"),
 						Type:           components.BenefitTypeGithubRepository,
 						Description:    "phew empty flawed worth radiant anti of blissfully",
 						Selectable:     false,
 						Deletable:      false,
 						OrganizationID: "<value>",
 					},
-					components.BenefitBase{
-						ID:         "<value>",
-						CreatedAt:  types.MustTimeFromString("2024-03-12T06:20:21.161Z"),
-						ModifiedAt: types.MustNewTimeFromString("2024-06-27T20:20:27.400Z"),
-						Metadata: map[string]components.BenefitBaseMetadata{
-							"key": components.CreateBenefitBaseMetadataNumber(
-								7454.42,
-							),
-						},
+					components.BenefitPublic{
+						ID:             "<value>",
+						CreatedAt:      types.MustTimeFromString("2024-03-12T06:20:21.161Z"),
+						ModifiedAt:     types.MustNewTimeFromString("2024-06-27T20:20:27.400Z"),
 						Type:           components.BenefitTypeLicenseKeys,
 						Description:    "ack neatly jagged as weekly drat nor why",
 						Selectable:     true,
 						Deletable:      false,
 						OrganizationID: "<value>",
 					},
-					components.BenefitBase{
-						ID:         "<value>",
-						CreatedAt:  types.MustTimeFromString("2024-03-31T07:42:35.077Z"),
-						ModifiedAt: types.MustNewTimeFromString("2025-04-30T13:13:01.707Z"),
-						Metadata: map[string]components.BenefitBaseMetadata{
-							"key": components.CreateBenefitBaseMetadataNumber(
-								8517.45,
-							),
-							"key1": components.CreateBenefitBaseMetadataStr(
-								"<value>",
-							),
-						},
+					components.BenefitPublic{
+						ID:             "<value>",
+						CreatedAt:      types.MustTimeFromString("2024-03-31T07:42:35.077Z"),
+						ModifiedAt:     types.MustNewTimeFromString("2025-04-30T13:13:01.707Z"),
 						Type:           components.BenefitTypeGithubRepository,
 						Description:    "ironclad chilly seriously finger unbearably and bourgeoisie deplore unless",
 						Selectable:     false,
@@ -268,17 +255,17 @@ func main() {
 			ProductPrice: components.CreateCheckoutProductPriceProductPrice(
 				components.CreateProductPriceProductPriceCustom(
 					components.ProductPriceCustom{
-						CreatedAt:         types.MustTimeFromString("2025-03-10T15:40:27.607Z"),
-						ModifiedAt:        types.MustNewTimeFromString("2025-09-19T22:43:39.176Z"),
+						CreatedAt:         types.MustTimeFromString("2024-12-18T06:26:25.293Z"),
+						ModifiedAt:        types.MustNewTimeFromString("2025-03-28T00:06:24.086Z"),
 						ID:                "<value>",
 						IsArchived:        false,
 						ProductID:         "<value>",
-						Type:              components.ProductPriceTypeRecurring,
+						Type:              components.ProductPriceTypeOneTime,
 						RecurringInterval: components.SubscriptionRecurringIntervalYear.ToPointer(),
 						PriceCurrency:     "<value>",
-						MinimumAmount:     polargo.Int64(774323),
-						MaximumAmount:     polargo.Int64(538461),
-						PresetAmount:      polargo.Int64(729540),
+						MinimumAmount:     polargo.Int64(476477),
+						MaximumAmount:     polargo.Int64(729611),
+						PresetAmount:      polargo.Int64(905974),
 					},
 				),
 			),
@@ -295,6 +282,27 @@ func main() {
 			)),
 			SubscriptionID: polargo.String("<value>"),
 			AttachedCustomFields: []components.AttachedCustomField{
+				components.AttachedCustomField{
+					CustomFieldID: "<value>",
+					CustomField: components.CreateCustomFieldNumber(
+						components.CustomFieldNumber{
+							CreatedAt:  types.MustTimeFromString("2025-10-29T00:32:24.235Z"),
+							ModifiedAt: types.MustNewTimeFromString("2025-04-28T15:46:25.145Z"),
+							ID:         "<value>",
+							Metadata: map[string]components.CustomFieldNumberMetadata{
+								"key": components.CreateCustomFieldNumberMetadataNumber(
+									7295.4,
+								),
+							},
+							Slug:           "<value>",
+							Name:           "<value>",
+							OrganizationID: "1dbfc517-0bbf-4301-9ba8-555ca42b9737",
+							Properties:     components.CustomFieldNumberProperties{},
+						},
+					),
+					Order:    192934,
+					Required: true,
+				},
 				components.AttachedCustomField{
 					CustomFieldID: "<value>",
 					CustomField: components.CreateCustomFieldSelect(
@@ -320,8 +328,8 @@ func main() {
 							},
 						},
 					),
-					Order:    192934,
-					Required: true,
+					Order:    597839,
+					Required: false,
 				},
 				components.AttachedCustomField{
 					CustomFieldID: "<value>",
@@ -339,34 +347,6 @@ func main() {
 							Name:           "<value>",
 							OrganizationID: "1dbfc517-0bbf-4301-9ba8-555ca42b9737",
 							Properties:     components.CustomFieldDateProperties{},
-						},
-					),
-					Order:    597839,
-					Required: false,
-				},
-				components.AttachedCustomField{
-					CustomFieldID: "<value>",
-					CustomField: components.CreateCustomFieldSelect(
-						components.CustomFieldSelect{
-							CreatedAt:  types.MustTimeFromString("2025-11-05T18:06:37.266Z"),
-							ModifiedAt: types.MustNewTimeFromString("2025-05-05T09:05:51.688Z"),
-							ID:         "<value>",
-							Metadata: map[string]components.CustomFieldSelectMetadata{
-								"key": components.CreateCustomFieldSelectMetadataStr(
-									"<value>",
-								),
-							},
-							Slug:           "<value>",
-							Name:           "<value>",
-							OrganizationID: "1dbfc517-0bbf-4301-9ba8-555ca42b9737",
-							Properties: components.CustomFieldSelectProperties{
-								Options: []components.CustomFieldSelectOption{
-									components.CustomFieldSelectOption{
-										Value: "<value>",
-										Label: "<value>",
-									},
-								},
-							},
 						},
 					),
 					Order:    660585,

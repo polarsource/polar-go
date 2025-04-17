@@ -9,72 +9,6 @@ import (
 	"time"
 )
 
-type CustomerSubscriptionPriceType string
-
-const (
-	CustomerSubscriptionPriceTypeLegacyRecurringProductPrice CustomerSubscriptionPriceType = "LegacyRecurringProductPrice"
-	CustomerSubscriptionPriceTypeProductPrice                CustomerSubscriptionPriceType = "ProductPrice"
-)
-
-// CustomerSubscriptionPrice
-//
-// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
-type CustomerSubscriptionPrice struct {
-	LegacyRecurringProductPrice *LegacyRecurringProductPrice `queryParam:"inline"`
-	ProductPrice                *ProductPrice                `queryParam:"inline"`
-
-	Type CustomerSubscriptionPriceType
-}
-
-func CreateCustomerSubscriptionPriceLegacyRecurringProductPrice(legacyRecurringProductPrice LegacyRecurringProductPrice) CustomerSubscriptionPrice {
-	typ := CustomerSubscriptionPriceTypeLegacyRecurringProductPrice
-
-	return CustomerSubscriptionPrice{
-		LegacyRecurringProductPrice: &legacyRecurringProductPrice,
-		Type:                        typ,
-	}
-}
-
-func CreateCustomerSubscriptionPriceProductPrice(productPrice ProductPrice) CustomerSubscriptionPrice {
-	typ := CustomerSubscriptionPriceTypeProductPrice
-
-	return CustomerSubscriptionPrice{
-		ProductPrice: &productPrice,
-		Type:         typ,
-	}
-}
-
-func (u *CustomerSubscriptionPrice) UnmarshalJSON(data []byte) error {
-
-	var legacyRecurringProductPrice LegacyRecurringProductPrice = LegacyRecurringProductPrice{}
-	if err := utils.UnmarshalJSON(data, &legacyRecurringProductPrice, "", true, true); err == nil {
-		u.LegacyRecurringProductPrice = &legacyRecurringProductPrice
-		u.Type = CustomerSubscriptionPriceTypeLegacyRecurringProductPrice
-		return nil
-	}
-
-	var productPrice ProductPrice = ProductPrice{}
-	if err := utils.UnmarshalJSON(data, &productPrice, "", true, true); err == nil {
-		u.ProductPrice = &productPrice
-		u.Type = CustomerSubscriptionPriceTypeProductPrice
-		return nil
-	}
-
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for CustomerSubscriptionPrice", string(data))
-}
-
-func (u CustomerSubscriptionPrice) MarshalJSON() ([]byte, error) {
-	if u.LegacyRecurringProductPrice != nil {
-		return utils.MarshalJSON(u.LegacyRecurringProductPrice, "", true)
-	}
-
-	if u.ProductPrice != nil {
-		return utils.MarshalJSON(u.ProductPrice, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type CustomerSubscriptionPrice: all fields are null")
-}
-
 type CustomerSubscriptionPricesType string
 
 const (
@@ -174,13 +108,7 @@ type CustomerSubscription struct {
 	CheckoutID                  *string                     `json:"checkout_id"`
 	CustomerCancellationReason  *CustomerCancellationReason `json:"customer_cancellation_reason"`
 	CustomerCancellationComment *string                     `json:"customer_cancellation_comment"`
-	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
-	PriceID string `json:"price_id"`
-	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
-	UserID  string                      `json:"user_id"`
-	Product CustomerSubscriptionProduct `json:"product"`
-	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
-	Price CustomerSubscriptionPrice `json:"price"`
+	Product                     CustomerSubscriptionProduct `json:"product"`
 	// List of enabled prices for the subscription.
 	Prices []CustomerSubscriptionPrices `json:"prices"`
 	// List of meters associated with the subscription.
@@ -338,32 +266,11 @@ func (o *CustomerSubscription) GetCustomerCancellationComment() *string {
 	return o.CustomerCancellationComment
 }
 
-func (o *CustomerSubscription) GetPriceID() string {
-	if o == nil {
-		return ""
-	}
-	return o.PriceID
-}
-
-func (o *CustomerSubscription) GetUserID() string {
-	if o == nil {
-		return ""
-	}
-	return o.UserID
-}
-
 func (o *CustomerSubscription) GetProduct() CustomerSubscriptionProduct {
 	if o == nil {
 		return CustomerSubscriptionProduct{}
 	}
 	return o.Product
-}
-
-func (o *CustomerSubscription) GetPrice() CustomerSubscriptionPrice {
-	if o == nil {
-		return CustomerSubscriptionPrice{}
-	}
-	return o.Price
 }
 
 func (o *CustomerSubscription) GetPrices() []CustomerSubscriptionPrices {

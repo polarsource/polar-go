@@ -8,13 +8,10 @@ import (
 )
 
 type LicenseKeyRead struct {
-	ID             string `json:"id"`
-	OrganizationID string `json:"organization_id"`
-	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
-	UserID     string             `json:"user_id"`
-	CustomerID string             `json:"customer_id"`
-	User       LicenseKeyUser     `json:"user"`
-	Customer   LicenseKeyCustomer `json:"customer"`
+	ID             string             `json:"id"`
+	OrganizationID string             `json:"organization_id"`
+	CustomerID     string             `json:"customer_id"`
+	Customer       LicenseKeyCustomer `json:"customer"`
 	// The benefit ID.
 	BenefitID        string           `json:"benefit_id"`
 	Key              string           `json:"key"`
@@ -53,25 +50,11 @@ func (o *LicenseKeyRead) GetOrganizationID() string {
 	return o.OrganizationID
 }
 
-func (o *LicenseKeyRead) GetUserID() string {
-	if o == nil {
-		return ""
-	}
-	return o.UserID
-}
-
 func (o *LicenseKeyRead) GetCustomerID() string {
 	if o == nil {
 		return ""
 	}
 	return o.CustomerID
-}
-
-func (o *LicenseKeyRead) GetUser() LicenseKeyUser {
-	if o == nil {
-		return LicenseKeyUser{}
-	}
-	return o.User
 }
 
 func (o *LicenseKeyRead) GetCustomer() LicenseKeyCustomer {

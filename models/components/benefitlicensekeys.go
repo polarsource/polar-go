@@ -122,9 +122,8 @@ type BenefitLicenseKeys struct {
 	// Creation timestamp of the object.
 	CreatedAt time.Time `json:"created_at"`
 	// Last modification timestamp of the object.
-	ModifiedAt *time.Time                            `json:"modified_at"`
-	Metadata   map[string]BenefitLicenseKeysMetadata `json:"metadata"`
-	type_      string                                `const:"license_keys" json:"type"`
+	ModifiedAt *time.Time `json:"modified_at"`
+	type_      string     `const:"license_keys" json:"type"`
 	// The description of the benefit.
 	Description string `json:"description"`
 	// Whether the benefit is selectable when creating a product.
@@ -132,8 +131,9 @@ type BenefitLicenseKeys struct {
 	// Whether the benefit is deletable.
 	Deletable bool `json:"deletable"`
 	// The ID of the organization owning the benefit.
-	OrganizationID string                       `json:"organization_id"`
-	Properties     BenefitLicenseKeysProperties `json:"properties"`
+	OrganizationID string                                `json:"organization_id"`
+	Metadata       map[string]BenefitLicenseKeysMetadata `json:"metadata"`
+	Properties     BenefitLicenseKeysProperties          `json:"properties"`
 }
 
 func (b BenefitLicenseKeys) MarshalJSON() ([]byte, error) {
@@ -168,13 +168,6 @@ func (o *BenefitLicenseKeys) GetModifiedAt() *time.Time {
 	return o.ModifiedAt
 }
 
-func (o *BenefitLicenseKeys) GetMetadata() map[string]BenefitLicenseKeysMetadata {
-	if o == nil {
-		return map[string]BenefitLicenseKeysMetadata{}
-	}
-	return o.Metadata
-}
-
 func (o *BenefitLicenseKeys) GetType() string {
 	return "license_keys"
 }
@@ -205,6 +198,13 @@ func (o *BenefitLicenseKeys) GetOrganizationID() string {
 		return ""
 	}
 	return o.OrganizationID
+}
+
+func (o *BenefitLicenseKeys) GetMetadata() map[string]BenefitLicenseKeysMetadata {
+	if o == nil {
+		return map[string]BenefitLicenseKeysMetadata{}
+	}
+	return o.Metadata
 }
 
 func (o *BenefitLicenseKeys) GetProperties() BenefitLicenseKeysProperties {

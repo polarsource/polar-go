@@ -31,16 +31,6 @@ type Organization struct {
 	// Organization feature settings
 	FeatureSettings      *OrganizationFeatureSettings     `json:"feature_settings"`
 	SubscriptionSettings OrganizationSubscriptionSettings `json:"subscription_settings"`
-	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
-	Bio *string `json:"bio"`
-	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
-	Company *string `json:"company"`
-	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
-	Blog *string `json:"blog"`
-	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
-	Location *string `json:"location"`
-	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
-	TwitterUsername *string `json:"twitter_username"`
 }
 
 func (o Organization) MarshalJSON() ([]byte, error) {
@@ -136,39 +126,4 @@ func (o *Organization) GetSubscriptionSettings() OrganizationSubscriptionSetting
 		return OrganizationSubscriptionSettings{}
 	}
 	return o.SubscriptionSettings
-}
-
-func (o *Organization) GetBio() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Bio
-}
-
-func (o *Organization) GetCompany() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Company
-}
-
-func (o *Organization) GetBlog() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Blog
-}
-
-func (o *Organization) GetLocation() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Location
-}
-
-func (o *Organization) GetTwitterUsername() *string {
-	if o == nil {
-		return nil
-	}
-	return o.TwitterUsername
 }

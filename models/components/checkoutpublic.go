@@ -348,8 +348,6 @@ type CheckoutPublic struct {
 	CustomerBillingAddress   *Address          `json:"customer_billing_address"`
 	CustomerTaxID            *string           `json:"customer_tax_id"`
 	PaymentProcessorMetadata map[string]string `json:"payment_processor_metadata"`
-	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
-	SubtotalAmount *int64 `json:"subtotal_amount"`
 	// List of products available to select.
 	Products []CheckoutProduct `json:"products"`
 	// Product data for a checkout session.
@@ -601,13 +599,6 @@ func (o *CheckoutPublic) GetPaymentProcessorMetadata() map[string]string {
 		return map[string]string{}
 	}
 	return o.PaymentProcessorMetadata
-}
-
-func (o *CheckoutPublic) GetSubtotalAmount() *int64 {
-	if o == nil {
-		return nil
-	}
-	return o.SubtotalAmount
 }
 
 func (o *CheckoutPublic) GetProducts() []CheckoutProduct {

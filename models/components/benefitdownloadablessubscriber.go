@@ -122,9 +122,8 @@ type BenefitDownloadablesSubscriber struct {
 	// Creation timestamp of the object.
 	CreatedAt time.Time `json:"created_at"`
 	// Last modification timestamp of the object.
-	ModifiedAt *time.Time                                        `json:"modified_at"`
-	Metadata   map[string]BenefitDownloadablesSubscriberMetadata `json:"metadata"`
-	type_      string                                            `const:"downloadables" json:"type"`
+	ModifiedAt *time.Time `json:"modified_at"`
+	type_      string     `const:"downloadables" json:"type"`
 	// The description of the benefit.
 	Description string `json:"description"`
 	// Whether the benefit is selectable when creating a product.
@@ -132,9 +131,10 @@ type BenefitDownloadablesSubscriber struct {
 	// Whether the benefit is deletable.
 	Deletable bool `json:"deletable"`
 	// The ID of the organization owning the benefit.
-	OrganizationID string                                   `json:"organization_id"`
-	Organization   Organization                             `json:"organization"`
-	Properties     BenefitDownloadablesSubscriberProperties `json:"properties"`
+	OrganizationID string                                            `json:"organization_id"`
+	Metadata       map[string]BenefitDownloadablesSubscriberMetadata `json:"metadata"`
+	Organization   Organization                                      `json:"organization"`
+	Properties     BenefitDownloadablesSubscriberProperties          `json:"properties"`
 }
 
 func (b BenefitDownloadablesSubscriber) MarshalJSON() ([]byte, error) {
@@ -169,13 +169,6 @@ func (o *BenefitDownloadablesSubscriber) GetModifiedAt() *time.Time {
 	return o.ModifiedAt
 }
 
-func (o *BenefitDownloadablesSubscriber) GetMetadata() map[string]BenefitDownloadablesSubscriberMetadata {
-	if o == nil {
-		return map[string]BenefitDownloadablesSubscriberMetadata{}
-	}
-	return o.Metadata
-}
-
 func (o *BenefitDownloadablesSubscriber) GetType() string {
 	return "downloadables"
 }
@@ -206,6 +199,13 @@ func (o *BenefitDownloadablesSubscriber) GetOrganizationID() string {
 		return ""
 	}
 	return o.OrganizationID
+}
+
+func (o *BenefitDownloadablesSubscriber) GetMetadata() map[string]BenefitDownloadablesSubscriberMetadata {
+	if o == nil {
+		return map[string]BenefitDownloadablesSubscriberMetadata{}
+	}
+	return o.Metadata
 }
 
 func (o *BenefitDownloadablesSubscriber) GetOrganization() Organization {

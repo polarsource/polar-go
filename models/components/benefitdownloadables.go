@@ -122,9 +122,8 @@ type BenefitDownloadables struct {
 	// Creation timestamp of the object.
 	CreatedAt time.Time `json:"created_at"`
 	// Last modification timestamp of the object.
-	ModifiedAt *time.Time                              `json:"modified_at"`
-	Metadata   map[string]BenefitDownloadablesMetadata `json:"metadata"`
-	type_      string                                  `const:"downloadables" json:"type"`
+	ModifiedAt *time.Time `json:"modified_at"`
+	type_      string     `const:"downloadables" json:"type"`
 	// The description of the benefit.
 	Description string `json:"description"`
 	// Whether the benefit is selectable when creating a product.
@@ -132,8 +131,9 @@ type BenefitDownloadables struct {
 	// Whether the benefit is deletable.
 	Deletable bool `json:"deletable"`
 	// The ID of the organization owning the benefit.
-	OrganizationID string                         `json:"organization_id"`
-	Properties     BenefitDownloadablesProperties `json:"properties"`
+	OrganizationID string                                  `json:"organization_id"`
+	Metadata       map[string]BenefitDownloadablesMetadata `json:"metadata"`
+	Properties     BenefitDownloadablesProperties          `json:"properties"`
 }
 
 func (b BenefitDownloadables) MarshalJSON() ([]byte, error) {
@@ -168,13 +168,6 @@ func (o *BenefitDownloadables) GetModifiedAt() *time.Time {
 	return o.ModifiedAt
 }
 
-func (o *BenefitDownloadables) GetMetadata() map[string]BenefitDownloadablesMetadata {
-	if o == nil {
-		return map[string]BenefitDownloadablesMetadata{}
-	}
-	return o.Metadata
-}
-
 func (o *BenefitDownloadables) GetType() string {
 	return "downloadables"
 }
@@ -205,6 +198,13 @@ func (o *BenefitDownloadables) GetOrganizationID() string {
 		return ""
 	}
 	return o.OrganizationID
+}
+
+func (o *BenefitDownloadables) GetMetadata() map[string]BenefitDownloadablesMetadata {
+	if o == nil {
+		return map[string]BenefitDownloadablesMetadata{}
+	}
+	return o.Metadata
 }
 
 func (o *BenefitDownloadables) GetProperties() BenefitDownloadablesProperties {

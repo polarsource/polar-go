@@ -122,9 +122,8 @@ type BenefitCustomSubscriber struct {
 	// Creation timestamp of the object.
 	CreatedAt time.Time `json:"created_at"`
 	// Last modification timestamp of the object.
-	ModifiedAt *time.Time                                 `json:"modified_at"`
-	Metadata   map[string]BenefitCustomSubscriberMetadata `json:"metadata"`
-	type_      string                                     `const:"custom" json:"type"`
+	ModifiedAt *time.Time `json:"modified_at"`
+	type_      string     `const:"custom" json:"type"`
 	// The description of the benefit.
 	Description string `json:"description"`
 	// Whether the benefit is selectable when creating a product.
@@ -132,8 +131,9 @@ type BenefitCustomSubscriber struct {
 	// Whether the benefit is deletable.
 	Deletable bool `json:"deletable"`
 	// The ID of the organization owning the benefit.
-	OrganizationID string       `json:"organization_id"`
-	Organization   Organization `json:"organization"`
+	OrganizationID string                                     `json:"organization_id"`
+	Metadata       map[string]BenefitCustomSubscriberMetadata `json:"metadata"`
+	Organization   Organization                               `json:"organization"`
 	// Properties available to subscribers for a benefit of type `custom`.
 	Properties BenefitCustomSubscriberProperties `json:"properties"`
 }
@@ -170,13 +170,6 @@ func (o *BenefitCustomSubscriber) GetModifiedAt() *time.Time {
 	return o.ModifiedAt
 }
 
-func (o *BenefitCustomSubscriber) GetMetadata() map[string]BenefitCustomSubscriberMetadata {
-	if o == nil {
-		return map[string]BenefitCustomSubscriberMetadata{}
-	}
-	return o.Metadata
-}
-
 func (o *BenefitCustomSubscriber) GetType() string {
 	return "custom"
 }
@@ -207,6 +200,13 @@ func (o *BenefitCustomSubscriber) GetOrganizationID() string {
 		return ""
 	}
 	return o.OrganizationID
+}
+
+func (o *BenefitCustomSubscriber) GetMetadata() map[string]BenefitCustomSubscriberMetadata {
+	if o == nil {
+		return map[string]BenefitCustomSubscriberMetadata{}
+	}
+	return o.Metadata
 }
 
 func (o *BenefitCustomSubscriber) GetOrganization() Organization {

@@ -330,72 +330,6 @@ func (u SubscriptionDiscount) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type SubscriptionDiscount: all fields are null")
 }
 
-type PriceType string
-
-const (
-	PriceTypeLegacyRecurringProductPrice PriceType = "LegacyRecurringProductPrice"
-	PriceTypeProductPrice                PriceType = "ProductPrice"
-)
-
-// Price
-//
-// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
-type Price struct {
-	LegacyRecurringProductPrice *LegacyRecurringProductPrice `queryParam:"inline"`
-	ProductPrice                *ProductPrice                `queryParam:"inline"`
-
-	Type PriceType
-}
-
-func CreatePriceLegacyRecurringProductPrice(legacyRecurringProductPrice LegacyRecurringProductPrice) Price {
-	typ := PriceTypeLegacyRecurringProductPrice
-
-	return Price{
-		LegacyRecurringProductPrice: &legacyRecurringProductPrice,
-		Type:                        typ,
-	}
-}
-
-func CreatePriceProductPrice(productPrice ProductPrice) Price {
-	typ := PriceTypeProductPrice
-
-	return Price{
-		ProductPrice: &productPrice,
-		Type:         typ,
-	}
-}
-
-func (u *Price) UnmarshalJSON(data []byte) error {
-
-	var legacyRecurringProductPrice LegacyRecurringProductPrice = LegacyRecurringProductPrice{}
-	if err := utils.UnmarshalJSON(data, &legacyRecurringProductPrice, "", true, true); err == nil {
-		u.LegacyRecurringProductPrice = &legacyRecurringProductPrice
-		u.Type = PriceTypeLegacyRecurringProductPrice
-		return nil
-	}
-
-	var productPrice ProductPrice = ProductPrice{}
-	if err := utils.UnmarshalJSON(data, &productPrice, "", true, true); err == nil {
-		u.ProductPrice = &productPrice
-		u.Type = PriceTypeProductPrice
-		return nil
-	}
-
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for Price", string(data))
-}
-
-func (u Price) MarshalJSON() ([]byte, error) {
-	if u.LegacyRecurringProductPrice != nil {
-		return utils.MarshalJSON(u.LegacyRecurringProductPrice, "", true)
-	}
-
-	if u.ProductPrice != nil {
-		return utils.MarshalJSON(u.ProductPrice, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type Price: all fields are null")
-}
-
 type SubscriptionPricesType string
 
 const (
@@ -495,20 +429,13 @@ type Subscription struct {
 	CheckoutID                  *string                     `json:"checkout_id"`
 	CustomerCancellationReason  *CustomerCancellationReason `json:"customer_cancellation_reason"`
 	CustomerCancellationComment *string                     `json:"customer_cancellation_comment"`
-	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
-	PriceID  string              `json:"price_id"`
-	Metadata map[string]Metadata `json:"metadata"`
+	Metadata                    map[string]Metadata         `json:"metadata"`
 	// Key-value object storing custom field values.
 	CustomFieldData map[string]*CustomFieldData `json:"custom_field_data,omitempty"`
 	Customer        SubscriptionCustomer        `json:"customer"`
-	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
-	UserID string           `json:"user_id"`
-	User   SubscriptionUser `json:"user"`
 	// A product.
 	Product  Product               `json:"product"`
 	Discount *SubscriptionDiscount `json:"discount"`
-	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
-	Price Price `json:"price"`
 	// List of enabled prices for the subscription.
 	Prices []SubscriptionPrices `json:"prices"`
 	// List of meters associated with the subscription.
@@ -666,13 +593,6 @@ func (o *Subscription) GetCustomerCancellationComment() *string {
 	return o.CustomerCancellationComment
 }
 
-func (o *Subscription) GetPriceID() string {
-	if o == nil {
-		return ""
-	}
-	return o.PriceID
-}
-
 func (o *Subscription) GetMetadata() map[string]Metadata {
 	if o == nil {
 		return map[string]Metadata{}
@@ -694,20 +614,6 @@ func (o *Subscription) GetCustomer() SubscriptionCustomer {
 	return o.Customer
 }
 
-func (o *Subscription) GetUserID() string {
-	if o == nil {
-		return ""
-	}
-	return o.UserID
-}
-
-func (o *Subscription) GetUser() SubscriptionUser {
-	if o == nil {
-		return SubscriptionUser{}
-	}
-	return o.User
-}
-
 func (o *Subscription) GetProduct() Product {
 	if o == nil {
 		return Product{}
@@ -720,13 +626,6 @@ func (o *Subscription) GetDiscount() *SubscriptionDiscount {
 		return nil
 	}
 	return o.Discount
-}
-
-func (o *Subscription) GetPrice() Price {
-	if o == nil {
-		return Price{}
-	}
-	return o.Price
 }
 
 func (o *Subscription) GetPrices() []SubscriptionPrices {

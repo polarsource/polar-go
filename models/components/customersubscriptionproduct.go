@@ -94,7 +94,7 @@ type CustomerSubscriptionProduct struct {
 	// List of prices for this product.
 	Prices []CustomerSubscriptionProductPrices `json:"prices"`
 	// List of benefits granted by the product.
-	Benefits []BenefitBase `json:"benefits"`
+	Benefits []BenefitPublic `json:"benefits"`
 	// List of medias associated to the product.
 	Medias       []ProductMediaFileRead `json:"medias"`
 	Organization Organization           `json:"organization"`
@@ -181,9 +181,9 @@ func (o *CustomerSubscriptionProduct) GetPrices() []CustomerSubscriptionProductP
 	return o.Prices
 }
 
-func (o *CustomerSubscriptionProduct) GetBenefits() []BenefitBase {
+func (o *CustomerSubscriptionProduct) GetBenefits() []BenefitPublic {
 	if o == nil {
-		return []BenefitBase{}
+		return []BenefitPublic{}
 	}
 	return o.Benefits
 }

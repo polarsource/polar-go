@@ -256,8 +256,6 @@ type CustomerStateSubscription struct {
 	ProductID string `json:"product_id"`
 	// The ID of the applied discount, if any.
 	DiscountID *string `json:"discount_id"`
-	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
-	PriceID string `json:"price_id"`
 	// List of meters associated with the subscription.
 	Meters []CustomerStateSubscriptionMeter `json:"meters"`
 }
@@ -387,13 +385,6 @@ func (o *CustomerStateSubscription) GetDiscountID() *string {
 		return nil
 	}
 	return o.DiscountID
-}
-
-func (o *CustomerStateSubscription) GetPriceID() string {
-	if o == nil {
-		return ""
-	}
-	return o.PriceID
 }
 
 func (o *CustomerStateSubscription) GetMeters() []CustomerStateSubscriptionMeter {

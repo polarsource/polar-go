@@ -3,77 +3,9 @@
 package components
 
 import (
-	"errors"
-	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
 	"time"
 )
-
-type CustomerOrderProductPriceType string
-
-const (
-	CustomerOrderProductPriceTypeLegacyRecurringProductPrice CustomerOrderProductPriceType = "LegacyRecurringProductPrice"
-	CustomerOrderProductPriceTypeProductPrice                CustomerOrderProductPriceType = "ProductPrice"
-)
-
-// CustomerOrderProductPrice
-//
-// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
-type CustomerOrderProductPrice struct {
-	LegacyRecurringProductPrice *LegacyRecurringProductPrice `queryParam:"inline"`
-	ProductPrice                *ProductPrice                `queryParam:"inline"`
-
-	Type CustomerOrderProductPriceType
-}
-
-func CreateCustomerOrderProductPriceLegacyRecurringProductPrice(legacyRecurringProductPrice LegacyRecurringProductPrice) CustomerOrderProductPrice {
-	typ := CustomerOrderProductPriceTypeLegacyRecurringProductPrice
-
-	return CustomerOrderProductPrice{
-		LegacyRecurringProductPrice: &legacyRecurringProductPrice,
-		Type:                        typ,
-	}
-}
-
-func CreateCustomerOrderProductPriceProductPrice(productPrice ProductPrice) CustomerOrderProductPrice {
-	typ := CustomerOrderProductPriceTypeProductPrice
-
-	return CustomerOrderProductPrice{
-		ProductPrice: &productPrice,
-		Type:         typ,
-	}
-}
-
-func (u *CustomerOrderProductPrice) UnmarshalJSON(data []byte) error {
-
-	var legacyRecurringProductPrice LegacyRecurringProductPrice = LegacyRecurringProductPrice{}
-	if err := utils.UnmarshalJSON(data, &legacyRecurringProductPrice, "", true, true); err == nil {
-		u.LegacyRecurringProductPrice = &legacyRecurringProductPrice
-		u.Type = CustomerOrderProductPriceTypeLegacyRecurringProductPrice
-		return nil
-	}
-
-	var productPrice ProductPrice = ProductPrice{}
-	if err := utils.UnmarshalJSON(data, &productPrice, "", true, true); err == nil {
-		u.ProductPrice = &productPrice
-		u.Type = CustomerOrderProductPriceTypeProductPrice
-		return nil
-	}
-
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for CustomerOrderProductPrice", string(data))
-}
-
-func (u CustomerOrderProductPrice) MarshalJSON() ([]byte, error) {
-	if u.LegacyRecurringProductPrice != nil {
-		return utils.MarshalJSON(u.LegacyRecurringProductPrice, "", true)
-	}
-
-	if u.ProductPrice != nil {
-		return utils.MarshalJSON(u.ProductPrice, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type CustomerOrderProductPrice: all fields are null")
-}
 
 type CustomerOrder struct {
 	// Creation timestamp of the object.
@@ -90,10 +22,6 @@ type CustomerOrder struct {
 	DiscountAmount int64 `json:"discount_amount"`
 	// Amount in cents, after discounts but before taxes.
 	NetAmount int64 `json:"net_amount"`
-	// Amount in cents, after discounts but before taxes.
-	//
-	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
-	Amount int64 `json:"amount"`
 	// Sales tax amount in cents.
 	TaxAmount int64 `json:"tax_amount"`
 	// Amount in cents, after discounts and taxes.
@@ -101,18 +29,14 @@ type CustomerOrder struct {
 	// Amount refunded in cents.
 	RefundedAmount int64 `json:"refunded_amount"`
 	// Sales tax refunded in cents.
-	RefundedTaxAmount int64  `json:"refunded_tax_amount"`
-	Currency          string `json:"currency"`
-	CustomerID        string `json:"customer_id"`
-	ProductID         string `json:"product_id"`
+	RefundedTaxAmount int64   `json:"refunded_tax_amount"`
+	Currency          string  `json:"currency"`
+	CustomerID        string  `json:"customer_id"`
+	ProductID         string  `json:"product_id"`
+	SubscriptionID    *string `json:"subscription_id"`
 	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
-	ProductPriceID string  `json:"product_price_id"`
-	SubscriptionID *string `json:"subscription_id"`
-	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
-	UserID  string               `json:"user_id"`
-	Product CustomerOrderProduct `json:"product"`
-	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
-	ProductPrice CustomerOrderProductPrice  `json:"product_price"`
+	UserID       string                     `json:"user_id"`
+	Product      CustomerOrderProduct       `json:"product"`
 	Subscription *CustomerOrderSubscription `json:"subscription"`
 	// Line items composing the order.
 	Items []OrderItemSchema `json:"items"`
@@ -185,13 +109,6 @@ func (o *CustomerOrder) GetNetAmount() int64 {
 	return o.NetAmount
 }
 
-func (o *CustomerOrder) GetAmount() int64 {
-	if o == nil {
-		return 0
-	}
-	return o.Amount
-}
-
 func (o *CustomerOrder) GetTaxAmount() int64 {
 	if o == nil {
 		return 0
@@ -241,13 +158,6 @@ func (o *CustomerOrder) GetProductID() string {
 	return o.ProductID
 }
 
-func (o *CustomerOrder) GetProductPriceID() string {
-	if o == nil {
-		return ""
-	}
-	return o.ProductPriceID
-}
-
 func (o *CustomerOrder) GetSubscriptionID() *string {
 	if o == nil {
 		return nil
@@ -267,13 +177,6 @@ func (o *CustomerOrder) GetProduct() CustomerOrderProduct {
 		return CustomerOrderProduct{}
 	}
 	return o.Product
-}
-
-func (o *CustomerOrder) GetProductPrice() CustomerOrderProductPrice {
-	if o == nil {
-		return CustomerOrderProductPrice{}
-	}
-	return o.ProductPrice
 }
 
 func (o *CustomerOrder) GetSubscription() *CustomerOrderSubscription {

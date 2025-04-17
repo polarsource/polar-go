@@ -125,9 +125,8 @@ type BenefitCustom struct {
 	// Creation timestamp of the object.
 	CreatedAt time.Time `json:"created_at"`
 	// Last modification timestamp of the object.
-	ModifiedAt *time.Time                       `json:"modified_at"`
-	Metadata   map[string]BenefitCustomMetadata `json:"metadata"`
-	type_      string                           `const:"custom" json:"type"`
+	ModifiedAt *time.Time `json:"modified_at"`
+	type_      string     `const:"custom" json:"type"`
 	// The description of the benefit.
 	Description string `json:"description"`
 	// Whether the benefit is selectable when creating a product.
@@ -135,11 +134,10 @@ type BenefitCustom struct {
 	// Whether the benefit is deletable.
 	Deletable bool `json:"deletable"`
 	// The ID of the organization owning the benefit.
-	OrganizationID string `json:"organization_id"`
+	OrganizationID string                           `json:"organization_id"`
+	Metadata       map[string]BenefitCustomMetadata `json:"metadata"`
 	// Properties for a benefit of type `custom`.
 	Properties BenefitCustomProperties `json:"properties"`
-	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
-	IsTaxApplicable bool `json:"is_tax_applicable"`
 }
 
 func (b BenefitCustom) MarshalJSON() ([]byte, error) {
@@ -174,13 +172,6 @@ func (o *BenefitCustom) GetModifiedAt() *time.Time {
 	return o.ModifiedAt
 }
 
-func (o *BenefitCustom) GetMetadata() map[string]BenefitCustomMetadata {
-	if o == nil {
-		return map[string]BenefitCustomMetadata{}
-	}
-	return o.Metadata
-}
-
 func (o *BenefitCustom) GetType() string {
 	return "custom"
 }
@@ -213,16 +204,16 @@ func (o *BenefitCustom) GetOrganizationID() string {
 	return o.OrganizationID
 }
 
+func (o *BenefitCustom) GetMetadata() map[string]BenefitCustomMetadata {
+	if o == nil {
+		return map[string]BenefitCustomMetadata{}
+	}
+	return o.Metadata
+}
+
 func (o *BenefitCustom) GetProperties() BenefitCustomProperties {
 	if o == nil {
 		return BenefitCustomProperties{}
 	}
 	return o.Properties
-}
-
-func (o *BenefitCustom) GetIsTaxApplicable() bool {
-	if o == nil {
-		return false
-	}
-	return o.IsTaxApplicable
 }

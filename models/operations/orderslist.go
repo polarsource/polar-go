@@ -201,69 +201,6 @@ func (u ProductBillingTypeFilter) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type ProductBillingTypeFilter: all fields are null")
 }
 
-type ProductPriceTypeFilterType string
-
-const (
-	ProductPriceTypeFilterTypeProductPriceType        ProductPriceTypeFilterType = "ProductPriceType"
-	ProductPriceTypeFilterTypeArrayOfProductPriceType ProductPriceTypeFilterType = "arrayOfProductPriceType"
-)
-
-type ProductPriceTypeFilter struct {
-	ProductPriceType        *components.ProductPriceType  `queryParam:"inline"`
-	ArrayOfProductPriceType []components.ProductPriceType `queryParam:"inline"`
-
-	Type ProductPriceTypeFilterType
-}
-
-func CreateProductPriceTypeFilterProductPriceType(productPriceType components.ProductPriceType) ProductPriceTypeFilter {
-	typ := ProductPriceTypeFilterTypeProductPriceType
-
-	return ProductPriceTypeFilter{
-		ProductPriceType: &productPriceType,
-		Type:             typ,
-	}
-}
-
-func CreateProductPriceTypeFilterArrayOfProductPriceType(arrayOfProductPriceType []components.ProductPriceType) ProductPriceTypeFilter {
-	typ := ProductPriceTypeFilterTypeArrayOfProductPriceType
-
-	return ProductPriceTypeFilter{
-		ArrayOfProductPriceType: arrayOfProductPriceType,
-		Type:                    typ,
-	}
-}
-
-func (u *ProductPriceTypeFilter) UnmarshalJSON(data []byte) error {
-
-	var productPriceType components.ProductPriceType = components.ProductPriceType("")
-	if err := utils.UnmarshalJSON(data, &productPriceType, "", true, true); err == nil {
-		u.ProductPriceType = &productPriceType
-		u.Type = ProductPriceTypeFilterTypeProductPriceType
-		return nil
-	}
-
-	var arrayOfProductPriceType []components.ProductPriceType = []components.ProductPriceType{}
-	if err := utils.UnmarshalJSON(data, &arrayOfProductPriceType, "", true, true); err == nil {
-		u.ArrayOfProductPriceType = arrayOfProductPriceType
-		u.Type = ProductPriceTypeFilterTypeArrayOfProductPriceType
-		return nil
-	}
-
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for ProductPriceTypeFilter", string(data))
-}
-
-func (u ProductPriceTypeFilter) MarshalJSON() ([]byte, error) {
-	if u.ProductPriceType != nil {
-		return utils.MarshalJSON(u.ProductPriceType, "", true)
-	}
-
-	if u.ArrayOfProductPriceType != nil {
-		return utils.MarshalJSON(u.ArrayOfProductPriceType, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type ProductPriceTypeFilter: all fields are null")
-}
-
 type QueryParamDiscountIDFilterType string
 
 const (
@@ -463,8 +400,6 @@ type OrdersListRequest struct {
 	ProductID *OrdersListQueryParamProductIDFilter `queryParam:"style=form,explode=true,name=product_id"`
 	// Filter by product billing type. `recurring` will filter data corresponding to subscriptions creations or renewals. `one_time` will filter data corresponding to one-time purchases.
 	ProductBillingType *ProductBillingTypeFilter `queryParam:"style=form,explode=true,name=product_billing_type"`
-	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
-	ProductPriceType *ProductPriceTypeFilter `queryParam:"style=form,explode=true,name=product_price_type"`
 	// Filter by discount ID.
 	DiscountID *QueryParamDiscountIDFilter `queryParam:"style=form,explode=true,name=discount_id"`
 	// Filter by customer ID.
@@ -509,13 +444,6 @@ func (o *OrdersListRequest) GetProductBillingType() *ProductBillingTypeFilter {
 		return nil
 	}
 	return o.ProductBillingType
-}
-
-func (o *OrdersListRequest) GetProductPriceType() *ProductPriceTypeFilter {
-	if o == nil {
-		return nil
-	}
-	return o.ProductPriceType
 }
 
 func (o *OrdersListRequest) GetDiscountID() *QueryParamDiscountIDFilter {

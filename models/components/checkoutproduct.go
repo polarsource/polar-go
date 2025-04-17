@@ -95,7 +95,7 @@ type CheckoutProduct struct {
 	// List of prices for this product.
 	Prices []CheckoutProductPrices `json:"prices"`
 	// List of benefits granted by the product.
-	Benefits []BenefitBase `json:"benefits"`
+	Benefits []BenefitPublic `json:"benefits"`
 	// List of medias associated to the product.
 	Medias []ProductMediaFileRead `json:"medias"`
 }
@@ -181,9 +181,9 @@ func (o *CheckoutProduct) GetPrices() []CheckoutProductPrices {
 	return o.Prices
 }
 
-func (o *CheckoutProduct) GetBenefits() []BenefitBase {
+func (o *CheckoutProduct) GetBenefits() []BenefitPublic {
 	if o == nil {
-		return []BenefitBase{}
+		return []BenefitPublic{}
 	}
 	return o.Benefits
 }

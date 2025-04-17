@@ -122,9 +122,8 @@ type BenefitLicenseKeysSubscriber struct {
 	// Creation timestamp of the object.
 	CreatedAt time.Time `json:"created_at"`
 	// Last modification timestamp of the object.
-	ModifiedAt *time.Time                                      `json:"modified_at"`
-	Metadata   map[string]BenefitLicenseKeysSubscriberMetadata `json:"metadata"`
-	type_      string                                          `const:"license_keys" json:"type"`
+	ModifiedAt *time.Time `json:"modified_at"`
+	type_      string     `const:"license_keys" json:"type"`
 	// The description of the benefit.
 	Description string `json:"description"`
 	// Whether the benefit is selectable when creating a product.
@@ -132,9 +131,10 @@ type BenefitLicenseKeysSubscriber struct {
 	// Whether the benefit is deletable.
 	Deletable bool `json:"deletable"`
 	// The ID of the organization owning the benefit.
-	OrganizationID string                                 `json:"organization_id"`
-	Organization   Organization                           `json:"organization"`
-	Properties     BenefitLicenseKeysSubscriberProperties `json:"properties"`
+	OrganizationID string                                          `json:"organization_id"`
+	Metadata       map[string]BenefitLicenseKeysSubscriberMetadata `json:"metadata"`
+	Organization   Organization                                    `json:"organization"`
+	Properties     BenefitLicenseKeysSubscriberProperties          `json:"properties"`
 }
 
 func (b BenefitLicenseKeysSubscriber) MarshalJSON() ([]byte, error) {
@@ -169,13 +169,6 @@ func (o *BenefitLicenseKeysSubscriber) GetModifiedAt() *time.Time {
 	return o.ModifiedAt
 }
 
-func (o *BenefitLicenseKeysSubscriber) GetMetadata() map[string]BenefitLicenseKeysSubscriberMetadata {
-	if o == nil {
-		return map[string]BenefitLicenseKeysSubscriberMetadata{}
-	}
-	return o.Metadata
-}
-
 func (o *BenefitLicenseKeysSubscriber) GetType() string {
 	return "license_keys"
 }
@@ -206,6 +199,13 @@ func (o *BenefitLicenseKeysSubscriber) GetOrganizationID() string {
 		return ""
 	}
 	return o.OrganizationID
+}
+
+func (o *BenefitLicenseKeysSubscriber) GetMetadata() map[string]BenefitLicenseKeysSubscriberMetadata {
+	if o == nil {
+		return map[string]BenefitLicenseKeysSubscriberMetadata{}
+	}
+	return o.Metadata
 }
 
 func (o *BenefitLicenseKeysSubscriber) GetOrganization() Organization {

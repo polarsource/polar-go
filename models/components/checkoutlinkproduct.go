@@ -9,6 +9,113 @@ import (
 	"time"
 )
 
+type CheckoutLinkProductMetadataType string
+
+const (
+	CheckoutLinkProductMetadataTypeStr     CheckoutLinkProductMetadataType = "str"
+	CheckoutLinkProductMetadataTypeInteger CheckoutLinkProductMetadataType = "integer"
+	CheckoutLinkProductMetadataTypeNumber  CheckoutLinkProductMetadataType = "number"
+	CheckoutLinkProductMetadataTypeBoolean CheckoutLinkProductMetadataType = "boolean"
+)
+
+type CheckoutLinkProductMetadata struct {
+	Str     *string  `queryParam:"inline"`
+	Integer *int64   `queryParam:"inline"`
+	Number  *float64 `queryParam:"inline"`
+	Boolean *bool    `queryParam:"inline"`
+
+	Type CheckoutLinkProductMetadataType
+}
+
+func CreateCheckoutLinkProductMetadataStr(str string) CheckoutLinkProductMetadata {
+	typ := CheckoutLinkProductMetadataTypeStr
+
+	return CheckoutLinkProductMetadata{
+		Str:  &str,
+		Type: typ,
+	}
+}
+
+func CreateCheckoutLinkProductMetadataInteger(integer int64) CheckoutLinkProductMetadata {
+	typ := CheckoutLinkProductMetadataTypeInteger
+
+	return CheckoutLinkProductMetadata{
+		Integer: &integer,
+		Type:    typ,
+	}
+}
+
+func CreateCheckoutLinkProductMetadataNumber(number float64) CheckoutLinkProductMetadata {
+	typ := CheckoutLinkProductMetadataTypeNumber
+
+	return CheckoutLinkProductMetadata{
+		Number: &number,
+		Type:   typ,
+	}
+}
+
+func CreateCheckoutLinkProductMetadataBoolean(boolean bool) CheckoutLinkProductMetadata {
+	typ := CheckoutLinkProductMetadataTypeBoolean
+
+	return CheckoutLinkProductMetadata{
+		Boolean: &boolean,
+		Type:    typ,
+	}
+}
+
+func (u *CheckoutLinkProductMetadata) UnmarshalJSON(data []byte) error {
+
+	var str string = ""
+	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
+		u.Str = &str
+		u.Type = CheckoutLinkProductMetadataTypeStr
+		return nil
+	}
+
+	var integer int64 = int64(0)
+	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
+		u.Integer = &integer
+		u.Type = CheckoutLinkProductMetadataTypeInteger
+		return nil
+	}
+
+	var number float64 = float64(0)
+	if err := utils.UnmarshalJSON(data, &number, "", true, true); err == nil {
+		u.Number = &number
+		u.Type = CheckoutLinkProductMetadataTypeNumber
+		return nil
+	}
+
+	var boolean bool = false
+	if err := utils.UnmarshalJSON(data, &boolean, "", true, true); err == nil {
+		u.Boolean = &boolean
+		u.Type = CheckoutLinkProductMetadataTypeBoolean
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for CheckoutLinkProductMetadata", string(data))
+}
+
+func (u CheckoutLinkProductMetadata) MarshalJSON() ([]byte, error) {
+	if u.Str != nil {
+		return utils.MarshalJSON(u.Str, "", true)
+	}
+
+	if u.Integer != nil {
+		return utils.MarshalJSON(u.Integer, "", true)
+	}
+
+	if u.Number != nil {
+		return utils.MarshalJSON(u.Number, "", true)
+	}
+
+	if u.Boolean != nil {
+		return utils.MarshalJSON(u.Boolean, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type CheckoutLinkProductMetadata: all fields are null")
+}
+
 type CheckoutLinkProductPricesType string
 
 const (
@@ -74,6 +181,7 @@ func (u CheckoutLinkProductPrices) MarshalJSON() ([]byte, error) {
 
 // CheckoutLinkProduct - Product data for a checkout link.
 type CheckoutLinkProduct struct {
+	Metadata map[string]CheckoutLinkProductMetadata `json:"metadata"`
 	// Creation timestamp of the object.
 	CreatedAt time.Time `json:"created_at"`
 	// Last modification timestamp of the object.
@@ -95,7 +203,7 @@ type CheckoutLinkProduct struct {
 	// List of prices for this product.
 	Prices []CheckoutLinkProductPrices `json:"prices"`
 	// List of benefits granted by the product.
-	Benefits []BenefitBase `json:"benefits"`
+	Benefits []BenefitPublic `json:"benefits"`
 	// List of medias associated to the product.
 	Medias []ProductMediaFileRead `json:"medias"`
 }
@@ -109,6 +217,13 @@ func (c *CheckoutLinkProduct) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
+}
+
+func (o *CheckoutLinkProduct) GetMetadata() map[string]CheckoutLinkProductMetadata {
+	if o == nil {
+		return map[string]CheckoutLinkProductMetadata{}
+	}
+	return o.Metadata
 }
 
 func (o *CheckoutLinkProduct) GetCreatedAt() time.Time {
@@ -181,9 +296,9 @@ func (o *CheckoutLinkProduct) GetPrices() []CheckoutLinkProductPrices {
 	return o.Prices
 }
 
-func (o *CheckoutLinkProduct) GetBenefits() []BenefitBase {
+func (o *CheckoutLinkProduct) GetBenefits() []BenefitPublic {
 	if o == nil {
-		return []BenefitBase{}
+		return []BenefitPublic{}
 	}
 	return o.Benefits
 }

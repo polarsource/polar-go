@@ -248,7 +248,6 @@ func (s *PolarOrders) List(ctx context.Context, request operations.CustomerPorta
 				OrganizationID:     request.OrganizationID,
 				ProductID:          request.ProductID,
 				ProductBillingType: request.ProductBillingType,
-				ProductPriceType:   request.ProductPriceType,
 				SubscriptionID:     request.SubscriptionID,
 				Query:              request.Query,
 				Page:               &nP,

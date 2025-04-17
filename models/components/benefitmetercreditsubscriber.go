@@ -122,9 +122,8 @@ type BenefitMeterCreditSubscriber struct {
 	// Creation timestamp of the object.
 	CreatedAt time.Time `json:"created_at"`
 	// Last modification timestamp of the object.
-	ModifiedAt *time.Time                                      `json:"modified_at"`
-	Metadata   map[string]BenefitMeterCreditSubscriberMetadata `json:"metadata"`
-	type_      string                                          `const:"meter_credit" json:"type"`
+	ModifiedAt *time.Time `json:"modified_at"`
+	type_      string     `const:"meter_credit" json:"type"`
 	// The description of the benefit.
 	Description string `json:"description"`
 	// Whether the benefit is selectable when creating a product.
@@ -132,8 +131,9 @@ type BenefitMeterCreditSubscriber struct {
 	// Whether the benefit is deletable.
 	Deletable bool `json:"deletable"`
 	// The ID of the organization owning the benefit.
-	OrganizationID string       `json:"organization_id"`
-	Organization   Organization `json:"organization"`
+	OrganizationID string                                          `json:"organization_id"`
+	Metadata       map[string]BenefitMeterCreditSubscriberMetadata `json:"metadata"`
+	Organization   Organization                                    `json:"organization"`
 	// Properties available to subscribers for a benefit of type `meter_unit`.
 	Properties BenefitMeterCreditSubscriberProperties `json:"properties"`
 }
@@ -170,13 +170,6 @@ func (o *BenefitMeterCreditSubscriber) GetModifiedAt() *time.Time {
 	return o.ModifiedAt
 }
 
-func (o *BenefitMeterCreditSubscriber) GetMetadata() map[string]BenefitMeterCreditSubscriberMetadata {
-	if o == nil {
-		return map[string]BenefitMeterCreditSubscriberMetadata{}
-	}
-	return o.Metadata
-}
-
 func (o *BenefitMeterCreditSubscriber) GetType() string {
 	return "meter_credit"
 }
@@ -207,6 +200,13 @@ func (o *BenefitMeterCreditSubscriber) GetOrganizationID() string {
 		return ""
 	}
 	return o.OrganizationID
+}
+
+func (o *BenefitMeterCreditSubscriber) GetMetadata() map[string]BenefitMeterCreditSubscriberMetadata {
+	if o == nil {
+		return map[string]BenefitMeterCreditSubscriberMetadata{}
+	}
+	return o.Metadata
 }
 
 func (o *BenefitMeterCreditSubscriber) GetOrganization() Organization {
