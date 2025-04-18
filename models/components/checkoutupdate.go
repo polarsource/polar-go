@@ -360,8 +360,10 @@ type CheckoutUpdate struct {
 	// ID of the discount to apply to the checkout.
 	DiscountID *string `json:"discount_id,omitempty"`
 	// Whether to allow the customer to apply discount codes. If you apply a discount through `discount_id`, it'll still be applied, but the customer won't be able to change it.
-	AllowDiscountCodes *bool   `json:"allow_discount_codes,omitempty"`
-	CustomerIPAddress  *string `json:"customer_ip_address,omitempty"`
+	AllowDiscountCodes *bool `json:"allow_discount_codes,omitempty"`
+	// Whether to require the customer to fill their full billing address, instead of just the country. Customers in the US will always be required to fill their full address, regardless of this setting. If you preset the billing address, this setting will be automatically set to `true`.
+	RequireBillingAddress *bool   `json:"require_billing_address,omitempty"`
+	CustomerIPAddress     *string `json:"customer_ip_address,omitempty"`
 	// Key-value object allowing you to store additional information that'll be copied to the created customer.
 	//
 	// The key must be a string with a maximum length of **40 characters**.
@@ -455,6 +457,13 @@ func (o *CheckoutUpdate) GetAllowDiscountCodes() *bool {
 		return nil
 	}
 	return o.AllowDiscountCodes
+}
+
+func (o *CheckoutUpdate) GetRequireBillingAddress() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.RequireBillingAddress
 }
 
 func (o *CheckoutUpdate) GetCustomerIPAddress() *string {

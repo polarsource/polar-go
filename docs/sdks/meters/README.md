@@ -114,9 +114,7 @@ func main() {
         Name: "<value>",
         Filter: components.Filter{
             Conjunction: components.FilterConjunctionAnd,
-            Clauses: []components.Clauses{
-
-            },
+            Clauses: []components.Clauses{},
         },
         Aggregation: components.CreateMeterCreateAggregationAvg(
             components.PropertyAggregation{

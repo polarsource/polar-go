@@ -241,6 +241,8 @@ type CheckoutLink struct {
 	Label *string `json:"label"`
 	// Whether to allow the customer to apply discount codes. If you apply a discount through `discount_id`, it'll still be applied, but the customer won't be able to change it.
 	AllowDiscountCodes bool `json:"allow_discount_codes"`
+	// Whether to require the customer to fill their full billing address, instead of just the country. Customers in the US will always be required to fill their full address, regardless of this setting.
+	RequireBillingAddress bool `json:"require_billing_address"`
 	// ID of the discount to apply to the checkout. If the discount is not applicable anymore when opening the checkout link, it'll be ignored.
 	DiscountID *string `json:"discount_id"`
 	// The organization ID.
@@ -322,6 +324,13 @@ func (o *CheckoutLink) GetAllowDiscountCodes() bool {
 		return false
 	}
 	return o.AllowDiscountCodes
+}
+
+func (o *CheckoutLink) GetRequireBillingAddress() bool {
+	if o == nil {
+		return false
+	}
+	return o.RequireBillingAddress
 }
 
 func (o *CheckoutLink) GetDiscountID() *string {

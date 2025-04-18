@@ -2,7 +2,11 @@
 
 package components
 
-type SubscriptionCancel struct {
+import (
+	"github.com/polarsource/polar-go/internal/utils"
+)
+
+type SubscriptionRevoke struct {
 	// Customer reason for cancellation.
 	//
 	// Helpful to monitor reasons behind churn for future improvements.
@@ -31,29 +35,35 @@ type SubscriptionCancel struct {
 	// customer. Or you copy a message directly from a customer
 	// conversation, i.e support.
 	CustomerCancellationComment *string `json:"customer_cancellation_comment,omitempty"`
-	// Cancel an active subscription once the current period ends.
-	//
-	// Or uncancel a subscription currently set to be revoked at period end.
-	CancelAtPeriodEnd bool `json:"cancel_at_period_end"`
+	// Cancel and revoke an active subscription immediately
+	revoke bool `const:"true" json:"revoke"`
 }
 
-func (o *SubscriptionCancel) GetCustomerCancellationReason() *CustomerCancellationReason {
+func (s SubscriptionRevoke) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SubscriptionRevoke) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *SubscriptionRevoke) GetCustomerCancellationReason() *CustomerCancellationReason {
 	if o == nil {
 		return nil
 	}
 	return o.CustomerCancellationReason
 }
 
-func (o *SubscriptionCancel) GetCustomerCancellationComment() *string {
+func (o *SubscriptionRevoke) GetCustomerCancellationComment() *string {
 	if o == nil {
 		return nil
 	}
 	return o.CustomerCancellationComment
 }
 
-func (o *SubscriptionCancel) GetCancelAtPeriodEnd() bool {
-	if o == nil {
-		return false
-	}
-	return o.CancelAtPeriodEnd
+func (o *SubscriptionRevoke) GetRevoke() bool {
+	return true
 }

@@ -94,6 +94,7 @@ func main() {
 			ProductPriceID:         "<value>",
 			DiscountID:             polargo.String("<value>"),
 			AllowDiscountCodes:     false,
+			RequireBillingAddress:  false,
 			IsDiscountApplicable:   false,
 			IsFreeProductPrice:     false,
 			IsPaymentRequired:      false,
@@ -104,7 +105,7 @@ func main() {
 			CustomerEmail:          polargo.String("<value>"),
 			CustomerIPAddress:      polargo.String("<value>"),
 			CustomerBillingAddress: &components.Address{
-				Country: "FR",
+				Country: "SE",
 			},
 			CustomerTaxID: polargo.String("<id>"),
 			PaymentProcessorMetadata: map[string]string{
@@ -357,6 +358,14 @@ func main() {
 				"key": components.CreateCustomerMetadataBoolean(
 					true,
 				),
+			},
+			CustomerBillingAddressFields: components.CheckoutCustomerBillingAddressFields{
+				Country:    true,
+				State:      false,
+				City:       true,
+				PostalCode: false,
+				Line1:      false,
+				Line2:      false,
 			},
 		},
 	})

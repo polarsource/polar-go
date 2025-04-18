@@ -332,6 +332,8 @@ type CheckoutPublicConfirmed struct {
 	DiscountID *string `json:"discount_id"`
 	// Whether to allow the customer to apply discount codes. If you apply a discount through `discount_id`, it'll still be applied, but the customer won't be able to change it.
 	AllowDiscountCodes bool `json:"allow_discount_codes"`
+	// Whether to require the customer to fill their full billing address, instead of just the country. Customers in the US will always be required to fill their full address, regardless of this setting. If you preset the billing address, this setting will be automatically set to `true`.
+	RequireBillingAddress bool `json:"require_billing_address"`
 	// Whether the discount is applicable to the checkout. Typically, free and custom prices are not discountable.
 	IsDiscountApplicable bool `json:"is_discount_applicable"`
 	// Whether the product price is free, regardless of discounts.
@@ -356,11 +358,12 @@ type CheckoutPublicConfirmed struct {
 	// Product data for a checkout session.
 	Product CheckoutProduct `json:"product"`
 	// Price of the selected product.
-	ProductPrice         CheckoutPublicConfirmedProductPrice `json:"product_price"`
-	Discount             *CheckoutPublicConfirmedDiscount    `json:"discount"`
-	Organization         Organization                        `json:"organization"`
-	AttachedCustomFields []AttachedCustomField               `json:"attached_custom_fields"`
-	CustomerSessionToken string                              `json:"customer_session_token"`
+	ProductPrice                 CheckoutPublicConfirmedProductPrice  `json:"product_price"`
+	Discount                     *CheckoutPublicConfirmedDiscount     `json:"discount"`
+	Organization                 Organization                         `json:"organization"`
+	AttachedCustomFields         []AttachedCustomField                `json:"attached_custom_fields"`
+	CustomerSessionToken         string                               `json:"customer_session_token"`
+	CustomerBillingAddressFields CheckoutCustomerBillingAddressFields `json:"customer_billing_address_fields"`
 }
 
 func (c CheckoutPublicConfirmed) MarshalJSON() ([]byte, error) {
@@ -518,6 +521,13 @@ func (o *CheckoutPublicConfirmed) GetAllowDiscountCodes() bool {
 	return o.AllowDiscountCodes
 }
 
+func (o *CheckoutPublicConfirmed) GetRequireBillingAddress() bool {
+	if o == nil {
+		return false
+	}
+	return o.RequireBillingAddress
+}
+
 func (o *CheckoutPublicConfirmed) GetIsDiscountApplicable() bool {
 	if o == nil {
 		return false
@@ -649,4 +659,11 @@ func (o *CheckoutPublicConfirmed) GetCustomerSessionToken() string {
 		return ""
 	}
 	return o.CustomerSessionToken
+}
+
+func (o *CheckoutPublicConfirmed) GetCustomerBillingAddressFields() CheckoutCustomerBillingAddressFields {
+	if o == nil {
+		return CheckoutCustomerBillingAddressFields{}
+	}
+	return o.CustomerBillingAddressFields
 }

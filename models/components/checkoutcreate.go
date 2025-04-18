@@ -353,8 +353,10 @@ type CheckoutCreate struct {
 	// ID of the discount to apply to the checkout.
 	DiscountID *string `json:"discount_id,omitempty"`
 	// Whether to allow the customer to apply discount codes. If you apply a discount through `discount_id`, it'll still be applied, but the customer won't be able to change it.
-	AllowDiscountCodes *bool  `default:"true" json:"allow_discount_codes"`
-	Amount             *int64 `json:"amount,omitempty"`
+	AllowDiscountCodes *bool `default:"true" json:"allow_discount_codes"`
+	// Whether to require the customer to fill their full billing address, instead of just the country. Customers in the US will always be required to fill their full address, regardless of this setting. If you preset the billing address, this setting will be automatically set to `true`.
+	RequireBillingAddress *bool  `default:"false" json:"require_billing_address"`
+	Amount                *int64 `json:"amount,omitempty"`
 	// ID of an existing customer in the organization. The customer data will be pre-filled in the checkout form. The resulting order will be linked to this customer.
 	CustomerID *string `json:"customer_id,omitempty"`
 	// ID of the customer in your system. If a matching customer exists on Polar, the resulting order will be linked to this customer. Otherwise, a new customer will be created with this external ID set.
@@ -423,6 +425,13 @@ func (o *CheckoutCreate) GetAllowDiscountCodes() *bool {
 		return nil
 	}
 	return o.AllowDiscountCodes
+}
+
+func (o *CheckoutCreate) GetRequireBillingAddress() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.RequireBillingAddress
 }
 
 func (o *CheckoutCreate) GetAmount() *int64 {

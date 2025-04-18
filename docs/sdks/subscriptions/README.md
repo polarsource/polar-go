@@ -225,7 +225,9 @@ func main() {
     )
 
     res, err := s.Subscriptions.Update(ctx, "<value>", components.CreateSubscriptionUpdateSubscriptionCancel(
-        components.SubscriptionCancel{},
+        components.SubscriptionCancel{
+            CancelAtPeriodEnd: false,
+        },
     ))
     if err != nil {
         log.Fatal(err)

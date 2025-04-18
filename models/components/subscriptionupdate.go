@@ -13,11 +13,13 @@ type SubscriptionUpdateType string
 const (
 	SubscriptionUpdateTypeSubscriptionUpdateProduct SubscriptionUpdateType = "SubscriptionUpdateProduct"
 	SubscriptionUpdateTypeSubscriptionCancel        SubscriptionUpdateType = "SubscriptionCancel"
+	SubscriptionUpdateTypeSubscriptionRevoke        SubscriptionUpdateType = "SubscriptionRevoke"
 )
 
 type SubscriptionUpdate struct {
 	SubscriptionUpdateProduct *SubscriptionUpdateProduct `queryParam:"inline"`
 	SubscriptionCancel        *SubscriptionCancel        `queryParam:"inline"`
+	SubscriptionRevoke        *SubscriptionRevoke        `queryParam:"inline"`
 
 	Type SubscriptionUpdateType
 }
@@ -40,6 +42,15 @@ func CreateSubscriptionUpdateSubscriptionCancel(subscriptionCancel SubscriptionC
 	}
 }
 
+func CreateSubscriptionUpdateSubscriptionRevoke(subscriptionRevoke SubscriptionRevoke) SubscriptionUpdate {
+	typ := SubscriptionUpdateTypeSubscriptionRevoke
+
+	return SubscriptionUpdate{
+		SubscriptionRevoke: &subscriptionRevoke,
+		Type:               typ,
+	}
+}
+
 func (u *SubscriptionUpdate) UnmarshalJSON(data []byte) error {
 
 	var subscriptionUpdateProduct SubscriptionUpdateProduct = SubscriptionUpdateProduct{}
@@ -56,6 +67,13 @@ func (u *SubscriptionUpdate) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
+	var subscriptionRevoke SubscriptionRevoke = SubscriptionRevoke{}
+	if err := utils.UnmarshalJSON(data, &subscriptionRevoke, "", true, true); err == nil {
+		u.SubscriptionRevoke = &subscriptionRevoke
+		u.Type = SubscriptionUpdateTypeSubscriptionRevoke
+		return nil
+	}
+
 	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SubscriptionUpdate", string(data))
 }
 
@@ -66,6 +84,10 @@ func (u SubscriptionUpdate) MarshalJSON() ([]byte, error) {
 
 	if u.SubscriptionCancel != nil {
 		return utils.MarshalJSON(u.SubscriptionCancel, "", true)
+	}
+
+	if u.SubscriptionRevoke != nil {
+		return utils.MarshalJSON(u.SubscriptionRevoke, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type SubscriptionUpdate: all fields are null")
