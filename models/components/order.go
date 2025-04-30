@@ -331,16 +331,13 @@ func (u OrderDiscount) MarshalJSON() ([]byte, error) {
 }
 
 type Order struct {
+	// The ID of the object.
+	ID string `json:"id"`
 	// Creation timestamp of the object.
 	CreatedAt time.Time `json:"created_at"`
 	// Last modification timestamp of the object.
-	ModifiedAt *time.Time `json:"modified_at"`
-	// The ID of the object.
-	ID       string                   `json:"id"`
-	Metadata map[string]OrderMetadata `json:"metadata"`
-	// Key-value object storing custom field values.
-	CustomFieldData map[string]*OrderCustomFieldData `json:"custom_field_data,omitempty"`
-	Status          OrderStatus                      `json:"status"`
+	ModifiedAt *time.Time  `json:"modified_at"`
+	Status     OrderStatus `json:"status"`
 	// Whether the order has been paid for.
 	Paid bool `json:"paid"`
 	// Amount in cents, before discounts and taxes.
@@ -360,16 +357,19 @@ type Order struct {
 	// Amount refunded in cents.
 	RefundedAmount int64 `json:"refunded_amount"`
 	// Sales tax refunded in cents.
-	RefundedTaxAmount int64              `json:"refunded_tax_amount"`
-	Currency          string             `json:"currency"`
-	BillingReason     OrderBillingReason `json:"billing_reason"`
-	BillingAddress    *Address           `json:"billing_address"`
-	CustomerID        string             `json:"customer_id"`
-	ProductID         string             `json:"product_id"`
-	DiscountID        *string            `json:"discount_id"`
-	SubscriptionID    *string            `json:"subscription_id"`
-	CheckoutID        *string            `json:"checkout_id"`
-	Customer          OrderCustomer      `json:"customer"`
+	RefundedTaxAmount int64                    `json:"refunded_tax_amount"`
+	Currency          string                   `json:"currency"`
+	BillingReason     OrderBillingReason       `json:"billing_reason"`
+	BillingAddress    *Address                 `json:"billing_address"`
+	CustomerID        string                   `json:"customer_id"`
+	ProductID         string                   `json:"product_id"`
+	DiscountID        *string                  `json:"discount_id"`
+	SubscriptionID    *string                  `json:"subscription_id"`
+	CheckoutID        *string                  `json:"checkout_id"`
+	Metadata          map[string]OrderMetadata `json:"metadata"`
+	// Key-value object storing custom field values.
+	CustomFieldData map[string]*OrderCustomFieldData `json:"custom_field_data,omitempty"`
+	Customer        OrderCustomer                    `json:"customer"`
 	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
 	UserID       string             `json:"user_id"`
 	Product      OrderProduct       `json:"product"`
@@ -390,6 +390,13 @@ func (o *Order) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (o *Order) GetID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ID
+}
+
 func (o *Order) GetCreatedAt() time.Time {
 	if o == nil {
 		return time.Time{}
@@ -402,27 +409,6 @@ func (o *Order) GetModifiedAt() *time.Time {
 		return nil
 	}
 	return o.ModifiedAt
-}
-
-func (o *Order) GetID() string {
-	if o == nil {
-		return ""
-	}
-	return o.ID
-}
-
-func (o *Order) GetMetadata() map[string]OrderMetadata {
-	if o == nil {
-		return map[string]OrderMetadata{}
-	}
-	return o.Metadata
-}
-
-func (o *Order) GetCustomFieldData() map[string]*OrderCustomFieldData {
-	if o == nil {
-		return nil
-	}
-	return o.CustomFieldData
 }
 
 func (o *Order) GetStatus() OrderStatus {
@@ -549,6 +535,20 @@ func (o *Order) GetCheckoutID() *string {
 		return nil
 	}
 	return o.CheckoutID
+}
+
+func (o *Order) GetMetadata() map[string]OrderMetadata {
+	if o == nil {
+		return map[string]OrderMetadata{}
+	}
+	return o.Metadata
+}
+
+func (o *Order) GetCustomFieldData() map[string]*OrderCustomFieldData {
+	if o == nil {
+		return nil
+	}
+	return o.CustomFieldData
 }
 
 func (o *Order) GetCustomer() OrderCustomer {

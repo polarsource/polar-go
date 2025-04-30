@@ -8,8 +8,8 @@ import (
 
 type CustomersUpdateExternalRequest struct {
 	// The customer external ID.
-	ExternalID     string                    `pathParam:"style=simple,explode=false,name=external_id"`
-	CustomerUpdate components.CustomerUpdate `request:"mediaType=application/json"`
+	ExternalID               string                              `pathParam:"style=simple,explode=false,name=external_id"`
+	CustomerUpdateExternalID components.CustomerUpdateExternalID `request:"mediaType=application/json"`
 }
 
 func (o *CustomersUpdateExternalRequest) GetExternalID() string {
@@ -19,11 +19,11 @@ func (o *CustomersUpdateExternalRequest) GetExternalID() string {
 	return o.ExternalID
 }
 
-func (o *CustomersUpdateExternalRequest) GetCustomerUpdate() components.CustomerUpdate {
+func (o *CustomersUpdateExternalRequest) GetCustomerUpdateExternalID() components.CustomerUpdateExternalID {
 	if o == nil {
-		return components.CustomerUpdate{}
+		return components.CustomerUpdateExternalID{}
 	}
-	return o.CustomerUpdate
+	return o.CustomerUpdateExternalID
 }
 
 type CustomersUpdateExternalResponse struct {

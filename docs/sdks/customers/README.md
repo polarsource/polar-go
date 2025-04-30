@@ -242,7 +242,6 @@ func main() {
     )
 
     res, err := s.Customers.Update(ctx, "<value>", components.CustomerUpdate{
-        ExternalID: polargo.String("usr_1337"),
         Email: polargo.String("customer@example.com"),
         Name: polargo.String("John Doe"),
         BillingAddress: &components.Address{
@@ -256,6 +255,7 @@ func main() {
                 "eu_vat",
             )),
         },
+        ExternalID: polargo.String("usr_1337"),
     })
     if err != nil {
         log.Fatal(err)
@@ -435,18 +435,17 @@ func main() {
         polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )
 
-    res, err := s.Customers.UpdateExternal(ctx, "<id>", components.CustomerUpdate{
-        ExternalID: polargo.String("usr_1337"),
+    res, err := s.Customers.UpdateExternal(ctx, "<id>", components.CustomerUpdateExternalID{
         Email: polargo.String("customer@example.com"),
         Name: polargo.String("John Doe"),
         BillingAddress: &components.Address{
             Country: "US",
         },
-        TaxID: []*components.CustomerUpdateTaxID{
-            polargo.Pointer(components.CreateCustomerUpdateTaxIDStr(
+        TaxID: []*components.CustomerUpdateExternalIDTaxID{
+            polargo.Pointer(components.CreateCustomerUpdateExternalIDTaxIDStr(
                 "FR61954506077",
             )),
-            polargo.Pointer(components.CreateCustomerUpdateTaxIDStr(
+            polargo.Pointer(components.CreateCustomerUpdateExternalIDTaxIDStr(
                 "eu_vat",
             )),
         },
@@ -462,12 +461,12 @@ func main() {
 
 ### Parameters
 
-| Parameter                                                              | Type                                                                   | Required                                                               | Description                                                            |
-| ---------------------------------------------------------------------- | ---------------------------------------------------------------------- | ---------------------------------------------------------------------- | ---------------------------------------------------------------------- |
-| `ctx`                                                                  | [context.Context](https://pkg.go.dev/context#Context)                  | :heavy_check_mark:                                                     | The context to use for the request.                                    |
-| `externalID`                                                           | *string*                                                               | :heavy_check_mark:                                                     | The customer external ID.                                              |
-| `customerUpdate`                                                       | [components.CustomerUpdate](../../models/components/customerupdate.md) | :heavy_check_mark:                                                     | N/A                                                                    |
-| `opts`                                                                 | [][operations.Option](../../models/operations/option.md)               | :heavy_minus_sign:                                                     | The options for this request.                                          |
+| Parameter                                                                                  | Type                                                                                       | Required                                                                                   | Description                                                                                |
+| ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ |
+| `ctx`                                                                                      | [context.Context](https://pkg.go.dev/context#Context)                                      | :heavy_check_mark:                                                                         | The context to use for the request.                                                        |
+| `externalID`                                                                               | *string*                                                                                   | :heavy_check_mark:                                                                         | The customer external ID.                                                                  |
+| `customerUpdateExternalID`                                                                 | [components.CustomerUpdateExternalID](../../models/components/customerupdateexternalid.md) | :heavy_check_mark:                                                                         | N/A                                                                                        |
+| `opts`                                                                                     | [][operations.Option](../../models/operations/option.md)                                   | :heavy_minus_sign:                                                                         | The options for this request.                                                              |
 
 ### Response
 

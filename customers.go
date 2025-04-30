@@ -1560,10 +1560,10 @@ func (s *Customers) GetExternal(ctx context.Context, externalID string, opts ...
 // Update a customer by external ID.
 //
 // **Scopes**: `customers:write`
-func (s *Customers) UpdateExternal(ctx context.Context, externalID string, customerUpdate components.CustomerUpdate, opts ...operations.Option) (*operations.CustomersUpdateExternalResponse, error) {
+func (s *Customers) UpdateExternal(ctx context.Context, externalID string, customerUpdateExternalID components.CustomerUpdateExternalID, opts ...operations.Option) (*operations.CustomersUpdateExternalResponse, error) {
 	request := operations.CustomersUpdateExternalRequest{
-		ExternalID:     externalID,
-		CustomerUpdate: customerUpdate,
+		ExternalID:               externalID,
+		CustomerUpdateExternalID: customerUpdateExternalID,
 	}
 
 	o := operations.Options{}
@@ -1596,7 +1596,7 @@ func (s *Customers) UpdateExternal(ctx context.Context, externalID string, custo
 		OAuth2Scopes:   []string{},
 		SecuritySource: s.sdkConfiguration.Security,
 	}
-	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "CustomerUpdate", "json", `request:"mediaType=application/json"`)
+	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "CustomerUpdateExternalID", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
 	}

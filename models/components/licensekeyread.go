@@ -8,7 +8,12 @@ import (
 )
 
 type LicenseKeyRead struct {
-	ID             string             `json:"id"`
+	// The ID of the object.
+	ID string `json:"id"`
+	// Creation timestamp of the object.
+	CreatedAt time.Time `json:"created_at"`
+	// Last modification timestamp of the object.
+	ModifiedAt     *time.Time         `json:"modified_at"`
 	OrganizationID string             `json:"organization_id"`
 	CustomerID     string             `json:"customer_id"`
 	Customer       LicenseKeyCustomer `json:"customer"`
@@ -41,6 +46,20 @@ func (o *LicenseKeyRead) GetID() string {
 		return ""
 	}
 	return o.ID
+}
+
+func (o *LicenseKeyRead) GetCreatedAt() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.CreatedAt
+}
+
+func (o *LicenseKeyRead) GetModifiedAt() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.ModifiedAt
 }
 
 func (o *LicenseKeyRead) GetOrganizationID() string {

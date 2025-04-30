@@ -8,11 +8,12 @@ import (
 )
 
 type CustomerOrder struct {
+	// The ID of the object.
+	ID string `json:"id"`
 	// Creation timestamp of the object.
 	CreatedAt time.Time `json:"created_at"`
 	// Last modification timestamp of the object.
 	ModifiedAt *time.Time  `json:"modified_at"`
-	ID         string      `json:"id"`
 	Status     OrderStatus `json:"status"`
 	// Whether the order has been paid for.
 	Paid bool `json:"paid"`
@@ -22,6 +23,10 @@ type CustomerOrder struct {
 	DiscountAmount int64 `json:"discount_amount"`
 	// Amount in cents, after discounts but before taxes.
 	NetAmount int64 `json:"net_amount"`
+	// Amount in cents, after discounts but before taxes.
+	//
+	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
+	Amount int64 `json:"amount"`
 	// Sales tax amount in cents.
 	TaxAmount int64 `json:"tax_amount"`
 	// Amount in cents, after discounts and taxes.
@@ -29,11 +34,15 @@ type CustomerOrder struct {
 	// Amount refunded in cents.
 	RefundedAmount int64 `json:"refunded_amount"`
 	// Sales tax refunded in cents.
-	RefundedTaxAmount int64   `json:"refunded_tax_amount"`
-	Currency          string  `json:"currency"`
-	CustomerID        string  `json:"customer_id"`
-	ProductID         string  `json:"product_id"`
-	SubscriptionID    *string `json:"subscription_id"`
+	RefundedTaxAmount int64              `json:"refunded_tax_amount"`
+	Currency          string             `json:"currency"`
+	BillingReason     OrderBillingReason `json:"billing_reason"`
+	BillingAddress    *Address           `json:"billing_address"`
+	CustomerID        string             `json:"customer_id"`
+	ProductID         string             `json:"product_id"`
+	DiscountID        *string            `json:"discount_id"`
+	SubscriptionID    *string            `json:"subscription_id"`
+	CheckoutID        *string            `json:"checkout_id"`
 	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
 	UserID       string                     `json:"user_id"`
 	Product      CustomerOrderProduct       `json:"product"`
@@ -53,6 +62,13 @@ func (c *CustomerOrder) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (o *CustomerOrder) GetID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ID
+}
+
 func (o *CustomerOrder) GetCreatedAt() time.Time {
 	if o == nil {
 		return time.Time{}
@@ -65,13 +81,6 @@ func (o *CustomerOrder) GetModifiedAt() *time.Time {
 		return nil
 	}
 	return o.ModifiedAt
-}
-
-func (o *CustomerOrder) GetID() string {
-	if o == nil {
-		return ""
-	}
-	return o.ID
 }
 
 func (o *CustomerOrder) GetStatus() OrderStatus {
@@ -109,6 +118,13 @@ func (o *CustomerOrder) GetNetAmount() int64 {
 	return o.NetAmount
 }
 
+func (o *CustomerOrder) GetAmount() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.Amount
+}
+
 func (o *CustomerOrder) GetTaxAmount() int64 {
 	if o == nil {
 		return 0
@@ -144,6 +160,20 @@ func (o *CustomerOrder) GetCurrency() string {
 	return o.Currency
 }
 
+func (o *CustomerOrder) GetBillingReason() OrderBillingReason {
+	if o == nil {
+		return OrderBillingReason("")
+	}
+	return o.BillingReason
+}
+
+func (o *CustomerOrder) GetBillingAddress() *Address {
+	if o == nil {
+		return nil
+	}
+	return o.BillingAddress
+}
+
 func (o *CustomerOrder) GetCustomerID() string {
 	if o == nil {
 		return ""
@@ -158,11 +188,25 @@ func (o *CustomerOrder) GetProductID() string {
 	return o.ProductID
 }
 
+func (o *CustomerOrder) GetDiscountID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.DiscountID
+}
+
 func (o *CustomerOrder) GetSubscriptionID() *string {
 	if o == nil {
 		return nil
 	}
 	return o.SubscriptionID
+}
+
+func (o *CustomerOrder) GetCheckoutID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.CheckoutID
 }
 
 func (o *CustomerOrder) GetUserID() string {
