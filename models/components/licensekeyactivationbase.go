@@ -3,20 +3,126 @@
 package components
 
 import (
+	"errors"
+	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
 	"time"
 )
 
+type MetaType string
+
+const (
+	MetaTypeStr     MetaType = "str"
+	MetaTypeInteger MetaType = "integer"
+	MetaTypeNumber  MetaType = "number"
+	MetaTypeBoolean MetaType = "boolean"
+)
+
 type Meta struct {
+	Str     *string  `queryParam:"inline"`
+	Integer *int64   `queryParam:"inline"`
+	Number  *float64 `queryParam:"inline"`
+	Boolean *bool    `queryParam:"inline"`
+
+	Type MetaType
+}
+
+func CreateMetaStr(str string) Meta {
+	typ := MetaTypeStr
+
+	return Meta{
+		Str:  &str,
+		Type: typ,
+	}
+}
+
+func CreateMetaInteger(integer int64) Meta {
+	typ := MetaTypeInteger
+
+	return Meta{
+		Integer: &integer,
+		Type:    typ,
+	}
+}
+
+func CreateMetaNumber(number float64) Meta {
+	typ := MetaTypeNumber
+
+	return Meta{
+		Number: &number,
+		Type:   typ,
+	}
+}
+
+func CreateMetaBoolean(boolean bool) Meta {
+	typ := MetaTypeBoolean
+
+	return Meta{
+		Boolean: &boolean,
+		Type:    typ,
+	}
+}
+
+func (u *Meta) UnmarshalJSON(data []byte) error {
+
+	var str string = ""
+	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
+		u.Str = &str
+		u.Type = MetaTypeStr
+		return nil
+	}
+
+	var integer int64 = int64(0)
+	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
+		u.Integer = &integer
+		u.Type = MetaTypeInteger
+		return nil
+	}
+
+	var number float64 = float64(0)
+	if err := utils.UnmarshalJSON(data, &number, "", true, true); err == nil {
+		u.Number = &number
+		u.Type = MetaTypeNumber
+		return nil
+	}
+
+	var boolean bool = false
+	if err := utils.UnmarshalJSON(data, &boolean, "", true, true); err == nil {
+		u.Boolean = &boolean
+		u.Type = MetaTypeBoolean
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for Meta", string(data))
+}
+
+func (u Meta) MarshalJSON() ([]byte, error) {
+	if u.Str != nil {
+		return utils.MarshalJSON(u.Str, "", true)
+	}
+
+	if u.Integer != nil {
+		return utils.MarshalJSON(u.Integer, "", true)
+	}
+
+	if u.Number != nil {
+		return utils.MarshalJSON(u.Number, "", true)
+	}
+
+	if u.Boolean != nil {
+		return utils.MarshalJSON(u.Boolean, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type Meta: all fields are null")
 }
 
 type LicenseKeyActivationBase struct {
-	ID           string     `json:"id"`
-	LicenseKeyID string     `json:"license_key_id"`
-	Label        string     `json:"label"`
-	Meta         Meta       `json:"meta"`
-	CreatedAt    time.Time  `json:"created_at"`
-	ModifiedAt   *time.Time `json:"modified_at"`
+	ID           string          `json:"id"`
+	LicenseKeyID string          `json:"license_key_id"`
+	Label        string          `json:"label"`
+	Meta         map[string]Meta `json:"meta"`
+	CreatedAt    time.Time       `json:"created_at"`
+	ModifiedAt   *time.Time      `json:"modified_at"`
 }
 
 func (l LicenseKeyActivationBase) MarshalJSON() ([]byte, error) {
@@ -51,9 +157,9 @@ func (o *LicenseKeyActivationBase) GetLabel() string {
 	return o.Label
 }
 
-func (o *LicenseKeyActivationBase) GetMeta() Meta {
+func (o *LicenseKeyActivationBase) GetMeta() map[string]Meta {
 	if o == nil {
-		return Meta{}
+		return map[string]Meta{}
 	}
 	return o.Meta
 }

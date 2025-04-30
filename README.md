@@ -105,7 +105,7 @@ func main() {
 			CustomerEmail:          polargo.String("<value>"),
 			CustomerIPAddress:      polargo.String("<value>"),
 			CustomerBillingAddress: &components.Address{
-				Country: "SE",
+				Country: "FR",
 			},
 			CustomerTaxID: polargo.String("<id>"),
 			PaymentProcessorMetadata: map[string]string{

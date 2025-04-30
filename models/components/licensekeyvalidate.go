@@ -2,17 +2,138 @@
 
 package components
 
+import (
+	"errors"
+	"fmt"
+	"github.com/polarsource/polar-go/internal/utils"
+)
+
+type ConditionsType string
+
+const (
+	ConditionsTypeStr     ConditionsType = "str"
+	ConditionsTypeInteger ConditionsType = "integer"
+	ConditionsTypeNumber  ConditionsType = "number"
+	ConditionsTypeBoolean ConditionsType = "boolean"
+)
+
 type Conditions struct {
+	Str     *string  `queryParam:"inline"`
+	Integer *int64   `queryParam:"inline"`
+	Number  *float64 `queryParam:"inline"`
+	Boolean *bool    `queryParam:"inline"`
+
+	Type ConditionsType
+}
+
+func CreateConditionsStr(str string) Conditions {
+	typ := ConditionsTypeStr
+
+	return Conditions{
+		Str:  &str,
+		Type: typ,
+	}
+}
+
+func CreateConditionsInteger(integer int64) Conditions {
+	typ := ConditionsTypeInteger
+
+	return Conditions{
+		Integer: &integer,
+		Type:    typ,
+	}
+}
+
+func CreateConditionsNumber(number float64) Conditions {
+	typ := ConditionsTypeNumber
+
+	return Conditions{
+		Number: &number,
+		Type:   typ,
+	}
+}
+
+func CreateConditionsBoolean(boolean bool) Conditions {
+	typ := ConditionsTypeBoolean
+
+	return Conditions{
+		Boolean: &boolean,
+		Type:    typ,
+	}
+}
+
+func (u *Conditions) UnmarshalJSON(data []byte) error {
+
+	var str string = ""
+	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
+		u.Str = &str
+		u.Type = ConditionsTypeStr
+		return nil
+	}
+
+	var integer int64 = int64(0)
+	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
+		u.Integer = &integer
+		u.Type = ConditionsTypeInteger
+		return nil
+	}
+
+	var number float64 = float64(0)
+	if err := utils.UnmarshalJSON(data, &number, "", true, true); err == nil {
+		u.Number = &number
+		u.Type = ConditionsTypeNumber
+		return nil
+	}
+
+	var boolean bool = false
+	if err := utils.UnmarshalJSON(data, &boolean, "", true, true); err == nil {
+		u.Boolean = &boolean
+		u.Type = ConditionsTypeBoolean
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for Conditions", string(data))
+}
+
+func (u Conditions) MarshalJSON() ([]byte, error) {
+	if u.Str != nil {
+		return utils.MarshalJSON(u.Str, "", true)
+	}
+
+	if u.Integer != nil {
+		return utils.MarshalJSON(u.Integer, "", true)
+	}
+
+	if u.Number != nil {
+		return utils.MarshalJSON(u.Number, "", true)
+	}
+
+	if u.Boolean != nil {
+		return utils.MarshalJSON(u.Boolean, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type Conditions: all fields are null")
 }
 
 type LicenseKeyValidate struct {
-	Key            string      `json:"key"`
-	OrganizationID string      `json:"organization_id"`
-	ActivationID   *string     `json:"activation_id,omitempty"`
-	BenefitID      *string     `json:"benefit_id,omitempty"`
-	CustomerID     *string     `json:"customer_id,omitempty"`
-	IncrementUsage *int64      `json:"increment_usage,omitempty"`
-	Conditions     *Conditions `json:"conditions,omitempty"`
+	Key            string  `json:"key"`
+	OrganizationID string  `json:"organization_id"`
+	ActivationID   *string `json:"activation_id,omitempty"`
+	BenefitID      *string `json:"benefit_id,omitempty"`
+	CustomerID     *string `json:"customer_id,omitempty"`
+	IncrementUsage *int64  `json:"increment_usage,omitempty"`
+	// Key-value object allowing you to set conditions that must match when validating the license key.
+	//
+	// The key must be a string with a maximum length of **40 characters**.
+	// The value must be either:
+	//
+	// * A string with a maximum length of **500 characters**
+	// * An integer
+	// * A floating-point number
+	// * A boolean
+	//
+	// You can store up to **50 key-value pairs**.
+	Conditions map[string]Conditions `json:"conditions,omitempty"`
 }
 
 func (o *LicenseKeyValidate) GetKey() string {
@@ -57,7 +178,7 @@ func (o *LicenseKeyValidate) GetIncrementUsage() *int64 {
 	return o.IncrementUsage
 }
 
-func (o *LicenseKeyValidate) GetConditions() *Conditions {
+func (o *LicenseKeyValidate) GetConditions() map[string]Conditions {
 	if o == nil {
 		return nil
 	}

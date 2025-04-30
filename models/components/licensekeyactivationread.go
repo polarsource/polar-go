@@ -3,21 +3,127 @@
 package components
 
 import (
+	"errors"
+	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
 	"time"
 )
 
+type LicenseKeyActivationReadMetaType string
+
+const (
+	LicenseKeyActivationReadMetaTypeStr     LicenseKeyActivationReadMetaType = "str"
+	LicenseKeyActivationReadMetaTypeInteger LicenseKeyActivationReadMetaType = "integer"
+	LicenseKeyActivationReadMetaTypeNumber  LicenseKeyActivationReadMetaType = "number"
+	LicenseKeyActivationReadMetaTypeBoolean LicenseKeyActivationReadMetaType = "boolean"
+)
+
 type LicenseKeyActivationReadMeta struct {
+	Str     *string  `queryParam:"inline"`
+	Integer *int64   `queryParam:"inline"`
+	Number  *float64 `queryParam:"inline"`
+	Boolean *bool    `queryParam:"inline"`
+
+	Type LicenseKeyActivationReadMetaType
+}
+
+func CreateLicenseKeyActivationReadMetaStr(str string) LicenseKeyActivationReadMeta {
+	typ := LicenseKeyActivationReadMetaTypeStr
+
+	return LicenseKeyActivationReadMeta{
+		Str:  &str,
+		Type: typ,
+	}
+}
+
+func CreateLicenseKeyActivationReadMetaInteger(integer int64) LicenseKeyActivationReadMeta {
+	typ := LicenseKeyActivationReadMetaTypeInteger
+
+	return LicenseKeyActivationReadMeta{
+		Integer: &integer,
+		Type:    typ,
+	}
+}
+
+func CreateLicenseKeyActivationReadMetaNumber(number float64) LicenseKeyActivationReadMeta {
+	typ := LicenseKeyActivationReadMetaTypeNumber
+
+	return LicenseKeyActivationReadMeta{
+		Number: &number,
+		Type:   typ,
+	}
+}
+
+func CreateLicenseKeyActivationReadMetaBoolean(boolean bool) LicenseKeyActivationReadMeta {
+	typ := LicenseKeyActivationReadMetaTypeBoolean
+
+	return LicenseKeyActivationReadMeta{
+		Boolean: &boolean,
+		Type:    typ,
+	}
+}
+
+func (u *LicenseKeyActivationReadMeta) UnmarshalJSON(data []byte) error {
+
+	var str string = ""
+	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
+		u.Str = &str
+		u.Type = LicenseKeyActivationReadMetaTypeStr
+		return nil
+	}
+
+	var integer int64 = int64(0)
+	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
+		u.Integer = &integer
+		u.Type = LicenseKeyActivationReadMetaTypeInteger
+		return nil
+	}
+
+	var number float64 = float64(0)
+	if err := utils.UnmarshalJSON(data, &number, "", true, true); err == nil {
+		u.Number = &number
+		u.Type = LicenseKeyActivationReadMetaTypeNumber
+		return nil
+	}
+
+	var boolean bool = false
+	if err := utils.UnmarshalJSON(data, &boolean, "", true, true); err == nil {
+		u.Boolean = &boolean
+		u.Type = LicenseKeyActivationReadMetaTypeBoolean
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for LicenseKeyActivationReadMeta", string(data))
+}
+
+func (u LicenseKeyActivationReadMeta) MarshalJSON() ([]byte, error) {
+	if u.Str != nil {
+		return utils.MarshalJSON(u.Str, "", true)
+	}
+
+	if u.Integer != nil {
+		return utils.MarshalJSON(u.Integer, "", true)
+	}
+
+	if u.Number != nil {
+		return utils.MarshalJSON(u.Number, "", true)
+	}
+
+	if u.Boolean != nil {
+		return utils.MarshalJSON(u.Boolean, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type LicenseKeyActivationReadMeta: all fields are null")
 }
 
 type LicenseKeyActivationRead struct {
-	ID           string                       `json:"id"`
-	LicenseKeyID string                       `json:"license_key_id"`
-	Label        string                       `json:"label"`
-	Meta         LicenseKeyActivationReadMeta `json:"meta"`
-	CreatedAt    time.Time                    `json:"created_at"`
-	ModifiedAt   *time.Time                   `json:"modified_at"`
-	LicenseKey   LicenseKeyRead               `json:"license_key"`
+	ID           string                                  `json:"id"`
+	LicenseKeyID string                                  `json:"license_key_id"`
+	Label        string                                  `json:"label"`
+	Meta         map[string]LicenseKeyActivationReadMeta `json:"meta"`
+	CreatedAt    time.Time                               `json:"created_at"`
+	ModifiedAt   *time.Time                              `json:"modified_at"`
+	LicenseKey   LicenseKeyRead                          `json:"license_key"`
 }
 
 func (l LicenseKeyActivationRead) MarshalJSON() ([]byte, error) {
@@ -52,9 +158,9 @@ func (o *LicenseKeyActivationRead) GetLabel() string {
 	return o.Label
 }
 
-func (o *LicenseKeyActivationRead) GetMeta() LicenseKeyActivationReadMeta {
+func (o *LicenseKeyActivationRead) GetMeta() map[string]LicenseKeyActivationReadMeta {
 	if o == nil {
-		return LicenseKeyActivationReadMeta{}
+		return map[string]LicenseKeyActivationReadMeta{}
 	}
 	return o.Meta
 }

@@ -2,18 +2,254 @@
 
 package components
 
+import (
+	"errors"
+	"fmt"
+	"github.com/polarsource/polar-go/internal/utils"
+)
+
+type LicenseKeyActivateConditionsType string
+
+const (
+	LicenseKeyActivateConditionsTypeStr     LicenseKeyActivateConditionsType = "str"
+	LicenseKeyActivateConditionsTypeInteger LicenseKeyActivateConditionsType = "integer"
+	LicenseKeyActivateConditionsTypeNumber  LicenseKeyActivateConditionsType = "number"
+	LicenseKeyActivateConditionsTypeBoolean LicenseKeyActivateConditionsType = "boolean"
+)
+
 type LicenseKeyActivateConditions struct {
+	Str     *string  `queryParam:"inline"`
+	Integer *int64   `queryParam:"inline"`
+	Number  *float64 `queryParam:"inline"`
+	Boolean *bool    `queryParam:"inline"`
+
+	Type LicenseKeyActivateConditionsType
 }
 
+func CreateLicenseKeyActivateConditionsStr(str string) LicenseKeyActivateConditions {
+	typ := LicenseKeyActivateConditionsTypeStr
+
+	return LicenseKeyActivateConditions{
+		Str:  &str,
+		Type: typ,
+	}
+}
+
+func CreateLicenseKeyActivateConditionsInteger(integer int64) LicenseKeyActivateConditions {
+	typ := LicenseKeyActivateConditionsTypeInteger
+
+	return LicenseKeyActivateConditions{
+		Integer: &integer,
+		Type:    typ,
+	}
+}
+
+func CreateLicenseKeyActivateConditionsNumber(number float64) LicenseKeyActivateConditions {
+	typ := LicenseKeyActivateConditionsTypeNumber
+
+	return LicenseKeyActivateConditions{
+		Number: &number,
+		Type:   typ,
+	}
+}
+
+func CreateLicenseKeyActivateConditionsBoolean(boolean bool) LicenseKeyActivateConditions {
+	typ := LicenseKeyActivateConditionsTypeBoolean
+
+	return LicenseKeyActivateConditions{
+		Boolean: &boolean,
+		Type:    typ,
+	}
+}
+
+func (u *LicenseKeyActivateConditions) UnmarshalJSON(data []byte) error {
+
+	var str string = ""
+	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
+		u.Str = &str
+		u.Type = LicenseKeyActivateConditionsTypeStr
+		return nil
+	}
+
+	var integer int64 = int64(0)
+	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
+		u.Integer = &integer
+		u.Type = LicenseKeyActivateConditionsTypeInteger
+		return nil
+	}
+
+	var number float64 = float64(0)
+	if err := utils.UnmarshalJSON(data, &number, "", true, true); err == nil {
+		u.Number = &number
+		u.Type = LicenseKeyActivateConditionsTypeNumber
+		return nil
+	}
+
+	var boolean bool = false
+	if err := utils.UnmarshalJSON(data, &boolean, "", true, true); err == nil {
+		u.Boolean = &boolean
+		u.Type = LicenseKeyActivateConditionsTypeBoolean
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for LicenseKeyActivateConditions", string(data))
+}
+
+func (u LicenseKeyActivateConditions) MarshalJSON() ([]byte, error) {
+	if u.Str != nil {
+		return utils.MarshalJSON(u.Str, "", true)
+	}
+
+	if u.Integer != nil {
+		return utils.MarshalJSON(u.Integer, "", true)
+	}
+
+	if u.Number != nil {
+		return utils.MarshalJSON(u.Number, "", true)
+	}
+
+	if u.Boolean != nil {
+		return utils.MarshalJSON(u.Boolean, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type LicenseKeyActivateConditions: all fields are null")
+}
+
+type LicenseKeyActivateMetaType string
+
+const (
+	LicenseKeyActivateMetaTypeStr     LicenseKeyActivateMetaType = "str"
+	LicenseKeyActivateMetaTypeInteger LicenseKeyActivateMetaType = "integer"
+	LicenseKeyActivateMetaTypeNumber  LicenseKeyActivateMetaType = "number"
+	LicenseKeyActivateMetaTypeBoolean LicenseKeyActivateMetaType = "boolean"
+)
+
 type LicenseKeyActivateMeta struct {
+	Str     *string  `queryParam:"inline"`
+	Integer *int64   `queryParam:"inline"`
+	Number  *float64 `queryParam:"inline"`
+	Boolean *bool    `queryParam:"inline"`
+
+	Type LicenseKeyActivateMetaType
+}
+
+func CreateLicenseKeyActivateMetaStr(str string) LicenseKeyActivateMeta {
+	typ := LicenseKeyActivateMetaTypeStr
+
+	return LicenseKeyActivateMeta{
+		Str:  &str,
+		Type: typ,
+	}
+}
+
+func CreateLicenseKeyActivateMetaInteger(integer int64) LicenseKeyActivateMeta {
+	typ := LicenseKeyActivateMetaTypeInteger
+
+	return LicenseKeyActivateMeta{
+		Integer: &integer,
+		Type:    typ,
+	}
+}
+
+func CreateLicenseKeyActivateMetaNumber(number float64) LicenseKeyActivateMeta {
+	typ := LicenseKeyActivateMetaTypeNumber
+
+	return LicenseKeyActivateMeta{
+		Number: &number,
+		Type:   typ,
+	}
+}
+
+func CreateLicenseKeyActivateMetaBoolean(boolean bool) LicenseKeyActivateMeta {
+	typ := LicenseKeyActivateMetaTypeBoolean
+
+	return LicenseKeyActivateMeta{
+		Boolean: &boolean,
+		Type:    typ,
+	}
+}
+
+func (u *LicenseKeyActivateMeta) UnmarshalJSON(data []byte) error {
+
+	var str string = ""
+	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
+		u.Str = &str
+		u.Type = LicenseKeyActivateMetaTypeStr
+		return nil
+	}
+
+	var integer int64 = int64(0)
+	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
+		u.Integer = &integer
+		u.Type = LicenseKeyActivateMetaTypeInteger
+		return nil
+	}
+
+	var number float64 = float64(0)
+	if err := utils.UnmarshalJSON(data, &number, "", true, true); err == nil {
+		u.Number = &number
+		u.Type = LicenseKeyActivateMetaTypeNumber
+		return nil
+	}
+
+	var boolean bool = false
+	if err := utils.UnmarshalJSON(data, &boolean, "", true, true); err == nil {
+		u.Boolean = &boolean
+		u.Type = LicenseKeyActivateMetaTypeBoolean
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for LicenseKeyActivateMeta", string(data))
+}
+
+func (u LicenseKeyActivateMeta) MarshalJSON() ([]byte, error) {
+	if u.Str != nil {
+		return utils.MarshalJSON(u.Str, "", true)
+	}
+
+	if u.Integer != nil {
+		return utils.MarshalJSON(u.Integer, "", true)
+	}
+
+	if u.Number != nil {
+		return utils.MarshalJSON(u.Number, "", true)
+	}
+
+	if u.Boolean != nil {
+		return utils.MarshalJSON(u.Boolean, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type LicenseKeyActivateMeta: all fields are null")
 }
 
 type LicenseKeyActivate struct {
-	Key            string                        `json:"key"`
-	OrganizationID string                        `json:"organization_id"`
-	Label          string                        `json:"label"`
-	Conditions     *LicenseKeyActivateConditions `json:"conditions,omitempty"`
-	Meta           *LicenseKeyActivateMeta       `json:"meta,omitempty"`
+	Key            string `json:"key"`
+	OrganizationID string `json:"organization_id"`
+	Label          string `json:"label"`
+	// Key-value object allowing you to set conditions that must match when validating the license key.
+	//
+	// The key must be a string with a maximum length of **40 characters**.
+	// The value must be either:
+	//
+	// * A string with a maximum length of **500 characters**
+	// * An integer
+	// * A floating-point number
+	// * A boolean
+	//
+	// You can store up to **50 key-value pairs**.
+	Conditions map[string]LicenseKeyActivateConditions `json:"conditions,omitempty"`
+	// Key-value object allowing you to store additional information about the activation
+	//
+	// The key must be a string with a maximum length of **40 characters**.
+	// The value must be either:
+	//
+	// * A string with a maximum length of **500 characters**
+	// * An integer
+	// * A floating-point number
+	// * A boolean
+	//
+	// You can store up to **50 key-value pairs**.
+	Meta map[string]LicenseKeyActivateMeta `json:"meta,omitempty"`
 }
 
 func (o *LicenseKeyActivate) GetKey() string {
@@ -37,14 +273,14 @@ func (o *LicenseKeyActivate) GetLabel() string {
 	return o.Label
 }
 
-func (o *LicenseKeyActivate) GetConditions() *LicenseKeyActivateConditions {
+func (o *LicenseKeyActivate) GetConditions() map[string]LicenseKeyActivateConditions {
 	if o == nil {
 		return nil
 	}
 	return o.Conditions
 }
 
-func (o *LicenseKeyActivate) GetMeta() *LicenseKeyActivateMeta {
+func (o *LicenseKeyActivate) GetMeta() map[string]LicenseKeyActivateMeta {
 	if o == nil {
 		return nil
 	}
