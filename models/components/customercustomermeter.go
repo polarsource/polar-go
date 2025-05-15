@@ -22,7 +22,7 @@ type CustomerCustomerMeter struct {
 	ConsumedUnits float64 `json:"consumed_units"`
 	// The number of credited units.
 	CreditedUnits int64 `json:"credited_units"`
-	// The balance of the meter, i.e. the difference between credited and consumed units. Never goes negative.
+	// The balance of the meter, i.e. the difference between credited and consumed units.
 	Balance float64                    `json:"balance"`
 	Meter   CustomerCustomerMeterMeter `json:"meter"`
 }

@@ -670,6 +670,11 @@ func main() {
 * [Get](docs/sdks/organizations/README.md#get) - Get Organization
 * [Update](docs/sdks/organizations/README.md#update) - Update Organization
 
+### [Payments](docs/sdks/payments/README.md)
+
+* [List](docs/sdks/payments/README.md#list) - List Payments
+* [Get](docs/sdks/payments/README.md#get) - Get Payment
+
 
 ### [Products](docs/sdks/products/README.md)
 

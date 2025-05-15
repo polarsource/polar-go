@@ -247,6 +247,9 @@ func (s *Checkouts) List(ctx context.Context, request operations.CheckoutsListRe
 			operations.CheckoutsListRequest{
 				OrganizationID: request.OrganizationID,
 				ProductID:      request.ProductID,
+				CustomerID:     request.CustomerID,
+				Status:         request.Status,
+				Query:          request.Query,
 				Page:           &nP,
 				Limit:          request.Limit,
 				Sorting:        request.Sorting,

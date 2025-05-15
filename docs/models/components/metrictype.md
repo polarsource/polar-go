@@ -3,7 +3,8 @@
 
 ## Values
 
-| Name                 | Value                |
-| -------------------- | -------------------- |
-| `MetricTypeScalar`   | scalar               |
-| `MetricTypeCurrency` | currency             |
+| Name                   | Value                  |
+| ---------------------- | ---------------------- |
+| `MetricTypeScalar`     | scalar                 |
+| `MetricTypeCurrency`   | currency               |
+| `MetricTypePercentage` | percentage             |

@@ -27,6 +27,12 @@ type Metrics struct {
 	ActiveSubscriptions Metric `json:"active_subscriptions"`
 	// Information about a metric.
 	MonthlyRecurringRevenue Metric `json:"monthly_recurring_revenue"`
+	// Information about a metric.
+	Checkouts Metric `json:"checkouts"`
+	// Information about a metric.
+	SucceededCheckouts Metric `json:"succeeded_checkouts"`
+	// Information about a metric.
+	CheckoutsConversion Metric `json:"checkouts_conversion"`
 }
 
 func (o *Metrics) GetOrders() Metric {
@@ -111,4 +117,25 @@ func (o *Metrics) GetMonthlyRecurringRevenue() Metric {
 		return Metric{}
 	}
 	return o.MonthlyRecurringRevenue
+}
+
+func (o *Metrics) GetCheckouts() Metric {
+	if o == nil {
+		return Metric{}
+	}
+	return o.Checkouts
+}
+
+func (o *Metrics) GetSucceededCheckouts() Metric {
+	if o == nil {
+		return Metric{}
+	}
+	return o.SucceededCheckouts
+}
+
+func (o *Metrics) GetCheckoutsConversion() Metric {
+	if o == nil {
+		return Metric{}
+	}
+	return o.CheckoutsConversion
 }

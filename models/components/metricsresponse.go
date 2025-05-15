@@ -6,6 +6,7 @@ package components
 type MetricsResponse struct {
 	// List of data for each timestamp.
 	Periods []MetricPeriod `json:"periods"`
+	Totals  MetricsTotals  `json:"totals"`
 	Metrics Metrics        `json:"metrics"`
 }
 
@@ -14,6 +15,13 @@ func (o *MetricsResponse) GetPeriods() []MetricPeriod {
 		return []MetricPeriod{}
 	}
 	return o.Periods
+}
+
+func (o *MetricsResponse) GetTotals() MetricsTotals {
+	if o == nil {
+		return MetricsTotals{}
+	}
+	return o.Totals
 }
 
 func (o *MetricsResponse) GetMetrics() Metrics {

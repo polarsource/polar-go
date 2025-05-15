@@ -4,8 +4,9 @@ package components
 
 // BenefitMeterCreditProperties - Properties for a benefit of type `meter_unit`.
 type BenefitMeterCreditProperties struct {
-	Units   int64  `json:"units"`
-	MeterID string `json:"meter_id"`
+	Units    int64  `json:"units"`
+	Rollover bool   `json:"rollover"`
+	MeterID  string `json:"meter_id"`
 }
 
 func (o *BenefitMeterCreditProperties) GetUnits() int64 {
@@ -13,6 +14,13 @@ func (o *BenefitMeterCreditProperties) GetUnits() int64 {
 		return 0
 	}
 	return o.Units
+}
+
+func (o *BenefitMeterCreditProperties) GetRollover() bool {
+	if o == nil {
+		return false
+	}
+	return o.Rollover
 }
 
 func (o *BenefitMeterCreditProperties) GetMeterID() string {

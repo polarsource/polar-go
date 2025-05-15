@@ -40,6 +40,7 @@
 | `ScopeOrdersRead`                  | orders:read                        |
 | `ScopeRefundsRead`                 | refunds:read                       |
 | `ScopeRefundsWrite`                | refunds:write                      |
+| `ScopePaymentsRead`                | payments:read                      |
 | `ScopeMetricsRead`                 | metrics:read                       |
 | `ScopeWebhooksRead`                | webhooks:read                      |
 | `ScopeWebhooksWrite`               | webhooks:write                     |

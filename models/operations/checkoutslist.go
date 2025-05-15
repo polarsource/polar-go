@@ -137,11 +137,145 @@ func (u CheckoutsListQueryParamProductIDFilter) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type CheckoutsListQueryParamProductIDFilter: all fields are null")
 }
 
+type CheckoutsListQueryParamCustomerIDFilterType string
+
+const (
+	CheckoutsListQueryParamCustomerIDFilterTypeStr        CheckoutsListQueryParamCustomerIDFilterType = "str"
+	CheckoutsListQueryParamCustomerIDFilterTypeArrayOfStr CheckoutsListQueryParamCustomerIDFilterType = "arrayOfStr"
+)
+
+// CheckoutsListQueryParamCustomerIDFilter - Filter by customer ID.
+type CheckoutsListQueryParamCustomerIDFilter struct {
+	Str        *string  `queryParam:"inline"`
+	ArrayOfStr []string `queryParam:"inline"`
+
+	Type CheckoutsListQueryParamCustomerIDFilterType
+}
+
+func CreateCheckoutsListQueryParamCustomerIDFilterStr(str string) CheckoutsListQueryParamCustomerIDFilter {
+	typ := CheckoutsListQueryParamCustomerIDFilterTypeStr
+
+	return CheckoutsListQueryParamCustomerIDFilter{
+		Str:  &str,
+		Type: typ,
+	}
+}
+
+func CreateCheckoutsListQueryParamCustomerIDFilterArrayOfStr(arrayOfStr []string) CheckoutsListQueryParamCustomerIDFilter {
+	typ := CheckoutsListQueryParamCustomerIDFilterTypeArrayOfStr
+
+	return CheckoutsListQueryParamCustomerIDFilter{
+		ArrayOfStr: arrayOfStr,
+		Type:       typ,
+	}
+}
+
+func (u *CheckoutsListQueryParamCustomerIDFilter) UnmarshalJSON(data []byte) error {
+
+	var str string = ""
+	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
+		u.Str = &str
+		u.Type = CheckoutsListQueryParamCustomerIDFilterTypeStr
+		return nil
+	}
+
+	var arrayOfStr []string = []string{}
+	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, true); err == nil {
+		u.ArrayOfStr = arrayOfStr
+		u.Type = CheckoutsListQueryParamCustomerIDFilterTypeArrayOfStr
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for CheckoutsListQueryParamCustomerIDFilter", string(data))
+}
+
+func (u CheckoutsListQueryParamCustomerIDFilter) MarshalJSON() ([]byte, error) {
+	if u.Str != nil {
+		return utils.MarshalJSON(u.Str, "", true)
+	}
+
+	if u.ArrayOfStr != nil {
+		return utils.MarshalJSON(u.ArrayOfStr, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type CheckoutsListQueryParamCustomerIDFilter: all fields are null")
+}
+
+type StatusFilterType string
+
+const (
+	StatusFilterTypeCheckoutStatus        StatusFilterType = "CheckoutStatus"
+	StatusFilterTypeArrayOfCheckoutStatus StatusFilterType = "arrayOfCheckoutStatus"
+)
+
+// StatusFilter - Filter by checkout session status.
+type StatusFilter struct {
+	CheckoutStatus        *components.CheckoutStatus  `queryParam:"inline"`
+	ArrayOfCheckoutStatus []components.CheckoutStatus `queryParam:"inline"`
+
+	Type StatusFilterType
+}
+
+func CreateStatusFilterCheckoutStatus(checkoutStatus components.CheckoutStatus) StatusFilter {
+	typ := StatusFilterTypeCheckoutStatus
+
+	return StatusFilter{
+		CheckoutStatus: &checkoutStatus,
+		Type:           typ,
+	}
+}
+
+func CreateStatusFilterArrayOfCheckoutStatus(arrayOfCheckoutStatus []components.CheckoutStatus) StatusFilter {
+	typ := StatusFilterTypeArrayOfCheckoutStatus
+
+	return StatusFilter{
+		ArrayOfCheckoutStatus: arrayOfCheckoutStatus,
+		Type:                  typ,
+	}
+}
+
+func (u *StatusFilter) UnmarshalJSON(data []byte) error {
+
+	var checkoutStatus components.CheckoutStatus = components.CheckoutStatus("")
+	if err := utils.UnmarshalJSON(data, &checkoutStatus, "", true, true); err == nil {
+		u.CheckoutStatus = &checkoutStatus
+		u.Type = StatusFilterTypeCheckoutStatus
+		return nil
+	}
+
+	var arrayOfCheckoutStatus []components.CheckoutStatus = []components.CheckoutStatus{}
+	if err := utils.UnmarshalJSON(data, &arrayOfCheckoutStatus, "", true, true); err == nil {
+		u.ArrayOfCheckoutStatus = arrayOfCheckoutStatus
+		u.Type = StatusFilterTypeArrayOfCheckoutStatus
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for StatusFilter", string(data))
+}
+
+func (u StatusFilter) MarshalJSON() ([]byte, error) {
+	if u.CheckoutStatus != nil {
+		return utils.MarshalJSON(u.CheckoutStatus, "", true)
+	}
+
+	if u.ArrayOfCheckoutStatus != nil {
+		return utils.MarshalJSON(u.ArrayOfCheckoutStatus, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type StatusFilter: all fields are null")
+}
+
 type CheckoutsListRequest struct {
 	// Filter by organization ID.
 	OrganizationID *CheckoutsListQueryParamOrganizationIDFilter `queryParam:"style=form,explode=true,name=organization_id"`
 	// Filter by product ID.
 	ProductID *CheckoutsListQueryParamProductIDFilter `queryParam:"style=form,explode=true,name=product_id"`
+	// Filter by customer ID.
+	CustomerID *CheckoutsListQueryParamCustomerIDFilter `queryParam:"style=form,explode=true,name=customer_id"`
+	// Filter by checkout session status.
+	Status *StatusFilter `queryParam:"style=form,explode=true,name=status"`
+	// Filter by customer email.
+	Query *string `queryParam:"style=form,explode=true,name=query"`
 	// Page number, defaults to 1.
 	Page *int64 `default:"1" queryParam:"style=form,explode=true,name=page"`
 	// Size of a page, defaults to 10. Maximum is 100.
@@ -173,6 +307,27 @@ func (o *CheckoutsListRequest) GetProductID() *CheckoutsListQueryParamProductIDF
 		return nil
 	}
 	return o.ProductID
+}
+
+func (o *CheckoutsListRequest) GetCustomerID() *CheckoutsListQueryParamCustomerIDFilter {
+	if o == nil {
+		return nil
+	}
+	return o.CustomerID
+}
+
+func (o *CheckoutsListRequest) GetStatus() *StatusFilter {
+	if o == nil {
+		return nil
+	}
+	return o.Status
+}
+
+func (o *CheckoutsListRequest) GetQuery() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Query
 }
 
 func (o *CheckoutsListRequest) GetPage() *int64 {

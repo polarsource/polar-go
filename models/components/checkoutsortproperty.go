@@ -14,6 +14,8 @@ const (
 	CheckoutSortPropertyMinusCreatedAt CheckoutSortProperty = "-created_at"
 	CheckoutSortPropertyExpiresAt      CheckoutSortProperty = "expires_at"
 	CheckoutSortPropertyMinusExpiresAt CheckoutSortProperty = "-expires_at"
+	CheckoutSortPropertyStatus         CheckoutSortProperty = "status"
+	CheckoutSortPropertyMinusStatus    CheckoutSortProperty = "-status"
 )
 
 func (e CheckoutSortProperty) ToPointer() *CheckoutSortProperty {
@@ -32,6 +34,10 @@ func (e *CheckoutSortProperty) UnmarshalJSON(data []byte) error {
 	case "expires_at":
 		fallthrough
 	case "-expires_at":
+		fallthrough
+	case "status":
+		fallthrough
+	case "-status":
 		*e = CheckoutSortProperty(v)
 		return nil
 	default:
