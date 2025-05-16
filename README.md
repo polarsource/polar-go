@@ -127,15 +127,16 @@ func main() {
 				IsArchived:        true,
 				OrganizationID:    "<value>",
 				Prices: []components.CheckoutProductPrices{
-					components.CreateCheckoutProductPricesLegacyRecurringProductPrice(
-						components.CreateLegacyRecurringProductPriceCustom(
-							components.LegacyRecurringProductPriceCustom{
-								CreatedAt:         types.MustTimeFromString("2023-10-20T05:29:02.563Z"),
-								ModifiedAt:        types.MustNewTimeFromString("2023-08-08T15:45:51.732Z"),
+					components.CreateCheckoutProductPricesProductPrice(
+						components.CreateProductPriceProductPriceCustom(
+							components.ProductPriceCustom{
+								CreatedAt:         types.MustTimeFromString("2023-01-11T22:31:47.320Z"),
+								ModifiedAt:        types.MustNewTimeFromString("2023-10-20T05:29:02.563Z"),
 								ID:                "<value>",
 								IsArchived:        false,
 								ProductID:         "<value>",
-								RecurringInterval: components.SubscriptionRecurringIntervalMonth,
+								Type:              components.ProductPriceTypeOneTime,
+								RecurringInterval: components.SubscriptionRecurringIntervalMonth.ToPointer(),
 								PriceCurrency:     "<value>",
 								MinimumAmount:     polargo.Int64(203013),
 								MaximumAmount:     polargo.Int64(49018),
@@ -284,8 +285,8 @@ func main() {
 				"key": components.CreateCustomerMetadataBoolean(
 					true,
 				),
-				"key1": components.CreateCustomerMetadataBoolean(
-					false,
+				"key1": components.CreateCustomerMetadataStr(
+					"<value>",
 				),
 				"key2": components.CreateCustomerMetadataInteger(
 					851435,

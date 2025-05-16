@@ -254,6 +254,7 @@ func (s *Orders) List(ctx context.Context, request operations.OrdersListRequest,
 				Page:               &nP,
 				Limit:              request.Limit,
 				Sorting:            request.Sorting,
+				Metadata:           request.Metadata,
 			},
 			opts...,
 		)

@@ -412,6 +412,8 @@ type OrdersListRequest struct {
 	Limit *int64 `default:"10" queryParam:"style=form,explode=true,name=limit"`
 	// Sorting criterion. Several criteria can be used simultaneously and will be applied in order. Add a minus sign `-` before the criteria name to sort by descending order.
 	Sorting []components.OrderSortProperty `queryParam:"style=form,explode=true,name=sorting"`
+	// Filter by metadata key-value pairs. It uses the `deepObject` style, e.g. `?metadata[key]=value`.
+	Metadata map[string]components.MetadataQuery `queryParam:"style=deepObject,explode=true,name=metadata"`
 }
 
 func (o OrdersListRequest) MarshalJSON() ([]byte, error) {
@@ -486,6 +488,13 @@ func (o *OrdersListRequest) GetSorting() []components.OrderSortProperty {
 		return nil
 	}
 	return o.Sorting
+}
+
+func (o *OrdersListRequest) GetMetadata() map[string]components.MetadataQuery {
+	if o == nil {
+		return nil
+	}
+	return o.Metadata
 }
 
 type OrdersListResponse struct {

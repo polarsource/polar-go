@@ -253,6 +253,7 @@ func (s *Subscriptions) List(ctx context.Context, request operations.Subscriptio
 				Page:           &nP,
 				Limit:          request.Limit,
 				Sorting:        request.Sorting,
+				Metadata:       request.Metadata,
 			},
 			opts...,
 		)

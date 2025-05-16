@@ -290,6 +290,8 @@ type BenefitGrantWebhook struct {
 	CustomerID string `json:"customer_id"`
 	// The ID of the benefit concerned by this grant.
 	BenefitID string `json:"benefit_id"`
+	// The error information if the benefit grant failed with an unrecoverable error.
+	Error *BenefitGrantError `json:"error,omitempty"`
 	// A customer in an organization.
 	Customer           Customer                      `json:"customer"`
 	Properties         BenefitGrantWebhookProperties `json:"properties"`
@@ -383,6 +385,13 @@ func (o *BenefitGrantWebhook) GetBenefitID() string {
 		return ""
 	}
 	return o.BenefitID
+}
+
+func (o *BenefitGrantWebhook) GetError() *BenefitGrantError {
+	if o == nil {
+		return nil
+	}
+	return o.Error
 }
 
 func (o *BenefitGrantWebhook) GetCustomer() Customer {
