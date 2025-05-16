@@ -66,28 +66,28 @@ func CreateEventCreateExternalCustomerMetadataBoolean(boolean bool) EventCreateE
 func (u *EventCreateExternalCustomerMetadata) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, false); err == nil {
 		u.Str = &str
 		u.Type = EventCreateExternalCustomerMetadataTypeStr
 		return nil
 	}
 
 	var integer int64 = int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &integer, "", true, false); err == nil {
 		u.Integer = &integer
 		u.Type = EventCreateExternalCustomerMetadataTypeInteger
 		return nil
 	}
 
 	var number float64 = float64(0)
-	if err := utils.UnmarshalJSON(data, &number, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &number, "", true, false); err == nil {
 		u.Number = &number
 		u.Type = EventCreateExternalCustomerMetadataTypeNumber
 		return nil
 	}
 
 	var boolean bool = false
-	if err := utils.UnmarshalJSON(data, &boolean, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &boolean, "", true, false); err == nil {
 		u.Boolean = &boolean
 		u.Type = EventCreateExternalCustomerMetadataTypeBoolean
 		return nil
@@ -144,7 +144,7 @@ func (e EventCreateExternalCustomer) MarshalJSON() ([]byte, error) {
 }
 
 func (e *EventCreateExternalCustomer) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &e, "", false, true); err != nil {
+	if err := utils.UnmarshalJSON(data, &e, "", false, false); err != nil {
 		return err
 	}
 	return nil

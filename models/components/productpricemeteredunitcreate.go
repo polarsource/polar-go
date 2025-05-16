@@ -44,14 +44,14 @@ func CreateUnitAmountStr(str string) UnitAmount {
 func (u *UnitAmount) UnmarshalJSON(data []byte) error {
 
 	var number float64 = float64(0)
-	if err := utils.UnmarshalJSON(data, &number, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &number, "", true, false); err == nil {
 		u.Number = &number
 		u.Type = UnitAmountTypeNumber
 		return nil
 	}
 
 	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, false); err == nil {
 		u.Str = &str
 		u.Type = UnitAmountTypeStr
 		return nil
@@ -90,7 +90,7 @@ func (p ProductPriceMeteredUnitCreate) MarshalJSON() ([]byte, error) {
 }
 
 func (p *ProductPriceMeteredUnitCreate) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &p, "", false, true); err != nil {
+	if err := utils.UnmarshalJSON(data, &p, "", false, false); err != nil {
 		return err
 	}
 	return nil

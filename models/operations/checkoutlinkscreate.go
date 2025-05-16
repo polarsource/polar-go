@@ -55,21 +55,21 @@ func CreateCheckoutLinksCreateCheckoutLinkCreateCheckoutLinkCreateProducts(check
 func (u *CheckoutLinksCreateCheckoutLinkCreate) UnmarshalJSON(data []byte) error {
 
 	var checkoutLinkCreateProductPrice components.CheckoutLinkCreateProductPrice = components.CheckoutLinkCreateProductPrice{}
-	if err := utils.UnmarshalJSON(data, &checkoutLinkCreateProductPrice, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &checkoutLinkCreateProductPrice, "", true, false); err == nil {
 		u.CheckoutLinkCreateProductPrice = &checkoutLinkCreateProductPrice
 		u.Type = CheckoutLinksCreateCheckoutLinkCreateTypeCheckoutLinkCreateProductPrice
 		return nil
 	}
 
 	var checkoutLinkCreateProduct components.CheckoutLinkCreateProduct = components.CheckoutLinkCreateProduct{}
-	if err := utils.UnmarshalJSON(data, &checkoutLinkCreateProduct, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &checkoutLinkCreateProduct, "", true, false); err == nil {
 		u.CheckoutLinkCreateProduct = &checkoutLinkCreateProduct
 		u.Type = CheckoutLinksCreateCheckoutLinkCreateTypeCheckoutLinkCreateProduct
 		return nil
 	}
 
 	var checkoutLinkCreateProducts components.CheckoutLinkCreateProducts = components.CheckoutLinkCreateProducts{}
-	if err := utils.UnmarshalJSON(data, &checkoutLinkCreateProducts, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &checkoutLinkCreateProducts, "", true, false); err == nil {
 		u.CheckoutLinkCreateProducts = &checkoutLinkCreateProducts
 		u.Type = CheckoutLinksCreateCheckoutLinkCreateTypeCheckoutLinkCreateProducts
 		return nil

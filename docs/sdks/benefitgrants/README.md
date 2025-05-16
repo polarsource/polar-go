@@ -34,10 +34,8 @@ func main() {
     s := polargo.New()
 
     res, err := s.CustomerPortal.BenefitGrants.List(ctx, operations.CustomerPortalBenefitGrantsListRequest{
-        OrganizationID: polargo.Pointer(operations.CreateCustomerPortalBenefitGrantsListQueryParamOrganizationIDFilterArrayOfStr(
-            []string{
-                "1dbfc517-0bbf-4301-9ba8-555ca42b9737",
-            },
+        OrganizationID: polargo.Pointer(operations.CreateCustomerPortalBenefitGrantsListQueryParamOrganizationIDFilterStr(
+            "1dbfc517-0bbf-4301-9ba8-555ca42b9737",
         )),
     }, operations.CustomerPortalBenefitGrantsListSecurity{
         CustomerSession: os.Getenv("POLAR_CUSTOMER_SESSION"),
@@ -167,12 +165,8 @@ func main() {
 
     res, err := s.CustomerPortal.BenefitGrants.Update(ctx, operations.CustomerPortalBenefitGrantsUpdateSecurity{
         CustomerSession: os.Getenv("POLAR_CUSTOMER_SESSION"),
-    }, "<value>", components.CreateCustomerBenefitGrantUpdateGithubRepository(
-        components.CustomerBenefitGrantGitHubRepositoryUpdate{
-            Properties: components.CustomerBenefitGrantGitHubRepositoryPropertiesUpdate{
-                AccountID: "<id>",
-            },
-        },
+    }, "<value>", components.CreateCustomerBenefitGrantUpdateLicenseKeys(
+        components.CustomerBenefitGrantLicenseKeysUpdate{},
     ))
     if err != nil {
         log.Fatal(err)

@@ -88,42 +88,42 @@ func CreateBenefitsUpdateBenefitUpdateBenefitMeterCreditUpdate(benefitMeterCredi
 func (u *BenefitsUpdateBenefitUpdate) UnmarshalJSON(data []byte) error {
 
 	var benefitCustomUpdate components.BenefitCustomUpdate = components.BenefitCustomUpdate{}
-	if err := utils.UnmarshalJSON(data, &benefitCustomUpdate, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &benefitCustomUpdate, "", true, false); err == nil {
 		u.BenefitCustomUpdate = &benefitCustomUpdate
 		u.Type = BenefitsUpdateBenefitUpdateTypeBenefitCustomUpdate
 		return nil
 	}
 
 	var benefitDiscordUpdate components.BenefitDiscordUpdate = components.BenefitDiscordUpdate{}
-	if err := utils.UnmarshalJSON(data, &benefitDiscordUpdate, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &benefitDiscordUpdate, "", true, false); err == nil {
 		u.BenefitDiscordUpdate = &benefitDiscordUpdate
 		u.Type = BenefitsUpdateBenefitUpdateTypeBenefitDiscordUpdate
 		return nil
 	}
 
 	var benefitGitHubRepositoryUpdate components.BenefitGitHubRepositoryUpdate = components.BenefitGitHubRepositoryUpdate{}
-	if err := utils.UnmarshalJSON(data, &benefitGitHubRepositoryUpdate, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &benefitGitHubRepositoryUpdate, "", true, false); err == nil {
 		u.BenefitGitHubRepositoryUpdate = &benefitGitHubRepositoryUpdate
 		u.Type = BenefitsUpdateBenefitUpdateTypeBenefitGitHubRepositoryUpdate
 		return nil
 	}
 
 	var benefitDownloadablesUpdate components.BenefitDownloadablesUpdate = components.BenefitDownloadablesUpdate{}
-	if err := utils.UnmarshalJSON(data, &benefitDownloadablesUpdate, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &benefitDownloadablesUpdate, "", true, false); err == nil {
 		u.BenefitDownloadablesUpdate = &benefitDownloadablesUpdate
 		u.Type = BenefitsUpdateBenefitUpdateTypeBenefitDownloadablesUpdate
 		return nil
 	}
 
 	var benefitLicenseKeysUpdate components.BenefitLicenseKeysUpdate = components.BenefitLicenseKeysUpdate{}
-	if err := utils.UnmarshalJSON(data, &benefitLicenseKeysUpdate, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &benefitLicenseKeysUpdate, "", true, false); err == nil {
 		u.BenefitLicenseKeysUpdate = &benefitLicenseKeysUpdate
 		u.Type = BenefitsUpdateBenefitUpdateTypeBenefitLicenseKeysUpdate
 		return nil
 	}
 
 	var benefitMeterCreditUpdate components.BenefitMeterCreditUpdate = components.BenefitMeterCreditUpdate{}
-	if err := utils.UnmarshalJSON(data, &benefitMeterCreditUpdate, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &benefitMeterCreditUpdate, "", true, false); err == nil {
 		u.BenefitMeterCreditUpdate = &benefitMeterCreditUpdate
 		u.Type = BenefitsUpdateBenefitUpdateTypeBenefitMeterCreditUpdate
 		return nil

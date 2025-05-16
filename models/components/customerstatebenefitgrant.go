@@ -77,35 +77,35 @@ func CreateCustomerStateBenefitGrantPropertiesBenefitGrantCustomProperties(benef
 func (u *CustomerStateBenefitGrantProperties) UnmarshalJSON(data []byte) error {
 
 	var benefitGrantCustomProperties BenefitGrantCustomProperties = BenefitGrantCustomProperties{}
-	if err := utils.UnmarshalJSON(data, &benefitGrantCustomProperties, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &benefitGrantCustomProperties, "", true, false); err == nil {
 		u.BenefitGrantCustomProperties = &benefitGrantCustomProperties
 		u.Type = CustomerStateBenefitGrantPropertiesTypeBenefitGrantCustomProperties
 		return nil
 	}
 
 	var benefitGrantDownloadablesProperties BenefitGrantDownloadablesProperties = BenefitGrantDownloadablesProperties{}
-	if err := utils.UnmarshalJSON(data, &benefitGrantDownloadablesProperties, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &benefitGrantDownloadablesProperties, "", true, false); err == nil {
 		u.BenefitGrantDownloadablesProperties = &benefitGrantDownloadablesProperties
 		u.Type = CustomerStateBenefitGrantPropertiesTypeBenefitGrantDownloadablesProperties
 		return nil
 	}
 
 	var benefitGrantLicenseKeysProperties BenefitGrantLicenseKeysProperties = BenefitGrantLicenseKeysProperties{}
-	if err := utils.UnmarshalJSON(data, &benefitGrantLicenseKeysProperties, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &benefitGrantLicenseKeysProperties, "", true, false); err == nil {
 		u.BenefitGrantLicenseKeysProperties = &benefitGrantLicenseKeysProperties
 		u.Type = CustomerStateBenefitGrantPropertiesTypeBenefitGrantLicenseKeysProperties
 		return nil
 	}
 
 	var benefitGrantDiscordProperties BenefitGrantDiscordProperties = BenefitGrantDiscordProperties{}
-	if err := utils.UnmarshalJSON(data, &benefitGrantDiscordProperties, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &benefitGrantDiscordProperties, "", true, false); err == nil {
 		u.BenefitGrantDiscordProperties = &benefitGrantDiscordProperties
 		u.Type = CustomerStateBenefitGrantPropertiesTypeBenefitGrantDiscordProperties
 		return nil
 	}
 
 	var benefitGrantGitHubRepositoryProperties BenefitGrantGitHubRepositoryProperties = BenefitGrantGitHubRepositoryProperties{}
-	if err := utils.UnmarshalJSON(data, &benefitGrantGitHubRepositoryProperties, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &benefitGrantGitHubRepositoryProperties, "", true, false); err == nil {
 		u.BenefitGrantGitHubRepositoryProperties = &benefitGrantGitHubRepositoryProperties
 		u.Type = CustomerStateBenefitGrantPropertiesTypeBenefitGrantGitHubRepositoryProperties
 		return nil

@@ -66,28 +66,28 @@ func CreateCheckoutCustomFieldDataDateTime(dateTime time.Time) CheckoutCustomFie
 func (u *CheckoutCustomFieldData) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, false); err == nil {
 		u.Str = &str
 		u.Type = CheckoutCustomFieldDataTypeStr
 		return nil
 	}
 
 	var integer int64 = int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &integer, "", true, false); err == nil {
 		u.Integer = &integer
 		u.Type = CheckoutCustomFieldDataTypeInteger
 		return nil
 	}
 
 	var boolean bool = false
-	if err := utils.UnmarshalJSON(data, &boolean, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &boolean, "", true, false); err == nil {
 		u.Boolean = &boolean
 		u.Type = CheckoutCustomFieldDataTypeBoolean
 		return nil
 	}
 
 	var dateTime time.Time = time.Time{}
-	if err := utils.UnmarshalJSON(data, &dateTime, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &dateTime, "", true, false); err == nil {
 		u.DateTime = &dateTime
 		u.Type = CheckoutCustomFieldDataTypeDateTime
 		return nil
@@ -173,28 +173,28 @@ func CreateCheckoutMetadataBoolean(boolean bool) CheckoutMetadata {
 func (u *CheckoutMetadata) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, false); err == nil {
 		u.Str = &str
 		u.Type = CheckoutMetadataTypeStr
 		return nil
 	}
 
 	var integer int64 = int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &integer, "", true, false); err == nil {
 		u.Integer = &integer
 		u.Type = CheckoutMetadataTypeInteger
 		return nil
 	}
 
 	var number float64 = float64(0)
-	if err := utils.UnmarshalJSON(data, &number, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &number, "", true, false); err == nil {
 		u.Number = &number
 		u.Type = CheckoutMetadataTypeNumber
 		return nil
 	}
 
 	var boolean bool = false
-	if err := utils.UnmarshalJSON(data, &boolean, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &boolean, "", true, false); err == nil {
 		u.Boolean = &boolean
 		u.Type = CheckoutMetadataTypeBoolean
 		return nil
@@ -259,14 +259,14 @@ func CreateCheckoutProductPriceProductPrice(productPrice ProductPrice) CheckoutP
 func (u *CheckoutProductPrice) UnmarshalJSON(data []byte) error {
 
 	var legacyRecurringProductPrice LegacyRecurringProductPrice = LegacyRecurringProductPrice{}
-	if err := utils.UnmarshalJSON(data, &legacyRecurringProductPrice, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &legacyRecurringProductPrice, "", true, false); err == nil {
 		u.LegacyRecurringProductPrice = &legacyRecurringProductPrice
 		u.Type = CheckoutProductPriceTypeLegacyRecurringProductPrice
 		return nil
 	}
 
 	var productPrice ProductPrice = ProductPrice{}
-	if err := utils.UnmarshalJSON(data, &productPrice, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &productPrice, "", true, false); err == nil {
 		u.ProductPrice = &productPrice
 		u.Type = CheckoutProductPriceTypeProductPrice
 		return nil
@@ -344,28 +344,28 @@ func CreateCheckoutDiscountCheckoutDiscountPercentageRepeatDuration(checkoutDisc
 func (u *CheckoutDiscount) UnmarshalJSON(data []byte) error {
 
 	var checkoutDiscountPercentageOnceForeverDuration CheckoutDiscountPercentageOnceForeverDuration = CheckoutDiscountPercentageOnceForeverDuration{}
-	if err := utils.UnmarshalJSON(data, &checkoutDiscountPercentageOnceForeverDuration, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &checkoutDiscountPercentageOnceForeverDuration, "", true, false); err == nil {
 		u.CheckoutDiscountPercentageOnceForeverDuration = &checkoutDiscountPercentageOnceForeverDuration
 		u.Type = CheckoutDiscountTypeCheckoutDiscountPercentageOnceForeverDuration
 		return nil
 	}
 
 	var checkoutDiscountFixedOnceForeverDuration CheckoutDiscountFixedOnceForeverDuration = CheckoutDiscountFixedOnceForeverDuration{}
-	if err := utils.UnmarshalJSON(data, &checkoutDiscountFixedOnceForeverDuration, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &checkoutDiscountFixedOnceForeverDuration, "", true, false); err == nil {
 		u.CheckoutDiscountFixedOnceForeverDuration = &checkoutDiscountFixedOnceForeverDuration
 		u.Type = CheckoutDiscountTypeCheckoutDiscountFixedOnceForeverDuration
 		return nil
 	}
 
 	var checkoutDiscountPercentageRepeatDuration CheckoutDiscountPercentageRepeatDuration = CheckoutDiscountPercentageRepeatDuration{}
-	if err := utils.UnmarshalJSON(data, &checkoutDiscountPercentageRepeatDuration, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &checkoutDiscountPercentageRepeatDuration, "", true, false); err == nil {
 		u.CheckoutDiscountPercentageRepeatDuration = &checkoutDiscountPercentageRepeatDuration
 		u.Type = CheckoutDiscountTypeCheckoutDiscountPercentageRepeatDuration
 		return nil
 	}
 
 	var checkoutDiscountFixedRepeatDuration CheckoutDiscountFixedRepeatDuration = CheckoutDiscountFixedRepeatDuration{}
-	if err := utils.UnmarshalJSON(data, &checkoutDiscountFixedRepeatDuration, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &checkoutDiscountFixedRepeatDuration, "", true, false); err == nil {
 		u.CheckoutDiscountFixedRepeatDuration = &checkoutDiscountFixedRepeatDuration
 		u.Type = CheckoutDiscountTypeCheckoutDiscountFixedRepeatDuration
 		return nil
@@ -440,21 +440,21 @@ func CreateCustomerMetadataBoolean(boolean bool) CustomerMetadata {
 func (u *CustomerMetadata) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, false); err == nil {
 		u.Str = &str
 		u.Type = CustomerMetadataTypeStr
 		return nil
 	}
 
 	var integer int64 = int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &integer, "", true, false); err == nil {
 		u.Integer = &integer
 		u.Type = CustomerMetadataTypeInteger
 		return nil
 	}
 
 	var boolean bool = false
-	if err := utils.UnmarshalJSON(data, &boolean, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &boolean, "", true, false); err == nil {
 		u.Boolean = &boolean
 		u.Type = CustomerMetadataTypeBoolean
 		return nil

@@ -66,28 +66,28 @@ func CreateOrderMetadataBoolean(boolean bool) OrderMetadata {
 func (u *OrderMetadata) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, false); err == nil {
 		u.Str = &str
 		u.Type = OrderMetadataTypeStr
 		return nil
 	}
 
 	var integer int64 = int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &integer, "", true, false); err == nil {
 		u.Integer = &integer
 		u.Type = OrderMetadataTypeInteger
 		return nil
 	}
 
 	var number float64 = float64(0)
-	if err := utils.UnmarshalJSON(data, &number, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &number, "", true, false); err == nil {
 		u.Number = &number
 		u.Type = OrderMetadataTypeNumber
 		return nil
 	}
 
 	var boolean bool = false
-	if err := utils.UnmarshalJSON(data, &boolean, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &boolean, "", true, false); err == nil {
 		u.Boolean = &boolean
 		u.Type = OrderMetadataTypeBoolean
 		return nil
@@ -173,28 +173,28 @@ func CreateOrderCustomFieldDataDateTime(dateTime time.Time) OrderCustomFieldData
 func (u *OrderCustomFieldData) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, false); err == nil {
 		u.Str = &str
 		u.Type = OrderCustomFieldDataTypeStr
 		return nil
 	}
 
 	var integer int64 = int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &integer, "", true, false); err == nil {
 		u.Integer = &integer
 		u.Type = OrderCustomFieldDataTypeInteger
 		return nil
 	}
 
 	var boolean bool = false
-	if err := utils.UnmarshalJSON(data, &boolean, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &boolean, "", true, false); err == nil {
 		u.Boolean = &boolean
 		u.Type = OrderCustomFieldDataTypeBoolean
 		return nil
 	}
 
 	var dateTime time.Time = time.Time{}
-	if err := utils.UnmarshalJSON(data, &dateTime, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &dateTime, "", true, false); err == nil {
 		u.DateTime = &dateTime
 		u.Type = OrderCustomFieldDataTypeDateTime
 		return nil
@@ -280,28 +280,28 @@ func CreateOrderDiscountDiscountPercentageRepeatDurationBase(discountPercentageR
 func (u *OrderDiscount) UnmarshalJSON(data []byte) error {
 
 	var discountPercentageOnceForeverDurationBase DiscountPercentageOnceForeverDurationBase = DiscountPercentageOnceForeverDurationBase{}
-	if err := utils.UnmarshalJSON(data, &discountPercentageOnceForeverDurationBase, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &discountPercentageOnceForeverDurationBase, "", true, false); err == nil {
 		u.DiscountPercentageOnceForeverDurationBase = &discountPercentageOnceForeverDurationBase
 		u.Type = OrderDiscountTypeDiscountPercentageOnceForeverDurationBase
 		return nil
 	}
 
 	var discountFixedOnceForeverDurationBase DiscountFixedOnceForeverDurationBase = DiscountFixedOnceForeverDurationBase{}
-	if err := utils.UnmarshalJSON(data, &discountFixedOnceForeverDurationBase, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &discountFixedOnceForeverDurationBase, "", true, false); err == nil {
 		u.DiscountFixedOnceForeverDurationBase = &discountFixedOnceForeverDurationBase
 		u.Type = OrderDiscountTypeDiscountFixedOnceForeverDurationBase
 		return nil
 	}
 
 	var discountPercentageRepeatDurationBase DiscountPercentageRepeatDurationBase = DiscountPercentageRepeatDurationBase{}
-	if err := utils.UnmarshalJSON(data, &discountPercentageRepeatDurationBase, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &discountPercentageRepeatDurationBase, "", true, false); err == nil {
 		u.DiscountPercentageRepeatDurationBase = &discountPercentageRepeatDurationBase
 		u.Type = OrderDiscountTypeDiscountPercentageRepeatDurationBase
 		return nil
 	}
 
 	var discountFixedRepeatDurationBase DiscountFixedRepeatDurationBase = DiscountFixedRepeatDurationBase{}
-	if err := utils.UnmarshalJSON(data, &discountFixedRepeatDurationBase, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &discountFixedRepeatDurationBase, "", true, false); err == nil {
 		u.DiscountFixedRepeatDurationBase = &discountFixedRepeatDurationBase
 		u.Type = OrderDiscountTypeDiscountFixedRepeatDurationBase
 		return nil

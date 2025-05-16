@@ -45,14 +45,14 @@ func CreateOrganizationIDFilterArrayOfStr(arrayOfStr []string) OrganizationIDFil
 func (u *OrganizationIDFilter) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, false); err == nil {
 		u.Str = &str
 		u.Type = OrganizationIDFilterTypeStr
 		return nil
 	}
 
 	var arrayOfStr []string = []string{}
-	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, false); err == nil {
 		u.ArrayOfStr = arrayOfStr
 		u.Type = OrganizationIDFilterTypeArrayOfStr
 		return nil
@@ -109,14 +109,14 @@ func CreateProductIDFilterArrayOfStr(arrayOfStr []string) ProductIDFilter {
 func (u *ProductIDFilter) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, false); err == nil {
 		u.Str = &str
 		u.Type = ProductIDFilterTypeStr
 		return nil
 	}
 
 	var arrayOfStr []string = []string{}
-	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, false); err == nil {
 		u.ArrayOfStr = arrayOfStr
 		u.Type = ProductIDFilterTypeArrayOfStr
 		return nil
@@ -173,14 +173,14 @@ func CreateCustomerIDFilterArrayOfStr(arrayOfStr []string) CustomerIDFilter {
 func (u *CustomerIDFilter) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, false); err == nil {
 		u.Str = &str
 		u.Type = CustomerIDFilterTypeStr
 		return nil
 	}
 
 	var arrayOfStr []string = []string{}
-	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, false); err == nil {
 		u.ArrayOfStr = arrayOfStr
 		u.Type = CustomerIDFilterTypeArrayOfStr
 		return nil
@@ -237,14 +237,14 @@ func CreateDiscountIDFilterArrayOfStr(arrayOfStr []string) DiscountIDFilter {
 func (u *DiscountIDFilter) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, false); err == nil {
 		u.Str = &str
 		u.Type = DiscountIDFilterTypeStr
 		return nil
 	}
 
 	var arrayOfStr []string = []string{}
-	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, false); err == nil {
 		u.ArrayOfStr = arrayOfStr
 		u.Type = DiscountIDFilterTypeArrayOfStr
 		return nil

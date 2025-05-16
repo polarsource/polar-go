@@ -16,7 +16,7 @@ func (n NotOpenCheckout) MarshalJSON() ([]byte, error) {
 }
 
 func (n *NotOpenCheckout) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &n, "", false, true); err != nil {
+	if err := utils.UnmarshalJSON(data, &n, "", false, false); err != nil {
 		return err
 	}
 	return nil

@@ -3,14 +3,145 @@
 package operations
 
 import (
+	"errors"
+	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
 	"github.com/polarsource/polar-go/models/components"
 )
 
+type FilesListQueryParamOrganizationIDFilterType string
+
+const (
+	FilesListQueryParamOrganizationIDFilterTypeStr        FilesListQueryParamOrganizationIDFilterType = "str"
+	FilesListQueryParamOrganizationIDFilterTypeArrayOfStr FilesListQueryParamOrganizationIDFilterType = "arrayOfStr"
+)
+
+// FilesListQueryParamOrganizationIDFilter - Filter by organization ID.
+type FilesListQueryParamOrganizationIDFilter struct {
+	Str        *string  `queryParam:"inline"`
+	ArrayOfStr []string `queryParam:"inline"`
+
+	Type FilesListQueryParamOrganizationIDFilterType
+}
+
+func CreateFilesListQueryParamOrganizationIDFilterStr(str string) FilesListQueryParamOrganizationIDFilter {
+	typ := FilesListQueryParamOrganizationIDFilterTypeStr
+
+	return FilesListQueryParamOrganizationIDFilter{
+		Str:  &str,
+		Type: typ,
+	}
+}
+
+func CreateFilesListQueryParamOrganizationIDFilterArrayOfStr(arrayOfStr []string) FilesListQueryParamOrganizationIDFilter {
+	typ := FilesListQueryParamOrganizationIDFilterTypeArrayOfStr
+
+	return FilesListQueryParamOrganizationIDFilter{
+		ArrayOfStr: arrayOfStr,
+		Type:       typ,
+	}
+}
+
+func (u *FilesListQueryParamOrganizationIDFilter) UnmarshalJSON(data []byte) error {
+
+	var str string = ""
+	if err := utils.UnmarshalJSON(data, &str, "", true, false); err == nil {
+		u.Str = &str
+		u.Type = FilesListQueryParamOrganizationIDFilterTypeStr
+		return nil
+	}
+
+	var arrayOfStr []string = []string{}
+	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, false); err == nil {
+		u.ArrayOfStr = arrayOfStr
+		u.Type = FilesListQueryParamOrganizationIDFilterTypeArrayOfStr
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for FilesListQueryParamOrganizationIDFilter", string(data))
+}
+
+func (u FilesListQueryParamOrganizationIDFilter) MarshalJSON() ([]byte, error) {
+	if u.Str != nil {
+		return utils.MarshalJSON(u.Str, "", true)
+	}
+
+	if u.ArrayOfStr != nil {
+		return utils.MarshalJSON(u.ArrayOfStr, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type FilesListQueryParamOrganizationIDFilter: all fields are null")
+}
+
+type FileIDFilterType string
+
+const (
+	FileIDFilterTypeStr        FileIDFilterType = "str"
+	FileIDFilterTypeArrayOfStr FileIDFilterType = "arrayOfStr"
+)
+
+// FileIDFilter - Filter by file ID.
+type FileIDFilter struct {
+	Str        *string  `queryParam:"inline"`
+	ArrayOfStr []string `queryParam:"inline"`
+
+	Type FileIDFilterType
+}
+
+func CreateFileIDFilterStr(str string) FileIDFilter {
+	typ := FileIDFilterTypeStr
+
+	return FileIDFilter{
+		Str:  &str,
+		Type: typ,
+	}
+}
+
+func CreateFileIDFilterArrayOfStr(arrayOfStr []string) FileIDFilter {
+	typ := FileIDFilterTypeArrayOfStr
+
+	return FileIDFilter{
+		ArrayOfStr: arrayOfStr,
+		Type:       typ,
+	}
+}
+
+func (u *FileIDFilter) UnmarshalJSON(data []byte) error {
+
+	var str string = ""
+	if err := utils.UnmarshalJSON(data, &str, "", true, false); err == nil {
+		u.Str = &str
+		u.Type = FileIDFilterTypeStr
+		return nil
+	}
+
+	var arrayOfStr []string = []string{}
+	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, false); err == nil {
+		u.ArrayOfStr = arrayOfStr
+		u.Type = FileIDFilterTypeArrayOfStr
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for FileIDFilter", string(data))
+}
+
+func (u FileIDFilter) MarshalJSON() ([]byte, error) {
+	if u.Str != nil {
+		return utils.MarshalJSON(u.Str, "", true)
+	}
+
+	if u.ArrayOfStr != nil {
+		return utils.MarshalJSON(u.ArrayOfStr, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type FileIDFilter: all fields are null")
+}
+
 type FilesListRequest struct {
-	OrganizationID *string `queryParam:"style=form,explode=true,name=organization_id"`
-	// List of file IDs to get.
-	Ids []string `queryParam:"style=form,explode=true,name=ids"`
+	// Filter by organization ID.
+	OrganizationID *FilesListQueryParamOrganizationIDFilter `queryParam:"style=form,explode=true,name=organization_id"`
+	// Filter by file ID.
+	Ids *FileIDFilter `queryParam:"style=form,explode=true,name=ids"`
 	// Page number, defaults to 1.
 	Page *int64 `default:"1" queryParam:"style=form,explode=true,name=page"`
 	// Size of a page, defaults to 10. Maximum is 100.
@@ -28,14 +159,14 @@ func (f *FilesListRequest) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *FilesListRequest) GetOrganizationID() *string {
+func (o *FilesListRequest) GetOrganizationID() *FilesListQueryParamOrganizationIDFilter {
 	if o == nil {
 		return nil
 	}
 	return o.OrganizationID
 }
 
-func (o *FilesListRequest) GetIds() []string {
+func (o *FilesListRequest) GetIds() *FileIDFilter {
 	if o == nil {
 		return nil
 	}

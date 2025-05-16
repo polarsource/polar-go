@@ -47,14 +47,14 @@ func CreateCheckoutForbiddenErrorNotOpenCheckout(notOpenCheckout components.NotO
 func (u *CheckoutForbiddenError) UnmarshalJSON(data []byte) error {
 
 	var alreadyActiveSubscriptionError components.AlreadyActiveSubscriptionError = components.AlreadyActiveSubscriptionError{}
-	if err := utils.UnmarshalJSON(data, &alreadyActiveSubscriptionError, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &alreadyActiveSubscriptionError, "", true, false); err == nil {
 		u.AlreadyActiveSubscriptionError = &alreadyActiveSubscriptionError
 		u.Type = CheckoutForbiddenErrorTypeAlreadyActiveSubscriptionError
 		return nil
 	}
 
 	var notOpenCheckout components.NotOpenCheckout = components.NotOpenCheckout{}
-	if err := utils.UnmarshalJSON(data, &notOpenCheckout, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &notOpenCheckout, "", true, false); err == nil {
 		u.NotOpenCheckout = &notOpenCheckout
 		u.Type = CheckoutForbiddenErrorTypeNotOpenCheckout
 		return nil

@@ -66,28 +66,28 @@ func CreateCheckoutPublicConfirmedCustomFieldDataDateTime(dateTime time.Time) Ch
 func (u *CheckoutPublicConfirmedCustomFieldData) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, false); err == nil {
 		u.Str = &str
 		u.Type = CheckoutPublicConfirmedCustomFieldDataTypeStr
 		return nil
 	}
 
 	var integer int64 = int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &integer, "", true, false); err == nil {
 		u.Integer = &integer
 		u.Type = CheckoutPublicConfirmedCustomFieldDataTypeInteger
 		return nil
 	}
 
 	var boolean bool = false
-	if err := utils.UnmarshalJSON(data, &boolean, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &boolean, "", true, false); err == nil {
 		u.Boolean = &boolean
 		u.Type = CheckoutPublicConfirmedCustomFieldDataTypeBoolean
 		return nil
 	}
 
 	var dateTime time.Time = time.Time{}
-	if err := utils.UnmarshalJSON(data, &dateTime, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &dateTime, "", true, false); err == nil {
 		u.DateTime = &dateTime
 		u.Type = CheckoutPublicConfirmedCustomFieldDataTypeDateTime
 		return nil
@@ -152,14 +152,14 @@ func CreateCheckoutPublicConfirmedProductPriceProductPrice(productPrice ProductP
 func (u *CheckoutPublicConfirmedProductPrice) UnmarshalJSON(data []byte) error {
 
 	var legacyRecurringProductPrice LegacyRecurringProductPrice = LegacyRecurringProductPrice{}
-	if err := utils.UnmarshalJSON(data, &legacyRecurringProductPrice, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &legacyRecurringProductPrice, "", true, false); err == nil {
 		u.LegacyRecurringProductPrice = &legacyRecurringProductPrice
 		u.Type = CheckoutPublicConfirmedProductPriceTypeLegacyRecurringProductPrice
 		return nil
 	}
 
 	var productPrice ProductPrice = ProductPrice{}
-	if err := utils.UnmarshalJSON(data, &productPrice, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &productPrice, "", true, false); err == nil {
 		u.ProductPrice = &productPrice
 		u.Type = CheckoutPublicConfirmedProductPriceTypeProductPrice
 		return nil
@@ -237,28 +237,28 @@ func CreateCheckoutPublicConfirmedDiscountCheckoutDiscountPercentageRepeatDurati
 func (u *CheckoutPublicConfirmedDiscount) UnmarshalJSON(data []byte) error {
 
 	var checkoutDiscountPercentageOnceForeverDuration CheckoutDiscountPercentageOnceForeverDuration = CheckoutDiscountPercentageOnceForeverDuration{}
-	if err := utils.UnmarshalJSON(data, &checkoutDiscountPercentageOnceForeverDuration, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &checkoutDiscountPercentageOnceForeverDuration, "", true, false); err == nil {
 		u.CheckoutDiscountPercentageOnceForeverDuration = &checkoutDiscountPercentageOnceForeverDuration
 		u.Type = CheckoutPublicConfirmedDiscountTypeCheckoutDiscountPercentageOnceForeverDuration
 		return nil
 	}
 
 	var checkoutDiscountFixedOnceForeverDuration CheckoutDiscountFixedOnceForeverDuration = CheckoutDiscountFixedOnceForeverDuration{}
-	if err := utils.UnmarshalJSON(data, &checkoutDiscountFixedOnceForeverDuration, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &checkoutDiscountFixedOnceForeverDuration, "", true, false); err == nil {
 		u.CheckoutDiscountFixedOnceForeverDuration = &checkoutDiscountFixedOnceForeverDuration
 		u.Type = CheckoutPublicConfirmedDiscountTypeCheckoutDiscountFixedOnceForeverDuration
 		return nil
 	}
 
 	var checkoutDiscountPercentageRepeatDuration CheckoutDiscountPercentageRepeatDuration = CheckoutDiscountPercentageRepeatDuration{}
-	if err := utils.UnmarshalJSON(data, &checkoutDiscountPercentageRepeatDuration, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &checkoutDiscountPercentageRepeatDuration, "", true, false); err == nil {
 		u.CheckoutDiscountPercentageRepeatDuration = &checkoutDiscountPercentageRepeatDuration
 		u.Type = CheckoutPublicConfirmedDiscountTypeCheckoutDiscountPercentageRepeatDuration
 		return nil
 	}
 
 	var checkoutDiscountFixedRepeatDuration CheckoutDiscountFixedRepeatDuration = CheckoutDiscountFixedRepeatDuration{}
-	if err := utils.UnmarshalJSON(data, &checkoutDiscountFixedRepeatDuration, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &checkoutDiscountFixedRepeatDuration, "", true, false); err == nil {
 		u.CheckoutDiscountFixedRepeatDuration = &checkoutDiscountFixedRepeatDuration
 		u.Type = CheckoutPublicConfirmedDiscountTypeCheckoutDiscountFixedRepeatDuration
 		return nil

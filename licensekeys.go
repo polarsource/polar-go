@@ -57,7 +57,7 @@ func (s *LicenseKeys) List(ctx context.Context, organizationID *operations.Licen
 	} else {
 		baseURL = *o.ServerURL
 	}
-	opURL, err := url.JoinPath(baseURL, "/v1/license-keys")
+	opURL, err := url.JoinPath(baseURL, "/v1/license-keys/")
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}

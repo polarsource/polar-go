@@ -66,28 +66,28 @@ func CreateSubscriptionCustomerMetadataBoolean(boolean bool) SubscriptionCustome
 func (u *SubscriptionCustomerMetadata) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, false); err == nil {
 		u.Str = &str
 		u.Type = SubscriptionCustomerMetadataTypeStr
 		return nil
 	}
 
 	var integer int64 = int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &integer, "", true, false); err == nil {
 		u.Integer = &integer
 		u.Type = SubscriptionCustomerMetadataTypeInteger
 		return nil
 	}
 
 	var number float64 = float64(0)
-	if err := utils.UnmarshalJSON(data, &number, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &number, "", true, false); err == nil {
 		u.Number = &number
 		u.Type = SubscriptionCustomerMetadataTypeNumber
 		return nil
 	}
 
 	var boolean bool = false
-	if err := utils.UnmarshalJSON(data, &boolean, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &boolean, "", true, false); err == nil {
 		u.Boolean = &boolean
 		u.Type = SubscriptionCustomerMetadataTypeBoolean
 		return nil
@@ -151,14 +151,14 @@ func CreateTaxIDTaxIDFormat(taxIDFormat TaxIDFormat) TaxID {
 func (u *TaxID) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, false); err == nil {
 		u.Str = &str
 		u.Type = TaxIDTypeStr
 		return nil
 	}
 
 	var taxIDFormat TaxIDFormat = TaxIDFormat("")
-	if err := utils.UnmarshalJSON(data, &taxIDFormat, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &taxIDFormat, "", true, false); err == nil {
 		u.TaxIDFormat = &taxIDFormat
 		u.Type = TaxIDTypeTaxIDFormat
 		return nil

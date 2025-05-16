@@ -45,14 +45,14 @@ func CreatePaymentsListQueryParamOrganizationIDFilterArrayOfStr(arrayOfStr []str
 func (u *PaymentsListQueryParamOrganizationIDFilter) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, false); err == nil {
 		u.Str = &str
 		u.Type = PaymentsListQueryParamOrganizationIDFilterTypeStr
 		return nil
 	}
 
 	var arrayOfStr []string = []string{}
-	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, false); err == nil {
 		u.ArrayOfStr = arrayOfStr
 		u.Type = PaymentsListQueryParamOrganizationIDFilterTypeArrayOfStr
 		return nil
@@ -109,14 +109,14 @@ func CreatePaymentsListQueryParamCheckoutIDFilterArrayOfStr(arrayOfStr []string)
 func (u *PaymentsListQueryParamCheckoutIDFilter) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, false); err == nil {
 		u.Str = &str
 		u.Type = PaymentsListQueryParamCheckoutIDFilterTypeStr
 		return nil
 	}
 
 	var arrayOfStr []string = []string{}
-	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, false); err == nil {
 		u.ArrayOfStr = arrayOfStr
 		u.Type = PaymentsListQueryParamCheckoutIDFilterTypeArrayOfStr
 		return nil
@@ -173,14 +173,14 @@ func CreatePaymentsListQueryParamOrderIDFilterArrayOfStr(arrayOfStr []string) Pa
 func (u *PaymentsListQueryParamOrderIDFilter) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, false); err == nil {
 		u.Str = &str
 		u.Type = PaymentsListQueryParamOrderIDFilterTypeStr
 		return nil
 	}
 
 	var arrayOfStr []string = []string{}
-	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, false); err == nil {
 		u.ArrayOfStr = arrayOfStr
 		u.Type = PaymentsListQueryParamOrderIDFilterTypeArrayOfStr
 		return nil
@@ -237,14 +237,14 @@ func CreateQueryParamStatusFilterArrayOfPaymentStatus(arrayOfPaymentStatus []com
 func (u *QueryParamStatusFilter) UnmarshalJSON(data []byte) error {
 
 	var paymentStatus components.PaymentStatus = components.PaymentStatus("")
-	if err := utils.UnmarshalJSON(data, &paymentStatus, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &paymentStatus, "", true, false); err == nil {
 		u.PaymentStatus = &paymentStatus
 		u.Type = QueryParamStatusFilterTypePaymentStatus
 		return nil
 	}
 
 	var arrayOfPaymentStatus []components.PaymentStatus = []components.PaymentStatus{}
-	if err := utils.UnmarshalJSON(data, &arrayOfPaymentStatus, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &arrayOfPaymentStatus, "", true, false); err == nil {
 		u.ArrayOfPaymentStatus = arrayOfPaymentStatus
 		u.Type = QueryParamStatusFilterTypeArrayOfPaymentStatus
 		return nil
@@ -301,14 +301,14 @@ func CreateMethodFilterArrayOfStr(arrayOfStr []string) MethodFilter {
 func (u *MethodFilter) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, false); err == nil {
 		u.Str = &str
 		u.Type = MethodFilterTypeStr
 		return nil
 	}
 
 	var arrayOfStr []string = []string{}
-	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, false); err == nil {
 		u.ArrayOfStr = arrayOfStr
 		u.Type = MethodFilterTypeArrayOfStr
 		return nil
@@ -365,14 +365,14 @@ func CreateCustomerEmailFilterArrayOfStr(arrayOfStr []string) CustomerEmailFilte
 func (u *CustomerEmailFilter) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, false); err == nil {
 		u.Str = &str
 		u.Type = CustomerEmailFilterTypeStr
 		return nil
 	}
 
 	var arrayOfStr []string = []string{}
-	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, false); err == nil {
 		u.ArrayOfStr = arrayOfStr
 		u.Type = CustomerEmailFilterTypeArrayOfStr
 		return nil

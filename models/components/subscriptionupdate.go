@@ -54,21 +54,21 @@ func CreateSubscriptionUpdateSubscriptionRevoke(subscriptionRevoke SubscriptionR
 func (u *SubscriptionUpdate) UnmarshalJSON(data []byte) error {
 
 	var subscriptionUpdateProduct SubscriptionUpdateProduct = SubscriptionUpdateProduct{}
-	if err := utils.UnmarshalJSON(data, &subscriptionUpdateProduct, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &subscriptionUpdateProduct, "", true, false); err == nil {
 		u.SubscriptionUpdateProduct = &subscriptionUpdateProduct
 		u.Type = SubscriptionUpdateTypeSubscriptionUpdateProduct
 		return nil
 	}
 
 	var subscriptionCancel SubscriptionCancel = SubscriptionCancel{}
-	if err := utils.UnmarshalJSON(data, &subscriptionCancel, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &subscriptionCancel, "", true, false); err == nil {
 		u.SubscriptionCancel = &subscriptionCancel
 		u.Type = SubscriptionUpdateTypeSubscriptionCancel
 		return nil
 	}
 
 	var subscriptionRevoke SubscriptionRevoke = SubscriptionRevoke{}
-	if err := utils.UnmarshalJSON(data, &subscriptionRevoke, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &subscriptionRevoke, "", true, false); err == nil {
 		u.SubscriptionRevoke = &subscriptionRevoke
 		u.Type = SubscriptionUpdateTypeSubscriptionRevoke
 		return nil

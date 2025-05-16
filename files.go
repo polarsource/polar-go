@@ -31,7 +31,7 @@ func newFiles(sdkConfig sdkConfiguration) *Files {
 // List files.
 //
 // **Scopes**: `files:read` `files:write`
-func (s *Files) List(ctx context.Context, organizationID *string, ids []string, page *int64, limit *int64, opts ...operations.Option) (*operations.FilesListResponse, error) {
+func (s *Files) List(ctx context.Context, organizationID *operations.FilesListQueryParamOrganizationIDFilter, ids *operations.FileIDFilter, page *int64, limit *int64, opts ...operations.Option) (*operations.FilesListResponse, error) {
 	request := operations.FilesListRequest{
 		OrganizationID: organizationID,
 		Ids:            ids,

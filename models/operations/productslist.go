@@ -45,14 +45,14 @@ func CreateQueryParamProductIDFilterArrayOfStr(arrayOfStr []string) QueryParamPr
 func (u *QueryParamProductIDFilter) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, false); err == nil {
 		u.Str = &str
 		u.Type = QueryParamProductIDFilterTypeStr
 		return nil
 	}
 
 	var arrayOfStr []string = []string{}
-	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, false); err == nil {
 		u.ArrayOfStr = arrayOfStr
 		u.Type = QueryParamProductIDFilterTypeArrayOfStr
 		return nil
@@ -109,14 +109,14 @@ func CreateProductsListQueryParamOrganizationIDFilterArrayOfStr(arrayOfStr []str
 func (u *ProductsListQueryParamOrganizationIDFilter) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, false); err == nil {
 		u.Str = &str
 		u.Type = ProductsListQueryParamOrganizationIDFilterTypeStr
 		return nil
 	}
 
 	var arrayOfStr []string = []string{}
-	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, false); err == nil {
 		u.ArrayOfStr = arrayOfStr
 		u.Type = ProductsListQueryParamOrganizationIDFilterTypeArrayOfStr
 		return nil
@@ -173,14 +173,14 @@ func CreateBenefitIDFilterArrayOfStr(arrayOfStr []string) BenefitIDFilter {
 func (u *BenefitIDFilter) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, false); err == nil {
 		u.Str = &str
 		u.Type = BenefitIDFilterTypeStr
 		return nil
 	}
 
 	var arrayOfStr []string = []string{}
-	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, false); err == nil {
 		u.ArrayOfStr = arrayOfStr
 		u.Type = BenefitIDFilterTypeArrayOfStr
 		return nil

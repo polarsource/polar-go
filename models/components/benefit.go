@@ -87,42 +87,42 @@ func CreateBenefitBenefitMeterCredit(benefitMeterCredit BenefitMeterCredit) Bene
 func (u *Benefit) UnmarshalJSON(data []byte) error {
 
 	var benefitCustom BenefitCustom = BenefitCustom{}
-	if err := utils.UnmarshalJSON(data, &benefitCustom, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &benefitCustom, "", true, false); err == nil {
 		u.BenefitCustom = &benefitCustom
 		u.Type = BenefitUnionTypeBenefitCustom
 		return nil
 	}
 
 	var benefitDiscord BenefitDiscord = BenefitDiscord{}
-	if err := utils.UnmarshalJSON(data, &benefitDiscord, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &benefitDiscord, "", true, false); err == nil {
 		u.BenefitDiscord = &benefitDiscord
 		u.Type = BenefitUnionTypeBenefitDiscord
 		return nil
 	}
 
 	var benefitGitHubRepository BenefitGitHubRepository = BenefitGitHubRepository{}
-	if err := utils.UnmarshalJSON(data, &benefitGitHubRepository, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &benefitGitHubRepository, "", true, false); err == nil {
 		u.BenefitGitHubRepository = &benefitGitHubRepository
 		u.Type = BenefitUnionTypeBenefitGitHubRepository
 		return nil
 	}
 
 	var benefitDownloadables BenefitDownloadables = BenefitDownloadables{}
-	if err := utils.UnmarshalJSON(data, &benefitDownloadables, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &benefitDownloadables, "", true, false); err == nil {
 		u.BenefitDownloadables = &benefitDownloadables
 		u.Type = BenefitUnionTypeBenefitDownloadables
 		return nil
 	}
 
 	var benefitLicenseKeys BenefitLicenseKeys = BenefitLicenseKeys{}
-	if err := utils.UnmarshalJSON(data, &benefitLicenseKeys, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &benefitLicenseKeys, "", true, false); err == nil {
 		u.BenefitLicenseKeys = &benefitLicenseKeys
 		u.Type = BenefitUnionTypeBenefitLicenseKeys
 		return nil
 	}
 
 	var benefitMeterCredit BenefitMeterCredit = BenefitMeterCredit{}
-	if err := utils.UnmarshalJSON(data, &benefitMeterCredit, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &benefitMeterCredit, "", true, false); err == nil {
 		u.BenefitMeterCredit = &benefitMeterCredit
 		u.Type = BenefitUnionTypeBenefitMeterCredit
 		return nil

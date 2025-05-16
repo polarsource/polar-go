@@ -45,14 +45,14 @@ func CreateLicenseKeysListQueryParamOrganizationIDFilterArrayOfStr(arrayOfStr []
 func (u *LicenseKeysListQueryParamOrganizationIDFilter) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, false); err == nil {
 		u.Str = &str
 		u.Type = LicenseKeysListQueryParamOrganizationIDFilterTypeStr
 		return nil
 	}
 
 	var arrayOfStr []string = []string{}
-	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, false); err == nil {
 		u.ArrayOfStr = arrayOfStr
 		u.Type = LicenseKeysListQueryParamOrganizationIDFilterTypeArrayOfStr
 		return nil
@@ -109,14 +109,14 @@ func CreateQueryParamBenefitIDFilterArrayOfStr(arrayOfStr []string) QueryParamBe
 func (u *QueryParamBenefitIDFilter) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, false); err == nil {
 		u.Str = &str
 		u.Type = QueryParamBenefitIDFilterTypeStr
 		return nil
 	}
 
 	var arrayOfStr []string = []string{}
-	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, false); err == nil {
 		u.ArrayOfStr = arrayOfStr
 		u.Type = QueryParamBenefitIDFilterTypeArrayOfStr
 		return nil

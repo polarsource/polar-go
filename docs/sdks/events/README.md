@@ -236,22 +236,7 @@ func main() {
     )
 
     res, err := s.Events.Ingest(ctx, components.EventsIngest{
-        Events: []components.Events{
-            components.CreateEventsEventCreateCustomer(
-                components.EventCreateCustomer{
-                    Name: "<value>",
-                    OrganizationID: polargo.String("1dbfc517-0bbf-4301-9ba8-555ca42b9737"),
-                    CustomerID: "<value>",
-                },
-            ),
-            components.CreateEventsEventCreateExternalCustomer(
-                components.EventCreateExternalCustomer{
-                    Name: "<value>",
-                    OrganizationID: polargo.String("1dbfc517-0bbf-4301-9ba8-555ca42b9737"),
-                    ExternalCustomerID: "<id>",
-                },
-            ),
-        },
+        Events: []components.Events{},
     })
     if err != nil {
         log.Fatal(err)

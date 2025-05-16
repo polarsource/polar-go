@@ -44,14 +44,14 @@ func CreateOauth2RequestTokenRequestBodyRefreshTokenRequest(refreshTokenRequest 
 func (u *Oauth2RequestTokenRequestBody) UnmarshalJSON(data []byte) error {
 
 	var refreshTokenRequest components.RefreshTokenRequest = components.RefreshTokenRequest{}
-	if err := utils.UnmarshalJSON(data, &refreshTokenRequest, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &refreshTokenRequest, "", true, false); err == nil {
 		u.RefreshTokenRequest = &refreshTokenRequest
 		u.Type = Oauth2RequestTokenRequestBodyTypeRefreshTokenRequest
 		return nil
 	}
 
 	var authorizationCodeTokenRequest components.AuthorizationCodeTokenRequest = components.AuthorizationCodeTokenRequest{}
-	if err := utils.UnmarshalJSON(data, &authorizationCodeTokenRequest, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &authorizationCodeTokenRequest, "", true, false); err == nil {
 		u.AuthorizationCodeTokenRequest = &authorizationCodeTokenRequest
 		u.Type = Oauth2RequestTokenRequestBodyTypeAuthorizationCodeTokenRequest
 		return nil

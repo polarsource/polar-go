@@ -65,28 +65,28 @@ func CreateProductPriceProductPriceMeteredUnit(productPriceMeteredUnit ProductPr
 func (u *ProductPrice) UnmarshalJSON(data []byte) error {
 
 	var productPriceFree ProductPriceFree = ProductPriceFree{}
-	if err := utils.UnmarshalJSON(data, &productPriceFree, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &productPriceFree, "", true, false); err == nil {
 		u.ProductPriceFree = &productPriceFree
 		u.Type = ProductPriceUnionTypeProductPriceFree
 		return nil
 	}
 
 	var productPriceFixed ProductPriceFixed = ProductPriceFixed{}
-	if err := utils.UnmarshalJSON(data, &productPriceFixed, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &productPriceFixed, "", true, false); err == nil {
 		u.ProductPriceFixed = &productPriceFixed
 		u.Type = ProductPriceUnionTypeProductPriceFixed
 		return nil
 	}
 
 	var productPriceCustom ProductPriceCustom = ProductPriceCustom{}
-	if err := utils.UnmarshalJSON(data, &productPriceCustom, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &productPriceCustom, "", true, false); err == nil {
 		u.ProductPriceCustom = &productPriceCustom
 		u.Type = ProductPriceUnionTypeProductPriceCustom
 		return nil
 	}
 
 	var productPriceMeteredUnit ProductPriceMeteredUnit = ProductPriceMeteredUnit{}
-	if err := utils.UnmarshalJSON(data, &productPriceMeteredUnit, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &productPriceMeteredUnit, "", true, false); err == nil {
 		u.ProductPriceMeteredUnit = &productPriceMeteredUnit
 		u.Type = ProductPriceUnionTypeProductPriceMeteredUnit
 		return nil

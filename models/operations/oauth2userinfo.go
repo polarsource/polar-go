@@ -45,14 +45,14 @@ func CreateOauth2UserinfoResponseOauth2UserinfoUserInfoOrganization(userInfoOrga
 func (u *Oauth2UserinfoResponseOauth2Userinfo) UnmarshalJSON(data []byte) error {
 
 	var userInfoOrganization components.UserInfoOrganization = components.UserInfoOrganization{}
-	if err := utils.UnmarshalJSON(data, &userInfoOrganization, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &userInfoOrganization, "", true, false); err == nil {
 		u.UserInfoOrganization = &userInfoOrganization
 		u.Type = Oauth2UserinfoResponseOauth2UserinfoTypeUserInfoOrganization
 		return nil
 	}
 
 	var userInfoUser components.UserInfoUser = components.UserInfoUser{}
-	if err := utils.UnmarshalJSON(data, &userInfoUser, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &userInfoUser, "", true, false); err == nil {
 		u.UserInfoUser = &userInfoUser
 		u.Type = Oauth2UserinfoResponseOauth2UserinfoTypeUserInfoUser
 		return nil

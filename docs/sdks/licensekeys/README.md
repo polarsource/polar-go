@@ -36,10 +36,8 @@ func main() {
         polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )
 
-    res, err := s.LicenseKeys.List(ctx, polargo.Pointer(operations.CreateLicenseKeysListQueryParamOrganizationIDFilterArrayOfStr(
-        []string{
-            "1dbfc517-0bbf-4301-9ba8-555ca42b9737",
-        },
+    res, err := s.LicenseKeys.List(ctx, polargo.Pointer(operations.CreateLicenseKeysListQueryParamOrganizationIDFilterStr(
+        "1dbfc517-0bbf-4301-9ba8-555ca42b9737",
     )), nil, nil, nil)
     if err != nil {
         log.Fatal(err)

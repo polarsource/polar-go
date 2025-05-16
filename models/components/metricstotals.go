@@ -43,14 +43,14 @@ func CreateMetricsTotalsOrdersNumber(number float64) MetricsTotalsOrders {
 func (u *MetricsTotalsOrders) UnmarshalJSON(data []byte) error {
 
 	var integer int64 = int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &integer, "", true, false); err == nil {
 		u.Integer = &integer
 		u.Type = MetricsTotalsOrdersTypeInteger
 		return nil
 	}
 
 	var number float64 = float64(0)
-	if err := utils.UnmarshalJSON(data, &number, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &number, "", true, false); err == nil {
 		u.Number = &number
 		u.Type = MetricsTotalsOrdersTypeNumber
 		return nil
@@ -106,14 +106,14 @@ func CreateMetricsTotalsRevenueNumber(number float64) MetricsTotalsRevenue {
 func (u *MetricsTotalsRevenue) UnmarshalJSON(data []byte) error {
 
 	var integer int64 = int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &integer, "", true, false); err == nil {
 		u.Integer = &integer
 		u.Type = MetricsTotalsRevenueTypeInteger
 		return nil
 	}
 
 	var number float64 = float64(0)
-	if err := utils.UnmarshalJSON(data, &number, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &number, "", true, false); err == nil {
 		u.Number = &number
 		u.Type = MetricsTotalsRevenueTypeNumber
 		return nil
@@ -169,14 +169,14 @@ func CreateMetricsTotalsCumulativeRevenueNumber(number float64) MetricsTotalsCum
 func (u *MetricsTotalsCumulativeRevenue) UnmarshalJSON(data []byte) error {
 
 	var integer int64 = int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &integer, "", true, false); err == nil {
 		u.Integer = &integer
 		u.Type = MetricsTotalsCumulativeRevenueTypeInteger
 		return nil
 	}
 
 	var number float64 = float64(0)
-	if err := utils.UnmarshalJSON(data, &number, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &number, "", true, false); err == nil {
 		u.Number = &number
 		u.Type = MetricsTotalsCumulativeRevenueTypeNumber
 		return nil
@@ -232,14 +232,14 @@ func CreateMetricsTotalsAverageOrderValueNumber(number float64) MetricsTotalsAve
 func (u *MetricsTotalsAverageOrderValue) UnmarshalJSON(data []byte) error {
 
 	var integer int64 = int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &integer, "", true, false); err == nil {
 		u.Integer = &integer
 		u.Type = MetricsTotalsAverageOrderValueTypeInteger
 		return nil
 	}
 
 	var number float64 = float64(0)
-	if err := utils.UnmarshalJSON(data, &number, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &number, "", true, false); err == nil {
 		u.Number = &number
 		u.Type = MetricsTotalsAverageOrderValueTypeNumber
 		return nil
@@ -295,14 +295,14 @@ func CreateMetricsTotalsOneTimeProductsNumber(number float64) MetricsTotalsOneTi
 func (u *MetricsTotalsOneTimeProducts) UnmarshalJSON(data []byte) error {
 
 	var integer int64 = int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &integer, "", true, false); err == nil {
 		u.Integer = &integer
 		u.Type = MetricsTotalsOneTimeProductsTypeInteger
 		return nil
 	}
 
 	var number float64 = float64(0)
-	if err := utils.UnmarshalJSON(data, &number, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &number, "", true, false); err == nil {
 		u.Number = &number
 		u.Type = MetricsTotalsOneTimeProductsTypeNumber
 		return nil
@@ -358,14 +358,14 @@ func CreateMetricsTotalsOneTimeProductsRevenueNumber(number float64) MetricsTota
 func (u *MetricsTotalsOneTimeProductsRevenue) UnmarshalJSON(data []byte) error {
 
 	var integer int64 = int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &integer, "", true, false); err == nil {
 		u.Integer = &integer
 		u.Type = MetricsTotalsOneTimeProductsRevenueTypeInteger
 		return nil
 	}
 
 	var number float64 = float64(0)
-	if err := utils.UnmarshalJSON(data, &number, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &number, "", true, false); err == nil {
 		u.Number = &number
 		u.Type = MetricsTotalsOneTimeProductsRevenueTypeNumber
 		return nil
@@ -421,14 +421,14 @@ func CreateMetricsTotalsNewSubscriptionsNumber(number float64) MetricsTotalsNewS
 func (u *MetricsTotalsNewSubscriptions) UnmarshalJSON(data []byte) error {
 
 	var integer int64 = int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &integer, "", true, false); err == nil {
 		u.Integer = &integer
 		u.Type = MetricsTotalsNewSubscriptionsTypeInteger
 		return nil
 	}
 
 	var number float64 = float64(0)
-	if err := utils.UnmarshalJSON(data, &number, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &number, "", true, false); err == nil {
 		u.Number = &number
 		u.Type = MetricsTotalsNewSubscriptionsTypeNumber
 		return nil
@@ -484,14 +484,14 @@ func CreateMetricsTotalsNewSubscriptionsRevenueNumber(number float64) MetricsTot
 func (u *MetricsTotalsNewSubscriptionsRevenue) UnmarshalJSON(data []byte) error {
 
 	var integer int64 = int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &integer, "", true, false); err == nil {
 		u.Integer = &integer
 		u.Type = MetricsTotalsNewSubscriptionsRevenueTypeInteger
 		return nil
 	}
 
 	var number float64 = float64(0)
-	if err := utils.UnmarshalJSON(data, &number, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &number, "", true, false); err == nil {
 		u.Number = &number
 		u.Type = MetricsTotalsNewSubscriptionsRevenueTypeNumber
 		return nil
@@ -547,14 +547,14 @@ func CreateMetricsTotalsRenewedSubscriptionsNumber(number float64) MetricsTotals
 func (u *MetricsTotalsRenewedSubscriptions) UnmarshalJSON(data []byte) error {
 
 	var integer int64 = int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &integer, "", true, false); err == nil {
 		u.Integer = &integer
 		u.Type = MetricsTotalsRenewedSubscriptionsTypeInteger
 		return nil
 	}
 
 	var number float64 = float64(0)
-	if err := utils.UnmarshalJSON(data, &number, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &number, "", true, false); err == nil {
 		u.Number = &number
 		u.Type = MetricsTotalsRenewedSubscriptionsTypeNumber
 		return nil
@@ -610,14 +610,14 @@ func CreateMetricsTotalsRenewedSubscriptionsRevenueNumber(number float64) Metric
 func (u *MetricsTotalsRenewedSubscriptionsRevenue) UnmarshalJSON(data []byte) error {
 
 	var integer int64 = int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &integer, "", true, false); err == nil {
 		u.Integer = &integer
 		u.Type = MetricsTotalsRenewedSubscriptionsRevenueTypeInteger
 		return nil
 	}
 
 	var number float64 = float64(0)
-	if err := utils.UnmarshalJSON(data, &number, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &number, "", true, false); err == nil {
 		u.Number = &number
 		u.Type = MetricsTotalsRenewedSubscriptionsRevenueTypeNumber
 		return nil
@@ -673,14 +673,14 @@ func CreateMetricsTotalsActiveSubscriptionsNumber(number float64) MetricsTotalsA
 func (u *MetricsTotalsActiveSubscriptions) UnmarshalJSON(data []byte) error {
 
 	var integer int64 = int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &integer, "", true, false); err == nil {
 		u.Integer = &integer
 		u.Type = MetricsTotalsActiveSubscriptionsTypeInteger
 		return nil
 	}
 
 	var number float64 = float64(0)
-	if err := utils.UnmarshalJSON(data, &number, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &number, "", true, false); err == nil {
 		u.Number = &number
 		u.Type = MetricsTotalsActiveSubscriptionsTypeNumber
 		return nil
@@ -736,14 +736,14 @@ func CreateMetricsTotalsMonthlyRecurringRevenueNumber(number float64) MetricsTot
 func (u *MetricsTotalsMonthlyRecurringRevenue) UnmarshalJSON(data []byte) error {
 
 	var integer int64 = int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &integer, "", true, false); err == nil {
 		u.Integer = &integer
 		u.Type = MetricsTotalsMonthlyRecurringRevenueTypeInteger
 		return nil
 	}
 
 	var number float64 = float64(0)
-	if err := utils.UnmarshalJSON(data, &number, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &number, "", true, false); err == nil {
 		u.Number = &number
 		u.Type = MetricsTotalsMonthlyRecurringRevenueTypeNumber
 		return nil
@@ -799,14 +799,14 @@ func CreateMetricsTotalsCheckoutsNumber(number float64) MetricsTotalsCheckouts {
 func (u *MetricsTotalsCheckouts) UnmarshalJSON(data []byte) error {
 
 	var integer int64 = int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &integer, "", true, false); err == nil {
 		u.Integer = &integer
 		u.Type = MetricsTotalsCheckoutsTypeInteger
 		return nil
 	}
 
 	var number float64 = float64(0)
-	if err := utils.UnmarshalJSON(data, &number, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &number, "", true, false); err == nil {
 		u.Number = &number
 		u.Type = MetricsTotalsCheckoutsTypeNumber
 		return nil
@@ -862,14 +862,14 @@ func CreateMetricsTotalsSucceededCheckoutsNumber(number float64) MetricsTotalsSu
 func (u *MetricsTotalsSucceededCheckouts) UnmarshalJSON(data []byte) error {
 
 	var integer int64 = int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &integer, "", true, false); err == nil {
 		u.Integer = &integer
 		u.Type = MetricsTotalsSucceededCheckoutsTypeInteger
 		return nil
 	}
 
 	var number float64 = float64(0)
-	if err := utils.UnmarshalJSON(data, &number, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &number, "", true, false); err == nil {
 		u.Number = &number
 		u.Type = MetricsTotalsSucceededCheckoutsTypeNumber
 		return nil
@@ -925,14 +925,14 @@ func CreateMetricsTotalsCheckoutsConversionNumber(number float64) MetricsTotalsC
 func (u *MetricsTotalsCheckoutsConversion) UnmarshalJSON(data []byte) error {
 
 	var integer int64 = int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &integer, "", true, false); err == nil {
 		u.Integer = &integer
 		u.Type = MetricsTotalsCheckoutsConversionTypeInteger
 		return nil
 	}
 
 	var number float64 = float64(0)
-	if err := utils.UnmarshalJSON(data, &number, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &number, "", true, false); err == nil {
 		u.Number = &number
 		u.Type = MetricsTotalsCheckoutsConversionTypeNumber
 		return nil

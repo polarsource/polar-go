@@ -44,7 +44,7 @@ func (s SubscriptionRevoke) MarshalJSON() ([]byte, error) {
 }
 
 func (s *SubscriptionRevoke) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &s, "", false, true); err != nil {
+	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
 		return err
 	}
 	return nil

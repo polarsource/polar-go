@@ -56,14 +56,14 @@ func CreateQueryParamBenefitTypeFilterArrayOfBenefitType(arrayOfBenefitType []co
 func (u *QueryParamBenefitTypeFilter) UnmarshalJSON(data []byte) error {
 
 	var benefitType components.BenefitType = components.BenefitType("")
-	if err := utils.UnmarshalJSON(data, &benefitType, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &benefitType, "", true, false); err == nil {
 		u.BenefitType = &benefitType
 		u.Type = QueryParamBenefitTypeFilterTypeBenefitType
 		return nil
 	}
 
 	var arrayOfBenefitType []components.BenefitType = []components.BenefitType{}
-	if err := utils.UnmarshalJSON(data, &arrayOfBenefitType, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &arrayOfBenefitType, "", true, false); err == nil {
 		u.ArrayOfBenefitType = arrayOfBenefitType
 		u.Type = QueryParamBenefitTypeFilterTypeArrayOfBenefitType
 		return nil
@@ -120,14 +120,14 @@ func CreateCustomerPortalBenefitGrantsListQueryParamBenefitIDFilterArrayOfStr(ar
 func (u *CustomerPortalBenefitGrantsListQueryParamBenefitIDFilter) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, false); err == nil {
 		u.Str = &str
 		u.Type = CustomerPortalBenefitGrantsListQueryParamBenefitIDFilterTypeStr
 		return nil
 	}
 
 	var arrayOfStr []string = []string{}
-	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, false); err == nil {
 		u.ArrayOfStr = arrayOfStr
 		u.Type = CustomerPortalBenefitGrantsListQueryParamBenefitIDFilterTypeArrayOfStr
 		return nil
@@ -184,14 +184,14 @@ func CreateCustomerPortalBenefitGrantsListQueryParamOrganizationIDFilterArrayOfS
 func (u *CustomerPortalBenefitGrantsListQueryParamOrganizationIDFilter) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, false); err == nil {
 		u.Str = &str
 		u.Type = CustomerPortalBenefitGrantsListQueryParamOrganizationIDFilterTypeStr
 		return nil
 	}
 
 	var arrayOfStr []string = []string{}
-	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, false); err == nil {
 		u.ArrayOfStr = arrayOfStr
 		u.Type = CustomerPortalBenefitGrantsListQueryParamOrganizationIDFilterTypeArrayOfStr
 		return nil
@@ -248,14 +248,14 @@ func CreateQueryParamCheckoutIDFilterArrayOfStr(arrayOfStr []string) QueryParamC
 func (u *QueryParamCheckoutIDFilter) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, false); err == nil {
 		u.Str = &str
 		u.Type = QueryParamCheckoutIDFilterTypeStr
 		return nil
 	}
 
 	var arrayOfStr []string = []string{}
-	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, false); err == nil {
 		u.ArrayOfStr = arrayOfStr
 		u.Type = QueryParamCheckoutIDFilterTypeArrayOfStr
 		return nil
@@ -312,14 +312,14 @@ func CreateQueryParamOrderIDFilterArrayOfStr(arrayOfStr []string) QueryParamOrde
 func (u *QueryParamOrderIDFilter) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, false); err == nil {
 		u.Str = &str
 		u.Type = QueryParamOrderIDFilterTypeStr
 		return nil
 	}
 
 	var arrayOfStr []string = []string{}
-	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, false); err == nil {
 		u.ArrayOfStr = arrayOfStr
 		u.Type = QueryParamOrderIDFilterTypeArrayOfStr
 		return nil
@@ -376,14 +376,14 @@ func CreateQueryParamSubscriptionIDFilterArrayOfStr(arrayOfStr []string) QueryPa
 func (u *QueryParamSubscriptionIDFilter) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, false); err == nil {
 		u.Str = &str
 		u.Type = QueryParamSubscriptionIDFilterTypeStr
 		return nil
 	}
 
 	var arrayOfStr []string = []string{}
-	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, false); err == nil {
 		u.ArrayOfStr = arrayOfStr
 		u.Type = QueryParamSubscriptionIDFilterTypeArrayOfStr
 		return nil

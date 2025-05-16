@@ -111,15 +111,11 @@ func main() {
         polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )
 
-    res, err := s.Benefits.Create(ctx, components.CreateBenefitCreateGithubRepository(
-        components.BenefitGitHubRepositoryCreate{
-            Description: "yuck forager beneath please shadowy foodstuffs welcome",
+    res, err := s.Benefits.Create(ctx, components.CreateBenefitCreateLicenseKeys(
+        components.BenefitLicenseKeysCreate{
+            Description: "mature emergent at outside arrogantly gadzooks zealous equatorial notwithstanding",
             OrganizationID: polargo.String("1dbfc517-0bbf-4301-9ba8-555ca42b9737"),
-            Properties: components.BenefitGitHubRepositoryCreateProperties{
-                RepositoryOwner: "polarsource",
-                RepositoryName: "private_repo",
-                Permission: components.BenefitGitHubRepositoryCreatePropertiesPermissionTriage,
-            },
+            Properties: components.BenefitLicenseKeysCreateProperties{},
         },
     ))
     if err != nil {
@@ -232,8 +228,8 @@ func main() {
         polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )
 
-    res, err := s.Benefits.Update(ctx, "<value>", operations.CreateBenefitsUpdateBenefitUpdateBenefitDownloadablesUpdate(
-        components.BenefitDownloadablesUpdate{},
+    res, err := s.Benefits.Update(ctx, "<value>", operations.CreateBenefitsUpdateBenefitUpdateBenefitCustomUpdate(
+        components.BenefitCustomUpdate{},
     ))
     if err != nil {
         log.Fatal(err)

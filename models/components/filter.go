@@ -43,14 +43,14 @@ func CreateClausesFilter(filter Filter) Clauses {
 func (u *Clauses) UnmarshalJSON(data []byte) error {
 
 	var filter Filter = Filter{}
-	if err := utils.UnmarshalJSON(data, &filter, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &filter, "", true, false); err == nil {
 		u.Filter = &filter
 		u.Type = ClausesTypeFilter
 		return nil
 	}
 
 	var filterClause FilterClause = FilterClause{}
-	if err := utils.UnmarshalJSON(data, &filterClause, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &filterClause, "", true, false); err == nil {
 		u.FilterClause = &filterClause
 		u.Type = ClausesTypeFilterClause
 		return nil

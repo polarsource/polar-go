@@ -35,10 +35,8 @@ func main() {
     )
 
     res, err := s.Payments.List(ctx, operations.PaymentsListRequest{
-        OrganizationID: polargo.Pointer(operations.CreatePaymentsListQueryParamOrganizationIDFilterArrayOfStr(
-            []string{
-                "1dbfc517-0bbf-4301-9ba8-555ca42b9737",
-            },
+        OrganizationID: polargo.Pointer(operations.CreatePaymentsListQueryParamOrganizationIDFilterStr(
+            "1dbfc517-0bbf-4301-9ba8-555ca42b9737",
         )),
     })
     if err != nil {

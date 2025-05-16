@@ -120,7 +120,7 @@ func main() {
         Email: "customer@example.com",
         Name: polargo.String("John Doe"),
         BillingAddress: &components.Address{
-            Country: "SE",
+            Country: "FR",
         },
         TaxID: []*components.CustomerCreateTaxID{
             polargo.Pointer(components.CreateCustomerCreateTaxIDStr(
@@ -249,10 +249,10 @@ func main() {
         },
         TaxID: []*components.CustomerUpdateTaxID{
             polargo.Pointer(components.CreateCustomerUpdateTaxIDStr(
-                "FR61954506077",
+                "911144442",
             )),
             polargo.Pointer(components.CreateCustomerUpdateTaxIDStr(
-                "eu_vat",
+                "us_ein",
             )),
         },
         ExternalID: polargo.String("usr_1337"),
@@ -443,10 +443,10 @@ func main() {
         },
         TaxID: []*components.CustomerUpdateExternalIDTaxID{
             polargo.Pointer(components.CreateCustomerUpdateExternalIDTaxIDStr(
-                "FR61954506077",
+                "911144442",
             )),
             polargo.Pointer(components.CreateCustomerUpdateExternalIDTaxIDStr(
-                "eu_vat",
+                "us_ein",
             )),
         },
     })

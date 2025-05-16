@@ -44,14 +44,14 @@ func CreateCheckoutProductPricesProductPrice(productPrice ProductPrice) Checkout
 func (u *CheckoutProductPrices) UnmarshalJSON(data []byte) error {
 
 	var legacyRecurringProductPrice LegacyRecurringProductPrice = LegacyRecurringProductPrice{}
-	if err := utils.UnmarshalJSON(data, &legacyRecurringProductPrice, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &legacyRecurringProductPrice, "", true, false); err == nil {
 		u.LegacyRecurringProductPrice = &legacyRecurringProductPrice
 		u.Type = CheckoutProductPricesTypeLegacyRecurringProductPrice
 		return nil
 	}
 
 	var productPrice ProductPrice = ProductPrice{}
-	if err := utils.UnmarshalJSON(data, &productPrice, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &productPrice, "", true, false); err == nil {
 		u.ProductPrice = &productPrice
 		u.Type = CheckoutProductPricesTypeProductPrice
 		return nil

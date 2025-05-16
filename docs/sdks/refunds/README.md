@@ -35,10 +35,8 @@ func main() {
     )
 
     res, err := s.Refunds.List(ctx, operations.RefundsListRequest{
-        OrganizationID: polargo.Pointer(operations.CreateRefundsListQueryParamOrganizationIDFilterArrayOfStr(
-            []string{
-                "1dbfc517-0bbf-4301-9ba8-555ca42b9737",
-            },
+        OrganizationID: polargo.Pointer(operations.CreateRefundsListQueryParamOrganizationIDFilterStr(
+            "1dbfc517-0bbf-4301-9ba8-555ca42b9737",
         )),
     })
     if err != nil {
@@ -110,7 +108,7 @@ func main() {
     res, err := s.Refunds.Create(ctx, components.RefundCreate{
         OrderID: "<value>",
         Reason: components.RefundReasonCustomerRequest,
-        Amount: 638424,
+        Amount: 90,
     })
     if err != nil {
         log.Fatal(err)

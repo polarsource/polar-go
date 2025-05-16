@@ -224,9 +224,9 @@ func main() {
         polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )
 
-    res, err := s.Subscriptions.Update(ctx, "<value>", components.CreateSubscriptionUpdateSubscriptionCancel(
-        components.SubscriptionCancel{
-            CancelAtPeriodEnd: false,
+    res, err := s.Subscriptions.Update(ctx, "<value>", components.CreateSubscriptionUpdateSubscriptionUpdateProduct(
+        components.SubscriptionUpdateProduct{
+            ProductID: "<value>",
         },
     ))
     if err != nil {

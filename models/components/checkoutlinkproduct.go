@@ -66,28 +66,28 @@ func CreateCheckoutLinkProductMetadataBoolean(boolean bool) CheckoutLinkProductM
 func (u *CheckoutLinkProductMetadata) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, false); err == nil {
 		u.Str = &str
 		u.Type = CheckoutLinkProductMetadataTypeStr
 		return nil
 	}
 
 	var integer int64 = int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &integer, "", true, false); err == nil {
 		u.Integer = &integer
 		u.Type = CheckoutLinkProductMetadataTypeInteger
 		return nil
 	}
 
 	var number float64 = float64(0)
-	if err := utils.UnmarshalJSON(data, &number, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &number, "", true, false); err == nil {
 		u.Number = &number
 		u.Type = CheckoutLinkProductMetadataTypeNumber
 		return nil
 	}
 
 	var boolean bool = false
-	if err := utils.UnmarshalJSON(data, &boolean, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &boolean, "", true, false); err == nil {
 		u.Boolean = &boolean
 		u.Type = CheckoutLinkProductMetadataTypeBoolean
 		return nil
@@ -151,14 +151,14 @@ func CreateCheckoutLinkProductPricesProductPrice(productPrice ProductPrice) Chec
 func (u *CheckoutLinkProductPrices) UnmarshalJSON(data []byte) error {
 
 	var legacyRecurringProductPrice LegacyRecurringProductPrice = LegacyRecurringProductPrice{}
-	if err := utils.UnmarshalJSON(data, &legacyRecurringProductPrice, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &legacyRecurringProductPrice, "", true, false); err == nil {
 		u.LegacyRecurringProductPrice = &legacyRecurringProductPrice
 		u.Type = CheckoutLinkProductPricesTypeLegacyRecurringProductPrice
 		return nil
 	}
 
 	var productPrice ProductPrice = ProductPrice{}
-	if err := utils.UnmarshalJSON(data, &productPrice, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &productPrice, "", true, false); err == nil {
 		u.ProductPrice = &productPrice
 		u.Type = CheckoutLinkProductPricesTypeProductPrice
 		return nil

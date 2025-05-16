@@ -65,28 +65,28 @@ func CreateDiscountCreateDiscountPercentageRepeatDurationCreate(discountPercenta
 func (u *DiscountCreate) UnmarshalJSON(data []byte) error {
 
 	var discountPercentageOnceForeverDurationCreate DiscountPercentageOnceForeverDurationCreate = DiscountPercentageOnceForeverDurationCreate{}
-	if err := utils.UnmarshalJSON(data, &discountPercentageOnceForeverDurationCreate, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &discountPercentageOnceForeverDurationCreate, "", true, false); err == nil {
 		u.DiscountPercentageOnceForeverDurationCreate = &discountPercentageOnceForeverDurationCreate
 		u.Type = DiscountCreateTypeDiscountPercentageOnceForeverDurationCreate
 		return nil
 	}
 
 	var discountFixedOnceForeverDurationCreate DiscountFixedOnceForeverDurationCreate = DiscountFixedOnceForeverDurationCreate{}
-	if err := utils.UnmarshalJSON(data, &discountFixedOnceForeverDurationCreate, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &discountFixedOnceForeverDurationCreate, "", true, false); err == nil {
 		u.DiscountFixedOnceForeverDurationCreate = &discountFixedOnceForeverDurationCreate
 		u.Type = DiscountCreateTypeDiscountFixedOnceForeverDurationCreate
 		return nil
 	}
 
 	var discountPercentageRepeatDurationCreate DiscountPercentageRepeatDurationCreate = DiscountPercentageRepeatDurationCreate{}
-	if err := utils.UnmarshalJSON(data, &discountPercentageRepeatDurationCreate, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &discountPercentageRepeatDurationCreate, "", true, false); err == nil {
 		u.DiscountPercentageRepeatDurationCreate = &discountPercentageRepeatDurationCreate
 		u.Type = DiscountCreateTypeDiscountPercentageRepeatDurationCreate
 		return nil
 	}
 
 	var discountFixedRepeatDurationCreate DiscountFixedRepeatDurationCreate = DiscountFixedRepeatDurationCreate{}
-	if err := utils.UnmarshalJSON(data, &discountFixedRepeatDurationCreate, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &discountFixedRepeatDurationCreate, "", true, false); err == nil {
 		u.DiscountFixedRepeatDurationCreate = &discountFixedRepeatDurationCreate
 		u.Type = DiscountCreateTypeDiscountFixedRepeatDurationCreate
 		return nil

@@ -102,7 +102,8 @@ func main() {
 
     res, err := s.Oauth2.Clients.Create(ctx, components.OAuth2ClientConfiguration{
         RedirectUris: []string{
-            "https://inferior-chainstay.com",
+            "https://impolite-hippodrome.com/",
+            "https://acidic-tomography.net/",
         },
         ClientName: "<value>",
     })
@@ -212,9 +213,8 @@ func main() {
 
     res, err := s.Oauth2.Clients.Update(ctx, "<id>", components.OAuth2ClientConfigurationUpdate{
         RedirectUris: []string{
-            "https://grown-worth.name",
-            "https://worthwhile-avalanche.org/",
-            "https://general-digit.com/",
+            "https://classic-cantaloupe.org",
+            "https://corrupt-status.biz/",
         },
         ClientName: "<value>",
         ClientID: "<id>",

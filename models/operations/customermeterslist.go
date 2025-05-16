@@ -45,14 +45,14 @@ func CreateCustomerMetersListQueryParamOrganizationIDFilterArrayOfStr(arrayOfStr
 func (u *CustomerMetersListQueryParamOrganizationIDFilter) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, false); err == nil {
 		u.Str = &str
 		u.Type = CustomerMetersListQueryParamOrganizationIDFilterTypeStr
 		return nil
 	}
 
 	var arrayOfStr []string = []string{}
-	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, false); err == nil {
 		u.ArrayOfStr = arrayOfStr
 		u.Type = CustomerMetersListQueryParamOrganizationIDFilterTypeArrayOfStr
 		return nil
@@ -109,14 +109,14 @@ func CreateCustomerMetersListQueryParamCustomerIDFilterArrayOfStr(arrayOfStr []s
 func (u *CustomerMetersListQueryParamCustomerIDFilter) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, false); err == nil {
 		u.Str = &str
 		u.Type = CustomerMetersListQueryParamCustomerIDFilterTypeStr
 		return nil
 	}
 
 	var arrayOfStr []string = []string{}
-	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, false); err == nil {
 		u.ArrayOfStr = arrayOfStr
 		u.Type = CustomerMetersListQueryParamCustomerIDFilterTypeArrayOfStr
 		return nil
@@ -173,14 +173,14 @@ func CreateCustomerMetersListQueryParamExternalCustomerIDFilterArrayOfStr(arrayO
 func (u *CustomerMetersListQueryParamExternalCustomerIDFilter) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, false); err == nil {
 		u.Str = &str
 		u.Type = CustomerMetersListQueryParamExternalCustomerIDFilterTypeStr
 		return nil
 	}
 
 	var arrayOfStr []string = []string{}
-	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, false); err == nil {
 		u.ArrayOfStr = arrayOfStr
 		u.Type = CustomerMetersListQueryParamExternalCustomerIDFilterTypeArrayOfStr
 		return nil
@@ -237,14 +237,14 @@ func CreateQueryParamMeterIDFilterArrayOfStr(arrayOfStr []string) QueryParamMete
 func (u *QueryParamMeterIDFilter) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, false); err == nil {
 		u.Str = &str
 		u.Type = QueryParamMeterIDFilterTypeStr
 		return nil
 	}
 
 	var arrayOfStr []string = []string{}
-	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, false); err == nil {
 		u.ArrayOfStr = arrayOfStr
 		u.Type = QueryParamMeterIDFilterTypeArrayOfStr
 		return nil

@@ -87,42 +87,42 @@ func CreateCustomerBenefitGrantCustomerBenefitGrantMeterCredit(customerBenefitGr
 func (u *CustomerBenefitGrant) UnmarshalJSON(data []byte) error {
 
 	var customerBenefitGrantDiscord CustomerBenefitGrantDiscord = CustomerBenefitGrantDiscord{}
-	if err := utils.UnmarshalJSON(data, &customerBenefitGrantDiscord, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &customerBenefitGrantDiscord, "", true, false); err == nil {
 		u.CustomerBenefitGrantDiscord = &customerBenefitGrantDiscord
 		u.Type = CustomerBenefitGrantTypeCustomerBenefitGrantDiscord
 		return nil
 	}
 
 	var customerBenefitGrantGitHubRepository CustomerBenefitGrantGitHubRepository = CustomerBenefitGrantGitHubRepository{}
-	if err := utils.UnmarshalJSON(data, &customerBenefitGrantGitHubRepository, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &customerBenefitGrantGitHubRepository, "", true, false); err == nil {
 		u.CustomerBenefitGrantGitHubRepository = &customerBenefitGrantGitHubRepository
 		u.Type = CustomerBenefitGrantTypeCustomerBenefitGrantGitHubRepository
 		return nil
 	}
 
 	var customerBenefitGrantDownloadables CustomerBenefitGrantDownloadables = CustomerBenefitGrantDownloadables{}
-	if err := utils.UnmarshalJSON(data, &customerBenefitGrantDownloadables, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &customerBenefitGrantDownloadables, "", true, false); err == nil {
 		u.CustomerBenefitGrantDownloadables = &customerBenefitGrantDownloadables
 		u.Type = CustomerBenefitGrantTypeCustomerBenefitGrantDownloadables
 		return nil
 	}
 
 	var customerBenefitGrantLicenseKeys CustomerBenefitGrantLicenseKeys = CustomerBenefitGrantLicenseKeys{}
-	if err := utils.UnmarshalJSON(data, &customerBenefitGrantLicenseKeys, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &customerBenefitGrantLicenseKeys, "", true, false); err == nil {
 		u.CustomerBenefitGrantLicenseKeys = &customerBenefitGrantLicenseKeys
 		u.Type = CustomerBenefitGrantTypeCustomerBenefitGrantLicenseKeys
 		return nil
 	}
 
 	var customerBenefitGrantCustom CustomerBenefitGrantCustom = CustomerBenefitGrantCustom{}
-	if err := utils.UnmarshalJSON(data, &customerBenefitGrantCustom, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &customerBenefitGrantCustom, "", true, false); err == nil {
 		u.CustomerBenefitGrantCustom = &customerBenefitGrantCustom
 		u.Type = CustomerBenefitGrantTypeCustomerBenefitGrantCustom
 		return nil
 	}
 
 	var customerBenefitGrantMeterCredit CustomerBenefitGrantMeterCredit = CustomerBenefitGrantMeterCredit{}
-	if err := utils.UnmarshalJSON(data, &customerBenefitGrantMeterCredit, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &customerBenefitGrantMeterCredit, "", true, false); err == nil {
 		u.CustomerBenefitGrantMeterCredit = &customerBenefitGrantMeterCredit
 		u.Type = CustomerBenefitGrantTypeCustomerBenefitGrantMeterCredit
 		return nil

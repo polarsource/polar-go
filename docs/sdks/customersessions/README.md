@@ -34,9 +34,9 @@ func main() {
         polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )
 
-    res, err := s.CustomerSessions.Create(ctx, operations.CreateCustomerSessionsCreateCustomerSessionCreateCustomerSessionCustomerIDCreate(
-        components.CustomerSessionCustomerIDCreate{
-            CustomerID: "<value>",
+    res, err := s.CustomerSessions.Create(ctx, operations.CreateCustomerSessionsCreateCustomerSessionCreateCustomerSessionCustomerExternalIDCreate(
+        components.CustomerSessionCustomerExternalIDCreate{
+            CustomerExternalID: "<id>",
         },
     ))
     if err != nil {

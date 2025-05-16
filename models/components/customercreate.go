@@ -65,28 +65,28 @@ func CreateCustomerCreateMetadataBoolean(boolean bool) CustomerCreateMetadata {
 func (u *CustomerCreateMetadata) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, false); err == nil {
 		u.Str = &str
 		u.Type = CustomerCreateMetadataTypeStr
 		return nil
 	}
 
 	var integer int64 = int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &integer, "", true, false); err == nil {
 		u.Integer = &integer
 		u.Type = CustomerCreateMetadataTypeInteger
 		return nil
 	}
 
 	var number float64 = float64(0)
-	if err := utils.UnmarshalJSON(data, &number, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &number, "", true, false); err == nil {
 		u.Number = &number
 		u.Type = CustomerCreateMetadataTypeNumber
 		return nil
 	}
 
 	var boolean bool = false
-	if err := utils.UnmarshalJSON(data, &boolean, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &boolean, "", true, false); err == nil {
 		u.Boolean = &boolean
 		u.Type = CustomerCreateMetadataTypeBoolean
 		return nil
@@ -150,14 +150,14 @@ func CreateCustomerCreateTaxIDTaxIDFormat(taxIDFormat TaxIDFormat) CustomerCreat
 func (u *CustomerCreateTaxID) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, false); err == nil {
 		u.Str = &str
 		u.Type = CustomerCreateTaxIDTypeStr
 		return nil
 	}
 
 	var taxIDFormat TaxIDFormat = TaxIDFormat("")
-	if err := utils.UnmarshalJSON(data, &taxIDFormat, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &taxIDFormat, "", true, false); err == nil {
 		u.TaxIDFormat = &taxIDFormat
 		u.Type = CustomerCreateTaxIDTypeTaxIDFormat
 		return nil

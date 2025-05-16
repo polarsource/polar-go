@@ -92,7 +92,7 @@ func main() {
 
     res, err := s.CustomerPortal.Customers.Update(ctx, components.CustomerPortalCustomerUpdate{
         BillingAddress: &components.Address{
-            Country: "FR",
+            Country: "US",
         },
     }, operations.CustomerPortalCustomersUpdateSecurity{
         CustomerSession: os.Getenv("POLAR_CUSTOMER_SESSION"),
@@ -223,7 +223,7 @@ func main() {
     res, err := s.CustomerPortal.Customers.AddPaymentMethod(ctx, components.CustomerPaymentMethodCreate{
         ConfirmationTokenID: "<id>",
         SetDefault: false,
-        ReturnURL: "https://slight-digestive.info",
+        ReturnURL: "https://yearly-custom.net/",
     }, operations.CustomerPortalCustomersAddPaymentMethodSecurity{
         CustomerSession: os.Getenv("POLAR_CUSTOMER_SESSION"),
     })

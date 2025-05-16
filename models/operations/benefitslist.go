@@ -45,14 +45,14 @@ func CreateQueryParamOrganizationIDFilterArrayOfStr(arrayOfStr []string) QueryPa
 func (u *QueryParamOrganizationIDFilter) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, false); err == nil {
 		u.Str = &str
 		u.Type = QueryParamOrganizationIDFilterTypeStr
 		return nil
 	}
 
 	var arrayOfStr []string = []string{}
-	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, false); err == nil {
 		u.ArrayOfStr = arrayOfStr
 		u.Type = QueryParamOrganizationIDFilterTypeArrayOfStr
 		return nil
@@ -109,14 +109,14 @@ func CreateBenefitTypeFilterArrayOfBenefitType(arrayOfBenefitType []components.B
 func (u *BenefitTypeFilter) UnmarshalJSON(data []byte) error {
 
 	var benefitType components.BenefitType = components.BenefitType("")
-	if err := utils.UnmarshalJSON(data, &benefitType, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &benefitType, "", true, false); err == nil {
 		u.BenefitType = &benefitType
 		u.Type = BenefitTypeFilterTypeBenefitType
 		return nil
 	}
 
 	var arrayOfBenefitType []components.BenefitType = []components.BenefitType{}
-	if err := utils.UnmarshalJSON(data, &arrayOfBenefitType, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &arrayOfBenefitType, "", true, false); err == nil {
 		u.ArrayOfBenefitType = arrayOfBenefitType
 		u.Type = BenefitTypeFilterTypeArrayOfBenefitType
 		return nil

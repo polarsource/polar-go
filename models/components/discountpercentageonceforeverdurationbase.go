@@ -66,28 +66,28 @@ func CreateDiscountPercentageOnceForeverDurationBaseMetadataBoolean(boolean bool
 func (u *DiscountPercentageOnceForeverDurationBaseMetadata) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, false); err == nil {
 		u.Str = &str
 		u.Type = DiscountPercentageOnceForeverDurationBaseMetadataTypeStr
 		return nil
 	}
 
 	var integer int64 = int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &integer, "", true, false); err == nil {
 		u.Integer = &integer
 		u.Type = DiscountPercentageOnceForeverDurationBaseMetadataTypeInteger
 		return nil
 	}
 
 	var number float64 = float64(0)
-	if err := utils.UnmarshalJSON(data, &number, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &number, "", true, false); err == nil {
 		u.Number = &number
 		u.Type = DiscountPercentageOnceForeverDurationBaseMetadataTypeNumber
 		return nil
 	}
 
 	var boolean bool = false
-	if err := utils.UnmarshalJSON(data, &boolean, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &boolean, "", true, false); err == nil {
 		u.Boolean = &boolean
 		u.Type = DiscountPercentageOnceForeverDurationBaseMetadataTypeBoolean
 		return nil
@@ -148,7 +148,7 @@ func (d DiscountPercentageOnceForeverDurationBase) MarshalJSON() ([]byte, error)
 }
 
 func (d *DiscountPercentageOnceForeverDurationBase) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &d, "", false, true); err != nil {
+	if err := utils.UnmarshalJSON(data, &d, "", false, false); err != nil {
 		return err
 	}
 	return nil

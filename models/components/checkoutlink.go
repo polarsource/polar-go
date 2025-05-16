@@ -66,28 +66,28 @@ func CreateCheckoutLinkMetadataBoolean(boolean bool) CheckoutLinkMetadata {
 func (u *CheckoutLinkMetadata) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, false); err == nil {
 		u.Str = &str
 		u.Type = CheckoutLinkMetadataTypeStr
 		return nil
 	}
 
 	var integer int64 = int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &integer, "", true, false); err == nil {
 		u.Integer = &integer
 		u.Type = CheckoutLinkMetadataTypeInteger
 		return nil
 	}
 
 	var number float64 = float64(0)
-	if err := utils.UnmarshalJSON(data, &number, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &number, "", true, false); err == nil {
 		u.Number = &number
 		u.Type = CheckoutLinkMetadataTypeNumber
 		return nil
 	}
 
 	var boolean bool = false
-	if err := utils.UnmarshalJSON(data, &boolean, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &boolean, "", true, false); err == nil {
 		u.Boolean = &boolean
 		u.Type = CheckoutLinkMetadataTypeBoolean
 		return nil
@@ -173,28 +173,28 @@ func CreateCheckoutLinkDiscountDiscountPercentageRepeatDurationBase(discountPerc
 func (u *CheckoutLinkDiscount) UnmarshalJSON(data []byte) error {
 
 	var discountPercentageOnceForeverDurationBase DiscountPercentageOnceForeverDurationBase = DiscountPercentageOnceForeverDurationBase{}
-	if err := utils.UnmarshalJSON(data, &discountPercentageOnceForeverDurationBase, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &discountPercentageOnceForeverDurationBase, "", true, false); err == nil {
 		u.DiscountPercentageOnceForeverDurationBase = &discountPercentageOnceForeverDurationBase
 		u.Type = CheckoutLinkDiscountTypeDiscountPercentageOnceForeverDurationBase
 		return nil
 	}
 
 	var discountFixedOnceForeverDurationBase DiscountFixedOnceForeverDurationBase = DiscountFixedOnceForeverDurationBase{}
-	if err := utils.UnmarshalJSON(data, &discountFixedOnceForeverDurationBase, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &discountFixedOnceForeverDurationBase, "", true, false); err == nil {
 		u.DiscountFixedOnceForeverDurationBase = &discountFixedOnceForeverDurationBase
 		u.Type = CheckoutLinkDiscountTypeDiscountFixedOnceForeverDurationBase
 		return nil
 	}
 
 	var discountPercentageRepeatDurationBase DiscountPercentageRepeatDurationBase = DiscountPercentageRepeatDurationBase{}
-	if err := utils.UnmarshalJSON(data, &discountPercentageRepeatDurationBase, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &discountPercentageRepeatDurationBase, "", true, false); err == nil {
 		u.DiscountPercentageRepeatDurationBase = &discountPercentageRepeatDurationBase
 		u.Type = CheckoutLinkDiscountTypeDiscountPercentageRepeatDurationBase
 		return nil
 	}
 
 	var discountFixedRepeatDurationBase DiscountFixedRepeatDurationBase = DiscountFixedRepeatDurationBase{}
-	if err := utils.UnmarshalJSON(data, &discountFixedRepeatDurationBase, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &discountFixedRepeatDurationBase, "", true, false); err == nil {
 		u.DiscountFixedRepeatDurationBase = &discountFixedRepeatDurationBase
 		u.Type = CheckoutLinkDiscountTypeDiscountFixedRepeatDurationBase
 		return nil

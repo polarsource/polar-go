@@ -32,10 +32,8 @@ func main() {
 
     res, err := s.CustomerPortal.Downloadables.List(ctx, operations.CustomerPortalDownloadablesListSecurity{
         CustomerSession: os.Getenv("POLAR_CUSTOMER_SESSION"),
-    }, polargo.Pointer(operations.CreateCustomerPortalDownloadablesListQueryParamOrganizationIDFilterArrayOfStr(
-        []string{
-            "1dbfc517-0bbf-4301-9ba8-555ca42b9737",
-        },
+    }, polargo.Pointer(operations.CreateCustomerPortalDownloadablesListQueryParamOrganizationIDFilterStr(
+        "1dbfc517-0bbf-4301-9ba8-555ca42b9737",
     )), nil, nil, nil)
     if err != nil {
         log.Fatal(err)

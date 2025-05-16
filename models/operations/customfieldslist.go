@@ -45,14 +45,14 @@ func CreateCustomFieldsListQueryParamOrganizationIDFilterArrayOfStr(arrayOfStr [
 func (u *CustomFieldsListQueryParamOrganizationIDFilter) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, false); err == nil {
 		u.Str = &str
 		u.Type = CustomFieldsListQueryParamOrganizationIDFilterTypeStr
 		return nil
 	}
 
 	var arrayOfStr []string = []string{}
-	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, false); err == nil {
 		u.ArrayOfStr = arrayOfStr
 		u.Type = CustomFieldsListQueryParamOrganizationIDFilterTypeArrayOfStr
 		return nil
@@ -109,14 +109,14 @@ func CreateCustomFieldTypeFilterArrayOfCustomFieldType(arrayOfCustomFieldType []
 func (u *CustomFieldTypeFilter) UnmarshalJSON(data []byte) error {
 
 	var customFieldType components.CustomFieldType = components.CustomFieldType("")
-	if err := utils.UnmarshalJSON(data, &customFieldType, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &customFieldType, "", true, false); err == nil {
 		u.CustomFieldType = &customFieldType
 		u.Type = CustomFieldTypeFilterTypeCustomFieldType
 		return nil
 	}
 
 	var arrayOfCustomFieldType []components.CustomFieldType = []components.CustomFieldType{}
-	if err := utils.UnmarshalJSON(data, &arrayOfCustomFieldType, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &arrayOfCustomFieldType, "", true, false); err == nil {
 		u.ArrayOfCustomFieldType = arrayOfCustomFieldType
 		u.Type = CustomFieldTypeFilterTypeArrayOfCustomFieldType
 		return nil

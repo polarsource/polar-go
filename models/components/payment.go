@@ -43,14 +43,14 @@ func CreatePaymentGenericPayment(genericPayment GenericPayment) Payment {
 func (u *Payment) UnmarshalJSON(data []byte) error {
 
 	var genericPayment GenericPayment = GenericPayment{}
-	if err := utils.UnmarshalJSON(data, &genericPayment, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &genericPayment, "", true, false); err == nil {
 		u.GenericPayment = &genericPayment
 		u.Type = PaymentTypeGenericPayment
 		return nil
 	}
 
 	var cardPayment CardPayment = CardPayment{}
-	if err := utils.UnmarshalJSON(data, &cardPayment, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &cardPayment, "", true, false); err == nil {
 		u.CardPayment = &cardPayment
 		u.Type = PaymentTypeCardPayment
 		return nil

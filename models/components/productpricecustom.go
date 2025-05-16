@@ -38,7 +38,7 @@ func (p ProductPriceCustom) MarshalJSON() ([]byte, error) {
 }
 
 func (p *ProductPriceCustom) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &p, "", false, true); err != nil {
+	if err := utils.UnmarshalJSON(data, &p, "", false, false); err != nil {
 		return err
 	}
 	return nil

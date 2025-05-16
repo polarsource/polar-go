@@ -65,28 +65,28 @@ func CreateBenefitGitHubRepositoryUpdateMetadataBoolean(boolean bool) BenefitGit
 func (u *BenefitGitHubRepositoryUpdateMetadata) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, false); err == nil {
 		u.Str = &str
 		u.Type = BenefitGitHubRepositoryUpdateMetadataTypeStr
 		return nil
 	}
 
 	var integer int64 = int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &integer, "", true, false); err == nil {
 		u.Integer = &integer
 		u.Type = BenefitGitHubRepositoryUpdateMetadataTypeInteger
 		return nil
 	}
 
 	var number float64 = float64(0)
-	if err := utils.UnmarshalJSON(data, &number, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &number, "", true, false); err == nil {
 		u.Number = &number
 		u.Type = BenefitGitHubRepositoryUpdateMetadataTypeNumber
 		return nil
 	}
 
 	var boolean bool = false
-	if err := utils.UnmarshalJSON(data, &boolean, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &boolean, "", true, false); err == nil {
 		u.Boolean = &boolean
 		u.Type = BenefitGitHubRepositoryUpdateMetadataTypeBoolean
 		return nil
@@ -139,7 +139,7 @@ func (b BenefitGitHubRepositoryUpdate) MarshalJSON() ([]byte, error) {
 }
 
 func (b *BenefitGitHubRepositoryUpdate) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &b, "", false, true); err != nil {
+	if err := utils.UnmarshalJSON(data, &b, "", false, false); err != nil {
 		return err
 	}
 	return nil

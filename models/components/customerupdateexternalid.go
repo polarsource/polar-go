@@ -65,28 +65,28 @@ func CreateCustomerUpdateExternalIDMetadataBoolean(boolean bool) CustomerUpdateE
 func (u *CustomerUpdateExternalIDMetadata) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, false); err == nil {
 		u.Str = &str
 		u.Type = CustomerUpdateExternalIDMetadataTypeStr
 		return nil
 	}
 
 	var integer int64 = int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &integer, "", true, false); err == nil {
 		u.Integer = &integer
 		u.Type = CustomerUpdateExternalIDMetadataTypeInteger
 		return nil
 	}
 
 	var number float64 = float64(0)
-	if err := utils.UnmarshalJSON(data, &number, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &number, "", true, false); err == nil {
 		u.Number = &number
 		u.Type = CustomerUpdateExternalIDMetadataTypeNumber
 		return nil
 	}
 
 	var boolean bool = false
-	if err := utils.UnmarshalJSON(data, &boolean, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &boolean, "", true, false); err == nil {
 		u.Boolean = &boolean
 		u.Type = CustomerUpdateExternalIDMetadataTypeBoolean
 		return nil
@@ -150,14 +150,14 @@ func CreateCustomerUpdateExternalIDTaxIDTaxIDFormat(taxIDFormat TaxIDFormat) Cus
 func (u *CustomerUpdateExternalIDTaxID) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, false); err == nil {
 		u.Str = &str
 		u.Type = CustomerUpdateExternalIDTaxIDTypeStr
 		return nil
 	}
 
 	var taxIDFormat TaxIDFormat = TaxIDFormat("")
-	if err := utils.UnmarshalJSON(data, &taxIDFormat, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &taxIDFormat, "", true, false); err == nil {
 		u.TaxIDFormat = &taxIDFormat
 		u.Type = CustomerUpdateExternalIDTaxIDTypeTaxIDFormat
 		return nil

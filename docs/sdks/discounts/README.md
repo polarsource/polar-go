@@ -38,10 +38,8 @@ func main() {
     )
 
     res, err := s.Discounts.List(ctx, operations.DiscountsListRequest{
-        OrganizationID: polargo.Pointer(operations.CreateDiscountsListQueryParamOrganizationIDFilterArrayOfStr(
-            []string{
-                "1dbfc517-0bbf-4301-9ba8-555ca42b9737",
-            },
+        OrganizationID: polargo.Pointer(operations.CreateDiscountsListQueryParamOrganizationIDFilterStr(
+            "1dbfc517-0bbf-4301-9ba8-555ca42b9737",
         )),
     })
     if err != nil {
@@ -110,12 +108,11 @@ func main() {
         polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )
 
-    res, err := s.Discounts.Create(ctx, components.CreateDiscountCreateDiscountFixedRepeatDurationCreate(
-        components.DiscountFixedRepeatDurationCreate{
-            Duration: components.DiscountDurationForever,
-            DurationInMonths: 417458,
+    res, err := s.Discounts.Create(ctx, components.CreateDiscountCreateDiscountPercentageOnceForeverDurationCreate(
+        components.DiscountPercentageOnceForeverDurationCreate{
+            Duration: components.DiscountDurationOnce,
             Type: components.DiscountTypeFixed,
-            Amount: 69025,
+            BasisPoints: 449604,
             Name: "<value>",
             OrganizationID: polargo.String("1dbfc517-0bbf-4301-9ba8-555ca42b9737"),
         },

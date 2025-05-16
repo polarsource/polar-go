@@ -56,14 +56,14 @@ func CreateCustomerPortalCustomersAddPaymentMethodResponseCustomerPortalCustomer
 func (u *CustomerPortalCustomersAddPaymentMethodResponseCustomerPortalCustomersAddPaymentMethod) UnmarshalJSON(data []byte) error {
 
 	var paymentMethodGeneric components.PaymentMethodGeneric = components.PaymentMethodGeneric{}
-	if err := utils.UnmarshalJSON(data, &paymentMethodGeneric, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &paymentMethodGeneric, "", true, false); err == nil {
 		u.PaymentMethodGeneric = &paymentMethodGeneric
 		u.Type = CustomerPortalCustomersAddPaymentMethodResponseCustomerPortalCustomersAddPaymentMethodTypePaymentMethodGeneric
 		return nil
 	}
 
 	var paymentMethodCard components.PaymentMethodCard = components.PaymentMethodCard{}
-	if err := utils.UnmarshalJSON(data, &paymentMethodCard, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &paymentMethodCard, "", true, false); err == nil {
 		u.PaymentMethodCard = &paymentMethodCard
 		u.Type = CustomerPortalCustomersAddPaymentMethodResponseCustomerPortalCustomersAddPaymentMethodTypePaymentMethodCard
 		return nil

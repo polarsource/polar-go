@@ -38,10 +38,8 @@ func main() {
     )
 
     res, err := s.Products.List(ctx, operations.ProductsListRequest{
-        OrganizationID: polargo.Pointer(operations.CreateProductsListQueryParamOrganizationIDFilterArrayOfStr(
-            []string{
-                "1dbfc517-0bbf-4301-9ba8-555ca42b9737",
-            },
+        OrganizationID: polargo.Pointer(operations.CreateProductsListQueryParamOrganizationIDFilterStr(
+            "1dbfc517-0bbf-4301-9ba8-555ca42b9737",
         )),
     })
     if err != nil {
@@ -112,15 +110,15 @@ func main() {
 
     res, err := s.Products.Create(ctx, components.ProductCreate{
         Name: "<value>",
-        RecurringInterval: components.SubscriptionRecurringIntervalMonth.ToPointer(),
+        RecurringInterval: components.SubscriptionRecurringIntervalYear.ToPointer(),
         Prices: []components.ProductCreatePrices{
-            components.CreateProductCreatePricesProductPriceCustomCreate(
-                components.ProductPriceCustomCreate{},
-            ),
             components.CreateProductCreatePricesProductPriceFixedCreate(
                 components.ProductPriceFixedCreate{
-                    PriceAmount: 69025,
+                    PriceAmount: 677078,
                 },
+            ),
+            components.CreateProductCreatePricesProductPriceCustomCreate(
+                components.ProductPriceCustomCreate{},
             ),
         },
         OrganizationID: polargo.String("1dbfc517-0bbf-4301-9ba8-555ca42b9737"),
@@ -294,7 +292,9 @@ func main() {
 
     res, err := s.Products.UpdateBenefits(ctx, "<value>", components.ProductBenefitsUpdate{
         Benefits: []string{
-            "<value>",
+            "<value 1>",
+            "<value 2>",
+            "<value 3>",
         },
     })
     if err != nil {

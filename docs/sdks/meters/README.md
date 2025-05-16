@@ -38,10 +38,8 @@ func main() {
     )
 
     res, err := s.Meters.List(ctx, operations.MetersListRequest{
-        OrganizationID: polargo.Pointer(operations.CreateMetersListQueryParamOrganizationIDFilterArrayOfStr(
-            []string{
-                "1dbfc517-0bbf-4301-9ba8-555ca42b9737",
-            },
+        OrganizationID: polargo.Pointer(operations.CreateMetersListQueryParamOrganizationIDFilterStr(
+            "1dbfc517-0bbf-4301-9ba8-555ca42b9737",
         )),
     })
     if err != nil {
@@ -113,7 +111,7 @@ func main() {
     res, err := s.Meters.Create(ctx, components.MeterCreate{
         Name: "<value>",
         Filter: components.Filter{
-            Conjunction: components.FilterConjunctionAnd,
+            Conjunction: components.FilterConjunctionOr,
             Clauses: []components.Clauses{
                 components.CreateClausesFilterClause(
                     components.FilterClause{
@@ -128,7 +126,7 @@ func main() {
         },
         Aggregation: components.CreateMeterCreateAggregationAvg(
             components.PropertyAggregation{
-                Func: components.FuncSum,
+                Func: components.FuncMax,
                 Property: "<value>",
             },
         ),
@@ -304,9 +302,9 @@ func main() {
 
     res, err := s.Meters.Quantities(ctx, operations.MetersQuantitiesRequest{
         ID: "<value>",
-        StartTimestamp: types.MustTimeFromString("2023-09-17T00:45:34.608Z"),
-        EndTimestamp: types.MustTimeFromString("2023-07-21T18:11:39.069Z"),
-        Interval: components.TimeIntervalHour,
+        StartTimestamp: types.MustTimeFromString("2025-11-25T04:37:16.823Z"),
+        EndTimestamp: types.MustTimeFromString("2025-11-26T17:06:00.727Z"),
+        Interval: components.TimeIntervalDay,
     })
     if err != nil {
         log.Fatal(err)

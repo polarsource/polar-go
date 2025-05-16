@@ -40,10 +40,8 @@ func main() {
     )
 
     res, err := s.Checkouts.List(ctx, operations.CheckoutsListRequest{
-        OrganizationID: polargo.Pointer(operations.CreateCheckoutsListQueryParamOrganizationIDFilterArrayOfStr(
-            []string{
-                "1dbfc517-0bbf-4301-9ba8-555ca42b9737",
-            },
+        OrganizationID: polargo.Pointer(operations.CreateCheckoutsListQueryParamOrganizationIDFilterStr(
+            "1dbfc517-0bbf-4301-9ba8-555ca42b9737",
         )),
     })
     if err != nil {
@@ -114,11 +112,12 @@ func main() {
 
     res, err := s.Checkouts.Create(ctx, components.CheckoutCreate{
         CustomerBillingAddress: &components.Address{
-            Country: "SE",
+            Country: "FR",
         },
         Products: []string{
-            "<value>",
-            "<value>",
+            "<value 1>",
+            "<value 2>",
+            "<value 3>",
         },
     })
     if err != nil {
@@ -232,7 +231,7 @@ func main() {
 
     res, err := s.Checkouts.Update(ctx, "<value>", components.CheckoutUpdate{
         CustomerBillingAddress: &components.Address{
-            Country: "FR",
+            Country: "US",
         },
     })
     if err != nil {
@@ -340,7 +339,7 @@ func main() {
 
     res, err := s.Checkouts.ClientUpdate(ctx, "<value>", components.CheckoutUpdatePublic{
         CustomerBillingAddress: &components.Address{
-            Country: "FR",
+            Country: "US",
         },
     })
     if err != nil {
@@ -403,7 +402,7 @@ func main() {
 
     res, err := s.Checkouts.ClientConfirm(ctx, "<value>", components.CheckoutConfirmStripe{
         CustomerBillingAddress: &components.Address{
-            Country: "FR",
+            Country: "US",
         },
     })
     if err != nil {

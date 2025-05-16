@@ -43,14 +43,14 @@ func CreateEventsEventCreateExternalCustomer(eventCreateExternalCustomer EventCr
 func (u *Events) UnmarshalJSON(data []byte) error {
 
 	var eventCreateCustomer EventCreateCustomer = EventCreateCustomer{}
-	if err := utils.UnmarshalJSON(data, &eventCreateCustomer, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &eventCreateCustomer, "", true, false); err == nil {
 		u.EventCreateCustomer = &eventCreateCustomer
 		u.Type = EventsTypeEventCreateCustomer
 		return nil
 	}
 
 	var eventCreateExternalCustomer EventCreateExternalCustomer = EventCreateExternalCustomer{}
-	if err := utils.UnmarshalJSON(data, &eventCreateExternalCustomer, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &eventCreateExternalCustomer, "", true, false); err == nil {
 		u.EventCreateExternalCustomer = &eventCreateExternalCustomer
 		u.Type = EventsTypeEventCreateExternalCustomer
 		return nil

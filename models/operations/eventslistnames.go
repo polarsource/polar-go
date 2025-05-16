@@ -45,14 +45,14 @@ func CreateEventsListNamesQueryParamOrganizationIDFilterArrayOfStr(arrayOfStr []
 func (u *EventsListNamesQueryParamOrganizationIDFilter) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, false); err == nil {
 		u.Str = &str
 		u.Type = EventsListNamesQueryParamOrganizationIDFilterTypeStr
 		return nil
 	}
 
 	var arrayOfStr []string = []string{}
-	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, false); err == nil {
 		u.ArrayOfStr = arrayOfStr
 		u.Type = EventsListNamesQueryParamOrganizationIDFilterTypeArrayOfStr
 		return nil
@@ -109,14 +109,14 @@ func CreateEventsListNamesQueryParamCustomerIDFilterArrayOfStr(arrayOfStr []stri
 func (u *EventsListNamesQueryParamCustomerIDFilter) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, false); err == nil {
 		u.Str = &str
 		u.Type = EventsListNamesQueryParamCustomerIDFilterTypeStr
 		return nil
 	}
 
 	var arrayOfStr []string = []string{}
-	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, false); err == nil {
 		u.ArrayOfStr = arrayOfStr
 		u.Type = EventsListNamesQueryParamCustomerIDFilterTypeArrayOfStr
 		return nil
@@ -173,14 +173,14 @@ func CreateQueryParamExternalCustomerIDFilterArrayOfStr(arrayOfStr []string) Que
 func (u *QueryParamExternalCustomerIDFilter) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, false); err == nil {
 		u.Str = &str
 		u.Type = QueryParamExternalCustomerIDFilterTypeStr
 		return nil
 	}
 
 	var arrayOfStr []string = []string{}
-	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, false); err == nil {
 		u.ArrayOfStr = arrayOfStr
 		u.Type = QueryParamExternalCustomerIDFilterTypeArrayOfStr
 		return nil
@@ -237,14 +237,14 @@ func CreateQueryParamSourceFilterArrayOfEventSource(arrayOfEventSource []compone
 func (u *QueryParamSourceFilter) UnmarshalJSON(data []byte) error {
 
 	var eventSource components.EventSource = components.EventSource("")
-	if err := utils.UnmarshalJSON(data, &eventSource, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &eventSource, "", true, false); err == nil {
 		u.EventSource = &eventSource
 		u.Type = QueryParamSourceFilterTypeEventSource
 		return nil
 	}
 
 	var arrayOfEventSource []components.EventSource = []components.EventSource{}
-	if err := utils.UnmarshalJSON(data, &arrayOfEventSource, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &arrayOfEventSource, "", true, false); err == nil {
 		u.ArrayOfEventSource = arrayOfEventSource
 		u.Type = QueryParamSourceFilterTypeArrayOfEventSource
 		return nil

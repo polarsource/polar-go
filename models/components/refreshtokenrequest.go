@@ -18,7 +18,7 @@ func (r RefreshTokenRequest) MarshalJSON() ([]byte, error) {
 }
 
 func (r *RefreshTokenRequest) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &r, "", false, true); err != nil {
+	if err := utils.UnmarshalJSON(data, &r, "", false, false); err != nil {
 		return err
 	}
 	return nil

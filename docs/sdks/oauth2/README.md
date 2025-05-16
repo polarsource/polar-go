@@ -88,7 +88,7 @@ func main() {
             ClientID: "<id>",
             ClientSecret: "<value>",
             Code: "<value>",
-            RedirectURI: "https://talkative-barracks.com",
+            RedirectURI: "https://memorable-season.name",
         },
     ))
     if err != nil {

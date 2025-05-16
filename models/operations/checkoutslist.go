@@ -45,14 +45,14 @@ func CreateCheckoutsListQueryParamOrganizationIDFilterArrayOfStr(arrayOfStr []st
 func (u *CheckoutsListQueryParamOrganizationIDFilter) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, false); err == nil {
 		u.Str = &str
 		u.Type = CheckoutsListQueryParamOrganizationIDFilterTypeStr
 		return nil
 	}
 
 	var arrayOfStr []string = []string{}
-	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, false); err == nil {
 		u.ArrayOfStr = arrayOfStr
 		u.Type = CheckoutsListQueryParamOrganizationIDFilterTypeArrayOfStr
 		return nil
@@ -109,14 +109,14 @@ func CreateCheckoutsListQueryParamProductIDFilterArrayOfStr(arrayOfStr []string)
 func (u *CheckoutsListQueryParamProductIDFilter) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, false); err == nil {
 		u.Str = &str
 		u.Type = CheckoutsListQueryParamProductIDFilterTypeStr
 		return nil
 	}
 
 	var arrayOfStr []string = []string{}
-	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, false); err == nil {
 		u.ArrayOfStr = arrayOfStr
 		u.Type = CheckoutsListQueryParamProductIDFilterTypeArrayOfStr
 		return nil
@@ -173,14 +173,14 @@ func CreateCheckoutsListQueryParamCustomerIDFilterArrayOfStr(arrayOfStr []string
 func (u *CheckoutsListQueryParamCustomerIDFilter) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, false); err == nil {
 		u.Str = &str
 		u.Type = CheckoutsListQueryParamCustomerIDFilterTypeStr
 		return nil
 	}
 
 	var arrayOfStr []string = []string{}
-	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, false); err == nil {
 		u.ArrayOfStr = arrayOfStr
 		u.Type = CheckoutsListQueryParamCustomerIDFilterTypeArrayOfStr
 		return nil
@@ -237,14 +237,14 @@ func CreateStatusFilterArrayOfCheckoutStatus(arrayOfCheckoutStatus []components.
 func (u *StatusFilter) UnmarshalJSON(data []byte) error {
 
 	var checkoutStatus components.CheckoutStatus = components.CheckoutStatus("")
-	if err := utils.UnmarshalJSON(data, &checkoutStatus, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &checkoutStatus, "", true, false); err == nil {
 		u.CheckoutStatus = &checkoutStatus
 		u.Type = StatusFilterTypeCheckoutStatus
 		return nil
 	}
 
 	var arrayOfCheckoutStatus []components.CheckoutStatus = []components.CheckoutStatus{}
-	if err := utils.UnmarshalJSON(data, &arrayOfCheckoutStatus, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &arrayOfCheckoutStatus, "", true, false); err == nil {
 		u.ArrayOfCheckoutStatus = arrayOfCheckoutStatus
 		u.Type = StatusFilterTypeArrayOfCheckoutStatus
 		return nil

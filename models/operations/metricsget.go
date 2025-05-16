@@ -46,14 +46,14 @@ func CreateMetricsGetQueryParamOrganizationIDFilterArrayOfStr(arrayOfStr []strin
 func (u *MetricsGetQueryParamOrganizationIDFilter) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, false); err == nil {
 		u.Str = &str
 		u.Type = MetricsGetQueryParamOrganizationIDFilterTypeStr
 		return nil
 	}
 
 	var arrayOfStr []string = []string{}
-	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, false); err == nil {
 		u.ArrayOfStr = arrayOfStr
 		u.Type = MetricsGetQueryParamOrganizationIDFilterTypeArrayOfStr
 		return nil
@@ -110,14 +110,14 @@ func CreateMetricsGetQueryParamProductIDFilterArrayOfStr(arrayOfStr []string) Me
 func (u *MetricsGetQueryParamProductIDFilter) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, false); err == nil {
 		u.Str = &str
 		u.Type = MetricsGetQueryParamProductIDFilterTypeStr
 		return nil
 	}
 
 	var arrayOfStr []string = []string{}
-	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, false); err == nil {
 		u.ArrayOfStr = arrayOfStr
 		u.Type = MetricsGetQueryParamProductIDFilterTypeArrayOfStr
 		return nil
@@ -174,14 +174,14 @@ func CreateQueryParamProductBillingTypeFilterArrayOfProductBillingType(arrayOfPr
 func (u *QueryParamProductBillingTypeFilter) UnmarshalJSON(data []byte) error {
 
 	var productBillingType components.ProductBillingType = components.ProductBillingType("")
-	if err := utils.UnmarshalJSON(data, &productBillingType, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &productBillingType, "", true, false); err == nil {
 		u.ProductBillingType = &productBillingType
 		u.Type = QueryParamProductBillingTypeFilterTypeProductBillingType
 		return nil
 	}
 
 	var arrayOfProductBillingType []components.ProductBillingType = []components.ProductBillingType{}
-	if err := utils.UnmarshalJSON(data, &arrayOfProductBillingType, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &arrayOfProductBillingType, "", true, false); err == nil {
 		u.ArrayOfProductBillingType = arrayOfProductBillingType
 		u.Type = QueryParamProductBillingTypeFilterTypeArrayOfProductBillingType
 		return nil
@@ -238,14 +238,14 @@ func CreateMetricsGetQueryParamCustomerIDFilterArrayOfStr(arrayOfStr []string) M
 func (u *MetricsGetQueryParamCustomerIDFilter) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, false); err == nil {
 		u.Str = &str
 		u.Type = MetricsGetQueryParamCustomerIDFilterTypeStr
 		return nil
 	}
 
 	var arrayOfStr []string = []string{}
-	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, false); err == nil {
 		u.ArrayOfStr = arrayOfStr
 		u.Type = MetricsGetQueryParamCustomerIDFilterTypeArrayOfStr
 		return nil

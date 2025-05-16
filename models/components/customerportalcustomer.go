@@ -44,14 +44,14 @@ func CreateCustomerPortalCustomerTaxIDTaxIDFormat(taxIDFormat TaxIDFormat) Custo
 func (u *CustomerPortalCustomerTaxID) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, false); err == nil {
 		u.Str = &str
 		u.Type = CustomerPortalCustomerTaxIDTypeStr
 		return nil
 	}
 
 	var taxIDFormat TaxIDFormat = TaxIDFormat("")
-	if err := utils.UnmarshalJSON(data, &taxIDFormat, "", true, true); err == nil {
+	if err := utils.UnmarshalJSON(data, &taxIDFormat, "", true, false); err == nil {
 		u.TaxIDFormat = &taxIDFormat
 		u.Type = CustomerPortalCustomerTaxIDTypeTaxIDFormat
 		return nil
