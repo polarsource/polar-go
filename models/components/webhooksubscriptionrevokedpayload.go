@@ -6,7 +6,7 @@ import (
 	"github.com/polarsource/polar-go/internal/utils"
 )
 
-// WebhookSubscriptionRevokedPayload - Sent when a subscription is revoked, the user looses access immediately.
+// WebhookSubscriptionRevokedPayload - Sent when a subscription is revoked, the user loses access immediately.
 // Happens when the subscription is canceled, or payment is past due.
 //
 // **Discord & Slack support:** Full
