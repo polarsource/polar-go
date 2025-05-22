@@ -35,10 +35,8 @@ func main() {
 
     res, err := s.CustomerPortal.LicenseKeys.List(ctx, operations.CustomerPortalLicenseKeysListSecurity{
         CustomerSession: os.Getenv("POLAR_CUSTOMER_SESSION"),
-    }, polargo.Pointer(operations.CreateCustomerPortalLicenseKeysListQueryParamOrganizationIDFilterArrayOfStr(
-        []string{
-            "1dbfc517-0bbf-4301-9ba8-555ca42b9737",
-        },
+    }, polargo.Pointer(operations.CreateCustomerPortalLicenseKeysListQueryParamOrganizationIDFilterStr(
+        "1dbfc517-0bbf-4301-9ba8-555ca42b9737",
     )), nil, nil, nil)
     if err != nil {
         log.Fatal(err)

@@ -38,10 +38,8 @@ func main() {
     )
 
     res, err := s.Subscriptions.List(ctx, operations.SubscriptionsListRequest{
-        OrganizationID: polargo.Pointer(operations.CreateOrganizationIDFilterArrayOfStr(
-            []string{
-                "1dbfc517-0bbf-4301-9ba8-555ca42b9737",
-            },
+        OrganizationID: polargo.Pointer(operations.CreateOrganizationIDFilterStr(
+            "1dbfc517-0bbf-4301-9ba8-555ca42b9737",
         )),
     })
     if err != nil {
@@ -110,10 +108,8 @@ func main() {
         polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )
 
-    res, err := s.Subscriptions.Export(ctx, polargo.Pointer(operations.CreateOrganizationIDArrayOfStr(
-        []string{
-            "1dbfc517-0bbf-4301-9ba8-555ca42b9737",
-        },
+    res, err := s.Subscriptions.Export(ctx, polargo.Pointer(operations.CreateOrganizationIDStr(
+        "1dbfc517-0bbf-4301-9ba8-555ca42b9737",
     )))
     if err != nil {
         log.Fatal(err)

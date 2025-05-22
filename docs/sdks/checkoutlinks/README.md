@@ -38,10 +38,8 @@ func main() {
     )
 
     res, err := s.CheckoutLinks.List(ctx, operations.CheckoutLinksListRequest{
-        OrganizationID: polargo.Pointer(operations.CreateCheckoutLinksListQueryParamOrganizationIDFilterArrayOfStr(
-            []string{
-                "1dbfc517-0bbf-4301-9ba8-555ca42b9737",
-            },
+        OrganizationID: polargo.Pointer(operations.CreateCheckoutLinksListQueryParamOrganizationIDFilterStr(
+            "1dbfc517-0bbf-4301-9ba8-555ca42b9737",
         )),
     })
     if err != nil {

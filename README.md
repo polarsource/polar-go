@@ -101,9 +101,11 @@ func main() {
 			IsPaymentSetupRequired: true,
 			IsPaymentFormRequired:  true,
 			CustomerID:             polargo.String("<value>"),
+			IsBusinessCustomer:     true,
 			CustomerName:           polargo.String("<value>"),
 			CustomerEmail:          polargo.String("<value>"),
 			CustomerIPAddress:      polargo.String("<value>"),
+			CustomerBillingName:    polargo.String("<value>"),
 			CustomerBillingAddress: &components.Address{
 				Country: "US",
 			},
@@ -127,36 +129,31 @@ func main() {
 				IsArchived:        true,
 				OrganizationID:    "<value>",
 				Prices: []components.CheckoutProductPrices{
-					components.CreateCheckoutProductPricesProductPrice(
-						components.CreateProductPriceProductPriceCustom(
-							components.ProductPriceCustom{
-								CreatedAt:         types.MustTimeFromString("2023-01-11T22:31:47.320Z"),
-								ModifiedAt:        types.MustNewTimeFromString("2023-10-20T05:29:02.563Z"),
-								ID:                "<value>",
-								IsArchived:        false,
-								ProductID:         "<value>",
-								Type:              components.ProductPriceTypeOneTime,
-								RecurringInterval: components.SubscriptionRecurringIntervalMonth.ToPointer(),
-								PriceCurrency:     "<value>",
-								MinimumAmount:     polargo.Int64(203013),
-								MaximumAmount:     polargo.Int64(49018),
-								PresetAmount:      polargo.Int64(322400),
-							},
-						),
-					),
 					components.CreateCheckoutProductPricesLegacyRecurringProductPrice(
 						components.CreateLegacyRecurringProductPriceCustom(
 							components.LegacyRecurringProductPriceCustom{
-								CreatedAt:         types.MustTimeFromString("2025-03-29T00:34:40.708Z"),
-								ModifiedAt:        types.MustNewTimeFromString("2024-04-06T18:48:21.449Z"),
+								CreatedAt:         types.MustTimeFromString("2023-08-08T15:45:51.732Z"),
+								ModifiedAt:        types.MustNewTimeFromString("2024-01-18T11:16:03.208Z"),
 								ID:                "<value>",
 								IsArchived:        false,
 								ProductID:         "<value>",
 								RecurringInterval: components.SubscriptionRecurringIntervalMonth,
 								PriceCurrency:     "<value>",
-								MinimumAmount:     polargo.Int64(25849),
-								MaximumAmount:     polargo.Int64(966908),
-								PresetAmount:      polargo.Int64(116404),
+								MinimumAmount:     polargo.Int64(49018),
+								MaximumAmount:     polargo.Int64(322400),
+								PresetAmount:      polargo.Int64(119260),
+							},
+						),
+					),
+					components.CreateCheckoutProductPricesLegacyRecurringProductPrice(
+						components.CreateLegacyRecurringProductPriceFree(
+							components.LegacyRecurringProductPriceFree{
+								CreatedAt:         types.MustTimeFromString("2024-04-06T18:48:21.449Z"),
+								ModifiedAt:        types.MustNewTimeFromString("2023-02-22T08:13:16.795Z"),
+								ID:                "<value>",
+								IsArchived:        false,
+								ProductID:         "<value>",
+								RecurringInterval: components.SubscriptionRecurringIntervalMonth,
 							},
 						),
 					),
@@ -220,23 +217,19 @@ func main() {
 				},
 			},
 			ProductPrice: components.CreateCheckoutProductPriceProductPrice(
-				components.CreateProductPriceProductPriceMeteredUnit(
-					components.ProductPriceMeteredUnit{
-						CreatedAt:         types.MustTimeFromString("2025-03-25T13:26:32.648Z"),
-						ModifiedAt:        types.MustNewTimeFromString("2025-07-13T15:35:24.219Z"),
+				components.CreateProductPriceCustom(
+					components.ProductPriceCustom{
+						CreatedAt:         types.MustTimeFromString("2025-11-30T03:33:51.498Z"),
+						ModifiedAt:        types.MustNewTimeFromString("2025-12-30T03:22:33.818Z"),
 						ID:                "<value>",
 						IsArchived:        false,
 						ProductID:         "<value>",
 						Type:              components.ProductPriceTypeRecurring,
 						RecurringInterval: components.SubscriptionRecurringIntervalYear.ToPointer(),
 						PriceCurrency:     "<value>",
-						UnitAmount:        "<value>",
-						CapAmount:         polargo.Int64(919230),
-						MeterID:           "<value>",
-						Meter: components.ProductPriceMeter{
-							ID:   "<value>",
-							Name: "<value>",
-						},
+						MinimumAmount:     polargo.Int64(707018),
+						MaximumAmount:     polargo.Int64(818126),
+						PresetAmount:      polargo.Int64(919230),
 					},
 				),
 			),

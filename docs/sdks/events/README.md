@@ -37,10 +37,8 @@ func main() {
     )
 
     res, err := s.Events.List(ctx, operations.EventsListRequest{
-        OrganizationID: polargo.Pointer(operations.CreateEventsListQueryParamOrganizationIDFilterArrayOfStr(
-            []string{
-                "1dbfc517-0bbf-4301-9ba8-555ca42b9737",
-            },
+        OrganizationID: polargo.Pointer(operations.CreateEventsListQueryParamOrganizationIDFilterStr(
+            "1dbfc517-0bbf-4301-9ba8-555ca42b9737",
         )),
     })
     if err != nil {

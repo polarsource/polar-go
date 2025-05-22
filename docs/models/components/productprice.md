@@ -3,27 +3,27 @@
 
 ## Supported Types
 
-### ProductPriceFixed
-
-```go
-productPrice := components.CreateProductPriceProductPriceFixed(components.ProductPriceFixed{/* values here */})
-```
-
 ### ProductPriceCustom
 
 ```go
-productPrice := components.CreateProductPriceProductPriceCustom(components.ProductPriceCustom{/* values here */})
+productPrice := components.CreateProductPriceCustom(components.ProductPriceCustom{/* values here */})
+```
+
+### ProductPriceFixed
+
+```go
+productPrice := components.CreateProductPriceFixed(components.ProductPriceFixed{/* values here */})
 ```
 
 ### ProductPriceFree
 
 ```go
-productPrice := components.CreateProductPriceProductPriceFree(components.ProductPriceFree{/* values here */})
+productPrice := components.CreateProductPriceFree(components.ProductPriceFree{/* values here */})
 ```
 
 ### ProductPriceMeteredUnit
 
 ```go
-productPrice := components.CreateProductPriceProductPriceMeteredUnit(components.ProductPriceMeteredUnit{/* values here */})
+productPrice := components.CreateProductPriceMeteredUnit(components.ProductPriceMeteredUnit{/* values here */})
 ```
 

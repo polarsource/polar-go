@@ -112,7 +112,7 @@ func main() {
 
     res, err := s.Checkouts.Create(ctx, components.CheckoutCreate{
         CustomerBillingAddress: &components.Address{
-            Country: "FR",
+            Country: "US",
         },
         Products: []string{
             "<value 1>",

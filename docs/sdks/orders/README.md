@@ -36,10 +36,8 @@ func main() {
     )
 
     res, err := s.Orders.List(ctx, operations.OrdersListRequest{
-        OrganizationID: polargo.Pointer(operations.CreateOrdersListQueryParamOrganizationIDFilterArrayOfStr(
-            []string{
-                "1dbfc517-0bbf-4301-9ba8-555ca42b9737",
-            },
+        OrganizationID: polargo.Pointer(operations.CreateOrdersListQueryParamOrganizationIDFilterStr(
+            "1dbfc517-0bbf-4301-9ba8-555ca42b9737",
         )),
     })
     if err != nil {

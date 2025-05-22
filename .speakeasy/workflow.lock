@@ -1,21 +1,21 @@
-speakeasyVersion: 1.546.0
+speakeasyVersion: 1.548.4
 sources:
     Polar-OAS:
         sourceNamespace: polar-oas
-        sourceRevisionDigest: sha256:be0b75d3c8ce5c4fd04ef18cd4f9598914d84ddd4be7a20d9d7f080b90ef065f
-        sourceBlobDigest: sha256:6815354c31717d2779df7cb89b1b6de5864d4f67bdde53b79a687acd8bf2a3f1
+        sourceRevisionDigest: sha256:7950c0e1fe6d99561a7ed654005107fd6916f560138a159c133ae0b365ea2b08
+        sourceBlobDigest: sha256:ca69aa49cf199aa1722e9140b830ac42c4eaa6c61f2fdfd64ec40b59009704e6
         tags:
             - latest
-            - speakeasy-sdk-regen-1747395418
+            - speakeasy-sdk-regen-1747787304
             - 0.1.0
 targets:
     polar:
         source: Polar-OAS
         sourceNamespace: polar-oas
-        sourceRevisionDigest: sha256:be0b75d3c8ce5c4fd04ef18cd4f9598914d84ddd4be7a20d9d7f080b90ef065f
-        sourceBlobDigest: sha256:6815354c31717d2779df7cb89b1b6de5864d4f67bdde53b79a687acd8bf2a3f1
+        sourceRevisionDigest: sha256:7950c0e1fe6d99561a7ed654005107fd6916f560138a159c133ae0b365ea2b08
+        sourceBlobDigest: sha256:ca69aa49cf199aa1722e9140b830ac42c4eaa6c61f2fdfd64ec40b59009704e6
         codeSamplesNamespace: polar-oas-code-samples-go
-        codeSamplesRevisionDigest: sha256:2608df8da3e380f91b3a1cc2182632db5ee7f198bd269773ce3e3935c0498dc8
+        codeSamplesRevisionDigest: sha256:9db52eaddbf36b9c8016966ea4b61f20dd071b82585e9986f3281412abc9b54b
 workflow:
     workflowVersion: 1.0.0
     speakeasyVersion: latest
@@ -26,8 +26,8 @@ workflow:
             overlays:
                 - location: https://raw.githubusercontent.com/polarsource/polar/main/sdk/overlays/security.yml
                 - location: https://raw.githubusercontent.com/polarsource/polar/main/sdk/overlays/type_parameter.yml
-                - location: https://raw.githubusercontent.com/polarsource/polar/main/sdk/overlays/product_price_discriminator.yml
                 - location: https://raw.githubusercontent.com/polarsource/polar/main/sdk/overlays/read_only.yml
+                - location: https://raw.githubusercontent.com/polarsource/polar/main/sdk/overlays/event_discriminator.yml
             registry:
                 location: registry.speakeasyapi.dev/polar/polar/polar-oas
     targets:

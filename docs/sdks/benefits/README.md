@@ -39,10 +39,8 @@ func main() {
     )
 
     res, err := s.Benefits.List(ctx, operations.BenefitsListRequest{
-        OrganizationID: polargo.Pointer(operations.CreateQueryParamOrganizationIDFilterArrayOfStr(
-            []string{
-                "1dbfc517-0bbf-4301-9ba8-555ca42b9737",
-            },
+        OrganizationID: polargo.Pointer(operations.CreateQueryParamOrganizationIDFilterStr(
+            "1dbfc517-0bbf-4301-9ba8-555ca42b9737",
         )),
     })
     if err != nil {

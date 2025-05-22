@@ -127,8 +127,10 @@ type CheckoutUpdatePublic struct {
 	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
 	ProductPriceID         *string  `json:"product_price_id,omitempty"`
 	Amount                 *int64   `json:"amount,omitempty"`
+	IsBusinessCustomer     *bool    `json:"is_business_customer,omitempty"`
 	CustomerName           *string  `json:"customer_name,omitempty"`
 	CustomerEmail          *string  `json:"customer_email,omitempty"`
+	CustomerBillingName    *string  `json:"customer_billing_name,omitempty"`
 	CustomerBillingAddress *Address `json:"customer_billing_address,omitempty"`
 	CustomerTaxID          *string  `json:"customer_tax_id,omitempty"`
 	// Discount code to apply to the checkout.
@@ -163,6 +165,13 @@ func (o *CheckoutUpdatePublic) GetAmount() *int64 {
 	return o.Amount
 }
 
+func (o *CheckoutUpdatePublic) GetIsBusinessCustomer() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.IsBusinessCustomer
+}
+
 func (o *CheckoutUpdatePublic) GetCustomerName() *string {
 	if o == nil {
 		return nil
@@ -175,6 +184,13 @@ func (o *CheckoutUpdatePublic) GetCustomerEmail() *string {
 		return nil
 	}
 	return o.CustomerEmail
+}
+
+func (o *CheckoutUpdatePublic) GetCustomerBillingName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.CustomerBillingName
 }
 
 func (o *CheckoutUpdatePublic) GetCustomerBillingAddress() *Address {

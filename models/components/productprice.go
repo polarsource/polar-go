@@ -3,6 +3,7 @@
 package components
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
@@ -11,10 +12,10 @@ import (
 type ProductPriceUnionType string
 
 const (
-	ProductPriceUnionTypeProductPriceFixed       ProductPriceUnionType = "ProductPriceFixed"
-	ProductPriceUnionTypeProductPriceCustom      ProductPriceUnionType = "ProductPriceCustom"
-	ProductPriceUnionTypeProductPriceFree        ProductPriceUnionType = "ProductPriceFree"
-	ProductPriceUnionTypeProductPriceMeteredUnit ProductPriceUnionType = "ProductPriceMeteredUnit"
+	ProductPriceUnionTypeCustom      ProductPriceUnionType = "custom"
+	ProductPriceUnionTypeFixed       ProductPriceUnionType = "fixed"
+	ProductPriceUnionTypeFree        ProductPriceUnionType = "free"
+	ProductPriceUnionTypeMeteredUnit ProductPriceUnionType = "metered_unit"
 )
 
 type ProductPrice struct {
@@ -26,69 +27,89 @@ type ProductPrice struct {
 	Type ProductPriceUnionType
 }
 
-func CreateProductPriceProductPriceFixed(productPriceFixed ProductPriceFixed) ProductPrice {
-	typ := ProductPriceUnionTypeProductPriceFixed
+func CreateProductPriceCustom(custom ProductPriceCustom) ProductPrice {
+	typ := ProductPriceUnionTypeCustom
 
 	return ProductPrice{
-		ProductPriceFixed: &productPriceFixed,
-		Type:              typ,
-	}
-}
-
-func CreateProductPriceProductPriceCustom(productPriceCustom ProductPriceCustom) ProductPrice {
-	typ := ProductPriceUnionTypeProductPriceCustom
-
-	return ProductPrice{
-		ProductPriceCustom: &productPriceCustom,
+		ProductPriceCustom: &custom,
 		Type:               typ,
 	}
 }
 
-func CreateProductPriceProductPriceFree(productPriceFree ProductPriceFree) ProductPrice {
-	typ := ProductPriceUnionTypeProductPriceFree
+func CreateProductPriceFixed(fixed ProductPriceFixed) ProductPrice {
+	typ := ProductPriceUnionTypeFixed
 
 	return ProductPrice{
-		ProductPriceFree: &productPriceFree,
+		ProductPriceFixed: &fixed,
+		Type:              typ,
+	}
+}
+
+func CreateProductPriceFree(free ProductPriceFree) ProductPrice {
+	typ := ProductPriceUnionTypeFree
+
+	return ProductPrice{
+		ProductPriceFree: &free,
 		Type:             typ,
 	}
 }
 
-func CreateProductPriceProductPriceMeteredUnit(productPriceMeteredUnit ProductPriceMeteredUnit) ProductPrice {
-	typ := ProductPriceUnionTypeProductPriceMeteredUnit
+func CreateProductPriceMeteredUnit(meteredUnit ProductPriceMeteredUnit) ProductPrice {
+	typ := ProductPriceUnionTypeMeteredUnit
 
 	return ProductPrice{
-		ProductPriceMeteredUnit: &productPriceMeteredUnit,
+		ProductPriceMeteredUnit: &meteredUnit,
 		Type:                    typ,
 	}
 }
 
 func (u *ProductPrice) UnmarshalJSON(data []byte) error {
 
-	var productPriceFree ProductPriceFree = ProductPriceFree{}
-	if err := utils.UnmarshalJSON(data, &productPriceFree, "", true, false); err == nil {
-		u.ProductPriceFree = &productPriceFree
-		u.Type = ProductPriceUnionTypeProductPriceFree
-		return nil
+	type discriminator struct {
+		AmountType string `json:"amount_type"`
 	}
 
-	var productPriceFixed ProductPriceFixed = ProductPriceFixed{}
-	if err := utils.UnmarshalJSON(data, &productPriceFixed, "", true, false); err == nil {
-		u.ProductPriceFixed = &productPriceFixed
-		u.Type = ProductPriceUnionTypeProductPriceFixed
-		return nil
+	dis := new(discriminator)
+	if err := json.Unmarshal(data, &dis); err != nil {
+		return fmt.Errorf("could not unmarshal discriminator: %w", err)
 	}
 
-	var productPriceCustom ProductPriceCustom = ProductPriceCustom{}
-	if err := utils.UnmarshalJSON(data, &productPriceCustom, "", true, false); err == nil {
-		u.ProductPriceCustom = &productPriceCustom
-		u.Type = ProductPriceUnionTypeProductPriceCustom
-		return nil
-	}
+	switch dis.AmountType {
+	case "custom":
+		productPriceCustom := new(ProductPriceCustom)
+		if err := utils.UnmarshalJSON(data, &productPriceCustom, "", true, false); err != nil {
+			return fmt.Errorf("could not unmarshal `%s` into expected (AmountType == custom) type ProductPriceCustom within ProductPrice: %w", string(data), err)
+		}
 
-	var productPriceMeteredUnit ProductPriceMeteredUnit = ProductPriceMeteredUnit{}
-	if err := utils.UnmarshalJSON(data, &productPriceMeteredUnit, "", true, false); err == nil {
-		u.ProductPriceMeteredUnit = &productPriceMeteredUnit
-		u.Type = ProductPriceUnionTypeProductPriceMeteredUnit
+		u.ProductPriceCustom = productPriceCustom
+		u.Type = ProductPriceUnionTypeCustom
+		return nil
+	case "fixed":
+		productPriceFixed := new(ProductPriceFixed)
+		if err := utils.UnmarshalJSON(data, &productPriceFixed, "", true, false); err != nil {
+			return fmt.Errorf("could not unmarshal `%s` into expected (AmountType == fixed) type ProductPriceFixed within ProductPrice: %w", string(data), err)
+		}
+
+		u.ProductPriceFixed = productPriceFixed
+		u.Type = ProductPriceUnionTypeFixed
+		return nil
+	case "free":
+		productPriceFree := new(ProductPriceFree)
+		if err := utils.UnmarshalJSON(data, &productPriceFree, "", true, false); err != nil {
+			return fmt.Errorf("could not unmarshal `%s` into expected (AmountType == free) type ProductPriceFree within ProductPrice: %w", string(data), err)
+		}
+
+		u.ProductPriceFree = productPriceFree
+		u.Type = ProductPriceUnionTypeFree
+		return nil
+	case "metered_unit":
+		productPriceMeteredUnit := new(ProductPriceMeteredUnit)
+		if err := utils.UnmarshalJSON(data, &productPriceMeteredUnit, "", true, false); err != nil {
+			return fmt.Errorf("could not unmarshal `%s` into expected (AmountType == metered_unit) type ProductPriceMeteredUnit within ProductPrice: %w", string(data), err)
+		}
+
+		u.ProductPriceMeteredUnit = productPriceMeteredUnit
+		u.Type = ProductPriceUnionTypeMeteredUnit
 		return nil
 	}
 

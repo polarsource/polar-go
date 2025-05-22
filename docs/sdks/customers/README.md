@@ -43,10 +43,8 @@ func main() {
     )
 
     res, err := s.Customers.List(ctx, operations.CustomersListRequest{
-        OrganizationID: polargo.Pointer(operations.CreateCustomersListQueryParamOrganizationIDFilterArrayOfStr(
-            []string{
-                "1dbfc517-0bbf-4301-9ba8-555ca42b9737",
-            },
+        OrganizationID: polargo.Pointer(operations.CreateCustomersListQueryParamOrganizationIDFilterStr(
+            "1dbfc517-0bbf-4301-9ba8-555ca42b9737",
         )),
     })
     if err != nil {
@@ -120,14 +118,14 @@ func main() {
         Email: "customer@example.com",
         Name: polargo.String("John Doe"),
         BillingAddress: &components.Address{
-            Country: "FR",
+            Country: "US",
         },
         TaxID: []*components.CustomerCreateTaxID{
             polargo.Pointer(components.CreateCustomerCreateTaxIDStr(
-                "FR61954506077",
+                "911144442",
             )),
             polargo.Pointer(components.CreateCustomerCreateTaxIDStr(
-                "eu_vat",
+                "us_ein",
             )),
         },
         OrganizationID: polargo.String("1dbfc517-0bbf-4301-9ba8-555ca42b9737"),
@@ -245,7 +243,7 @@ func main() {
         Email: polargo.String("customer@example.com"),
         Name: polargo.String("John Doe"),
         BillingAddress: &components.Address{
-            Country: "FR",
+            Country: "US",
         },
         TaxID: []*components.CustomerUpdateTaxID{
             polargo.Pointer(components.CreateCustomerUpdateTaxIDStr(

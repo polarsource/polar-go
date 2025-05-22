@@ -341,8 +341,10 @@ type CheckoutUpdate struct {
 	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
 	ProductPriceID         *string  `json:"product_price_id,omitempty"`
 	Amount                 *int64   `json:"amount,omitempty"`
+	IsBusinessCustomer     *bool    `json:"is_business_customer,omitempty"`
 	CustomerName           *string  `json:"customer_name,omitempty"`
 	CustomerEmail          *string  `json:"customer_email,omitempty"`
+	CustomerBillingName    *string  `json:"customer_billing_name,omitempty"`
 	CustomerBillingAddress *Address `json:"customer_billing_address,omitempty"`
 	CustomerTaxID          *string  `json:"customer_tax_id,omitempty"`
 	// Key-value object allowing you to store additional information.
@@ -410,6 +412,13 @@ func (o *CheckoutUpdate) GetAmount() *int64 {
 	return o.Amount
 }
 
+func (o *CheckoutUpdate) GetIsBusinessCustomer() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.IsBusinessCustomer
+}
+
 func (o *CheckoutUpdate) GetCustomerName() *string {
 	if o == nil {
 		return nil
@@ -422,6 +431,13 @@ func (o *CheckoutUpdate) GetCustomerEmail() *string {
 		return nil
 	}
 	return o.CustomerEmail
+}
+
+func (o *CheckoutUpdate) GetCustomerBillingName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.CustomerBillingName
 }
 
 func (o *CheckoutUpdate) GetCustomerBillingAddress() *Address {

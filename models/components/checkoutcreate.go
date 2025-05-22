@@ -359,11 +359,14 @@ type CheckoutCreate struct {
 	Amount                *int64 `json:"amount,omitempty"`
 	// ID of an existing customer in the organization. The customer data will be pre-filled in the checkout form. The resulting order will be linked to this customer.
 	CustomerID *string `json:"customer_id,omitempty"`
+	// Whether the customer is a business or an individual. If `true`, the customer will be required to fill their full billing address and billing name.
+	IsBusinessCustomer *bool `default:"false" json:"is_business_customer"`
 	// ID of the customer in your system. If a matching customer exists on Polar, the resulting order will be linked to this customer. Otherwise, a new customer will be created with this external ID set.
 	CustomerExternalID     *string  `json:"customer_external_id,omitempty"`
 	CustomerName           *string  `json:"customer_name,omitempty"`
 	CustomerEmail          *string  `json:"customer_email,omitempty"`
 	CustomerIPAddress      *string  `json:"customer_ip_address,omitempty"`
+	CustomerBillingName    *string  `json:"customer_billing_name,omitempty"`
 	CustomerBillingAddress *Address `json:"customer_billing_address,omitempty"`
 	CustomerTaxID          *string  `json:"customer_tax_id,omitempty"`
 	// Key-value object allowing you to store additional information that'll be copied to the created customer.
@@ -448,6 +451,13 @@ func (o *CheckoutCreate) GetCustomerID() *string {
 	return o.CustomerID
 }
 
+func (o *CheckoutCreate) GetIsBusinessCustomer() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.IsBusinessCustomer
+}
+
 func (o *CheckoutCreate) GetCustomerExternalID() *string {
 	if o == nil {
 		return nil
@@ -474,6 +484,13 @@ func (o *CheckoutCreate) GetCustomerIPAddress() *string {
 		return nil
 	}
 	return o.CustomerIPAddress
+}
+
+func (o *CheckoutCreate) GetCustomerBillingName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.CustomerBillingName
 }
 
 func (o *CheckoutCreate) GetCustomerBillingAddress() *Address {

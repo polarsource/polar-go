@@ -6,205 +6,67 @@ import (
 	"errors"
 	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
-	"time"
 )
 
-type EventMetadataType string
+type EventType string
 
 const (
-	EventMetadataTypeStr     EventMetadataType = "str"
-	EventMetadataTypeInteger EventMetadataType = "integer"
-	EventMetadataTypeNumber  EventMetadataType = "number"
-	EventMetadataTypeBoolean EventMetadataType = "boolean"
+	EventTypeSystemEvent EventType = "SystemEvent"
+	EventTypeUserEvent   EventType = "UserEvent"
 )
 
-type EventMetadata struct {
-	Str     *string  `queryParam:"inline"`
-	Integer *int64   `queryParam:"inline"`
-	Number  *float64 `queryParam:"inline"`
-	Boolean *bool    `queryParam:"inline"`
-
-	Type EventMetadataType
-}
-
-func CreateEventMetadataStr(str string) EventMetadata {
-	typ := EventMetadataTypeStr
-
-	return EventMetadata{
-		Str:  &str,
-		Type: typ,
-	}
-}
-
-func CreateEventMetadataInteger(integer int64) EventMetadata {
-	typ := EventMetadataTypeInteger
-
-	return EventMetadata{
-		Integer: &integer,
-		Type:    typ,
-	}
-}
-
-func CreateEventMetadataNumber(number float64) EventMetadata {
-	typ := EventMetadataTypeNumber
-
-	return EventMetadata{
-		Number: &number,
-		Type:   typ,
-	}
-}
-
-func CreateEventMetadataBoolean(boolean bool) EventMetadata {
-	typ := EventMetadataTypeBoolean
-
-	return EventMetadata{
-		Boolean: &boolean,
-		Type:    typ,
-	}
-}
-
-func (u *EventMetadata) UnmarshalJSON(data []byte) error {
-
-	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, false); err == nil {
-		u.Str = &str
-		u.Type = EventMetadataTypeStr
-		return nil
-	}
-
-	var integer int64 = int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, false); err == nil {
-		u.Integer = &integer
-		u.Type = EventMetadataTypeInteger
-		return nil
-	}
-
-	var number float64 = float64(0)
-	if err := utils.UnmarshalJSON(data, &number, "", true, false); err == nil {
-		u.Number = &number
-		u.Type = EventMetadataTypeNumber
-		return nil
-	}
-
-	var boolean bool = false
-	if err := utils.UnmarshalJSON(data, &boolean, "", true, false); err == nil {
-		u.Boolean = &boolean
-		u.Type = EventMetadataTypeBoolean
-		return nil
-	}
-
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for EventMetadata", string(data))
-}
-
-func (u EventMetadata) MarshalJSON() ([]byte, error) {
-	if u.Str != nil {
-		return utils.MarshalJSON(u.Str, "", true)
-	}
-
-	if u.Integer != nil {
-		return utils.MarshalJSON(u.Integer, "", true)
-	}
-
-	if u.Number != nil {
-		return utils.MarshalJSON(u.Number, "", true)
-	}
-
-	if u.Boolean != nil {
-		return utils.MarshalJSON(u.Boolean, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type EventMetadata: all fields are null")
-}
-
 type Event struct {
-	Metadata map[string]EventMetadata `json:"metadata"`
-	// The ID of the object.
-	ID string `json:"id"`
-	// The timestamp of the event.
-	Timestamp time.Time `json:"timestamp"`
-	// The name of the event.
-	Name   string      `json:"name"`
-	Source EventSource `json:"source"`
-	// The ID of the organization owning the event.
-	OrganizationID string `json:"organization_id"`
-	// ID of the customer in your Polar organization associated with the event.
-	CustomerID *string `json:"customer_id"`
-	// The customer associated with the event.
-	Customer *Customer `json:"customer"`
-	// ID of the customer in your system associated with the event.
-	ExternalCustomerID *string `json:"external_customer_id"`
+	SystemEvent *SystemEvent `queryParam:"inline"`
+	UserEvent   *UserEvent   `queryParam:"inline"`
+
+	Type EventType
 }
 
-func (e Event) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(e, "", false)
-}
+func CreateEventSystemEvent(systemEvent SystemEvent) Event {
+	typ := EventTypeSystemEvent
 
-func (e *Event) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &e, "", false, false); err != nil {
-		return err
+	return Event{
+		SystemEvent: &systemEvent,
+		Type:        typ,
 	}
-	return nil
 }
 
-func (o *Event) GetMetadata() map[string]EventMetadata {
-	if o == nil {
-		return map[string]EventMetadata{}
+func CreateEventUserEvent(userEvent UserEvent) Event {
+	typ := EventTypeUserEvent
+
+	return Event{
+		UserEvent: &userEvent,
+		Type:      typ,
 	}
-	return o.Metadata
 }
 
-func (o *Event) GetID() string {
-	if o == nil {
-		return ""
-	}
-	return o.ID
-}
+func (u *Event) UnmarshalJSON(data []byte) error {
 
-func (o *Event) GetTimestamp() time.Time {
-	if o == nil {
-		return time.Time{}
-	}
-	return o.Timestamp
-}
-
-func (o *Event) GetName() string {
-	if o == nil {
-		return ""
-	}
-	return o.Name
-}
-
-func (o *Event) GetSource() EventSource {
-	if o == nil {
-		return EventSource("")
-	}
-	return o.Source
-}
-
-func (o *Event) GetOrganizationID() string {
-	if o == nil {
-		return ""
-	}
-	return o.OrganizationID
-}
-
-func (o *Event) GetCustomerID() *string {
-	if o == nil {
+	var userEvent UserEvent = UserEvent{}
+	if err := utils.UnmarshalJSON(data, &userEvent, "", true, false); err == nil {
+		u.UserEvent = &userEvent
+		u.Type = EventTypeUserEvent
 		return nil
 	}
-	return o.CustomerID
-}
 
-func (o *Event) GetCustomer() *Customer {
-	if o == nil {
+	var systemEvent SystemEvent = SystemEvent{}
+	if err := utils.UnmarshalJSON(data, &systemEvent, "", true, false); err == nil {
+		u.SystemEvent = &systemEvent
+		u.Type = EventTypeSystemEvent
 		return nil
 	}
-	return o.Customer
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for Event", string(data))
 }
 
-func (o *Event) GetExternalCustomerID() *string {
-	if o == nil {
-		return nil
+func (u Event) MarshalJSON() ([]byte, error) {
+	if u.SystemEvent != nil {
+		return utils.MarshalJSON(u.SystemEvent, "", true)
 	}
-	return o.ExternalCustomerID
+
+	if u.UserEvent != nil {
+		return utils.MarshalJSON(u.UserEvent, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type Event: all fields are null")
 }

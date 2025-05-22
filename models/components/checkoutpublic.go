@@ -342,11 +342,14 @@ type CheckoutPublic struct {
 	// Whether the checkout requires a payment form, whether because of a payment or payment method setup.
 	IsPaymentFormRequired bool    `json:"is_payment_form_required"`
 	CustomerID            *string `json:"customer_id"`
+	// Whether the customer is a business or an individual. If `true`, the customer will be required to fill their full billing address and billing name.
+	IsBusinessCustomer bool `json:"is_business_customer"`
 	// Name of the customer.
 	CustomerName *string `json:"customer_name"`
 	// Email address of the customer.
 	CustomerEmail            *string           `json:"customer_email"`
 	CustomerIPAddress        *string           `json:"customer_ip_address"`
+	CustomerBillingName      *string           `json:"customer_billing_name"`
 	CustomerBillingAddress   *Address          `json:"customer_billing_address"`
 	CustomerTaxID            *string           `json:"customer_tax_id"`
 	PaymentProcessorMetadata map[string]string `json:"payment_processor_metadata"`
@@ -569,6 +572,13 @@ func (o *CheckoutPublic) GetCustomerID() *string {
 	return o.CustomerID
 }
 
+func (o *CheckoutPublic) GetIsBusinessCustomer() bool {
+	if o == nil {
+		return false
+	}
+	return o.IsBusinessCustomer
+}
+
 func (o *CheckoutPublic) GetCustomerName() *string {
 	if o == nil {
 		return nil
@@ -588,6 +598,13 @@ func (o *CheckoutPublic) GetCustomerIPAddress() *string {
 		return nil
 	}
 	return o.CustomerIPAddress
+}
+
+func (o *CheckoutPublic) GetCustomerBillingName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.CustomerBillingName
 }
 
 func (o *CheckoutPublic) GetCustomerBillingAddress() *Address {
