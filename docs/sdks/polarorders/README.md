@@ -7,6 +7,8 @@
 
 * [List](#list) - List Orders
 * [Get](#get) - Get Order
+* [Update](#update) - Update Order
+* [GenerateInvoice](#generateinvoice) - Generate Order Invoice
 * [Invoice](#invoice) - Get Order Invoice
 
 ## List
@@ -137,6 +139,127 @@ func main() {
 | apierrors.ResourceNotFound    | 404                           | application/json              |
 | apierrors.HTTPValidationError | 422                           | application/json              |
 | apierrors.APIError            | 4XX, 5XX                      | \*/\*                         |
+
+## Update
+
+Update an order for the authenticated customer.
+
+**Scopes**: `customer_portal:write`
+
+### Example Usage
+
+```go
+package main
+
+import(
+	"context"
+	polargo "github.com/polarsource/polar-go"
+	"github.com/polarsource/polar-go/models/components"
+	"os"
+	"github.com/polarsource/polar-go/models/operations"
+	"log"
+)
+
+func main() {
+    ctx := context.Background()
+
+    s := polargo.New()
+
+    res, err := s.CustomerPortal.Orders.Update(ctx, operations.CustomerPortalOrdersUpdateSecurity{
+        CustomerSession: os.Getenv("POLAR_CUSTOMER_SESSION"),
+    }, "<value>", components.CustomerOrderUpdate{
+        BillingName: polargo.String("<value>"),
+        BillingAddress: &components.Address{
+            Country: "US",
+        },
+    })
+    if err != nil {
+        log.Fatal(err)
+    }
+    if res.CustomerOrder != nil {
+        // handle response
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                                                                      | Type                                                                                                           | Required                                                                                                       | Description                                                                                                    |
+| -------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
+| `ctx`                                                                                                          | [context.Context](https://pkg.go.dev/context#Context)                                                          | :heavy_check_mark:                                                                                             | The context to use for the request.                                                                            |
+| `security`                                                                                                     | [operations.CustomerPortalOrdersUpdateSecurity](../../models/operations/customerportalordersupdatesecurity.md) | :heavy_check_mark:                                                                                             | The security requirements to use for the request.                                                              |
+| `id`                                                                                                           | *string*                                                                                                       | :heavy_check_mark:                                                                                             | The order ID.                                                                                                  |
+| `customerOrderUpdate`                                                                                          | [components.CustomerOrderUpdate](../../models/components/customerorderupdate.md)                               | :heavy_check_mark:                                                                                             | N/A                                                                                                            |
+| `opts`                                                                                                         | [][operations.Option](../../models/operations/option.md)                                                       | :heavy_minus_sign:                                                                                             | The options for this request.                                                                                  |
+
+### Response
+
+**[*operations.CustomerPortalOrdersUpdateResponse](../../models/operations/customerportalordersupdateresponse.md), error**
+
+### Errors
+
+| Error Type                    | Status Code                   | Content Type                  |
+| ----------------------------- | ----------------------------- | ----------------------------- |
+| apierrors.ResourceNotFound    | 404                           | application/json              |
+| apierrors.HTTPValidationError | 422                           | application/json              |
+| apierrors.APIError            | 4XX, 5XX                      | \*/\*                         |
+
+## GenerateInvoice
+
+Trigger generation of an order's invoice.
+
+**Scopes**: `customer_portal:read` `customer_portal:write`
+
+### Example Usage
+
+```go
+package main
+
+import(
+	"context"
+	polargo "github.com/polarsource/polar-go"
+	"os"
+	"github.com/polarsource/polar-go/models/operations"
+	"log"
+)
+
+func main() {
+    ctx := context.Background()
+
+    s := polargo.New()
+
+    res, err := s.CustomerPortal.Orders.GenerateInvoice(ctx, operations.CustomerPortalOrdersGenerateInvoiceSecurity{
+        CustomerSession: os.Getenv("POLAR_CUSTOMER_SESSION"),
+    }, "<value>")
+    if err != nil {
+        log.Fatal(err)
+    }
+    if res.Any != nil {
+        // handle response
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                                                                                        | Type                                                                                                                             | Required                                                                                                                         | Description                                                                                                                      |
+| -------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| `ctx`                                                                                                                            | [context.Context](https://pkg.go.dev/context#Context)                                                                            | :heavy_check_mark:                                                                                                               | The context to use for the request.                                                                                              |
+| `security`                                                                                                                       | [operations.CustomerPortalOrdersGenerateInvoiceSecurity](../../models/operations/customerportalordersgenerateinvoicesecurity.md) | :heavy_check_mark:                                                                                                               | The security requirements to use for the request.                                                                                |
+| `id`                                                                                                                             | *string*                                                                                                                         | :heavy_check_mark:                                                                                                               | The order ID.                                                                                                                    |
+| `opts`                                                                                                                           | [][operations.Option](../../models/operations/option.md)                                                                         | :heavy_minus_sign:                                                                                                               | The options for this request.                                                                                                    |
+
+### Response
+
+**[*operations.CustomerPortalOrdersGenerateInvoiceResponse](../../models/operations/customerportalordersgenerateinvoiceresponse.md), error**
+
+### Errors
+
+| Error Type                                                                                  | Status Code                                                                                 | Content Type                                                                                |
+| ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- |
+| apierrors.InvoiceAlreadyExists                                                              | 409                                                                                         | application/json                                                                            |
+| apierrors.CustomerPortalOrdersGenerateInvoiceResponse422CustomerPortalOrdersGenerateInvoice | 422                                                                                         | application/json                                                                            |
+| apierrors.APIError                                                                          | 4XX, 5XX                                                                                    | \*/\*                                                                                       |
 
 ## Invoice
 

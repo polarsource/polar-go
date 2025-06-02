@@ -484,6 +484,8 @@ func main() {
 
 * [List](docs/sdks/polarorders/README.md#list) - List Orders
 * [Get](docs/sdks/polarorders/README.md#get) - Get Order
+* [Update](docs/sdks/polarorders/README.md#update) - Update Order
+* [GenerateInvoice](docs/sdks/polarorders/README.md#generateinvoice) - Generate Order Invoice
 * [Invoice](docs/sdks/polarorders/README.md#invoice) - Get Order Invoice
 
 #### [CustomerPortal.Organizations](docs/sdks/polarorganizations/README.md)
@@ -585,6 +587,8 @@ func main() {
 
 * [List](docs/sdks/orders/README.md#list) - List Orders
 * [Get](docs/sdks/orders/README.md#get) - Get Order
+* [Update](docs/sdks/orders/README.md#update) - Update Order
+* [GenerateInvoice](docs/sdks/orders/README.md#generateinvoice) - Generate Order Invoice
 * [Invoice](docs/sdks/orders/README.md#invoice) - Get Order Invoice
 
 ### [Organizations](docs/sdks/organizations/README.md)

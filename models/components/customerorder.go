@@ -37,12 +37,16 @@ type CustomerOrder struct {
 	RefundedTaxAmount int64              `json:"refunded_tax_amount"`
 	Currency          string             `json:"currency"`
 	BillingReason     OrderBillingReason `json:"billing_reason"`
-	BillingAddress    *Address           `json:"billing_address"`
-	CustomerID        string             `json:"customer_id"`
-	ProductID         string             `json:"product_id"`
-	DiscountID        *string            `json:"discount_id"`
-	SubscriptionID    *string            `json:"subscription_id"`
-	CheckoutID        *string            `json:"checkout_id"`
+	// The name of the customer that should appear on the invoice.
+	BillingName    *string  `json:"billing_name"`
+	BillingAddress *Address `json:"billing_address"`
+	// Whether an invoice has been generated for this order.
+	IsInvoiceGenerated bool    `json:"is_invoice_generated"`
+	CustomerID         string  `json:"customer_id"`
+	ProductID          string  `json:"product_id"`
+	DiscountID         *string `json:"discount_id"`
+	SubscriptionID     *string `json:"subscription_id"`
+	CheckoutID         *string `json:"checkout_id"`
 	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
 	UserID       string                     `json:"user_id"`
 	Product      CustomerOrderProduct       `json:"product"`
@@ -167,11 +171,25 @@ func (o *CustomerOrder) GetBillingReason() OrderBillingReason {
 	return o.BillingReason
 }
 
+func (o *CustomerOrder) GetBillingName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.BillingName
+}
+
 func (o *CustomerOrder) GetBillingAddress() *Address {
 	if o == nil {
 		return nil
 	}
 	return o.BillingAddress
+}
+
+func (o *CustomerOrder) GetIsInvoiceGenerated() bool {
+	if o == nil {
+		return false
+	}
+	return o.IsInvoiceGenerated
 }
 
 func (o *CustomerOrder) GetCustomerID() string {

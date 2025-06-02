@@ -2,9 +2,12 @@
 
 package polargo
 
+// Generated from OpenAPI doc version 0.1.0 and generator version 2.616.1
+
 import (
 	"context"
 	"fmt"
+	"github.com/polarsource/polar-go/internal/config"
 	"github.com/polarsource/polar-go/internal/hooks"
 	"github.com/polarsource/polar-go/internal/utils"
 	"github.com/polarsource/polar-go/models/components"
@@ -26,7 +29,7 @@ var ServerList = map[string]string{
 	ServerSandbox:    "https://sandbox-api.polar.sh",
 }
 
-// HTTPClient provides an interface for suplying the SDK with a custom HTTP client
+// HTTPClient provides an interface for supplying the SDK with a custom HTTP client
 type HTTPClient interface {
 	Do(req *http.Request) (*http.Response, error)
 }
@@ -52,36 +55,10 @@ func Float64(f float64) *float64 { return &f }
 // Pointer provides a helper function to return a pointer to a type
 func Pointer[T any](v T) *T { return &v }
 
-type sdkConfiguration struct {
-	Client            HTTPClient
-	Security          func(context.Context) (interface{}, error)
-	ServerURL         string
-	Server            string
-	Language          string
-	OpenAPIDocVersion string
-	SDKVersion        string
-	GenVersion        string
-	UserAgent         string
-	RetryConfig       *retry.Config
-	Hooks             *hooks.Hooks
-	Timeout           *time.Duration
-}
-
-func (c *sdkConfiguration) GetServerDetails() (string, map[string]string) {
-	if c.ServerURL != "" {
-		return c.ServerURL, nil
-	}
-
-	if c.Server == "" {
-		c.Server = "production"
-	}
-
-	return ServerList[c.Server], nil
-}
-
 // Polar API: Polar HTTP and Webhooks API
 // Read the docs at https://docs.polar.sh/api-reference
 type Polar struct {
+	SDKVersion       string
 	Organizations    *Organizations
 	Subscriptions    *Subscriptions
 	Oauth2           *Oauth2
@@ -104,7 +81,8 @@ type Polar struct {
 	CustomerMeters   *CustomerMeters
 	Payments         *Payments
 
-	sdkConfiguration sdkConfiguration
+	sdkConfiguration config.SDKConfiguration
+	hooks            *hooks.Hooks
 }
 
 type SDKOption func(*Polar)
@@ -179,14 +157,12 @@ func WithTimeout(timeout time.Duration) SDKOption {
 // New creates a new instance of the SDK with the provided options
 func New(opts ...SDKOption) *Polar {
 	sdk := &Polar{
-		sdkConfiguration: sdkConfiguration{
-			Language:          "go",
-			OpenAPIDocVersion: "0.1.0",
-			SDKVersion:        "0.4.20",
-			GenVersion:        "2.605.6",
-			UserAgent:         "speakeasy-sdk/go 0.4.20 2.605.6 0.1.0 github.com/polarsource/polar-go",
-			Hooks:             hooks.New(),
+		SDKVersion: "0.5.0",
+		sdkConfiguration: config.SDKConfiguration{
+			UserAgent:  "speakeasy-sdk/go 0.5.0 2.616.1 0.1.0 github.com/polarsource/polar-go",
+			ServerList: ServerList,
 		},
+		hooks: hooks.New(),
 	}
 	for _, opt := range opts {
 		opt(sdk)
@@ -206,52 +182,32 @@ func New(opts ...SDKOption) *Polar {
 
 	currentServerURL, _ := sdk.sdkConfiguration.GetServerDetails()
 	serverURL := currentServerURL
-	serverURL, sdk.sdkConfiguration.Client = sdk.sdkConfiguration.Hooks.SDKInit(currentServerURL, sdk.sdkConfiguration.Client)
-	if serverURL != currentServerURL {
+	serverURL, sdk.sdkConfiguration.Client = sdk.hooks.SDKInit(currentServerURL, sdk.sdkConfiguration.Client)
+	if currentServerURL != serverURL {
 		sdk.sdkConfiguration.ServerURL = serverURL
 	}
 
-	sdk.Organizations = newOrganizations(sdk.sdkConfiguration)
-
-	sdk.Subscriptions = newSubscriptions(sdk.sdkConfiguration)
-
-	sdk.Oauth2 = newOauth2(sdk.sdkConfiguration)
-
-	sdk.Benefits = newBenefits(sdk.sdkConfiguration)
-
-	sdk.Products = newProducts(sdk.sdkConfiguration)
-
-	sdk.Orders = newOrders(sdk.sdkConfiguration)
-
-	sdk.Refunds = newRefunds(sdk.sdkConfiguration)
-
-	sdk.Checkouts = newCheckouts(sdk.sdkConfiguration)
-
-	sdk.Files = newFiles(sdk.sdkConfiguration)
-
-	sdk.Metrics = newMetrics(sdk.sdkConfiguration)
-
-	sdk.LicenseKeys = newLicenseKeys(sdk.sdkConfiguration)
-
-	sdk.CheckoutLinks = newCheckoutLinks(sdk.sdkConfiguration)
-
-	sdk.CustomFields = newCustomFields(sdk.sdkConfiguration)
-
-	sdk.Discounts = newDiscounts(sdk.sdkConfiguration)
-
-	sdk.Customers = newCustomers(sdk.sdkConfiguration)
-
-	sdk.CustomerPortal = newCustomerPortal(sdk.sdkConfiguration)
-
-	sdk.CustomerSessions = newCustomerSessions(sdk.sdkConfiguration)
-
-	sdk.Events = newEvents(sdk.sdkConfiguration)
-
-	sdk.Meters = newMeters(sdk.sdkConfiguration)
-
-	sdk.CustomerMeters = newCustomerMeters(sdk.sdkConfiguration)
-
-	sdk.Payments = newPayments(sdk.sdkConfiguration)
+	sdk.Organizations = newOrganizations(sdk, sdk.sdkConfiguration, sdk.hooks)
+	sdk.Subscriptions = newSubscriptions(sdk, sdk.sdkConfiguration, sdk.hooks)
+	sdk.Oauth2 = newOauth2(sdk, sdk.sdkConfiguration, sdk.hooks)
+	sdk.Benefits = newBenefits(sdk, sdk.sdkConfiguration, sdk.hooks)
+	sdk.Products = newProducts(sdk, sdk.sdkConfiguration, sdk.hooks)
+	sdk.Orders = newOrders(sdk, sdk.sdkConfiguration, sdk.hooks)
+	sdk.Refunds = newRefunds(sdk, sdk.sdkConfiguration, sdk.hooks)
+	sdk.Checkouts = newCheckouts(sdk, sdk.sdkConfiguration, sdk.hooks)
+	sdk.Files = newFiles(sdk, sdk.sdkConfiguration, sdk.hooks)
+	sdk.Metrics = newMetrics(sdk, sdk.sdkConfiguration, sdk.hooks)
+	sdk.LicenseKeys = newLicenseKeys(sdk, sdk.sdkConfiguration, sdk.hooks)
+	sdk.CheckoutLinks = newCheckoutLinks(sdk, sdk.sdkConfiguration, sdk.hooks)
+	sdk.CustomFields = newCustomFields(sdk, sdk.sdkConfiguration, sdk.hooks)
+	sdk.Discounts = newDiscounts(sdk, sdk.sdkConfiguration, sdk.hooks)
+	sdk.Customers = newCustomers(sdk, sdk.sdkConfiguration, sdk.hooks)
+	sdk.CustomerPortal = newCustomerPortal(sdk, sdk.sdkConfiguration, sdk.hooks)
+	sdk.CustomerSessions = newCustomerSessions(sdk, sdk.sdkConfiguration, sdk.hooks)
+	sdk.Events = newEvents(sdk, sdk.sdkConfiguration, sdk.hooks)
+	sdk.Meters = newMeters(sdk, sdk.sdkConfiguration, sdk.hooks)
+	sdk.CustomerMeters = newCustomerMeters(sdk, sdk.sdkConfiguration, sdk.hooks)
+	sdk.Payments = newPayments(sdk, sdk.sdkConfiguration, sdk.hooks)
 
 	return sdk
 }

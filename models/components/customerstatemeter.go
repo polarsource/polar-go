@@ -9,6 +9,8 @@ import (
 
 // CustomerStateMeter - An active meter for a customer, with latest consumed and credited units.
 type CustomerStateMeter struct {
+	// The ID of the object.
+	ID string `json:"id"`
 	// Creation timestamp of the object.
 	CreatedAt time.Time `json:"created_at"`
 	// Last modification timestamp of the object.
@@ -32,6 +34,13 @@ func (c *CustomerStateMeter) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
+}
+
+func (o *CustomerStateMeter) GetID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ID
 }
 
 func (o *CustomerStateMeter) GetCreatedAt() time.Time {

@@ -2,6 +2,11 @@
 
 package polargo
 
+import (
+	"github.com/polarsource/polar-go/internal/config"
+	"github.com/polarsource/polar-go/internal/hooks"
+)
+
 type CustomerPortal struct {
 	BenefitGrants  *BenefitGrants
 	Customers      *PolarCustomers
@@ -12,19 +17,23 @@ type CustomerPortal struct {
 	Organizations  *PolarOrganizations
 	Subscriptions  *PolarSubscriptions
 
-	sdkConfiguration sdkConfiguration
+	rootSDK          *Polar
+	sdkConfiguration config.SDKConfiguration
+	hooks            *hooks.Hooks
 }
 
-func newCustomerPortal(sdkConfig sdkConfiguration) *CustomerPortal {
+func newCustomerPortal(rootSDK *Polar, sdkConfig config.SDKConfiguration, hooks *hooks.Hooks) *CustomerPortal {
 	return &CustomerPortal{
+		rootSDK:          rootSDK,
 		sdkConfiguration: sdkConfig,
-		BenefitGrants:    newBenefitGrants(sdkConfig),
-		Customers:        newPolarCustomers(sdkConfig),
-		CustomerMeters:   newPolarCustomerMeters(sdkConfig),
-		Downloadables:    newDownloadables(sdkConfig),
-		LicenseKeys:      newPolarLicenseKeys(sdkConfig),
-		Orders:           newPolarOrders(sdkConfig),
-		Organizations:    newPolarOrganizations(sdkConfig),
-		Subscriptions:    newPolarSubscriptions(sdkConfig),
+		hooks:            hooks,
+		BenefitGrants:    newBenefitGrants(rootSDK, sdkConfig, hooks),
+		Customers:        newPolarCustomers(rootSDK, sdkConfig, hooks),
+		CustomerMeters:   newPolarCustomerMeters(rootSDK, sdkConfig, hooks),
+		Downloadables:    newDownloadables(rootSDK, sdkConfig, hooks),
+		LicenseKeys:      newPolarLicenseKeys(rootSDK, sdkConfig, hooks),
+		Orders:           newPolarOrders(rootSDK, sdkConfig, hooks),
+		Organizations:    newPolarOrganizations(rootSDK, sdkConfig, hooks),
+		Subscriptions:    newPolarSubscriptions(rootSDK, sdkConfig, hooks),
 	}
 }

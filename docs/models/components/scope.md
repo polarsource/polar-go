@@ -38,6 +38,7 @@
 | `ScopeCustomerMetersRead`          | customer_meters:read               |
 | `ScopeCustomerSessionsWrite`       | customer_sessions:write            |
 | `ScopeOrdersRead`                  | orders:read                        |
+| `ScopeOrdersWrite`                 | orders:write                       |
 | `ScopeRefundsRead`                 | refunds:read                       |
 | `ScopeRefundsWrite`                | refunds:write                      |
 | `ScopePaymentsRead`                | payments:read                      |
@@ -53,5 +54,7 @@
 | `ScopeIssuesWrite`                 | issues:write                       |
 | `ScopeCustomerPortalRead`          | customer_portal:read               |
 | `ScopeCustomerPortalWrite`         | customer_portal:write              |
+| `ScopeNotificationsRead`           | notifications:read                 |
+| `ScopeNotificationsWrite`          | notifications:write                |
 | `ScopeNotificationRecipientsRead`  | notification_recipients:read       |
 | `ScopeNotificationRecipientsWrite` | notification_recipients:write      |

@@ -7,6 +7,8 @@
 
 * [List](#list) - List Orders
 * [Get](#get) - Get Order
+* [Update](#update) - Update Order
+* [GenerateInvoice](#generateinvoice) - Generate Order Invoice
 * [Invoice](#invoice) - Get Order Invoice
 
 ## List
@@ -134,6 +136,123 @@ func main() {
 | apierrors.ResourceNotFound    | 404                           | application/json              |
 | apierrors.HTTPValidationError | 422                           | application/json              |
 | apierrors.APIError            | 4XX, 5XX                      | \*/\*                         |
+
+## Update
+
+Update an order.
+
+**Scopes**: `orders:write`
+
+### Example Usage
+
+```go
+package main
+
+import(
+	"context"
+	"os"
+	polargo "github.com/polarsource/polar-go"
+	"github.com/polarsource/polar-go/models/components"
+	"log"
+)
+
+func main() {
+    ctx := context.Background()
+
+    s := polargo.New(
+        polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
+    )
+
+    res, err := s.Orders.Update(ctx, "<value>", components.OrderUpdate{
+        BillingName: polargo.String("<value>"),
+        BillingAddress: &components.Address{
+            Country: "US",
+        },
+    })
+    if err != nil {
+        log.Fatal(err)
+    }
+    if res.Order != nil {
+        // handle response
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                        | Type                                                             | Required                                                         | Description                                                      |
+| ---------------------------------------------------------------- | ---------------------------------------------------------------- | ---------------------------------------------------------------- | ---------------------------------------------------------------- |
+| `ctx`                                                            | [context.Context](https://pkg.go.dev/context#Context)            | :heavy_check_mark:                                               | The context to use for the request.                              |
+| `id`                                                             | *string*                                                         | :heavy_check_mark:                                               | The order ID.                                                    |
+| `orderUpdate`                                                    | [components.OrderUpdate](../../models/components/orderupdate.md) | :heavy_check_mark:                                               | N/A                                                              |
+| `opts`                                                           | [][operations.Option](../../models/operations/option.md)         | :heavy_minus_sign:                                               | The options for this request.                                    |
+
+### Response
+
+**[*operations.OrdersUpdateResponse](../../models/operations/ordersupdateresponse.md), error**
+
+### Errors
+
+| Error Type                    | Status Code                   | Content Type                  |
+| ----------------------------- | ----------------------------- | ----------------------------- |
+| apierrors.ResourceNotFound    | 404                           | application/json              |
+| apierrors.HTTPValidationError | 422                           | application/json              |
+| apierrors.APIError            | 4XX, 5XX                      | \*/\*                         |
+
+## GenerateInvoice
+
+Trigger generation of an order's invoice.
+
+**Scopes**: `orders:read`
+
+### Example Usage
+
+```go
+package main
+
+import(
+	"context"
+	"os"
+	polargo "github.com/polarsource/polar-go"
+	"log"
+)
+
+func main() {
+    ctx := context.Background()
+
+    s := polargo.New(
+        polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
+    )
+
+    res, err := s.Orders.GenerateInvoice(ctx, "<value>")
+    if err != nil {
+        log.Fatal(err)
+    }
+    if res.Any != nil {
+        // handle response
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                | Type                                                     | Required                                                 | Description                                              |
+| -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- |
+| `ctx`                                                    | [context.Context](https://pkg.go.dev/context#Context)    | :heavy_check_mark:                                       | The context to use for the request.                      |
+| `id`                                                     | *string*                                                 | :heavy_check_mark:                                       | The order ID.                                            |
+| `opts`                                                   | [][operations.Option](../../models/operations/option.md) | :heavy_minus_sign:                                       | The options for this request.                            |
+
+### Response
+
+**[*operations.OrdersGenerateInvoiceResponse](../../models/operations/ordersgenerateinvoiceresponse.md), error**
+
+### Errors
+
+| Error Type                                                      | Status Code                                                     | Content Type                                                    |
+| --------------------------------------------------------------- | --------------------------------------------------------------- | --------------------------------------------------------------- |
+| apierrors.InvoiceAlreadyExists                                  | 409                                                             | application/json                                                |
+| apierrors.OrdersGenerateInvoiceResponse422OrdersGenerateInvoice | 422                                                             | application/json                                                |
+| apierrors.APIError                                              | 4XX, 5XX                                                        | \*/\*                                                           |
 
 ## Invoice
 
