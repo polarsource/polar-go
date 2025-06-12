@@ -120,11 +120,13 @@ func (s *Benefits) List(ctx context.Context, request operations.BenefitsListRequ
 				"504",
 			},
 		}, func() (*http.Response, error) {
-			if req.Body != nil {
+			if req.Body != nil && req.Body != http.NoBody && req.GetBody != nil {
 				copyBody, err := req.GetBody()
+
 				if err != nil {
 					return nil, err
 				}
+
 				req.Body = copyBody
 			}
 
@@ -421,11 +423,13 @@ func (s *Benefits) Create(ctx context.Context, request components.BenefitCreate,
 				"504",
 			},
 		}, func() (*http.Response, error) {
-			if req.Body != nil {
+			if req.Body != nil && req.Body != http.NoBody && req.GetBody != nil {
 				copyBody, err := req.GetBody()
+
 				if err != nil {
 					return nil, err
 				}
+
 				req.Body = copyBody
 			}
 
@@ -652,11 +656,13 @@ func (s *Benefits) Get(ctx context.Context, id string, opts ...operations.Option
 				"504",
 			},
 		}, func() (*http.Response, error) {
-			if req.Body != nil {
+			if req.Body != nil && req.Body != http.NoBody && req.GetBody != nil {
 				copyBody, err := req.GetBody()
+
 				if err != nil {
 					return nil, err
 				}
+
 				req.Body = copyBody
 			}
 
@@ -912,11 +918,13 @@ func (s *Benefits) Update(ctx context.Context, id string, requestBody operations
 				"504",
 			},
 		}, func() (*http.Response, error) {
-			if req.Body != nil {
+			if req.Body != nil && req.Body != http.NoBody && req.GetBody != nil {
 				copyBody, err := req.GetBody()
+
 				if err != nil {
 					return nil, err
 				}
+
 				req.Body = copyBody
 			}
 
@@ -1168,11 +1176,13 @@ func (s *Benefits) Delete(ctx context.Context, id string, opts ...operations.Opt
 				"504",
 			},
 		}, func() (*http.Response, error) {
-			if req.Body != nil {
+			if req.Body != nil && req.Body != http.NoBody && req.GetBody != nil {
 				copyBody, err := req.GetBody()
+
 				if err != nil {
 					return nil, err
 				}
+
 				req.Body = copyBody
 			}
 
@@ -1423,11 +1433,13 @@ func (s *Benefits) Grants(ctx context.Context, request operations.BenefitsGrants
 				"504",
 			},
 		}, func() (*http.Response, error) {
-			if req.Body != nil {
+			if req.Body != nil && req.Body != http.NoBody && req.GetBody != nil {
 				copyBody, err := req.GetBody()
+
 				if err != nil {
 					return nil, err
 				}
+
 				req.Body = copyBody
 			}
 

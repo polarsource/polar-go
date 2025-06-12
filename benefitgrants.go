@@ -120,11 +120,13 @@ func (s *BenefitGrants) List(ctx context.Context, request operations.CustomerPor
 				"504",
 			},
 		}, func() (*http.Response, error) {
-			if req.Body != nil {
+			if req.Body != nil && req.Body != http.NoBody && req.GetBody != nil {
 				copyBody, err := req.GetBody()
+
 				if err != nil {
 					return nil, err
 				}
+
 				req.Body = copyBody
 			}
 
@@ -422,11 +424,13 @@ func (s *BenefitGrants) Get(ctx context.Context, security operations.CustomerPor
 				"504",
 			},
 		}, func() (*http.Response, error) {
-			if req.Body != nil {
+			if req.Body != nil && req.Body != http.NoBody && req.GetBody != nil {
 				copyBody, err := req.GetBody()
+
 				if err != nil {
 					return nil, err
 				}
+
 				req.Body = copyBody
 			}
 
@@ -682,11 +686,13 @@ func (s *BenefitGrants) Update(ctx context.Context, security operations.Customer
 				"504",
 			},
 		}, func() (*http.Response, error) {
-			if req.Body != nil {
+			if req.Body != nil && req.Body != http.NoBody && req.GetBody != nil {
 				copyBody, err := req.GetBody()
+
 				if err != nil {
 					return nil, err
 				}
+
 				req.Body = copyBody
 			}
 

@@ -125,11 +125,13 @@ func (s *PolarLicenseKeys) List(ctx context.Context, security operations.Custome
 				"504",
 			},
 		}, func() (*http.Response, error) {
-			if req.Body != nil {
+			if req.Body != nil && req.Body != http.NoBody && req.GetBody != nil {
 				copyBody, err := req.GetBody()
+
 				if err != nil {
 					return nil, err
 				}
+
 				req.Body = copyBody
 			}
 
@@ -462,11 +464,13 @@ func (s *PolarLicenseKeys) Get(ctx context.Context, security operations.Customer
 				"504",
 			},
 		}, func() (*http.Response, error) {
-			if req.Body != nil {
+			if req.Body != nil && req.Body != http.NoBody && req.GetBody != nil {
 				copyBody, err := req.GetBody()
+
 				if err != nil {
 					return nil, err
 				}
+
 				req.Body = copyBody
 			}
 
@@ -711,11 +715,13 @@ func (s *PolarLicenseKeys) Validate(ctx context.Context, request components.Lice
 				"504",
 			},
 		}, func() (*http.Response, error) {
-			if req.Body != nil {
+			if req.Body != nil && req.Body != http.NoBody && req.GetBody != nil {
 				copyBody, err := req.GetBody()
+
 				if err != nil {
 					return nil, err
 				}
+
 				req.Body = copyBody
 			}
 
@@ -960,11 +966,13 @@ func (s *PolarLicenseKeys) Activate(ctx context.Context, request components.Lice
 				"504",
 			},
 		}, func() (*http.Response, error) {
-			if req.Body != nil {
+			if req.Body != nil && req.Body != http.NoBody && req.GetBody != nil {
 				copyBody, err := req.GetBody()
+
 				if err != nil {
 					return nil, err
 				}
+
 				req.Body = copyBody
 			}
 
@@ -1230,11 +1238,13 @@ func (s *PolarLicenseKeys) Deactivate(ctx context.Context, request components.Li
 				"504",
 			},
 		}, func() (*http.Response, error) {
-			if req.Body != nil {
+			if req.Body != nil && req.Body != http.NoBody && req.GetBody != nil {
 				copyBody, err := req.GetBody()
+
 				if err != nil {
 					return nil, err
 				}
+
 				req.Body = copyBody
 			}
 

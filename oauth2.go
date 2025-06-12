@@ -115,11 +115,13 @@ func (s *Oauth2) Authorize(ctx context.Context, opts ...operations.Option) (*ope
 				"504",
 			},
 		}, func() (*http.Response, error) {
-			if req.Body != nil {
+			if req.Body != nil && req.Body != http.NoBody && req.GetBody != nil {
 				copyBody, err := req.GetBody()
+
 				if err != nil {
 					return nil, err
 				}
+
 				req.Body = copyBody
 			}
 
@@ -322,11 +324,13 @@ func (s *Oauth2) Token(ctx context.Context, request operations.Oauth2RequestToke
 				"504",
 			},
 		}, func() (*http.Response, error) {
-			if req.Body != nil {
+			if req.Body != nil && req.Body != http.NoBody && req.GetBody != nil {
 				copyBody, err := req.GetBody()
+
 				if err != nil {
 					return nil, err
 				}
+
 				req.Body = copyBody
 			}
 
@@ -529,11 +533,13 @@ func (s *Oauth2) Revoke(ctx context.Context, request components.RevokeTokenReque
 				"504",
 			},
 		}, func() (*http.Response, error) {
-			if req.Body != nil {
+			if req.Body != nil && req.Body != http.NoBody && req.GetBody != nil {
 				copyBody, err := req.GetBody()
+
 				if err != nil {
 					return nil, err
 				}
+
 				req.Body = copyBody
 			}
 
@@ -736,11 +742,13 @@ func (s *Oauth2) Introspect(ctx context.Context, request components.IntrospectTo
 				"504",
 			},
 		}, func() (*http.Response, error) {
-			if req.Body != nil {
+			if req.Body != nil && req.Body != http.NoBody && req.GetBody != nil {
 				copyBody, err := req.GetBody()
+
 				if err != nil {
 					return nil, err
 				}
+
 				req.Body = copyBody
 			}
 
@@ -940,11 +948,13 @@ func (s *Oauth2) Userinfo(ctx context.Context, opts ...operations.Option) (*oper
 				"504",
 			},
 		}, func() (*http.Response, error) {
-			if req.Body != nil {
+			if req.Body != nil && req.Body != http.NoBody && req.GetBody != nil {
 				copyBody, err := req.GetBody()
+
 				if err != nil {
 					return nil, err
 				}
+
 				req.Body = copyBody
 			}
 

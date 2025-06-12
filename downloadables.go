@@ -125,11 +125,13 @@ func (s *Downloadables) List(ctx context.Context, security operations.CustomerPo
 				"504",
 			},
 		}, func() (*http.Response, error) {
-			if req.Body != nil {
+			if req.Body != nil && req.Body != http.NoBody && req.GetBody != nil {
 				copyBody, err := req.GetBody()
+
 				if err != nil {
 					return nil, err
 				}
+
 				req.Body = copyBody
 			}
 
@@ -413,11 +415,13 @@ func (s *Downloadables) Get(ctx context.Context, token string, opts ...operation
 				"504",
 			},
 		}, func() (*http.Response, error) {
-			if req.Body != nil {
+			if req.Body != nil && req.Body != http.NoBody && req.GetBody != nil {
 				copyBody, err := req.GetBody()
+
 				if err != nil {
 					return nil, err
 				}
+
 				req.Body = copyBody
 			}
 

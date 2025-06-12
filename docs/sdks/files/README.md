@@ -39,7 +39,7 @@ func main() {
 
     res, err := s.Files.List(ctx, polargo.Pointer(operations.CreateFilesListQueryParamOrganizationIDFilterStr(
         "1dbfc517-0bbf-4301-9ba8-555ca42b9737",
-    )), nil, nil, nil)
+    )), nil, polargo.Int64(1), polargo.Int64(10))
     if err != nil {
         log.Fatal(err)
     }

@@ -16,7 +16,7 @@ func main() {
 		polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
 	)
 
-	res, err := s.Organizations.List(ctx, nil, nil, nil, nil)
+	res, err := s.Organizations.List(ctx, nil, polargo.Int64(1), polargo.Int64(10), nil)
 	if err != nil {
 		log.Fatal(err)
 	}

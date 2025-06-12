@@ -7,7 +7,7 @@ import (
 )
 
 type NotOpenCheckout struct {
-	error  string `const:"NotOpenCheckout" json:"error"`
+	error_ string `const:"NotOpenCheckout" json:"error"`
 	Detail string `json:"detail"`
 }
 

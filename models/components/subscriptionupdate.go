@@ -11,15 +11,17 @@ import (
 type SubscriptionUpdateType string
 
 const (
-	SubscriptionUpdateTypeSubscriptionUpdateProduct SubscriptionUpdateType = "SubscriptionUpdateProduct"
-	SubscriptionUpdateTypeSubscriptionCancel        SubscriptionUpdateType = "SubscriptionCancel"
-	SubscriptionUpdateTypeSubscriptionRevoke        SubscriptionUpdateType = "SubscriptionRevoke"
+	SubscriptionUpdateTypeSubscriptionUpdateProduct  SubscriptionUpdateType = "SubscriptionUpdateProduct"
+	SubscriptionUpdateTypeSubscriptionUpdateDiscount SubscriptionUpdateType = "SubscriptionUpdateDiscount"
+	SubscriptionUpdateTypeSubscriptionCancel         SubscriptionUpdateType = "SubscriptionCancel"
+	SubscriptionUpdateTypeSubscriptionRevoke         SubscriptionUpdateType = "SubscriptionRevoke"
 )
 
 type SubscriptionUpdate struct {
-	SubscriptionUpdateProduct *SubscriptionUpdateProduct `queryParam:"inline"`
-	SubscriptionCancel        *SubscriptionCancel        `queryParam:"inline"`
-	SubscriptionRevoke        *SubscriptionRevoke        `queryParam:"inline"`
+	SubscriptionUpdateProduct  *SubscriptionUpdateProduct  `queryParam:"inline"`
+	SubscriptionUpdateDiscount *SubscriptionUpdateDiscount `queryParam:"inline"`
+	SubscriptionCancel         *SubscriptionCancel         `queryParam:"inline"`
+	SubscriptionRevoke         *SubscriptionRevoke         `queryParam:"inline"`
 
 	Type SubscriptionUpdateType
 }
@@ -30,6 +32,15 @@ func CreateSubscriptionUpdateSubscriptionUpdateProduct(subscriptionUpdateProduct
 	return SubscriptionUpdate{
 		SubscriptionUpdateProduct: &subscriptionUpdateProduct,
 		Type:                      typ,
+	}
+}
+
+func CreateSubscriptionUpdateSubscriptionUpdateDiscount(subscriptionUpdateDiscount SubscriptionUpdateDiscount) SubscriptionUpdate {
+	typ := SubscriptionUpdateTypeSubscriptionUpdateDiscount
+
+	return SubscriptionUpdate{
+		SubscriptionUpdateDiscount: &subscriptionUpdateDiscount,
+		Type:                       typ,
 	}
 }
 
@@ -52,6 +63,13 @@ func CreateSubscriptionUpdateSubscriptionRevoke(subscriptionRevoke SubscriptionR
 }
 
 func (u *SubscriptionUpdate) UnmarshalJSON(data []byte) error {
+
+	var subscriptionUpdateDiscount SubscriptionUpdateDiscount = SubscriptionUpdateDiscount{}
+	if err := utils.UnmarshalJSON(data, &subscriptionUpdateDiscount, "", true, false); err == nil {
+		u.SubscriptionUpdateDiscount = &subscriptionUpdateDiscount
+		u.Type = SubscriptionUpdateTypeSubscriptionUpdateDiscount
+		return nil
+	}
 
 	var subscriptionUpdateProduct SubscriptionUpdateProduct = SubscriptionUpdateProduct{}
 	if err := utils.UnmarshalJSON(data, &subscriptionUpdateProduct, "", true, false); err == nil {
@@ -80,6 +98,10 @@ func (u *SubscriptionUpdate) UnmarshalJSON(data []byte) error {
 func (u SubscriptionUpdate) MarshalJSON() ([]byte, error) {
 	if u.SubscriptionUpdateProduct != nil {
 		return utils.MarshalJSON(u.SubscriptionUpdateProduct, "", true)
+	}
+
+	if u.SubscriptionUpdateDiscount != nil {
+		return utils.MarshalJSON(u.SubscriptionUpdateDiscount, "", true)
 	}
 
 	if u.SubscriptionCancel != nil {

@@ -7,7 +7,7 @@ import (
 )
 
 type NotPaidOrder struct {
-	error  string `const:"NotPaidOrder" json:"error"`
+	error_ string `const:"NotPaidOrder" json:"error"`
 	Detail string `json:"detail"`
 }
 

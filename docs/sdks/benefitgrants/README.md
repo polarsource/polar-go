@@ -152,9 +152,9 @@ package main
 import(
 	"context"
 	polargo "github.com/polarsource/polar-go"
-	"github.com/polarsource/polar-go/models/components"
 	"os"
 	"github.com/polarsource/polar-go/models/operations"
+	"github.com/polarsource/polar-go/models/components"
 	"log"
 )
 

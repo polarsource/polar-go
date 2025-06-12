@@ -20,9 +20,10 @@ generation:
     oAuth2ClientCredentialsEnabled: true
     oAuth2PasswordEnabled: true
 go:
-  version: 0.5.0
+  version: 0.6.0
   additionalDependencies: {}
   allowUnknownFieldsInWeakUnions: true
+  baseErrorName: PolarError
   clientServerStatusCodesAsErrors: true
   defaultErrorName: APIError
   envVarPrefix: POLAR

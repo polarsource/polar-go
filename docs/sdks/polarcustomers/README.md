@@ -152,7 +152,7 @@ func main() {
 
     res, err := s.CustomerPortal.Customers.GetPaymentMethods(ctx, operations.CustomerPortalCustomersGetPaymentMethodsSecurity{
         CustomerSession: os.Getenv("POLAR_CUSTOMER_SESSION"),
-    }, nil, nil)
+    }, polargo.Int64(1), polargo.Int64(10))
     if err != nil {
         log.Fatal(err)
     }

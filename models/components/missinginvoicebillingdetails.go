@@ -7,7 +7,7 @@ import (
 )
 
 type MissingInvoiceBillingDetails struct {
-	error  string `const:"MissingInvoiceBillingDetails" json:"error"`
+	error_ string `const:"MissingInvoiceBillingDetails" json:"error"`
 	Detail string `json:"detail"`
 }
 

@@ -20,8 +20,8 @@ package main
 import(
 	"context"
 	polargo "github.com/polarsource/polar-go"
-	"github.com/polarsource/polar-go/models/operations"
 	"os"
+	"github.com/polarsource/polar-go/models/operations"
 	"log"
 )
 
@@ -34,7 +34,7 @@ func main() {
         CustomerSession: os.Getenv("POLAR_CUSTOMER_SESSION"),
     }, polargo.Pointer(operations.CreateCustomerPortalDownloadablesListQueryParamOrganizationIDFilterStr(
         "1dbfc517-0bbf-4301-9ba8-555ca42b9737",
-    )), nil, nil, nil)
+    )), nil, polargo.Int64(1), polargo.Int64(10))
     if err != nil {
         log.Fatal(err)
     }

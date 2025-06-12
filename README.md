@@ -130,30 +130,29 @@ func main() {
 				OrganizationID:    "<value>",
 				Prices: []components.CheckoutProductPrices{
 					components.CreateCheckoutProductPricesLegacyRecurringProductPrice(
-						components.CreateLegacyRecurringProductPriceCustom(
-							components.LegacyRecurringProductPriceCustom{
-								CreatedAt:         types.MustTimeFromString("2023-08-08T15:45:51.732Z"),
-								ModifiedAt:        types.MustNewTimeFromString("2024-01-18T11:16:03.208Z"),
+						components.CreateLegacyRecurringProductPriceFree(
+							components.LegacyRecurringProductPriceFree{
+								CreatedAt:         types.MustTimeFromString("2023-09-13T08:36:46.434Z"),
+								ModifiedAt:        types.MustNewTimeFromString("2023-10-05T12:55:46.428Z"),
 								ID:                "<value>",
 								IsArchived:        false,
 								ProductID:         "<value>",
 								RecurringInterval: components.SubscriptionRecurringIntervalMonth,
-								PriceCurrency:     "<value>",
-								MinimumAmount:     polargo.Int64(49018),
-								MaximumAmount:     polargo.Int64(322400),
-								PresetAmount:      polargo.Int64(119260),
 							},
 						),
 					),
-					components.CreateCheckoutProductPricesLegacyRecurringProductPrice(
-						components.CreateLegacyRecurringProductPriceFree(
-							components.LegacyRecurringProductPriceFree{
-								CreatedAt:         types.MustTimeFromString("2024-04-06T18:48:21.449Z"),
-								ModifiedAt:        types.MustNewTimeFromString("2023-02-22T08:13:16.795Z"),
+					components.CreateCheckoutProductPricesProductPrice(
+						components.CreateProductPriceFixed(
+							components.ProductPriceFixed{
+								CreatedAt:         types.MustTimeFromString("2024-05-02T18:25:33.974Z"),
+								ModifiedAt:        types.MustNewTimeFromString("2025-02-06T12:55:07.640Z"),
 								ID:                "<value>",
 								IsArchived:        false,
 								ProductID:         "<value>",
-								RecurringInterval: components.SubscriptionRecurringIntervalMonth,
+								Type:              components.ProductPriceTypeRecurring,
+								RecurringInterval: components.SubscriptionRecurringIntervalMonth.ToPointer(),
+								PriceCurrency:     "<value>",
+								PriceAmount:       115799,
 							},
 						),
 					),
@@ -216,20 +215,19 @@ func main() {
 					},
 				},
 			},
-			ProductPrice: components.CreateCheckoutProductPriceProductPrice(
-				components.CreateProductPriceCustom(
-					components.ProductPriceCustom{
-						CreatedAt:         types.MustTimeFromString("2025-11-30T03:33:51.498Z"),
-						ModifiedAt:        types.MustNewTimeFromString("2025-12-30T03:22:33.818Z"),
+			ProductPrice: components.CreateCheckoutProductPriceLegacyRecurringProductPrice(
+				components.CreateLegacyRecurringProductPriceCustom(
+					components.LegacyRecurringProductPriceCustom{
+						CreatedAt:         types.MustTimeFromString("2025-07-31T12:54:47.590Z"),
+						ModifiedAt:        types.MustNewTimeFromString("2023-01-11T22:31:47.320Z"),
 						ID:                "<value>",
-						IsArchived:        false,
+						IsArchived:        true,
 						ProductID:         "<value>",
-						Type:              components.ProductPriceTypeRecurring,
-						RecurringInterval: components.SubscriptionRecurringIntervalYear.ToPointer(),
+						RecurringInterval: components.SubscriptionRecurringIntervalMonth,
 						PriceCurrency:     "<value>",
-						MinimumAmount:     polargo.Int64(707018),
-						MaximumAmount:     polargo.Int64(818126),
-						PresetAmount:      polargo.Int64(919230),
+						MinimumAmount:     polargo.Int64(203013),
+						MaximumAmount:     nil,
+						PresetAmount:      polargo.Int64(119260),
 					},
 				),
 			),
@@ -335,7 +333,7 @@ func main() {
 		polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
 	)
 
-	res, err := s.Organizations.List(ctx, nil, nil, nil, nil)
+	res, err := s.Organizations.List(ctx, nil, polargo.Int64(1), polargo.Int64(10), nil)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -653,7 +651,7 @@ func main() {
 		polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
 	)
 
-	res, err := s.Organizations.List(ctx, nil, nil, nil, nil)
+	res, err := s.Organizations.List(ctx, nil, polargo.Int64(1), polargo.Int64(10), nil)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -702,7 +700,7 @@ func main() {
 		polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
 	)
 
-	res, err := s.Organizations.List(ctx, nil, nil, nil, nil, operations.WithRetries(
+	res, err := s.Organizations.List(ctx, nil, polargo.Int64(1), polargo.Int64(10), nil, operations.WithRetries(
 		retry.Config{
 			Strategy: "backoff",
 			Backoff: &retry.BackoffStrategy{
@@ -765,7 +763,7 @@ func main() {
 		polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
 	)
 
-	res, err := s.Organizations.List(ctx, nil, nil, nil, nil)
+	res, err := s.Organizations.List(ctx, nil, polargo.Int64(1), polargo.Int64(10), nil)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -824,7 +822,7 @@ func main() {
 		polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
 	)
 
-	res, err := s.Organizations.List(ctx, nil, nil, nil, nil)
+	res, err := s.Organizations.List(ctx, nil, polargo.Int64(1), polargo.Int64(10), nil)
 	if err != nil {
 
 		var e *apierrors.HTTPValidationError
@@ -876,7 +874,7 @@ func main() {
 		polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
 	)
 
-	res, err := s.Organizations.List(ctx, nil, nil, nil, nil)
+	res, err := s.Organizations.List(ctx, nil, polargo.Int64(1), polargo.Int64(10), nil)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -920,7 +918,7 @@ func main() {
 		polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
 	)
 
-	res, err := s.Organizations.List(ctx, nil, nil, nil, nil)
+	res, err := s.Organizations.List(ctx, nil, polargo.Int64(1), polargo.Int64(10), nil)
 	if err != nil {
 		log.Fatal(err)
 	}

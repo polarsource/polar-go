@@ -34,7 +34,7 @@ func main() {
         polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )
 
-    res, err := s.Oauth2.Clients.List(ctx, nil, nil)
+    res, err := s.Oauth2.Clients.List(ctx, polargo.Int64(1), polargo.Int64(10))
     if err != nil {
         log.Fatal(err)
     }

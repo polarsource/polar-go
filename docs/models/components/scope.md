@@ -21,6 +21,8 @@
 | `ScopeCheckoutLinksWrite`          | checkout_links:write               |
 | `ScopeCheckoutsRead`               | checkouts:read                     |
 | `ScopeCheckoutsWrite`              | checkouts:write                    |
+| `ScopeTransactionsRead`            | transactions:read                  |
+| `ScopeTransactionsWrite`           | transactions:write                 |
 | `ScopeProductsRead`                | products:read                      |
 | `ScopeProductsWrite`               | products:write                     |
 | `ScopeBenefitsRead`                | benefits:read                      |

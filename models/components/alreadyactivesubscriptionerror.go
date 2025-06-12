@@ -7,7 +7,7 @@ import (
 )
 
 type AlreadyActiveSubscriptionError struct {
-	error  string `const:"AlreadyActiveSubscriptionError" json:"error"`
+	error_ string `const:"AlreadyActiveSubscriptionError" json:"error"`
 	Detail string `json:"detail"`
 }
 
