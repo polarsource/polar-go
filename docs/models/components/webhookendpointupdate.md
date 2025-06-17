@@ -1,0 +1,13 @@
+# WebhookEndpointUpdate
+
+Schema to update a webhook endpoint.
+
+
+## Fields
+
+| Field                                                                        | Type                                                                         | Required                                                                     | Description                                                                  | Example                                                                      |
+| ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
+| `URL`                                                                        | **string*                                                                    | :heavy_minus_sign:                                                           | N/A                                                                          | https://webhook.site/cb791d80-f26e-4f8c-be88-6e56054192b0                    |
+| `Format`                                                                     | [*components.WebhookFormat](../../models/components/webhookformat.md)        | :heavy_minus_sign:                                                           | N/A                                                                          |                                                                              |
+| `Secret`                                                                     | **string*                                                                    | :heavy_minus_sign:                                                           | N/A                                                                          | f_z6mfSpxkjogyw3FkA2aH2gYE5huxruNf34MpdWMcA                                  |
+| `Events`                                                                     | [][components.WebhookEventType](../../models/components/webhookeventtype.md) | :heavy_minus_sign:                                                           | N/A                                                                          |                                                                              |

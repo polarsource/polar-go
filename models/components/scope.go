@@ -28,6 +28,8 @@ const (
 	ScopeCheckoutsWrite              Scope = "checkouts:write"
 	ScopeTransactionsRead            Scope = "transactions:read"
 	ScopeTransactionsWrite           Scope = "transactions:write"
+	ScopePayoutsRead                 Scope = "payouts:read"
+	ScopePayoutsWrite                Scope = "payouts:write"
 	ScopeProductsRead                Scope = "products:read"
 	ScopeProductsWrite               Scope = "products:write"
 	ScopeBenefitsRead                Scope = "benefits:read"
@@ -111,6 +113,10 @@ func (e *Scope) UnmarshalJSON(data []byte) error {
 	case "transactions:read":
 		fallthrough
 	case "transactions:write":
+		fallthrough
+	case "payouts:read":
+		fallthrough
+	case "payouts:write":
 		fallthrough
 	case "products:read":
 		fallthrough

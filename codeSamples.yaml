@@ -729,6 +729,48 @@ actions:
         - "lang": "go"
           "label": "Go (SDK)"
           "source": "package main\n\nimport(\n\t\"context\"\n\t\"os\"\n\tpolargo \"github.com/polarsource/polar-go\"\n\t\"github.com/polarsource/polar-go/models/components\"\n\t\"log\"\n)\n\nfunc main() {\n    ctx := context.Background()\n\n    s := polargo.New(\n        polargo.WithSecurity(os.Getenv(\"POLAR_ACCESS_TOKEN\")),\n    )\n\n    res, err := s.Subscriptions.Update(ctx, \"<value>\", components.CreateSubscriptionUpdateSubscriptionUpdateDiscount(\n        components.SubscriptionUpdateDiscount{\n            DiscountID: polargo.String(\"<value>\"),\n        },\n    ))\n    if err != nil {\n        log.Fatal(err)\n    }\n    if res.Subscription != nil {\n        // handle response\n    }\n}"
+  - target: $["paths"]["/v1/webhooks/deliveries"]["get"]
+    update:
+      "x-codeSamples":
+        - "lang": "go"
+          "label": "Go (SDK)"
+          "source": "package main\n\nimport(\n\t\"context\"\n\t\"os\"\n\tpolargo \"github.com/polarsource/polar-go\"\n\t\"log\"\n)\n\nfunc main() {\n    ctx := context.Background()\n\n    s := polargo.New(\n        polargo.WithSecurity(os.Getenv(\"POLAR_ACCESS_TOKEN\")),\n    )\n\n    res, err := s.Webhooks.ListWebhookDeliveries(ctx, nil, polargo.Int64(1), polargo.Int64(10))\n    if err != nil {\n        log.Fatal(err)\n    }\n    if res.ListResourceWebhookDelivery != nil {\n        for {\n            // handle items\n\n            res, err = res.Next()\n\n            if err != nil {\n                // handle error\n            }\n\n            if res == nil {\n                break\n            }\n        }\n    }\n}"
+  - target: $["paths"]["/v1/webhooks/endpoints"]["get"]
+    update:
+      "x-codeSamples":
+        - "lang": "go"
+          "label": "Go (SDK)"
+          "source": "package main\n\nimport(\n\t\"context\"\n\t\"os\"\n\tpolargo \"github.com/polarsource/polar-go\"\n\t\"github.com/polarsource/polar-go/models/operations\"\n\t\"log\"\n)\n\nfunc main() {\n    ctx := context.Background()\n\n    s := polargo.New(\n        polargo.WithSecurity(os.Getenv(\"POLAR_ACCESS_TOKEN\")),\n    )\n\n    res, err := s.Webhooks.ListWebhookEndpoints(ctx, polargo.Pointer(operations.CreateQueryParamOrganizationIDStr(\n        \"1dbfc517-0bbf-4301-9ba8-555ca42b9737\",\n    )), polargo.Int64(1), polargo.Int64(10))\n    if err != nil {\n        log.Fatal(err)\n    }\n    if res.ListResourceWebhookEndpoint != nil {\n        for {\n            // handle items\n\n            res, err = res.Next()\n\n            if err != nil {\n                // handle error\n            }\n\n            if res == nil {\n                break\n            }\n        }\n    }\n}"
+  - target: $["paths"]["/v1/webhooks/endpoints"]["post"]
+    update:
+      "x-codeSamples":
+        - "lang": "go"
+          "label": "Go (SDK)"
+          "source": "package main\n\nimport(\n\t\"context\"\n\t\"os\"\n\tpolargo \"github.com/polarsource/polar-go\"\n\t\"github.com/polarsource/polar-go/models/components\"\n\t\"log\"\n)\n\nfunc main() {\n    ctx := context.Background()\n\n    s := polargo.New(\n        polargo.WithSecurity(os.Getenv(\"POLAR_ACCESS_TOKEN\")),\n    )\n\n    res, err := s.Webhooks.CreateWebhookEndpoint(ctx, components.WebhookEndpointCreate{\n        URL: \"https://webhook.site/cb791d80-f26e-4f8c-be88-6e56054192b0\",\n        Format: components.WebhookFormatSlack,\n        Secret: \"f_z6mfSpxkjogyw3FkA2aH2gYE5huxruNf34MpdWMcA\",\n        Events: []components.WebhookEventType{\n            components.WebhookEventTypeSubscriptionUncanceled,\n        },\n        OrganizationID: polargo.String(\"1dbfc517-0bbf-4301-9ba8-555ca42b9737\"),\n    })\n    if err != nil {\n        log.Fatal(err)\n    }\n    if res.WebhookEndpoint != nil {\n        // handle response\n    }\n}"
+  - target: $["paths"]["/v1/webhooks/endpoints/{id}"]["delete"]
+    update:
+      "x-codeSamples":
+        - "lang": "go"
+          "label": "Go (SDK)"
+          "source": "package main\n\nimport(\n\t\"context\"\n\t\"os\"\n\tpolargo \"github.com/polarsource/polar-go\"\n\t\"log\"\n)\n\nfunc main() {\n    ctx := context.Background()\n\n    s := polargo.New(\n        polargo.WithSecurity(os.Getenv(\"POLAR_ACCESS_TOKEN\")),\n    )\n\n    res, err := s.Webhooks.DeleteWebhookEndpoint(ctx, \"<value>\")\n    if err != nil {\n        log.Fatal(err)\n    }\n    if res != nil {\n        // handle response\n    }\n}"
+  - target: $["paths"]["/v1/webhooks/endpoints/{id}"]["get"]
+    update:
+      "x-codeSamples":
+        - "lang": "go"
+          "label": "Go (SDK)"
+          "source": "package main\n\nimport(\n\t\"context\"\n\t\"os\"\n\tpolargo \"github.com/polarsource/polar-go\"\n\t\"log\"\n)\n\nfunc main() {\n    ctx := context.Background()\n\n    s := polargo.New(\n        polargo.WithSecurity(os.Getenv(\"POLAR_ACCESS_TOKEN\")),\n    )\n\n    res, err := s.Webhooks.GetWebhookEndpoint(ctx, \"<value>\")\n    if err != nil {\n        log.Fatal(err)\n    }\n    if res.WebhookEndpoint != nil {\n        // handle response\n    }\n}"
+  - target: $["paths"]["/v1/webhooks/endpoints/{id}"]["patch"]
+    update:
+      "x-codeSamples":
+        - "lang": "go"
+          "label": "Go (SDK)"
+          "source": "package main\n\nimport(\n\t\"context\"\n\t\"os\"\n\tpolargo \"github.com/polarsource/polar-go\"\n\t\"github.com/polarsource/polar-go/models/components\"\n\t\"log\"\n)\n\nfunc main() {\n    ctx := context.Background()\n\n    s := polargo.New(\n        polargo.WithSecurity(os.Getenv(\"POLAR_ACCESS_TOKEN\")),\n    )\n\n    res, err := s.Webhooks.UpdateWebhookEndpoint(ctx, \"<value>\", components.WebhookEndpointUpdate{\n        URL: polargo.String(\"https://webhook.site/cb791d80-f26e-4f8c-be88-6e56054192b0\"),\n        Secret: polargo.String(\"f_z6mfSpxkjogyw3FkA2aH2gYE5huxruNf34MpdWMcA\"),\n    })\n    if err != nil {\n        log.Fatal(err)\n    }\n    if res.WebhookEndpoint != nil {\n        // handle response\n    }\n}"
+  - target: $["paths"]["/v1/webhooks/events/{id}/redeliver"]["post"]
+    update:
+      "x-codeSamples":
+        - "lang": "go"
+          "label": "Go (SDK)"
+          "source": "package main\n\nimport(\n\t\"context\"\n\t\"os\"\n\tpolargo \"github.com/polarsource/polar-go\"\n\t\"log\"\n)\n\nfunc main() {\n    ctx := context.Background()\n\n    s := polargo.New(\n        polargo.WithSecurity(os.Getenv(\"POLAR_ACCESS_TOKEN\")),\n    )\n\n    res, err := s.Webhooks.RedeliverWebhookEvent(ctx, \"<value>\")\n    if err != nil {\n        log.Fatal(err)\n    }\n    if res.Any != nil {\n        // handle response\n    }\n}"
   - target: $["paths"]["benefit.created"]["post"]
     update:
       "x-codeSamples":

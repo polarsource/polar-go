@@ -623,6 +623,16 @@ func main() {
 * [Update](docs/sdks/subscriptions/README.md#update) - Update Subscription
 * [Revoke](docs/sdks/subscriptions/README.md#revoke) - Revoke Subscription
 
+### [Webhooks](docs/sdks/webhooks/README.md)
+
+* [ListWebhookEndpoints](docs/sdks/webhooks/README.md#listwebhookendpoints) - List Webhook Endpoints
+* [CreateWebhookEndpoint](docs/sdks/webhooks/README.md#createwebhookendpoint) - Create Webhook Endpoint
+* [GetWebhookEndpoint](docs/sdks/webhooks/README.md#getwebhookendpoint) - Get Webhook Endpoint
+* [UpdateWebhookEndpoint](docs/sdks/webhooks/README.md#updatewebhookendpoint) - Update Webhook Endpoint
+* [DeleteWebhookEndpoint](docs/sdks/webhooks/README.md#deletewebhookendpoint) - Delete Webhook Endpoint
+* [ListWebhookDeliveries](docs/sdks/webhooks/README.md#listwebhookdeliveries) - List Webhook Deliveries
+* [RedeliverWebhookEvent](docs/sdks/webhooks/README.md#redeliverwebhookevent) - Redeliver Webhook Event
+
 </details>
 <!-- End Available Resources and Operations [operations] -->
 

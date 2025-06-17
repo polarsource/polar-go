@@ -23,6 +23,8 @@
 | `ScopeCheckoutsWrite`              | checkouts:write                    |
 | `ScopeTransactionsRead`            | transactions:read                  |
 | `ScopeTransactionsWrite`           | transactions:write                 |
+| `ScopePayoutsRead`                 | payouts:read                       |
+| `ScopePayoutsWrite`                | payouts:write                      |
 | `ScopeProductsRead`                | products:read                      |
 | `ScopeProductsWrite`               | products:write                     |
 | `ScopeBenefitsRead`                | benefits:read                      |

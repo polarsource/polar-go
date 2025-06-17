@@ -2,7 +2,7 @@
 
 package polargo
 
-// Generated from OpenAPI doc version 0.1.0 and generator version 2.628.0
+// Generated from OpenAPI doc version 0.1.0 and generator version 2.630.6
 
 import (
 	"context"
@@ -63,6 +63,7 @@ type Polar struct {
 	Subscriptions    *Subscriptions
 	Oauth2           *Oauth2
 	Benefits         *Benefits
+	Webhooks         *Webhooks
 	Products         *Products
 	Orders           *Orders
 	Refunds          *Refunds
@@ -157,9 +158,9 @@ func WithTimeout(timeout time.Duration) SDKOption {
 // New creates a new instance of the SDK with the provided options
 func New(opts ...SDKOption) *Polar {
 	sdk := &Polar{
-		SDKVersion: "0.6.0",
+		SDKVersion: "0.6.1",
 		sdkConfiguration: config.SDKConfiguration{
-			UserAgent:  "speakeasy-sdk/go 0.6.0 2.628.0 0.1.0 github.com/polarsource/polar-go",
+			UserAgent:  "speakeasy-sdk/go 0.6.1 2.630.6 0.1.0 github.com/polarsource/polar-go",
 			ServerList: ServerList,
 		},
 		hooks: hooks.New(),
@@ -191,6 +192,7 @@ func New(opts ...SDKOption) *Polar {
 	sdk.Subscriptions = newSubscriptions(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.Oauth2 = newOauth2(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.Benefits = newBenefits(sdk, sdk.sdkConfiguration, sdk.hooks)
+	sdk.Webhooks = newWebhooks(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.Products = newProducts(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.Orders = newOrders(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.Refunds = newRefunds(sdk, sdk.sdkConfiguration, sdk.hooks)
