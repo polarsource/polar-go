@@ -116,6 +116,7 @@ func main() {
 					"<value>",
 				),
 			},
+			ExternalCustomerID: nil,
 			CustomerExternalID: polargo.String("<id>"),
 			Products:           []components.CheckoutProduct{},
 			Product: components.CheckoutProduct{

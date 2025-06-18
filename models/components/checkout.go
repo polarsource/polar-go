@@ -547,6 +547,8 @@ type Checkout struct {
 	PaymentProcessorMetadata map[string]string           `json:"payment_processor_metadata"`
 	Metadata                 map[string]CheckoutMetadata `json:"metadata"`
 	// ID of the customer in your system. If a matching customer exists on Polar, the resulting order will be linked to this customer. Otherwise, a new customer will be created with this external ID set.
+	ExternalCustomerID *string `json:"external_customer_id"`
+	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
 	CustomerExternalID *string `json:"customer_external_id"`
 	// List of products available to select.
 	Products []CheckoutProduct `json:"products"`
@@ -829,6 +831,13 @@ func (o *Checkout) GetMetadata() map[string]CheckoutMetadata {
 		return map[string]CheckoutMetadata{}
 	}
 	return o.Metadata
+}
+
+func (o *Checkout) GetExternalCustomerID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ExternalCustomerID
 }
 
 func (o *Checkout) GetCustomerExternalID() *string {

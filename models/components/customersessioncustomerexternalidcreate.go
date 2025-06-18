@@ -5,12 +5,12 @@ package components
 // CustomerSessionCustomerExternalIDCreate - Schema for creating a customer session using an external customer ID.
 type CustomerSessionCustomerExternalIDCreate struct {
 	// External ID of the customer to create a session for.
-	CustomerExternalID string `json:"customer_external_id"`
+	ExternalCustomerID string `json:"external_customer_id"`
 }
 
-func (o *CustomerSessionCustomerExternalIDCreate) GetCustomerExternalID() string {
+func (o *CustomerSessionCustomerExternalIDCreate) GetExternalCustomerID() string {
 	if o == nil {
 		return ""
 	}
-	return o.CustomerExternalID
+	return o.ExternalCustomerID
 }

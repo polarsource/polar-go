@@ -36,7 +36,7 @@ func main() {
 
     res, err := s.CustomerSessions.Create(ctx, operations.CreateCustomerSessionsCreateCustomerSessionCreateCustomerSessionCustomerExternalIDCreate(
         components.CustomerSessionCustomerExternalIDCreate{
-            CustomerExternalID: "<id>",
+            ExternalCustomerID: "<id>",
         },
     ))
     if err != nil {
