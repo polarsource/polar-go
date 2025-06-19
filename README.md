@@ -111,6 +111,14 @@ func main() {
 			},
 			CustomerTaxID:            polargo.String("<id>"),
 			PaymentProcessorMetadata: map[string]string{},
+			CustomerBillingAddressFields: components.CheckoutCustomerBillingAddressFields{
+				Country:    false,
+				State:      true,
+				City:       false,
+				PostalCode: true,
+				Line1:      true,
+				Line2:      false,
+			},
 			Metadata: map[string]components.CheckoutMetadata{
 				"key": components.CreateCheckoutMetadataStr(
 					"<value>",
@@ -283,14 +291,6 @@ func main() {
 				"key2": components.CreateCustomerMetadataInteger(
 					851435,
 				),
-			},
-			CustomerBillingAddressFields: components.CheckoutCustomerBillingAddressFields{
-				Country:    false,
-				State:      true,
-				City:       false,
-				PostalCode: true,
-				Line1:      true,
-				Line2:      false,
 			},
 		},
 	})

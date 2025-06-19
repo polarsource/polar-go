@@ -220,6 +220,8 @@ type ProductsListRequest struct {
 	Limit *int64 `default:"10" queryParam:"style=form,explode=true,name=limit"`
 	// Sorting criterion. Several criteria can be used simultaneously and will be applied in order. Add a minus sign `-` before the criteria name to sort by descending order.
 	Sorting []components.ProductSortProperty `queryParam:"style=form,explode=true,name=sorting"`
+	// Filter by metadata key-value pairs. It uses the `deepObject` style, e.g. `?metadata[key]=value`.
+	Metadata map[string]components.MetadataQuery `queryParam:"style=deepObject,explode=true,name=metadata"`
 }
 
 func (p ProductsListRequest) MarshalJSON() ([]byte, error) {
@@ -294,6 +296,13 @@ func (o *ProductsListRequest) GetSorting() []components.ProductSortProperty {
 		return nil
 	}
 	return o.Sorting
+}
+
+func (o *ProductsListRequest) GetMetadata() map[string]components.MetadataQuery {
+	if o == nil {
+		return nil
+	}
+	return o.Metadata
 }
 
 type ProductsListResponse struct {

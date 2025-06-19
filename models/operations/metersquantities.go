@@ -151,6 +151,8 @@ type MetersQuantitiesRequest struct {
 	CustomerID *MetersQuantitiesQueryParamCustomerIDFilter `queryParam:"style=form,explode=true,name=customer_id"`
 	// Filter by external customer ID.
 	ExternalCustomerID *MetersQuantitiesQueryParamExternalCustomerIDFilter `queryParam:"style=form,explode=true,name=external_customer_id"`
+	// Filter by metadata key-value pairs. It uses the `deepObject` style, e.g. `?metadata[key]=value`.
+	Metadata map[string]components.MetadataQuery `queryParam:"style=deepObject,explode=true,name=metadata"`
 }
 
 func (m MetersQuantitiesRequest) MarshalJSON() ([]byte, error) {
@@ -204,6 +206,13 @@ func (o *MetersQuantitiesRequest) GetExternalCustomerID() *MetersQuantitiesQuery
 		return nil
 	}
 	return o.ExternalCustomerID
+}
+
+func (o *MetersQuantitiesRequest) GetMetadata() map[string]components.MetadataQuery {
+	if o == nil {
+		return nil
+	}
+	return o.Metadata
 }
 
 type MetersQuantitiesResponse struct {

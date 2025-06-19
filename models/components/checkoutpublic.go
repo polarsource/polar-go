@@ -347,22 +347,22 @@ type CheckoutPublic struct {
 	// Name of the customer.
 	CustomerName *string `json:"customer_name"`
 	// Email address of the customer.
-	CustomerEmail            *string           `json:"customer_email"`
-	CustomerIPAddress        *string           `json:"customer_ip_address"`
-	CustomerBillingName      *string           `json:"customer_billing_name"`
-	CustomerBillingAddress   *Address          `json:"customer_billing_address"`
-	CustomerTaxID            *string           `json:"customer_tax_id"`
-	PaymentProcessorMetadata map[string]string `json:"payment_processor_metadata"`
+	CustomerEmail                *string                              `json:"customer_email"`
+	CustomerIPAddress            *string                              `json:"customer_ip_address"`
+	CustomerBillingName          *string                              `json:"customer_billing_name"`
+	CustomerBillingAddress       *Address                             `json:"customer_billing_address"`
+	CustomerTaxID                *string                              `json:"customer_tax_id"`
+	PaymentProcessorMetadata     map[string]string                    `json:"payment_processor_metadata"`
+	CustomerBillingAddressFields CheckoutCustomerBillingAddressFields `json:"customer_billing_address_fields"`
 	// List of products available to select.
 	Products []CheckoutProduct `json:"products"`
 	// Product data for a checkout session.
 	Product CheckoutProduct `json:"product"`
 	// Price of the selected product.
-	ProductPrice                 CheckoutPublicProductPrice           `json:"product_price"`
-	Discount                     *CheckoutPublicDiscount              `json:"discount"`
-	Organization                 Organization                         `json:"organization"`
-	AttachedCustomFields         []AttachedCustomField                `json:"attached_custom_fields"`
-	CustomerBillingAddressFields CheckoutCustomerBillingAddressFields `json:"customer_billing_address_fields"`
+	ProductPrice         CheckoutPublicProductPrice `json:"product_price"`
+	Discount             *CheckoutPublicDiscount    `json:"discount"`
+	Organization         Organization               `json:"organization"`
+	AttachedCustomFields []AttachedCustomField      `json:"attached_custom_fields"`
 }
 
 func (c CheckoutPublic) MarshalJSON() ([]byte, error) {
@@ -628,6 +628,13 @@ func (o *CheckoutPublic) GetPaymentProcessorMetadata() map[string]string {
 	return o.PaymentProcessorMetadata
 }
 
+func (o *CheckoutPublic) GetCustomerBillingAddressFields() CheckoutCustomerBillingAddressFields {
+	if o == nil {
+		return CheckoutCustomerBillingAddressFields{}
+	}
+	return o.CustomerBillingAddressFields
+}
+
 func (o *CheckoutPublic) GetProducts() []CheckoutProduct {
 	if o == nil {
 		return []CheckoutProduct{}
@@ -668,11 +675,4 @@ func (o *CheckoutPublic) GetAttachedCustomFields() []AttachedCustomField {
 		return []AttachedCustomField{}
 	}
 	return o.AttachedCustomFields
-}
-
-func (o *CheckoutPublic) GetCustomerBillingAddressFields() CheckoutCustomerBillingAddressFields {
-	if o == nil {
-		return CheckoutCustomerBillingAddressFields{}
-	}
-	return o.CustomerBillingAddressFields
 }

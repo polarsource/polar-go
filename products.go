@@ -263,6 +263,7 @@ func (s *Products) List(ctx context.Context, request operations.ProductsListRequ
 				Page:           &nP,
 				Limit:          request.Limit,
 				Sorting:        request.Sorting,
+				Metadata:       request.Metadata,
 			},
 			opts...,
 		)

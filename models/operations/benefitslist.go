@@ -150,6 +150,8 @@ type BenefitsListRequest struct {
 	Limit *int64 `default:"10" queryParam:"style=form,explode=true,name=limit"`
 	// Sorting criterion. Several criteria can be used simultaneously and will be applied in order. Add a minus sign `-` before the criteria name to sort by descending order.
 	Sorting []components.BenefitSortProperty `queryParam:"style=form,explode=true,name=sorting"`
+	// Filter by metadata key-value pairs. It uses the `deepObject` style, e.g. `?metadata[key]=value`.
+	Metadata map[string]components.MetadataQuery `queryParam:"style=deepObject,explode=true,name=metadata"`
 }
 
 func (b BenefitsListRequest) MarshalJSON() ([]byte, error) {
@@ -203,6 +205,13 @@ func (o *BenefitsListRequest) GetSorting() []components.BenefitSortProperty {
 		return nil
 	}
 	return o.Sorting
+}
+
+func (o *BenefitsListRequest) GetMetadata() map[string]components.MetadataQuery {
+	if o == nil {
+		return nil
+	}
+	return o.Metadata
 }
 
 type BenefitsListResponse struct {

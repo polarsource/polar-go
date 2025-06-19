@@ -260,6 +260,7 @@ func (s *Benefits) List(ctx context.Context, request operations.BenefitsListRequ
 				Page:           &nP,
 				Limit:          request.Limit,
 				Sorting:        request.Sorting,
+				Metadata:       request.Metadata,
 			},
 			opts...,
 		)
