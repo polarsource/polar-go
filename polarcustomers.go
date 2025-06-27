@@ -476,12 +476,12 @@ func (s *PolarCustomers) Update(ctx context.Context, request components.Customer
 
 }
 
-// GetPaymentMethods - Get Customer Payment Methods
+// ListPaymentMethods - List Customer Payment Methods
 // Get saved payment methods of the authenticated customer.
 //
 // **Scopes**: `customer_portal:read` `customer_portal:write`
-func (s *PolarCustomers) GetPaymentMethods(ctx context.Context, security operations.CustomerPortalCustomersGetPaymentMethodsSecurity, page *int64, limit *int64, opts ...operations.Option) (*operations.CustomerPortalCustomersGetPaymentMethodsResponse, error) {
-	request := operations.CustomerPortalCustomersGetPaymentMethodsRequest{
+func (s *PolarCustomers) ListPaymentMethods(ctx context.Context, security operations.CustomerPortalCustomersListPaymentMethodsSecurity, page *int64, limit *int64, opts ...operations.Option) (*operations.CustomerPortalCustomersListPaymentMethodsResponse, error) {
+	request := operations.CustomerPortalCustomersListPaymentMethodsRequest{
 		Page:  page,
 		Limit: limit,
 	}
@@ -514,7 +514,7 @@ func (s *PolarCustomers) GetPaymentMethods(ctx context.Context, security operati
 		SDKConfiguration: s.sdkConfiguration,
 		BaseURL:          baseURL,
 		Context:          ctx,
-		OperationID:      "customer_portal:customers:get_payment_methods",
+		OperationID:      "customer_portal:customers:list_payment_methods",
 		OAuth2Scopes:     nil,
 		SecuritySource:   utils.AsSecuritySource(security),
 	}
@@ -640,13 +640,13 @@ func (s *PolarCustomers) GetPaymentMethods(ctx context.Context, security operati
 		}
 	}
 
-	res := &operations.CustomerPortalCustomersGetPaymentMethodsResponse{
+	res := &operations.CustomerPortalCustomersListPaymentMethodsResponse{
 		HTTPMeta: components.HTTPMetadata{
 			Request:  req,
 			Response: httpRes,
 		},
 	}
-	res.Next = func() (*operations.CustomerPortalCustomersGetPaymentMethodsResponse, error) {
+	res.Next = func() (*operations.CustomerPortalCustomersListPaymentMethodsResponse, error) {
 		rawBody, err := utils.ConsumeRawBody(httpRes)
 		if err != nil {
 			return nil, err
@@ -700,7 +700,7 @@ func (s *PolarCustomers) GetPaymentMethods(ctx context.Context, security operati
 			return nil, nil
 		}
 
-		return s.GetPaymentMethods(
+		return s.ListPaymentMethods(
 			ctx,
 			security,
 			&nP,

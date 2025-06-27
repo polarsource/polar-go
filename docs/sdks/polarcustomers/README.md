@@ -7,7 +7,7 @@
 
 * [Get](#get) - Get Customer
 * [Update](#update) - Update Customer
-* [GetPaymentMethods](#getpaymentmethods) - Get Customer Payment Methods
+* [ListPaymentMethods](#listpaymentmethods) - List Customer Payment Methods
 * [AddPaymentMethod](#addpaymentmethod) - Add Customer Payment Method
 * [DeletePaymentMethod](#deletepaymentmethod) - Delete Customer Payment Method
 
@@ -126,7 +126,7 @@ func main() {
 | apierrors.HTTPValidationError | 422                           | application/json              |
 | apierrors.APIError            | 4XX, 5XX                      | \*/\*                         |
 
-## GetPaymentMethods
+## ListPaymentMethods
 
 Get saved payment methods of the authenticated customer.
 
@@ -150,7 +150,7 @@ func main() {
 
     s := polargo.New()
 
-    res, err := s.CustomerPortal.Customers.GetPaymentMethods(ctx, operations.CustomerPortalCustomersGetPaymentMethodsSecurity{
+    res, err := s.CustomerPortal.Customers.ListPaymentMethods(ctx, operations.CustomerPortalCustomersListPaymentMethodsSecurity{
         CustomerSession: os.Getenv("POLAR_CUSTOMER_SESSION"),
     }, polargo.Int64(1), polargo.Int64(10))
     if err != nil {
@@ -176,17 +176,17 @@ func main() {
 
 ### Parameters
 
-| Parameter                                                                                                                                  | Type                                                                                                                                       | Required                                                                                                                                   | Description                                                                                                                                |
-| ------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------ |
-| `ctx`                                                                                                                                      | [context.Context](https://pkg.go.dev/context#Context)                                                                                      | :heavy_check_mark:                                                                                                                         | The context to use for the request.                                                                                                        |
-| `security`                                                                                                                                 | [operations.CustomerPortalCustomersGetPaymentMethodsSecurity](../../models/operations/customerportalcustomersgetpaymentmethodssecurity.md) | :heavy_check_mark:                                                                                                                         | The security requirements to use for the request.                                                                                          |
-| `page`                                                                                                                                     | **int64*                                                                                                                                   | :heavy_minus_sign:                                                                                                                         | Page number, defaults to 1.                                                                                                                |
-| `limit`                                                                                                                                    | **int64*                                                                                                                                   | :heavy_minus_sign:                                                                                                                         | Size of a page, defaults to 10. Maximum is 100.                                                                                            |
-| `opts`                                                                                                                                     | [][operations.Option](../../models/operations/option.md)                                                                                   | :heavy_minus_sign:                                                                                                                         | The options for this request.                                                                                                              |
+| Parameter                                                                                                                                    | Type                                                                                                                                         | Required                                                                                                                                     | Description                                                                                                                                  |
+| -------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
+| `ctx`                                                                                                                                        | [context.Context](https://pkg.go.dev/context#Context)                                                                                        | :heavy_check_mark:                                                                                                                           | The context to use for the request.                                                                                                          |
+| `security`                                                                                                                                   | [operations.CustomerPortalCustomersListPaymentMethodsSecurity](../../models/operations/customerportalcustomerslistpaymentmethodssecurity.md) | :heavy_check_mark:                                                                                                                           | The security requirements to use for the request.                                                                                            |
+| `page`                                                                                                                                       | **int64*                                                                                                                                     | :heavy_minus_sign:                                                                                                                           | Page number, defaults to 1.                                                                                                                  |
+| `limit`                                                                                                                                      | **int64*                                                                                                                                     | :heavy_minus_sign:                                                                                                                           | Size of a page, defaults to 10. Maximum is 100.                                                                                              |
+| `opts`                                                                                                                                       | [][operations.Option](../../models/operations/option.md)                                                                                     | :heavy_minus_sign:                                                                                                                           | The options for this request.                                                                                                                |
 
 ### Response
 
-**[*operations.CustomerPortalCustomersGetPaymentMethodsResponse](../../models/operations/customerportalcustomersgetpaymentmethodsresponse.md), error**
+**[*operations.CustomerPortalCustomersListPaymentMethodsResponse](../../models/operations/customerportalcustomerslistpaymentmethodsresponse.md), error**
 
 ### Errors
 

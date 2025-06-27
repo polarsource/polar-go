@@ -1,4 +1,4 @@
-# CustomerPortalCustomersGetPaymentMethodsResponse
+# CustomerPortalCustomersListPaymentMethodsResponse
 
 
 ## Fields

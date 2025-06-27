@@ -462,7 +462,7 @@ func main() {
 
 * [Get](docs/sdks/polarcustomers/README.md#get) - Get Customer
 * [Update](docs/sdks/polarcustomers/README.md#update) - Update Customer
-* [GetPaymentMethods](docs/sdks/polarcustomers/README.md#getpaymentmethods) - Get Customer Payment Methods
+* [ListPaymentMethods](docs/sdks/polarcustomers/README.md#listpaymentmethods) - List Customer Payment Methods
 * [AddPaymentMethod](docs/sdks/polarcustomers/README.md#addpaymentmethod) - Add Customer Payment Method
 * [DeletePaymentMethod](docs/sdks/polarcustomers/README.md#deletepaymentmethod) - Delete Customer Payment Method
 

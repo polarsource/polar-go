@@ -78,13 +78,14 @@ type CustomerPortalCustomer struct {
 	// Last modification timestamp of the object.
 	ModifiedAt *time.Time `json:"modified_at"`
 	// The ID of the object.
-	ID             string                                `json:"id"`
-	Email          string                                `json:"email"`
-	EmailVerified  bool                                  `json:"email_verified"`
-	Name           *string                               `json:"name"`
-	BillingAddress *Address                              `json:"billing_address"`
-	TaxID          []*CustomerPortalCustomerTaxID        `json:"tax_id"`
-	OauthAccounts  map[string]CustomerPortalOAuthAccount `json:"oauth_accounts"`
+	ID                     string                                `json:"id"`
+	Email                  string                                `json:"email"`
+	EmailVerified          bool                                  `json:"email_verified"`
+	Name                   *string                               `json:"name"`
+	BillingAddress         *Address                              `json:"billing_address"`
+	TaxID                  []*CustomerPortalCustomerTaxID        `json:"tax_id"`
+	OauthAccounts          map[string]CustomerPortalOAuthAccount `json:"oauth_accounts"`
+	DefaultPaymentMethodID *string                               `json:"default_payment_method_id,omitempty"`
 }
 
 func (c CustomerPortalCustomer) MarshalJSON() ([]byte, error) {
@@ -159,4 +160,11 @@ func (o *CustomerPortalCustomer) GetOauthAccounts() map[string]CustomerPortalOAu
 		return map[string]CustomerPortalOAuthAccount{}
 	}
 	return o.OauthAccounts
+}
+
+func (o *CustomerPortalCustomer) GetDefaultPaymentMethodID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.DefaultPaymentMethodID
 }

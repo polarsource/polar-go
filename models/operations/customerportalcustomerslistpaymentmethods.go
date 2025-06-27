@@ -7,65 +7,65 @@ import (
 	"github.com/polarsource/polar-go/models/components"
 )
 
-type CustomerPortalCustomersGetPaymentMethodsSecurity struct {
+type CustomerPortalCustomersListPaymentMethodsSecurity struct {
 	CustomerSession string `security:"scheme,type=http,subtype=bearer,name=Authorization,env=polar_customer_session"`
 }
 
-func (o *CustomerPortalCustomersGetPaymentMethodsSecurity) GetCustomerSession() string {
+func (o *CustomerPortalCustomersListPaymentMethodsSecurity) GetCustomerSession() string {
 	if o == nil {
 		return ""
 	}
 	return o.CustomerSession
 }
 
-type CustomerPortalCustomersGetPaymentMethodsRequest struct {
+type CustomerPortalCustomersListPaymentMethodsRequest struct {
 	// Page number, defaults to 1.
 	Page *int64 `default:"1" queryParam:"style=form,explode=true,name=page"`
 	// Size of a page, defaults to 10. Maximum is 100.
 	Limit *int64 `default:"10" queryParam:"style=form,explode=true,name=limit"`
 }
 
-func (c CustomerPortalCustomersGetPaymentMethodsRequest) MarshalJSON() ([]byte, error) {
+func (c CustomerPortalCustomersListPaymentMethodsRequest) MarshalJSON() ([]byte, error) {
 	return utils.MarshalJSON(c, "", false)
 }
 
-func (c *CustomerPortalCustomersGetPaymentMethodsRequest) UnmarshalJSON(data []byte) error {
+func (c *CustomerPortalCustomersListPaymentMethodsRequest) UnmarshalJSON(data []byte) error {
 	if err := utils.UnmarshalJSON(data, &c, "", false, false); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *CustomerPortalCustomersGetPaymentMethodsRequest) GetPage() *int64 {
+func (o *CustomerPortalCustomersListPaymentMethodsRequest) GetPage() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.Page
 }
 
-func (o *CustomerPortalCustomersGetPaymentMethodsRequest) GetLimit() *int64 {
+func (o *CustomerPortalCustomersListPaymentMethodsRequest) GetLimit() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.Limit
 }
 
-type CustomerPortalCustomersGetPaymentMethodsResponse struct {
+type CustomerPortalCustomersListPaymentMethodsResponse struct {
 	HTTPMeta components.HTTPMetadata `json:"-"`
 	// Successful Response
 	ListResourceUnionPaymentMethodCardPaymentMethodGeneric *components.ListResourceUnionPaymentMethodCardPaymentMethodGeneric
 
-	Next func() (*CustomerPortalCustomersGetPaymentMethodsResponse, error)
+	Next func() (*CustomerPortalCustomersListPaymentMethodsResponse, error)
 }
 
-func (o *CustomerPortalCustomersGetPaymentMethodsResponse) GetHTTPMeta() components.HTTPMetadata {
+func (o *CustomerPortalCustomersListPaymentMethodsResponse) GetHTTPMeta() components.HTTPMetadata {
 	if o == nil {
 		return components.HTTPMetadata{}
 	}
 	return o.HTTPMeta
 }
 
-func (o *CustomerPortalCustomersGetPaymentMethodsResponse) GetListResourceUnionPaymentMethodCardPaymentMethodGeneric() *components.ListResourceUnionPaymentMethodCardPaymentMethodGeneric {
+func (o *CustomerPortalCustomersListPaymentMethodsResponse) GetListResourceUnionPaymentMethodCardPaymentMethodGeneric() *components.ListResourceUnionPaymentMethodCardPaymentMethodGeneric {
 	if o == nil {
 		return nil
 	}
