@@ -201,6 +201,70 @@ func (u CustomerIDFilter) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type CustomerIDFilter: all fields are null")
 }
 
+type ExternalCustomerIDFilterType string
+
+const (
+	ExternalCustomerIDFilterTypeStr        ExternalCustomerIDFilterType = "str"
+	ExternalCustomerIDFilterTypeArrayOfStr ExternalCustomerIDFilterType = "arrayOfStr"
+)
+
+// ExternalCustomerIDFilter - Filter by customer external ID.
+type ExternalCustomerIDFilter struct {
+	Str        *string  `queryParam:"inline"`
+	ArrayOfStr []string `queryParam:"inline"`
+
+	Type ExternalCustomerIDFilterType
+}
+
+func CreateExternalCustomerIDFilterStr(str string) ExternalCustomerIDFilter {
+	typ := ExternalCustomerIDFilterTypeStr
+
+	return ExternalCustomerIDFilter{
+		Str:  &str,
+		Type: typ,
+	}
+}
+
+func CreateExternalCustomerIDFilterArrayOfStr(arrayOfStr []string) ExternalCustomerIDFilter {
+	typ := ExternalCustomerIDFilterTypeArrayOfStr
+
+	return ExternalCustomerIDFilter{
+		ArrayOfStr: arrayOfStr,
+		Type:       typ,
+	}
+}
+
+func (u *ExternalCustomerIDFilter) UnmarshalJSON(data []byte) error {
+
+	var str string = ""
+	if err := utils.UnmarshalJSON(data, &str, "", true, false); err == nil {
+		u.Str = &str
+		u.Type = ExternalCustomerIDFilterTypeStr
+		return nil
+	}
+
+	var arrayOfStr []string = []string{}
+	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, false); err == nil {
+		u.ArrayOfStr = arrayOfStr
+		u.Type = ExternalCustomerIDFilterTypeArrayOfStr
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for ExternalCustomerIDFilter", string(data))
+}
+
+func (u ExternalCustomerIDFilter) MarshalJSON() ([]byte, error) {
+	if u.Str != nil {
+		return utils.MarshalJSON(u.Str, "", true)
+	}
+
+	if u.ArrayOfStr != nil {
+		return utils.MarshalJSON(u.ArrayOfStr, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type ExternalCustomerIDFilter: all fields are null")
+}
+
 type DiscountIDFilterType string
 
 const (
@@ -272,6 +336,8 @@ type SubscriptionsListRequest struct {
 	ProductID *ProductIDFilter `queryParam:"style=form,explode=true,name=product_id"`
 	// Filter by customer ID.
 	CustomerID *CustomerIDFilter `queryParam:"style=form,explode=true,name=customer_id"`
+	// Filter by customer external ID.
+	ExternalCustomerID *ExternalCustomerIDFilter `queryParam:"style=form,explode=true,name=external_customer_id"`
 	// Filter by discount ID.
 	DiscountID *DiscountIDFilter `queryParam:"style=form,explode=true,name=discount_id"`
 	// Filter by active or inactive subscription.
@@ -316,6 +382,13 @@ func (o *SubscriptionsListRequest) GetCustomerID() *CustomerIDFilter {
 		return nil
 	}
 	return o.CustomerID
+}
+
+func (o *SubscriptionsListRequest) GetExternalCustomerID() *ExternalCustomerIDFilter {
+	if o == nil {
+		return nil
+	}
+	return o.ExternalCustomerID
 }
 
 func (o *SubscriptionsListRequest) GetDiscountID() *DiscountIDFilter {

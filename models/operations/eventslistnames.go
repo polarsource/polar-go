@@ -137,59 +137,59 @@ func (u EventsListNamesQueryParamCustomerIDFilter) MarshalJSON() ([]byte, error)
 	return nil, errors.New("could not marshal union type EventsListNamesQueryParamCustomerIDFilter: all fields are null")
 }
 
-type QueryParamExternalCustomerIDFilterType string
+type EventsListNamesQueryParamExternalCustomerIDFilterType string
 
 const (
-	QueryParamExternalCustomerIDFilterTypeStr        QueryParamExternalCustomerIDFilterType = "str"
-	QueryParamExternalCustomerIDFilterTypeArrayOfStr QueryParamExternalCustomerIDFilterType = "arrayOfStr"
+	EventsListNamesQueryParamExternalCustomerIDFilterTypeStr        EventsListNamesQueryParamExternalCustomerIDFilterType = "str"
+	EventsListNamesQueryParamExternalCustomerIDFilterTypeArrayOfStr EventsListNamesQueryParamExternalCustomerIDFilterType = "arrayOfStr"
 )
 
-// QueryParamExternalCustomerIDFilter - Filter by external customer ID.
-type QueryParamExternalCustomerIDFilter struct {
+// EventsListNamesQueryParamExternalCustomerIDFilter - Filter by external customer ID.
+type EventsListNamesQueryParamExternalCustomerIDFilter struct {
 	Str        *string  `queryParam:"inline"`
 	ArrayOfStr []string `queryParam:"inline"`
 
-	Type QueryParamExternalCustomerIDFilterType
+	Type EventsListNamesQueryParamExternalCustomerIDFilterType
 }
 
-func CreateQueryParamExternalCustomerIDFilterStr(str string) QueryParamExternalCustomerIDFilter {
-	typ := QueryParamExternalCustomerIDFilterTypeStr
+func CreateEventsListNamesQueryParamExternalCustomerIDFilterStr(str string) EventsListNamesQueryParamExternalCustomerIDFilter {
+	typ := EventsListNamesQueryParamExternalCustomerIDFilterTypeStr
 
-	return QueryParamExternalCustomerIDFilter{
+	return EventsListNamesQueryParamExternalCustomerIDFilter{
 		Str:  &str,
 		Type: typ,
 	}
 }
 
-func CreateQueryParamExternalCustomerIDFilterArrayOfStr(arrayOfStr []string) QueryParamExternalCustomerIDFilter {
-	typ := QueryParamExternalCustomerIDFilterTypeArrayOfStr
+func CreateEventsListNamesQueryParamExternalCustomerIDFilterArrayOfStr(arrayOfStr []string) EventsListNamesQueryParamExternalCustomerIDFilter {
+	typ := EventsListNamesQueryParamExternalCustomerIDFilterTypeArrayOfStr
 
-	return QueryParamExternalCustomerIDFilter{
+	return EventsListNamesQueryParamExternalCustomerIDFilter{
 		ArrayOfStr: arrayOfStr,
 		Type:       typ,
 	}
 }
 
-func (u *QueryParamExternalCustomerIDFilter) UnmarshalJSON(data []byte) error {
+func (u *EventsListNamesQueryParamExternalCustomerIDFilter) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
 	if err := utils.UnmarshalJSON(data, &str, "", true, false); err == nil {
 		u.Str = &str
-		u.Type = QueryParamExternalCustomerIDFilterTypeStr
+		u.Type = EventsListNamesQueryParamExternalCustomerIDFilterTypeStr
 		return nil
 	}
 
 	var arrayOfStr []string = []string{}
 	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, false); err == nil {
 		u.ArrayOfStr = arrayOfStr
-		u.Type = QueryParamExternalCustomerIDFilterTypeArrayOfStr
+		u.Type = EventsListNamesQueryParamExternalCustomerIDFilterTypeArrayOfStr
 		return nil
 	}
 
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for QueryParamExternalCustomerIDFilter", string(data))
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for EventsListNamesQueryParamExternalCustomerIDFilter", string(data))
 }
 
-func (u QueryParamExternalCustomerIDFilter) MarshalJSON() ([]byte, error) {
+func (u EventsListNamesQueryParamExternalCustomerIDFilter) MarshalJSON() ([]byte, error) {
 	if u.Str != nil {
 		return utils.MarshalJSON(u.Str, "", true)
 	}
@@ -198,7 +198,7 @@ func (u QueryParamExternalCustomerIDFilter) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.ArrayOfStr, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type QueryParamExternalCustomerIDFilter: all fields are null")
+	return nil, errors.New("could not marshal union type EventsListNamesQueryParamExternalCustomerIDFilter: all fields are null")
 }
 
 type QueryParamSourceFilterType string
@@ -271,7 +271,7 @@ type EventsListNamesRequest struct {
 	// Filter by customer ID.
 	CustomerID *EventsListNamesQueryParamCustomerIDFilter `queryParam:"style=form,explode=true,name=customer_id"`
 	// Filter by external customer ID.
-	ExternalCustomerID *QueryParamExternalCustomerIDFilter `queryParam:"style=form,explode=true,name=external_customer_id"`
+	ExternalCustomerID *EventsListNamesQueryParamExternalCustomerIDFilter `queryParam:"style=form,explode=true,name=external_customer_id"`
 	// Filter by event source.
 	Source *QueryParamSourceFilter `queryParam:"style=form,explode=true,name=source"`
 	// Query to filter event names.
@@ -309,7 +309,7 @@ func (o *EventsListNamesRequest) GetCustomerID() *EventsListNamesQueryParamCusto
 	return o.CustomerID
 }
 
-func (o *EventsListNamesRequest) GetExternalCustomerID() *QueryParamExternalCustomerIDFilter {
+func (o *EventsListNamesRequest) GetExternalCustomerID() *EventsListNamesQueryParamExternalCustomerIDFilter {
 	if o == nil {
 		return nil
 	}

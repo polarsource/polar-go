@@ -15,6 +15,7 @@ type OrganizationUpdate struct {
 	Details              *OrganizationDetails              `json:"details,omitempty"`
 	FeatureSettings      *OrganizationFeatureSettings      `json:"feature_settings,omitempty"`
 	SubscriptionSettings *OrganizationSubscriptionSettings `json:"subscription_settings,omitempty"`
+	NotificationSettings *OrganizationNotificationSettings `json:"notification_settings,omitempty"`
 }
 
 func (o *OrganizationUpdate) GetName() *string {
@@ -71,4 +72,11 @@ func (o *OrganizationUpdate) GetSubscriptionSettings() *OrganizationSubscription
 		return nil
 	}
 	return o.SubscriptionSettings
+}
+
+func (o *OrganizationUpdate) GetNotificationSettings() *OrganizationNotificationSettings {
+	if o == nil {
+		return nil
+	}
+	return o.NotificationSettings
 }

@@ -7,7 +7,9 @@ type BenefitDiscordProperties struct {
 	// The ID of the Discord server.
 	GuildID string `json:"guild_id"`
 	// The ID of the Discord role to grant.
-	RoleID     string `json:"role_id"`
+	RoleID string `json:"role_id"`
+	// Whether to kick the member from the Discord server on revocation.
+	KickMember bool   `json:"kick_member"`
 	GuildToken string `json:"guild_token"`
 }
 
@@ -23,6 +25,13 @@ func (o *BenefitDiscordProperties) GetRoleID() string {
 		return ""
 	}
 	return o.RoleID
+}
+
+func (o *BenefitDiscordProperties) GetKickMember() bool {
+	if o == nil {
+		return false
+	}
+	return o.KickMember
 }
 
 func (o *BenefitDiscordProperties) GetGuildToken() string {

@@ -1,4 +1,4 @@
-# Oauth2ClientsListRequest
+# CustomerPortalCustomersListPaymentMethodsRequest
 
 
 ## Fields

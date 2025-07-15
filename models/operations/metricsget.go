@@ -271,6 +271,8 @@ type MetricsGetRequest struct {
 	StartDate types.Date `queryParam:"style=form,explode=true,name=start_date"`
 	// End date.
 	EndDate types.Date `queryParam:"style=form,explode=true,name=end_date"`
+	// Timezone to use for the timestamps. Default is UTC.
+	Timezone *string `default:"UTC" queryParam:"style=form,explode=true,name=timezone"`
 	// Interval between two timestamps.
 	Interval components.TimeInterval `queryParam:"style=form,explode=true,name=interval"`
 	// Filter by organization ID.
@@ -306,6 +308,13 @@ func (o *MetricsGetRequest) GetEndDate() types.Date {
 		return types.Date{}
 	}
 	return o.EndDate
+}
+
+func (o *MetricsGetRequest) GetTimezone() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Timezone
 }
 
 func (o *MetricsGetRequest) GetInterval() components.TimeInterval {

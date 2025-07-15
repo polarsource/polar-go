@@ -276,6 +276,7 @@ package main
 
 import(
 	"context"
+	"os"
 	polargo "github.com/polarsource/polar-go"
 	"log"
 )
@@ -283,7 +284,9 @@ import(
 func main() {
     ctx := context.Background()
 
-    s := polargo.New()
+    s := polargo.New(
+        polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
+    )
 
     res, err := s.Checkouts.ClientGet(ctx, "<value>")
     if err != nil {
@@ -327,6 +330,7 @@ package main
 
 import(
 	"context"
+	"os"
 	polargo "github.com/polarsource/polar-go"
 	"github.com/polarsource/polar-go/models/components"
 	"log"
@@ -335,7 +339,9 @@ import(
 func main() {
     ctx := context.Background()
 
-    s := polargo.New()
+    s := polargo.New(
+        polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
+    )
 
     res, err := s.Checkouts.ClientUpdate(ctx, "<value>", components.CheckoutUpdatePublic{
         CustomerBillingAddress: &components.Address{

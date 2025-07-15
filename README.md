@@ -111,13 +111,13 @@ func main() {
 			},
 			CustomerTaxID:            polargo.String("<id>"),
 			PaymentProcessorMetadata: map[string]string{},
-			CustomerBillingAddressFields: components.CheckoutCustomerBillingAddressFields{
-				Country:    false,
-				State:      true,
-				City:       false,
-				PostalCode: true,
-				Line1:      true,
-				Line2:      false,
+			BillingAddressFields: components.CheckoutBillingAddressFields{
+				Country:    components.BillingAddressFieldModeRequired,
+				State:      components.BillingAddressFieldModeDisabled,
+				City:       components.BillingAddressFieldModeRequired,
+				PostalCode: components.BillingAddressFieldModeRequired,
+				Line1:      components.BillingAddressFieldModeRequired,
+				Line2:      components.BillingAddressFieldModeDisabled,
 			},
 			Metadata: map[string]components.CheckoutMetadata{
 				"key": components.CreateCheckoutMetadataStr(
@@ -150,16 +150,15 @@ func main() {
 							},
 						),
 					),
-					components.CreateCheckoutProductPricesProductPrice(
-						components.CreateProductPriceFixed(
-							components.ProductPriceFixed{
+					components.CreateCheckoutProductPricesLegacyRecurringProductPrice(
+						components.CreateLegacyRecurringProductPriceFixed(
+							components.LegacyRecurringProductPriceFixed{
 								CreatedAt:         types.MustTimeFromString("2024-05-02T18:25:33.974Z"),
 								ModifiedAt:        types.MustNewTimeFromString("2025-02-06T12:55:07.640Z"),
 								ID:                "<value>",
 								IsArchived:        false,
 								ProductID:         "<value>",
-								Type:              components.ProductPriceTypeRecurring,
-								RecurringInterval: components.SubscriptionRecurringIntervalMonth.ToPointer(),
+								RecurringInterval: components.SubscriptionRecurringIntervalMonth,
 								PriceCurrency:     "<value>",
 								PriceAmount:       115799,
 							},
@@ -225,18 +224,16 @@ func main() {
 				},
 			},
 			ProductPrice: components.CreateCheckoutProductPriceLegacyRecurringProductPrice(
-				components.CreateLegacyRecurringProductPriceCustom(
-					components.LegacyRecurringProductPriceCustom{
-						CreatedAt:         types.MustTimeFromString("2025-07-31T12:54:47.590Z"),
-						ModifiedAt:        types.MustNewTimeFromString("2023-01-11T22:31:47.320Z"),
+				components.CreateLegacyRecurringProductPriceFixed(
+					components.LegacyRecurringProductPriceFixed{
+						CreatedAt:         types.MustTimeFromString("2023-04-17T07:49:35.822Z"),
+						ModifiedAt:        types.MustNewTimeFromString("2025-07-31T12:54:47.590Z"),
 						ID:                "<value>",
 						IsArchived:        true,
 						ProductID:         "<value>",
 						RecurringInterval: components.SubscriptionRecurringIntervalMonth,
 						PriceCurrency:     "<value>",
-						MinimumAmount:     polargo.Int64(203013),
-						MaximumAmount:     nil,
-						PresetAmount:      polargo.Int64(119260),
+						PriceAmount:       266632,
 					},
 				),
 			),
@@ -462,14 +459,13 @@ func main() {
 
 * [Get](docs/sdks/polarcustomers/README.md#get) - Get Customer
 * [Update](docs/sdks/polarcustomers/README.md#update) - Update Customer
-* [GetPaymentMethods](docs/sdks/polarcustomers/README.md#getpaymentmethods) - Get Customer Payment Methods
+* [ListPaymentMethods](docs/sdks/polarcustomers/README.md#listpaymentmethods) - List Customer Payment Methods
 * [AddPaymentMethod](docs/sdks/polarcustomers/README.md#addpaymentmethod) - Add Customer Payment Method
 * [DeletePaymentMethod](docs/sdks/polarcustomers/README.md#deletepaymentmethod) - Delete Customer Payment Method
 
 #### [CustomerPortal.Downloadables](docs/sdks/downloadables/README.md)
 
 * [List](docs/sdks/downloadables/README.md#list) - List Downloadables
-* [Get](docs/sdks/downloadables/README.md#get) - Get Downloadable
 
 #### [CustomerPortal.LicenseKeys](docs/sdks/polarlicensekeys/README.md)
 
@@ -573,14 +569,6 @@ func main() {
 * [Revoke](docs/sdks/oauth2/README.md#revoke) - Revoke Token
 * [Introspect](docs/sdks/oauth2/README.md#introspect) - Introspect Token
 * [Userinfo](docs/sdks/oauth2/README.md#userinfo) - Get User Info
-
-#### [Oauth2.Clients](docs/sdks/clients/README.md)
-
-* [List](docs/sdks/clients/README.md#list) - List Clients
-* [Create](docs/sdks/clients/README.md#create) - Create Client
-* [Get](docs/sdks/clients/README.md#get) - Get Client
-* [Update](docs/sdks/clients/README.md#update) - Update Client
-* [Delete](docs/sdks/clients/README.md#delete) - Delete Client
 
 ### [Orders](docs/sdks/orders/README.md)
 

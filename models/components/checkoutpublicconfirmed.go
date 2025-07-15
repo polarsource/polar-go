@@ -350,13 +350,13 @@ type CheckoutPublicConfirmed struct {
 	// Name of the customer.
 	CustomerName *string `json:"customer_name"`
 	// Email address of the customer.
-	CustomerEmail                *string                              `json:"customer_email"`
-	CustomerIPAddress            *string                              `json:"customer_ip_address"`
-	CustomerBillingName          *string                              `json:"customer_billing_name"`
-	CustomerBillingAddress       *Address                             `json:"customer_billing_address"`
-	CustomerTaxID                *string                              `json:"customer_tax_id"`
-	PaymentProcessorMetadata     map[string]string                    `json:"payment_processor_metadata"`
-	CustomerBillingAddressFields CheckoutCustomerBillingAddressFields `json:"customer_billing_address_fields"`
+	CustomerEmail            *string                      `json:"customer_email"`
+	CustomerIPAddress        *string                      `json:"customer_ip_address"`
+	CustomerBillingName      *string                      `json:"customer_billing_name"`
+	CustomerBillingAddress   *Address                     `json:"customer_billing_address"`
+	CustomerTaxID            *string                      `json:"customer_tax_id"`
+	PaymentProcessorMetadata map[string]string            `json:"payment_processor_metadata"`
+	BillingAddressFields     CheckoutBillingAddressFields `json:"billing_address_fields"`
 	// List of products available to select.
 	Products []CheckoutProduct `json:"products"`
 	// Product data for a checkout session.
@@ -629,11 +629,11 @@ func (o *CheckoutPublicConfirmed) GetPaymentProcessorMetadata() map[string]strin
 	return o.PaymentProcessorMetadata
 }
 
-func (o *CheckoutPublicConfirmed) GetCustomerBillingAddressFields() CheckoutCustomerBillingAddressFields {
+func (o *CheckoutPublicConfirmed) GetBillingAddressFields() CheckoutBillingAddressFields {
 	if o == nil {
-		return CheckoutCustomerBillingAddressFields{}
+		return CheckoutBillingAddressFields{}
 	}
-	return o.CustomerBillingAddressFields
+	return o.BillingAddressFields
 }
 
 func (o *CheckoutPublicConfirmed) GetProducts() []CheckoutProduct {

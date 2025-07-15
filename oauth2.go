@@ -18,8 +18,6 @@ import (
 )
 
 type Oauth2 struct {
-	Clients *Clients
-
 	rootSDK          *Polar
 	sdkConfiguration config.SDKConfiguration
 	hooks            *hooks.Hooks
@@ -30,7 +28,6 @@ func newOauth2(rootSDK *Polar, sdkConfig config.SDKConfiguration, hooks *hooks.H
 		rootSDK:          rootSDK,
 		sdkConfiguration: sdkConfig,
 		hooks:            hooks,
-		Clients:          newClients(rootSDK, sdkConfig, hooks),
 	}
 }
 
@@ -272,7 +269,7 @@ func (s *Oauth2) Token(ctx context.Context, request operations.Oauth2RequestToke
 		Context:          ctx,
 		OperationID:      "oauth2:request_token",
 		OAuth2Scopes:     []string{},
-		SecuritySource:   nil,
+		SecuritySource:   s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "Request", "form", `request:"mediaType=application/x-www-form-urlencoded"`)
 	if err != nil {
@@ -298,6 +295,10 @@ func (s *Oauth2) Token(ctx context.Context, request operations.Oauth2RequestToke
 	req.Header.Set("User-Agent", s.sdkConfiguration.UserAgent)
 	if reqContentType != "" {
 		req.Header.Set("Content-Type", reqContentType)
+	}
+
+	if err := utils.PopulateSecurity(ctx, req, s.sdkConfiguration.Security); err != nil {
+		return nil, err
 	}
 
 	for k, v := range o.SetHeaders {
@@ -481,7 +482,7 @@ func (s *Oauth2) Revoke(ctx context.Context, request components.RevokeTokenReque
 		Context:          ctx,
 		OperationID:      "oauth2:revoke_token",
 		OAuth2Scopes:     []string{},
-		SecuritySource:   nil,
+		SecuritySource:   s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "Request", "form", `request:"mediaType=application/x-www-form-urlencoded"`)
 	if err != nil {
@@ -507,6 +508,10 @@ func (s *Oauth2) Revoke(ctx context.Context, request components.RevokeTokenReque
 	req.Header.Set("User-Agent", s.sdkConfiguration.UserAgent)
 	if reqContentType != "" {
 		req.Header.Set("Content-Type", reqContentType)
+	}
+
+	if err := utils.PopulateSecurity(ctx, req, s.sdkConfiguration.Security); err != nil {
+		return nil, err
 	}
 
 	for k, v := range o.SetHeaders {
@@ -690,7 +695,7 @@ func (s *Oauth2) Introspect(ctx context.Context, request components.IntrospectTo
 		Context:          ctx,
 		OperationID:      "oauth2:introspect_token",
 		OAuth2Scopes:     []string{},
-		SecuritySource:   nil,
+		SecuritySource:   s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "Request", "form", `request:"mediaType=application/x-www-form-urlencoded"`)
 	if err != nil {
@@ -716,6 +721,10 @@ func (s *Oauth2) Introspect(ctx context.Context, request components.IntrospectTo
 	req.Header.Set("User-Agent", s.sdkConfiguration.UserAgent)
 	if reqContentType != "" {
 		req.Header.Set("Content-Type", reqContentType)
+	}
+
+	if err := utils.PopulateSecurity(ctx, req, s.sdkConfiguration.Security); err != nil {
+		return nil, err
 	}
 
 	for k, v := range o.SetHeaders {

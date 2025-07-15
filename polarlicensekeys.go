@@ -663,7 +663,7 @@ func (s *PolarLicenseKeys) Validate(ctx context.Context, request components.Lice
 		Context:          ctx,
 		OperationID:      "customer_portal:license_keys:validate",
 		OAuth2Scopes:     []string{},
-		SecuritySource:   nil,
+		SecuritySource:   s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "Request", "json", `request:"mediaType=application/json"`)
 	if err != nil {
@@ -689,6 +689,10 @@ func (s *PolarLicenseKeys) Validate(ctx context.Context, request components.Lice
 	req.Header.Set("User-Agent", s.sdkConfiguration.UserAgent)
 	if reqContentType != "" {
 		req.Header.Set("Content-Type", reqContentType)
+	}
+
+	if err := utils.PopulateSecurity(ctx, req, s.sdkConfiguration.Security); err != nil {
+		return nil, err
 	}
 
 	for k, v := range o.SetHeaders {
@@ -914,7 +918,7 @@ func (s *PolarLicenseKeys) Activate(ctx context.Context, request components.Lice
 		Context:          ctx,
 		OperationID:      "customer_portal:license_keys:activate",
 		OAuth2Scopes:     []string{},
-		SecuritySource:   nil,
+		SecuritySource:   s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "Request", "json", `request:"mediaType=application/json"`)
 	if err != nil {
@@ -940,6 +944,10 @@ func (s *PolarLicenseKeys) Activate(ctx context.Context, request components.Lice
 	req.Header.Set("User-Agent", s.sdkConfiguration.UserAgent)
 	if reqContentType != "" {
 		req.Header.Set("Content-Type", reqContentType)
+	}
+
+	if err := utils.PopulateSecurity(ctx, req, s.sdkConfiguration.Security); err != nil {
+		return nil, err
 	}
 
 	for k, v := range o.SetHeaders {
@@ -1186,7 +1194,7 @@ func (s *PolarLicenseKeys) Deactivate(ctx context.Context, request components.Li
 		Context:          ctx,
 		OperationID:      "customer_portal:license_keys:deactivate",
 		OAuth2Scopes:     []string{},
-		SecuritySource:   nil,
+		SecuritySource:   s.sdkConfiguration.Security,
 	}
 	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "Request", "json", `request:"mediaType=application/json"`)
 	if err != nil {
@@ -1212,6 +1220,10 @@ func (s *PolarLicenseKeys) Deactivate(ctx context.Context, request components.Li
 	req.Header.Set("User-Agent", s.sdkConfiguration.UserAgent)
 	if reqContentType != "" {
 		req.Header.Set("Content-Type", reqContentType)
+	}
+
+	if err := utils.PopulateSecurity(ctx, req, s.sdkConfiguration.Security); err != nil {
+		return nil, err
 	}
 
 	for k, v := range o.SetHeaders {

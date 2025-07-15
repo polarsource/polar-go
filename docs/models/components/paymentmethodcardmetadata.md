@@ -1,4 +1,4 @@
-# PaymentMethodCardData
+# PaymentMethodCardMetadata
 
 
 ## Fields

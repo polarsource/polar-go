@@ -1,4 +1,4 @@
-# CustomerPortalCustomersGetPaymentMethodsSecurity
+# CustomerPortalCustomersListPaymentMethodsSecurity
 
 
 ## Fields

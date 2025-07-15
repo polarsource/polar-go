@@ -539,14 +539,14 @@ type Checkout struct {
 	// Name of the customer.
 	CustomerName *string `json:"customer_name"`
 	// Email address of the customer.
-	CustomerEmail                *string                              `json:"customer_email"`
-	CustomerIPAddress            *string                              `json:"customer_ip_address"`
-	CustomerBillingName          *string                              `json:"customer_billing_name"`
-	CustomerBillingAddress       *Address                             `json:"customer_billing_address"`
-	CustomerTaxID                *string                              `json:"customer_tax_id"`
-	PaymentProcessorMetadata     map[string]string                    `json:"payment_processor_metadata"`
-	CustomerBillingAddressFields CheckoutCustomerBillingAddressFields `json:"customer_billing_address_fields"`
-	Metadata                     map[string]CheckoutMetadata          `json:"metadata"`
+	CustomerEmail            *string                      `json:"customer_email"`
+	CustomerIPAddress        *string                      `json:"customer_ip_address"`
+	CustomerBillingName      *string                      `json:"customer_billing_name"`
+	CustomerBillingAddress   *Address                     `json:"customer_billing_address"`
+	CustomerTaxID            *string                      `json:"customer_tax_id"`
+	PaymentProcessorMetadata map[string]string            `json:"payment_processor_metadata"`
+	BillingAddressFields     CheckoutBillingAddressFields `json:"billing_address_fields"`
+	Metadata                 map[string]CheckoutMetadata  `json:"metadata"`
 	// ID of the customer in your system. If a matching customer exists on Polar, the resulting order will be linked to this customer. Otherwise, a new customer will be created with this external ID set.
 	ExternalCustomerID *string `json:"external_customer_id"`
 	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
@@ -826,11 +826,11 @@ func (o *Checkout) GetPaymentProcessorMetadata() map[string]string {
 	return o.PaymentProcessorMetadata
 }
 
-func (o *Checkout) GetCustomerBillingAddressFields() CheckoutCustomerBillingAddressFields {
+func (o *Checkout) GetBillingAddressFields() CheckoutBillingAddressFields {
 	if o == nil {
-		return CheckoutCustomerBillingAddressFields{}
+		return CheckoutBillingAddressFields{}
 	}
-	return o.CustomerBillingAddressFields
+	return o.BillingAddressFields
 }
 
 func (o *Checkout) GetMetadata() map[string]CheckoutMetadata {

@@ -2,7 +2,7 @@
 
 package components
 
-type PaymentMethodCardData struct {
+type PaymentMethodCardMetadata struct {
 	Brand    string  `json:"brand"`
 	Last4    string  `json:"last4"`
 	ExpMonth int64   `json:"exp_month"`
@@ -10,35 +10,35 @@ type PaymentMethodCardData struct {
 	Wallet   *string `json:"wallet,omitempty"`
 }
 
-func (o *PaymentMethodCardData) GetBrand() string {
+func (o *PaymentMethodCardMetadata) GetBrand() string {
 	if o == nil {
 		return ""
 	}
 	return o.Brand
 }
 
-func (o *PaymentMethodCardData) GetLast4() string {
+func (o *PaymentMethodCardMetadata) GetLast4() string {
 	if o == nil {
 		return ""
 	}
 	return o.Last4
 }
 
-func (o *PaymentMethodCardData) GetExpMonth() int64 {
+func (o *PaymentMethodCardMetadata) GetExpMonth() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.ExpMonth
 }
 
-func (o *PaymentMethodCardData) GetExpYear() int64 {
+func (o *PaymentMethodCardMetadata) GetExpYear() int64 {
 	if o == nil {
 		return 0
 	}
 	return o.ExpYear
 }
 
-func (o *PaymentMethodCardData) GetWallet() *string {
+func (o *PaymentMethodCardMetadata) GetWallet() *string {
 	if o == nil {
 		return nil
 	}

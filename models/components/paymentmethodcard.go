@@ -8,11 +8,16 @@ import (
 )
 
 type PaymentMethodCard struct {
-	ID        string                `json:"id"`
-	type_     string                `const:"card" json:"type"`
-	CreatedAt time.Time             `json:"created_at"`
-	Default   bool                  `json:"default"`
-	Card      PaymentMethodCardData `json:"card"`
+	// The ID of the object.
+	ID string `json:"id"`
+	// Creation timestamp of the object.
+	CreatedAt time.Time `json:"created_at"`
+	// Last modification timestamp of the object.
+	ModifiedAt     *time.Time                `json:"modified_at"`
+	Processor      PaymentProcessor          `json:"processor"`
+	CustomerID     string                    `json:"customer_id"`
+	type_          string                    `const:"card" json:"type"`
+	MethodMetadata PaymentMethodCardMetadata `json:"method_metadata"`
 }
 
 func (p PaymentMethodCard) MarshalJSON() ([]byte, error) {
@@ -33,10 +38,6 @@ func (o *PaymentMethodCard) GetID() string {
 	return o.ID
 }
 
-func (o *PaymentMethodCard) GetType() string {
-	return "card"
-}
-
 func (o *PaymentMethodCard) GetCreatedAt() time.Time {
 	if o == nil {
 		return time.Time{}
@@ -44,16 +45,34 @@ func (o *PaymentMethodCard) GetCreatedAt() time.Time {
 	return o.CreatedAt
 }
 
-func (o *PaymentMethodCard) GetDefault() bool {
+func (o *PaymentMethodCard) GetModifiedAt() *time.Time {
 	if o == nil {
-		return false
+		return nil
 	}
-	return o.Default
+	return o.ModifiedAt
 }
 
-func (o *PaymentMethodCard) GetCard() PaymentMethodCardData {
+func (o *PaymentMethodCard) GetProcessor() PaymentProcessor {
 	if o == nil {
-		return PaymentMethodCardData{}
+		return PaymentProcessor("")
 	}
-	return o.Card
+	return o.Processor
+}
+
+func (o *PaymentMethodCard) GetCustomerID() string {
+	if o == nil {
+		return ""
+	}
+	return o.CustomerID
+}
+
+func (o *PaymentMethodCard) GetType() string {
+	return "card"
+}
+
+func (o *PaymentMethodCard) GetMethodMetadata() PaymentMethodCardMetadata {
+	if o == nil {
+		return PaymentMethodCardMetadata{}
+	}
+	return o.MethodMetadata
 }

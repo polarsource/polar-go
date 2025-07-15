@@ -8,10 +8,15 @@ import (
 )
 
 type PaymentMethodGeneric struct {
-	ID        string    `json:"id"`
-	Type      string    `json:"type"`
+	// The ID of the object.
+	ID string `json:"id"`
+	// Creation timestamp of the object.
 	CreatedAt time.Time `json:"created_at"`
-	Default   bool      `json:"default"`
+	// Last modification timestamp of the object.
+	ModifiedAt *time.Time       `json:"modified_at"`
+	Processor  PaymentProcessor `json:"processor"`
+	CustomerID string           `json:"customer_id"`
+	Type       string           `json:"type"`
 }
 
 func (p PaymentMethodGeneric) MarshalJSON() ([]byte, error) {
@@ -32,13 +37,6 @@ func (o *PaymentMethodGeneric) GetID() string {
 	return o.ID
 }
 
-func (o *PaymentMethodGeneric) GetType() string {
-	if o == nil {
-		return ""
-	}
-	return o.Type
-}
-
 func (o *PaymentMethodGeneric) GetCreatedAt() time.Time {
 	if o == nil {
 		return time.Time{}
@@ -46,9 +44,30 @@ func (o *PaymentMethodGeneric) GetCreatedAt() time.Time {
 	return o.CreatedAt
 }
 
-func (o *PaymentMethodGeneric) GetDefault() bool {
+func (o *PaymentMethodGeneric) GetModifiedAt() *time.Time {
 	if o == nil {
-		return false
+		return nil
 	}
-	return o.Default
+	return o.ModifiedAt
+}
+
+func (o *PaymentMethodGeneric) GetProcessor() PaymentProcessor {
+	if o == nil {
+		return PaymentProcessor("")
+	}
+	return o.Processor
+}
+
+func (o *PaymentMethodGeneric) GetCustomerID() string {
+	if o == nil {
+		return ""
+	}
+	return o.CustomerID
+}
+
+func (o *PaymentMethodGeneric) GetType() string {
+	if o == nil {
+		return ""
+	}
+	return o.Type
 }
