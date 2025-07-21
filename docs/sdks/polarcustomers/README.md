@@ -156,7 +156,7 @@ func main() {
     if err != nil {
         log.Fatal(err)
     }
-    if res.ListResourceUnionPaymentMethodCardPaymentMethodGeneric != nil {
+    if res.ListResourceCustomerPaymentMethod != nil {
         for {
             // handle items
 
@@ -230,7 +230,7 @@ func main() {
     if err != nil {
         log.Fatal(err)
     }
-    if res.ResponseCustomerPortalCustomersAddPaymentMethod != nil {
+    if res.CustomerPaymentMethod != nil {
         // handle response
     }
 }

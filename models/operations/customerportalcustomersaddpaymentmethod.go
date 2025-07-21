@@ -3,9 +3,6 @@
 package operations
 
 import (
-	"errors"
-	"fmt"
-	"github.com/polarsource/polar-go/internal/utils"
 	"github.com/polarsource/polar-go/models/components"
 )
 
@@ -20,74 +17,10 @@ func (o *CustomerPortalCustomersAddPaymentMethodSecurity) GetCustomerSession() s
 	return o.CustomerSession
 }
 
-type CustomerPortalCustomersAddPaymentMethodResponseCustomerPortalCustomersAddPaymentMethodType string
-
-const (
-	CustomerPortalCustomersAddPaymentMethodResponseCustomerPortalCustomersAddPaymentMethodTypePaymentMethodCard    CustomerPortalCustomersAddPaymentMethodResponseCustomerPortalCustomersAddPaymentMethodType = "PaymentMethodCard"
-	CustomerPortalCustomersAddPaymentMethodResponseCustomerPortalCustomersAddPaymentMethodTypePaymentMethodGeneric CustomerPortalCustomersAddPaymentMethodResponseCustomerPortalCustomersAddPaymentMethodType = "PaymentMethodGeneric"
-)
-
-// CustomerPortalCustomersAddPaymentMethodResponseCustomerPortalCustomersAddPaymentMethod - Payment method created.
-type CustomerPortalCustomersAddPaymentMethodResponseCustomerPortalCustomersAddPaymentMethod struct {
-	PaymentMethodCard    *components.PaymentMethodCard    `queryParam:"inline"`
-	PaymentMethodGeneric *components.PaymentMethodGeneric `queryParam:"inline"`
-
-	Type CustomerPortalCustomersAddPaymentMethodResponseCustomerPortalCustomersAddPaymentMethodType
-}
-
-func CreateCustomerPortalCustomersAddPaymentMethodResponseCustomerPortalCustomersAddPaymentMethodPaymentMethodCard(paymentMethodCard components.PaymentMethodCard) CustomerPortalCustomersAddPaymentMethodResponseCustomerPortalCustomersAddPaymentMethod {
-	typ := CustomerPortalCustomersAddPaymentMethodResponseCustomerPortalCustomersAddPaymentMethodTypePaymentMethodCard
-
-	return CustomerPortalCustomersAddPaymentMethodResponseCustomerPortalCustomersAddPaymentMethod{
-		PaymentMethodCard: &paymentMethodCard,
-		Type:              typ,
-	}
-}
-
-func CreateCustomerPortalCustomersAddPaymentMethodResponseCustomerPortalCustomersAddPaymentMethodPaymentMethodGeneric(paymentMethodGeneric components.PaymentMethodGeneric) CustomerPortalCustomersAddPaymentMethodResponseCustomerPortalCustomersAddPaymentMethod {
-	typ := CustomerPortalCustomersAddPaymentMethodResponseCustomerPortalCustomersAddPaymentMethodTypePaymentMethodGeneric
-
-	return CustomerPortalCustomersAddPaymentMethodResponseCustomerPortalCustomersAddPaymentMethod{
-		PaymentMethodGeneric: &paymentMethodGeneric,
-		Type:                 typ,
-	}
-}
-
-func (u *CustomerPortalCustomersAddPaymentMethodResponseCustomerPortalCustomersAddPaymentMethod) UnmarshalJSON(data []byte) error {
-
-	var paymentMethodGeneric components.PaymentMethodGeneric = components.PaymentMethodGeneric{}
-	if err := utils.UnmarshalJSON(data, &paymentMethodGeneric, "", true, false); err == nil {
-		u.PaymentMethodGeneric = &paymentMethodGeneric
-		u.Type = CustomerPortalCustomersAddPaymentMethodResponseCustomerPortalCustomersAddPaymentMethodTypePaymentMethodGeneric
-		return nil
-	}
-
-	var paymentMethodCard components.PaymentMethodCard = components.PaymentMethodCard{}
-	if err := utils.UnmarshalJSON(data, &paymentMethodCard, "", true, false); err == nil {
-		u.PaymentMethodCard = &paymentMethodCard
-		u.Type = CustomerPortalCustomersAddPaymentMethodResponseCustomerPortalCustomersAddPaymentMethodTypePaymentMethodCard
-		return nil
-	}
-
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for CustomerPortalCustomersAddPaymentMethodResponseCustomerPortalCustomersAddPaymentMethod", string(data))
-}
-
-func (u CustomerPortalCustomersAddPaymentMethodResponseCustomerPortalCustomersAddPaymentMethod) MarshalJSON() ([]byte, error) {
-	if u.PaymentMethodCard != nil {
-		return utils.MarshalJSON(u.PaymentMethodCard, "", true)
-	}
-
-	if u.PaymentMethodGeneric != nil {
-		return utils.MarshalJSON(u.PaymentMethodGeneric, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type CustomerPortalCustomersAddPaymentMethodResponseCustomerPortalCustomersAddPaymentMethod: all fields are null")
-}
-
 type CustomerPortalCustomersAddPaymentMethodResponse struct {
 	HTTPMeta components.HTTPMetadata `json:"-"`
 	// Payment method created.
-	ResponseCustomerPortalCustomersAddPaymentMethod *CustomerPortalCustomersAddPaymentMethodResponseCustomerPortalCustomersAddPaymentMethod
+	CustomerPaymentMethod *components.CustomerPaymentMethod
 }
 
 func (o *CustomerPortalCustomersAddPaymentMethodResponse) GetHTTPMeta() components.HTTPMetadata {
@@ -97,9 +30,9 @@ func (o *CustomerPortalCustomersAddPaymentMethodResponse) GetHTTPMeta() componen
 	return o.HTTPMeta
 }
 
-func (o *CustomerPortalCustomersAddPaymentMethodResponse) GetResponseCustomerPortalCustomersAddPaymentMethod() *CustomerPortalCustomersAddPaymentMethodResponseCustomerPortalCustomersAddPaymentMethod {
+func (o *CustomerPortalCustomersAddPaymentMethodResponse) GetCustomerPaymentMethod() *components.CustomerPaymentMethod {
 	if o == nil {
 		return nil
 	}
-	return o.ResponseCustomerPortalCustomersAddPaymentMethod
+	return o.CustomerPaymentMethod
 }

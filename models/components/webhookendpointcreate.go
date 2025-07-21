@@ -5,10 +5,10 @@ package components
 // WebhookEndpointCreate - Schema to create a webhook endpoint.
 type WebhookEndpointCreate struct {
 	// The URL where the webhook events will be sent.
-	URL    string        `json:"url"`
+	URL string `json:"url"`
+	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
+	Secret *string       `json:"secret,omitempty"`
 	Format WebhookFormat `json:"format"`
-	// The secret used to sign the webhook events.
-	Secret string `json:"secret"`
 	// The events that will trigger the webhook.
 	Events []WebhookEventType `json:"events"`
 	// The organization ID associated with the webhook endpoint. **Required unless you use an organization token.**
@@ -22,18 +22,18 @@ func (o *WebhookEndpointCreate) GetURL() string {
 	return o.URL
 }
 
+func (o *WebhookEndpointCreate) GetSecret() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Secret
+}
+
 func (o *WebhookEndpointCreate) GetFormat() WebhookFormat {
 	if o == nil {
 		return WebhookFormat("")
 	}
 	return o.Format
-}
-
-func (o *WebhookEndpointCreate) GetSecret() string {
-	if o == nil {
-		return ""
-	}
-	return o.Secret
 }
 
 func (o *WebhookEndpointCreate) GetEvents() []WebhookEventType {

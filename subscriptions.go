@@ -576,7 +576,7 @@ func (s *Subscriptions) Export(ctx context.Context, organizationID *operations.O
 // Get Subscription
 // Get a subscription by ID.
 //
-// **Scopes**: `subscriptions:write`
+// **Scopes**: `subscriptions:read` `subscriptions:write`
 func (s *Subscriptions) Get(ctx context.Context, id string, opts ...operations.Option) (*operations.SubscriptionsGetResponse, error) {
 	request := operations.SubscriptionsGetRequest{
 		ID: id,

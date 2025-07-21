@@ -53,7 +53,7 @@ func (o *CustomerPortalCustomersListPaymentMethodsRequest) GetLimit() *int64 {
 type CustomerPortalCustomersListPaymentMethodsResponse struct {
 	HTTPMeta components.HTTPMetadata `json:"-"`
 	// Successful Response
-	ListResourceUnionPaymentMethodCardPaymentMethodGeneric *components.ListResourceUnionPaymentMethodCardPaymentMethodGeneric
+	ListResourceCustomerPaymentMethod *components.ListResourceCustomerPaymentMethod
 
 	Next func() (*CustomerPortalCustomersListPaymentMethodsResponse, error)
 }
@@ -65,9 +65,9 @@ func (o *CustomerPortalCustomersListPaymentMethodsResponse) GetHTTPMeta() compon
 	return o.HTTPMeta
 }
 
-func (o *CustomerPortalCustomersListPaymentMethodsResponse) GetListResourceUnionPaymentMethodCardPaymentMethodGeneric() *components.ListResourceUnionPaymentMethodCardPaymentMethodGeneric {
+func (o *CustomerPortalCustomersListPaymentMethodsResponse) GetListResourceCustomerPaymentMethod() *components.ListResourceCustomerPaymentMethod {
 	if o == nil {
 		return nil
 	}
-	return o.ListResourceUnionPaymentMethodCardPaymentMethodGeneric
+	return o.ListResourceCustomerPaymentMethod
 }

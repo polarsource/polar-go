@@ -18,6 +18,8 @@ type WebhookEndpoint struct {
 	// The URL where the webhook events will be sent.
 	URL    string        `json:"url"`
 	Format WebhookFormat `json:"format"`
+	// The secret used to sign the webhook events.
+	Secret string `json:"secret"`
 	// The organization ID associated with the webhook endpoint.
 	OrganizationID string `json:"organization_id"`
 	// The events that will trigger the webhook.
@@ -68,6 +70,13 @@ func (o *WebhookEndpoint) GetFormat() WebhookFormat {
 		return WebhookFormat("")
 	}
 	return o.Format
+}
+
+func (o *WebhookEndpoint) GetSecret() string {
+	if o == nil {
+		return ""
+	}
+	return o.Secret
 }
 
 func (o *WebhookEndpoint) GetOrganizationID() string {

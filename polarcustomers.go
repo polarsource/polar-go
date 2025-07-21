@@ -718,12 +718,12 @@ func (s *PolarCustomers) ListPaymentMethods(ctx context.Context, security operat
 				return nil, err
 			}
 
-			var out components.ListResourceUnionPaymentMethodCardPaymentMethodGeneric
+			var out components.ListResourceCustomerPaymentMethod
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.ListResourceUnionPaymentMethodCardPaymentMethodGeneric = &out
+			res.ListResourceCustomerPaymentMethod = &out
 		default:
 			rawBody, err := utils.ConsumeRawBody(httpRes)
 			if err != nil {
@@ -954,12 +954,12 @@ func (s *PolarCustomers) AddPaymentMethod(ctx context.Context, request component
 				return nil, err
 			}
 
-			var out operations.CustomerPortalCustomersAddPaymentMethodResponseCustomerPortalCustomersAddPaymentMethod
+			var out components.CustomerPaymentMethod
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.ResponseCustomerPortalCustomersAddPaymentMethod = &out
+			res.CustomerPaymentMethod = &out
 		default:
 			rawBody, err := utils.ConsumeRawBody(httpRes)
 			if err != nil {
