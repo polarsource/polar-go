@@ -22,6 +22,7 @@ List webhook endpoints.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="webhooks:list_webhook_endpoints" method="get" path="/v1/webhooks/endpoints" -->
 ```go
 package main
 
@@ -93,6 +94,7 @@ Create a webhook endpoint.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="webhooks:create_webhook_endpoint" method="post" path="/v1/webhooks/endpoints" -->
 ```go
 package main
 
@@ -155,6 +157,7 @@ Get a webhook endpoint by ID.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="webhooks:get_webhook_endpoint" method="get" path="/v1/webhooks/endpoints/{id}" -->
 ```go
 package main
 
@@ -210,6 +213,7 @@ Update a webhook endpoint.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="webhooks:update_webhook_endpoint" method="patch" path="/v1/webhooks/endpoints/{id}" -->
 ```go
 package main
 
@@ -269,6 +273,7 @@ Delete a webhook endpoint.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="webhooks:delete_webhook_endpoint" method="delete" path="/v1/webhooks/endpoints/{id}" -->
 ```go
 package main
 
@@ -324,6 +329,7 @@ Regenerate a webhook endpoint secret.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="webhooks:reset_webhook_endpoint_secret" method="patch" path="/v1/webhooks/endpoints/{id}/secret" -->
 ```go
 package main
 
@@ -381,6 +387,7 @@ Deliveries are all the attempts to deliver a webhook event to an endpoint.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="webhooks:list_webhook_deliveries" method="get" path="/v1/webhooks/deliveries" -->
 ```go
 package main
 
@@ -449,6 +456,7 @@ Schedule the re-delivery of a webhook event.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="webhooks:redeliver_webhook_event" method="post" path="/v1/webhooks/events/{id}/redeliver" -->
 ```go
 package main
 

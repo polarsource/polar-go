@@ -15,11 +15,13 @@ type CheckoutForbiddenErrorType string
 const (
 	CheckoutForbiddenErrorTypeAlreadyActiveSubscriptionError CheckoutForbiddenErrorType = "AlreadyActiveSubscriptionError"
 	CheckoutForbiddenErrorTypeNotOpenCheckout                CheckoutForbiddenErrorType = "NotOpenCheckout"
+	CheckoutForbiddenErrorTypePaymentNotReady                CheckoutForbiddenErrorType = "PaymentNotReady"
 )
 
 type CheckoutForbiddenError struct {
 	AlreadyActiveSubscriptionError *components.AlreadyActiveSubscriptionError `queryParam:"inline"`
 	NotOpenCheckout                *components.NotOpenCheckout                `queryParam:"inline"`
+	PaymentNotReady                *components.PaymentNotReady                `queryParam:"inline"`
 
 	Type CheckoutForbiddenErrorType
 }
@@ -44,6 +46,15 @@ func CreateCheckoutForbiddenErrorNotOpenCheckout(notOpenCheckout components.NotO
 	}
 }
 
+func CreateCheckoutForbiddenErrorPaymentNotReady(paymentNotReady components.PaymentNotReady) CheckoutForbiddenError {
+	typ := CheckoutForbiddenErrorTypePaymentNotReady
+
+	return CheckoutForbiddenError{
+		PaymentNotReady: &paymentNotReady,
+		Type:            typ,
+	}
+}
+
 func (u *CheckoutForbiddenError) UnmarshalJSON(data []byte) error {
 
 	var alreadyActiveSubscriptionError components.AlreadyActiveSubscriptionError = components.AlreadyActiveSubscriptionError{}
@@ -60,6 +71,13 @@ func (u *CheckoutForbiddenError) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
+	var paymentNotReady components.PaymentNotReady = components.PaymentNotReady{}
+	if err := utils.UnmarshalJSON(data, &paymentNotReady, "", true, false); err == nil {
+		u.PaymentNotReady = &paymentNotReady
+		u.Type = CheckoutForbiddenErrorTypePaymentNotReady
+		return nil
+	}
+
 	return fmt.Errorf("could not unmarshal `%s` into any supported union types for CheckoutForbiddenError", string(data))
 }
 
@@ -72,6 +90,10 @@ func (u CheckoutForbiddenError) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.NotOpenCheckout, "", true)
 	}
 
+	if u.PaymentNotReady != nil {
+		return utils.MarshalJSON(u.PaymentNotReady, "", true)
+	}
+
 	return nil, errors.New("could not marshal union type CheckoutForbiddenError: all fields are null")
 }
 
@@ -82,6 +104,9 @@ func (u CheckoutForbiddenError) Error() string {
 		return string(data)
 	case CheckoutForbiddenErrorTypeNotOpenCheckout:
 		data, _ := json.Marshal(u.NotOpenCheckout)
+		return string(data)
+	case CheckoutForbiddenErrorTypePaymentNotReady:
+		data, _ := json.Marshal(u.PaymentNotReady)
 		return string(data)
 	default:
 		return "unknown error"

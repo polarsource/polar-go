@@ -19,6 +19,7 @@ List files.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="files:list" method="get" path="/v1/files/" -->
 ```go
 package main
 
@@ -91,6 +92,7 @@ Create a file.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="files:create" method="post" path="/v1/files/" -->
 ```go
 package main
 
@@ -156,6 +158,7 @@ Complete a file upload.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="files:uploaded" method="post" path="/v1/files/{id}/uploaded" -->
 ```go
 package main
 
@@ -234,6 +237,7 @@ Update a file.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="files:update" method="patch" path="/v1/files/{id}" -->
 ```go
 package main
 
@@ -292,6 +296,7 @@ Delete a file.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="files:delete" method="delete" path="/v1/files/{id}" -->
 ```go
 package main
 

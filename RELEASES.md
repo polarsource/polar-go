@@ -419,3 +419,13 @@ Based on:
 - [go v0.7.3] .
 ### Releases
 - [Go v0.7.3] https://github.com/polarsource/polar-go/releases/tag/v0.7.3 - .
+
+## 2025-08-11 00:31:56
+### Changes
+Based on:
+- OpenAPI Doc  
+- Speakeasy CLI 1.600.2 (2.677.3) https://github.com/speakeasy-api/speakeasy
+### Generated
+- [go v0.8.0] .
+### Releases
+- [Go v0.8.0] https://github.com/polarsource/polar-go/releases/tag/v0.8.0 - .

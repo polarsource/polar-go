@@ -19,6 +19,7 @@ List meters.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="meters:list" method="get" path="/v1/meters/" -->
 ```go
 package main
 
@@ -90,6 +91,7 @@ Create a meter.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="meters:create" method="post" path="/v1/meters/" -->
 ```go
 package main
 
@@ -168,6 +170,7 @@ Get a meter by ID.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="meters:get" method="get" path="/v1/meters/{id}" -->
 ```go
 package main
 
@@ -223,6 +226,7 @@ Update a meter.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="meters:update" method="patch" path="/v1/meters/{id}" -->
 ```go
 package main
 
@@ -280,6 +284,7 @@ Get quantities of a meter over a time period.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="meters:quantities" method="get" path="/v1/meters/{id}/quantities" -->
 ```go
 package main
 

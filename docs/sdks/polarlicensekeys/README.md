@@ -17,6 +17,7 @@
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="customer_portal:license_keys:list" method="get" path="/v1/customer-portal/license-keys/" -->
 ```go
 package main
 
@@ -92,6 +93,7 @@ Get a license key.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="customer_portal:license_keys:get" method="get" path="/v1/customer-portal/license-keys/{id}" -->
 ```go
 package main
 
@@ -147,6 +149,7 @@ Validate a license key.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="customer_portal:license_keys:validate" method="post" path="/v1/customer-portal/license-keys/validate" -->
 ```go
 package main
 
@@ -204,6 +207,7 @@ Activate a license key instance.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="customer_portal:license_keys:activate" method="post" path="/v1/customer-portal/license-keys/activate" -->
 ```go
 package main
 
@@ -263,6 +267,7 @@ Deactivate a license key instance.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="customer_portal:license_keys:deactivate" method="post" path="/v1/customer-portal/license-keys/deactivate" -->
 ```go
 package main
 

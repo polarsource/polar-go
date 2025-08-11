@@ -1,19 +1,19 @@
 lockVersion: 2.0.0
 id: e7f2de70-a9ae-48d3-92f6-da15e6733a27
 management:
-  docChecksum: b0f01aec457cc91ea8f087c1cb410d91
+  docChecksum: 65b52aa270befaec33d1ecb4a090c803
   docVersion: 0.1.0
-  speakeasyVersion: 1.583.1
-  generationVersion: 2.658.3
-  releaseVersion: 0.7.3
-  configChecksum: f9491fdc07975a59cb85dc6765347efa
+  speakeasyVersion: 1.600.2
+  generationVersion: 2.677.3
+  releaseVersion: 0.8.0
+  configChecksum: 39f6c82c128657ebe479581769d9ce23
   repoURL: https://github.com/polarsource/polar-go.git
   installationURL: https://github.com/polarsource/polar-go
 features:
   go:
     additionalDependencies: 0.1.0
     constsAndDefaults: 0.1.12
-    core: 3.8.1
+    core: 3.9.3
     defaultEnabledRetries: 0.2.0
     deprecations: 2.81.3
     devContainers: 2.90.0
@@ -31,7 +31,7 @@ features:
     nullables: 0.1.1
     pagination: 2.82.4
     responseFormat: 0.1.2
-    retries: 2.83.3
+    retries: 2.84.2
     sdkHooks: 0.2.0
     serverIDs: 2.81.1
     unions: 2.85.12
@@ -48,7 +48,9 @@ generatedFiles:
   - /models/apierrors/httpvalidationerror.go
   - /models/apierrors/invoicealreadyexists.go
   - /models/apierrors/notpermitted.go
+  - /models/apierrors/ordernoteligibleforretry.go
   - /models/apierrors/ordersgenerateinvoice.go
+  - /models/apierrors/paymentalreadyinprogress.go
   - /models/apierrors/paymenterror.go
   - /models/apierrors/refundamounttoohigh.go
   - /models/apierrors/refundedalready.go
@@ -373,6 +375,7 @@ generatedFiles:
   - /models/components/paymentmethodcard.go
   - /models/components/paymentmethodcardmetadata.go
   - /models/components/paymentmethodgeneric.go
+  - /models/components/paymentnotready.go
   - /models/components/paymentprocessor.go
   - /models/components/paymentsortproperty.go
   - /models/components/paymentstatus.go
@@ -509,6 +512,7 @@ generatedFiles:
   - /models/operations/customerportalordersget.go
   - /models/operations/customerportalordersinvoice.go
   - /models/operations/customerportalorderslist.go
+  - /models/operations/customerportalordersretrypayment.go
   - /models/operations/customerportalordersupdate.go
   - /models/operations/customerportalorganizationsget.go
   - /models/operations/customerportalsubscriptionscancel.go
@@ -637,7 +641,9 @@ generatedFiles:
   - docs/models/apierrors/httpvalidationerror.md
   - docs/models/apierrors/invoicealreadyexists.md
   - docs/models/apierrors/notpermitted.md
+  - docs/models/apierrors/ordernoteligibleforretry.md
   - docs/models/apierrors/ordersgenerateinvoiceresponse422ordersgenerateinvoice.md
+  - docs/models/apierrors/paymentalreadyinprogress.md
   - docs/models/apierrors/paymenterror.md
   - docs/models/apierrors/refundamounttoohigh.md
   - docs/models/apierrors/refundedalready.md
@@ -802,6 +808,7 @@ generatedFiles:
   - docs/models/components/checkoutupdatepublic.md
   - docs/models/components/checkoutupdatepubliccustomfielddata.md
   - docs/models/components/clauses.md
+  - docs/models/components/committedmonthlyrecurringrevenue.md
   - docs/models/components/conditions.md
   - docs/models/components/countaggregation.md
   - docs/models/components/cumulativerevenue.md
@@ -1066,6 +1073,7 @@ generatedFiles:
   - docs/models/components/metricstotalsaverageordervalue.md
   - docs/models/components/metricstotalscheckouts.md
   - docs/models/components/metricstotalscheckoutsconversion.md
+  - docs/models/components/metricstotalscommittedmonthlyrecurringrevenue.md
   - docs/models/components/metricstotalscumulativerevenue.md
   - docs/models/components/metricstotalsmonthlyrecurringrevenue.md
   - docs/models/components/metricstotalsnewsubscriptions.md
@@ -1122,6 +1130,7 @@ generatedFiles:
   - docs/models/components/paymentmethodcard.md
   - docs/models/components/paymentmethodcardmetadata.md
   - docs/models/components/paymentmethodgeneric.md
+  - docs/models/components/paymentnotready.md
   - docs/models/components/paymentprocessor.md
   - docs/models/components/paymentsortproperty.md
   - docs/models/components/paymentstatus.md
@@ -1355,6 +1364,9 @@ generatedFiles:
   - docs/models/operations/customerportalorderslistrequest.md
   - docs/models/operations/customerportalorderslistresponse.md
   - docs/models/operations/customerportalorderslistsecurity.md
+  - docs/models/operations/customerportalordersretrypaymentrequest.md
+  - docs/models/operations/customerportalordersretrypaymentresponse.md
+  - docs/models/operations/customerportalordersretrypaymentsecurity.md
   - docs/models/operations/customerportalordersupdaterequest.md
   - docs/models/operations/customerportalordersupdateresponse.md
   - docs/models/operations/customerportalordersupdatesecurity.md
@@ -2493,7 +2505,7 @@ examples:
           timezone: "UTC"
       responses:
         "200":
-          application/json: {"periods": [{"timestamp": "2024-11-05T16:37:46.152Z", "orders": 2313.41, "revenue": 3697.18, "cumulative_revenue": 160547, "average_order_value": 8348.91, "one_time_products": 6315.62, "one_time_products_revenue": 271957, "new_subscriptions": 225346, "new_subscriptions_revenue": 5903.37, "renewed_subscriptions": 146.2, "renewed_subscriptions_revenue": 3772.41, "active_subscriptions": 1692.89, "monthly_recurring_revenue": 5809.97, "checkouts": 6229.46, "succeeded_checkouts": 464.75, "checkouts_conversion": 536209}], "totals": {"orders": 300394, "revenue": 980988, "cumulative_revenue": 5367.66, "average_order_value": 7320.73, "one_time_products": 772559, "one_time_products_revenue": 875093, "new_subscriptions": 903196, "new_subscriptions_revenue": 18.97, "renewed_subscriptions": 723.93, "renewed_subscriptions_revenue": 846052, "active_subscriptions": 5698.58, "monthly_recurring_revenue": 180851, "checkouts": 5307.17, "succeeded_checkouts": 9995.79, "checkouts_conversion": 5883.46}, "metrics": {"orders": {"slug": "<value>", "display_name": "Mortimer35", "type": "percentage"}, "revenue": {"slug": "<value>", "display_name": "Cruz.Yundt29", "type": "scalar"}, "cumulative_revenue": {"slug": "<value>", "display_name": "Keshaun_Mraz87", "type": "scalar"}, "average_order_value": {"slug": "<value>", "display_name": "Therese_Marks93", "type": "percentage"}, "one_time_products": {"slug": "<value>", "display_name": "Roslyn.White86", "type": "scalar"}, "one_time_products_revenue": {"slug": "<value>", "display_name": "Henderson.Herman17", "type": "percentage"}, "new_subscriptions": {"slug": "<value>", "display_name": "Jamaal_Mueller91", "type": "percentage"}, "new_subscriptions_revenue": {"slug": "<value>", "display_name": "Kaylee25", "type": "currency"}, "renewed_subscriptions": {"slug": "<value>", "display_name": "Leland_Yundt", "type": "scalar"}, "renewed_subscriptions_revenue": {"slug": "<value>", "display_name": "Dalton_Waters92", "type": "scalar"}, "active_subscriptions": {"slug": "<value>", "display_name": "Alfonzo_Daugherty", "type": "percentage"}, "monthly_recurring_revenue": {"slug": "<value>", "display_name": "Diana97", "type": "currency"}, "checkouts": {"slug": "<value>", "display_name": "Magdalen_Goodwin-Schoen", "type": "scalar"}, "succeeded_checkouts": {"slug": "<value>", "display_name": "Ida37", "type": "scalar"}, "checkouts_conversion": {"slug": "<value>", "display_name": "Savion.Gerlach", "type": "percentage"}}}
+          application/json: {"periods": [{"timestamp": "2024-11-05T16:37:46.152Z", "orders": 2313.41, "revenue": 3697.18, "cumulative_revenue": 160547, "average_order_value": 8348.91, "one_time_products": 6315.62, "one_time_products_revenue": 271957, "new_subscriptions": 225346, "new_subscriptions_revenue": 5903.37, "renewed_subscriptions": 146.2, "renewed_subscriptions_revenue": 3772.41, "active_subscriptions": 1692.89, "monthly_recurring_revenue": 5809.97, "committed_monthly_recurring_revenue": 7366.16, "checkouts": 6229.46, "succeeded_checkouts": 464.75, "checkouts_conversion": 536209}], "totals": {"orders": 300394, "revenue": 980988, "cumulative_revenue": 5367.66, "average_order_value": 7320.73, "one_time_products": 772559, "one_time_products_revenue": 875093, "new_subscriptions": 903196, "new_subscriptions_revenue": 18.97, "renewed_subscriptions": 723.93, "renewed_subscriptions_revenue": 846052, "active_subscriptions": 5698.58, "monthly_recurring_revenue": 180851, "committed_monthly_recurring_revenue": 620.86, "checkouts": 5307.17, "succeeded_checkouts": 9995.79, "checkouts_conversion": 5883.46}, "metrics": {"orders": {"slug": "<value>", "display_name": "Mortimer35", "type": "percentage"}, "revenue": {"slug": "<value>", "display_name": "Cruz.Yundt29", "type": "scalar"}, "cumulative_revenue": {"slug": "<value>", "display_name": "Keshaun_Mraz87", "type": "scalar"}, "average_order_value": {"slug": "<value>", "display_name": "Therese_Marks93", "type": "percentage"}, "one_time_products": {"slug": "<value>", "display_name": "Roslyn.White86", "type": "scalar"}, "one_time_products_revenue": {"slug": "<value>", "display_name": "Henderson.Herman17", "type": "percentage"}, "new_subscriptions": {"slug": "<value>", "display_name": "Jamaal_Mueller91", "type": "percentage"}, "new_subscriptions_revenue": {"slug": "<value>", "display_name": "Kaylee25", "type": "currency"}, "renewed_subscriptions": {"slug": "<value>", "display_name": "Leland_Yundt", "type": "scalar"}, "renewed_subscriptions_revenue": {"slug": "<value>", "display_name": "Dalton_Waters92", "type": "scalar"}, "active_subscriptions": {"slug": "<value>", "display_name": "Alfonzo_Daugherty", "type": "percentage"}, "monthly_recurring_revenue": {"slug": "<value>", "display_name": "Diana97", "type": "currency"}, "committed_monthly_recurring_revenue": {"slug": "<value>", "display_name": "Garrett.Stokes", "type": "scalar"}, "checkouts": {"slug": "<value>", "display_name": "Magdalen_Goodwin-Schoen", "type": "scalar"}, "succeeded_checkouts": {"slug": "<value>", "display_name": "Ida37", "type": "scalar"}, "checkouts_conversion": {"slug": "<value>", "display_name": "Savion.Gerlach", "type": "percentage"}}}
         "422":
           application/json: {}
   metrics:limits:
@@ -3462,5 +3474,19 @@ examples:
           application/json: {"error": "ResourceNotFound", "detail": "<value>"}
         "422":
           application/json: {}
+  customer_portal:orders:retry_payment:
+    speakeasy-default-customer-portal:orders:retry-payment:
+      parameters:
+        path:
+          id: "<value>"
+      responses:
+        "202":
+          application/json: "<value>"
+        "404":
+          application/json: {"error": "ResourceNotFound", "detail": "<value>"}
+        "409":
+          application/json: {"error": "PaymentAlreadyInProgress", "detail": "<value>"}
+        "422":
+          application/json: {"error": "OrderNotEligibleForRetry", "detail": "<value>"}
 examplesVersion: 1.0.2
 generatedTests: {}

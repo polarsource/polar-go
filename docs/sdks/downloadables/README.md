@@ -13,6 +13,7 @@
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="customer_portal:downloadables:list" method="get" path="/v1/customer-portal/downloadables/" -->
 ```go
 package main
 

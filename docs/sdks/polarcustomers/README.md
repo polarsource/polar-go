@@ -19,6 +19,7 @@ Get authenticated customer.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="customer_portal:customers:get" method="get" path="/v1/customer-portal/customers/me" -->
 ```go
 package main
 
@@ -73,6 +74,7 @@ Update authenticated customer.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="customer_portal:customers:update" method="patch" path="/v1/customer-portal/customers/me" -->
 ```go
 package main
 
@@ -134,6 +136,7 @@ Get saved payment methods of the authenticated customer.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="customer_portal:customers:list_payment_methods" method="get" path="/v1/customer-portal/customers/me/payment-methods" -->
 ```go
 package main
 
@@ -203,6 +206,7 @@ Add a payment method to the authenticated customer.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="customer_portal:customers:add_payment_method" method="post" path="/v1/customer-portal/customers/me/payment-methods" -->
 ```go
 package main
 
@@ -264,6 +268,7 @@ Delete a payment method from the authenticated customer.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="customer_portal:customers:delete_payment_method" method="delete" path="/v1/customer-portal/customers/me/payment-methods/{id}" -->
 ```go
 package main
 

@@ -21,6 +21,7 @@ List checkout sessions.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="checkouts:list" method="get" path="/v1/checkouts/" -->
 ```go
 package main
 
@@ -92,6 +93,7 @@ Create a checkout session.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="checkouts:create" method="post" path="/v1/checkouts/" -->
 ```go
 package main
 
@@ -156,6 +158,7 @@ Get a checkout session by ID.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="checkouts:get" method="get" path="/v1/checkouts/{id}" -->
 ```go
 package main
 
@@ -211,6 +214,7 @@ Update a checkout session.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="checkouts:update" method="patch" path="/v1/checkouts/{id}" -->
 ```go
 package main
 
@@ -271,6 +275,7 @@ Get a checkout session by client secret.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="checkouts:client_get" method="get" path="/v1/checkouts/client/{client_secret}" -->
 ```go
 package main
 
@@ -325,6 +330,7 @@ Update a checkout session by client secret.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="checkouts:client_update" method="patch" path="/v1/checkouts/client/{client_secret}" -->
 ```go
 package main
 
@@ -388,6 +394,7 @@ Orders and subscriptions will be processed.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="checkouts:client_confirm" method="post" path="/v1/checkouts/client/{client_secret}/confirm" -->
 ```go
 package main
 

@@ -765,6 +765,69 @@ func (u MonthlyRecurringRevenue) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type MonthlyRecurringRevenue: all fields are null")
 }
 
+type CommittedMonthlyRecurringRevenueType string
+
+const (
+	CommittedMonthlyRecurringRevenueTypeInteger CommittedMonthlyRecurringRevenueType = "integer"
+	CommittedMonthlyRecurringRevenueTypeNumber  CommittedMonthlyRecurringRevenueType = "number"
+)
+
+type CommittedMonthlyRecurringRevenue struct {
+	Integer *int64   `queryParam:"inline"`
+	Number  *float64 `queryParam:"inline"`
+
+	Type CommittedMonthlyRecurringRevenueType
+}
+
+func CreateCommittedMonthlyRecurringRevenueInteger(integer int64) CommittedMonthlyRecurringRevenue {
+	typ := CommittedMonthlyRecurringRevenueTypeInteger
+
+	return CommittedMonthlyRecurringRevenue{
+		Integer: &integer,
+		Type:    typ,
+	}
+}
+
+func CreateCommittedMonthlyRecurringRevenueNumber(number float64) CommittedMonthlyRecurringRevenue {
+	typ := CommittedMonthlyRecurringRevenueTypeNumber
+
+	return CommittedMonthlyRecurringRevenue{
+		Number: &number,
+		Type:   typ,
+	}
+}
+
+func (u *CommittedMonthlyRecurringRevenue) UnmarshalJSON(data []byte) error {
+
+	var integer int64 = int64(0)
+	if err := utils.UnmarshalJSON(data, &integer, "", true, false); err == nil {
+		u.Integer = &integer
+		u.Type = CommittedMonthlyRecurringRevenueTypeInteger
+		return nil
+	}
+
+	var number float64 = float64(0)
+	if err := utils.UnmarshalJSON(data, &number, "", true, false); err == nil {
+		u.Number = &number
+		u.Type = CommittedMonthlyRecurringRevenueTypeNumber
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for CommittedMonthlyRecurringRevenue", string(data))
+}
+
+func (u CommittedMonthlyRecurringRevenue) MarshalJSON() ([]byte, error) {
+	if u.Integer != nil {
+		return utils.MarshalJSON(u.Integer, "", true)
+	}
+
+	if u.Number != nil {
+		return utils.MarshalJSON(u.Number, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type CommittedMonthlyRecurringRevenue: all fields are null")
+}
+
 type CheckoutsType string
 
 const (
@@ -956,22 +1019,23 @@ func (u CheckoutsConversion) MarshalJSON() ([]byte, error) {
 
 type MetricPeriod struct {
 	// Timestamp of this period data.
-	Timestamp                   time.Time                   `json:"timestamp"`
-	Orders                      Orders                      `json:"orders"`
-	Revenue                     Revenue                     `json:"revenue"`
-	CumulativeRevenue           CumulativeRevenue           `json:"cumulative_revenue"`
-	AverageOrderValue           AverageOrderValue           `json:"average_order_value"`
-	OneTimeProducts             OneTimeProducts             `json:"one_time_products"`
-	OneTimeProductsRevenue      OneTimeProductsRevenue      `json:"one_time_products_revenue"`
-	NewSubscriptions            NewSubscriptions            `json:"new_subscriptions"`
-	NewSubscriptionsRevenue     NewSubscriptionsRevenue     `json:"new_subscriptions_revenue"`
-	RenewedSubscriptions        RenewedSubscriptions        `json:"renewed_subscriptions"`
-	RenewedSubscriptionsRevenue RenewedSubscriptionsRevenue `json:"renewed_subscriptions_revenue"`
-	ActiveSubscriptions         ActiveSubscriptions         `json:"active_subscriptions"`
-	MonthlyRecurringRevenue     MonthlyRecurringRevenue     `json:"monthly_recurring_revenue"`
-	Checkouts                   Checkouts                   `json:"checkouts"`
-	SucceededCheckouts          SucceededCheckouts          `json:"succeeded_checkouts"`
-	CheckoutsConversion         CheckoutsConversion         `json:"checkouts_conversion"`
+	Timestamp                        time.Time                        `json:"timestamp"`
+	Orders                           Orders                           `json:"orders"`
+	Revenue                          Revenue                          `json:"revenue"`
+	CumulativeRevenue                CumulativeRevenue                `json:"cumulative_revenue"`
+	AverageOrderValue                AverageOrderValue                `json:"average_order_value"`
+	OneTimeProducts                  OneTimeProducts                  `json:"one_time_products"`
+	OneTimeProductsRevenue           OneTimeProductsRevenue           `json:"one_time_products_revenue"`
+	NewSubscriptions                 NewSubscriptions                 `json:"new_subscriptions"`
+	NewSubscriptionsRevenue          NewSubscriptionsRevenue          `json:"new_subscriptions_revenue"`
+	RenewedSubscriptions             RenewedSubscriptions             `json:"renewed_subscriptions"`
+	RenewedSubscriptionsRevenue      RenewedSubscriptionsRevenue      `json:"renewed_subscriptions_revenue"`
+	ActiveSubscriptions              ActiveSubscriptions              `json:"active_subscriptions"`
+	MonthlyRecurringRevenue          MonthlyRecurringRevenue          `json:"monthly_recurring_revenue"`
+	CommittedMonthlyRecurringRevenue CommittedMonthlyRecurringRevenue `json:"committed_monthly_recurring_revenue"`
+	Checkouts                        Checkouts                        `json:"checkouts"`
+	SucceededCheckouts               SucceededCheckouts               `json:"succeeded_checkouts"`
+	CheckoutsConversion              CheckoutsConversion              `json:"checkouts_conversion"`
 }
 
 func (m MetricPeriod) MarshalJSON() ([]byte, error) {
@@ -1074,6 +1138,13 @@ func (o *MetricPeriod) GetMonthlyRecurringRevenue() MonthlyRecurringRevenue {
 		return MonthlyRecurringRevenue{}
 	}
 	return o.MonthlyRecurringRevenue
+}
+
+func (o *MetricPeriod) GetCommittedMonthlyRecurringRevenue() CommittedMonthlyRecurringRevenue {
+	if o == nil {
+		return CommittedMonthlyRecurringRevenue{}
+	}
+	return o.CommittedMonthlyRecurringRevenue
 }
 
 func (o *MetricPeriod) GetCheckouts() Checkouts {

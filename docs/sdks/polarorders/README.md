@@ -10,6 +10,7 @@
 * [Update](#update) - Update Order
 * [GenerateInvoice](#generateinvoice) - Generate Order Invoice
 * [Invoice](#invoice) - Get Order Invoice
+* [RetryPayment](#retrypayment) - Retry Payment
 
 ## List
 
@@ -19,6 +20,7 @@ List orders of the authenticated customer.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="customer_portal:orders:list" method="get" path="/v1/customer-portal/orders/" -->
 ```go
 package main
 
@@ -91,6 +93,7 @@ Get an order by ID for the authenticated customer.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="customer_portal:orders:get" method="get" path="/v1/customer-portal/orders/{id}" -->
 ```go
 package main
 
@@ -148,6 +151,7 @@ Update an order for the authenticated customer.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="customer_portal:orders:update" method="patch" path="/v1/customer-portal/orders/{id}" -->
 ```go
 package main
 
@@ -212,6 +216,7 @@ Trigger generation of an order's invoice.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="customer_portal:orders:generate_invoice" method="post" path="/v1/customer-portal/orders/{id}/invoice" -->
 ```go
 package main
 
@@ -269,6 +274,7 @@ Get an order's invoice data.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="customer_portal:orders:invoice" method="get" path="/v1/customer-portal/orders/{id}/invoice" -->
 ```go
 package main
 
@@ -317,3 +323,62 @@ func main() {
 | apierrors.ResourceNotFound    | 404                           | application/json              |
 | apierrors.HTTPValidationError | 422                           | application/json              |
 | apierrors.APIError            | 4XX, 5XX                      | \*/\*                         |
+
+## RetryPayment
+
+Manually retry payment for a failed order.
+
+**Scopes**: `customer_portal:write`
+
+### Example Usage
+
+<!-- UsageSnippet language="go" operationID="customer_portal:orders:retry_payment" method="post" path="/v1/customer-portal/orders/{id}/retry-payment" -->
+```go
+package main
+
+import(
+	"context"
+	polargo "github.com/polarsource/polar-go"
+	"os"
+	"github.com/polarsource/polar-go/models/operations"
+	"log"
+)
+
+func main() {
+    ctx := context.Background()
+
+    s := polargo.New()
+
+    res, err := s.CustomerPortal.Orders.RetryPayment(ctx, operations.CustomerPortalOrdersRetryPaymentSecurity{
+        CustomerSession: os.Getenv("POLAR_CUSTOMER_SESSION"),
+    }, "<value>")
+    if err != nil {
+        log.Fatal(err)
+    }
+    if res.Any != nil {
+        // handle response
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                                                                                  | Type                                                                                                                       | Required                                                                                                                   | Description                                                                                                                |
+| -------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| `ctx`                                                                                                                      | [context.Context](https://pkg.go.dev/context#Context)                                                                      | :heavy_check_mark:                                                                                                         | The context to use for the request.                                                                                        |
+| `security`                                                                                                                 | [operations.CustomerPortalOrdersRetryPaymentSecurity](../../models/operations/customerportalordersretrypaymentsecurity.md) | :heavy_check_mark:                                                                                                         | The security requirements to use for the request.                                                                          |
+| `id`                                                                                                                       | *string*                                                                                                                   | :heavy_check_mark:                                                                                                         | The order ID.                                                                                                              |
+| `opts`                                                                                                                     | [][operations.Option](../../models/operations/option.md)                                                                   | :heavy_minus_sign:                                                                                                         | The options for this request.                                                                                              |
+
+### Response
+
+**[*operations.CustomerPortalOrdersRetryPaymentResponse](../../models/operations/customerportalordersretrypaymentresponse.md), error**
+
+### Errors
+
+| Error Type                         | Status Code                        | Content Type                       |
+| ---------------------------------- | ---------------------------------- | ---------------------------------- |
+| apierrors.ResourceNotFound         | 404                                | application/json                   |
+| apierrors.PaymentAlreadyInProgress | 409                                | application/json                   |
+| apierrors.OrderNotEligibleForRetry | 422                                | application/json                   |
+| apierrors.APIError                 | 4XX, 5XX                           | \*/\*                              |

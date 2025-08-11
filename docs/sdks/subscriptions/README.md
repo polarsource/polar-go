@@ -19,6 +19,7 @@ List subscriptions.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="subscriptions:list" method="get" path="/v1/subscriptions/" -->
 ```go
 package main
 
@@ -90,6 +91,7 @@ Export subscriptions as a CSV file.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="subscriptions:export" method="get" path="/v1/subscriptions/export" -->
 ```go
 package main
 
@@ -147,6 +149,7 @@ Get a subscription by ID.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="subscriptions:get" method="get" path="/v1/subscriptions/{id}" -->
 ```go
 package main
 
@@ -202,6 +205,7 @@ Update a subscription.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="subscriptions:update" method="patch" path="/v1/subscriptions/{id}" -->
 ```go
 package main
 
@@ -264,6 +268,7 @@ Revoke a subscription, i.e cancel immediately.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="subscriptions:revoke" method="delete" path="/v1/subscriptions/{id}" -->
 ```go
 package main
 

@@ -20,6 +20,7 @@ List benefits.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="benefits:list" method="get" path="/v1/benefits/" -->
 ```go
 package main
 
@@ -91,6 +92,7 @@ Create a benefit.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="benefits:create" method="post" path="/v1/benefits/" -->
 ```go
 package main
 
@@ -152,6 +154,7 @@ Get a benefit by ID.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="benefits:get" method="get" path="/v1/benefits/{id}" -->
 ```go
 package main
 
@@ -207,6 +210,7 @@ Update a benefit.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="benefits:update" method="patch" path="/v1/benefits/{id}" -->
 ```go
 package main
 
@@ -271,6 +275,7 @@ Delete a benefit.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="benefits:delete" method="delete" path="/v1/benefits/{id}" -->
 ```go
 package main
 
@@ -329,6 +334,7 @@ It's especially useful to check if a user has been granted a benefit.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="benefits:grants" method="get" path="/v1/benefits/{id}/grants" -->
 ```go
 package main
 

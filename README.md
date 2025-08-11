@@ -482,6 +482,7 @@ func main() {
 * [Update](docs/sdks/polarorders/README.md#update) - Update Order
 * [GenerateInvoice](docs/sdks/polarorders/README.md#generateinvoice) - Generate Order Invoice
 * [Invoice](docs/sdks/polarorders/README.md#invoice) - Get Order Invoice
+* [RetryPayment](docs/sdks/polarorders/README.md#retrypayment) - Retry Payment
 
 #### [CustomerPortal.Organizations](docs/sdks/polarorganizations/README.md)
 
@@ -959,12 +960,13 @@ The built-in `net/http` client satisfies this interface and a default client bas
 import (
 	"net/http"
 	"time"
-	"github.com/myorg/your-go-sdk"
+
+	"github.com/polarsource/polar-go"
 )
 
 var (
 	httpClient = &http.Client{Timeout: 30 * time.Second}
-	sdkClient  = sdk.New(sdk.WithClient(httpClient))
+	sdkClient  = polargo.New(polargo.WithClient(httpClient))
 )
 ```
 

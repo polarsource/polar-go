@@ -19,6 +19,7 @@ List orders.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="orders:list" method="get" path="/v1/orders/" -->
 ```go
 package main
 
@@ -90,6 +91,7 @@ Get an order by ID.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="orders:get" method="get" path="/v1/orders/{id}" -->
 ```go
 package main
 
@@ -145,6 +147,7 @@ Update an order.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="orders:update" method="patch" path="/v1/orders/{id}" -->
 ```go
 package main
 
@@ -207,6 +210,7 @@ Trigger generation of an order's invoice.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="orders:generate_invoice" method="post" path="/v1/orders/{id}/invoice" -->
 ```go
 package main
 
@@ -262,6 +266,7 @@ Get an order's invoice data.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="orders:invoice" method="get" path="/v1/orders/{id}/invoice" -->
 ```go
 package main
 

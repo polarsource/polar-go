@@ -19,6 +19,7 @@ List products.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="products:list" method="get" path="/v1/products/" -->
 ```go
 package main
 
@@ -90,6 +91,7 @@ Create a product.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="products:create" method="post" path="/v1/products/" -->
 ```go
 package main
 
@@ -159,6 +161,7 @@ Get a product by ID.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="products:get" method="get" path="/v1/products/{id}" -->
 ```go
 package main
 
@@ -214,6 +217,7 @@ Update a product.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="products:update" method="patch" path="/v1/products/{id}" -->
 ```go
 package main
 
@@ -272,6 +276,7 @@ Update benefits granted by a product.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="products:update_benefits" method="post" path="/v1/products/{id}/benefits" -->
 ```go
 package main
 

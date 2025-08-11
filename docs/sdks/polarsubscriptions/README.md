@@ -18,6 +18,7 @@ List subscriptions of the authenticated customer.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="customer_portal:subscriptions:list" method="get" path="/v1/customer-portal/subscriptions/" -->
 ```go
 package main
 
@@ -90,6 +91,7 @@ Get a subscription for the authenticated customer.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="customer_portal:subscriptions:get" method="get" path="/v1/customer-portal/subscriptions/{id}" -->
 ```go
 package main
 
@@ -147,6 +149,7 @@ Update a subscription of the authenticated customer.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="customer_portal:subscriptions:update" method="patch" path="/v1/customer-portal/subscriptions/{id}" -->
 ```go
 package main
 
@@ -209,6 +212,7 @@ Cancel a subscription of the authenticated customer.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="customer_portal:subscriptions:cancel" method="delete" path="/v1/customer-portal/subscriptions/{id}" -->
 ```go
 package main
 

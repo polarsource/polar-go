@@ -16,6 +16,7 @@ List customer meters.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="customer_meters:list" method="get" path="/v1/customer-meters/" -->
 ```go
 package main
 
@@ -87,6 +88,7 @@ Get a customer meter by ID.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="customer_meters:get" method="get" path="/v1/customer-meters/{id}" -->
 ```go
 package main
 

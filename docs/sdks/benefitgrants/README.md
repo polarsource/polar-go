@@ -17,6 +17,7 @@ List benefits grants of the authenticated customer.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="customer_portal:benefit-grants:list" method="get" path="/v1/customer-portal/benefit-grants/" -->
 ```go
 package main
 
@@ -89,6 +90,7 @@ Get a benefit grant by ID for the authenticated customer.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="customer_portal:benefit-grants:get" method="get" path="/v1/customer-portal/benefit-grants/{id}" -->
 ```go
 package main
 
@@ -146,6 +148,7 @@ Update a benefit grant for the authenticated customer.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="customer_portal:benefit-grants:update" method="patch" path="/v1/customer-portal/benefit-grants/{id}" -->
 ```go
 package main
 

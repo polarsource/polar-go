@@ -10,20 +10,24 @@ import (
 type OrderSortProperty string
 
 const (
-	OrderSortPropertyCreatedAt         OrderSortProperty = "created_at"
-	OrderSortPropertyMinusCreatedAt    OrderSortProperty = "-created_at"
-	OrderSortPropertyAmount            OrderSortProperty = "amount"
-	OrderSortPropertyMinusAmount       OrderSortProperty = "-amount"
-	OrderSortPropertyNetAmount         OrderSortProperty = "net_amount"
-	OrderSortPropertyMinusNetAmount    OrderSortProperty = "-net_amount"
-	OrderSortPropertyCustomer          OrderSortProperty = "customer"
-	OrderSortPropertyMinusCustomer     OrderSortProperty = "-customer"
-	OrderSortPropertyProduct           OrderSortProperty = "product"
-	OrderSortPropertyMinusProduct      OrderSortProperty = "-product"
-	OrderSortPropertyDiscount          OrderSortProperty = "discount"
-	OrderSortPropertyMinusDiscount     OrderSortProperty = "-discount"
-	OrderSortPropertySubscription      OrderSortProperty = "subscription"
-	OrderSortPropertyMinusSubscription OrderSortProperty = "-subscription"
+	OrderSortPropertyCreatedAt          OrderSortProperty = "created_at"
+	OrderSortPropertyMinusCreatedAt     OrderSortProperty = "-created_at"
+	OrderSortPropertyStatus             OrderSortProperty = "status"
+	OrderSortPropertyMinusStatus        OrderSortProperty = "-status"
+	OrderSortPropertyInvoiceNumber      OrderSortProperty = "invoice_number"
+	OrderSortPropertyMinusInvoiceNumber OrderSortProperty = "-invoice_number"
+	OrderSortPropertyAmount             OrderSortProperty = "amount"
+	OrderSortPropertyMinusAmount        OrderSortProperty = "-amount"
+	OrderSortPropertyNetAmount          OrderSortProperty = "net_amount"
+	OrderSortPropertyMinusNetAmount     OrderSortProperty = "-net_amount"
+	OrderSortPropertyCustomer           OrderSortProperty = "customer"
+	OrderSortPropertyMinusCustomer      OrderSortProperty = "-customer"
+	OrderSortPropertyProduct            OrderSortProperty = "product"
+	OrderSortPropertyMinusProduct       OrderSortProperty = "-product"
+	OrderSortPropertyDiscount           OrderSortProperty = "discount"
+	OrderSortPropertyMinusDiscount      OrderSortProperty = "-discount"
+	OrderSortPropertySubscription       OrderSortProperty = "subscription"
+	OrderSortPropertyMinusSubscription  OrderSortProperty = "-subscription"
 )
 
 func (e OrderSortProperty) ToPointer() *OrderSortProperty {
@@ -38,6 +42,14 @@ func (e *OrderSortProperty) UnmarshalJSON(data []byte) error {
 	case "created_at":
 		fallthrough
 	case "-created_at":
+		fallthrough
+	case "status":
+		fallthrough
+	case "-status":
+		fallthrough
+	case "invoice_number":
+		fallthrough
+	case "-invoice_number":
 		fallthrough
 	case "amount":
 		fallthrough

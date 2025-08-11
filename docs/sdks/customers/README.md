@@ -24,6 +24,7 @@ List customers.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="customers:list" method="get" path="/v1/customers/" -->
 ```go
 package main
 
@@ -95,6 +96,7 @@ Create a customer.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="customers:create" method="post" path="/v1/customers/" -->
 ```go
 package main
 
@@ -166,6 +168,7 @@ Get a customer by ID.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="customers:get" method="get" path="/v1/customers/{id}" -->
 ```go
 package main
 
@@ -221,6 +224,7 @@ Update a customer.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="customers:update" method="patch" path="/v1/customers/{id}" -->
 ```go
 package main
 
@@ -305,6 +309,7 @@ orders and subscriptions.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="customers:delete" method="delete" path="/v1/customers/{id}" -->
 ```go
 package main
 
@@ -360,6 +365,7 @@ Get a customer by external ID.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="customers:get_external" method="get" path="/v1/customers/external/{external_id}" -->
 ```go
 package main
 
@@ -415,6 +421,7 @@ Update a customer by external ID.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="customers:update_external" method="patch" path="/v1/customers/external/{external_id}" -->
 ```go
 package main
 
@@ -488,6 +495,7 @@ Immediately cancels any active subscriptions and revokes any active benefits.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="customers:delete_external" method="delete" path="/v1/customers/external/{external_id}" -->
 ```go
 package main
 
@@ -549,6 +557,7 @@ of a customer's status.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="customers:get_state" method="get" path="/v1/customers/{id}/state" -->
 ```go
 package main
 
@@ -610,6 +619,7 @@ of a customer's status.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="customers:get_state_external" method="get" path="/v1/customers/external/{external_id}/state" -->
 ```go
 package main
 

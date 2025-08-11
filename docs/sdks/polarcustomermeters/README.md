@@ -16,6 +16,7 @@ List meters of the authenticated customer.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="customer_portal:customer_meters:list" method="get" path="/v1/customer-portal/meters/" -->
 ```go
 package main
 
@@ -84,6 +85,7 @@ Get a meter by ID for the authenticated customer.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="customer_portal:customer_meters:get" method="get" path="/v1/customer-portal/meters/{id}" -->
 ```go
 package main
 

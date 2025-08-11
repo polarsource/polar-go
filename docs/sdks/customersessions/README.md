@@ -15,6 +15,7 @@ Create a customer session.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="customer-sessions:create" method="post" path="/v1/customer-sessions/" -->
 ```go
 package main
 

@@ -18,6 +18,7 @@ List organizations.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="organizations:list" method="get" path="/v1/organizations/" -->
 ```go
 package main
 
@@ -87,6 +88,7 @@ Create an organization.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="organizations:create" method="post" path="/v1/organizations/" -->
 ```go
 package main
 
@@ -145,6 +147,7 @@ Get an organization by ID.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="organizations:get" method="get" path="/v1/organizations/{id}" -->
 ```go
 package main
 
@@ -200,6 +203,7 @@ Update an organization.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="organizations:update" method="patch" path="/v1/organizations/{id}" -->
 ```go
 package main
 

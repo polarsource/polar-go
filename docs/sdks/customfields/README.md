@@ -19,6 +19,7 @@ List custom fields.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="custom-fields:list" method="get" path="/v1/custom-fields/" -->
 ```go
 package main
 
@@ -90,6 +91,7 @@ Create a custom field.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="custom-fields:create" method="post" path="/v1/custom-fields/" -->
 ```go
 package main
 
@@ -154,6 +156,7 @@ Get a custom field by ID.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="custom-fields:get" method="get" path="/v1/custom-fields/{id}" -->
 ```go
 package main
 
@@ -209,6 +212,7 @@ Update a custom field.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="custom-fields:update" method="patch" path="/v1/custom-fields/{id}" -->
 ```go
 package main
 
@@ -268,6 +272,7 @@ Delete a custom field.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="custom-fields:delete" method="delete" path="/v1/custom-fields/{id}" -->
 ```go
 package main
 

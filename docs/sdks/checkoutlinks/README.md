@@ -19,6 +19,7 @@ List checkout links.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="checkout-links:list" method="get" path="/v1/checkout-links/" -->
 ```go
 package main
 
@@ -90,6 +91,7 @@ Create a checkout link.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="checkout-links:create" method="post" path="/v1/checkout-links/" -->
 ```go
 package main
 
@@ -150,6 +152,7 @@ Get a checkout link by ID.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="checkout-links:get" method="get" path="/v1/checkout-links/{id}" -->
 ```go
 package main
 
@@ -205,6 +208,7 @@ Update a checkout link.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="checkout-links:update" method="patch" path="/v1/checkout-links/{id}" -->
 ```go
 package main
 
@@ -262,6 +266,7 @@ Delete a checkout link.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="checkout-links:delete" method="delete" path="/v1/checkout-links/{id}" -->
 ```go
 package main
 

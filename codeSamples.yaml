@@ -279,6 +279,12 @@ actions:
         - "lang": "go"
           "label": "Go (SDK)"
           "source": "package main\n\nimport(\n\t\"context\"\n\tpolargo \"github.com/polarsource/polar-go\"\n\t\"os\"\n\t\"github.com/polarsource/polar-go/models/operations\"\n\t\"log\"\n)\n\nfunc main() {\n    ctx := context.Background()\n\n    s := polargo.New()\n\n    res, err := s.CustomerPortal.Orders.GenerateInvoice(ctx, operations.CustomerPortalOrdersGenerateInvoiceSecurity{\n        CustomerSession: os.Getenv(\"POLAR_CUSTOMER_SESSION\"),\n    }, \"<value>\")\n    if err != nil {\n        log.Fatal(err)\n    }\n    if res.Any != nil {\n        // handle response\n    }\n}"
+  - target: $["paths"]["/v1/customer-portal/orders/{id}/retry-payment"]["post"]
+    update:
+      "x-codeSamples":
+        - "lang": "go"
+          "label": "Go (SDK)"
+          "source": "package main\n\nimport(\n\t\"context\"\n\tpolargo \"github.com/polarsource/polar-go\"\n\t\"os\"\n\t\"github.com/polarsource/polar-go/models/operations\"\n\t\"log\"\n)\n\nfunc main() {\n    ctx := context.Background()\n\n    s := polargo.New()\n\n    res, err := s.CustomerPortal.Orders.RetryPayment(ctx, operations.CustomerPortalOrdersRetryPaymentSecurity{\n        CustomerSession: os.Getenv(\"POLAR_CUSTOMER_SESSION\"),\n    }, \"<value>\")\n    if err != nil {\n        log.Fatal(err)\n    }\n    if res.Any != nil {\n        // handle response\n    }\n}"
   - target: $["paths"]["/v1/customer-portal/organizations/{slug}"]["get"]
     update:
       "x-codeSamples":

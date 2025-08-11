@@ -2,7 +2,7 @@
 
 package polargo
 
-// Generated from OpenAPI doc version 0.1.0 and generator version 2.658.3
+// Generated from OpenAPI doc version 0.1.0 and generator version 2.677.3
 
 import (
 	"context"
@@ -158,9 +158,9 @@ func WithTimeout(timeout time.Duration) SDKOption {
 // New creates a new instance of the SDK with the provided options
 func New(opts ...SDKOption) *Polar {
 	sdk := &Polar{
-		SDKVersion: "0.7.3",
+		SDKVersion: "0.8.0",
 		sdkConfiguration: config.SDKConfiguration{
-			UserAgent:  "speakeasy-sdk/go 0.7.3 2.658.3 0.1.0 github.com/polarsource/polar-go",
+			UserAgent:  "speakeasy-sdk/go 0.8.0 2.677.3 0.1.0 github.com/polarsource/polar-go",
 			ServerList: ServerList,
 		},
 		hooks: hooks.New(),

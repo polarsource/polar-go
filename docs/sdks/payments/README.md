@@ -16,6 +16,7 @@ List payments.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="payments:list" method="get" path="/v1/payments/" -->
 ```go
 package main
 
@@ -87,6 +88,7 @@ Get a payment by ID.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="payments:get" method="get" path="/v1/payments/{id}" -->
 ```go
 package main
 

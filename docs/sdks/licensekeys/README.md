@@ -18,6 +18,7 @@ Get license keys connected to the given organization & filters.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="license_keys:list" method="get" path="/v1/license-keys/" -->
 ```go
 package main
 
@@ -92,6 +93,7 @@ Get a license key.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="license_keys:get" method="get" path="/v1/license-keys/{id}" -->
 ```go
 package main
 
@@ -148,6 +150,7 @@ Update a license key.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="license_keys:update" method="patch" path="/v1/license-keys/{id}" -->
 ```go
 package main
 
@@ -206,6 +209,7 @@ Get a license key activation.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="license_keys:get_activation" method="get" path="/v1/license-keys/{id}/activations/{activation_id}" -->
 ```go
 package main
 

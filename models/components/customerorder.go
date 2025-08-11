@@ -53,6 +53,8 @@ type CustomerOrder struct {
 	Subscription *CustomerOrderSubscription `json:"subscription"`
 	// Line items composing the order.
 	Items []OrderItemSchema `json:"items"`
+	// When the next payment retry is scheduled
+	NextPaymentAttemptAt *time.Time `json:"next_payment_attempt_at,omitempty"`
 }
 
 func (c CustomerOrder) MarshalJSON() ([]byte, error) {
@@ -253,4 +255,11 @@ func (o *CustomerOrder) GetItems() []OrderItemSchema {
 		return []OrderItemSchema{}
 	}
 	return o.Items
+}
+
+func (o *CustomerOrder) GetNextPaymentAttemptAt() *time.Time {
+	if o == nil {
+		return nil
+	}
+	return o.NextPaymentAttemptAt
 }

@@ -18,6 +18,7 @@ Currency values are output in cents.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="metrics:get" method="get" path="/v1/metrics/" -->
 ```go
 package main
 
@@ -82,6 +83,7 @@ Get the interval limits for the metrics endpoint.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="metrics:limits" method="get" path="/v1/metrics/limits" -->
 ```go
 package main
 

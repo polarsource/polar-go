@@ -18,6 +18,7 @@ List events.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="events:list" method="get" path="/v1/events/" -->
 ```go
 package main
 
@@ -89,6 +90,7 @@ List event names.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="events:list_names" method="get" path="/v1/events/names" -->
 ```go
 package main
 
@@ -160,6 +162,7 @@ Get an event by ID.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="events:get" method="get" path="/v1/events/{id}" -->
 ```go
 package main
 
@@ -215,6 +218,7 @@ Ingest batch of events.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="events:ingest" method="post" path="/v1/events/ingest" -->
 ```go
 package main
 

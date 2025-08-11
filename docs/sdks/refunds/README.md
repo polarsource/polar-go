@@ -16,6 +16,7 @@ List products.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="refunds:list" method="get" path="/v1/refunds/" -->
 ```go
 package main
 
@@ -87,6 +88,7 @@ Create a refund.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="refunds:create" method="post" path="/v1/refunds/" -->
 ```go
 package main
 

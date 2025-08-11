@@ -764,6 +764,69 @@ func (u MetricsTotalsMonthlyRecurringRevenue) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type MetricsTotalsMonthlyRecurringRevenue: all fields are null")
 }
 
+type MetricsTotalsCommittedMonthlyRecurringRevenueType string
+
+const (
+	MetricsTotalsCommittedMonthlyRecurringRevenueTypeInteger MetricsTotalsCommittedMonthlyRecurringRevenueType = "integer"
+	MetricsTotalsCommittedMonthlyRecurringRevenueTypeNumber  MetricsTotalsCommittedMonthlyRecurringRevenueType = "number"
+)
+
+type MetricsTotalsCommittedMonthlyRecurringRevenue struct {
+	Integer *int64   `queryParam:"inline"`
+	Number  *float64 `queryParam:"inline"`
+
+	Type MetricsTotalsCommittedMonthlyRecurringRevenueType
+}
+
+func CreateMetricsTotalsCommittedMonthlyRecurringRevenueInteger(integer int64) MetricsTotalsCommittedMonthlyRecurringRevenue {
+	typ := MetricsTotalsCommittedMonthlyRecurringRevenueTypeInteger
+
+	return MetricsTotalsCommittedMonthlyRecurringRevenue{
+		Integer: &integer,
+		Type:    typ,
+	}
+}
+
+func CreateMetricsTotalsCommittedMonthlyRecurringRevenueNumber(number float64) MetricsTotalsCommittedMonthlyRecurringRevenue {
+	typ := MetricsTotalsCommittedMonthlyRecurringRevenueTypeNumber
+
+	return MetricsTotalsCommittedMonthlyRecurringRevenue{
+		Number: &number,
+		Type:   typ,
+	}
+}
+
+func (u *MetricsTotalsCommittedMonthlyRecurringRevenue) UnmarshalJSON(data []byte) error {
+
+	var integer int64 = int64(0)
+	if err := utils.UnmarshalJSON(data, &integer, "", true, false); err == nil {
+		u.Integer = &integer
+		u.Type = MetricsTotalsCommittedMonthlyRecurringRevenueTypeInteger
+		return nil
+	}
+
+	var number float64 = float64(0)
+	if err := utils.UnmarshalJSON(data, &number, "", true, false); err == nil {
+		u.Number = &number
+		u.Type = MetricsTotalsCommittedMonthlyRecurringRevenueTypeNumber
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for MetricsTotalsCommittedMonthlyRecurringRevenue", string(data))
+}
+
+func (u MetricsTotalsCommittedMonthlyRecurringRevenue) MarshalJSON() ([]byte, error) {
+	if u.Integer != nil {
+		return utils.MarshalJSON(u.Integer, "", true)
+	}
+
+	if u.Number != nil {
+		return utils.MarshalJSON(u.Number, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type MetricsTotalsCommittedMonthlyRecurringRevenue: all fields are null")
+}
+
 type MetricsTotalsCheckoutsType string
 
 const (
@@ -954,21 +1017,22 @@ func (u MetricsTotalsCheckoutsConversion) MarshalJSON() ([]byte, error) {
 }
 
 type MetricsTotals struct {
-	Orders                      MetricsTotalsOrders                      `json:"orders"`
-	Revenue                     MetricsTotalsRevenue                     `json:"revenue"`
-	CumulativeRevenue           MetricsTotalsCumulativeRevenue           `json:"cumulative_revenue"`
-	AverageOrderValue           MetricsTotalsAverageOrderValue           `json:"average_order_value"`
-	OneTimeProducts             MetricsTotalsOneTimeProducts             `json:"one_time_products"`
-	OneTimeProductsRevenue      MetricsTotalsOneTimeProductsRevenue      `json:"one_time_products_revenue"`
-	NewSubscriptions            MetricsTotalsNewSubscriptions            `json:"new_subscriptions"`
-	NewSubscriptionsRevenue     MetricsTotalsNewSubscriptionsRevenue     `json:"new_subscriptions_revenue"`
-	RenewedSubscriptions        MetricsTotalsRenewedSubscriptions        `json:"renewed_subscriptions"`
-	RenewedSubscriptionsRevenue MetricsTotalsRenewedSubscriptionsRevenue `json:"renewed_subscriptions_revenue"`
-	ActiveSubscriptions         MetricsTotalsActiveSubscriptions         `json:"active_subscriptions"`
-	MonthlyRecurringRevenue     MetricsTotalsMonthlyRecurringRevenue     `json:"monthly_recurring_revenue"`
-	Checkouts                   MetricsTotalsCheckouts                   `json:"checkouts"`
-	SucceededCheckouts          MetricsTotalsSucceededCheckouts          `json:"succeeded_checkouts"`
-	CheckoutsConversion         MetricsTotalsCheckoutsConversion         `json:"checkouts_conversion"`
+	Orders                           MetricsTotalsOrders                           `json:"orders"`
+	Revenue                          MetricsTotalsRevenue                          `json:"revenue"`
+	CumulativeRevenue                MetricsTotalsCumulativeRevenue                `json:"cumulative_revenue"`
+	AverageOrderValue                MetricsTotalsAverageOrderValue                `json:"average_order_value"`
+	OneTimeProducts                  MetricsTotalsOneTimeProducts                  `json:"one_time_products"`
+	OneTimeProductsRevenue           MetricsTotalsOneTimeProductsRevenue           `json:"one_time_products_revenue"`
+	NewSubscriptions                 MetricsTotalsNewSubscriptions                 `json:"new_subscriptions"`
+	NewSubscriptionsRevenue          MetricsTotalsNewSubscriptionsRevenue          `json:"new_subscriptions_revenue"`
+	RenewedSubscriptions             MetricsTotalsRenewedSubscriptions             `json:"renewed_subscriptions"`
+	RenewedSubscriptionsRevenue      MetricsTotalsRenewedSubscriptionsRevenue      `json:"renewed_subscriptions_revenue"`
+	ActiveSubscriptions              MetricsTotalsActiveSubscriptions              `json:"active_subscriptions"`
+	MonthlyRecurringRevenue          MetricsTotalsMonthlyRecurringRevenue          `json:"monthly_recurring_revenue"`
+	CommittedMonthlyRecurringRevenue MetricsTotalsCommittedMonthlyRecurringRevenue `json:"committed_monthly_recurring_revenue"`
+	Checkouts                        MetricsTotalsCheckouts                        `json:"checkouts"`
+	SucceededCheckouts               MetricsTotalsSucceededCheckouts               `json:"succeeded_checkouts"`
+	CheckoutsConversion              MetricsTotalsCheckoutsConversion              `json:"checkouts_conversion"`
 }
 
 func (o *MetricsTotals) GetOrders() MetricsTotalsOrders {
@@ -1053,6 +1117,13 @@ func (o *MetricsTotals) GetMonthlyRecurringRevenue() MetricsTotalsMonthlyRecurri
 		return MetricsTotalsMonthlyRecurringRevenue{}
 	}
 	return o.MonthlyRecurringRevenue
+}
+
+func (o *MetricsTotals) GetCommittedMonthlyRecurringRevenue() MetricsTotalsCommittedMonthlyRecurringRevenue {
+	if o == nil {
+		return MetricsTotalsCommittedMonthlyRecurringRevenue{}
+	}
+	return o.CommittedMonthlyRecurringRevenue
 }
 
 func (o *MetricsTotals) GetCheckouts() MetricsTotalsCheckouts {

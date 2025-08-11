@@ -15,3 +15,9 @@ checkoutForbiddenError := apierrors.CreateCheckoutForbiddenErrorAlreadyActiveSub
 checkoutForbiddenError := apierrors.CreateCheckoutForbiddenErrorNotOpenCheckout(components.NotOpenCheckout{/* values here */})
 ```
 
+### PaymentNotReady
+
+```go
+checkoutForbiddenError := apierrors.CreateCheckoutForbiddenErrorPaymentNotReady(components.PaymentNotReady{/* values here */})
+```
+

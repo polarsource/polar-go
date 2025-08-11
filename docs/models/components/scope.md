@@ -9,7 +9,6 @@
 | `ScopeProfile`                     | profile                            |
 | `ScopeEmail`                       | email                              |
 | `ScopeUserRead`                    | user:read                          |
-| `ScopeAdmin`                       | admin                              |
 | `ScopeWebDefault`                  | web_default                        |
 | `ScopeOrganizationsRead`           | organizations:read                 |
 | `ScopeOrganizationsWrite`          | organizations:write                |

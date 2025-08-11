@@ -19,6 +19,7 @@ List discounts.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="discounts:list" method="get" path="/v1/discounts/" -->
 ```go
 package main
 
@@ -90,6 +91,7 @@ Create a discount.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="discounts:create" method="post" path="/v1/discounts/" -->
 ```go
 package main
 
@@ -153,6 +155,7 @@ Get a discount by ID.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="discounts:get" method="get" path="/v1/discounts/{id}" -->
 ```go
 package main
 
@@ -208,6 +211,7 @@ Update a discount.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="discounts:update" method="patch" path="/v1/discounts/{id}" -->
 ```go
 package main
 
@@ -265,6 +269,7 @@ Delete a discount.
 
 ### Example Usage
 
+<!-- UsageSnippet language="go" operationID="discounts:delete" method="delete" path="/v1/discounts/{id}" -->
 ```go
 package main
 
