@@ -67,7 +67,7 @@ func (s *PolarOrganizations) Get(ctx context.Context, slug string, opts ...opera
 		Context:          ctx,
 		OperationID:      "customer_portal:organizations:get",
 		OAuth2Scopes:     []string{},
-		SecuritySource:   s.sdkConfiguration.Security,
+		SecuritySource:   nil,
 	}
 
 	timeout := o.Timeout
@@ -87,10 +87,6 @@ func (s *PolarOrganizations) Get(ctx context.Context, slug string, opts ...opera
 	}
 	req.Header.Set("Accept", "application/json")
 	req.Header.Set("User-Agent", s.sdkConfiguration.UserAgent)
-
-	if err := utils.PopulateSecurity(ctx, req, s.sdkConfiguration.Security); err != nil {
-		return nil, err
-	}
 
 	for k, v := range o.SetHeaders {
 		req.Header.Set(k, v)

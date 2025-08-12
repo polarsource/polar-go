@@ -8,21 +8,33 @@ type Metrics struct {
 	// Information about a metric.
 	Revenue Metric `json:"revenue"`
 	// Information about a metric.
+	NetRevenue Metric `json:"net_revenue"`
+	// Information about a metric.
 	CumulativeRevenue Metric `json:"cumulative_revenue"`
 	// Information about a metric.
+	NetCumulativeRevenue Metric `json:"net_cumulative_revenue"`
+	// Information about a metric.
 	AverageOrderValue Metric `json:"average_order_value"`
+	// Information about a metric.
+	NetAverageOrderValue Metric `json:"net_average_order_value"`
 	// Information about a metric.
 	OneTimeProducts Metric `json:"one_time_products"`
 	// Information about a metric.
 	OneTimeProductsRevenue Metric `json:"one_time_products_revenue"`
 	// Information about a metric.
+	OneTimeProductsNetRevenue Metric `json:"one_time_products_net_revenue"`
+	// Information about a metric.
 	NewSubscriptions Metric `json:"new_subscriptions"`
 	// Information about a metric.
 	NewSubscriptionsRevenue Metric `json:"new_subscriptions_revenue"`
 	// Information about a metric.
+	NewSubscriptionsNetRevenue Metric `json:"new_subscriptions_net_revenue"`
+	// Information about a metric.
 	RenewedSubscriptions Metric `json:"renewed_subscriptions"`
 	// Information about a metric.
 	RenewedSubscriptionsRevenue Metric `json:"renewed_subscriptions_revenue"`
+	// Information about a metric.
+	RenewedSubscriptionsNetRevenue Metric `json:"renewed_subscriptions_net_revenue"`
 	// Information about a metric.
 	ActiveSubscriptions Metric `json:"active_subscriptions"`
 	// Information about a metric.
@@ -51,6 +63,13 @@ func (o *Metrics) GetRevenue() Metric {
 	return o.Revenue
 }
 
+func (o *Metrics) GetNetRevenue() Metric {
+	if o == nil {
+		return Metric{}
+	}
+	return o.NetRevenue
+}
+
 func (o *Metrics) GetCumulativeRevenue() Metric {
 	if o == nil {
 		return Metric{}
@@ -58,11 +77,25 @@ func (o *Metrics) GetCumulativeRevenue() Metric {
 	return o.CumulativeRevenue
 }
 
+func (o *Metrics) GetNetCumulativeRevenue() Metric {
+	if o == nil {
+		return Metric{}
+	}
+	return o.NetCumulativeRevenue
+}
+
 func (o *Metrics) GetAverageOrderValue() Metric {
 	if o == nil {
 		return Metric{}
 	}
 	return o.AverageOrderValue
+}
+
+func (o *Metrics) GetNetAverageOrderValue() Metric {
+	if o == nil {
+		return Metric{}
+	}
+	return o.NetAverageOrderValue
 }
 
 func (o *Metrics) GetOneTimeProducts() Metric {
@@ -79,6 +112,13 @@ func (o *Metrics) GetOneTimeProductsRevenue() Metric {
 	return o.OneTimeProductsRevenue
 }
 
+func (o *Metrics) GetOneTimeProductsNetRevenue() Metric {
+	if o == nil {
+		return Metric{}
+	}
+	return o.OneTimeProductsNetRevenue
+}
+
 func (o *Metrics) GetNewSubscriptions() Metric {
 	if o == nil {
 		return Metric{}
@@ -93,6 +133,13 @@ func (o *Metrics) GetNewSubscriptionsRevenue() Metric {
 	return o.NewSubscriptionsRevenue
 }
 
+func (o *Metrics) GetNewSubscriptionsNetRevenue() Metric {
+	if o == nil {
+		return Metric{}
+	}
+	return o.NewSubscriptionsNetRevenue
+}
+
 func (o *Metrics) GetRenewedSubscriptions() Metric {
 	if o == nil {
 		return Metric{}
@@ -105,6 +152,13 @@ func (o *Metrics) GetRenewedSubscriptionsRevenue() Metric {
 		return Metric{}
 	}
 	return o.RenewedSubscriptionsRevenue
+}
+
+func (o *Metrics) GetRenewedSubscriptionsNetRevenue() Metric {
+	if o == nil {
+		return Metric{}
+	}
+	return o.RenewedSubscriptionsNetRevenue
 }
 
 func (o *Metrics) GetActiveSubscriptions() Metric {

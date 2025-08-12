@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: e7f2de70-a9ae-48d3-92f6-da15e6733a27
 management:
-  docChecksum: 65b52aa270befaec33d1ecb4a090c803
+  docChecksum: f04f87e6f01948093445b7a6302d0fb4
   docVersion: 0.1.0
-  speakeasyVersion: 1.600.2
-  generationVersion: 2.677.3
-  releaseVersion: 0.8.0
-  configChecksum: 39f6c82c128657ebe479581769d9ce23
+  speakeasyVersion: 1.601.3
+  generationVersion: 2.680.0
+  releaseVersion: 0.8.1
+  configChecksum: a6751cacbe19cac1b64d51fc766ae0d0
   repoURL: https://github.com/polarsource/polar-go.git
   installationURL: https://github.com/polarsource/polar-go
 features:
@@ -992,6 +992,7 @@ generatedFiles:
   - docs/models/components/filteroperator.md
   - docs/models/components/func.md
   - docs/models/components/genericpayment.md
+  - docs/models/components/genericpaymentprocessormetadata.md
   - docs/models/components/httpmetadata.md
   - docs/models/components/introspecttokenrequest.md
   - docs/models/components/introspecttokenrequesttokentypehint.md
@@ -1076,24 +1077,35 @@ generatedFiles:
   - docs/models/components/metricstotalscommittedmonthlyrecurringrevenue.md
   - docs/models/components/metricstotalscumulativerevenue.md
   - docs/models/components/metricstotalsmonthlyrecurringrevenue.md
+  - docs/models/components/metricstotalsnetaverageordervalue.md
+  - docs/models/components/metricstotalsnetcumulativerevenue.md
+  - docs/models/components/metricstotalsnetrevenue.md
   - docs/models/components/metricstotalsnewsubscriptions.md
+  - docs/models/components/metricstotalsnewsubscriptionsnetrevenue.md
   - docs/models/components/metricstotalsnewsubscriptionsrevenue.md
   - docs/models/components/metricstotalsonetimeproducts.md
+  - docs/models/components/metricstotalsonetimeproductsnetrevenue.md
   - docs/models/components/metricstotalsonetimeproductsrevenue.md
   - docs/models/components/metricstotalsorders.md
   - docs/models/components/metricstotalsrenewedsubscriptions.md
+  - docs/models/components/metricstotalsrenewedsubscriptionsnetrevenue.md
   - docs/models/components/metricstotalsrenewedsubscriptionsrevenue.md
   - docs/models/components/metricstotalsrevenue.md
   - docs/models/components/metricstotalssucceededcheckouts.md
   - docs/models/components/metrictype.md
   - docs/models/components/missinginvoicebillingdetails.md
   - docs/models/components/monthlyrecurringrevenue.md
+  - docs/models/components/netaverageordervalue.md
+  - docs/models/components/netcumulativerevenue.md
+  - docs/models/components/netrevenue.md
   - docs/models/components/newsubscriptions.md
+  - docs/models/components/newsubscriptionsnetrevenue.md
   - docs/models/components/newsubscriptionsrevenue.md
   - docs/models/components/notopencheckout.md
   - docs/models/components/notpaidorder.md
   - docs/models/components/oauth2clientpublic.md
   - docs/models/components/onetimeproducts.md
+  - docs/models/components/onetimeproductsnetrevenue.md
   - docs/models/components/onetimeproductsrevenue.md
   - docs/models/components/order.md
   - docs/models/components/orderbillingreason.md
@@ -1137,6 +1149,7 @@ generatedFiles:
   - docs/models/components/permission.md
   - docs/models/components/previousproperties.md
   - docs/models/components/prices.md
+  - docs/models/components/processormetadata.md
   - docs/models/components/product.md
   - docs/models/components/productbenefitsupdate.md
   - docs/models/components/productbillingtype.md
@@ -1172,6 +1185,7 @@ generatedFiles:
   - docs/models/components/refundsortproperty.md
   - docs/models/components/refundstatus.md
   - docs/models/components/renewedsubscriptions.md
+  - docs/models/components/renewedsubscriptionsnetrevenue.md
   - docs/models/components/renewedsubscriptionsrevenue.md
   - docs/models/components/revenue.md
   - docs/models/components/revoketokenrequest.md
@@ -2505,7 +2519,7 @@ examples:
           timezone: "UTC"
       responses:
         "200":
-          application/json: {"periods": [{"timestamp": "2024-11-05T16:37:46.152Z", "orders": 2313.41, "revenue": 3697.18, "cumulative_revenue": 160547, "average_order_value": 8348.91, "one_time_products": 6315.62, "one_time_products_revenue": 271957, "new_subscriptions": 225346, "new_subscriptions_revenue": 5903.37, "renewed_subscriptions": 146.2, "renewed_subscriptions_revenue": 3772.41, "active_subscriptions": 1692.89, "monthly_recurring_revenue": 5809.97, "committed_monthly_recurring_revenue": 7366.16, "checkouts": 6229.46, "succeeded_checkouts": 464.75, "checkouts_conversion": 536209}], "totals": {"orders": 300394, "revenue": 980988, "cumulative_revenue": 5367.66, "average_order_value": 7320.73, "one_time_products": 772559, "one_time_products_revenue": 875093, "new_subscriptions": 903196, "new_subscriptions_revenue": 18.97, "renewed_subscriptions": 723.93, "renewed_subscriptions_revenue": 846052, "active_subscriptions": 5698.58, "monthly_recurring_revenue": 180851, "committed_monthly_recurring_revenue": 620.86, "checkouts": 5307.17, "succeeded_checkouts": 9995.79, "checkouts_conversion": 5883.46}, "metrics": {"orders": {"slug": "<value>", "display_name": "Mortimer35", "type": "percentage"}, "revenue": {"slug": "<value>", "display_name": "Cruz.Yundt29", "type": "scalar"}, "cumulative_revenue": {"slug": "<value>", "display_name": "Keshaun_Mraz87", "type": "scalar"}, "average_order_value": {"slug": "<value>", "display_name": "Therese_Marks93", "type": "percentage"}, "one_time_products": {"slug": "<value>", "display_name": "Roslyn.White86", "type": "scalar"}, "one_time_products_revenue": {"slug": "<value>", "display_name": "Henderson.Herman17", "type": "percentage"}, "new_subscriptions": {"slug": "<value>", "display_name": "Jamaal_Mueller91", "type": "percentage"}, "new_subscriptions_revenue": {"slug": "<value>", "display_name": "Kaylee25", "type": "currency"}, "renewed_subscriptions": {"slug": "<value>", "display_name": "Leland_Yundt", "type": "scalar"}, "renewed_subscriptions_revenue": {"slug": "<value>", "display_name": "Dalton_Waters92", "type": "scalar"}, "active_subscriptions": {"slug": "<value>", "display_name": "Alfonzo_Daugherty", "type": "percentage"}, "monthly_recurring_revenue": {"slug": "<value>", "display_name": "Diana97", "type": "currency"}, "committed_monthly_recurring_revenue": {"slug": "<value>", "display_name": "Garrett.Stokes", "type": "scalar"}, "checkouts": {"slug": "<value>", "display_name": "Magdalen_Goodwin-Schoen", "type": "scalar"}, "succeeded_checkouts": {"slug": "<value>", "display_name": "Ida37", "type": "scalar"}, "checkouts_conversion": {"slug": "<value>", "display_name": "Savion.Gerlach", "type": "percentage"}}}
+          application/json: {"periods": [{"timestamp": "2024-11-05T16:37:46.152Z", "orders": 2313.41, "revenue": 3697.18, "net_revenue": 7366.16, "cumulative_revenue": 160547, "net_cumulative_revenue": 620.86, "average_order_value": 8348.91, "net_average_order_value": 615596, "one_time_products": 6315.62, "one_time_products_revenue": 271957, "one_time_products_net_revenue": 2313.41, "new_subscriptions": 225346, "new_subscriptions_revenue": 5903.37, "new_subscriptions_net_revenue": 3697.18, "renewed_subscriptions": 146.2, "renewed_subscriptions_revenue": 3772.41, "renewed_subscriptions_net_revenue": 160547, "active_subscriptions": 1692.89, "monthly_recurring_revenue": 5809.97, "committed_monthly_recurring_revenue": 7366.16, "checkouts": 6229.46, "succeeded_checkouts": 464.75, "checkouts_conversion": 536209}], "totals": {"orders": 300394, "revenue": 980988, "net_revenue": 8348.91, "cumulative_revenue": 5367.66, "net_cumulative_revenue": 6315.62, "average_order_value": 7320.73, "net_average_order_value": 271957, "one_time_products": 772559, "one_time_products_revenue": 875093, "one_time_products_net_revenue": 225346, "new_subscriptions": 903196, "new_subscriptions_revenue": 18.97, "new_subscriptions_net_revenue": 5903.37, "renewed_subscriptions": 723.93, "renewed_subscriptions_revenue": 846052, "renewed_subscriptions_net_revenue": 146.2, "active_subscriptions": 5698.58, "monthly_recurring_revenue": 180851, "committed_monthly_recurring_revenue": 620.86, "checkouts": 5307.17, "succeeded_checkouts": 9995.79, "checkouts_conversion": 5883.46}, "metrics": {"orders": {"slug": "<value>", "display_name": "Mortimer35", "type": "percentage"}, "revenue": {"slug": "<value>", "display_name": "Cruz.Yundt29", "type": "scalar"}, "net_revenue": {"slug": "<value>", "display_name": "Noemie.Pagac", "type": "currency"}, "cumulative_revenue": {"slug": "<value>", "display_name": "Keshaun_Mraz87", "type": "scalar"}, "net_cumulative_revenue": {"slug": "<value>", "display_name": "Lina.Bayer53", "type": "scalar"}, "average_order_value": {"slug": "<value>", "display_name": "Therese_Marks93", "type": "percentage"}, "net_average_order_value": {"slug": "<value>", "display_name": "Christine_Mertz-Leuschke73", "type": "percentage"}, "one_time_products": {"slug": "<value>", "display_name": "Roslyn.White86", "type": "scalar"}, "one_time_products_revenue": {"slug": "<value>", "display_name": "Henderson.Herman17", "type": "percentage"}, "one_time_products_net_revenue": {"slug": "<value>", "display_name": "Daniella_Herzog72", "type": "percentage"}, "new_subscriptions": {"slug": "<value>", "display_name": "Jamaal_Mueller91", "type": "percentage"}, "new_subscriptions_revenue": {"slug": "<value>", "display_name": "Kaylee25", "type": "currency"}, "new_subscriptions_net_revenue": {"slug": "<value>", "display_name": "Antonina_Stamm", "type": "scalar"}, "renewed_subscriptions": {"slug": "<value>", "display_name": "Leland_Yundt", "type": "scalar"}, "renewed_subscriptions_revenue": {"slug": "<value>", "display_name": "Dalton_Waters92", "type": "scalar"}, "renewed_subscriptions_net_revenue": {"slug": "<value>", "display_name": "Vincenza_Yundt", "type": "percentage"}, "active_subscriptions": {"slug": "<value>", "display_name": "Alfonzo_Daugherty", "type": "percentage"}, "monthly_recurring_revenue": {"slug": "<value>", "display_name": "Diana97", "type": "currency"}, "committed_monthly_recurring_revenue": {"slug": "<value>", "display_name": "Garrett.Stokes", "type": "scalar"}, "checkouts": {"slug": "<value>", "display_name": "Magdalen_Goodwin-Schoen", "type": "scalar"}, "succeeded_checkouts": {"slug": "<value>", "display_name": "Ida37", "type": "scalar"}, "checkouts_conversion": {"slug": "<value>", "display_name": "Savion.Gerlach", "type": "percentage"}}}
         "422":
           application/json: {}
   metrics:limits:

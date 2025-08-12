@@ -135,6 +135,69 @@ func (u Revenue) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type Revenue: all fields are null")
 }
 
+type NetRevenueType string
+
+const (
+	NetRevenueTypeInteger NetRevenueType = "integer"
+	NetRevenueTypeNumber  NetRevenueType = "number"
+)
+
+type NetRevenue struct {
+	Integer *int64   `queryParam:"inline"`
+	Number  *float64 `queryParam:"inline"`
+
+	Type NetRevenueType
+}
+
+func CreateNetRevenueInteger(integer int64) NetRevenue {
+	typ := NetRevenueTypeInteger
+
+	return NetRevenue{
+		Integer: &integer,
+		Type:    typ,
+	}
+}
+
+func CreateNetRevenueNumber(number float64) NetRevenue {
+	typ := NetRevenueTypeNumber
+
+	return NetRevenue{
+		Number: &number,
+		Type:   typ,
+	}
+}
+
+func (u *NetRevenue) UnmarshalJSON(data []byte) error {
+
+	var integer int64 = int64(0)
+	if err := utils.UnmarshalJSON(data, &integer, "", true, false); err == nil {
+		u.Integer = &integer
+		u.Type = NetRevenueTypeInteger
+		return nil
+	}
+
+	var number float64 = float64(0)
+	if err := utils.UnmarshalJSON(data, &number, "", true, false); err == nil {
+		u.Number = &number
+		u.Type = NetRevenueTypeNumber
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for NetRevenue", string(data))
+}
+
+func (u NetRevenue) MarshalJSON() ([]byte, error) {
+	if u.Integer != nil {
+		return utils.MarshalJSON(u.Integer, "", true)
+	}
+
+	if u.Number != nil {
+		return utils.MarshalJSON(u.Number, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type NetRevenue: all fields are null")
+}
+
 type CumulativeRevenueType string
 
 const (
@@ -198,6 +261,69 @@ func (u CumulativeRevenue) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type CumulativeRevenue: all fields are null")
 }
 
+type NetCumulativeRevenueType string
+
+const (
+	NetCumulativeRevenueTypeInteger NetCumulativeRevenueType = "integer"
+	NetCumulativeRevenueTypeNumber  NetCumulativeRevenueType = "number"
+)
+
+type NetCumulativeRevenue struct {
+	Integer *int64   `queryParam:"inline"`
+	Number  *float64 `queryParam:"inline"`
+
+	Type NetCumulativeRevenueType
+}
+
+func CreateNetCumulativeRevenueInteger(integer int64) NetCumulativeRevenue {
+	typ := NetCumulativeRevenueTypeInteger
+
+	return NetCumulativeRevenue{
+		Integer: &integer,
+		Type:    typ,
+	}
+}
+
+func CreateNetCumulativeRevenueNumber(number float64) NetCumulativeRevenue {
+	typ := NetCumulativeRevenueTypeNumber
+
+	return NetCumulativeRevenue{
+		Number: &number,
+		Type:   typ,
+	}
+}
+
+func (u *NetCumulativeRevenue) UnmarshalJSON(data []byte) error {
+
+	var integer int64 = int64(0)
+	if err := utils.UnmarshalJSON(data, &integer, "", true, false); err == nil {
+		u.Integer = &integer
+		u.Type = NetCumulativeRevenueTypeInteger
+		return nil
+	}
+
+	var number float64 = float64(0)
+	if err := utils.UnmarshalJSON(data, &number, "", true, false); err == nil {
+		u.Number = &number
+		u.Type = NetCumulativeRevenueTypeNumber
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for NetCumulativeRevenue", string(data))
+}
+
+func (u NetCumulativeRevenue) MarshalJSON() ([]byte, error) {
+	if u.Integer != nil {
+		return utils.MarshalJSON(u.Integer, "", true)
+	}
+
+	if u.Number != nil {
+		return utils.MarshalJSON(u.Number, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type NetCumulativeRevenue: all fields are null")
+}
+
 type AverageOrderValueType string
 
 const (
@@ -259,6 +385,69 @@ func (u AverageOrderValue) MarshalJSON() ([]byte, error) {
 	}
 
 	return nil, errors.New("could not marshal union type AverageOrderValue: all fields are null")
+}
+
+type NetAverageOrderValueType string
+
+const (
+	NetAverageOrderValueTypeInteger NetAverageOrderValueType = "integer"
+	NetAverageOrderValueTypeNumber  NetAverageOrderValueType = "number"
+)
+
+type NetAverageOrderValue struct {
+	Integer *int64   `queryParam:"inline"`
+	Number  *float64 `queryParam:"inline"`
+
+	Type NetAverageOrderValueType
+}
+
+func CreateNetAverageOrderValueInteger(integer int64) NetAverageOrderValue {
+	typ := NetAverageOrderValueTypeInteger
+
+	return NetAverageOrderValue{
+		Integer: &integer,
+		Type:    typ,
+	}
+}
+
+func CreateNetAverageOrderValueNumber(number float64) NetAverageOrderValue {
+	typ := NetAverageOrderValueTypeNumber
+
+	return NetAverageOrderValue{
+		Number: &number,
+		Type:   typ,
+	}
+}
+
+func (u *NetAverageOrderValue) UnmarshalJSON(data []byte) error {
+
+	var integer int64 = int64(0)
+	if err := utils.UnmarshalJSON(data, &integer, "", true, false); err == nil {
+		u.Integer = &integer
+		u.Type = NetAverageOrderValueTypeInteger
+		return nil
+	}
+
+	var number float64 = float64(0)
+	if err := utils.UnmarshalJSON(data, &number, "", true, false); err == nil {
+		u.Number = &number
+		u.Type = NetAverageOrderValueTypeNumber
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for NetAverageOrderValue", string(data))
+}
+
+func (u NetAverageOrderValue) MarshalJSON() ([]byte, error) {
+	if u.Integer != nil {
+		return utils.MarshalJSON(u.Integer, "", true)
+	}
+
+	if u.Number != nil {
+		return utils.MarshalJSON(u.Number, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type NetAverageOrderValue: all fields are null")
 }
 
 type OneTimeProductsType string
@@ -387,6 +576,69 @@ func (u OneTimeProductsRevenue) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type OneTimeProductsRevenue: all fields are null")
 }
 
+type OneTimeProductsNetRevenueType string
+
+const (
+	OneTimeProductsNetRevenueTypeInteger OneTimeProductsNetRevenueType = "integer"
+	OneTimeProductsNetRevenueTypeNumber  OneTimeProductsNetRevenueType = "number"
+)
+
+type OneTimeProductsNetRevenue struct {
+	Integer *int64   `queryParam:"inline"`
+	Number  *float64 `queryParam:"inline"`
+
+	Type OneTimeProductsNetRevenueType
+}
+
+func CreateOneTimeProductsNetRevenueInteger(integer int64) OneTimeProductsNetRevenue {
+	typ := OneTimeProductsNetRevenueTypeInteger
+
+	return OneTimeProductsNetRevenue{
+		Integer: &integer,
+		Type:    typ,
+	}
+}
+
+func CreateOneTimeProductsNetRevenueNumber(number float64) OneTimeProductsNetRevenue {
+	typ := OneTimeProductsNetRevenueTypeNumber
+
+	return OneTimeProductsNetRevenue{
+		Number: &number,
+		Type:   typ,
+	}
+}
+
+func (u *OneTimeProductsNetRevenue) UnmarshalJSON(data []byte) error {
+
+	var integer int64 = int64(0)
+	if err := utils.UnmarshalJSON(data, &integer, "", true, false); err == nil {
+		u.Integer = &integer
+		u.Type = OneTimeProductsNetRevenueTypeInteger
+		return nil
+	}
+
+	var number float64 = float64(0)
+	if err := utils.UnmarshalJSON(data, &number, "", true, false); err == nil {
+		u.Number = &number
+		u.Type = OneTimeProductsNetRevenueTypeNumber
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for OneTimeProductsNetRevenue", string(data))
+}
+
+func (u OneTimeProductsNetRevenue) MarshalJSON() ([]byte, error) {
+	if u.Integer != nil {
+		return utils.MarshalJSON(u.Integer, "", true)
+	}
+
+	if u.Number != nil {
+		return utils.MarshalJSON(u.Number, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type OneTimeProductsNetRevenue: all fields are null")
+}
+
 type NewSubscriptionsType string
 
 const (
@@ -513,6 +765,69 @@ func (u NewSubscriptionsRevenue) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type NewSubscriptionsRevenue: all fields are null")
 }
 
+type NewSubscriptionsNetRevenueType string
+
+const (
+	NewSubscriptionsNetRevenueTypeInteger NewSubscriptionsNetRevenueType = "integer"
+	NewSubscriptionsNetRevenueTypeNumber  NewSubscriptionsNetRevenueType = "number"
+)
+
+type NewSubscriptionsNetRevenue struct {
+	Integer *int64   `queryParam:"inline"`
+	Number  *float64 `queryParam:"inline"`
+
+	Type NewSubscriptionsNetRevenueType
+}
+
+func CreateNewSubscriptionsNetRevenueInteger(integer int64) NewSubscriptionsNetRevenue {
+	typ := NewSubscriptionsNetRevenueTypeInteger
+
+	return NewSubscriptionsNetRevenue{
+		Integer: &integer,
+		Type:    typ,
+	}
+}
+
+func CreateNewSubscriptionsNetRevenueNumber(number float64) NewSubscriptionsNetRevenue {
+	typ := NewSubscriptionsNetRevenueTypeNumber
+
+	return NewSubscriptionsNetRevenue{
+		Number: &number,
+		Type:   typ,
+	}
+}
+
+func (u *NewSubscriptionsNetRevenue) UnmarshalJSON(data []byte) error {
+
+	var integer int64 = int64(0)
+	if err := utils.UnmarshalJSON(data, &integer, "", true, false); err == nil {
+		u.Integer = &integer
+		u.Type = NewSubscriptionsNetRevenueTypeInteger
+		return nil
+	}
+
+	var number float64 = float64(0)
+	if err := utils.UnmarshalJSON(data, &number, "", true, false); err == nil {
+		u.Number = &number
+		u.Type = NewSubscriptionsNetRevenueTypeNumber
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for NewSubscriptionsNetRevenue", string(data))
+}
+
+func (u NewSubscriptionsNetRevenue) MarshalJSON() ([]byte, error) {
+	if u.Integer != nil {
+		return utils.MarshalJSON(u.Integer, "", true)
+	}
+
+	if u.Number != nil {
+		return utils.MarshalJSON(u.Number, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type NewSubscriptionsNetRevenue: all fields are null")
+}
+
 type RenewedSubscriptionsType string
 
 const (
@@ -637,6 +952,69 @@ func (u RenewedSubscriptionsRevenue) MarshalJSON() ([]byte, error) {
 	}
 
 	return nil, errors.New("could not marshal union type RenewedSubscriptionsRevenue: all fields are null")
+}
+
+type RenewedSubscriptionsNetRevenueType string
+
+const (
+	RenewedSubscriptionsNetRevenueTypeInteger RenewedSubscriptionsNetRevenueType = "integer"
+	RenewedSubscriptionsNetRevenueTypeNumber  RenewedSubscriptionsNetRevenueType = "number"
+)
+
+type RenewedSubscriptionsNetRevenue struct {
+	Integer *int64   `queryParam:"inline"`
+	Number  *float64 `queryParam:"inline"`
+
+	Type RenewedSubscriptionsNetRevenueType
+}
+
+func CreateRenewedSubscriptionsNetRevenueInteger(integer int64) RenewedSubscriptionsNetRevenue {
+	typ := RenewedSubscriptionsNetRevenueTypeInteger
+
+	return RenewedSubscriptionsNetRevenue{
+		Integer: &integer,
+		Type:    typ,
+	}
+}
+
+func CreateRenewedSubscriptionsNetRevenueNumber(number float64) RenewedSubscriptionsNetRevenue {
+	typ := RenewedSubscriptionsNetRevenueTypeNumber
+
+	return RenewedSubscriptionsNetRevenue{
+		Number: &number,
+		Type:   typ,
+	}
+}
+
+func (u *RenewedSubscriptionsNetRevenue) UnmarshalJSON(data []byte) error {
+
+	var integer int64 = int64(0)
+	if err := utils.UnmarshalJSON(data, &integer, "", true, false); err == nil {
+		u.Integer = &integer
+		u.Type = RenewedSubscriptionsNetRevenueTypeInteger
+		return nil
+	}
+
+	var number float64 = float64(0)
+	if err := utils.UnmarshalJSON(data, &number, "", true, false); err == nil {
+		u.Number = &number
+		u.Type = RenewedSubscriptionsNetRevenueTypeNumber
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for RenewedSubscriptionsNetRevenue", string(data))
+}
+
+func (u RenewedSubscriptionsNetRevenue) MarshalJSON() ([]byte, error) {
+	if u.Integer != nil {
+		return utils.MarshalJSON(u.Integer, "", true)
+	}
+
+	if u.Number != nil {
+		return utils.MarshalJSON(u.Number, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type RenewedSubscriptionsNetRevenue: all fields are null")
 }
 
 type ActiveSubscriptionsType string
@@ -1022,14 +1400,20 @@ type MetricPeriod struct {
 	Timestamp                        time.Time                        `json:"timestamp"`
 	Orders                           Orders                           `json:"orders"`
 	Revenue                          Revenue                          `json:"revenue"`
+	NetRevenue                       NetRevenue                       `json:"net_revenue"`
 	CumulativeRevenue                CumulativeRevenue                `json:"cumulative_revenue"`
+	NetCumulativeRevenue             NetCumulativeRevenue             `json:"net_cumulative_revenue"`
 	AverageOrderValue                AverageOrderValue                `json:"average_order_value"`
+	NetAverageOrderValue             NetAverageOrderValue             `json:"net_average_order_value"`
 	OneTimeProducts                  OneTimeProducts                  `json:"one_time_products"`
 	OneTimeProductsRevenue           OneTimeProductsRevenue           `json:"one_time_products_revenue"`
+	OneTimeProductsNetRevenue        OneTimeProductsNetRevenue        `json:"one_time_products_net_revenue"`
 	NewSubscriptions                 NewSubscriptions                 `json:"new_subscriptions"`
 	NewSubscriptionsRevenue          NewSubscriptionsRevenue          `json:"new_subscriptions_revenue"`
+	NewSubscriptionsNetRevenue       NewSubscriptionsNetRevenue       `json:"new_subscriptions_net_revenue"`
 	RenewedSubscriptions             RenewedSubscriptions             `json:"renewed_subscriptions"`
 	RenewedSubscriptionsRevenue      RenewedSubscriptionsRevenue      `json:"renewed_subscriptions_revenue"`
+	RenewedSubscriptionsNetRevenue   RenewedSubscriptionsNetRevenue   `json:"renewed_subscriptions_net_revenue"`
 	ActiveSubscriptions              ActiveSubscriptions              `json:"active_subscriptions"`
 	MonthlyRecurringRevenue          MonthlyRecurringRevenue          `json:"monthly_recurring_revenue"`
 	CommittedMonthlyRecurringRevenue CommittedMonthlyRecurringRevenue `json:"committed_monthly_recurring_revenue"`
@@ -1070,6 +1454,13 @@ func (o *MetricPeriod) GetRevenue() Revenue {
 	return o.Revenue
 }
 
+func (o *MetricPeriod) GetNetRevenue() NetRevenue {
+	if o == nil {
+		return NetRevenue{}
+	}
+	return o.NetRevenue
+}
+
 func (o *MetricPeriod) GetCumulativeRevenue() CumulativeRevenue {
 	if o == nil {
 		return CumulativeRevenue{}
@@ -1077,11 +1468,25 @@ func (o *MetricPeriod) GetCumulativeRevenue() CumulativeRevenue {
 	return o.CumulativeRevenue
 }
 
+func (o *MetricPeriod) GetNetCumulativeRevenue() NetCumulativeRevenue {
+	if o == nil {
+		return NetCumulativeRevenue{}
+	}
+	return o.NetCumulativeRevenue
+}
+
 func (o *MetricPeriod) GetAverageOrderValue() AverageOrderValue {
 	if o == nil {
 		return AverageOrderValue{}
 	}
 	return o.AverageOrderValue
+}
+
+func (o *MetricPeriod) GetNetAverageOrderValue() NetAverageOrderValue {
+	if o == nil {
+		return NetAverageOrderValue{}
+	}
+	return o.NetAverageOrderValue
 }
 
 func (o *MetricPeriod) GetOneTimeProducts() OneTimeProducts {
@@ -1098,6 +1503,13 @@ func (o *MetricPeriod) GetOneTimeProductsRevenue() OneTimeProductsRevenue {
 	return o.OneTimeProductsRevenue
 }
 
+func (o *MetricPeriod) GetOneTimeProductsNetRevenue() OneTimeProductsNetRevenue {
+	if o == nil {
+		return OneTimeProductsNetRevenue{}
+	}
+	return o.OneTimeProductsNetRevenue
+}
+
 func (o *MetricPeriod) GetNewSubscriptions() NewSubscriptions {
 	if o == nil {
 		return NewSubscriptions{}
@@ -1112,6 +1524,13 @@ func (o *MetricPeriod) GetNewSubscriptionsRevenue() NewSubscriptionsRevenue {
 	return o.NewSubscriptionsRevenue
 }
 
+func (o *MetricPeriod) GetNewSubscriptionsNetRevenue() NewSubscriptionsNetRevenue {
+	if o == nil {
+		return NewSubscriptionsNetRevenue{}
+	}
+	return o.NewSubscriptionsNetRevenue
+}
+
 func (o *MetricPeriod) GetRenewedSubscriptions() RenewedSubscriptions {
 	if o == nil {
 		return RenewedSubscriptions{}
@@ -1124,6 +1543,13 @@ func (o *MetricPeriod) GetRenewedSubscriptionsRevenue() RenewedSubscriptionsReve
 		return RenewedSubscriptionsRevenue{}
 	}
 	return o.RenewedSubscriptionsRevenue
+}
+
+func (o *MetricPeriod) GetRenewedSubscriptionsNetRevenue() RenewedSubscriptionsNetRevenue {
+	if o == nil {
+		return RenewedSubscriptionsNetRevenue{}
+	}
+	return o.RenewedSubscriptionsNetRevenue
 }
 
 func (o *MetricPeriod) GetActiveSubscriptions() ActiveSubscriptions {

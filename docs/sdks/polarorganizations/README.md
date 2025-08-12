@@ -19,7 +19,6 @@ package main
 
 import(
 	"context"
-	"os"
 	polargo "github.com/polarsource/polar-go"
 	"log"
 )
@@ -27,9 +26,7 @@ import(
 func main() {
     ctx := context.Background()
 
-    s := polargo.New(
-        polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
-    )
+    s := polargo.New()
 
     res, err := s.CustomerPortal.Organizations.Get(ctx, "<value>")
     if err != nil {

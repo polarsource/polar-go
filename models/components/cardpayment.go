@@ -7,6 +7,10 @@ import (
 	"time"
 )
 
+// ProcessorMetadata - Additional metadata from the payment processor for internal use.
+type ProcessorMetadata struct {
+}
+
 // CardPayment - Schema of a payment with a card payment method.
 type CardPayment struct {
 	// Creation timestamp of the object.
@@ -33,6 +37,8 @@ type CardPayment struct {
 	CheckoutID *string `json:"checkout_id"`
 	// The ID of the order associated with this payment.
 	OrderID *string `json:"order_id"`
+	// Additional metadata from the payment processor for internal use.
+	ProcessorMetadata *ProcessorMetadata `json:"processor_metadata,omitempty"`
 	// Additional metadata for a card payment method.
 	MethodMetadata CardPaymentMetadata `json:"method_metadata"`
 }
@@ -134,6 +140,13 @@ func (o *CardPayment) GetOrderID() *string {
 		return nil
 	}
 	return o.OrderID
+}
+
+func (o *CardPayment) GetProcessorMetadata() *ProcessorMetadata {
+	if o == nil {
+		return nil
+	}
+	return o.ProcessorMetadata
 }
 
 func (o *CardPayment) GetMethodMetadata() CardPaymentMetadata {

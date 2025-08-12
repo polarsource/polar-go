@@ -74,7 +74,6 @@ package main
 
 import(
 	"context"
-	"os"
 	polargo "github.com/polarsource/polar-go"
 	"github.com/polarsource/polar-go/models/components"
 	"github.com/polarsource/polar-go/models/operations"
@@ -84,9 +83,7 @@ import(
 func main() {
     ctx := context.Background()
 
-    s := polargo.New(
-        polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
-    )
+    s := polargo.New()
 
     res, err := s.Oauth2.Token(ctx, operations.CreateOauth2RequestTokenRequestBodyAuthorizationCodeTokenRequest(
         components.AuthorizationCodeTokenRequest{
@@ -135,7 +132,6 @@ package main
 
 import(
 	"context"
-	"os"
 	polargo "github.com/polarsource/polar-go"
 	"github.com/polarsource/polar-go/models/components"
 	"log"
@@ -144,9 +140,7 @@ import(
 func main() {
     ctx := context.Background()
 
-    s := polargo.New(
-        polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
-    )
+    s := polargo.New()
 
     res, err := s.Oauth2.Revoke(ctx, components.RevokeTokenRequest{
         Token: "<value>",
@@ -192,7 +186,6 @@ package main
 
 import(
 	"context"
-	"os"
 	polargo "github.com/polarsource/polar-go"
 	"github.com/polarsource/polar-go/models/components"
 	"log"
@@ -201,9 +194,7 @@ import(
 func main() {
     ctx := context.Background()
 
-    s := polargo.New(
-        polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
-    )
+    s := polargo.New()
 
     res, err := s.Oauth2.Introspect(ctx, components.IntrospectTokenRequest{
         Token: "<value>",
