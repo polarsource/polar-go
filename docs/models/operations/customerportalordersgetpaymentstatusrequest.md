@@ -1,4 +1,4 @@
-# CustomerPortalOrdersRetryPaymentRequest
+# CustomerPortalOrdersGetPaymentStatusRequest
 
 
 ## Fields

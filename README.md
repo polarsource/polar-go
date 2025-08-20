@@ -482,7 +482,8 @@ func main() {
 * [Update](docs/sdks/polarorders/README.md#update) - Update Order
 * [GenerateInvoice](docs/sdks/polarorders/README.md#generateinvoice) - Generate Order Invoice
 * [Invoice](docs/sdks/polarorders/README.md#invoice) - Get Order Invoice
-* [RetryPayment](docs/sdks/polarorders/README.md#retrypayment) - Retry Payment
+* [GetPaymentStatus](docs/sdks/polarorders/README.md#getpaymentstatus) - Get Order Payment Status
+* [ConfirmRetryPayment](docs/sdks/polarorders/README.md#confirmretrypayment) - Confirm Retry Payment
 
 #### [CustomerPortal.Organizations](docs/sdks/polarorganizations/README.md)
 
@@ -549,6 +550,9 @@ func main() {
 * [Get](docs/sdks/licensekeys/README.md#get) - Get License Key
 * [Update](docs/sdks/licensekeys/README.md#update) - Update License Key
 * [GetActivation](docs/sdks/licensekeys/README.md#getactivation) - Get Activation
+* [Validate](docs/sdks/licensekeys/README.md#validate) - Validate License Key
+* [Activate](docs/sdks/licensekeys/README.md#activate) - Activate License Key
+* [Deactivate](docs/sdks/licensekeys/README.md#deactivate) - Deactivate License Key
 
 ### [Meters](docs/sdks/meters/README.md)
 

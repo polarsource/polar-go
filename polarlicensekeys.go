@@ -632,6 +632,11 @@ func (s *PolarLicenseKeys) Get(ctx context.Context, security operations.Customer
 
 // Validate License Key
 // Validate a license key.
+//
+// > This endpoint doesn't require authentication and can be safely used on a public
+// > client, like a desktop application or a mobile app.
+// > If you plan to validate a license key on a server, use the `/v1/license-keys/validate`
+// > endpoint instead.
 func (s *PolarLicenseKeys) Validate(ctx context.Context, request components.LicenseKeyValidate, opts ...operations.Option) (*operations.CustomerPortalLicenseKeysValidateResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{
@@ -883,6 +888,11 @@ func (s *PolarLicenseKeys) Validate(ctx context.Context, request components.Lice
 
 // Activate License Key
 // Activate a license key instance.
+//
+// > This endpoint doesn't require authentication and can be safely used on a public
+// > client, like a desktop application or a mobile app.
+// > If you plan to validate a license key on a server, use the `/v1/license-keys/activate`
+// > endpoint instead.
 func (s *PolarLicenseKeys) Activate(ctx context.Context, request components.LicenseKeyActivate, opts ...operations.Option) (*operations.CustomerPortalLicenseKeysActivateResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{
@@ -1155,6 +1165,11 @@ func (s *PolarLicenseKeys) Activate(ctx context.Context, request components.Lice
 
 // Deactivate License Key
 // Deactivate a license key instance.
+//
+// > This endpoint doesn't require authentication and can be safely used on a public
+// > client, like a desktop application or a mobile app.
+// > If you plan to validate a license key on a server, use the `/v1/license-keys/deactivate`
+// > endpoint instead.
 func (s *PolarLicenseKeys) Deactivate(ctx context.Context, request components.LicenseKeyDeactivate, opts ...operations.Option) (*operations.CustomerPortalLicenseKeysDeactivateResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{

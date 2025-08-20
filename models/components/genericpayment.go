@@ -7,10 +7,6 @@ import (
 	"time"
 )
 
-// GenericPaymentProcessorMetadata - Additional metadata from the payment processor for internal use.
-type GenericPaymentProcessorMetadata struct {
-}
-
 // GenericPayment - Schema of a payment with a generic payment method.
 type GenericPayment struct {
 	// Creation timestamp of the object.
@@ -38,7 +34,7 @@ type GenericPayment struct {
 	// The ID of the order associated with this payment.
 	OrderID *string `json:"order_id"`
 	// Additional metadata from the payment processor for internal use.
-	ProcessorMetadata *GenericPaymentProcessorMetadata `json:"processor_metadata,omitempty"`
+	ProcessorMetadata map[string]any `json:"processor_metadata,omitempty"`
 }
 
 func (g GenericPayment) MarshalJSON() ([]byte, error) {
@@ -143,7 +139,7 @@ func (o *GenericPayment) GetOrderID() *string {
 	return o.OrderID
 }
 
-func (o *GenericPayment) GetProcessorMetadata() *GenericPaymentProcessorMetadata {
+func (o *GenericPayment) GetProcessorMetadata() map[string]any {
 	if o == nil {
 		return nil
 	}

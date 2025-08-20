@@ -10,7 +10,8 @@
 * [Update](#update) - Update Order
 * [GenerateInvoice](#generateinvoice) - Generate Order Invoice
 * [Invoice](#invoice) - Get Order Invoice
-* [RetryPayment](#retrypayment) - Retry Payment
+* [GetPaymentStatus](#getpaymentstatus) - Get Order Payment Status
+* [ConfirmRetryPayment](#confirmretrypayment) - Confirm Retry Payment
 
 ## List
 
@@ -324,15 +325,15 @@ func main() {
 | apierrors.HTTPValidationError | 422                           | application/json              |
 | apierrors.APIError            | 4XX, 5XX                      | \*/\*                         |
 
-## RetryPayment
+## GetPaymentStatus
 
-Manually retry payment for a failed order.
+Get the current payment status for an order.
 
-**Scopes**: `customer_portal:write`
+**Scopes**: `customer_portal:read` `customer_portal:write`
 
 ### Example Usage
 
-<!-- UsageSnippet language="go" operationID="customer_portal:orders:retry_payment" method="post" path="/v1/customer-portal/orders/{id}/retry-payment" -->
+<!-- UsageSnippet language="go" operationID="customer_portal:orders:get_payment_status" method="get" path="/v1/customer-portal/orders/{id}/payment-status" -->
 ```go
 package main
 
@@ -349,13 +350,13 @@ func main() {
 
     s := polargo.New()
 
-    res, err := s.CustomerPortal.Orders.RetryPayment(ctx, operations.CustomerPortalOrdersRetryPaymentSecurity{
+    res, err := s.CustomerPortal.Orders.GetPaymentStatus(ctx, operations.CustomerPortalOrdersGetPaymentStatusSecurity{
         CustomerSession: os.Getenv("POLAR_CUSTOMER_SESSION"),
     }, "<value>")
     if err != nil {
         log.Fatal(err)
     }
-    if res.Any != nil {
+    if res.CustomerOrderPaymentStatus != nil {
         // handle response
     }
 }
@@ -363,16 +364,78 @@ func main() {
 
 ### Parameters
 
-| Parameter                                                                                                                  | Type                                                                                                                       | Required                                                                                                                   | Description                                                                                                                |
-| -------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
-| `ctx`                                                                                                                      | [context.Context](https://pkg.go.dev/context#Context)                                                                      | :heavy_check_mark:                                                                                                         | The context to use for the request.                                                                                        |
-| `security`                                                                                                                 | [operations.CustomerPortalOrdersRetryPaymentSecurity](../../models/operations/customerportalordersretrypaymentsecurity.md) | :heavy_check_mark:                                                                                                         | The security requirements to use for the request.                                                                          |
-| `id`                                                                                                                       | *string*                                                                                                                   | :heavy_check_mark:                                                                                                         | The order ID.                                                                                                              |
-| `opts`                                                                                                                     | [][operations.Option](../../models/operations/option.md)                                                                   | :heavy_minus_sign:                                                                                                         | The options for this request.                                                                                              |
+| Parameter                                                                                                                          | Type                                                                                                                               | Required                                                                                                                           | Description                                                                                                                        |
+| ---------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| `ctx`                                                                                                                              | [context.Context](https://pkg.go.dev/context#Context)                                                                              | :heavy_check_mark:                                                                                                                 | The context to use for the request.                                                                                                |
+| `security`                                                                                                                         | [operations.CustomerPortalOrdersGetPaymentStatusSecurity](../../models/operations/customerportalordersgetpaymentstatussecurity.md) | :heavy_check_mark:                                                                                                                 | The security requirements to use for the request.                                                                                  |
+| `id`                                                                                                                               | *string*                                                                                                                           | :heavy_check_mark:                                                                                                                 | The order ID.                                                                                                                      |
+| `opts`                                                                                                                             | [][operations.Option](../../models/operations/option.md)                                                                           | :heavy_minus_sign:                                                                                                                 | The options for this request.                                                                                                      |
 
 ### Response
 
-**[*operations.CustomerPortalOrdersRetryPaymentResponse](../../models/operations/customerportalordersretrypaymentresponse.md), error**
+**[*operations.CustomerPortalOrdersGetPaymentStatusResponse](../../models/operations/customerportalordersgetpaymentstatusresponse.md), error**
+
+### Errors
+
+| Error Type                    | Status Code                   | Content Type                  |
+| ----------------------------- | ----------------------------- | ----------------------------- |
+| apierrors.ResourceNotFound    | 404                           | application/json              |
+| apierrors.HTTPValidationError | 422                           | application/json              |
+| apierrors.APIError            | 4XX, 5XX                      | \*/\*                         |
+
+## ConfirmRetryPayment
+
+Confirm a retry payment using a Stripe confirmation token.
+
+**Scopes**: `customer_portal:write`
+
+### Example Usage
+
+<!-- UsageSnippet language="go" operationID="customer_portal:orders:confirm_retry_payment" method="post" path="/v1/customer-portal/orders/{id}/confirm-payment" -->
+```go
+package main
+
+import(
+	"context"
+	polargo "github.com/polarsource/polar-go"
+	"os"
+	"github.com/polarsource/polar-go/models/operations"
+	"github.com/polarsource/polar-go/models/components"
+	"log"
+)
+
+func main() {
+    ctx := context.Background()
+
+    s := polargo.New()
+
+    res, err := s.CustomerPortal.Orders.ConfirmRetryPayment(ctx, operations.CustomerPortalOrdersConfirmRetryPaymentSecurity{
+        CustomerSession: os.Getenv("POLAR_CUSTOMER_SESSION"),
+    }, "<value>", components.CustomerOrderConfirmPayment{
+        ConfirmationTokenID: "<id>",
+    })
+    if err != nil {
+        log.Fatal(err)
+    }
+    if res.CustomerOrderPaymentConfirmation != nil {
+        // handle response
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                                                                                                | Type                                                                                                                                     | Required                                                                                                                                 | Description                                                                                                                              |
+| ---------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| `ctx`                                                                                                                                    | [context.Context](https://pkg.go.dev/context#Context)                                                                                    | :heavy_check_mark:                                                                                                                       | The context to use for the request.                                                                                                      |
+| `security`                                                                                                                               | [operations.CustomerPortalOrdersConfirmRetryPaymentSecurity](../../models/operations/customerportalordersconfirmretrypaymentsecurity.md) | :heavy_check_mark:                                                                                                                       | The security requirements to use for the request.                                                                                        |
+| `id`                                                                                                                                     | *string*                                                                                                                                 | :heavy_check_mark:                                                                                                                       | The order ID.                                                                                                                            |
+| `customerOrderConfirmPayment`                                                                                                            | [components.CustomerOrderConfirmPayment](../../models/components/customerorderconfirmpayment.md)                                         | :heavy_check_mark:                                                                                                                       | N/A                                                                                                                                      |
+| `opts`                                                                                                                                   | [][operations.Option](../../models/operations/option.md)                                                                                 | :heavy_minus_sign:                                                                                                                       | The options for this request.                                                                                                            |
+
+### Response
+
+**[*operations.CustomerPortalOrdersConfirmRetryPaymentResponse](../../models/operations/customerportalordersconfirmretrypaymentresponse.md), error**
 
 ### Errors
 

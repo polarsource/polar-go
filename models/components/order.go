@@ -346,10 +346,6 @@ type Order struct {
 	DiscountAmount int64 `json:"discount_amount"`
 	// Amount in cents, after discounts but before taxes.
 	NetAmount int64 `json:"net_amount"`
-	// Amount in cents, after discounts but before taxes.
-	//
-	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
-	Amount int64 `json:"amount"`
 	// Sales tax amount in cents.
 	TaxAmount int64 `json:"tax_amount"`
 	// Amount in cents, after discounts and taxes.
@@ -448,13 +444,6 @@ func (o *Order) GetNetAmount() int64 {
 		return 0
 	}
 	return o.NetAmount
-}
-
-func (o *Order) GetAmount() int64 {
-	if o == nil {
-		return 0
-	}
-	return o.Amount
 }
 
 func (o *Order) GetTaxAmount() int64 {
