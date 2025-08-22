@@ -119,16 +119,18 @@ func (u MeterUpdateMetadata) MarshalJSON() ([]byte, error) {
 type AggregationType string
 
 const (
-	AggregationTypeAvg   AggregationType = "avg"
-	AggregationTypeCount AggregationType = "count"
-	AggregationTypeMax   AggregationType = "max"
-	AggregationTypeMin   AggregationType = "min"
-	AggregationTypeSum   AggregationType = "sum"
+	AggregationTypeAvg    AggregationType = "avg"
+	AggregationTypeCount  AggregationType = "count"
+	AggregationTypeMax    AggregationType = "max"
+	AggregationTypeMin    AggregationType = "min"
+	AggregationTypeSum    AggregationType = "sum"
+	AggregationTypeUnique AggregationType = "unique"
 )
 
 type Aggregation struct {
 	CountAggregation    *CountAggregation    `queryParam:"inline"`
 	PropertyAggregation *PropertyAggregation `queryParam:"inline"`
+	UniqueAggregation   *UniqueAggregation   `queryParam:"inline"`
 
 	Type AggregationType
 }
@@ -190,6 +192,15 @@ func CreateAggregationSum(sum PropertyAggregation) Aggregation {
 	}
 }
 
+func CreateAggregationUnique(unique UniqueAggregation) Aggregation {
+	typ := AggregationTypeUnique
+
+	return Aggregation{
+		UniqueAggregation: &unique,
+		Type:              typ,
+	}
+}
+
 func (u *Aggregation) UnmarshalJSON(data []byte) error {
 
 	type discriminator struct {
@@ -247,6 +258,15 @@ func (u *Aggregation) UnmarshalJSON(data []byte) error {
 		u.PropertyAggregation = propertyAggregation
 		u.Type = AggregationTypeSum
 		return nil
+	case "unique":
+		uniqueAggregation := new(UniqueAggregation)
+		if err := utils.UnmarshalJSON(data, &uniqueAggregation, "", true, false); err != nil {
+			return fmt.Errorf("could not unmarshal `%s` into expected (Func == unique) type UniqueAggregation within Aggregation: %w", string(data), err)
+		}
+
+		u.UniqueAggregation = uniqueAggregation
+		u.Type = AggregationTypeUnique
+		return nil
 	}
 
 	return fmt.Errorf("could not unmarshal `%s` into any supported union types for Aggregation", string(data))
@@ -259,6 +279,10 @@ func (u Aggregation) MarshalJSON() ([]byte, error) {
 
 	if u.PropertyAggregation != nil {
 		return utils.MarshalJSON(u.PropertyAggregation, "", true)
+	}
+
+	if u.UniqueAggregation != nil {
+		return utils.MarshalJSON(u.UniqueAggregation, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type Aggregation: all fields are null")
@@ -344,6 +368,13 @@ func (o *MeterUpdate) GetAggregationMin() *PropertyAggregation {
 func (o *MeterUpdate) GetAggregationSum() *PropertyAggregation {
 	if v := o.GetAggregation(); v != nil {
 		return v.PropertyAggregation
+	}
+	return nil
+}
+
+func (o *MeterUpdate) GetAggregationUnique() *UniqueAggregation {
+	if v := o.GetAggregation(); v != nil {
+		return v.UniqueAggregation
 	}
 	return nil
 }

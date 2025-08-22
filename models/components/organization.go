@@ -26,6 +26,7 @@ type Organization struct {
 	Website *string `json:"website"`
 	// Links to social profiles.
 	Socials []OrganizationSocialLink `json:"socials"`
+	Status  Status                   `json:"status"`
 	// When the business details were submitted.
 	DetailsSubmittedAt *time.Time `json:"details_submitted_at"`
 	// Organization feature settings
@@ -106,6 +107,13 @@ func (o *Organization) GetSocials() []OrganizationSocialLink {
 		return []OrganizationSocialLink{}
 	}
 	return o.Socials
+}
+
+func (o *Organization) GetStatus() Status {
+	if o == nil {
+		return Status("")
+	}
+	return o.Status
 }
 
 func (o *Organization) GetDetailsSubmittedAt() *time.Time {

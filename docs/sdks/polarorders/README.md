@@ -411,9 +411,7 @@ func main() {
 
     res, err := s.CustomerPortal.Orders.ConfirmRetryPayment(ctx, operations.CustomerPortalOrdersConfirmRetryPaymentSecurity{
         CustomerSession: os.Getenv("POLAR_CUSTOMER_SESSION"),
-    }, "<value>", components.CustomerOrderConfirmPayment{
-        ConfirmationTokenID: "<id>",
-    })
+    }, "<value>", components.CustomerOrderConfirmPayment{})
     if err != nil {
         log.Fatal(err)
     }

@@ -33,3 +33,9 @@ aggregation := components.CreateAggregationMin(components.PropertyAggregation{/*
 aggregation := components.CreateAggregationSum(components.PropertyAggregation{/* values here */})
 ```
 
+### UniqueAggregation
+
+```go
+aggregation := components.CreateAggregationUnique(components.UniqueAggregation{/* values here */})
+```
+

@@ -82,6 +82,7 @@ type CustomerPortalCustomer struct {
 	Email                  string                                `json:"email"`
 	EmailVerified          bool                                  `json:"email_verified"`
 	Name                   *string                               `json:"name"`
+	BillingName            *string                               `json:"billing_name"`
 	BillingAddress         *Address                              `json:"billing_address"`
 	TaxID                  []*CustomerPortalCustomerTaxID        `json:"tax_id"`
 	OauthAccounts          map[string]CustomerPortalOAuthAccount `json:"oauth_accounts"`
@@ -139,6 +140,13 @@ func (o *CustomerPortalCustomer) GetName() *string {
 		return nil
 	}
 	return o.Name
+}
+
+func (o *CustomerPortalCustomer) GetBillingName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.BillingName
 }
 
 func (o *CustomerPortalCustomer) GetBillingAddress() *Address {

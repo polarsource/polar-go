@@ -35,3 +35,9 @@ meterCreateAggregation := components.CreateMeterCreateAggregationMin(components.
 meterCreateAggregation := components.CreateMeterCreateAggregationSum(components.PropertyAggregation{/* values here */})
 ```
 
+### UniqueAggregation
+
+```go
+meterCreateAggregation := components.CreateMeterCreateAggregationUnique(components.UniqueAggregation{/* values here */})
+```
+

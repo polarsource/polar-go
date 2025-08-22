@@ -2,18 +2,27 @@
 
 package components
 
-// CustomerOrderConfirmPayment - Schema to confirm a retry payment using a Stripe confirmation token.
+// CustomerOrderConfirmPayment - Schema to confirm a retry payment using either a saved payment method or a new confirmation token.
 type CustomerOrderConfirmPayment struct {
-	// ID of the Stripe confirmation token.
-	ConfirmationTokenID string            `json:"confirmation_token_id"`
-	PaymentProcessor    *PaymentProcessor `json:"payment_processor,omitempty"`
+	// ID of the Stripe confirmation token for new payment methods.
+	ConfirmationTokenID *string `json:"confirmation_token_id,omitempty"`
+	// ID of an existing saved payment method.
+	PaymentMethodID  *string           `json:"payment_method_id,omitempty"`
+	PaymentProcessor *PaymentProcessor `json:"payment_processor,omitempty"`
 }
 
-func (o *CustomerOrderConfirmPayment) GetConfirmationTokenID() string {
+func (o *CustomerOrderConfirmPayment) GetConfirmationTokenID() *string {
 	if o == nil {
-		return ""
+		return nil
 	}
 	return o.ConfirmationTokenID
+}
+
+func (o *CustomerOrderConfirmPayment) GetPaymentMethodID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.PaymentMethodID
 }
 
 func (o *CustomerOrderConfirmPayment) GetPaymentProcessor() *PaymentProcessor {

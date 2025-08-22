@@ -3,24 +3,16 @@
 package components
 
 type CustomerPortalCustomerUpdate struct {
-	Email          *string  `json:"email,omitempty"`
-	Name           *string  `json:"name,omitempty"`
+	BillingName    *string  `json:"billing_name,omitempty"`
 	BillingAddress *Address `json:"billing_address,omitempty"`
 	TaxID          *string  `json:"tax_id,omitempty"`
 }
 
-func (o *CustomerPortalCustomerUpdate) GetEmail() *string {
+func (o *CustomerPortalCustomerUpdate) GetBillingName() *string {
 	if o == nil {
 		return nil
 	}
-	return o.Email
-}
-
-func (o *CustomerPortalCustomerUpdate) GetName() *string {
-	if o == nil {
-		return nil
-	}
-	return o.Name
+	return o.BillingName
 }
 
 func (o *CustomerPortalCustomerUpdate) GetBillingAddress() *Address {
