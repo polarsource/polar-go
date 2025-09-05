@@ -20,7 +20,7 @@ func (w WebhookProductCreatedPayload) MarshalJSON() ([]byte, error) {
 }
 
 func (w *WebhookProductCreatedPayload) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &w, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &w, "", false, []string{"type", "data"}); err != nil {
 		return err
 	}
 	return nil

@@ -19,10 +19,10 @@ const (
 )
 
 type CheckoutLinkMetadata struct {
-	Str     *string  `queryParam:"inline"`
-	Integer *int64   `queryParam:"inline"`
-	Number  *float64 `queryParam:"inline"`
-	Boolean *bool    `queryParam:"inline"`
+	Str     *string  `queryParam:"inline" name:"metadata"`
+	Integer *int64   `queryParam:"inline" name:"metadata"`
+	Number  *float64 `queryParam:"inline" name:"metadata"`
+	Boolean *bool    `queryParam:"inline" name:"metadata"`
 
 	Type CheckoutLinkMetadataType
 }
@@ -66,28 +66,28 @@ func CreateCheckoutLinkMetadataBoolean(boolean bool) CheckoutLinkMetadata {
 func (u *CheckoutLinkMetadata) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, nil); err == nil {
 		u.Str = &str
 		u.Type = CheckoutLinkMetadataTypeStr
 		return nil
 	}
 
 	var integer int64 = int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
 		u.Integer = &integer
 		u.Type = CheckoutLinkMetadataTypeInteger
 		return nil
 	}
 
 	var number float64 = float64(0)
-	if err := utils.UnmarshalJSON(data, &number, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
 		u.Number = &number
 		u.Type = CheckoutLinkMetadataTypeNumber
 		return nil
 	}
 
 	var boolean bool = false
-	if err := utils.UnmarshalJSON(data, &boolean, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &boolean, "", true, nil); err == nil {
 		u.Boolean = &boolean
 		u.Type = CheckoutLinkMetadataTypeBoolean
 		return nil
@@ -126,10 +126,10 @@ const (
 )
 
 type CheckoutLinkDiscount struct {
-	DiscountFixedOnceForeverDurationBase      *DiscountFixedOnceForeverDurationBase      `queryParam:"inline"`
-	DiscountFixedRepeatDurationBase           *DiscountFixedRepeatDurationBase           `queryParam:"inline"`
-	DiscountPercentageOnceForeverDurationBase *DiscountPercentageOnceForeverDurationBase `queryParam:"inline"`
-	DiscountPercentageRepeatDurationBase      *DiscountPercentageRepeatDurationBase      `queryParam:"inline"`
+	DiscountFixedOnceForeverDurationBase      *DiscountFixedOnceForeverDurationBase      `queryParam:"inline" name:"CheckoutLinkDiscount"`
+	DiscountFixedRepeatDurationBase           *DiscountFixedRepeatDurationBase           `queryParam:"inline" name:"CheckoutLinkDiscount"`
+	DiscountPercentageOnceForeverDurationBase *DiscountPercentageOnceForeverDurationBase `queryParam:"inline" name:"CheckoutLinkDiscount"`
+	DiscountPercentageRepeatDurationBase      *DiscountPercentageRepeatDurationBase      `queryParam:"inline" name:"CheckoutLinkDiscount"`
 
 	Type CheckoutLinkDiscountType
 }
@@ -172,31 +172,31 @@ func CreateCheckoutLinkDiscountDiscountPercentageRepeatDurationBase(discountPerc
 
 func (u *CheckoutLinkDiscount) UnmarshalJSON(data []byte) error {
 
-	var discountPercentageOnceForeverDurationBase DiscountPercentageOnceForeverDurationBase = DiscountPercentageOnceForeverDurationBase{}
-	if err := utils.UnmarshalJSON(data, &discountPercentageOnceForeverDurationBase, "", true, false); err == nil {
-		u.DiscountPercentageOnceForeverDurationBase = &discountPercentageOnceForeverDurationBase
-		u.Type = CheckoutLinkDiscountTypeDiscountPercentageOnceForeverDurationBase
+	var discountFixedRepeatDurationBase DiscountFixedRepeatDurationBase = DiscountFixedRepeatDurationBase{}
+	if err := utils.UnmarshalJSON(data, &discountFixedRepeatDurationBase, "", true, nil); err == nil {
+		u.DiscountFixedRepeatDurationBase = &discountFixedRepeatDurationBase
+		u.Type = CheckoutLinkDiscountTypeDiscountFixedRepeatDurationBase
 		return nil
 	}
 
 	var discountFixedOnceForeverDurationBase DiscountFixedOnceForeverDurationBase = DiscountFixedOnceForeverDurationBase{}
-	if err := utils.UnmarshalJSON(data, &discountFixedOnceForeverDurationBase, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &discountFixedOnceForeverDurationBase, "", true, nil); err == nil {
 		u.DiscountFixedOnceForeverDurationBase = &discountFixedOnceForeverDurationBase
 		u.Type = CheckoutLinkDiscountTypeDiscountFixedOnceForeverDurationBase
 		return nil
 	}
 
 	var discountPercentageRepeatDurationBase DiscountPercentageRepeatDurationBase = DiscountPercentageRepeatDurationBase{}
-	if err := utils.UnmarshalJSON(data, &discountPercentageRepeatDurationBase, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &discountPercentageRepeatDurationBase, "", true, nil); err == nil {
 		u.DiscountPercentageRepeatDurationBase = &discountPercentageRepeatDurationBase
 		u.Type = CheckoutLinkDiscountTypeDiscountPercentageRepeatDurationBase
 		return nil
 	}
 
-	var discountFixedRepeatDurationBase DiscountFixedRepeatDurationBase = DiscountFixedRepeatDurationBase{}
-	if err := utils.UnmarshalJSON(data, &discountFixedRepeatDurationBase, "", true, false); err == nil {
-		u.DiscountFixedRepeatDurationBase = &discountFixedRepeatDurationBase
-		u.Type = CheckoutLinkDiscountTypeDiscountFixedRepeatDurationBase
+	var discountPercentageOnceForeverDurationBase DiscountPercentageOnceForeverDurationBase = DiscountPercentageOnceForeverDurationBase{}
+	if err := utils.UnmarshalJSON(data, &discountPercentageOnceForeverDurationBase, "", true, nil); err == nil {
+		u.DiscountPercentageOnceForeverDurationBase = &discountPercentageOnceForeverDurationBase
+		u.Type = CheckoutLinkDiscountTypeDiscountPercentageOnceForeverDurationBase
 		return nil
 	}
 
@@ -257,7 +257,7 @@ func (c CheckoutLink) MarshalJSON() ([]byte, error) {
 }
 
 func (c *CheckoutLink) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &c, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &c, "", false, []string{"created_at", "modified_at", "id", "metadata", "payment_processor", "client_secret", "success_url", "label", "allow_discount_codes", "require_billing_address", "discount_id", "organization_id", "products", "discount", "url"}); err != nil {
 		return err
 	}
 	return nil

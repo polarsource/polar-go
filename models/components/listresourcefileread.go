@@ -18,9 +18,9 @@ const (
 )
 
 type FileRead struct {
-	DownloadableFileRead       *DownloadableFileRead       `queryParam:"inline"`
-	ProductMediaFileRead       *ProductMediaFileRead       `queryParam:"inline"`
-	OrganizationAvatarFileRead *OrganizationAvatarFileRead `queryParam:"inline"`
+	DownloadableFileRead       *DownloadableFileRead       `queryParam:"inline" name:"FileRead"`
+	ProductMediaFileRead       *ProductMediaFileRead       `queryParam:"inline" name:"FileRead"`
+	OrganizationAvatarFileRead *OrganizationAvatarFileRead `queryParam:"inline" name:"FileRead"`
 
 	Type FileReadType
 }
@@ -66,7 +66,7 @@ func (u *FileRead) UnmarshalJSON(data []byte) error {
 	switch dis.Service {
 	case "downloadable":
 		downloadableFileRead := new(DownloadableFileRead)
-		if err := utils.UnmarshalJSON(data, &downloadableFileRead, "", true, false); err != nil {
+		if err := utils.UnmarshalJSON(data, &downloadableFileRead, "", true, nil); err != nil {
 			return fmt.Errorf("could not unmarshal `%s` into expected (Service == downloadable) type DownloadableFileRead within FileRead: %w", string(data), err)
 		}
 
@@ -75,7 +75,7 @@ func (u *FileRead) UnmarshalJSON(data []byte) error {
 		return nil
 	case "organization_avatar":
 		organizationAvatarFileRead := new(OrganizationAvatarFileRead)
-		if err := utils.UnmarshalJSON(data, &organizationAvatarFileRead, "", true, false); err != nil {
+		if err := utils.UnmarshalJSON(data, &organizationAvatarFileRead, "", true, nil); err != nil {
 			return fmt.Errorf("could not unmarshal `%s` into expected (Service == organization_avatar) type OrganizationAvatarFileRead within FileRead: %w", string(data), err)
 		}
 
@@ -84,7 +84,7 @@ func (u *FileRead) UnmarshalJSON(data []byte) error {
 		return nil
 	case "product_media":
 		productMediaFileRead := new(ProductMediaFileRead)
-		if err := utils.UnmarshalJSON(data, &productMediaFileRead, "", true, false); err != nil {
+		if err := utils.UnmarshalJSON(data, &productMediaFileRead, "", true, nil); err != nil {
 			return fmt.Errorf("could not unmarshal `%s` into expected (Service == product_media) type ProductMediaFileRead within FileRead: %w", string(data), err)
 		}
 

@@ -2,9 +2,24 @@
 
 package components
 
+import (
+	"github.com/polarsource/polar-go/internal/utils"
+)
+
 type SubscriptionUpdateDiscount struct {
 	// Update the subscription to apply a new discount. If set to `null`, the discount will be removed. The change will be applied on the next billing cycle.
 	DiscountID *string `json:"discount_id"`
+}
+
+func (s SubscriptionUpdateDiscount) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SubscriptionUpdateDiscount) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, []string{"discount_id"}); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *SubscriptionUpdateDiscount) GetDiscountID() *string {

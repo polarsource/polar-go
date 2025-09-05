@@ -42,7 +42,7 @@ func (g GenericPayment) MarshalJSON() ([]byte, error) {
 }
 
 func (g *GenericPayment) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &g, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &g, "", false, []string{"created_at", "modified_at", "id", "processor", "status", "amount", "currency", "method", "decline_reason", "decline_message", "organization_id", "checkout_id", "order_id"}); err != nil {
 		return err
 	}
 	return nil

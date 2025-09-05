@@ -2,10 +2,25 @@
 
 package components
 
+import (
+	"github.com/polarsource/polar-go/internal/utils"
+)
+
 type OrganizationSocialLink struct {
 	Platform OrganizationSocialPlatforms `json:"platform"`
 	// The URL to the organization profile
 	URL string `json:"url"`
+}
+
+func (o OrganizationSocialLink) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(o, "", false)
+}
+
+func (o *OrganizationSocialLink) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &o, "", false, []string{"platform", "url"}); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *OrganizationSocialLink) GetPlatform() OrganizationSocialPlatforms {

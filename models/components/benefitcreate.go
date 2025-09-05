@@ -21,12 +21,12 @@ const (
 )
 
 type BenefitCreate struct {
-	BenefitCustomCreate           *BenefitCustomCreate           `queryParam:"inline"`
-	BenefitDiscordCreate          *BenefitDiscordCreate          `queryParam:"inline"`
-	BenefitGitHubRepositoryCreate *BenefitGitHubRepositoryCreate `queryParam:"inline"`
-	BenefitDownloadablesCreate    *BenefitDownloadablesCreate    `queryParam:"inline"`
-	BenefitLicenseKeysCreate      *BenefitLicenseKeysCreate      `queryParam:"inline"`
-	BenefitMeterCreditCreate      *BenefitMeterCreditCreate      `queryParam:"inline"`
+	BenefitCustomCreate           *BenefitCustomCreate           `queryParam:"inline" name:"BenefitCreate"`
+	BenefitDiscordCreate          *BenefitDiscordCreate          `queryParam:"inline" name:"BenefitCreate"`
+	BenefitGitHubRepositoryCreate *BenefitGitHubRepositoryCreate `queryParam:"inline" name:"BenefitCreate"`
+	BenefitDownloadablesCreate    *BenefitDownloadablesCreate    `queryParam:"inline" name:"BenefitCreate"`
+	BenefitLicenseKeysCreate      *BenefitLicenseKeysCreate      `queryParam:"inline" name:"BenefitCreate"`
+	BenefitMeterCreditCreate      *BenefitMeterCreditCreate      `queryParam:"inline" name:"BenefitCreate"`
 
 	Type BenefitCreateType
 }
@@ -99,7 +99,7 @@ func (u *BenefitCreate) UnmarshalJSON(data []byte) error {
 	switch dis.Type {
 	case "custom":
 		benefitCustomCreate := new(BenefitCustomCreate)
-		if err := utils.UnmarshalJSON(data, &benefitCustomCreate, "", true, false); err != nil {
+		if err := utils.UnmarshalJSON(data, &benefitCustomCreate, "", true, nil); err != nil {
 			return fmt.Errorf("could not unmarshal `%s` into expected (Type == custom) type BenefitCustomCreate within BenefitCreate: %w", string(data), err)
 		}
 
@@ -108,7 +108,7 @@ func (u *BenefitCreate) UnmarshalJSON(data []byte) error {
 		return nil
 	case "discord":
 		benefitDiscordCreate := new(BenefitDiscordCreate)
-		if err := utils.UnmarshalJSON(data, &benefitDiscordCreate, "", true, false); err != nil {
+		if err := utils.UnmarshalJSON(data, &benefitDiscordCreate, "", true, nil); err != nil {
 			return fmt.Errorf("could not unmarshal `%s` into expected (Type == discord) type BenefitDiscordCreate within BenefitCreate: %w", string(data), err)
 		}
 
@@ -117,7 +117,7 @@ func (u *BenefitCreate) UnmarshalJSON(data []byte) error {
 		return nil
 	case "downloadables":
 		benefitDownloadablesCreate := new(BenefitDownloadablesCreate)
-		if err := utils.UnmarshalJSON(data, &benefitDownloadablesCreate, "", true, false); err != nil {
+		if err := utils.UnmarshalJSON(data, &benefitDownloadablesCreate, "", true, nil); err != nil {
 			return fmt.Errorf("could not unmarshal `%s` into expected (Type == downloadables) type BenefitDownloadablesCreate within BenefitCreate: %w", string(data), err)
 		}
 
@@ -126,7 +126,7 @@ func (u *BenefitCreate) UnmarshalJSON(data []byte) error {
 		return nil
 	case "github_repository":
 		benefitGitHubRepositoryCreate := new(BenefitGitHubRepositoryCreate)
-		if err := utils.UnmarshalJSON(data, &benefitGitHubRepositoryCreate, "", true, false); err != nil {
+		if err := utils.UnmarshalJSON(data, &benefitGitHubRepositoryCreate, "", true, nil); err != nil {
 			return fmt.Errorf("could not unmarshal `%s` into expected (Type == github_repository) type BenefitGitHubRepositoryCreate within BenefitCreate: %w", string(data), err)
 		}
 
@@ -135,7 +135,7 @@ func (u *BenefitCreate) UnmarshalJSON(data []byte) error {
 		return nil
 	case "license_keys":
 		benefitLicenseKeysCreate := new(BenefitLicenseKeysCreate)
-		if err := utils.UnmarshalJSON(data, &benefitLicenseKeysCreate, "", true, false); err != nil {
+		if err := utils.UnmarshalJSON(data, &benefitLicenseKeysCreate, "", true, nil); err != nil {
 			return fmt.Errorf("could not unmarshal `%s` into expected (Type == license_keys) type BenefitLicenseKeysCreate within BenefitCreate: %w", string(data), err)
 		}
 
@@ -144,7 +144,7 @@ func (u *BenefitCreate) UnmarshalJSON(data []byte) error {
 		return nil
 	case "meter_credit":
 		benefitMeterCreditCreate := new(BenefitMeterCreditCreate)
-		if err := utils.UnmarshalJSON(data, &benefitMeterCreditCreate, "", true, false); err != nil {
+		if err := utils.UnmarshalJSON(data, &benefitMeterCreditCreate, "", true, nil); err != nil {
 			return fmt.Errorf("could not unmarshal `%s` into expected (Type == meter_credit) type BenefitMeterCreditCreate within BenefitCreate: %w", string(data), err)
 		}
 

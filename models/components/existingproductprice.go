@@ -2,11 +2,26 @@
 
 package components
 
+import (
+	"github.com/polarsource/polar-go/internal/utils"
+)
+
 // ExistingProductPrice - A price that already exists for this product.
 //
 // Useful when updating a product if you want to keep an existing price.
 type ExistingProductPrice struct {
 	ID string `json:"id"`
+}
+
+func (e ExistingProductPrice) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(e, "", false)
+}
+
+func (e *ExistingProductPrice) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &e, "", false, []string{"id"}); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *ExistingProductPrice) GetID() string {

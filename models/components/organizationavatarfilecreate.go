@@ -25,7 +25,7 @@ func (o OrganizationAvatarFileCreate) MarshalJSON() ([]byte, error) {
 }
 
 func (o *OrganizationAvatarFileCreate) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &o, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &o, "", false, []string{"name", "mime_type", "size", "upload", "service"}); err != nil {
 		return err
 	}
 	return nil

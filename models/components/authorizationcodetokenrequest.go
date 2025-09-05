@@ -19,7 +19,7 @@ func (a AuthorizationCodeTokenRequest) MarshalJSON() ([]byte, error) {
 }
 
 func (a *AuthorizationCodeTokenRequest) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &a, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &a, "", false, []string{"grant_type", "client_id", "client_secret", "code", "redirect_uri"}); err != nil {
 		return err
 	}
 	return nil

@@ -17,8 +17,8 @@ const (
 )
 
 type CustomerPortalCustomerTaxID struct {
-	Str         *string      `queryParam:"inline"`
-	TaxIDFormat *TaxIDFormat `queryParam:"inline"`
+	Str         *string      `queryParam:"inline" name:"tax_id"`
+	TaxIDFormat *TaxIDFormat `queryParam:"inline" name:"tax_id"`
 
 	Type CustomerPortalCustomerTaxIDType
 }
@@ -44,14 +44,14 @@ func CreateCustomerPortalCustomerTaxIDTaxIDFormat(taxIDFormat TaxIDFormat) Custo
 func (u *CustomerPortalCustomerTaxID) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, nil); err == nil {
 		u.Str = &str
 		u.Type = CustomerPortalCustomerTaxIDTypeStr
 		return nil
 	}
 
 	var taxIDFormat TaxIDFormat = TaxIDFormat("")
-	if err := utils.UnmarshalJSON(data, &taxIDFormat, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &taxIDFormat, "", true, nil); err == nil {
 		u.TaxIDFormat = &taxIDFormat
 		u.Type = CustomerPortalCustomerTaxIDTypeTaxIDFormat
 		return nil
@@ -94,7 +94,7 @@ func (c CustomerPortalCustomer) MarshalJSON() ([]byte, error) {
 }
 
 func (c *CustomerPortalCustomer) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &c, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &c, "", false, []string{"created_at", "modified_at", "id", "email", "email_verified", "name", "billing_name", "billing_address", "tax_id", "oauth_accounts"}); err != nil {
 		return err
 	}
 	return nil

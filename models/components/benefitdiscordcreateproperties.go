@@ -2,6 +2,10 @@
 
 package components
 
+import (
+	"github.com/polarsource/polar-go/internal/utils"
+)
+
 // BenefitDiscordCreateProperties - Properties to create a benefit of type `discord`.
 type BenefitDiscordCreateProperties struct {
 	GuildToken string `json:"guild_token"`
@@ -9,6 +13,17 @@ type BenefitDiscordCreateProperties struct {
 	RoleID string `json:"role_id"`
 	// Whether to kick the member from the Discord server on revocation.
 	KickMember bool `json:"kick_member"`
+}
+
+func (b BenefitDiscordCreateProperties) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(b, "", false)
+}
+
+func (b *BenefitDiscordCreateProperties) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &b, "", false, []string{"guild_token", "role_id", "kick_member"}); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *BenefitDiscordCreateProperties) GetGuildToken() string {

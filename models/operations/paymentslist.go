@@ -18,8 +18,8 @@ const (
 
 // PaymentsListQueryParamOrganizationIDFilter - Filter by organization ID.
 type PaymentsListQueryParamOrganizationIDFilter struct {
-	Str        *string  `queryParam:"inline"`
-	ArrayOfStr []string `queryParam:"inline"`
+	Str        *string  `queryParam:"inline" name:"OrganizationID_Filter"`
+	ArrayOfStr []string `queryParam:"inline" name:"OrganizationID_Filter"`
 
 	Type PaymentsListQueryParamOrganizationIDFilterType
 }
@@ -45,14 +45,14 @@ func CreatePaymentsListQueryParamOrganizationIDFilterArrayOfStr(arrayOfStr []str
 func (u *PaymentsListQueryParamOrganizationIDFilter) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, nil); err == nil {
 		u.Str = &str
 		u.Type = PaymentsListQueryParamOrganizationIDFilterTypeStr
 		return nil
 	}
 
 	var arrayOfStr []string = []string{}
-	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, nil); err == nil {
 		u.ArrayOfStr = arrayOfStr
 		u.Type = PaymentsListQueryParamOrganizationIDFilterTypeArrayOfStr
 		return nil
@@ -82,8 +82,8 @@ const (
 
 // PaymentsListQueryParamCheckoutIDFilter - Filter by checkout ID.
 type PaymentsListQueryParamCheckoutIDFilter struct {
-	Str        *string  `queryParam:"inline"`
-	ArrayOfStr []string `queryParam:"inline"`
+	Str        *string  `queryParam:"inline" name:"CheckoutID_Filter"`
+	ArrayOfStr []string `queryParam:"inline" name:"CheckoutID_Filter"`
 
 	Type PaymentsListQueryParamCheckoutIDFilterType
 }
@@ -109,14 +109,14 @@ func CreatePaymentsListQueryParamCheckoutIDFilterArrayOfStr(arrayOfStr []string)
 func (u *PaymentsListQueryParamCheckoutIDFilter) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, nil); err == nil {
 		u.Str = &str
 		u.Type = PaymentsListQueryParamCheckoutIDFilterTypeStr
 		return nil
 	}
 
 	var arrayOfStr []string = []string{}
-	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, nil); err == nil {
 		u.ArrayOfStr = arrayOfStr
 		u.Type = PaymentsListQueryParamCheckoutIDFilterTypeArrayOfStr
 		return nil
@@ -146,8 +146,8 @@ const (
 
 // PaymentsListQueryParamOrderIDFilter - Filter by order ID.
 type PaymentsListQueryParamOrderIDFilter struct {
-	Str        *string  `queryParam:"inline"`
-	ArrayOfStr []string `queryParam:"inline"`
+	Str        *string  `queryParam:"inline" name:"OrderID_Filter"`
+	ArrayOfStr []string `queryParam:"inline" name:"OrderID_Filter"`
 
 	Type PaymentsListQueryParamOrderIDFilterType
 }
@@ -173,14 +173,14 @@ func CreatePaymentsListQueryParamOrderIDFilterArrayOfStr(arrayOfStr []string) Pa
 func (u *PaymentsListQueryParamOrderIDFilter) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, nil); err == nil {
 		u.Str = &str
 		u.Type = PaymentsListQueryParamOrderIDFilterTypeStr
 		return nil
 	}
 
 	var arrayOfStr []string = []string{}
-	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, nil); err == nil {
 		u.ArrayOfStr = arrayOfStr
 		u.Type = PaymentsListQueryParamOrderIDFilterTypeArrayOfStr
 		return nil
@@ -210,8 +210,8 @@ const (
 
 // QueryParamStatusFilter - Filter by payment status.
 type QueryParamStatusFilter struct {
-	PaymentStatus        *components.PaymentStatus  `queryParam:"inline"`
-	ArrayOfPaymentStatus []components.PaymentStatus `queryParam:"inline"`
+	PaymentStatus        *components.PaymentStatus  `queryParam:"inline" name:"Status_Filter"`
+	ArrayOfPaymentStatus []components.PaymentStatus `queryParam:"inline" name:"Status_Filter"`
 
 	Type QueryParamStatusFilterType
 }
@@ -237,14 +237,14 @@ func CreateQueryParamStatusFilterArrayOfPaymentStatus(arrayOfPaymentStatus []com
 func (u *QueryParamStatusFilter) UnmarshalJSON(data []byte) error {
 
 	var paymentStatus components.PaymentStatus = components.PaymentStatus("")
-	if err := utils.UnmarshalJSON(data, &paymentStatus, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &paymentStatus, "", true, nil); err == nil {
 		u.PaymentStatus = &paymentStatus
 		u.Type = QueryParamStatusFilterTypePaymentStatus
 		return nil
 	}
 
 	var arrayOfPaymentStatus []components.PaymentStatus = []components.PaymentStatus{}
-	if err := utils.UnmarshalJSON(data, &arrayOfPaymentStatus, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &arrayOfPaymentStatus, "", true, nil); err == nil {
 		u.ArrayOfPaymentStatus = arrayOfPaymentStatus
 		u.Type = QueryParamStatusFilterTypeArrayOfPaymentStatus
 		return nil
@@ -274,8 +274,8 @@ const (
 
 // MethodFilter - Filter by payment method.
 type MethodFilter struct {
-	Str        *string  `queryParam:"inline"`
-	ArrayOfStr []string `queryParam:"inline"`
+	Str        *string  `queryParam:"inline" name:"Method_Filter"`
+	ArrayOfStr []string `queryParam:"inline" name:"Method_Filter"`
 
 	Type MethodFilterType
 }
@@ -301,14 +301,14 @@ func CreateMethodFilterArrayOfStr(arrayOfStr []string) MethodFilter {
 func (u *MethodFilter) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, nil); err == nil {
 		u.Str = &str
 		u.Type = MethodFilterTypeStr
 		return nil
 	}
 
 	var arrayOfStr []string = []string{}
-	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, nil); err == nil {
 		u.ArrayOfStr = arrayOfStr
 		u.Type = MethodFilterTypeArrayOfStr
 		return nil
@@ -338,8 +338,8 @@ const (
 
 // CustomerEmailFilter - Filter by customer email.
 type CustomerEmailFilter struct {
-	Str        *string  `queryParam:"inline"`
-	ArrayOfStr []string `queryParam:"inline"`
+	Str        *string  `queryParam:"inline" name:"CustomerEmail_Filter"`
+	ArrayOfStr []string `queryParam:"inline" name:"CustomerEmail_Filter"`
 
 	Type CustomerEmailFilterType
 }
@@ -365,14 +365,14 @@ func CreateCustomerEmailFilterArrayOfStr(arrayOfStr []string) CustomerEmailFilte
 func (u *CustomerEmailFilter) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, nil); err == nil {
 		u.Str = &str
 		u.Type = CustomerEmailFilterTypeStr
 		return nil
 	}
 
 	var arrayOfStr []string = []string{}
-	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, nil); err == nil {
 		u.ArrayOfStr = arrayOfStr
 		u.Type = CustomerEmailFilterTypeArrayOfStr
 		return nil
@@ -419,7 +419,7 @@ func (p PaymentsListRequest) MarshalJSON() ([]byte, error) {
 }
 
 func (p *PaymentsListRequest) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &p, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &p, "", false, nil); err != nil {
 		return err
 	}
 	return nil

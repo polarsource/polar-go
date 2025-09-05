@@ -2,12 +2,27 @@
 
 package components
 
+import (
+	"github.com/polarsource/polar-go/internal/utils"
+)
+
 // ProductPriceMeter - A meter associated to a metered price.
 type ProductPriceMeter struct {
 	// The ID of the object.
 	ID string `json:"id"`
 	// The name of the meter.
 	Name string `json:"name"`
+}
+
+func (p ProductPriceMeter) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(p, "", false)
+}
+
+func (p *ProductPriceMeter) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &p, "", false, []string{"id", "name"}); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *ProductPriceMeter) GetID() string {

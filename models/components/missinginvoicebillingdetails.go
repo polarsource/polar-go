@@ -16,7 +16,7 @@ func (m MissingInvoiceBillingDetails) MarshalJSON() ([]byte, error) {
 }
 
 func (m *MissingInvoiceBillingDetails) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &m, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &m, "", false, []string{"error", "detail"}); err != nil {
 		return err
 	}
 	return nil

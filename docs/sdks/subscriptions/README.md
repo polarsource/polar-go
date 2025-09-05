@@ -257,6 +257,7 @@ func main() {
 | ------------------------------------- | ------------------------------------- | ------------------------------------- |
 | apierrors.AlreadyCanceledSubscription | 403                                   | application/json                      |
 | apierrors.ResourceNotFound            | 404                                   | application/json                      |
+| apierrors.SubscriptionLocked          | 409                                   | application/json                      |
 | apierrors.HTTPValidationError         | 422                                   | application/json                      |
 | apierrors.APIError                    | 4XX, 5XX                              | \*/\*                                 |
 
@@ -314,5 +315,6 @@ func main() {
 | ------------------------------------- | ------------------------------------- | ------------------------------------- |
 | apierrors.AlreadyCanceledSubscription | 403                                   | application/json                      |
 | apierrors.ResourceNotFound            | 404                                   | application/json                      |
+| apierrors.SubscriptionLocked          | 409                                   | application/json                      |
 | apierrors.HTTPValidationError         | 422                                   | application/json                      |
 | apierrors.APIError                    | 4XX, 5XX                              | \*/\*                                 |

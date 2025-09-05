@@ -2,10 +2,25 @@
 
 package components
 
+import (
+	"github.com/polarsource/polar-go/internal/utils"
+)
+
 type OrganizationSubscriptionSettings struct {
 	AllowMultipleSubscriptions bool                          `json:"allow_multiple_subscriptions"`
 	AllowCustomerUpdates       bool                          `json:"allow_customer_updates"`
 	ProrationBehavior          SubscriptionProrationBehavior `json:"proration_behavior"`
+}
+
+func (o OrganizationSubscriptionSettings) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(o, "", false)
+}
+
+func (o *OrganizationSubscriptionSettings) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &o, "", false, []string{"allow_multiple_subscriptions", "allow_customer_updates", "proration_behavior"}); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *OrganizationSubscriptionSettings) GetAllowMultipleSubscriptions() bool {

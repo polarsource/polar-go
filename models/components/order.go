@@ -19,10 +19,10 @@ const (
 )
 
 type OrderMetadata struct {
-	Str     *string  `queryParam:"inline"`
-	Integer *int64   `queryParam:"inline"`
-	Number  *float64 `queryParam:"inline"`
-	Boolean *bool    `queryParam:"inline"`
+	Str     *string  `queryParam:"inline" name:"metadata"`
+	Integer *int64   `queryParam:"inline" name:"metadata"`
+	Number  *float64 `queryParam:"inline" name:"metadata"`
+	Boolean *bool    `queryParam:"inline" name:"metadata"`
 
 	Type OrderMetadataType
 }
@@ -66,28 +66,28 @@ func CreateOrderMetadataBoolean(boolean bool) OrderMetadata {
 func (u *OrderMetadata) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, nil); err == nil {
 		u.Str = &str
 		u.Type = OrderMetadataTypeStr
 		return nil
 	}
 
 	var integer int64 = int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
 		u.Integer = &integer
 		u.Type = OrderMetadataTypeInteger
 		return nil
 	}
 
 	var number float64 = float64(0)
-	if err := utils.UnmarshalJSON(data, &number, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
 		u.Number = &number
 		u.Type = OrderMetadataTypeNumber
 		return nil
 	}
 
 	var boolean bool = false
-	if err := utils.UnmarshalJSON(data, &boolean, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &boolean, "", true, nil); err == nil {
 		u.Boolean = &boolean
 		u.Type = OrderMetadataTypeBoolean
 		return nil
@@ -126,10 +126,10 @@ const (
 )
 
 type OrderCustomFieldData struct {
-	Str      *string    `queryParam:"inline"`
-	Integer  *int64     `queryParam:"inline"`
-	Boolean  *bool      `queryParam:"inline"`
-	DateTime *time.Time `queryParam:"inline"`
+	Str      *string    `queryParam:"inline" name:"custom_field_data"`
+	Integer  *int64     `queryParam:"inline" name:"custom_field_data"`
+	Boolean  *bool      `queryParam:"inline" name:"custom_field_data"`
+	DateTime *time.Time `queryParam:"inline" name:"custom_field_data"`
 
 	Type OrderCustomFieldDataType
 }
@@ -173,28 +173,28 @@ func CreateOrderCustomFieldDataDateTime(dateTime time.Time) OrderCustomFieldData
 func (u *OrderCustomFieldData) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, nil); err == nil {
 		u.Str = &str
 		u.Type = OrderCustomFieldDataTypeStr
 		return nil
 	}
 
 	var integer int64 = int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
 		u.Integer = &integer
 		u.Type = OrderCustomFieldDataTypeInteger
 		return nil
 	}
 
 	var boolean bool = false
-	if err := utils.UnmarshalJSON(data, &boolean, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &boolean, "", true, nil); err == nil {
 		u.Boolean = &boolean
 		u.Type = OrderCustomFieldDataTypeBoolean
 		return nil
 	}
 
 	var dateTime time.Time = time.Time{}
-	if err := utils.UnmarshalJSON(data, &dateTime, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &dateTime, "", true, nil); err == nil {
 		u.DateTime = &dateTime
 		u.Type = OrderCustomFieldDataTypeDateTime
 		return nil
@@ -233,10 +233,10 @@ const (
 )
 
 type OrderDiscount struct {
-	DiscountFixedOnceForeverDurationBase      *DiscountFixedOnceForeverDurationBase      `queryParam:"inline"`
-	DiscountFixedRepeatDurationBase           *DiscountFixedRepeatDurationBase           `queryParam:"inline"`
-	DiscountPercentageOnceForeverDurationBase *DiscountPercentageOnceForeverDurationBase `queryParam:"inline"`
-	DiscountPercentageRepeatDurationBase      *DiscountPercentageRepeatDurationBase      `queryParam:"inline"`
+	DiscountFixedOnceForeverDurationBase      *DiscountFixedOnceForeverDurationBase      `queryParam:"inline" name:"OrderDiscount"`
+	DiscountFixedRepeatDurationBase           *DiscountFixedRepeatDurationBase           `queryParam:"inline" name:"OrderDiscount"`
+	DiscountPercentageOnceForeverDurationBase *DiscountPercentageOnceForeverDurationBase `queryParam:"inline" name:"OrderDiscount"`
+	DiscountPercentageRepeatDurationBase      *DiscountPercentageRepeatDurationBase      `queryParam:"inline" name:"OrderDiscount"`
 
 	Type OrderDiscountType
 }
@@ -279,31 +279,31 @@ func CreateOrderDiscountDiscountPercentageRepeatDurationBase(discountPercentageR
 
 func (u *OrderDiscount) UnmarshalJSON(data []byte) error {
 
-	var discountPercentageOnceForeverDurationBase DiscountPercentageOnceForeverDurationBase = DiscountPercentageOnceForeverDurationBase{}
-	if err := utils.UnmarshalJSON(data, &discountPercentageOnceForeverDurationBase, "", true, false); err == nil {
-		u.DiscountPercentageOnceForeverDurationBase = &discountPercentageOnceForeverDurationBase
-		u.Type = OrderDiscountTypeDiscountPercentageOnceForeverDurationBase
+	var discountFixedRepeatDurationBase DiscountFixedRepeatDurationBase = DiscountFixedRepeatDurationBase{}
+	if err := utils.UnmarshalJSON(data, &discountFixedRepeatDurationBase, "", true, nil); err == nil {
+		u.DiscountFixedRepeatDurationBase = &discountFixedRepeatDurationBase
+		u.Type = OrderDiscountTypeDiscountFixedRepeatDurationBase
 		return nil
 	}
 
 	var discountFixedOnceForeverDurationBase DiscountFixedOnceForeverDurationBase = DiscountFixedOnceForeverDurationBase{}
-	if err := utils.UnmarshalJSON(data, &discountFixedOnceForeverDurationBase, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &discountFixedOnceForeverDurationBase, "", true, nil); err == nil {
 		u.DiscountFixedOnceForeverDurationBase = &discountFixedOnceForeverDurationBase
 		u.Type = OrderDiscountTypeDiscountFixedOnceForeverDurationBase
 		return nil
 	}
 
 	var discountPercentageRepeatDurationBase DiscountPercentageRepeatDurationBase = DiscountPercentageRepeatDurationBase{}
-	if err := utils.UnmarshalJSON(data, &discountPercentageRepeatDurationBase, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &discountPercentageRepeatDurationBase, "", true, nil); err == nil {
 		u.DiscountPercentageRepeatDurationBase = &discountPercentageRepeatDurationBase
 		u.Type = OrderDiscountTypeDiscountPercentageRepeatDurationBase
 		return nil
 	}
 
-	var discountFixedRepeatDurationBase DiscountFixedRepeatDurationBase = DiscountFixedRepeatDurationBase{}
-	if err := utils.UnmarshalJSON(data, &discountFixedRepeatDurationBase, "", true, false); err == nil {
-		u.DiscountFixedRepeatDurationBase = &discountFixedRepeatDurationBase
-		u.Type = OrderDiscountTypeDiscountFixedRepeatDurationBase
+	var discountPercentageOnceForeverDurationBase DiscountPercentageOnceForeverDurationBase = DiscountPercentageOnceForeverDurationBase{}
+	if err := utils.UnmarshalJSON(data, &discountPercentageOnceForeverDurationBase, "", true, nil); err == nil {
+		u.DiscountPercentageOnceForeverDurationBase = &discountPercentageOnceForeverDurationBase
+		u.Type = OrderDiscountTypeDiscountPercentageOnceForeverDurationBase
 		return nil
 	}
 
@@ -384,7 +384,7 @@ func (o Order) MarshalJSON() ([]byte, error) {
 }
 
 func (o *Order) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &o, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &o, "", false, []string{"id", "created_at", "modified_at", "status", "paid", "subtotal_amount", "discount_amount", "net_amount", "tax_amount", "total_amount", "refunded_amount", "refunded_tax_amount", "currency", "billing_reason", "billing_name", "billing_address", "is_invoice_generated", "customer_id", "product_id", "discount_id", "subscription_id", "checkout_id", "metadata", "customer", "user_id", "product", "discount", "subscription", "items"}); err != nil {
 		return err
 	}
 	return nil

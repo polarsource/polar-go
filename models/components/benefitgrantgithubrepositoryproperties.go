@@ -5,6 +5,7 @@ package components
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/polarsource/polar-go/internal/utils"
 )
 
 type BenefitGrantGitHubRepositoryPropertiesPermission string
@@ -43,10 +44,22 @@ func (e *BenefitGrantGitHubRepositoryPropertiesPermission) UnmarshalJSON(data []
 }
 
 type BenefitGrantGitHubRepositoryProperties struct {
-	AccountID       *string                                           `json:"account_id,omitempty"`
-	RepositoryOwner *string                                           `json:"repository_owner,omitempty"`
-	RepositoryName  *string                                           `json:"repository_name,omitempty"`
-	Permission      *BenefitGrantGitHubRepositoryPropertiesPermission `json:"permission,omitempty"`
+	AccountID        *string                                           `json:"account_id,omitempty"`
+	RepositoryOwner  *string                                           `json:"repository_owner,omitempty"`
+	RepositoryName   *string                                           `json:"repository_name,omitempty"`
+	Permission       *BenefitGrantGitHubRepositoryPropertiesPermission `json:"permission,omitempty"`
+	GrantedAccountID *string                                           `json:"granted_account_id,omitempty"`
+}
+
+func (b BenefitGrantGitHubRepositoryProperties) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(b, "", false)
+}
+
+func (b *BenefitGrantGitHubRepositoryProperties) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &b, "", false, nil); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *BenefitGrantGitHubRepositoryProperties) GetAccountID() *string {
@@ -75,4 +88,11 @@ func (o *BenefitGrantGitHubRepositoryProperties) GetPermission() *BenefitGrantGi
 		return nil
 	}
 	return o.Permission
+}
+
+func (o *BenefitGrantGitHubRepositoryProperties) GetGrantedAccountID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.GrantedAccountID
 }

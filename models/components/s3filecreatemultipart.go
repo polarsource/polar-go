@@ -2,8 +2,23 @@
 
 package components
 
+import (
+	"github.com/polarsource/polar-go/internal/utils"
+)
+
 type S3FileCreateMultipart struct {
 	Parts []S3FileCreatePart `json:"parts"`
+}
+
+func (s S3FileCreateMultipart) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *S3FileCreateMultipart) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, []string{"parts"}); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *S3FileCreateMultipart) GetParts() []S3FileCreatePart {

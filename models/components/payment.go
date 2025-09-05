@@ -16,8 +16,8 @@ const (
 )
 
 type Payment struct {
-	CardPayment    *CardPayment    `queryParam:"inline"`
-	GenericPayment *GenericPayment `queryParam:"inline"`
+	CardPayment    *CardPayment    `queryParam:"inline" name:"Payment"`
+	GenericPayment *GenericPayment `queryParam:"inline" name:"Payment"`
 
 	Type PaymentType
 }
@@ -42,17 +42,17 @@ func CreatePaymentGenericPayment(genericPayment GenericPayment) Payment {
 
 func (u *Payment) UnmarshalJSON(data []byte) error {
 
-	var genericPayment GenericPayment = GenericPayment{}
-	if err := utils.UnmarshalJSON(data, &genericPayment, "", true, false); err == nil {
-		u.GenericPayment = &genericPayment
-		u.Type = PaymentTypeGenericPayment
+	var cardPayment CardPayment = CardPayment{}
+	if err := utils.UnmarshalJSON(data, &cardPayment, "", true, nil); err == nil {
+		u.CardPayment = &cardPayment
+		u.Type = PaymentTypeCardPayment
 		return nil
 	}
 
-	var cardPayment CardPayment = CardPayment{}
-	if err := utils.UnmarshalJSON(data, &cardPayment, "", true, false); err == nil {
-		u.CardPayment = &cardPayment
-		u.Type = PaymentTypeCardPayment
+	var genericPayment GenericPayment = GenericPayment{}
+	if err := utils.UnmarshalJSON(data, &genericPayment, "", true, nil); err == nil {
+		u.GenericPayment = &genericPayment
+		u.Type = PaymentTypeGenericPayment
 		return nil
 	}
 

@@ -2,13 +2,28 @@
 
 package components
 
+import (
+	"github.com/polarsource/polar-go/internal/utils"
+)
+
 type CustomerBenefitGrantDiscordPropertiesUpdate struct {
-	AccountID string `json:"account_id"`
+	AccountID *string `json:"account_id"`
 }
 
-func (o *CustomerBenefitGrantDiscordPropertiesUpdate) GetAccountID() string {
+func (c CustomerBenefitGrantDiscordPropertiesUpdate) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(c, "", false)
+}
+
+func (c *CustomerBenefitGrantDiscordPropertiesUpdate) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &c, "", false, []string{"account_id"}); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *CustomerBenefitGrantDiscordPropertiesUpdate) GetAccountID() *string {
 	if o == nil {
-		return ""
+		return nil
 	}
 	return o.AccountID
 }

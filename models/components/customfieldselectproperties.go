@@ -2,11 +2,26 @@
 
 package components
 
+import (
+	"github.com/polarsource/polar-go/internal/utils"
+)
+
 type CustomFieldSelectProperties struct {
 	FormLabel       *string                   `json:"form_label,omitempty"`
 	FormHelpText    *string                   `json:"form_help_text,omitempty"`
 	FormPlaceholder *string                   `json:"form_placeholder,omitempty"`
 	Options         []CustomFieldSelectOption `json:"options"`
+}
+
+func (c CustomFieldSelectProperties) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(c, "", false)
+}
+
+func (c *CustomFieldSelectProperties) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &c, "", false, []string{"options"}); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *CustomFieldSelectProperties) GetFormLabel() *string {

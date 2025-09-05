@@ -2,9 +2,24 @@
 
 package components
 
+import (
+	"github.com/polarsource/polar-go/internal/utils"
+)
+
 type CustomFieldSelectOption struct {
 	Value string `json:"value"`
 	Label string `json:"label"`
+}
+
+func (c CustomFieldSelectOption) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(c, "", false)
+}
+
+func (c *CustomFieldSelectOption) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &c, "", false, []string{"value", "label"}); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *CustomFieldSelectOption) GetValue() string {

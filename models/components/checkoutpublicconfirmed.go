@@ -19,10 +19,10 @@ const (
 )
 
 type CheckoutPublicConfirmedCustomFieldData struct {
-	Str      *string    `queryParam:"inline"`
-	Integer  *int64     `queryParam:"inline"`
-	Boolean  *bool      `queryParam:"inline"`
-	DateTime *time.Time `queryParam:"inline"`
+	Str      *string    `queryParam:"inline" name:"custom_field_data"`
+	Integer  *int64     `queryParam:"inline" name:"custom_field_data"`
+	Boolean  *bool      `queryParam:"inline" name:"custom_field_data"`
+	DateTime *time.Time `queryParam:"inline" name:"custom_field_data"`
 
 	Type CheckoutPublicConfirmedCustomFieldDataType
 }
@@ -66,28 +66,28 @@ func CreateCheckoutPublicConfirmedCustomFieldDataDateTime(dateTime time.Time) Ch
 func (u *CheckoutPublicConfirmedCustomFieldData) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, nil); err == nil {
 		u.Str = &str
 		u.Type = CheckoutPublicConfirmedCustomFieldDataTypeStr
 		return nil
 	}
 
 	var integer int64 = int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
 		u.Integer = &integer
 		u.Type = CheckoutPublicConfirmedCustomFieldDataTypeInteger
 		return nil
 	}
 
 	var boolean bool = false
-	if err := utils.UnmarshalJSON(data, &boolean, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &boolean, "", true, nil); err == nil {
 		u.Boolean = &boolean
 		u.Type = CheckoutPublicConfirmedCustomFieldDataTypeBoolean
 		return nil
 	}
 
 	var dateTime time.Time = time.Time{}
-	if err := utils.UnmarshalJSON(data, &dateTime, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &dateTime, "", true, nil); err == nil {
 		u.DateTime = &dateTime
 		u.Type = CheckoutPublicConfirmedCustomFieldDataTypeDateTime
 		return nil
@@ -125,8 +125,8 @@ const (
 
 // CheckoutPublicConfirmedProductPrice - Price of the selected product.
 type CheckoutPublicConfirmedProductPrice struct {
-	LegacyRecurringProductPrice *LegacyRecurringProductPrice `queryParam:"inline"`
-	ProductPrice                *ProductPrice                `queryParam:"inline"`
+	LegacyRecurringProductPrice *LegacyRecurringProductPrice `queryParam:"inline" name:"Product_Price"`
+	ProductPrice                *ProductPrice                `queryParam:"inline" name:"Product_Price"`
 
 	Type CheckoutPublicConfirmedProductPriceType
 }
@@ -152,14 +152,14 @@ func CreateCheckoutPublicConfirmedProductPriceProductPrice(productPrice ProductP
 func (u *CheckoutPublicConfirmedProductPrice) UnmarshalJSON(data []byte) error {
 
 	var legacyRecurringProductPrice LegacyRecurringProductPrice = LegacyRecurringProductPrice{}
-	if err := utils.UnmarshalJSON(data, &legacyRecurringProductPrice, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &legacyRecurringProductPrice, "", true, nil); err == nil {
 		u.LegacyRecurringProductPrice = &legacyRecurringProductPrice
 		u.Type = CheckoutPublicConfirmedProductPriceTypeLegacyRecurringProductPrice
 		return nil
 	}
 
 	var productPrice ProductPrice = ProductPrice{}
-	if err := utils.UnmarshalJSON(data, &productPrice, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &productPrice, "", true, nil); err == nil {
 		u.ProductPrice = &productPrice
 		u.Type = CheckoutPublicConfirmedProductPriceTypeProductPrice
 		return nil
@@ -190,10 +190,10 @@ const (
 )
 
 type CheckoutPublicConfirmedDiscount struct {
-	CheckoutDiscountFixedOnceForeverDuration      *CheckoutDiscountFixedOnceForeverDuration      `queryParam:"inline"`
-	CheckoutDiscountFixedRepeatDuration           *CheckoutDiscountFixedRepeatDuration           `queryParam:"inline"`
-	CheckoutDiscountPercentageOnceForeverDuration *CheckoutDiscountPercentageOnceForeverDuration `queryParam:"inline"`
-	CheckoutDiscountPercentageRepeatDuration      *CheckoutDiscountPercentageRepeatDuration      `queryParam:"inline"`
+	CheckoutDiscountFixedOnceForeverDuration      *CheckoutDiscountFixedOnceForeverDuration      `queryParam:"inline" name:"discount"`
+	CheckoutDiscountFixedRepeatDuration           *CheckoutDiscountFixedRepeatDuration           `queryParam:"inline" name:"discount"`
+	CheckoutDiscountPercentageOnceForeverDuration *CheckoutDiscountPercentageOnceForeverDuration `queryParam:"inline" name:"discount"`
+	CheckoutDiscountPercentageRepeatDuration      *CheckoutDiscountPercentageRepeatDuration      `queryParam:"inline" name:"discount"`
 
 	Type CheckoutPublicConfirmedDiscountType
 }
@@ -236,31 +236,31 @@ func CreateCheckoutPublicConfirmedDiscountCheckoutDiscountPercentageRepeatDurati
 
 func (u *CheckoutPublicConfirmedDiscount) UnmarshalJSON(data []byte) error {
 
-	var checkoutDiscountPercentageOnceForeverDuration CheckoutDiscountPercentageOnceForeverDuration = CheckoutDiscountPercentageOnceForeverDuration{}
-	if err := utils.UnmarshalJSON(data, &checkoutDiscountPercentageOnceForeverDuration, "", true, false); err == nil {
-		u.CheckoutDiscountPercentageOnceForeverDuration = &checkoutDiscountPercentageOnceForeverDuration
-		u.Type = CheckoutPublicConfirmedDiscountTypeCheckoutDiscountPercentageOnceForeverDuration
+	var checkoutDiscountFixedRepeatDuration CheckoutDiscountFixedRepeatDuration = CheckoutDiscountFixedRepeatDuration{}
+	if err := utils.UnmarshalJSON(data, &checkoutDiscountFixedRepeatDuration, "", true, nil); err == nil {
+		u.CheckoutDiscountFixedRepeatDuration = &checkoutDiscountFixedRepeatDuration
+		u.Type = CheckoutPublicConfirmedDiscountTypeCheckoutDiscountFixedRepeatDuration
 		return nil
 	}
 
 	var checkoutDiscountFixedOnceForeverDuration CheckoutDiscountFixedOnceForeverDuration = CheckoutDiscountFixedOnceForeverDuration{}
-	if err := utils.UnmarshalJSON(data, &checkoutDiscountFixedOnceForeverDuration, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &checkoutDiscountFixedOnceForeverDuration, "", true, nil); err == nil {
 		u.CheckoutDiscountFixedOnceForeverDuration = &checkoutDiscountFixedOnceForeverDuration
 		u.Type = CheckoutPublicConfirmedDiscountTypeCheckoutDiscountFixedOnceForeverDuration
 		return nil
 	}
 
 	var checkoutDiscountPercentageRepeatDuration CheckoutDiscountPercentageRepeatDuration = CheckoutDiscountPercentageRepeatDuration{}
-	if err := utils.UnmarshalJSON(data, &checkoutDiscountPercentageRepeatDuration, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &checkoutDiscountPercentageRepeatDuration, "", true, nil); err == nil {
 		u.CheckoutDiscountPercentageRepeatDuration = &checkoutDiscountPercentageRepeatDuration
 		u.Type = CheckoutPublicConfirmedDiscountTypeCheckoutDiscountPercentageRepeatDuration
 		return nil
 	}
 
-	var checkoutDiscountFixedRepeatDuration CheckoutDiscountFixedRepeatDuration = CheckoutDiscountFixedRepeatDuration{}
-	if err := utils.UnmarshalJSON(data, &checkoutDiscountFixedRepeatDuration, "", true, false); err == nil {
-		u.CheckoutDiscountFixedRepeatDuration = &checkoutDiscountFixedRepeatDuration
-		u.Type = CheckoutPublicConfirmedDiscountTypeCheckoutDiscountFixedRepeatDuration
+	var checkoutDiscountPercentageOnceForeverDuration CheckoutDiscountPercentageOnceForeverDuration = CheckoutDiscountPercentageOnceForeverDuration{}
+	if err := utils.UnmarshalJSON(data, &checkoutDiscountPercentageOnceForeverDuration, "", true, nil); err == nil {
+		u.CheckoutDiscountPercentageOnceForeverDuration = &checkoutDiscountPercentageOnceForeverDuration
+		u.Type = CheckoutPublicConfirmedDiscountTypeCheckoutDiscountPercentageOnceForeverDuration
 		return nil
 	}
 
@@ -374,7 +374,7 @@ func (c CheckoutPublicConfirmed) MarshalJSON() ([]byte, error) {
 }
 
 func (c *CheckoutPublicConfirmed) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &c, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &c, "", false, []string{"created_at", "modified_at", "id", "payment_processor", "status", "client_secret", "url", "expires_at", "success_url", "embed_origin", "amount", "discount_amount", "net_amount", "tax_amount", "total_amount", "currency", "product_id", "product_price_id", "discount_id", "allow_discount_codes", "require_billing_address", "is_discount_applicable", "is_free_product_price", "is_payment_required", "is_payment_setup_required", "is_payment_form_required", "customer_id", "is_business_customer", "customer_name", "customer_email", "customer_ip_address", "customer_billing_name", "customer_billing_address", "customer_tax_id", "payment_processor_metadata", "billing_address_fields", "products", "product", "product_price", "discount", "organization", "attached_custom_fields", "customer_session_token"}); err != nil {
 		return err
 	}
 	return nil

@@ -18,8 +18,8 @@ const (
 
 // OrganizationID - Filter by organization ID.
 type OrganizationID struct {
-	Str        *string  `queryParam:"inline"`
-	ArrayOfStr []string `queryParam:"inline"`
+	Str        *string  `queryParam:"inline" name:"Organization_Id"`
+	ArrayOfStr []string `queryParam:"inline" name:"Organization_Id"`
 
 	Type OrganizationIDType
 }
@@ -45,14 +45,14 @@ func CreateOrganizationIDArrayOfStr(arrayOfStr []string) OrganizationID {
 func (u *OrganizationID) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, nil); err == nil {
 		u.Str = &str
 		u.Type = OrganizationIDTypeStr
 		return nil
 	}
 
 	var arrayOfStr []string = []string{}
-	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, nil); err == nil {
 		u.ArrayOfStr = arrayOfStr
 		u.Type = OrganizationIDTypeArrayOfStr
 		return nil

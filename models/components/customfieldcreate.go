@@ -20,11 +20,11 @@ const (
 )
 
 type CustomFieldCreate struct {
-	CustomFieldCreateText     *CustomFieldCreateText     `queryParam:"inline"`
-	CustomFieldCreateNumber   *CustomFieldCreateNumber   `queryParam:"inline"`
-	CustomFieldCreateDate     *CustomFieldCreateDate     `queryParam:"inline"`
-	CustomFieldCreateCheckbox *CustomFieldCreateCheckbox `queryParam:"inline"`
-	CustomFieldCreateSelect   *CustomFieldCreateSelect   `queryParam:"inline"`
+	CustomFieldCreateText     *CustomFieldCreateText     `queryParam:"inline" name:"CustomFieldCreate"`
+	CustomFieldCreateNumber   *CustomFieldCreateNumber   `queryParam:"inline" name:"CustomFieldCreate"`
+	CustomFieldCreateDate     *CustomFieldCreateDate     `queryParam:"inline" name:"CustomFieldCreate"`
+	CustomFieldCreateCheckbox *CustomFieldCreateCheckbox `queryParam:"inline" name:"CustomFieldCreate"`
+	CustomFieldCreateSelect   *CustomFieldCreateSelect   `queryParam:"inline" name:"CustomFieldCreate"`
 
 	Type CustomFieldCreateType
 }
@@ -88,7 +88,7 @@ func (u *CustomFieldCreate) UnmarshalJSON(data []byte) error {
 	switch dis.Type {
 	case "checkbox":
 		customFieldCreateCheckbox := new(CustomFieldCreateCheckbox)
-		if err := utils.UnmarshalJSON(data, &customFieldCreateCheckbox, "", true, false); err != nil {
+		if err := utils.UnmarshalJSON(data, &customFieldCreateCheckbox, "", true, nil); err != nil {
 			return fmt.Errorf("could not unmarshal `%s` into expected (Type == checkbox) type CustomFieldCreateCheckbox within CustomFieldCreate: %w", string(data), err)
 		}
 
@@ -97,7 +97,7 @@ func (u *CustomFieldCreate) UnmarshalJSON(data []byte) error {
 		return nil
 	case "date":
 		customFieldCreateDate := new(CustomFieldCreateDate)
-		if err := utils.UnmarshalJSON(data, &customFieldCreateDate, "", true, false); err != nil {
+		if err := utils.UnmarshalJSON(data, &customFieldCreateDate, "", true, nil); err != nil {
 			return fmt.Errorf("could not unmarshal `%s` into expected (Type == date) type CustomFieldCreateDate within CustomFieldCreate: %w", string(data), err)
 		}
 
@@ -106,7 +106,7 @@ func (u *CustomFieldCreate) UnmarshalJSON(data []byte) error {
 		return nil
 	case "number":
 		customFieldCreateNumber := new(CustomFieldCreateNumber)
-		if err := utils.UnmarshalJSON(data, &customFieldCreateNumber, "", true, false); err != nil {
+		if err := utils.UnmarshalJSON(data, &customFieldCreateNumber, "", true, nil); err != nil {
 			return fmt.Errorf("could not unmarshal `%s` into expected (Type == number) type CustomFieldCreateNumber within CustomFieldCreate: %w", string(data), err)
 		}
 
@@ -115,7 +115,7 @@ func (u *CustomFieldCreate) UnmarshalJSON(data []byte) error {
 		return nil
 	case "select":
 		customFieldCreateSelect := new(CustomFieldCreateSelect)
-		if err := utils.UnmarshalJSON(data, &customFieldCreateSelect, "", true, false); err != nil {
+		if err := utils.UnmarshalJSON(data, &customFieldCreateSelect, "", true, nil); err != nil {
 			return fmt.Errorf("could not unmarshal `%s` into expected (Type == select) type CustomFieldCreateSelect within CustomFieldCreate: %w", string(data), err)
 		}
 
@@ -124,7 +124,7 @@ func (u *CustomFieldCreate) UnmarshalJSON(data []byte) error {
 		return nil
 	case "text":
 		customFieldCreateText := new(CustomFieldCreateText)
-		if err := utils.UnmarshalJSON(data, &customFieldCreateText, "", true, false); err != nil {
+		if err := utils.UnmarshalJSON(data, &customFieldCreateText, "", true, nil); err != nil {
 			return fmt.Errorf("could not unmarshal `%s` into expected (Type == text) type CustomFieldCreateText within CustomFieldCreate: %w", string(data), err)
 		}
 

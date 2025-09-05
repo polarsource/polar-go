@@ -18,8 +18,8 @@ const (
 
 // QueryParamCustomerIDFilter - Filter by customer.
 type QueryParamCustomerIDFilter struct {
-	Str        *string  `queryParam:"inline"`
-	ArrayOfStr []string `queryParam:"inline"`
+	Str        *string  `queryParam:"inline" name:"CustomerID_Filter"`
+	ArrayOfStr []string `queryParam:"inline" name:"CustomerID_Filter"`
 
 	Type QueryParamCustomerIDFilterType
 }
@@ -45,14 +45,14 @@ func CreateQueryParamCustomerIDFilterArrayOfStr(arrayOfStr []string) QueryParamC
 func (u *QueryParamCustomerIDFilter) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, nil); err == nil {
 		u.Str = &str
 		u.Type = QueryParamCustomerIDFilterTypeStr
 		return nil
 	}
 
 	var arrayOfStr []string = []string{}
-	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, nil); err == nil {
 		u.ArrayOfStr = arrayOfStr
 		u.Type = QueryParamCustomerIDFilterTypeArrayOfStr
 		return nil
@@ -90,7 +90,7 @@ func (b BenefitsGrantsRequest) MarshalJSON() ([]byte, error) {
 }
 
 func (b *BenefitsGrantsRequest) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &b, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &b, "", false, []string{"id"}); err != nil {
 		return err
 	}
 	return nil

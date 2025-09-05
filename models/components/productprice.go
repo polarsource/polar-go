@@ -19,10 +19,10 @@ const (
 )
 
 type ProductPrice struct {
-	ProductPriceFixed       *ProductPriceFixed       `queryParam:"inline"`
-	ProductPriceCustom      *ProductPriceCustom      `queryParam:"inline"`
-	ProductPriceFree        *ProductPriceFree        `queryParam:"inline"`
-	ProductPriceMeteredUnit *ProductPriceMeteredUnit `queryParam:"inline"`
+	ProductPriceFixed       *ProductPriceFixed       `queryParam:"inline" name:"ProductPrice"`
+	ProductPriceCustom      *ProductPriceCustom      `queryParam:"inline" name:"ProductPrice"`
+	ProductPriceFree        *ProductPriceFree        `queryParam:"inline" name:"ProductPrice"`
+	ProductPriceMeteredUnit *ProductPriceMeteredUnit `queryParam:"inline" name:"ProductPrice"`
 
 	Type ProductPriceUnionType
 }
@@ -77,7 +77,7 @@ func (u *ProductPrice) UnmarshalJSON(data []byte) error {
 	switch dis.AmountType {
 	case "custom":
 		productPriceCustom := new(ProductPriceCustom)
-		if err := utils.UnmarshalJSON(data, &productPriceCustom, "", true, false); err != nil {
+		if err := utils.UnmarshalJSON(data, &productPriceCustom, "", true, nil); err != nil {
 			return fmt.Errorf("could not unmarshal `%s` into expected (AmountType == custom) type ProductPriceCustom within ProductPrice: %w", string(data), err)
 		}
 
@@ -86,7 +86,7 @@ func (u *ProductPrice) UnmarshalJSON(data []byte) error {
 		return nil
 	case "fixed":
 		productPriceFixed := new(ProductPriceFixed)
-		if err := utils.UnmarshalJSON(data, &productPriceFixed, "", true, false); err != nil {
+		if err := utils.UnmarshalJSON(data, &productPriceFixed, "", true, nil); err != nil {
 			return fmt.Errorf("could not unmarshal `%s` into expected (AmountType == fixed) type ProductPriceFixed within ProductPrice: %w", string(data), err)
 		}
 
@@ -95,7 +95,7 @@ func (u *ProductPrice) UnmarshalJSON(data []byte) error {
 		return nil
 	case "free":
 		productPriceFree := new(ProductPriceFree)
-		if err := utils.UnmarshalJSON(data, &productPriceFree, "", true, false); err != nil {
+		if err := utils.UnmarshalJSON(data, &productPriceFree, "", true, nil); err != nil {
 			return fmt.Errorf("could not unmarshal `%s` into expected (AmountType == free) type ProductPriceFree within ProductPrice: %w", string(data), err)
 		}
 
@@ -104,7 +104,7 @@ func (u *ProductPrice) UnmarshalJSON(data []byte) error {
 		return nil
 	case "metered_unit":
 		productPriceMeteredUnit := new(ProductPriceMeteredUnit)
-		if err := utils.UnmarshalJSON(data, &productPriceMeteredUnit, "", true, false); err != nil {
+		if err := utils.UnmarshalJSON(data, &productPriceMeteredUnit, "", true, nil); err != nil {
 			return fmt.Errorf("could not unmarshal `%s` into expected (AmountType == metered_unit) type ProductPriceMeteredUnit within ProductPrice: %w", string(data), err)
 		}
 

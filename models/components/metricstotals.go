@@ -16,8 +16,8 @@ const (
 )
 
 type MetricsTotalsOrders struct {
-	Integer *int64   `queryParam:"inline"`
-	Number  *float64 `queryParam:"inline"`
+	Integer *int64   `queryParam:"inline" name:"Orders"`
+	Number  *float64 `queryParam:"inline" name:"Orders"`
 
 	Type MetricsTotalsOrdersType
 }
@@ -43,14 +43,14 @@ func CreateMetricsTotalsOrdersNumber(number float64) MetricsTotalsOrders {
 func (u *MetricsTotalsOrders) UnmarshalJSON(data []byte) error {
 
 	var integer int64 = int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
 		u.Integer = &integer
 		u.Type = MetricsTotalsOrdersTypeInteger
 		return nil
 	}
 
 	var number float64 = float64(0)
-	if err := utils.UnmarshalJSON(data, &number, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
 		u.Number = &number
 		u.Type = MetricsTotalsOrdersTypeNumber
 		return nil
@@ -79,8 +79,8 @@ const (
 )
 
 type MetricsTotalsRevenue struct {
-	Integer *int64   `queryParam:"inline"`
-	Number  *float64 `queryParam:"inline"`
+	Integer *int64   `queryParam:"inline" name:"Revenue"`
+	Number  *float64 `queryParam:"inline" name:"Revenue"`
 
 	Type MetricsTotalsRevenueType
 }
@@ -106,14 +106,14 @@ func CreateMetricsTotalsRevenueNumber(number float64) MetricsTotalsRevenue {
 func (u *MetricsTotalsRevenue) UnmarshalJSON(data []byte) error {
 
 	var integer int64 = int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
 		u.Integer = &integer
 		u.Type = MetricsTotalsRevenueTypeInteger
 		return nil
 	}
 
 	var number float64 = float64(0)
-	if err := utils.UnmarshalJSON(data, &number, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
 		u.Number = &number
 		u.Type = MetricsTotalsRevenueTypeNumber
 		return nil
@@ -142,8 +142,8 @@ const (
 )
 
 type MetricsTotalsNetRevenue struct {
-	Integer *int64   `queryParam:"inline"`
-	Number  *float64 `queryParam:"inline"`
+	Integer *int64   `queryParam:"inline" name:"Net_Revenue"`
+	Number  *float64 `queryParam:"inline" name:"Net_Revenue"`
 
 	Type MetricsTotalsNetRevenueType
 }
@@ -169,14 +169,14 @@ func CreateMetricsTotalsNetRevenueNumber(number float64) MetricsTotalsNetRevenue
 func (u *MetricsTotalsNetRevenue) UnmarshalJSON(data []byte) error {
 
 	var integer int64 = int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
 		u.Integer = &integer
 		u.Type = MetricsTotalsNetRevenueTypeInteger
 		return nil
 	}
 
 	var number float64 = float64(0)
-	if err := utils.UnmarshalJSON(data, &number, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
 		u.Number = &number
 		u.Type = MetricsTotalsNetRevenueTypeNumber
 		return nil
@@ -205,8 +205,8 @@ const (
 )
 
 type MetricsTotalsCumulativeRevenue struct {
-	Integer *int64   `queryParam:"inline"`
-	Number  *float64 `queryParam:"inline"`
+	Integer *int64   `queryParam:"inline" name:"Cumulative_Revenue"`
+	Number  *float64 `queryParam:"inline" name:"Cumulative_Revenue"`
 
 	Type MetricsTotalsCumulativeRevenueType
 }
@@ -232,14 +232,14 @@ func CreateMetricsTotalsCumulativeRevenueNumber(number float64) MetricsTotalsCum
 func (u *MetricsTotalsCumulativeRevenue) UnmarshalJSON(data []byte) error {
 
 	var integer int64 = int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
 		u.Integer = &integer
 		u.Type = MetricsTotalsCumulativeRevenueTypeInteger
 		return nil
 	}
 
 	var number float64 = float64(0)
-	if err := utils.UnmarshalJSON(data, &number, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
 		u.Number = &number
 		u.Type = MetricsTotalsCumulativeRevenueTypeNumber
 		return nil
@@ -268,8 +268,8 @@ const (
 )
 
 type MetricsTotalsNetCumulativeRevenue struct {
-	Integer *int64   `queryParam:"inline"`
-	Number  *float64 `queryParam:"inline"`
+	Integer *int64   `queryParam:"inline" name:"Net_Cumulative_Revenue"`
+	Number  *float64 `queryParam:"inline" name:"Net_Cumulative_Revenue"`
 
 	Type MetricsTotalsNetCumulativeRevenueType
 }
@@ -295,14 +295,14 @@ func CreateMetricsTotalsNetCumulativeRevenueNumber(number float64) MetricsTotals
 func (u *MetricsTotalsNetCumulativeRevenue) UnmarshalJSON(data []byte) error {
 
 	var integer int64 = int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
 		u.Integer = &integer
 		u.Type = MetricsTotalsNetCumulativeRevenueTypeInteger
 		return nil
 	}
 
 	var number float64 = float64(0)
-	if err := utils.UnmarshalJSON(data, &number, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
 		u.Number = &number
 		u.Type = MetricsTotalsNetCumulativeRevenueTypeNumber
 		return nil
@@ -331,8 +331,8 @@ const (
 )
 
 type MetricsTotalsAverageOrderValue struct {
-	Integer *int64   `queryParam:"inline"`
-	Number  *float64 `queryParam:"inline"`
+	Integer *int64   `queryParam:"inline" name:"Average_Order_Value"`
+	Number  *float64 `queryParam:"inline" name:"Average_Order_Value"`
 
 	Type MetricsTotalsAverageOrderValueType
 }
@@ -358,14 +358,14 @@ func CreateMetricsTotalsAverageOrderValueNumber(number float64) MetricsTotalsAve
 func (u *MetricsTotalsAverageOrderValue) UnmarshalJSON(data []byte) error {
 
 	var integer int64 = int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
 		u.Integer = &integer
 		u.Type = MetricsTotalsAverageOrderValueTypeInteger
 		return nil
 	}
 
 	var number float64 = float64(0)
-	if err := utils.UnmarshalJSON(data, &number, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
 		u.Number = &number
 		u.Type = MetricsTotalsAverageOrderValueTypeNumber
 		return nil
@@ -394,8 +394,8 @@ const (
 )
 
 type MetricsTotalsNetAverageOrderValue struct {
-	Integer *int64   `queryParam:"inline"`
-	Number  *float64 `queryParam:"inline"`
+	Integer *int64   `queryParam:"inline" name:"Net_Average_Order_Value"`
+	Number  *float64 `queryParam:"inline" name:"Net_Average_Order_Value"`
 
 	Type MetricsTotalsNetAverageOrderValueType
 }
@@ -421,14 +421,14 @@ func CreateMetricsTotalsNetAverageOrderValueNumber(number float64) MetricsTotals
 func (u *MetricsTotalsNetAverageOrderValue) UnmarshalJSON(data []byte) error {
 
 	var integer int64 = int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
 		u.Integer = &integer
 		u.Type = MetricsTotalsNetAverageOrderValueTypeInteger
 		return nil
 	}
 
 	var number float64 = float64(0)
-	if err := utils.UnmarshalJSON(data, &number, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
 		u.Number = &number
 		u.Type = MetricsTotalsNetAverageOrderValueTypeNumber
 		return nil
@@ -457,8 +457,8 @@ const (
 )
 
 type MetricsTotalsOneTimeProducts struct {
-	Integer *int64   `queryParam:"inline"`
-	Number  *float64 `queryParam:"inline"`
+	Integer *int64   `queryParam:"inline" name:"One_Time_Products"`
+	Number  *float64 `queryParam:"inline" name:"One_Time_Products"`
 
 	Type MetricsTotalsOneTimeProductsType
 }
@@ -484,14 +484,14 @@ func CreateMetricsTotalsOneTimeProductsNumber(number float64) MetricsTotalsOneTi
 func (u *MetricsTotalsOneTimeProducts) UnmarshalJSON(data []byte) error {
 
 	var integer int64 = int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
 		u.Integer = &integer
 		u.Type = MetricsTotalsOneTimeProductsTypeInteger
 		return nil
 	}
 
 	var number float64 = float64(0)
-	if err := utils.UnmarshalJSON(data, &number, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
 		u.Number = &number
 		u.Type = MetricsTotalsOneTimeProductsTypeNumber
 		return nil
@@ -520,8 +520,8 @@ const (
 )
 
 type MetricsTotalsOneTimeProductsRevenue struct {
-	Integer *int64   `queryParam:"inline"`
-	Number  *float64 `queryParam:"inline"`
+	Integer *int64   `queryParam:"inline" name:"One_Time_Products_Revenue"`
+	Number  *float64 `queryParam:"inline" name:"One_Time_Products_Revenue"`
 
 	Type MetricsTotalsOneTimeProductsRevenueType
 }
@@ -547,14 +547,14 @@ func CreateMetricsTotalsOneTimeProductsRevenueNumber(number float64) MetricsTota
 func (u *MetricsTotalsOneTimeProductsRevenue) UnmarshalJSON(data []byte) error {
 
 	var integer int64 = int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
 		u.Integer = &integer
 		u.Type = MetricsTotalsOneTimeProductsRevenueTypeInteger
 		return nil
 	}
 
 	var number float64 = float64(0)
-	if err := utils.UnmarshalJSON(data, &number, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
 		u.Number = &number
 		u.Type = MetricsTotalsOneTimeProductsRevenueTypeNumber
 		return nil
@@ -583,8 +583,8 @@ const (
 )
 
 type MetricsTotalsOneTimeProductsNetRevenue struct {
-	Integer *int64   `queryParam:"inline"`
-	Number  *float64 `queryParam:"inline"`
+	Integer *int64   `queryParam:"inline" name:"One_Time_Products_Net_Revenue"`
+	Number  *float64 `queryParam:"inline" name:"One_Time_Products_Net_Revenue"`
 
 	Type MetricsTotalsOneTimeProductsNetRevenueType
 }
@@ -610,14 +610,14 @@ func CreateMetricsTotalsOneTimeProductsNetRevenueNumber(number float64) MetricsT
 func (u *MetricsTotalsOneTimeProductsNetRevenue) UnmarshalJSON(data []byte) error {
 
 	var integer int64 = int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
 		u.Integer = &integer
 		u.Type = MetricsTotalsOneTimeProductsNetRevenueTypeInteger
 		return nil
 	}
 
 	var number float64 = float64(0)
-	if err := utils.UnmarshalJSON(data, &number, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
 		u.Number = &number
 		u.Type = MetricsTotalsOneTimeProductsNetRevenueTypeNumber
 		return nil
@@ -646,8 +646,8 @@ const (
 )
 
 type MetricsTotalsNewSubscriptions struct {
-	Integer *int64   `queryParam:"inline"`
-	Number  *float64 `queryParam:"inline"`
+	Integer *int64   `queryParam:"inline" name:"New_Subscriptions"`
+	Number  *float64 `queryParam:"inline" name:"New_Subscriptions"`
 
 	Type MetricsTotalsNewSubscriptionsType
 }
@@ -673,14 +673,14 @@ func CreateMetricsTotalsNewSubscriptionsNumber(number float64) MetricsTotalsNewS
 func (u *MetricsTotalsNewSubscriptions) UnmarshalJSON(data []byte) error {
 
 	var integer int64 = int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
 		u.Integer = &integer
 		u.Type = MetricsTotalsNewSubscriptionsTypeInteger
 		return nil
 	}
 
 	var number float64 = float64(0)
-	if err := utils.UnmarshalJSON(data, &number, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
 		u.Number = &number
 		u.Type = MetricsTotalsNewSubscriptionsTypeNumber
 		return nil
@@ -709,8 +709,8 @@ const (
 )
 
 type MetricsTotalsNewSubscriptionsRevenue struct {
-	Integer *int64   `queryParam:"inline"`
-	Number  *float64 `queryParam:"inline"`
+	Integer *int64   `queryParam:"inline" name:"New_Subscriptions_Revenue"`
+	Number  *float64 `queryParam:"inline" name:"New_Subscriptions_Revenue"`
 
 	Type MetricsTotalsNewSubscriptionsRevenueType
 }
@@ -736,14 +736,14 @@ func CreateMetricsTotalsNewSubscriptionsRevenueNumber(number float64) MetricsTot
 func (u *MetricsTotalsNewSubscriptionsRevenue) UnmarshalJSON(data []byte) error {
 
 	var integer int64 = int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
 		u.Integer = &integer
 		u.Type = MetricsTotalsNewSubscriptionsRevenueTypeInteger
 		return nil
 	}
 
 	var number float64 = float64(0)
-	if err := utils.UnmarshalJSON(data, &number, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
 		u.Number = &number
 		u.Type = MetricsTotalsNewSubscriptionsRevenueTypeNumber
 		return nil
@@ -772,8 +772,8 @@ const (
 )
 
 type MetricsTotalsNewSubscriptionsNetRevenue struct {
-	Integer *int64   `queryParam:"inline"`
-	Number  *float64 `queryParam:"inline"`
+	Integer *int64   `queryParam:"inline" name:"New_Subscriptions_Net_Revenue"`
+	Number  *float64 `queryParam:"inline" name:"New_Subscriptions_Net_Revenue"`
 
 	Type MetricsTotalsNewSubscriptionsNetRevenueType
 }
@@ -799,14 +799,14 @@ func CreateMetricsTotalsNewSubscriptionsNetRevenueNumber(number float64) Metrics
 func (u *MetricsTotalsNewSubscriptionsNetRevenue) UnmarshalJSON(data []byte) error {
 
 	var integer int64 = int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
 		u.Integer = &integer
 		u.Type = MetricsTotalsNewSubscriptionsNetRevenueTypeInteger
 		return nil
 	}
 
 	var number float64 = float64(0)
-	if err := utils.UnmarshalJSON(data, &number, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
 		u.Number = &number
 		u.Type = MetricsTotalsNewSubscriptionsNetRevenueTypeNumber
 		return nil
@@ -835,8 +835,8 @@ const (
 )
 
 type MetricsTotalsRenewedSubscriptions struct {
-	Integer *int64   `queryParam:"inline"`
-	Number  *float64 `queryParam:"inline"`
+	Integer *int64   `queryParam:"inline" name:"Renewed_Subscriptions"`
+	Number  *float64 `queryParam:"inline" name:"Renewed_Subscriptions"`
 
 	Type MetricsTotalsRenewedSubscriptionsType
 }
@@ -862,14 +862,14 @@ func CreateMetricsTotalsRenewedSubscriptionsNumber(number float64) MetricsTotals
 func (u *MetricsTotalsRenewedSubscriptions) UnmarshalJSON(data []byte) error {
 
 	var integer int64 = int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
 		u.Integer = &integer
 		u.Type = MetricsTotalsRenewedSubscriptionsTypeInteger
 		return nil
 	}
 
 	var number float64 = float64(0)
-	if err := utils.UnmarshalJSON(data, &number, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
 		u.Number = &number
 		u.Type = MetricsTotalsRenewedSubscriptionsTypeNumber
 		return nil
@@ -898,8 +898,8 @@ const (
 )
 
 type MetricsTotalsRenewedSubscriptionsRevenue struct {
-	Integer *int64   `queryParam:"inline"`
-	Number  *float64 `queryParam:"inline"`
+	Integer *int64   `queryParam:"inline" name:"Renewed_Subscriptions_Revenue"`
+	Number  *float64 `queryParam:"inline" name:"Renewed_Subscriptions_Revenue"`
 
 	Type MetricsTotalsRenewedSubscriptionsRevenueType
 }
@@ -925,14 +925,14 @@ func CreateMetricsTotalsRenewedSubscriptionsRevenueNumber(number float64) Metric
 func (u *MetricsTotalsRenewedSubscriptionsRevenue) UnmarshalJSON(data []byte) error {
 
 	var integer int64 = int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
 		u.Integer = &integer
 		u.Type = MetricsTotalsRenewedSubscriptionsRevenueTypeInteger
 		return nil
 	}
 
 	var number float64 = float64(0)
-	if err := utils.UnmarshalJSON(data, &number, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
 		u.Number = &number
 		u.Type = MetricsTotalsRenewedSubscriptionsRevenueTypeNumber
 		return nil
@@ -961,8 +961,8 @@ const (
 )
 
 type MetricsTotalsRenewedSubscriptionsNetRevenue struct {
-	Integer *int64   `queryParam:"inline"`
-	Number  *float64 `queryParam:"inline"`
+	Integer *int64   `queryParam:"inline" name:"Renewed_Subscriptions_Net_Revenue"`
+	Number  *float64 `queryParam:"inline" name:"Renewed_Subscriptions_Net_Revenue"`
 
 	Type MetricsTotalsRenewedSubscriptionsNetRevenueType
 }
@@ -988,14 +988,14 @@ func CreateMetricsTotalsRenewedSubscriptionsNetRevenueNumber(number float64) Met
 func (u *MetricsTotalsRenewedSubscriptionsNetRevenue) UnmarshalJSON(data []byte) error {
 
 	var integer int64 = int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
 		u.Integer = &integer
 		u.Type = MetricsTotalsRenewedSubscriptionsNetRevenueTypeInteger
 		return nil
 	}
 
 	var number float64 = float64(0)
-	if err := utils.UnmarshalJSON(data, &number, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
 		u.Number = &number
 		u.Type = MetricsTotalsRenewedSubscriptionsNetRevenueTypeNumber
 		return nil
@@ -1024,8 +1024,8 @@ const (
 )
 
 type MetricsTotalsActiveSubscriptions struct {
-	Integer *int64   `queryParam:"inline"`
-	Number  *float64 `queryParam:"inline"`
+	Integer *int64   `queryParam:"inline" name:"Active_Subscriptions"`
+	Number  *float64 `queryParam:"inline" name:"Active_Subscriptions"`
 
 	Type MetricsTotalsActiveSubscriptionsType
 }
@@ -1051,14 +1051,14 @@ func CreateMetricsTotalsActiveSubscriptionsNumber(number float64) MetricsTotalsA
 func (u *MetricsTotalsActiveSubscriptions) UnmarshalJSON(data []byte) error {
 
 	var integer int64 = int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
 		u.Integer = &integer
 		u.Type = MetricsTotalsActiveSubscriptionsTypeInteger
 		return nil
 	}
 
 	var number float64 = float64(0)
-	if err := utils.UnmarshalJSON(data, &number, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
 		u.Number = &number
 		u.Type = MetricsTotalsActiveSubscriptionsTypeNumber
 		return nil
@@ -1087,8 +1087,8 @@ const (
 )
 
 type MetricsTotalsMonthlyRecurringRevenue struct {
-	Integer *int64   `queryParam:"inline"`
-	Number  *float64 `queryParam:"inline"`
+	Integer *int64   `queryParam:"inline" name:"Monthly_Recurring_Revenue"`
+	Number  *float64 `queryParam:"inline" name:"Monthly_Recurring_Revenue"`
 
 	Type MetricsTotalsMonthlyRecurringRevenueType
 }
@@ -1114,14 +1114,14 @@ func CreateMetricsTotalsMonthlyRecurringRevenueNumber(number float64) MetricsTot
 func (u *MetricsTotalsMonthlyRecurringRevenue) UnmarshalJSON(data []byte) error {
 
 	var integer int64 = int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
 		u.Integer = &integer
 		u.Type = MetricsTotalsMonthlyRecurringRevenueTypeInteger
 		return nil
 	}
 
 	var number float64 = float64(0)
-	if err := utils.UnmarshalJSON(data, &number, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
 		u.Number = &number
 		u.Type = MetricsTotalsMonthlyRecurringRevenueTypeNumber
 		return nil
@@ -1150,8 +1150,8 @@ const (
 )
 
 type MetricsTotalsCommittedMonthlyRecurringRevenue struct {
-	Integer *int64   `queryParam:"inline"`
-	Number  *float64 `queryParam:"inline"`
+	Integer *int64   `queryParam:"inline" name:"Committed_Monthly_Recurring_Revenue"`
+	Number  *float64 `queryParam:"inline" name:"Committed_Monthly_Recurring_Revenue"`
 
 	Type MetricsTotalsCommittedMonthlyRecurringRevenueType
 }
@@ -1177,14 +1177,14 @@ func CreateMetricsTotalsCommittedMonthlyRecurringRevenueNumber(number float64) M
 func (u *MetricsTotalsCommittedMonthlyRecurringRevenue) UnmarshalJSON(data []byte) error {
 
 	var integer int64 = int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
 		u.Integer = &integer
 		u.Type = MetricsTotalsCommittedMonthlyRecurringRevenueTypeInteger
 		return nil
 	}
 
 	var number float64 = float64(0)
-	if err := utils.UnmarshalJSON(data, &number, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
 		u.Number = &number
 		u.Type = MetricsTotalsCommittedMonthlyRecurringRevenueTypeNumber
 		return nil
@@ -1213,8 +1213,8 @@ const (
 )
 
 type MetricsTotalsCheckouts struct {
-	Integer *int64   `queryParam:"inline"`
-	Number  *float64 `queryParam:"inline"`
+	Integer *int64   `queryParam:"inline" name:"Checkouts"`
+	Number  *float64 `queryParam:"inline" name:"Checkouts"`
 
 	Type MetricsTotalsCheckoutsType
 }
@@ -1240,14 +1240,14 @@ func CreateMetricsTotalsCheckoutsNumber(number float64) MetricsTotalsCheckouts {
 func (u *MetricsTotalsCheckouts) UnmarshalJSON(data []byte) error {
 
 	var integer int64 = int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
 		u.Integer = &integer
 		u.Type = MetricsTotalsCheckoutsTypeInteger
 		return nil
 	}
 
 	var number float64 = float64(0)
-	if err := utils.UnmarshalJSON(data, &number, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
 		u.Number = &number
 		u.Type = MetricsTotalsCheckoutsTypeNumber
 		return nil
@@ -1276,8 +1276,8 @@ const (
 )
 
 type MetricsTotalsSucceededCheckouts struct {
-	Integer *int64   `queryParam:"inline"`
-	Number  *float64 `queryParam:"inline"`
+	Integer *int64   `queryParam:"inline" name:"Succeeded_Checkouts"`
+	Number  *float64 `queryParam:"inline" name:"Succeeded_Checkouts"`
 
 	Type MetricsTotalsSucceededCheckoutsType
 }
@@ -1303,14 +1303,14 @@ func CreateMetricsTotalsSucceededCheckoutsNumber(number float64) MetricsTotalsSu
 func (u *MetricsTotalsSucceededCheckouts) UnmarshalJSON(data []byte) error {
 
 	var integer int64 = int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
 		u.Integer = &integer
 		u.Type = MetricsTotalsSucceededCheckoutsTypeInteger
 		return nil
 	}
 
 	var number float64 = float64(0)
-	if err := utils.UnmarshalJSON(data, &number, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
 		u.Number = &number
 		u.Type = MetricsTotalsSucceededCheckoutsTypeNumber
 		return nil
@@ -1339,8 +1339,8 @@ const (
 )
 
 type MetricsTotalsCheckoutsConversion struct {
-	Integer *int64   `queryParam:"inline"`
-	Number  *float64 `queryParam:"inline"`
+	Integer *int64   `queryParam:"inline" name:"Checkouts_Conversion"`
+	Number  *float64 `queryParam:"inline" name:"Checkouts_Conversion"`
 
 	Type MetricsTotalsCheckoutsConversionType
 }
@@ -1366,14 +1366,14 @@ func CreateMetricsTotalsCheckoutsConversionNumber(number float64) MetricsTotalsC
 func (u *MetricsTotalsCheckoutsConversion) UnmarshalJSON(data []byte) error {
 
 	var integer int64 = int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
 		u.Integer = &integer
 		u.Type = MetricsTotalsCheckoutsConversionTypeInteger
 		return nil
 	}
 
 	var number float64 = float64(0)
-	if err := utils.UnmarshalJSON(data, &number, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
 		u.Number = &number
 		u.Type = MetricsTotalsCheckoutsConversionTypeNumber
 		return nil

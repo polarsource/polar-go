@@ -2,10 +2,25 @@
 
 package components
 
+import (
+	"github.com/polarsource/polar-go/internal/utils"
+)
+
 type BenefitGrantMeterCreditProperties struct {
 	LastCreditedMeterID string `json:"last_credited_meter_id"`
 	LastCreditedUnits   int64  `json:"last_credited_units"`
 	LastCreditedAt      string `json:"last_credited_at"`
+}
+
+func (b BenefitGrantMeterCreditProperties) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(b, "", false)
+}
+
+func (b *BenefitGrantMeterCreditProperties) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &b, "", false, []string{"last_credited_meter_id", "last_credited_units", "last_credited_at"}); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *BenefitGrantMeterCreditProperties) GetLastCreditedMeterID() string {

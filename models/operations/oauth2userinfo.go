@@ -18,8 +18,8 @@ const (
 
 // Oauth2UserinfoResponseOauth2Userinfo - Successful Response
 type Oauth2UserinfoResponseOauth2Userinfo struct {
-	UserInfoUser         *components.UserInfoUser         `queryParam:"inline"`
-	UserInfoOrganization *components.UserInfoOrganization `queryParam:"inline"`
+	UserInfoUser         *components.UserInfoUser         `queryParam:"inline" name:"Response_Oauth2_Userinfo"`
+	UserInfoOrganization *components.UserInfoOrganization `queryParam:"inline" name:"Response_Oauth2_Userinfo"`
 
 	Type Oauth2UserinfoResponseOauth2UserinfoType
 }
@@ -44,17 +44,17 @@ func CreateOauth2UserinfoResponseOauth2UserinfoUserInfoOrganization(userInfoOrga
 
 func (u *Oauth2UserinfoResponseOauth2Userinfo) UnmarshalJSON(data []byte) error {
 
-	var userInfoOrganization components.UserInfoOrganization = components.UserInfoOrganization{}
-	if err := utils.UnmarshalJSON(data, &userInfoOrganization, "", true, false); err == nil {
-		u.UserInfoOrganization = &userInfoOrganization
-		u.Type = Oauth2UserinfoResponseOauth2UserinfoTypeUserInfoOrganization
+	var userInfoUser components.UserInfoUser = components.UserInfoUser{}
+	if err := utils.UnmarshalJSON(data, &userInfoUser, "", true, nil); err == nil {
+		u.UserInfoUser = &userInfoUser
+		u.Type = Oauth2UserinfoResponseOauth2UserinfoTypeUserInfoUser
 		return nil
 	}
 
-	var userInfoUser components.UserInfoUser = components.UserInfoUser{}
-	if err := utils.UnmarshalJSON(data, &userInfoUser, "", true, false); err == nil {
-		u.UserInfoUser = &userInfoUser
-		u.Type = Oauth2UserinfoResponseOauth2UserinfoTypeUserInfoUser
+	var userInfoOrganization components.UserInfoOrganization = components.UserInfoOrganization{}
+	if err := utils.UnmarshalJSON(data, &userInfoOrganization, "", true, nil); err == nil {
+		u.UserInfoOrganization = &userInfoOrganization
+		u.Type = Oauth2UserinfoResponseOauth2UserinfoTypeUserInfoOrganization
 		return nil
 	}
 

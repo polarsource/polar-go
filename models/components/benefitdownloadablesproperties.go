@@ -2,9 +2,24 @@
 
 package components
 
+import (
+	"github.com/polarsource/polar-go/internal/utils"
+)
+
 type BenefitDownloadablesProperties struct {
 	Archived map[string]bool `json:"archived"`
 	Files    []string        `json:"files"`
+}
+
+func (b BenefitDownloadablesProperties) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(b, "", false)
+}
+
+func (b *BenefitDownloadablesProperties) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &b, "", false, []string{"archived", "files"}); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *BenefitDownloadablesProperties) GetArchived() map[string]bool {

@@ -57,240 +57,35 @@ package main
 import (
 	"context"
 	polargo "github.com/polarsource/polar-go"
-	"github.com/polarsource/polar-go/models/components"
-	"github.com/polarsource/polar-go/types"
 	"log"
+	"os"
 )
 
 func main() {
 	ctx := context.Background()
 
-	s := polargo.New()
+	s := polargo.New(
+		polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
+	)
 
-	res, err := s.EndpointcheckoutCreatedPost(ctx, components.WebhookCheckoutCreatedPayload{
-		Data: components.Checkout{
-			CreatedAt:              types.MustTimeFromString("2023-02-15T15:44:21.478Z"),
-			ModifiedAt:             types.MustNewTimeFromString("2025-09-12T19:48:15.814Z"),
-			ID:                     "<value>",
-			PaymentProcessor:       components.PaymentProcessorStripe,
-			Status:                 components.CheckoutStatusExpired,
-			ClientSecret:           "<value>",
-			URL:                    "https://fair-veto.com/",
-			ExpiresAt:              types.MustTimeFromString("2025-03-15T14:26:53.109Z"),
-			SuccessURL:             "https://junior-linseed.net/",
-			EmbedOrigin:            polargo.String("<value>"),
-			Amount:                 631188,
-			DiscountAmount:         968968,
-			NetAmount:              929514,
-			TaxAmount:              polargo.Int64(323773),
-			TotalAmount:            115799,
-			Currency:               "Som",
-			ProductID:              "<value>",
-			ProductPriceID:         "<value>",
-			DiscountID:             polargo.String("<value>"),
-			AllowDiscountCodes:     true,
-			RequireBillingAddress:  false,
-			IsDiscountApplicable:   true,
-			IsFreeProductPrice:     true,
-			IsPaymentRequired:      true,
-			IsPaymentSetupRequired: true,
-			IsPaymentFormRequired:  true,
-			CustomerID:             polargo.String("<value>"),
-			IsBusinessCustomer:     true,
-			CustomerName:           polargo.String("<value>"),
-			CustomerEmail:          polargo.String("<value>"),
-			CustomerIPAddress:      polargo.String("<value>"),
-			CustomerBillingName:    polargo.String("<value>"),
-			CustomerBillingAddress: &components.Address{
-				Country: "US",
-			},
-			CustomerTaxID:            polargo.String("<id>"),
-			PaymentProcessorMetadata: map[string]string{},
-			BillingAddressFields: components.CheckoutBillingAddressFields{
-				Country:    components.BillingAddressFieldModeRequired,
-				State:      components.BillingAddressFieldModeDisabled,
-				City:       components.BillingAddressFieldModeRequired,
-				PostalCode: components.BillingAddressFieldModeRequired,
-				Line1:      components.BillingAddressFieldModeRequired,
-				Line2:      components.BillingAddressFieldModeDisabled,
-			},
-			Metadata: map[string]components.CheckoutMetadata{
-				"key": components.CreateCheckoutMetadataStr(
-					"<value>",
-				),
-			},
-			ExternalCustomerID: nil,
-			CustomerExternalID: polargo.String("<id>"),
-			Products:           []components.CheckoutProduct{},
-			Product: components.CheckoutProduct{
-				CreatedAt:         types.MustTimeFromString("2025-03-29T00:34:40.708Z"),
-				ModifiedAt:        types.MustNewTimeFromString("2024-04-06T18:48:21.449Z"),
-				ID:                "<value>",
-				Name:              "<value>",
-				Description:       polargo.String("stall for mousse"),
-				RecurringInterval: components.SubscriptionRecurringIntervalYear.ToPointer(),
-				IsRecurring:       false,
-				IsArchived:        true,
-				OrganizationID:    "<value>",
-				Prices: []components.CheckoutProductPrices{
-					components.CreateCheckoutProductPricesLegacyRecurringProductPrice(
-						components.CreateLegacyRecurringProductPriceFree(
-							components.LegacyRecurringProductPriceFree{
-								CreatedAt:         types.MustTimeFromString("2023-09-13T08:36:46.434Z"),
-								ModifiedAt:        types.MustNewTimeFromString("2023-10-05T12:55:46.428Z"),
-								ID:                "<value>",
-								IsArchived:        false,
-								ProductID:         "<value>",
-								RecurringInterval: components.SubscriptionRecurringIntervalMonth,
-							},
-						),
-					),
-					components.CreateCheckoutProductPricesLegacyRecurringProductPrice(
-						components.CreateLegacyRecurringProductPriceFixed(
-							components.LegacyRecurringProductPriceFixed{
-								CreatedAt:         types.MustTimeFromString("2024-05-02T18:25:33.974Z"),
-								ModifiedAt:        types.MustNewTimeFromString("2025-02-06T12:55:07.640Z"),
-								ID:                "<value>",
-								IsArchived:        false,
-								ProductID:         "<value>",
-								RecurringInterval: components.SubscriptionRecurringIntervalMonth,
-								PriceCurrency:     "<value>",
-								PriceAmount:       115799,
-							},
-						),
-					),
-				},
-				Benefits: []components.BenefitPublic{},
-				Medias: []components.ProductMediaFileRead{
-					components.ProductMediaFileRead{
-						ID:                   "<value>",
-						OrganizationID:       "<value>",
-						Name:                 "<value>",
-						Path:                 "/private/tmp",
-						MimeType:             "<value>",
-						Size:                 225502,
-						StorageVersion:       polargo.String("<value>"),
-						ChecksumEtag:         polargo.String("<value>"),
-						ChecksumSha256Base64: polargo.String("<value>"),
-						ChecksumSha256Hex:    polargo.String("<value>"),
-						LastModifiedAt:       types.MustNewTimeFromString("2024-07-06T07:35:44.280Z"),
-						Version:              polargo.String("<value>"),
-						IsUploaded:           true,
-						CreatedAt:            types.MustTimeFromString("2024-10-08T20:45:26.653Z"),
-						SizeReadable:         "<value>",
-						PublicURL:            "https://graceful-battle.info",
-					},
-					components.ProductMediaFileRead{
-						ID:                   "<value>",
-						OrganizationID:       "<value>",
-						Name:                 "<value>",
-						Path:                 "/private/tmp",
-						MimeType:             "<value>",
-						Size:                 225502,
-						StorageVersion:       polargo.String("<value>"),
-						ChecksumEtag:         polargo.String("<value>"),
-						ChecksumSha256Base64: polargo.String("<value>"),
-						ChecksumSha256Hex:    polargo.String("<value>"),
-						LastModifiedAt:       types.MustNewTimeFromString("2024-07-06T07:35:44.280Z"),
-						Version:              polargo.String("<value>"),
-						IsUploaded:           true,
-						CreatedAt:            types.MustTimeFromString("2024-10-08T20:45:26.653Z"),
-						SizeReadable:         "<value>",
-						PublicURL:            "https://graceful-battle.info",
-					},
-					components.ProductMediaFileRead{
-						ID:                   "<value>",
-						OrganizationID:       "<value>",
-						Name:                 "<value>",
-						Path:                 "/private/tmp",
-						MimeType:             "<value>",
-						Size:                 225502,
-						StorageVersion:       polargo.String("<value>"),
-						ChecksumEtag:         polargo.String("<value>"),
-						ChecksumSha256Base64: polargo.String("<value>"),
-						ChecksumSha256Hex:    polargo.String("<value>"),
-						LastModifiedAt:       types.MustNewTimeFromString("2024-07-06T07:35:44.280Z"),
-						Version:              polargo.String("<value>"),
-						IsUploaded:           true,
-						CreatedAt:            types.MustTimeFromString("2024-10-08T20:45:26.653Z"),
-						SizeReadable:         "<value>",
-						PublicURL:            "https://graceful-battle.info",
-					},
-				},
-			},
-			ProductPrice: components.CreateCheckoutProductPriceLegacyRecurringProductPrice(
-				components.CreateLegacyRecurringProductPriceFixed(
-					components.LegacyRecurringProductPriceFixed{
-						CreatedAt:         types.MustTimeFromString("2023-04-17T07:49:35.822Z"),
-						ModifiedAt:        types.MustNewTimeFromString("2025-07-31T12:54:47.590Z"),
-						ID:                "<value>",
-						IsArchived:        true,
-						ProductID:         "<value>",
-						RecurringInterval: components.SubscriptionRecurringIntervalMonth,
-						PriceCurrency:     "<value>",
-						PriceAmount:       266632,
-					},
-				),
-			),
-			Discount: polargo.Pointer(components.CreateCheckoutDiscountCheckoutDiscountFixedOnceForeverDuration(
-				components.CheckoutDiscountFixedOnceForeverDuration{
-					Duration: components.DiscountDurationOnce,
-					Type:     components.DiscountTypeFixed,
-					Amount:   405691,
-					Currency: "Dobra",
-					ID:       "<value>",
-					Name:     "<value>",
-					Code:     polargo.String("<value>"),
-				},
-			)),
-			SubscriptionID: polargo.String("<value>"),
-			AttachedCustomFields: []components.AttachedCustomField{
-				components.AttachedCustomField{
-					CustomFieldID: "<value>",
-					CustomField: components.CreateCustomFieldText(
-						components.CustomFieldText{
-							CreatedAt:  types.MustTimeFromString("2025-06-07T12:37:50.969Z"),
-							ModifiedAt: types.MustNewTimeFromString("2023-11-20T09:37:39.033Z"),
-							ID:         "<value>",
-							Metadata: map[string]components.CustomFieldTextMetadata{
-								"key": components.CreateCustomFieldTextMetadataBoolean(
-									true,
-								),
-								"key1": components.CreateCustomFieldTextMetadataStr(
-									"<value>",
-								),
-								"key2": components.CreateCustomFieldTextMetadataStr(
-									"<value>",
-								),
-							},
-							Slug:           "<value>",
-							Name:           "<value>",
-							OrganizationID: "1dbfc517-0bbf-4301-9ba8-555ca42b9737",
-							Properties:     components.CustomFieldTextProperties{},
-						},
-					),
-					Order:    168537,
-					Required: false,
-				},
-			},
-			CustomerMetadata: map[string]components.CustomerMetadata{
-				"key": components.CreateCustomerMetadataBoolean(
-					true,
-				),
-				"key1": components.CreateCustomerMetadataStr(
-					"<value>",
-				),
-				"key2": components.CreateCustomerMetadataInteger(
-					851435,
-				),
-			},
-		},
-	})
+	res, err := s.Organizations.List(ctx, nil, polargo.Int64(1), polargo.Int64(10), nil)
 	if err != nil {
 		log.Fatal(err)
 	}
-	if res.Any != nil {
-		// handle response
+	if res.ListResourceOrganization != nil {
+		for {
+			// handle items
+
+			res, err = res.Next()
+
+			if err != nil {
+				// handle error
+			}
+
+			if res == nil {
+				break
+			}
+		}
 	}
 }
 

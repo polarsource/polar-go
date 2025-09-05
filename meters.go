@@ -256,6 +256,7 @@ func (s *Meters) List(ctx context.Context, request operations.MetersListRequest,
 			operations.MetersListRequest{
 				OrganizationID: request.OrganizationID,
 				Query:          request.Query,
+				IsArchived:     request.IsArchived,
 				Page:           &nP,
 				Limit:          request.Limit,
 				Sorting:        request.Sorting,

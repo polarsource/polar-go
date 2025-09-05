@@ -2,11 +2,26 @@
 
 package components
 
+import (
+	"github.com/polarsource/polar-go/internal/utils"
+)
+
 // BenefitMeterCreditSubscriberProperties - Properties available to subscribers for a benefit of type `meter_unit`.
 type BenefitMeterCreditSubscriberProperties struct {
 	Units    int64  `json:"units"`
 	Rollover bool   `json:"rollover"`
 	MeterID  string `json:"meter_id"`
+}
+
+func (b BenefitMeterCreditSubscriberProperties) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(b, "", false)
+}
+
+func (b *BenefitMeterCreditSubscriberProperties) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &b, "", false, []string{"units", "rollover", "meter_id"}); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *BenefitMeterCreditSubscriberProperties) GetUnits() int64 {

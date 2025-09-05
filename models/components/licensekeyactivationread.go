@@ -19,10 +19,10 @@ const (
 )
 
 type LicenseKeyActivationReadMeta struct {
-	Str     *string  `queryParam:"inline"`
-	Integer *int64   `queryParam:"inline"`
-	Number  *float64 `queryParam:"inline"`
-	Boolean *bool    `queryParam:"inline"`
+	Str     *string  `queryParam:"inline" name:"meta"`
+	Integer *int64   `queryParam:"inline" name:"meta"`
+	Number  *float64 `queryParam:"inline" name:"meta"`
+	Boolean *bool    `queryParam:"inline" name:"meta"`
 
 	Type LicenseKeyActivationReadMetaType
 }
@@ -66,28 +66,28 @@ func CreateLicenseKeyActivationReadMetaBoolean(boolean bool) LicenseKeyActivatio
 func (u *LicenseKeyActivationReadMeta) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, nil); err == nil {
 		u.Str = &str
 		u.Type = LicenseKeyActivationReadMetaTypeStr
 		return nil
 	}
 
 	var integer int64 = int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
 		u.Integer = &integer
 		u.Type = LicenseKeyActivationReadMetaTypeInteger
 		return nil
 	}
 
 	var number float64 = float64(0)
-	if err := utils.UnmarshalJSON(data, &number, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
 		u.Number = &number
 		u.Type = LicenseKeyActivationReadMetaTypeNumber
 		return nil
 	}
 
 	var boolean bool = false
-	if err := utils.UnmarshalJSON(data, &boolean, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &boolean, "", true, nil); err == nil {
 		u.Boolean = &boolean
 		u.Type = LicenseKeyActivationReadMetaTypeBoolean
 		return nil
@@ -131,7 +131,7 @@ func (l LicenseKeyActivationRead) MarshalJSON() ([]byte, error) {
 }
 
 func (l *LicenseKeyActivationRead) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &l, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &l, "", false, []string{"id", "license_key_id", "label", "meta", "created_at", "modified_at", "license_key"}); err != nil {
 		return err
 	}
 	return nil

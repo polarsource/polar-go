@@ -33,7 +33,7 @@ func (d DownloadableFileRead) MarshalJSON() ([]byte, error) {
 }
 
 func (d *DownloadableFileRead) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &d, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &d, "", false, []string{"id", "organization_id", "name", "path", "mime_type", "size", "storage_version", "checksum_etag", "checksum_sha256_base64", "checksum_sha256_hex", "last_modified_at", "version", "service", "is_uploaded", "created_at", "size_readable"}); err != nil {
 		return err
 	}
 	return nil

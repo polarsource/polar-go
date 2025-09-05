@@ -12,21 +12,27 @@ import (
 type SystemEventType string
 
 const (
-	SystemEventTypeBenefitCycled  SystemEventType = "benefit.cycled"
-	SystemEventTypeBenefitGranted SystemEventType = "benefit.granted"
-	SystemEventTypeBenefitRevoked SystemEventType = "benefit.revoked"
-	SystemEventTypeBenefitUpdated SystemEventType = "benefit.updated"
-	SystemEventTypeMeterCredited  SystemEventType = "meter.credited"
-	SystemEventTypeMeterReset     SystemEventType = "meter.reset"
+	SystemEventTypeBenefitCycled              SystemEventType = "benefit.cycled"
+	SystemEventTypeBenefitGranted             SystemEventType = "benefit.granted"
+	SystemEventTypeBenefitRevoked             SystemEventType = "benefit.revoked"
+	SystemEventTypeBenefitUpdated             SystemEventType = "benefit.updated"
+	SystemEventTypeMeterCredited              SystemEventType = "meter.credited"
+	SystemEventTypeMeterReset                 SystemEventType = "meter.reset"
+	SystemEventTypeSubscriptionCycled         SystemEventType = "subscription.cycled"
+	SystemEventTypeSubscriptionProductUpdated SystemEventType = "subscription.product_updated"
+	SystemEventTypeSubscriptionRevoked        SystemEventType = "subscription.revoked"
 )
 
 type SystemEvent struct {
-	MeterCreditEvent    *MeterCreditEvent    `queryParam:"inline"`
-	MeterResetEvent     *MeterResetEvent     `queryParam:"inline"`
-	BenefitGrantedEvent *BenefitGrantedEvent `queryParam:"inline"`
-	BenefitCycledEvent  *BenefitCycledEvent  `queryParam:"inline"`
-	BenefitUpdatedEvent *BenefitUpdatedEvent `queryParam:"inline"`
-	BenefitRevokedEvent *BenefitRevokedEvent `queryParam:"inline"`
+	MeterCreditEvent                *MeterCreditEvent                `queryParam:"inline" name:"SystemEvent"`
+	MeterResetEvent                 *MeterResetEvent                 `queryParam:"inline" name:"SystemEvent"`
+	BenefitGrantedEvent             *BenefitGrantedEvent             `queryParam:"inline" name:"SystemEvent"`
+	BenefitCycledEvent              *BenefitCycledEvent              `queryParam:"inline" name:"SystemEvent"`
+	BenefitUpdatedEvent             *BenefitUpdatedEvent             `queryParam:"inline" name:"SystemEvent"`
+	BenefitRevokedEvent             *BenefitRevokedEvent             `queryParam:"inline" name:"SystemEvent"`
+	SubscriptionCycledEvent         *SubscriptionCycledEvent         `queryParam:"inline" name:"SystemEvent"`
+	SubscriptionRevokedEvent        *SubscriptionRevokedEvent        `queryParam:"inline" name:"SystemEvent"`
+	SubscriptionProductUpdatedEvent *SubscriptionProductUpdatedEvent `queryParam:"inline" name:"SystemEvent"`
 
 	Type SystemEventType
 }
@@ -85,6 +91,33 @@ func CreateSystemEventMeterReset(meterReset MeterResetEvent) SystemEvent {
 	}
 }
 
+func CreateSystemEventSubscriptionCycled(subscriptionCycled SubscriptionCycledEvent) SystemEvent {
+	typ := SystemEventTypeSubscriptionCycled
+
+	return SystemEvent{
+		SubscriptionCycledEvent: &subscriptionCycled,
+		Type:                    typ,
+	}
+}
+
+func CreateSystemEventSubscriptionProductUpdated(subscriptionProductUpdated SubscriptionProductUpdatedEvent) SystemEvent {
+	typ := SystemEventTypeSubscriptionProductUpdated
+
+	return SystemEvent{
+		SubscriptionProductUpdatedEvent: &subscriptionProductUpdated,
+		Type:                            typ,
+	}
+}
+
+func CreateSystemEventSubscriptionRevoked(subscriptionRevoked SubscriptionRevokedEvent) SystemEvent {
+	typ := SystemEventTypeSubscriptionRevoked
+
+	return SystemEvent{
+		SubscriptionRevokedEvent: &subscriptionRevoked,
+		Type:                     typ,
+	}
+}
+
 func (u *SystemEvent) UnmarshalJSON(data []byte) error {
 
 	type discriminator struct {
@@ -99,7 +132,7 @@ func (u *SystemEvent) UnmarshalJSON(data []byte) error {
 	switch dis.Name {
 	case "benefit.cycled":
 		benefitCycledEvent := new(BenefitCycledEvent)
-		if err := utils.UnmarshalJSON(data, &benefitCycledEvent, "", true, false); err != nil {
+		if err := utils.UnmarshalJSON(data, &benefitCycledEvent, "", true, nil); err != nil {
 			return fmt.Errorf("could not unmarshal `%s` into expected (Name == benefit.cycled) type BenefitCycledEvent within SystemEvent: %w", string(data), err)
 		}
 
@@ -108,7 +141,7 @@ func (u *SystemEvent) UnmarshalJSON(data []byte) error {
 		return nil
 	case "benefit.granted":
 		benefitGrantedEvent := new(BenefitGrantedEvent)
-		if err := utils.UnmarshalJSON(data, &benefitGrantedEvent, "", true, false); err != nil {
+		if err := utils.UnmarshalJSON(data, &benefitGrantedEvent, "", true, nil); err != nil {
 			return fmt.Errorf("could not unmarshal `%s` into expected (Name == benefit.granted) type BenefitGrantedEvent within SystemEvent: %w", string(data), err)
 		}
 
@@ -117,7 +150,7 @@ func (u *SystemEvent) UnmarshalJSON(data []byte) error {
 		return nil
 	case "benefit.revoked":
 		benefitRevokedEvent := new(BenefitRevokedEvent)
-		if err := utils.UnmarshalJSON(data, &benefitRevokedEvent, "", true, false); err != nil {
+		if err := utils.UnmarshalJSON(data, &benefitRevokedEvent, "", true, nil); err != nil {
 			return fmt.Errorf("could not unmarshal `%s` into expected (Name == benefit.revoked) type BenefitRevokedEvent within SystemEvent: %w", string(data), err)
 		}
 
@@ -126,7 +159,7 @@ func (u *SystemEvent) UnmarshalJSON(data []byte) error {
 		return nil
 	case "benefit.updated":
 		benefitUpdatedEvent := new(BenefitUpdatedEvent)
-		if err := utils.UnmarshalJSON(data, &benefitUpdatedEvent, "", true, false); err != nil {
+		if err := utils.UnmarshalJSON(data, &benefitUpdatedEvent, "", true, nil); err != nil {
 			return fmt.Errorf("could not unmarshal `%s` into expected (Name == benefit.updated) type BenefitUpdatedEvent within SystemEvent: %w", string(data), err)
 		}
 
@@ -135,7 +168,7 @@ func (u *SystemEvent) UnmarshalJSON(data []byte) error {
 		return nil
 	case "meter.credited":
 		meterCreditEvent := new(MeterCreditEvent)
-		if err := utils.UnmarshalJSON(data, &meterCreditEvent, "", true, false); err != nil {
+		if err := utils.UnmarshalJSON(data, &meterCreditEvent, "", true, nil); err != nil {
 			return fmt.Errorf("could not unmarshal `%s` into expected (Name == meter.credited) type MeterCreditEvent within SystemEvent: %w", string(data), err)
 		}
 
@@ -144,12 +177,39 @@ func (u *SystemEvent) UnmarshalJSON(data []byte) error {
 		return nil
 	case "meter.reset":
 		meterResetEvent := new(MeterResetEvent)
-		if err := utils.UnmarshalJSON(data, &meterResetEvent, "", true, false); err != nil {
+		if err := utils.UnmarshalJSON(data, &meterResetEvent, "", true, nil); err != nil {
 			return fmt.Errorf("could not unmarshal `%s` into expected (Name == meter.reset) type MeterResetEvent within SystemEvent: %w", string(data), err)
 		}
 
 		u.MeterResetEvent = meterResetEvent
 		u.Type = SystemEventTypeMeterReset
+		return nil
+	case "subscription.cycled":
+		subscriptionCycledEvent := new(SubscriptionCycledEvent)
+		if err := utils.UnmarshalJSON(data, &subscriptionCycledEvent, "", true, nil); err != nil {
+			return fmt.Errorf("could not unmarshal `%s` into expected (Name == subscription.cycled) type SubscriptionCycledEvent within SystemEvent: %w", string(data), err)
+		}
+
+		u.SubscriptionCycledEvent = subscriptionCycledEvent
+		u.Type = SystemEventTypeSubscriptionCycled
+		return nil
+	case "subscription.product_updated":
+		subscriptionProductUpdatedEvent := new(SubscriptionProductUpdatedEvent)
+		if err := utils.UnmarshalJSON(data, &subscriptionProductUpdatedEvent, "", true, nil); err != nil {
+			return fmt.Errorf("could not unmarshal `%s` into expected (Name == subscription.product_updated) type SubscriptionProductUpdatedEvent within SystemEvent: %w", string(data), err)
+		}
+
+		u.SubscriptionProductUpdatedEvent = subscriptionProductUpdatedEvent
+		u.Type = SystemEventTypeSubscriptionProductUpdated
+		return nil
+	case "subscription.revoked":
+		subscriptionRevokedEvent := new(SubscriptionRevokedEvent)
+		if err := utils.UnmarshalJSON(data, &subscriptionRevokedEvent, "", true, nil); err != nil {
+			return fmt.Errorf("could not unmarshal `%s` into expected (Name == subscription.revoked) type SubscriptionRevokedEvent within SystemEvent: %w", string(data), err)
+		}
+
+		u.SubscriptionRevokedEvent = subscriptionRevokedEvent
+		u.Type = SystemEventTypeSubscriptionRevoked
 		return nil
 	}
 
@@ -179,6 +239,18 @@ func (u SystemEvent) MarshalJSON() ([]byte, error) {
 
 	if u.BenefitRevokedEvent != nil {
 		return utils.MarshalJSON(u.BenefitRevokedEvent, "", true)
+	}
+
+	if u.SubscriptionCycledEvent != nil {
+		return utils.MarshalJSON(u.SubscriptionCycledEvent, "", true)
+	}
+
+	if u.SubscriptionRevokedEvent != nil {
+		return utils.MarshalJSON(u.SubscriptionRevokedEvent, "", true)
+	}
+
+	if u.SubscriptionProductUpdatedEvent != nil {
+		return utils.MarshalJSON(u.SubscriptionProductUpdatedEvent, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type SystemEvent: all fields are null")

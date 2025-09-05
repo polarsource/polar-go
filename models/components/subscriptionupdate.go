@@ -18,10 +18,10 @@ const (
 )
 
 type SubscriptionUpdate struct {
-	SubscriptionUpdateProduct  *SubscriptionUpdateProduct  `queryParam:"inline"`
-	SubscriptionUpdateDiscount *SubscriptionUpdateDiscount `queryParam:"inline"`
-	SubscriptionCancel         *SubscriptionCancel         `queryParam:"inline"`
-	SubscriptionRevoke         *SubscriptionRevoke         `queryParam:"inline"`
+	SubscriptionUpdateProduct  *SubscriptionUpdateProduct  `queryParam:"inline" name:"SubscriptionUpdate"`
+	SubscriptionUpdateDiscount *SubscriptionUpdateDiscount `queryParam:"inline" name:"SubscriptionUpdate"`
+	SubscriptionCancel         *SubscriptionCancel         `queryParam:"inline" name:"SubscriptionUpdate"`
+	SubscriptionRevoke         *SubscriptionRevoke         `queryParam:"inline" name:"SubscriptionUpdate"`
 
 	Type SubscriptionUpdateType
 }
@@ -64,29 +64,29 @@ func CreateSubscriptionUpdateSubscriptionRevoke(subscriptionRevoke SubscriptionR
 
 func (u *SubscriptionUpdate) UnmarshalJSON(data []byte) error {
 
-	var subscriptionUpdateDiscount SubscriptionUpdateDiscount = SubscriptionUpdateDiscount{}
-	if err := utils.UnmarshalJSON(data, &subscriptionUpdateDiscount, "", true, false); err == nil {
-		u.SubscriptionUpdateDiscount = &subscriptionUpdateDiscount
-		u.Type = SubscriptionUpdateTypeSubscriptionUpdateDiscount
-		return nil
-	}
-
 	var subscriptionUpdateProduct SubscriptionUpdateProduct = SubscriptionUpdateProduct{}
-	if err := utils.UnmarshalJSON(data, &subscriptionUpdateProduct, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &subscriptionUpdateProduct, "", true, nil); err == nil {
 		u.SubscriptionUpdateProduct = &subscriptionUpdateProduct
 		u.Type = SubscriptionUpdateTypeSubscriptionUpdateProduct
 		return nil
 	}
 
+	var subscriptionUpdateDiscount SubscriptionUpdateDiscount = SubscriptionUpdateDiscount{}
+	if err := utils.UnmarshalJSON(data, &subscriptionUpdateDiscount, "", true, nil); err == nil {
+		u.SubscriptionUpdateDiscount = &subscriptionUpdateDiscount
+		u.Type = SubscriptionUpdateTypeSubscriptionUpdateDiscount
+		return nil
+	}
+
 	var subscriptionCancel SubscriptionCancel = SubscriptionCancel{}
-	if err := utils.UnmarshalJSON(data, &subscriptionCancel, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &subscriptionCancel, "", true, nil); err == nil {
 		u.SubscriptionCancel = &subscriptionCancel
 		u.Type = SubscriptionUpdateTypeSubscriptionCancel
 		return nil
 	}
 
 	var subscriptionRevoke SubscriptionRevoke = SubscriptionRevoke{}
-	if err := utils.UnmarshalJSON(data, &subscriptionRevoke, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &subscriptionRevoke, "", true, nil); err == nil {
 		u.SubscriptionRevoke = &subscriptionRevoke
 		u.Type = SubscriptionUpdateTypeSubscriptionRevoke
 		return nil

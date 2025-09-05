@@ -33,7 +33,7 @@ func (b BenefitGrantedEvent) MarshalJSON() ([]byte, error) {
 }
 
 func (b *BenefitGrantedEvent) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &b, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &b, "", false, []string{"id", "timestamp", "organization_id", "customer_id", "customer", "external_customer_id", "source", "name", "metadata"}); err != nil {
 		return err
 	}
 	return nil

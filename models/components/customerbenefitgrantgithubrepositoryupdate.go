@@ -16,7 +16,7 @@ func (c CustomerBenefitGrantGitHubRepositoryUpdate) MarshalJSON() ([]byte, error
 }
 
 func (c *CustomerBenefitGrantGitHubRepositoryUpdate) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &c, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &c, "", false, []string{"benefit_type", "properties"}); err != nil {
 		return err
 	}
 	return nil

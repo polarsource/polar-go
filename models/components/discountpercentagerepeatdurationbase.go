@@ -19,10 +19,10 @@ const (
 )
 
 type DiscountPercentageRepeatDurationBaseMetadata struct {
-	Str     *string  `queryParam:"inline"`
-	Integer *int64   `queryParam:"inline"`
-	Number  *float64 `queryParam:"inline"`
-	Boolean *bool    `queryParam:"inline"`
+	Str     *string  `queryParam:"inline" name:"metadata"`
+	Integer *int64   `queryParam:"inline" name:"metadata"`
+	Number  *float64 `queryParam:"inline" name:"metadata"`
+	Boolean *bool    `queryParam:"inline" name:"metadata"`
 
 	Type DiscountPercentageRepeatDurationBaseMetadataType
 }
@@ -66,28 +66,28 @@ func CreateDiscountPercentageRepeatDurationBaseMetadataBoolean(boolean bool) Dis
 func (u *DiscountPercentageRepeatDurationBaseMetadata) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, nil); err == nil {
 		u.Str = &str
 		u.Type = DiscountPercentageRepeatDurationBaseMetadataTypeStr
 		return nil
 	}
 
 	var integer int64 = int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
 		u.Integer = &integer
 		u.Type = DiscountPercentageRepeatDurationBaseMetadataTypeInteger
 		return nil
 	}
 
 	var number float64 = float64(0)
-	if err := utils.UnmarshalJSON(data, &number, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
 		u.Number = &number
 		u.Type = DiscountPercentageRepeatDurationBaseMetadataTypeNumber
 		return nil
 	}
 
 	var boolean bool = false
-	if err := utils.UnmarshalJSON(data, &boolean, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &boolean, "", true, nil); err == nil {
 		u.Boolean = &boolean
 		u.Type = DiscountPercentageRepeatDurationBaseMetadataTypeBoolean
 		return nil
@@ -149,7 +149,7 @@ func (d DiscountPercentageRepeatDurationBase) MarshalJSON() ([]byte, error) {
 }
 
 func (d *DiscountPercentageRepeatDurationBase) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &d, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &d, "", false, []string{"duration", "duration_in_months", "type", "basis_points", "created_at", "modified_at", "id", "metadata", "name", "code", "starts_at", "ends_at", "max_redemptions", "redemptions_count", "organization_id"}); err != nil {
 		return err
 	}
 	return nil

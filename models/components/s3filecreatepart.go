@@ -2,11 +2,26 @@
 
 package components
 
+import (
+	"github.com/polarsource/polar-go/internal/utils"
+)
+
 type S3FileCreatePart struct {
 	Number               int64   `json:"number"`
 	ChunkStart           int64   `json:"chunk_start"`
 	ChunkEnd             int64   `json:"chunk_end"`
 	ChecksumSha256Base64 *string `json:"checksum_sha256_base64,omitempty"`
+}
+
+func (s S3FileCreatePart) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *S3FileCreatePart) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, []string{"number", "chunk_start", "chunk_end"}); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *S3FileCreatePart) GetNumber() int64 {

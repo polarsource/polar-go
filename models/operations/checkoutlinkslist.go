@@ -18,8 +18,8 @@ const (
 
 // CheckoutLinksListQueryParamOrganizationIDFilter - Filter by organization ID.
 type CheckoutLinksListQueryParamOrganizationIDFilter struct {
-	Str        *string  `queryParam:"inline"`
-	ArrayOfStr []string `queryParam:"inline"`
+	Str        *string  `queryParam:"inline" name:"OrganizationID_Filter"`
+	ArrayOfStr []string `queryParam:"inline" name:"OrganizationID_Filter"`
 
 	Type CheckoutLinksListQueryParamOrganizationIDFilterType
 }
@@ -45,14 +45,14 @@ func CreateCheckoutLinksListQueryParamOrganizationIDFilterArrayOfStr(arrayOfStr 
 func (u *CheckoutLinksListQueryParamOrganizationIDFilter) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, nil); err == nil {
 		u.Str = &str
 		u.Type = CheckoutLinksListQueryParamOrganizationIDFilterTypeStr
 		return nil
 	}
 
 	var arrayOfStr []string = []string{}
-	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, nil); err == nil {
 		u.ArrayOfStr = arrayOfStr
 		u.Type = CheckoutLinksListQueryParamOrganizationIDFilterTypeArrayOfStr
 		return nil
@@ -82,8 +82,8 @@ const (
 
 // CheckoutLinksListQueryParamProductIDFilter - Filter by product ID.
 type CheckoutLinksListQueryParamProductIDFilter struct {
-	Str        *string  `queryParam:"inline"`
-	ArrayOfStr []string `queryParam:"inline"`
+	Str        *string  `queryParam:"inline" name:"ProductID_Filter"`
+	ArrayOfStr []string `queryParam:"inline" name:"ProductID_Filter"`
 
 	Type CheckoutLinksListQueryParamProductIDFilterType
 }
@@ -109,14 +109,14 @@ func CreateCheckoutLinksListQueryParamProductIDFilterArrayOfStr(arrayOfStr []str
 func (u *CheckoutLinksListQueryParamProductIDFilter) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, nil); err == nil {
 		u.Str = &str
 		u.Type = CheckoutLinksListQueryParamProductIDFilterTypeStr
 		return nil
 	}
 
 	var arrayOfStr []string = []string{}
-	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, nil); err == nil {
 		u.ArrayOfStr = arrayOfStr
 		u.Type = CheckoutLinksListQueryParamProductIDFilterTypeArrayOfStr
 		return nil
@@ -155,7 +155,7 @@ func (c CheckoutLinksListRequest) MarshalJSON() ([]byte, error) {
 }
 
 func (c *CheckoutLinksListRequest) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &c, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &c, "", false, nil); err != nil {
 		return err
 	}
 	return nil

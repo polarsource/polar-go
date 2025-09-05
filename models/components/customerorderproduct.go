@@ -17,8 +17,8 @@ const (
 )
 
 type CustomerOrderProductPrices struct {
-	LegacyRecurringProductPrice *LegacyRecurringProductPrice `queryParam:"inline"`
-	ProductPrice                *ProductPrice                `queryParam:"inline"`
+	LegacyRecurringProductPrice *LegacyRecurringProductPrice `queryParam:"inline" name:"prices"`
+	ProductPrice                *ProductPrice                `queryParam:"inline" name:"prices"`
 
 	Type CustomerOrderProductPricesType
 }
@@ -44,14 +44,14 @@ func CreateCustomerOrderProductPricesProductPrice(productPrice ProductPrice) Cus
 func (u *CustomerOrderProductPrices) UnmarshalJSON(data []byte) error {
 
 	var legacyRecurringProductPrice LegacyRecurringProductPrice = LegacyRecurringProductPrice{}
-	if err := utils.UnmarshalJSON(data, &legacyRecurringProductPrice, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &legacyRecurringProductPrice, "", true, nil); err == nil {
 		u.LegacyRecurringProductPrice = &legacyRecurringProductPrice
 		u.Type = CustomerOrderProductPricesTypeLegacyRecurringProductPrice
 		return nil
 	}
 
 	var productPrice ProductPrice = ProductPrice{}
-	if err := utils.UnmarshalJSON(data, &productPrice, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &productPrice, "", true, nil); err == nil {
 		u.ProductPrice = &productPrice
 		u.Type = CustomerOrderProductPricesTypeProductPrice
 		return nil
@@ -83,7 +83,7 @@ type CustomerOrderProduct struct {
 	Name string `json:"name"`
 	// The description of the product.
 	Description *string `json:"description"`
-	// The recurring interval of the product. If `None`, the product is a one-time purchase.
+	// The recurring interval of the product. If `None`, the product is a one-time purchase.Note that the `day` and `week` values are for internal Polar staff use only.
 	RecurringInterval *SubscriptionRecurringInterval `json:"recurring_interval"`
 	// Whether the product is a subscription.
 	IsRecurring bool `json:"is_recurring"`
@@ -105,7 +105,7 @@ func (c CustomerOrderProduct) MarshalJSON() ([]byte, error) {
 }
 
 func (c *CustomerOrderProduct) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &c, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &c, "", false, []string{"created_at", "modified_at", "id", "name", "description", "recurring_interval", "is_recurring", "is_archived", "organization_id", "prices", "benefits", "medias", "organization"}); err != nil {
 		return err
 	}
 	return nil

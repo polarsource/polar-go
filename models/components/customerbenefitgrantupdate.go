@@ -21,12 +21,12 @@ const (
 )
 
 type CustomerBenefitGrantUpdate struct {
-	CustomerBenefitGrantDiscordUpdate          *CustomerBenefitGrantDiscordUpdate          `queryParam:"inline"`
-	CustomerBenefitGrantGitHubRepositoryUpdate *CustomerBenefitGrantGitHubRepositoryUpdate `queryParam:"inline"`
-	CustomerBenefitGrantDownloadablesUpdate    *CustomerBenefitGrantDownloadablesUpdate    `queryParam:"inline"`
-	CustomerBenefitGrantLicenseKeysUpdate      *CustomerBenefitGrantLicenseKeysUpdate      `queryParam:"inline"`
-	CustomerBenefitGrantCustomUpdate           *CustomerBenefitGrantCustomUpdate           `queryParam:"inline"`
-	CustomerBenefitGrantMeterCreditUpdate      *CustomerBenefitGrantMeterCreditUpdate      `queryParam:"inline"`
+	CustomerBenefitGrantDiscordUpdate          *CustomerBenefitGrantDiscordUpdate          `queryParam:"inline" name:"CustomerBenefitGrantUpdate"`
+	CustomerBenefitGrantGitHubRepositoryUpdate *CustomerBenefitGrantGitHubRepositoryUpdate `queryParam:"inline" name:"CustomerBenefitGrantUpdate"`
+	CustomerBenefitGrantDownloadablesUpdate    *CustomerBenefitGrantDownloadablesUpdate    `queryParam:"inline" name:"CustomerBenefitGrantUpdate"`
+	CustomerBenefitGrantLicenseKeysUpdate      *CustomerBenefitGrantLicenseKeysUpdate      `queryParam:"inline" name:"CustomerBenefitGrantUpdate"`
+	CustomerBenefitGrantCustomUpdate           *CustomerBenefitGrantCustomUpdate           `queryParam:"inline" name:"CustomerBenefitGrantUpdate"`
+	CustomerBenefitGrantMeterCreditUpdate      *CustomerBenefitGrantMeterCreditUpdate      `queryParam:"inline" name:"CustomerBenefitGrantUpdate"`
 
 	Type CustomerBenefitGrantUpdateType
 }
@@ -99,7 +99,7 @@ func (u *CustomerBenefitGrantUpdate) UnmarshalJSON(data []byte) error {
 	switch dis.BenefitType {
 	case "custom":
 		customerBenefitGrantCustomUpdate := new(CustomerBenefitGrantCustomUpdate)
-		if err := utils.UnmarshalJSON(data, &customerBenefitGrantCustomUpdate, "", true, false); err != nil {
+		if err := utils.UnmarshalJSON(data, &customerBenefitGrantCustomUpdate, "", true, nil); err != nil {
 			return fmt.Errorf("could not unmarshal `%s` into expected (BenefitType == custom) type CustomerBenefitGrantCustomUpdate within CustomerBenefitGrantUpdate: %w", string(data), err)
 		}
 
@@ -108,7 +108,7 @@ func (u *CustomerBenefitGrantUpdate) UnmarshalJSON(data []byte) error {
 		return nil
 	case "discord":
 		customerBenefitGrantDiscordUpdate := new(CustomerBenefitGrantDiscordUpdate)
-		if err := utils.UnmarshalJSON(data, &customerBenefitGrantDiscordUpdate, "", true, false); err != nil {
+		if err := utils.UnmarshalJSON(data, &customerBenefitGrantDiscordUpdate, "", true, nil); err != nil {
 			return fmt.Errorf("could not unmarshal `%s` into expected (BenefitType == discord) type CustomerBenefitGrantDiscordUpdate within CustomerBenefitGrantUpdate: %w", string(data), err)
 		}
 
@@ -117,7 +117,7 @@ func (u *CustomerBenefitGrantUpdate) UnmarshalJSON(data []byte) error {
 		return nil
 	case "downloadables":
 		customerBenefitGrantDownloadablesUpdate := new(CustomerBenefitGrantDownloadablesUpdate)
-		if err := utils.UnmarshalJSON(data, &customerBenefitGrantDownloadablesUpdate, "", true, false); err != nil {
+		if err := utils.UnmarshalJSON(data, &customerBenefitGrantDownloadablesUpdate, "", true, nil); err != nil {
 			return fmt.Errorf("could not unmarshal `%s` into expected (BenefitType == downloadables) type CustomerBenefitGrantDownloadablesUpdate within CustomerBenefitGrantUpdate: %w", string(data), err)
 		}
 
@@ -126,7 +126,7 @@ func (u *CustomerBenefitGrantUpdate) UnmarshalJSON(data []byte) error {
 		return nil
 	case "github_repository":
 		customerBenefitGrantGitHubRepositoryUpdate := new(CustomerBenefitGrantGitHubRepositoryUpdate)
-		if err := utils.UnmarshalJSON(data, &customerBenefitGrantGitHubRepositoryUpdate, "", true, false); err != nil {
+		if err := utils.UnmarshalJSON(data, &customerBenefitGrantGitHubRepositoryUpdate, "", true, nil); err != nil {
 			return fmt.Errorf("could not unmarshal `%s` into expected (BenefitType == github_repository) type CustomerBenefitGrantGitHubRepositoryUpdate within CustomerBenefitGrantUpdate: %w", string(data), err)
 		}
 
@@ -135,7 +135,7 @@ func (u *CustomerBenefitGrantUpdate) UnmarshalJSON(data []byte) error {
 		return nil
 	case "license_keys":
 		customerBenefitGrantLicenseKeysUpdate := new(CustomerBenefitGrantLicenseKeysUpdate)
-		if err := utils.UnmarshalJSON(data, &customerBenefitGrantLicenseKeysUpdate, "", true, false); err != nil {
+		if err := utils.UnmarshalJSON(data, &customerBenefitGrantLicenseKeysUpdate, "", true, nil); err != nil {
 			return fmt.Errorf("could not unmarshal `%s` into expected (BenefitType == license_keys) type CustomerBenefitGrantLicenseKeysUpdate within CustomerBenefitGrantUpdate: %w", string(data), err)
 		}
 
@@ -144,7 +144,7 @@ func (u *CustomerBenefitGrantUpdate) UnmarshalJSON(data []byte) error {
 		return nil
 	case "meter_credit":
 		customerBenefitGrantMeterCreditUpdate := new(CustomerBenefitGrantMeterCreditUpdate)
-		if err := utils.UnmarshalJSON(data, &customerBenefitGrantMeterCreditUpdate, "", true, false); err != nil {
+		if err := utils.UnmarshalJSON(data, &customerBenefitGrantMeterCreditUpdate, "", true, nil); err != nil {
 			return fmt.Errorf("could not unmarshal `%s` into expected (BenefitType == meter_credit) type CustomerBenefitGrantMeterCreditUpdate within CustomerBenefitGrantUpdate: %w", string(data), err)
 		}
 

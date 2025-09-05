@@ -20,7 +20,7 @@ func (l LicenseKeyUpdate) MarshalJSON() ([]byte, error) {
 }
 
 func (l *LicenseKeyUpdate) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &l, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &l, "", false, nil); err != nil {
 		return err
 	}
 	return nil

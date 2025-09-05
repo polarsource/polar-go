@@ -18,9 +18,9 @@ const (
 )
 
 type FileCreate struct {
-	DownloadableFileCreate       *DownloadableFileCreate       `queryParam:"inline"`
-	ProductMediaFileCreate       *ProductMediaFileCreate       `queryParam:"inline"`
-	OrganizationAvatarFileCreate *OrganizationAvatarFileCreate `queryParam:"inline"`
+	DownloadableFileCreate       *DownloadableFileCreate       `queryParam:"inline" name:"FileCreate"`
+	ProductMediaFileCreate       *ProductMediaFileCreate       `queryParam:"inline" name:"FileCreate"`
+	OrganizationAvatarFileCreate *OrganizationAvatarFileCreate `queryParam:"inline" name:"FileCreate"`
 
 	Type FileCreateType
 }
@@ -66,7 +66,7 @@ func (u *FileCreate) UnmarshalJSON(data []byte) error {
 	switch dis.Service {
 	case "downloadable":
 		downloadableFileCreate := new(DownloadableFileCreate)
-		if err := utils.UnmarshalJSON(data, &downloadableFileCreate, "", true, false); err != nil {
+		if err := utils.UnmarshalJSON(data, &downloadableFileCreate, "", true, nil); err != nil {
 			return fmt.Errorf("could not unmarshal `%s` into expected (Service == downloadable) type DownloadableFileCreate within FileCreate: %w", string(data), err)
 		}
 
@@ -75,7 +75,7 @@ func (u *FileCreate) UnmarshalJSON(data []byte) error {
 		return nil
 	case "organization_avatar":
 		organizationAvatarFileCreate := new(OrganizationAvatarFileCreate)
-		if err := utils.UnmarshalJSON(data, &organizationAvatarFileCreate, "", true, false); err != nil {
+		if err := utils.UnmarshalJSON(data, &organizationAvatarFileCreate, "", true, nil); err != nil {
 			return fmt.Errorf("could not unmarshal `%s` into expected (Service == organization_avatar) type OrganizationAvatarFileCreate within FileCreate: %w", string(data), err)
 		}
 
@@ -84,7 +84,7 @@ func (u *FileCreate) UnmarshalJSON(data []byte) error {
 		return nil
 	case "product_media":
 		productMediaFileCreate := new(ProductMediaFileCreate)
-		if err := utils.UnmarshalJSON(data, &productMediaFileCreate, "", true, false); err != nil {
+		if err := utils.UnmarshalJSON(data, &productMediaFileCreate, "", true, nil); err != nil {
 			return fmt.Errorf("could not unmarshal `%s` into expected (Service == product_media) type ProductMediaFileCreate within FileCreate: %w", string(data), err)
 		}
 

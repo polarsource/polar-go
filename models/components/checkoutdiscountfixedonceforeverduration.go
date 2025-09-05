@@ -2,6 +2,10 @@
 
 package components
 
+import (
+	"github.com/polarsource/polar-go/internal/utils"
+)
+
 // CheckoutDiscountFixedOnceForeverDuration - Schema for a fixed amount discount that is applied once or forever.
 type CheckoutDiscountFixedOnceForeverDuration struct {
 	Duration DiscountDuration `json:"duration"`
@@ -12,6 +16,17 @@ type CheckoutDiscountFixedOnceForeverDuration struct {
 	ID   string  `json:"id"`
 	Name string  `json:"name"`
 	Code *string `json:"code"`
+}
+
+func (c CheckoutDiscountFixedOnceForeverDuration) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(c, "", false)
+}
+
+func (c *CheckoutDiscountFixedOnceForeverDuration) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &c, "", false, []string{"duration", "type", "amount", "currency", "id", "name", "code"}); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *CheckoutDiscountFixedOnceForeverDuration) GetDuration() DiscountDuration {

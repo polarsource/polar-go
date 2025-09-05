@@ -2,11 +2,26 @@
 
 package components
 
+import (
+	"github.com/polarsource/polar-go/internal/utils"
+)
+
 type BenefitLicenseKeysCreateProperties struct {
 	Prefix      *string                                      `json:"prefix,omitempty"`
 	Expires     *BenefitLicenseKeyExpirationProperties       `json:"expires,omitempty"`
 	Activations *BenefitLicenseKeyActivationCreateProperties `json:"activations,omitempty"`
 	LimitUsage  *int64                                       `json:"limit_usage,omitempty"`
+}
+
+func (b BenefitLicenseKeysCreateProperties) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(b, "", false)
+}
+
+func (b *BenefitLicenseKeysCreateProperties) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &b, "", false, nil); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *BenefitLicenseKeysCreateProperties) GetPrefix() *string {

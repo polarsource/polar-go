@@ -40,9 +40,9 @@ const (
 
 // FilesUpdateResponseFilesUpdate - File updated.
 type FilesUpdateResponseFilesUpdate struct {
-	DownloadableFileRead       *components.DownloadableFileRead       `queryParam:"inline"`
-	ProductMediaFileRead       *components.ProductMediaFileRead       `queryParam:"inline"`
-	OrganizationAvatarFileRead *components.OrganizationAvatarFileRead `queryParam:"inline"`
+	DownloadableFileRead       *components.DownloadableFileRead       `queryParam:"inline" name:"Response_Files_Update"`
+	ProductMediaFileRead       *components.ProductMediaFileRead       `queryParam:"inline" name:"Response_Files_Update"`
+	OrganizationAvatarFileRead *components.OrganizationAvatarFileRead `queryParam:"inline" name:"Response_Files_Update"`
 
 	Type FilesUpdateResponseFilesUpdateType
 }
@@ -88,7 +88,7 @@ func (u *FilesUpdateResponseFilesUpdate) UnmarshalJSON(data []byte) error {
 	switch dis.Service {
 	case "downloadable":
 		downloadableFileRead := new(components.DownloadableFileRead)
-		if err := utils.UnmarshalJSON(data, &downloadableFileRead, "", true, false); err != nil {
+		if err := utils.UnmarshalJSON(data, &downloadableFileRead, "", true, nil); err != nil {
 			return fmt.Errorf("could not unmarshal `%s` into expected (Service == downloadable) type components.DownloadableFileRead within FilesUpdateResponseFilesUpdate: %w", string(data), err)
 		}
 
@@ -97,7 +97,7 @@ func (u *FilesUpdateResponseFilesUpdate) UnmarshalJSON(data []byte) error {
 		return nil
 	case "product_media":
 		productMediaFileRead := new(components.ProductMediaFileRead)
-		if err := utils.UnmarshalJSON(data, &productMediaFileRead, "", true, false); err != nil {
+		if err := utils.UnmarshalJSON(data, &productMediaFileRead, "", true, nil); err != nil {
 			return fmt.Errorf("could not unmarshal `%s` into expected (Service == product_media) type components.ProductMediaFileRead within FilesUpdateResponseFilesUpdate: %w", string(data), err)
 		}
 
@@ -106,7 +106,7 @@ func (u *FilesUpdateResponseFilesUpdate) UnmarshalJSON(data []byte) error {
 		return nil
 	case "organization_avatar":
 		organizationAvatarFileRead := new(components.OrganizationAvatarFileRead)
-		if err := utils.UnmarshalJSON(data, &organizationAvatarFileRead, "", true, false); err != nil {
+		if err := utils.UnmarshalJSON(data, &organizationAvatarFileRead, "", true, nil); err != nil {
 			return fmt.Errorf("could not unmarshal `%s` into expected (Service == organization_avatar) type components.OrganizationAvatarFileRead within FilesUpdateResponseFilesUpdate: %w", string(data), err)
 		}
 

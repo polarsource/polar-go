@@ -18,10 +18,10 @@ const (
 )
 
 type ProductCreateMetadata struct {
-	Str     *string  `queryParam:"inline"`
-	Integer *int64   `queryParam:"inline"`
-	Number  *float64 `queryParam:"inline"`
-	Boolean *bool    `queryParam:"inline"`
+	Str     *string  `queryParam:"inline" name:"metadata"`
+	Integer *int64   `queryParam:"inline" name:"metadata"`
+	Number  *float64 `queryParam:"inline" name:"metadata"`
+	Boolean *bool    `queryParam:"inline" name:"metadata"`
 
 	Type ProductCreateMetadataType
 }
@@ -65,28 +65,28 @@ func CreateProductCreateMetadataBoolean(boolean bool) ProductCreateMetadata {
 func (u *ProductCreateMetadata) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, nil); err == nil {
 		u.Str = &str
 		u.Type = ProductCreateMetadataTypeStr
 		return nil
 	}
 
 	var integer int64 = int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
 		u.Integer = &integer
 		u.Type = ProductCreateMetadataTypeInteger
 		return nil
 	}
 
 	var number float64 = float64(0)
-	if err := utils.UnmarshalJSON(data, &number, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
 		u.Number = &number
 		u.Type = ProductCreateMetadataTypeNumber
 		return nil
 	}
 
 	var boolean bool = false
-	if err := utils.UnmarshalJSON(data, &boolean, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &boolean, "", true, nil); err == nil {
 		u.Boolean = &boolean
 		u.Type = ProductCreateMetadataTypeBoolean
 		return nil
@@ -125,10 +125,10 @@ const (
 )
 
 type ProductCreatePrices struct {
-	ProductPriceFixedCreate       *ProductPriceFixedCreate       `queryParam:"inline"`
-	ProductPriceCustomCreate      *ProductPriceCustomCreate      `queryParam:"inline"`
-	ProductPriceFreeCreate        *ProductPriceFreeCreate        `queryParam:"inline"`
-	ProductPriceMeteredUnitCreate *ProductPriceMeteredUnitCreate `queryParam:"inline"`
+	ProductPriceFixedCreate       *ProductPriceFixedCreate       `queryParam:"inline" name:"prices"`
+	ProductPriceCustomCreate      *ProductPriceCustomCreate      `queryParam:"inline" name:"prices"`
+	ProductPriceFreeCreate        *ProductPriceFreeCreate        `queryParam:"inline" name:"prices"`
+	ProductPriceMeteredUnitCreate *ProductPriceMeteredUnitCreate `queryParam:"inline" name:"prices"`
 
 	Type ProductCreatePricesType
 }
@@ -171,31 +171,31 @@ func CreateProductCreatePricesProductPriceMeteredUnitCreate(productPriceMeteredU
 
 func (u *ProductCreatePrices) UnmarshalJSON(data []byte) error {
 
-	var productPriceFreeCreate ProductPriceFreeCreate = ProductPriceFreeCreate{}
-	if err := utils.UnmarshalJSON(data, &productPriceFreeCreate, "", true, false); err == nil {
-		u.ProductPriceFreeCreate = &productPriceFreeCreate
-		u.Type = ProductCreatePricesTypeProductPriceFreeCreate
+	var productPriceMeteredUnitCreate ProductPriceMeteredUnitCreate = ProductPriceMeteredUnitCreate{}
+	if err := utils.UnmarshalJSON(data, &productPriceMeteredUnitCreate, "", true, nil); err == nil {
+		u.ProductPriceMeteredUnitCreate = &productPriceMeteredUnitCreate
+		u.Type = ProductCreatePricesTypeProductPriceMeteredUnitCreate
 		return nil
 	}
 
 	var productPriceFixedCreate ProductPriceFixedCreate = ProductPriceFixedCreate{}
-	if err := utils.UnmarshalJSON(data, &productPriceFixedCreate, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &productPriceFixedCreate, "", true, nil); err == nil {
 		u.ProductPriceFixedCreate = &productPriceFixedCreate
 		u.Type = ProductCreatePricesTypeProductPriceFixedCreate
 		return nil
 	}
 
 	var productPriceCustomCreate ProductPriceCustomCreate = ProductPriceCustomCreate{}
-	if err := utils.UnmarshalJSON(data, &productPriceCustomCreate, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &productPriceCustomCreate, "", true, nil); err == nil {
 		u.ProductPriceCustomCreate = &productPriceCustomCreate
 		u.Type = ProductCreatePricesTypeProductPriceCustomCreate
 		return nil
 	}
 
-	var productPriceMeteredUnitCreate ProductPriceMeteredUnitCreate = ProductPriceMeteredUnitCreate{}
-	if err := utils.UnmarshalJSON(data, &productPriceMeteredUnitCreate, "", true, false); err == nil {
-		u.ProductPriceMeteredUnitCreate = &productPriceMeteredUnitCreate
-		u.Type = ProductCreatePricesTypeProductPriceMeteredUnitCreate
+	var productPriceFreeCreate ProductPriceFreeCreate = ProductPriceFreeCreate{}
+	if err := utils.UnmarshalJSON(data, &productPriceFreeCreate, "", true, nil); err == nil {
+		u.ProductPriceFreeCreate = &productPriceFreeCreate
+		u.Type = ProductCreatePricesTypeProductPriceFreeCreate
 		return nil
 	}
 
@@ -240,7 +240,7 @@ type ProductCreate struct {
 	Name string `json:"name"`
 	// The description of the product.
 	Description *string `json:"description,omitempty"`
-	// The recurring interval of the product. If `None`, the product is a one-time purchase.
+	// The recurring interval of the product. If `None`, the product is a one-time purchase.Note that the `day` and `week` values are for internal Polar staff use only.
 	RecurringInterval *SubscriptionRecurringInterval `json:"recurring_interval"`
 	// List of available prices for this product. It should contain at most one static price (fixed, custom or free), and any number of metered prices. Metered prices are not supported on one-time purchase products.
 	Prices []ProductCreatePrices `json:"prices"`

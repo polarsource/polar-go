@@ -17,8 +17,8 @@ const (
 )
 
 type CustomerSessionsCreateCustomerSessionCreate struct {
-	CustomerSessionCustomerIDCreate         *components.CustomerSessionCustomerIDCreate         `queryParam:"inline"`
-	CustomerSessionCustomerExternalIDCreate *components.CustomerSessionCustomerExternalIDCreate `queryParam:"inline"`
+	CustomerSessionCustomerIDCreate         *components.CustomerSessionCustomerIDCreate         `queryParam:"inline" name:"Customer_Session_Create"`
+	CustomerSessionCustomerExternalIDCreate *components.CustomerSessionCustomerExternalIDCreate `queryParam:"inline" name:"Customer_Session_Create"`
 
 	Type CustomerSessionsCreateCustomerSessionCreateType
 }
@@ -44,14 +44,14 @@ func CreateCustomerSessionsCreateCustomerSessionCreateCustomerSessionCustomerExt
 func (u *CustomerSessionsCreateCustomerSessionCreate) UnmarshalJSON(data []byte) error {
 
 	var customerSessionCustomerIDCreate components.CustomerSessionCustomerIDCreate = components.CustomerSessionCustomerIDCreate{}
-	if err := utils.UnmarshalJSON(data, &customerSessionCustomerIDCreate, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &customerSessionCustomerIDCreate, "", true, nil); err == nil {
 		u.CustomerSessionCustomerIDCreate = &customerSessionCustomerIDCreate
 		u.Type = CustomerSessionsCreateCustomerSessionCreateTypeCustomerSessionCustomerIDCreate
 		return nil
 	}
 
 	var customerSessionCustomerExternalIDCreate components.CustomerSessionCustomerExternalIDCreate = components.CustomerSessionCustomerExternalIDCreate{}
-	if err := utils.UnmarshalJSON(data, &customerSessionCustomerExternalIDCreate, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &customerSessionCustomerExternalIDCreate, "", true, nil); err == nil {
 		u.CustomerSessionCustomerExternalIDCreate = &customerSessionCustomerExternalIDCreate
 		u.Type = CustomerSessionsCreateCustomerSessionCreateTypeCustomerSessionCustomerExternalIDCreate
 		return nil

@@ -19,10 +19,10 @@ const (
 )
 
 type CustomerStateSubscriptionCustomFieldData struct {
-	Str      *string    `queryParam:"inline"`
-	Integer  *int64     `queryParam:"inline"`
-	Boolean  *bool      `queryParam:"inline"`
-	DateTime *time.Time `queryParam:"inline"`
+	Str      *string    `queryParam:"inline" name:"custom_field_data"`
+	Integer  *int64     `queryParam:"inline" name:"custom_field_data"`
+	Boolean  *bool      `queryParam:"inline" name:"custom_field_data"`
+	DateTime *time.Time `queryParam:"inline" name:"custom_field_data"`
 
 	Type CustomerStateSubscriptionCustomFieldDataType
 }
@@ -66,28 +66,28 @@ func CreateCustomerStateSubscriptionCustomFieldDataDateTime(dateTime time.Time) 
 func (u *CustomerStateSubscriptionCustomFieldData) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, nil); err == nil {
 		u.Str = &str
 		u.Type = CustomerStateSubscriptionCustomFieldDataTypeStr
 		return nil
 	}
 
 	var integer int64 = int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
 		u.Integer = &integer
 		u.Type = CustomerStateSubscriptionCustomFieldDataTypeInteger
 		return nil
 	}
 
 	var boolean bool = false
-	if err := utils.UnmarshalJSON(data, &boolean, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &boolean, "", true, nil); err == nil {
 		u.Boolean = &boolean
 		u.Type = CustomerStateSubscriptionCustomFieldDataTypeBoolean
 		return nil
 	}
 
 	var dateTime time.Time = time.Time{}
-	if err := utils.UnmarshalJSON(data, &dateTime, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &dateTime, "", true, nil); err == nil {
 		u.DateTime = &dateTime
 		u.Type = CustomerStateSubscriptionCustomFieldDataTypeDateTime
 		return nil
@@ -126,10 +126,10 @@ const (
 )
 
 type CustomerStateSubscriptionMetadata struct {
-	Str     *string  `queryParam:"inline"`
-	Integer *int64   `queryParam:"inline"`
-	Number  *float64 `queryParam:"inline"`
-	Boolean *bool    `queryParam:"inline"`
+	Str     *string  `queryParam:"inline" name:"metadata"`
+	Integer *int64   `queryParam:"inline" name:"metadata"`
+	Number  *float64 `queryParam:"inline" name:"metadata"`
+	Boolean *bool    `queryParam:"inline" name:"metadata"`
 
 	Type CustomerStateSubscriptionMetadataType
 }
@@ -173,28 +173,28 @@ func CreateCustomerStateSubscriptionMetadataBoolean(boolean bool) CustomerStateS
 func (u *CustomerStateSubscriptionMetadata) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, nil); err == nil {
 		u.Str = &str
 		u.Type = CustomerStateSubscriptionMetadataTypeStr
 		return nil
 	}
 
 	var integer int64 = int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
 		u.Integer = &integer
 		u.Type = CustomerStateSubscriptionMetadataTypeInteger
 		return nil
 	}
 
 	var number float64 = float64(0)
-	if err := utils.UnmarshalJSON(data, &number, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
 		u.Number = &number
 		u.Type = CustomerStateSubscriptionMetadataTypeNumber
 		return nil
 	}
 
 	var boolean bool = false
-	if err := utils.UnmarshalJSON(data, &boolean, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &boolean, "", true, nil); err == nil {
 		u.Boolean = &boolean
 		u.Type = CustomerStateSubscriptionMetadataTypeBoolean
 		return nil
@@ -265,7 +265,7 @@ func (c CustomerStateSubscription) MarshalJSON() ([]byte, error) {
 }
 
 func (c *CustomerStateSubscription) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &c, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &c, "", false, []string{"id", "created_at", "modified_at", "metadata", "status", "amount", "currency", "recurring_interval", "current_period_start", "current_period_end", "cancel_at_period_end", "canceled_at", "started_at", "ends_at", "product_id", "discount_id", "meters"}); err != nil {
 		return err
 	}
 	return nil

@@ -18,8 +18,8 @@ const (
 
 // MetersListQueryParamOrganizationIDFilter - Filter by organization ID.
 type MetersListQueryParamOrganizationIDFilter struct {
-	Str        *string  `queryParam:"inline"`
-	ArrayOfStr []string `queryParam:"inline"`
+	Str        *string  `queryParam:"inline" name:"OrganizationID_Filter"`
+	ArrayOfStr []string `queryParam:"inline" name:"OrganizationID_Filter"`
 
 	Type MetersListQueryParamOrganizationIDFilterType
 }
@@ -45,14 +45,14 @@ func CreateMetersListQueryParamOrganizationIDFilterArrayOfStr(arrayOfStr []strin
 func (u *MetersListQueryParamOrganizationIDFilter) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, nil); err == nil {
 		u.Str = &str
 		u.Type = MetersListQueryParamOrganizationIDFilterTypeStr
 		return nil
 	}
 
 	var arrayOfStr []string = []string{}
-	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, nil); err == nil {
 		u.ArrayOfStr = arrayOfStr
 		u.Type = MetersListQueryParamOrganizationIDFilterTypeArrayOfStr
 		return nil
@@ -78,6 +78,8 @@ type MetersListRequest struct {
 	OrganizationID *MetersListQueryParamOrganizationIDFilter `queryParam:"style=form,explode=true,name=organization_id"`
 	// Filter by name.
 	Query *string `queryParam:"style=form,explode=true,name=query"`
+	// Filter on archived meters.
+	IsArchived *bool `queryParam:"style=form,explode=true,name=is_archived"`
 	// Page number, defaults to 1.
 	Page *int64 `default:"1" queryParam:"style=form,explode=true,name=page"`
 	// Size of a page, defaults to 10. Maximum is 100.
@@ -93,7 +95,7 @@ func (m MetersListRequest) MarshalJSON() ([]byte, error) {
 }
 
 func (m *MetersListRequest) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &m, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &m, "", false, nil); err != nil {
 		return err
 	}
 	return nil
@@ -111,6 +113,13 @@ func (o *MetersListRequest) GetQuery() *string {
 		return nil
 	}
 	return o.Query
+}
+
+func (o *MetersListRequest) GetIsArchived() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.IsArchived
 }
 
 func (o *MetersListRequest) GetPage() *int64 {

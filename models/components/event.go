@@ -16,8 +16,8 @@ const (
 )
 
 type Event struct {
-	SystemEvent *SystemEvent `queryParam:"inline"`
-	UserEvent   *UserEvent   `queryParam:"inline"`
+	SystemEvent *SystemEvent `queryParam:"inline" name:"Event"`
+	UserEvent   *UserEvent   `queryParam:"inline" name:"Event"`
 
 	Type EventType
 }
@@ -43,14 +43,14 @@ func CreateEventUserEvent(userEvent UserEvent) Event {
 func (u *Event) UnmarshalJSON(data []byte) error {
 
 	var userEvent UserEvent = UserEvent{}
-	if err := utils.UnmarshalJSON(data, &userEvent, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &userEvent, "", true, nil); err == nil {
 		u.UserEvent = &userEvent
 		u.Type = EventTypeUserEvent
 		return nil
 	}
 
 	var systemEvent SystemEvent = SystemEvent{}
-	if err := utils.UnmarshalJSON(data, &systemEvent, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &systemEvent, "", true, nil); err == nil {
 		u.SystemEvent = &systemEvent
 		u.Type = EventTypeSystemEvent
 		return nil

@@ -14,7 +14,8 @@ const (
 	ScopeProfile                     Scope = "profile"
 	ScopeEmail                       Scope = "email"
 	ScopeUserRead                    Scope = "user:read"
-	ScopeWebDefault                  Scope = "web_default"
+	ScopeWebRead                     Scope = "web:read"
+	ScopeWebWrite                    Scope = "web:write"
 	ScopeOrganizationsRead           Scope = "organizations:read"
 	ScopeOrganizationsWrite          Scope = "organizations:write"
 	ScopeCustomFieldsRead            Scope = "custom_fields:read"
@@ -85,7 +86,9 @@ func (e *Scope) UnmarshalJSON(data []byte) error {
 		fallthrough
 	case "user:read":
 		fallthrough
-	case "web_default":
+	case "web:read":
+		fallthrough
+	case "web:write":
 		fallthrough
 	case "organizations:read":
 		fallthrough

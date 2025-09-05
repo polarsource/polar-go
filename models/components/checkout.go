@@ -19,10 +19,10 @@ const (
 )
 
 type CheckoutCustomFieldData struct {
-	Str      *string    `queryParam:"inline"`
-	Integer  *int64     `queryParam:"inline"`
-	Boolean  *bool      `queryParam:"inline"`
-	DateTime *time.Time `queryParam:"inline"`
+	Str      *string    `queryParam:"inline" name:"custom_field_data"`
+	Integer  *int64     `queryParam:"inline" name:"custom_field_data"`
+	Boolean  *bool      `queryParam:"inline" name:"custom_field_data"`
+	DateTime *time.Time `queryParam:"inline" name:"custom_field_data"`
 
 	Type CheckoutCustomFieldDataType
 }
@@ -66,28 +66,28 @@ func CreateCheckoutCustomFieldDataDateTime(dateTime time.Time) CheckoutCustomFie
 func (u *CheckoutCustomFieldData) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, nil); err == nil {
 		u.Str = &str
 		u.Type = CheckoutCustomFieldDataTypeStr
 		return nil
 	}
 
 	var integer int64 = int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
 		u.Integer = &integer
 		u.Type = CheckoutCustomFieldDataTypeInteger
 		return nil
 	}
 
 	var boolean bool = false
-	if err := utils.UnmarshalJSON(data, &boolean, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &boolean, "", true, nil); err == nil {
 		u.Boolean = &boolean
 		u.Type = CheckoutCustomFieldDataTypeBoolean
 		return nil
 	}
 
 	var dateTime time.Time = time.Time{}
-	if err := utils.UnmarshalJSON(data, &dateTime, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &dateTime, "", true, nil); err == nil {
 		u.DateTime = &dateTime
 		u.Type = CheckoutCustomFieldDataTypeDateTime
 		return nil
@@ -126,10 +126,10 @@ const (
 )
 
 type CheckoutMetadata struct {
-	Str     *string  `queryParam:"inline"`
-	Integer *int64   `queryParam:"inline"`
-	Number  *float64 `queryParam:"inline"`
-	Boolean *bool    `queryParam:"inline"`
+	Str     *string  `queryParam:"inline" name:"metadata"`
+	Integer *int64   `queryParam:"inline" name:"metadata"`
+	Number  *float64 `queryParam:"inline" name:"metadata"`
+	Boolean *bool    `queryParam:"inline" name:"metadata"`
 
 	Type CheckoutMetadataType
 }
@@ -173,28 +173,28 @@ func CreateCheckoutMetadataBoolean(boolean bool) CheckoutMetadata {
 func (u *CheckoutMetadata) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, nil); err == nil {
 		u.Str = &str
 		u.Type = CheckoutMetadataTypeStr
 		return nil
 	}
 
 	var integer int64 = int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
 		u.Integer = &integer
 		u.Type = CheckoutMetadataTypeInteger
 		return nil
 	}
 
 	var number float64 = float64(0)
-	if err := utils.UnmarshalJSON(data, &number, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
 		u.Number = &number
 		u.Type = CheckoutMetadataTypeNumber
 		return nil
 	}
 
 	var boolean bool = false
-	if err := utils.UnmarshalJSON(data, &boolean, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &boolean, "", true, nil); err == nil {
 		u.Boolean = &boolean
 		u.Type = CheckoutMetadataTypeBoolean
 		return nil
@@ -232,8 +232,8 @@ const (
 
 // CheckoutProductPrice - Price of the selected product.
 type CheckoutProductPrice struct {
-	LegacyRecurringProductPrice *LegacyRecurringProductPrice `queryParam:"inline"`
-	ProductPrice                *ProductPrice                `queryParam:"inline"`
+	LegacyRecurringProductPrice *LegacyRecurringProductPrice `queryParam:"inline" name:"Product_Price"`
+	ProductPrice                *ProductPrice                `queryParam:"inline" name:"Product_Price"`
 
 	Type CheckoutProductPriceType
 }
@@ -259,14 +259,14 @@ func CreateCheckoutProductPriceProductPrice(productPrice ProductPrice) CheckoutP
 func (u *CheckoutProductPrice) UnmarshalJSON(data []byte) error {
 
 	var legacyRecurringProductPrice LegacyRecurringProductPrice = LegacyRecurringProductPrice{}
-	if err := utils.UnmarshalJSON(data, &legacyRecurringProductPrice, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &legacyRecurringProductPrice, "", true, nil); err == nil {
 		u.LegacyRecurringProductPrice = &legacyRecurringProductPrice
 		u.Type = CheckoutProductPriceTypeLegacyRecurringProductPrice
 		return nil
 	}
 
 	var productPrice ProductPrice = ProductPrice{}
-	if err := utils.UnmarshalJSON(data, &productPrice, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &productPrice, "", true, nil); err == nil {
 		u.ProductPrice = &productPrice
 		u.Type = CheckoutProductPriceTypeProductPrice
 		return nil
@@ -297,10 +297,10 @@ const (
 )
 
 type CheckoutDiscount struct {
-	CheckoutDiscountFixedOnceForeverDuration      *CheckoutDiscountFixedOnceForeverDuration      `queryParam:"inline"`
-	CheckoutDiscountFixedRepeatDuration           *CheckoutDiscountFixedRepeatDuration           `queryParam:"inline"`
-	CheckoutDiscountPercentageOnceForeverDuration *CheckoutDiscountPercentageOnceForeverDuration `queryParam:"inline"`
-	CheckoutDiscountPercentageRepeatDuration      *CheckoutDiscountPercentageRepeatDuration      `queryParam:"inline"`
+	CheckoutDiscountFixedOnceForeverDuration      *CheckoutDiscountFixedOnceForeverDuration      `queryParam:"inline" name:"discount"`
+	CheckoutDiscountFixedRepeatDuration           *CheckoutDiscountFixedRepeatDuration           `queryParam:"inline" name:"discount"`
+	CheckoutDiscountPercentageOnceForeverDuration *CheckoutDiscountPercentageOnceForeverDuration `queryParam:"inline" name:"discount"`
+	CheckoutDiscountPercentageRepeatDuration      *CheckoutDiscountPercentageRepeatDuration      `queryParam:"inline" name:"discount"`
 
 	Type CheckoutDiscountType
 }
@@ -343,31 +343,31 @@ func CreateCheckoutDiscountCheckoutDiscountPercentageRepeatDuration(checkoutDisc
 
 func (u *CheckoutDiscount) UnmarshalJSON(data []byte) error {
 
-	var checkoutDiscountPercentageOnceForeverDuration CheckoutDiscountPercentageOnceForeverDuration = CheckoutDiscountPercentageOnceForeverDuration{}
-	if err := utils.UnmarshalJSON(data, &checkoutDiscountPercentageOnceForeverDuration, "", true, false); err == nil {
-		u.CheckoutDiscountPercentageOnceForeverDuration = &checkoutDiscountPercentageOnceForeverDuration
-		u.Type = CheckoutDiscountTypeCheckoutDiscountPercentageOnceForeverDuration
+	var checkoutDiscountFixedRepeatDuration CheckoutDiscountFixedRepeatDuration = CheckoutDiscountFixedRepeatDuration{}
+	if err := utils.UnmarshalJSON(data, &checkoutDiscountFixedRepeatDuration, "", true, nil); err == nil {
+		u.CheckoutDiscountFixedRepeatDuration = &checkoutDiscountFixedRepeatDuration
+		u.Type = CheckoutDiscountTypeCheckoutDiscountFixedRepeatDuration
 		return nil
 	}
 
 	var checkoutDiscountFixedOnceForeverDuration CheckoutDiscountFixedOnceForeverDuration = CheckoutDiscountFixedOnceForeverDuration{}
-	if err := utils.UnmarshalJSON(data, &checkoutDiscountFixedOnceForeverDuration, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &checkoutDiscountFixedOnceForeverDuration, "", true, nil); err == nil {
 		u.CheckoutDiscountFixedOnceForeverDuration = &checkoutDiscountFixedOnceForeverDuration
 		u.Type = CheckoutDiscountTypeCheckoutDiscountFixedOnceForeverDuration
 		return nil
 	}
 
 	var checkoutDiscountPercentageRepeatDuration CheckoutDiscountPercentageRepeatDuration = CheckoutDiscountPercentageRepeatDuration{}
-	if err := utils.UnmarshalJSON(data, &checkoutDiscountPercentageRepeatDuration, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &checkoutDiscountPercentageRepeatDuration, "", true, nil); err == nil {
 		u.CheckoutDiscountPercentageRepeatDuration = &checkoutDiscountPercentageRepeatDuration
 		u.Type = CheckoutDiscountTypeCheckoutDiscountPercentageRepeatDuration
 		return nil
 	}
 
-	var checkoutDiscountFixedRepeatDuration CheckoutDiscountFixedRepeatDuration = CheckoutDiscountFixedRepeatDuration{}
-	if err := utils.UnmarshalJSON(data, &checkoutDiscountFixedRepeatDuration, "", true, false); err == nil {
-		u.CheckoutDiscountFixedRepeatDuration = &checkoutDiscountFixedRepeatDuration
-		u.Type = CheckoutDiscountTypeCheckoutDiscountFixedRepeatDuration
+	var checkoutDiscountPercentageOnceForeverDuration CheckoutDiscountPercentageOnceForeverDuration = CheckoutDiscountPercentageOnceForeverDuration{}
+	if err := utils.UnmarshalJSON(data, &checkoutDiscountPercentageOnceForeverDuration, "", true, nil); err == nil {
+		u.CheckoutDiscountPercentageOnceForeverDuration = &checkoutDiscountPercentageOnceForeverDuration
+		u.Type = CheckoutDiscountTypeCheckoutDiscountPercentageOnceForeverDuration
 		return nil
 	}
 
@@ -403,9 +403,9 @@ const (
 )
 
 type CustomerMetadata struct {
-	Str     *string `queryParam:"inline"`
-	Integer *int64  `queryParam:"inline"`
-	Boolean *bool   `queryParam:"inline"`
+	Str     *string `queryParam:"inline" name:"customer_metadata"`
+	Integer *int64  `queryParam:"inline" name:"customer_metadata"`
+	Boolean *bool   `queryParam:"inline" name:"customer_metadata"`
 
 	Type CustomerMetadataType
 }
@@ -440,21 +440,21 @@ func CreateCustomerMetadataBoolean(boolean bool) CustomerMetadata {
 func (u *CustomerMetadata) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, nil); err == nil {
 		u.Str = &str
 		u.Type = CustomerMetadataTypeStr
 		return nil
 	}
 
 	var integer int64 = int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
 		u.Integer = &integer
 		u.Type = CustomerMetadataTypeInteger
 		return nil
 	}
 
 	var boolean bool = false
-	if err := utils.UnmarshalJSON(data, &boolean, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &boolean, "", true, nil); err == nil {
 		u.Boolean = &boolean
 		u.Type = CustomerMetadataTypeBoolean
 		return nil
@@ -568,7 +568,7 @@ func (c Checkout) MarshalJSON() ([]byte, error) {
 }
 
 func (c *Checkout) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &c, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &c, "", false, []string{"created_at", "modified_at", "id", "payment_processor", "status", "client_secret", "url", "expires_at", "success_url", "embed_origin", "amount", "discount_amount", "net_amount", "tax_amount", "total_amount", "currency", "product_id", "product_price_id", "discount_id", "allow_discount_codes", "require_billing_address", "is_discount_applicable", "is_free_product_price", "is_payment_required", "is_payment_setup_required", "is_payment_form_required", "customer_id", "is_business_customer", "customer_name", "customer_email", "customer_ip_address", "customer_billing_name", "customer_billing_address", "customer_tax_id", "payment_processor_metadata", "billing_address_fields", "metadata", "external_customer_id", "customer_external_id", "products", "product", "product_price", "discount", "subscription_id", "attached_custom_fields", "customer_metadata"}); err != nil {
 		return err
 	}
 	return nil

@@ -32,7 +32,7 @@ func (o OrderItemSchema) MarshalJSON() ([]byte, error) {
 }
 
 func (o *OrderItemSchema) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &o, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &o, "", false, []string{"created_at", "modified_at", "id", "label", "amount", "tax_amount", "proration", "product_price_id"}); err != nil {
 		return err
 	}
 	return nil

@@ -2,8 +2,23 @@
 
 package components
 
+import (
+	"github.com/polarsource/polar-go/internal/utils"
+)
+
 type MeterResetMetadata struct {
 	MeterID string `json:"meter_id"`
+}
+
+func (m MeterResetMetadata) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(m, "", false)
+}
+
+func (m *MeterResetMetadata) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &m, "", false, []string{"meter_id"}); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *MeterResetMetadata) GetMeterID() string {

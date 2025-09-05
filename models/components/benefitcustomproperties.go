@@ -2,9 +2,24 @@
 
 package components
 
+import (
+	"github.com/polarsource/polar-go/internal/utils"
+)
+
 // BenefitCustomProperties - Properties for a benefit of type `custom`.
 type BenefitCustomProperties struct {
 	Note *string `json:"note"`
+}
+
+func (b BenefitCustomProperties) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(b, "", false)
+}
+
+func (b *BenefitCustomProperties) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &b, "", false, []string{"note"}); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *BenefitCustomProperties) GetNote() *string {

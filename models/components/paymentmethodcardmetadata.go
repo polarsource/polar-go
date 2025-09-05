@@ -2,12 +2,27 @@
 
 package components
 
+import (
+	"github.com/polarsource/polar-go/internal/utils"
+)
+
 type PaymentMethodCardMetadata struct {
 	Brand    string  `json:"brand"`
 	Last4    string  `json:"last4"`
 	ExpMonth int64   `json:"exp_month"`
 	ExpYear  int64   `json:"exp_year"`
 	Wallet   *string `json:"wallet,omitempty"`
+}
+
+func (p PaymentMethodCardMetadata) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(p, "", false)
+}
+
+func (p *PaymentMethodCardMetadata) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &p, "", false, []string{"brand", "last4", "exp_month", "exp_year"}); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *PaymentMethodCardMetadata) GetBrand() string {

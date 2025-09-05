@@ -23,7 +23,7 @@ func (d DownloadableFileCreate) MarshalJSON() ([]byte, error) {
 }
 
 func (d *DownloadableFileCreate) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &d, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &d, "", false, []string{"name", "mime_type", "size", "upload", "service"}); err != nil {
 		return err
 	}
 	return nil

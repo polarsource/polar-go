@@ -29,8 +29,8 @@ const (
 
 // CustomerPortalDownloadablesListQueryParamOrganizationIDFilter - Filter by organization ID.
 type CustomerPortalDownloadablesListQueryParamOrganizationIDFilter struct {
-	Str        *string  `queryParam:"inline"`
-	ArrayOfStr []string `queryParam:"inline"`
+	Str        *string  `queryParam:"inline" name:"OrganizationID_Filter"`
+	ArrayOfStr []string `queryParam:"inline" name:"OrganizationID_Filter"`
 
 	Type CustomerPortalDownloadablesListQueryParamOrganizationIDFilterType
 }
@@ -56,14 +56,14 @@ func CreateCustomerPortalDownloadablesListQueryParamOrganizationIDFilterArrayOfS
 func (u *CustomerPortalDownloadablesListQueryParamOrganizationIDFilter) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, nil); err == nil {
 		u.Str = &str
 		u.Type = CustomerPortalDownloadablesListQueryParamOrganizationIDFilterTypeStr
 		return nil
 	}
 
 	var arrayOfStr []string = []string{}
-	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, nil); err == nil {
 		u.ArrayOfStr = arrayOfStr
 		u.Type = CustomerPortalDownloadablesListQueryParamOrganizationIDFilterTypeArrayOfStr
 		return nil
@@ -93,8 +93,8 @@ const (
 
 // CustomerPortalDownloadablesListQueryParamBenefitIDFilter - Filter by benefit ID.
 type CustomerPortalDownloadablesListQueryParamBenefitIDFilter struct {
-	Str        *string  `queryParam:"inline"`
-	ArrayOfStr []string `queryParam:"inline"`
+	Str        *string  `queryParam:"inline" name:"BenefitID_Filter"`
+	ArrayOfStr []string `queryParam:"inline" name:"BenefitID_Filter"`
 
 	Type CustomerPortalDownloadablesListQueryParamBenefitIDFilterType
 }
@@ -120,14 +120,14 @@ func CreateCustomerPortalDownloadablesListQueryParamBenefitIDFilterArrayOfStr(ar
 func (u *CustomerPortalDownloadablesListQueryParamBenefitIDFilter) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, nil); err == nil {
 		u.Str = &str
 		u.Type = CustomerPortalDownloadablesListQueryParamBenefitIDFilterTypeStr
 		return nil
 	}
 
 	var arrayOfStr []string = []string{}
-	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, nil); err == nil {
 		u.ArrayOfStr = arrayOfStr
 		u.Type = CustomerPortalDownloadablesListQueryParamBenefitIDFilterTypeArrayOfStr
 		return nil
@@ -164,7 +164,7 @@ func (c CustomerPortalDownloadablesListRequest) MarshalJSON() ([]byte, error) {
 }
 
 func (c *CustomerPortalDownloadablesListRequest) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &c, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &c, "", false, nil); err != nil {
 		return err
 	}
 	return nil

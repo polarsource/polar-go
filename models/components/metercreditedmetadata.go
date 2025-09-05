@@ -2,10 +2,25 @@
 
 package components
 
+import (
+	"github.com/polarsource/polar-go/internal/utils"
+)
+
 type MeterCreditedMetadata struct {
 	MeterID  string `json:"meter_id"`
 	Units    int64  `json:"units"`
 	Rollover bool   `json:"rollover"`
+}
+
+func (m MeterCreditedMetadata) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(m, "", false)
+}
+
+func (m *MeterCreditedMetadata) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &m, "", false, []string{"meter_id", "units", "rollover"}); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *MeterCreditedMetadata) GetMeterID() string {

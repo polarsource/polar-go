@@ -18,10 +18,10 @@ const (
 )
 
 type Discount struct {
-	DiscountFixedOnceForeverDuration      *DiscountFixedOnceForeverDuration      `queryParam:"inline"`
-	DiscountFixedRepeatDuration           *DiscountFixedRepeatDuration           `queryParam:"inline"`
-	DiscountPercentageOnceForeverDuration *DiscountPercentageOnceForeverDuration `queryParam:"inline"`
-	DiscountPercentageRepeatDuration      *DiscountPercentageRepeatDuration      `queryParam:"inline"`
+	DiscountFixedOnceForeverDuration      *DiscountFixedOnceForeverDuration      `queryParam:"inline" name:"Discount"`
+	DiscountFixedRepeatDuration           *DiscountFixedRepeatDuration           `queryParam:"inline" name:"Discount"`
+	DiscountPercentageOnceForeverDuration *DiscountPercentageOnceForeverDuration `queryParam:"inline" name:"Discount"`
+	DiscountPercentageRepeatDuration      *DiscountPercentageRepeatDuration      `queryParam:"inline" name:"Discount"`
 
 	Type DiscountUnionType
 }
@@ -64,31 +64,31 @@ func CreateDiscountDiscountPercentageRepeatDuration(discountPercentageRepeatDura
 
 func (u *Discount) UnmarshalJSON(data []byte) error {
 
-	var discountPercentageOnceForeverDuration DiscountPercentageOnceForeverDuration = DiscountPercentageOnceForeverDuration{}
-	if err := utils.UnmarshalJSON(data, &discountPercentageOnceForeverDuration, "", true, false); err == nil {
-		u.DiscountPercentageOnceForeverDuration = &discountPercentageOnceForeverDuration
-		u.Type = DiscountUnionTypeDiscountPercentageOnceForeverDuration
+	var discountFixedRepeatDuration DiscountFixedRepeatDuration = DiscountFixedRepeatDuration{}
+	if err := utils.UnmarshalJSON(data, &discountFixedRepeatDuration, "", true, nil); err == nil {
+		u.DiscountFixedRepeatDuration = &discountFixedRepeatDuration
+		u.Type = DiscountUnionTypeDiscountFixedRepeatDuration
 		return nil
 	}
 
 	var discountFixedOnceForeverDuration DiscountFixedOnceForeverDuration = DiscountFixedOnceForeverDuration{}
-	if err := utils.UnmarshalJSON(data, &discountFixedOnceForeverDuration, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &discountFixedOnceForeverDuration, "", true, nil); err == nil {
 		u.DiscountFixedOnceForeverDuration = &discountFixedOnceForeverDuration
 		u.Type = DiscountUnionTypeDiscountFixedOnceForeverDuration
 		return nil
 	}
 
 	var discountPercentageRepeatDuration DiscountPercentageRepeatDuration = DiscountPercentageRepeatDuration{}
-	if err := utils.UnmarshalJSON(data, &discountPercentageRepeatDuration, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &discountPercentageRepeatDuration, "", true, nil); err == nil {
 		u.DiscountPercentageRepeatDuration = &discountPercentageRepeatDuration
 		u.Type = DiscountUnionTypeDiscountPercentageRepeatDuration
 		return nil
 	}
 
-	var discountFixedRepeatDuration DiscountFixedRepeatDuration = DiscountFixedRepeatDuration{}
-	if err := utils.UnmarshalJSON(data, &discountFixedRepeatDuration, "", true, false); err == nil {
-		u.DiscountFixedRepeatDuration = &discountFixedRepeatDuration
-		u.Type = DiscountUnionTypeDiscountFixedRepeatDuration
+	var discountPercentageOnceForeverDuration DiscountPercentageOnceForeverDuration = DiscountPercentageOnceForeverDuration{}
+	if err := utils.UnmarshalJSON(data, &discountPercentageOnceForeverDuration, "", true, nil); err == nil {
+		u.DiscountPercentageOnceForeverDuration = &discountPercentageOnceForeverDuration
+		u.Type = DiscountUnionTypeDiscountPercentageOnceForeverDuration
 		return nil
 	}
 

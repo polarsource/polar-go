@@ -19,10 +19,10 @@ const (
 )
 
 type CheckoutCreateMetadata struct {
-	Str     *string  `queryParam:"inline"`
-	Integer *int64   `queryParam:"inline"`
-	Number  *float64 `queryParam:"inline"`
-	Boolean *bool    `queryParam:"inline"`
+	Str     *string  `queryParam:"inline" name:"metadata"`
+	Integer *int64   `queryParam:"inline" name:"metadata"`
+	Number  *float64 `queryParam:"inline" name:"metadata"`
+	Boolean *bool    `queryParam:"inline" name:"metadata"`
 
 	Type CheckoutCreateMetadataType
 }
@@ -66,28 +66,28 @@ func CreateCheckoutCreateMetadataBoolean(boolean bool) CheckoutCreateMetadata {
 func (u *CheckoutCreateMetadata) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, nil); err == nil {
 		u.Str = &str
 		u.Type = CheckoutCreateMetadataTypeStr
 		return nil
 	}
 
 	var integer int64 = int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
 		u.Integer = &integer
 		u.Type = CheckoutCreateMetadataTypeInteger
 		return nil
 	}
 
 	var number float64 = float64(0)
-	if err := utils.UnmarshalJSON(data, &number, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
 		u.Number = &number
 		u.Type = CheckoutCreateMetadataTypeNumber
 		return nil
 	}
 
 	var boolean bool = false
-	if err := utils.UnmarshalJSON(data, &boolean, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &boolean, "", true, nil); err == nil {
 		u.Boolean = &boolean
 		u.Type = CheckoutCreateMetadataTypeBoolean
 		return nil
@@ -126,10 +126,10 @@ const (
 )
 
 type CheckoutCreateCustomFieldData struct {
-	Str      *string    `queryParam:"inline"`
-	Integer  *int64     `queryParam:"inline"`
-	Boolean  *bool      `queryParam:"inline"`
-	DateTime *time.Time `queryParam:"inline"`
+	Str      *string    `queryParam:"inline" name:"custom_field_data"`
+	Integer  *int64     `queryParam:"inline" name:"custom_field_data"`
+	Boolean  *bool      `queryParam:"inline" name:"custom_field_data"`
+	DateTime *time.Time `queryParam:"inline" name:"custom_field_data"`
 
 	Type CheckoutCreateCustomFieldDataType
 }
@@ -173,28 +173,28 @@ func CreateCheckoutCreateCustomFieldDataDateTime(dateTime time.Time) CheckoutCre
 func (u *CheckoutCreateCustomFieldData) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, nil); err == nil {
 		u.Str = &str
 		u.Type = CheckoutCreateCustomFieldDataTypeStr
 		return nil
 	}
 
 	var integer int64 = int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
 		u.Integer = &integer
 		u.Type = CheckoutCreateCustomFieldDataTypeInteger
 		return nil
 	}
 
 	var boolean bool = false
-	if err := utils.UnmarshalJSON(data, &boolean, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &boolean, "", true, nil); err == nil {
 		u.Boolean = &boolean
 		u.Type = CheckoutCreateCustomFieldDataTypeBoolean
 		return nil
 	}
 
 	var dateTime time.Time = time.Time{}
-	if err := utils.UnmarshalJSON(data, &dateTime, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &dateTime, "", true, nil); err == nil {
 		u.DateTime = &dateTime
 		u.Type = CheckoutCreateCustomFieldDataTypeDateTime
 		return nil
@@ -233,10 +233,10 @@ const (
 )
 
 type CheckoutCreateCustomerMetadata struct {
-	Str     *string  `queryParam:"inline"`
-	Integer *int64   `queryParam:"inline"`
-	Number  *float64 `queryParam:"inline"`
-	Boolean *bool    `queryParam:"inline"`
+	Str     *string  `queryParam:"inline" name:"customer_metadata"`
+	Integer *int64   `queryParam:"inline" name:"customer_metadata"`
+	Number  *float64 `queryParam:"inline" name:"customer_metadata"`
+	Boolean *bool    `queryParam:"inline" name:"customer_metadata"`
 
 	Type CheckoutCreateCustomerMetadataType
 }
@@ -280,28 +280,28 @@ func CreateCheckoutCreateCustomerMetadataBoolean(boolean bool) CheckoutCreateCus
 func (u *CheckoutCreateCustomerMetadata) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, nil); err == nil {
 		u.Str = &str
 		u.Type = CheckoutCreateCustomerMetadataTypeStr
 		return nil
 	}
 
 	var integer int64 = int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
 		u.Integer = &integer
 		u.Type = CheckoutCreateCustomerMetadataTypeInteger
 		return nil
 	}
 
 	var number float64 = float64(0)
-	if err := utils.UnmarshalJSON(data, &number, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
 		u.Number = &number
 		u.Type = CheckoutCreateCustomerMetadataTypeNumber
 		return nil
 	}
 
 	var boolean bool = false
-	if err := utils.UnmarshalJSON(data, &boolean, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &boolean, "", true, nil); err == nil {
 		u.Boolean = &boolean
 		u.Type = CheckoutCreateCustomerMetadataTypeBoolean
 		return nil
@@ -396,7 +396,7 @@ func (c CheckoutCreate) MarshalJSON() ([]byte, error) {
 }
 
 func (c *CheckoutCreate) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &c, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &c, "", false, []string{"products"}); err != nil {
 		return err
 	}
 	return nil

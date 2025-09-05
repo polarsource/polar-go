@@ -19,10 +19,10 @@ const (
 )
 
 type MeterCreateMetadata struct {
-	Str     *string  `queryParam:"inline"`
-	Integer *int64   `queryParam:"inline"`
-	Number  *float64 `queryParam:"inline"`
-	Boolean *bool    `queryParam:"inline"`
+	Str     *string  `queryParam:"inline" name:"metadata"`
+	Integer *int64   `queryParam:"inline" name:"metadata"`
+	Number  *float64 `queryParam:"inline" name:"metadata"`
+	Boolean *bool    `queryParam:"inline" name:"metadata"`
 
 	Type MeterCreateMetadataType
 }
@@ -66,28 +66,28 @@ func CreateMeterCreateMetadataBoolean(boolean bool) MeterCreateMetadata {
 func (u *MeterCreateMetadata) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, nil); err == nil {
 		u.Str = &str
 		u.Type = MeterCreateMetadataTypeStr
 		return nil
 	}
 
 	var integer int64 = int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
 		u.Integer = &integer
 		u.Type = MeterCreateMetadataTypeInteger
 		return nil
 	}
 
 	var number float64 = float64(0)
-	if err := utils.UnmarshalJSON(data, &number, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
 		u.Number = &number
 		u.Type = MeterCreateMetadataTypeNumber
 		return nil
 	}
 
 	var boolean bool = false
-	if err := utils.UnmarshalJSON(data, &boolean, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &boolean, "", true, nil); err == nil {
 		u.Boolean = &boolean
 		u.Type = MeterCreateMetadataTypeBoolean
 		return nil
@@ -129,9 +129,9 @@ const (
 
 // MeterCreateAggregation - The aggregation to apply on the filtered events to calculate the meter.
 type MeterCreateAggregation struct {
-	CountAggregation    *CountAggregation    `queryParam:"inline"`
-	PropertyAggregation *PropertyAggregation `queryParam:"inline"`
-	UniqueAggregation   *UniqueAggregation   `queryParam:"inline"`
+	CountAggregation    *CountAggregation    `queryParam:"inline" name:"Aggregation"`
+	PropertyAggregation *PropertyAggregation `queryParam:"inline" name:"Aggregation"`
+	UniqueAggregation   *UniqueAggregation   `queryParam:"inline" name:"Aggregation"`
 
 	Type MeterCreateAggregationType
 }
@@ -216,7 +216,7 @@ func (u *MeterCreateAggregation) UnmarshalJSON(data []byte) error {
 	switch dis.Func {
 	case "avg":
 		propertyAggregation := new(PropertyAggregation)
-		if err := utils.UnmarshalJSON(data, &propertyAggregation, "", true, false); err != nil {
+		if err := utils.UnmarshalJSON(data, &propertyAggregation, "", true, nil); err != nil {
 			return fmt.Errorf("could not unmarshal `%s` into expected (Func == avg) type PropertyAggregation within MeterCreateAggregation: %w", string(data), err)
 		}
 
@@ -225,7 +225,7 @@ func (u *MeterCreateAggregation) UnmarshalJSON(data []byte) error {
 		return nil
 	case "count":
 		countAggregation := new(CountAggregation)
-		if err := utils.UnmarshalJSON(data, &countAggregation, "", true, false); err != nil {
+		if err := utils.UnmarshalJSON(data, &countAggregation, "", true, nil); err != nil {
 			return fmt.Errorf("could not unmarshal `%s` into expected (Func == count) type CountAggregation within MeterCreateAggregation: %w", string(data), err)
 		}
 
@@ -234,7 +234,7 @@ func (u *MeterCreateAggregation) UnmarshalJSON(data []byte) error {
 		return nil
 	case "max":
 		propertyAggregation := new(PropertyAggregation)
-		if err := utils.UnmarshalJSON(data, &propertyAggregation, "", true, false); err != nil {
+		if err := utils.UnmarshalJSON(data, &propertyAggregation, "", true, nil); err != nil {
 			return fmt.Errorf("could not unmarshal `%s` into expected (Func == max) type PropertyAggregation within MeterCreateAggregation: %w", string(data), err)
 		}
 
@@ -243,7 +243,7 @@ func (u *MeterCreateAggregation) UnmarshalJSON(data []byte) error {
 		return nil
 	case "min":
 		propertyAggregation := new(PropertyAggregation)
-		if err := utils.UnmarshalJSON(data, &propertyAggregation, "", true, false); err != nil {
+		if err := utils.UnmarshalJSON(data, &propertyAggregation, "", true, nil); err != nil {
 			return fmt.Errorf("could not unmarshal `%s` into expected (Func == min) type PropertyAggregation within MeterCreateAggregation: %w", string(data), err)
 		}
 
@@ -252,7 +252,7 @@ func (u *MeterCreateAggregation) UnmarshalJSON(data []byte) error {
 		return nil
 	case "sum":
 		propertyAggregation := new(PropertyAggregation)
-		if err := utils.UnmarshalJSON(data, &propertyAggregation, "", true, false); err != nil {
+		if err := utils.UnmarshalJSON(data, &propertyAggregation, "", true, nil); err != nil {
 			return fmt.Errorf("could not unmarshal `%s` into expected (Func == sum) type PropertyAggregation within MeterCreateAggregation: %w", string(data), err)
 		}
 
@@ -261,7 +261,7 @@ func (u *MeterCreateAggregation) UnmarshalJSON(data []byte) error {
 		return nil
 	case "unique":
 		uniqueAggregation := new(UniqueAggregation)
-		if err := utils.UnmarshalJSON(data, &uniqueAggregation, "", true, false); err != nil {
+		if err := utils.UnmarshalJSON(data, &uniqueAggregation, "", true, nil); err != nil {
 			return fmt.Errorf("could not unmarshal `%s` into expected (Func == unique) type UniqueAggregation within MeterCreateAggregation: %w", string(data), err)
 		}
 

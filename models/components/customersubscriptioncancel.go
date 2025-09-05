@@ -2,6 +2,10 @@
 
 package components
 
+import (
+	"github.com/polarsource/polar-go/internal/utils"
+)
+
 type CustomerSubscriptionCancel struct {
 	// Cancel an active subscription once the current period ends.
 	//
@@ -20,6 +24,17 @@ type CustomerSubscriptionCancel struct {
 	CancellationReason *CustomerCancellationReason `json:"cancellation_reason,omitempty"`
 	// Customer feedback and why they decided to cancel.
 	CancellationComment *string `json:"cancellation_comment,omitempty"`
+}
+
+func (c CustomerSubscriptionCancel) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(c, "", false)
+}
+
+func (c *CustomerSubscriptionCancel) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &c, "", false, nil); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *CustomerSubscriptionCancel) GetCancelAtPeriodEnd() *bool {

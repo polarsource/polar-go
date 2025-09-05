@@ -17,9 +17,9 @@ const (
 )
 
 type Value struct {
-	Str     *string `queryParam:"inline"`
-	Integer *int64  `queryParam:"inline"`
-	Boolean *bool   `queryParam:"inline"`
+	Str     *string `queryParam:"inline" name:"Value"`
+	Integer *int64  `queryParam:"inline" name:"Value"`
+	Boolean *bool   `queryParam:"inline" name:"Value"`
 
 	Type ValueType
 }
@@ -54,21 +54,21 @@ func CreateValueBoolean(boolean bool) Value {
 func (u *Value) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, nil); err == nil {
 		u.Str = &str
 		u.Type = ValueTypeStr
 		return nil
 	}
 
 	var integer int64 = int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
 		u.Integer = &integer
 		u.Type = ValueTypeInteger
 		return nil
 	}
 
 	var boolean bool = false
-	if err := utils.UnmarshalJSON(data, &boolean, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &boolean, "", true, nil); err == nil {
 		u.Boolean = &boolean
 		u.Type = ValueTypeBoolean
 		return nil
@@ -97,6 +97,17 @@ type FilterClause struct {
 	Property string         `json:"property"`
 	Operator FilterOperator `json:"operator"`
 	Value    Value          `json:"value"`
+}
+
+func (f FilterClause) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(f, "", false)
+}
+
+func (f *FilterClause) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &f, "", false, []string{"property", "operator", "value"}); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *FilterClause) GetProperty() string {

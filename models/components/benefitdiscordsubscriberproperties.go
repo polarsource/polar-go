@@ -2,10 +2,25 @@
 
 package components
 
+import (
+	"github.com/polarsource/polar-go/internal/utils"
+)
+
 // BenefitDiscordSubscriberProperties - Properties available to subscribers for a benefit of type `discord`.
 type BenefitDiscordSubscriberProperties struct {
 	// The ID of the Discord server.
 	GuildID string `json:"guild_id"`
+}
+
+func (b BenefitDiscordSubscriberProperties) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(b, "", false)
+}
+
+func (b *BenefitDiscordSubscriberProperties) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &b, "", false, []string{"guild_id"}); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *BenefitDiscordSubscriberProperties) GetGuildID() string {

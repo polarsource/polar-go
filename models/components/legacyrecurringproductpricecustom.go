@@ -41,7 +41,7 @@ func (l LegacyRecurringProductPriceCustom) MarshalJSON() ([]byte, error) {
 }
 
 func (l *LegacyRecurringProductPriceCustom) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &l, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &l, "", false, []string{"created_at", "modified_at", "id", "amount_type", "is_archived", "product_id", "type", "recurring_interval", "price_currency", "minimum_amount", "maximum_amount", "preset_amount", "legacy"}); err != nil {
 		return err
 	}
 	return nil

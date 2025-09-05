@@ -19,10 +19,10 @@ const (
 )
 
 type CheckoutLinkProductMetadata struct {
-	Str     *string  `queryParam:"inline"`
-	Integer *int64   `queryParam:"inline"`
-	Number  *float64 `queryParam:"inline"`
-	Boolean *bool    `queryParam:"inline"`
+	Str     *string  `queryParam:"inline" name:"metadata"`
+	Integer *int64   `queryParam:"inline" name:"metadata"`
+	Number  *float64 `queryParam:"inline" name:"metadata"`
+	Boolean *bool    `queryParam:"inline" name:"metadata"`
 
 	Type CheckoutLinkProductMetadataType
 }
@@ -66,28 +66,28 @@ func CreateCheckoutLinkProductMetadataBoolean(boolean bool) CheckoutLinkProductM
 func (u *CheckoutLinkProductMetadata) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, nil); err == nil {
 		u.Str = &str
 		u.Type = CheckoutLinkProductMetadataTypeStr
 		return nil
 	}
 
 	var integer int64 = int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
 		u.Integer = &integer
 		u.Type = CheckoutLinkProductMetadataTypeInteger
 		return nil
 	}
 
 	var number float64 = float64(0)
-	if err := utils.UnmarshalJSON(data, &number, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
 		u.Number = &number
 		u.Type = CheckoutLinkProductMetadataTypeNumber
 		return nil
 	}
 
 	var boolean bool = false
-	if err := utils.UnmarshalJSON(data, &boolean, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &boolean, "", true, nil); err == nil {
 		u.Boolean = &boolean
 		u.Type = CheckoutLinkProductMetadataTypeBoolean
 		return nil
@@ -124,8 +124,8 @@ const (
 )
 
 type CheckoutLinkProductPrices struct {
-	LegacyRecurringProductPrice *LegacyRecurringProductPrice `queryParam:"inline"`
-	ProductPrice                *ProductPrice                `queryParam:"inline"`
+	LegacyRecurringProductPrice *LegacyRecurringProductPrice `queryParam:"inline" name:"prices"`
+	ProductPrice                *ProductPrice                `queryParam:"inline" name:"prices"`
 
 	Type CheckoutLinkProductPricesType
 }
@@ -151,14 +151,14 @@ func CreateCheckoutLinkProductPricesProductPrice(productPrice ProductPrice) Chec
 func (u *CheckoutLinkProductPrices) UnmarshalJSON(data []byte) error {
 
 	var legacyRecurringProductPrice LegacyRecurringProductPrice = LegacyRecurringProductPrice{}
-	if err := utils.UnmarshalJSON(data, &legacyRecurringProductPrice, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &legacyRecurringProductPrice, "", true, nil); err == nil {
 		u.LegacyRecurringProductPrice = &legacyRecurringProductPrice
 		u.Type = CheckoutLinkProductPricesTypeLegacyRecurringProductPrice
 		return nil
 	}
 
 	var productPrice ProductPrice = ProductPrice{}
-	if err := utils.UnmarshalJSON(data, &productPrice, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &productPrice, "", true, nil); err == nil {
 		u.ProductPrice = &productPrice
 		u.Type = CheckoutLinkProductPricesTypeProductPrice
 		return nil
@@ -192,7 +192,7 @@ type CheckoutLinkProduct struct {
 	Name string `json:"name"`
 	// The description of the product.
 	Description *string `json:"description"`
-	// The recurring interval of the product. If `None`, the product is a one-time purchase.
+	// The recurring interval of the product. If `None`, the product is a one-time purchase.Note that the `day` and `week` values are for internal Polar staff use only.
 	RecurringInterval *SubscriptionRecurringInterval `json:"recurring_interval"`
 	// Whether the product is a subscription.
 	IsRecurring bool `json:"is_recurring"`
@@ -213,7 +213,7 @@ func (c CheckoutLinkProduct) MarshalJSON() ([]byte, error) {
 }
 
 func (c *CheckoutLinkProduct) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &c, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &c, "", false, []string{"metadata", "created_at", "modified_at", "id", "name", "description", "recurring_interval", "is_recurring", "is_archived", "organization_id", "prices", "benefits", "medias"}); err != nil {
 		return err
 	}
 	return nil

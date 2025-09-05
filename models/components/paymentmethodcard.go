@@ -25,7 +25,7 @@ func (p PaymentMethodCard) MarshalJSON() ([]byte, error) {
 }
 
 func (p *PaymentMethodCard) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &p, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &p, "", false, []string{"id", "created_at", "modified_at", "processor", "customer_id", "type", "method_metadata"}); err != nil {
 		return err
 	}
 	return nil

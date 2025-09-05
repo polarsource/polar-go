@@ -18,8 +18,8 @@ const (
 
 // EndpointID - Filter by webhook endpoint ID.
 type EndpointID struct {
-	Str        *string  `queryParam:"inline"`
-	ArrayOfStr []string `queryParam:"inline"`
+	Str        *string  `queryParam:"inline" name:"Endpoint_Id"`
+	ArrayOfStr []string `queryParam:"inline" name:"Endpoint_Id"`
 
 	Type EndpointIDType
 }
@@ -45,14 +45,14 @@ func CreateEndpointIDArrayOfStr(arrayOfStr []string) EndpointID {
 func (u *EndpointID) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, nil); err == nil {
 		u.Str = &str
 		u.Type = EndpointIDTypeStr
 		return nil
 	}
 
 	var arrayOfStr []string = []string{}
-	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, nil); err == nil {
 		u.ArrayOfStr = arrayOfStr
 		u.Type = EndpointIDTypeArrayOfStr
 		return nil
@@ -87,7 +87,7 @@ func (w WebhooksListWebhookDeliveriesRequest) MarshalJSON() ([]byte, error) {
 }
 
 func (w *WebhooksListWebhookDeliveriesRequest) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &w, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &w, "", false, nil); err != nil {
 		return err
 	}
 	return nil

@@ -17,8 +17,8 @@ const (
 )
 
 type CustomerSubscriptionPrices struct {
-	LegacyRecurringProductPrice *LegacyRecurringProductPrice `queryParam:"inline"`
-	ProductPrice                *ProductPrice                `queryParam:"inline"`
+	LegacyRecurringProductPrice *LegacyRecurringProductPrice `queryParam:"inline" name:"prices"`
+	ProductPrice                *ProductPrice                `queryParam:"inline" name:"prices"`
 
 	Type CustomerSubscriptionPricesType
 }
@@ -44,14 +44,14 @@ func CreateCustomerSubscriptionPricesProductPrice(productPrice ProductPrice) Cus
 func (u *CustomerSubscriptionPrices) UnmarshalJSON(data []byte) error {
 
 	var legacyRecurringProductPrice LegacyRecurringProductPrice = LegacyRecurringProductPrice{}
-	if err := utils.UnmarshalJSON(data, &legacyRecurringProductPrice, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &legacyRecurringProductPrice, "", true, nil); err == nil {
 		u.LegacyRecurringProductPrice = &legacyRecurringProductPrice
 		u.Type = CustomerSubscriptionPricesTypeLegacyRecurringProductPrice
 		return nil
 	}
 
 	var productPrice ProductPrice = ProductPrice{}
-	if err := utils.UnmarshalJSON(data, &productPrice, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &productPrice, "", true, nil); err == nil {
 		u.ProductPrice = &productPrice
 		u.Type = CustomerSubscriptionPricesTypeProductPrice
 		return nil
@@ -120,7 +120,7 @@ func (c CustomerSubscription) MarshalJSON() ([]byte, error) {
 }
 
 func (c *CustomerSubscription) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &c, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &c, "", false, []string{"created_at", "modified_at", "id", "amount", "currency", "recurring_interval", "status", "current_period_start", "current_period_end", "cancel_at_period_end", "canceled_at", "started_at", "ends_at", "ended_at", "customer_id", "product_id", "discount_id", "checkout_id", "customer_cancellation_reason", "customer_cancellation_comment", "product", "prices", "meters"}); err != nil {
 		return err
 	}
 	return nil

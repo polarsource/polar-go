@@ -28,7 +28,7 @@ func (c CustomerSession) MarshalJSON() ([]byte, error) {
 }
 
 func (c *CustomerSession) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &c, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &c, "", false, []string{"created_at", "modified_at", "id", "token", "expires_at", "customer_portal_url", "customer_id", "customer"}); err != nil {
 		return err
 	}
 	return nil

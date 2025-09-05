@@ -2,10 +2,25 @@
 
 package components
 
+import (
+	"github.com/polarsource/polar-go/internal/utils"
+)
+
 type AuthorizeOrganization struct {
 	ID        string  `json:"id"`
 	Slug      string  `json:"slug"`
 	AvatarURL *string `json:"avatar_url"`
+}
+
+func (a AuthorizeOrganization) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(a, "", false)
+}
+
+func (a *AuthorizeOrganization) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &a, "", false, []string{"id", "slug", "avatar_url"}); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *AuthorizeOrganization) GetID() string {

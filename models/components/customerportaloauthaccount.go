@@ -2,9 +2,24 @@
 
 package components
 
+import (
+	"github.com/polarsource/polar-go/internal/utils"
+)
+
 type CustomerPortalOAuthAccount struct {
 	AccountID       string  `json:"account_id"`
 	AccountUsername *string `json:"account_username"`
+}
+
+func (c CustomerPortalOAuthAccount) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(c, "", false)
+}
+
+func (c *CustomerPortalOAuthAccount) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &c, "", false, []string{"account_id", "account_username"}); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *CustomerPortalOAuthAccount) GetAccountID() string {

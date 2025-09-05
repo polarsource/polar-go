@@ -16,8 +16,8 @@ const (
 )
 
 type Clauses struct {
-	FilterClause *FilterClause `queryParam:"inline"`
-	Filter       *Filter       `queryParam:"inline"`
+	FilterClause *FilterClause `queryParam:"inline" name:"clauses"`
+	Filter       *Filter       `queryParam:"inline" name:"clauses"`
 
 	Type ClausesType
 }
@@ -42,17 +42,17 @@ func CreateClausesFilter(filter Filter) Clauses {
 
 func (u *Clauses) UnmarshalJSON(data []byte) error {
 
-	var filter Filter = Filter{}
-	if err := utils.UnmarshalJSON(data, &filter, "", true, false); err == nil {
-		u.Filter = &filter
-		u.Type = ClausesTypeFilter
+	var filterClause FilterClause = FilterClause{}
+	if err := utils.UnmarshalJSON(data, &filterClause, "", true, nil); err == nil {
+		u.FilterClause = &filterClause
+		u.Type = ClausesTypeFilterClause
 		return nil
 	}
 
-	var filterClause FilterClause = FilterClause{}
-	if err := utils.UnmarshalJSON(data, &filterClause, "", true, false); err == nil {
-		u.FilterClause = &filterClause
-		u.Type = ClausesTypeFilterClause
+	var filter Filter = Filter{}
+	if err := utils.UnmarshalJSON(data, &filter, "", true, nil); err == nil {
+		u.Filter = &filter
+		u.Type = ClausesTypeFilter
 		return nil
 	}
 

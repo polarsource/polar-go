@@ -2,11 +2,26 @@
 
 package components
 
+import (
+	"github.com/polarsource/polar-go/internal/utils"
+)
+
 type SubscriptionUpdateProduct struct {
 	// Update subscription to another product.
 	ProductID string `json:"product_id"`
 	// Determine how to handle the proration billing. If not provided, will use the default organization setting.
 	ProrationBehavior *SubscriptionProrationBehavior `json:"proration_behavior,omitempty"`
+}
+
+func (s SubscriptionUpdateProduct) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SubscriptionUpdateProduct) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, []string{"product_id"}); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *SubscriptionUpdateProduct) GetProductID() string {

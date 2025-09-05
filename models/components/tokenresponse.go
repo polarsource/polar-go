@@ -20,7 +20,7 @@ func (t TokenResponse) MarshalJSON() ([]byte, error) {
 }
 
 func (t *TokenResponse) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &t, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &t, "", false, []string{"access_token", "token_type", "expires_in", "refresh_token", "scope", "id_token"}); err != nil {
 		return err
 	}
 	return nil

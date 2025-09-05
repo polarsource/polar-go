@@ -40,7 +40,7 @@ func (p ProductPriceMeteredUnit) MarshalJSON() ([]byte, error) {
 }
 
 func (p *ProductPriceMeteredUnit) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &p, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &p, "", false, []string{"created_at", "modified_at", "id", "amount_type", "is_archived", "product_id", "type", "recurring_interval", "price_currency", "unit_amount", "cap_amount", "meter_id", "meter"}); err != nil {
 		return err
 	}
 	return nil

@@ -20,12 +20,12 @@ const (
 )
 
 type Benefit struct {
-	BenefitCustom           *BenefitCustom           `queryParam:"inline"`
-	BenefitDiscord          *BenefitDiscord          `queryParam:"inline"`
-	BenefitGitHubRepository *BenefitGitHubRepository `queryParam:"inline"`
-	BenefitDownloadables    *BenefitDownloadables    `queryParam:"inline"`
-	BenefitLicenseKeys      *BenefitLicenseKeys      `queryParam:"inline"`
-	BenefitMeterCredit      *BenefitMeterCredit      `queryParam:"inline"`
+	BenefitCustom           *BenefitCustom           `queryParam:"inline" name:"Benefit"`
+	BenefitDiscord          *BenefitDiscord          `queryParam:"inline" name:"Benefit"`
+	BenefitGitHubRepository *BenefitGitHubRepository `queryParam:"inline" name:"Benefit"`
+	BenefitDownloadables    *BenefitDownloadables    `queryParam:"inline" name:"Benefit"`
+	BenefitLicenseKeys      *BenefitLicenseKeys      `queryParam:"inline" name:"Benefit"`
+	BenefitMeterCredit      *BenefitMeterCredit      `queryParam:"inline" name:"Benefit"`
 
 	Type BenefitUnionType
 }
@@ -87,42 +87,42 @@ func CreateBenefitBenefitMeterCredit(benefitMeterCredit BenefitMeterCredit) Bene
 func (u *Benefit) UnmarshalJSON(data []byte) error {
 
 	var benefitCustom BenefitCustom = BenefitCustom{}
-	if err := utils.UnmarshalJSON(data, &benefitCustom, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &benefitCustom, "", true, nil); err == nil {
 		u.BenefitCustom = &benefitCustom
 		u.Type = BenefitUnionTypeBenefitCustom
 		return nil
 	}
 
 	var benefitDiscord BenefitDiscord = BenefitDiscord{}
-	if err := utils.UnmarshalJSON(data, &benefitDiscord, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &benefitDiscord, "", true, nil); err == nil {
 		u.BenefitDiscord = &benefitDiscord
 		u.Type = BenefitUnionTypeBenefitDiscord
 		return nil
 	}
 
 	var benefitGitHubRepository BenefitGitHubRepository = BenefitGitHubRepository{}
-	if err := utils.UnmarshalJSON(data, &benefitGitHubRepository, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &benefitGitHubRepository, "", true, nil); err == nil {
 		u.BenefitGitHubRepository = &benefitGitHubRepository
 		u.Type = BenefitUnionTypeBenefitGitHubRepository
 		return nil
 	}
 
 	var benefitDownloadables BenefitDownloadables = BenefitDownloadables{}
-	if err := utils.UnmarshalJSON(data, &benefitDownloadables, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &benefitDownloadables, "", true, nil); err == nil {
 		u.BenefitDownloadables = &benefitDownloadables
 		u.Type = BenefitUnionTypeBenefitDownloadables
 		return nil
 	}
 
 	var benefitLicenseKeys BenefitLicenseKeys = BenefitLicenseKeys{}
-	if err := utils.UnmarshalJSON(data, &benefitLicenseKeys, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &benefitLicenseKeys, "", true, nil); err == nil {
 		u.BenefitLicenseKeys = &benefitLicenseKeys
 		u.Type = BenefitUnionTypeBenefitLicenseKeys
 		return nil
 	}
 
 	var benefitMeterCredit BenefitMeterCredit = BenefitMeterCredit{}
-	if err := utils.UnmarshalJSON(data, &benefitMeterCredit, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &benefitMeterCredit, "", true, nil); err == nil {
 		u.BenefitMeterCredit = &benefitMeterCredit
 		u.Type = BenefitUnionTypeBenefitMeterCredit
 		return nil

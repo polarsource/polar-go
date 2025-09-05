@@ -2,6 +2,10 @@
 
 package components
 
+import (
+	"github.com/polarsource/polar-go/internal/utils"
+)
+
 // CheckoutDiscountPercentageRepeatDuration - Schema for a percentage discount that is applied on every invoice
 // for a certain number of months.
 type CheckoutDiscountPercentageRepeatDuration struct {
@@ -13,6 +17,17 @@ type CheckoutDiscountPercentageRepeatDuration struct {
 	ID   string  `json:"id"`
 	Name string  `json:"name"`
 	Code *string `json:"code"`
+}
+
+func (c CheckoutDiscountPercentageRepeatDuration) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(c, "", false)
+}
+
+func (c *CheckoutDiscountPercentageRepeatDuration) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &c, "", false, []string{"duration", "duration_in_months", "type", "basis_points", "id", "name", "code"}); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *CheckoutDiscountPercentageRepeatDuration) GetDuration() DiscountDuration {

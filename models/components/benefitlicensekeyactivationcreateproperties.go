@@ -2,9 +2,24 @@
 
 package components
 
+import (
+	"github.com/polarsource/polar-go/internal/utils"
+)
+
 type BenefitLicenseKeyActivationCreateProperties struct {
 	Limit               int64 `json:"limit"`
 	EnableCustomerAdmin bool  `json:"enable_customer_admin"`
+}
+
+func (b BenefitLicenseKeyActivationCreateProperties) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(b, "", false)
+}
+
+func (b *BenefitLicenseKeyActivationCreateProperties) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &b, "", false, []string{"limit", "enable_customer_admin"}); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *BenefitLicenseKeyActivationCreateProperties) GetLimit() int64 {

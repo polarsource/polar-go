@@ -29,8 +29,8 @@ const (
 
 // CustomerPortalOrdersListQueryParamOrganizationIDFilter - Filter by organization ID.
 type CustomerPortalOrdersListQueryParamOrganizationIDFilter struct {
-	Str        *string  `queryParam:"inline"`
-	ArrayOfStr []string `queryParam:"inline"`
+	Str        *string  `queryParam:"inline" name:"OrganizationID_Filter"`
+	ArrayOfStr []string `queryParam:"inline" name:"OrganizationID_Filter"`
 
 	Type CustomerPortalOrdersListQueryParamOrganizationIDFilterType
 }
@@ -56,14 +56,14 @@ func CreateCustomerPortalOrdersListQueryParamOrganizationIDFilterArrayOfStr(arra
 func (u *CustomerPortalOrdersListQueryParamOrganizationIDFilter) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, nil); err == nil {
 		u.Str = &str
 		u.Type = CustomerPortalOrdersListQueryParamOrganizationIDFilterTypeStr
 		return nil
 	}
 
 	var arrayOfStr []string = []string{}
-	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, nil); err == nil {
 		u.ArrayOfStr = arrayOfStr
 		u.Type = CustomerPortalOrdersListQueryParamOrganizationIDFilterTypeArrayOfStr
 		return nil
@@ -93,8 +93,8 @@ const (
 
 // CustomerPortalOrdersListQueryParamProductIDFilter - Filter by product ID.
 type CustomerPortalOrdersListQueryParamProductIDFilter struct {
-	Str        *string  `queryParam:"inline"`
-	ArrayOfStr []string `queryParam:"inline"`
+	Str        *string  `queryParam:"inline" name:"ProductID_Filter"`
+	ArrayOfStr []string `queryParam:"inline" name:"ProductID_Filter"`
 
 	Type CustomerPortalOrdersListQueryParamProductIDFilterType
 }
@@ -120,14 +120,14 @@ func CreateCustomerPortalOrdersListQueryParamProductIDFilterArrayOfStr(arrayOfSt
 func (u *CustomerPortalOrdersListQueryParamProductIDFilter) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, nil); err == nil {
 		u.Str = &str
 		u.Type = CustomerPortalOrdersListQueryParamProductIDFilterTypeStr
 		return nil
 	}
 
 	var arrayOfStr []string = []string{}
-	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, nil); err == nil {
 		u.ArrayOfStr = arrayOfStr
 		u.Type = CustomerPortalOrdersListQueryParamProductIDFilterTypeArrayOfStr
 		return nil
@@ -157,8 +157,8 @@ const (
 
 // CustomerPortalOrdersListQueryParamProductBillingTypeFilter - Filter by product billing type. `recurring` will filter data corresponding to subscriptions creations or renewals. `one_time` will filter data corresponding to one-time purchases.
 type CustomerPortalOrdersListQueryParamProductBillingTypeFilter struct {
-	ProductBillingType        *components.ProductBillingType  `queryParam:"inline"`
-	ArrayOfProductBillingType []components.ProductBillingType `queryParam:"inline"`
+	ProductBillingType        *components.ProductBillingType  `queryParam:"inline" name:"ProductBillingType_Filter"`
+	ArrayOfProductBillingType []components.ProductBillingType `queryParam:"inline" name:"ProductBillingType_Filter"`
 
 	Type CustomerPortalOrdersListQueryParamProductBillingTypeFilterType
 }
@@ -184,14 +184,14 @@ func CreateCustomerPortalOrdersListQueryParamProductBillingTypeFilterArrayOfProd
 func (u *CustomerPortalOrdersListQueryParamProductBillingTypeFilter) UnmarshalJSON(data []byte) error {
 
 	var productBillingType components.ProductBillingType = components.ProductBillingType("")
-	if err := utils.UnmarshalJSON(data, &productBillingType, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &productBillingType, "", true, nil); err == nil {
 		u.ProductBillingType = &productBillingType
 		u.Type = CustomerPortalOrdersListQueryParamProductBillingTypeFilterTypeProductBillingType
 		return nil
 	}
 
 	var arrayOfProductBillingType []components.ProductBillingType = []components.ProductBillingType{}
-	if err := utils.UnmarshalJSON(data, &arrayOfProductBillingType, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &arrayOfProductBillingType, "", true, nil); err == nil {
 		u.ArrayOfProductBillingType = arrayOfProductBillingType
 		u.Type = CustomerPortalOrdersListQueryParamProductBillingTypeFilterTypeArrayOfProductBillingType
 		return nil
@@ -221,8 +221,8 @@ const (
 
 // CustomerPortalOrdersListQueryParamSubscriptionIDFilter - Filter by subscription ID.
 type CustomerPortalOrdersListQueryParamSubscriptionIDFilter struct {
-	Str        *string  `queryParam:"inline"`
-	ArrayOfStr []string `queryParam:"inline"`
+	Str        *string  `queryParam:"inline" name:"SubscriptionID_Filter"`
+	ArrayOfStr []string `queryParam:"inline" name:"SubscriptionID_Filter"`
 
 	Type CustomerPortalOrdersListQueryParamSubscriptionIDFilterType
 }
@@ -248,14 +248,14 @@ func CreateCustomerPortalOrdersListQueryParamSubscriptionIDFilterArrayOfStr(arra
 func (u *CustomerPortalOrdersListQueryParamSubscriptionIDFilter) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, nil); err == nil {
 		u.Str = &str
 		u.Type = CustomerPortalOrdersListQueryParamSubscriptionIDFilterTypeStr
 		return nil
 	}
 
 	var arrayOfStr []string = []string{}
-	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, nil); err == nil {
 		u.ArrayOfStr = arrayOfStr
 		u.Type = CustomerPortalOrdersListQueryParamSubscriptionIDFilterTypeArrayOfStr
 		return nil
@@ -300,7 +300,7 @@ func (c CustomerPortalOrdersListRequest) MarshalJSON() ([]byte, error) {
 }
 
 func (c *CustomerPortalOrdersListRequest) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &c, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &c, "", false, nil); err != nil {
 		return err
 	}
 	return nil

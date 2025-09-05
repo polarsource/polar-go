@@ -19,9 +19,9 @@ const (
 )
 
 type CheckoutForbiddenError struct {
-	AlreadyActiveSubscriptionError *components.AlreadyActiveSubscriptionError `queryParam:"inline"`
-	NotOpenCheckout                *components.NotOpenCheckout                `queryParam:"inline"`
-	PaymentNotReady                *components.PaymentNotReady                `queryParam:"inline"`
+	AlreadyActiveSubscriptionError *components.AlreadyActiveSubscriptionError `queryParam:"inline" name:"CheckoutForbiddenError"`
+	NotOpenCheckout                *components.NotOpenCheckout                `queryParam:"inline" name:"CheckoutForbiddenError"`
+	PaymentNotReady                *components.PaymentNotReady                `queryParam:"inline" name:"CheckoutForbiddenError"`
 
 	Type CheckoutForbiddenErrorType
 }
@@ -58,21 +58,21 @@ func CreateCheckoutForbiddenErrorPaymentNotReady(paymentNotReady components.Paym
 func (u *CheckoutForbiddenError) UnmarshalJSON(data []byte) error {
 
 	var alreadyActiveSubscriptionError components.AlreadyActiveSubscriptionError = components.AlreadyActiveSubscriptionError{}
-	if err := utils.UnmarshalJSON(data, &alreadyActiveSubscriptionError, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &alreadyActiveSubscriptionError, "", true, nil); err == nil {
 		u.AlreadyActiveSubscriptionError = &alreadyActiveSubscriptionError
 		u.Type = CheckoutForbiddenErrorTypeAlreadyActiveSubscriptionError
 		return nil
 	}
 
 	var notOpenCheckout components.NotOpenCheckout = components.NotOpenCheckout{}
-	if err := utils.UnmarshalJSON(data, &notOpenCheckout, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &notOpenCheckout, "", true, nil); err == nil {
 		u.NotOpenCheckout = &notOpenCheckout
 		u.Type = CheckoutForbiddenErrorTypeNotOpenCheckout
 		return nil
 	}
 
 	var paymentNotReady components.PaymentNotReady = components.PaymentNotReady{}
-	if err := utils.UnmarshalJSON(data, &paymentNotReady, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &paymentNotReady, "", true, nil); err == nil {
 		u.PaymentNotReady = &paymentNotReady
 		u.Type = CheckoutForbiddenErrorTypePaymentNotReady
 		return nil

@@ -2,9 +2,24 @@
 
 package components
 
+import (
+	"github.com/polarsource/polar-go/internal/utils"
+)
+
 type UserInfoOrganization struct {
 	Sub  string  `json:"sub"`
 	Name *string `json:"name,omitempty"`
+}
+
+func (u UserInfoOrganization) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(u, "", false)
+}
+
+func (u *UserInfoOrganization) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &u, "", false, []string{"sub"}); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *UserInfoOrganization) GetSub() string {

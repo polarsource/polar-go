@@ -1,19 +1,19 @@
 lockVersion: 2.0.0
 id: e7f2de70-a9ae-48d3-92f6-da15e6733a27
 management:
-  docChecksum: 325f9072ad8465148f22517ea0de69e4
+  docChecksum: 3721564a1db1b7a536d00f0f876a4abc
   docVersion: 0.1.0
-  speakeasyVersion: 1.606.2
-  generationVersion: 2.687.1
-  releaseVersion: 0.8.3
-  configChecksum: e079146bc3fd2e19b2d79658c44ad33a
+  speakeasyVersion: 1.609.0
+  generationVersion: 2.692.0
+  releaseVersion: 0.8.4
+  configChecksum: 686120048ba2c97a0fb3e571bdb32a17
   repoURL: https://github.com/polarsource/polar-go.git
   installationURL: https://github.com/polarsource/polar-go
 features:
   go:
     additionalDependencies: 0.1.0
     constsAndDefaults: 0.1.12
-    core: 3.9.3
+    core: 3.9.6
     defaultEnabledRetries: 0.2.0
     deprecations: 2.81.3
     devContainers: 2.90.0
@@ -34,7 +34,7 @@ features:
     retries: 2.84.2
     sdkHooks: 0.2.0
     serverIDs: 2.81.1
-    unions: 2.85.12
+    unions: 2.85.14
     webhooks: 1.0.0
 generatedFiles:
   - .devcontainer/README.md
@@ -52,9 +52,11 @@ generatedFiles:
   - /models/apierrors/ordersgenerateinvoice.go
   - /models/apierrors/paymentalreadyinprogress.go
   - /models/apierrors/paymenterror.go
+  - /models/apierrors/paymentmethodinusebyactivesubscription.go
   - /models/apierrors/refundamounttoohigh.go
   - /models/apierrors/refundedalready.go
   - /models/apierrors/resourcenotfound.go
+  - /models/apierrors/subscriptionlocked.go
   - /models/apierrors/unauthorized.go
   - /models/components/address.go
   - /models/components/alreadyactivesubscriptionerror.go
@@ -422,10 +424,16 @@ generatedFiles:
   - /models/components/subscription.go
   - /models/components/subscriptioncancel.go
   - /models/components/subscriptioncustomer.go
+  - /models/components/subscriptioncycledevent.go
+  - /models/components/subscriptioncycledmetadata.go
   - /models/components/subscriptionmeter.go
+  - /models/components/subscriptionproductupdatedevent.go
+  - /models/components/subscriptionproductupdatedmetadata.go
   - /models/components/subscriptionprorationbehavior.go
   - /models/components/subscriptionrecurringinterval.go
   - /models/components/subscriptionrevoke.go
+  - /models/components/subscriptionrevokedevent.go
+  - /models/components/subscriptionrevokedmetadata.go
   - /models/components/subscriptionslist.go
   - /models/components/subscriptionsortproperty.go
   - /models/components/subscriptionstatus.go
@@ -654,9 +662,11 @@ generatedFiles:
   - docs/models/apierrors/ordersgenerateinvoiceresponse422ordersgenerateinvoice.md
   - docs/models/apierrors/paymentalreadyinprogress.md
   - docs/models/apierrors/paymenterror.md
+  - docs/models/apierrors/paymentmethodinusebyactivesubscription.md
   - docs/models/apierrors/refundamounttoohigh.md
   - docs/models/apierrors/refundedalready.md
   - docs/models/apierrors/resourcenotfound.md
+  - docs/models/apierrors/subscriptionlocked.md
   - docs/models/apierrors/unauthorized.md
   - docs/models/components/activesubscriptions.md
   - docs/models/components/address.md
@@ -1213,12 +1223,18 @@ generatedFiles:
   - docs/models/components/subscriptioncancel.md
   - docs/models/components/subscriptioncustomer.md
   - docs/models/components/subscriptioncustomermetadata.md
+  - docs/models/components/subscriptioncycledevent.md
+  - docs/models/components/subscriptioncycledmetadata.md
   - docs/models/components/subscriptiondiscount.md
   - docs/models/components/subscriptionmeter.md
   - docs/models/components/subscriptionprices.md
+  - docs/models/components/subscriptionproductupdatedevent.md
+  - docs/models/components/subscriptionproductupdatedmetadata.md
   - docs/models/components/subscriptionprorationbehavior.md
   - docs/models/components/subscriptionrecurringinterval.md
   - docs/models/components/subscriptionrevoke.md
+  - docs/models/components/subscriptionrevokedevent.md
+  - docs/models/components/subscriptionrevokedmetadata.md
   - docs/models/components/subscriptionsortproperty.md
   - docs/models/components/subscriptionstatus.md
   - docs/models/components/subscriptionupdate.md
@@ -2063,6 +2079,8 @@ examples:
           application/json: {"error": "ResourceNotFound", "detail": "<value>"}
         "422":
           application/json: {}
+        "409":
+          application/json: {"error": "SubscriptionLocked", "detail": "<value>"}
   subscriptions:revoke:
     speakeasy-default-subscriptions:revoke:
       parameters:
@@ -2077,6 +2095,8 @@ examples:
           application/json: {"error": "ResourceNotFound", "detail": "<value>"}
         "422":
           application/json: {}
+        "409":
+          application/json: {"error": "SubscriptionLocked", "detail": "<value>"}
   oauth2:authorize:
     speakeasy-default-oauth2-:authorize:
       responses:
@@ -2978,6 +2998,8 @@ examples:
           application/json: {"error": "ResourceNotFound", "detail": "<value>"}
         "422":
           application/json: {}
+        "400":
+          application/json: {"error": "PaymentMethodInUseByActiveSubscription", "detail": "<value>"}
   customer_portal:customer_meters:list:
     speakeasy-default-customer-portal:customer-meters:list:
       parameters:
@@ -3583,4 +3605,4 @@ examples:
           application/json: {"error": "OrderNotEligibleForRetry", "detail": "<value>"}
 examplesVersion: 1.0.2
 generatedTests: {}
-releaseNotes: "## SDK Changes Detected:\n* `Polar.CustomerPortal.Customers.Update()`: \n  *  `request.Request` **Changed** **Breaking** :warning:\n  *  `response.BillingName` **Added**\n* `Polar.CustomerPortal.Customers.Get()`:  `response.BillingName` **Added**\n* `Polar.CustomerPortal.Subscriptions.List()`:  `response.Items.[].Product.Organization.Status` **Added**\n* `Polar.Organizations.Update()`:  `response.Status` **Added**\n* `Polar.Subscriptions.List()`:  `response.Items.[].Meters.[].Meter.Aggregation.[max]` **Added**\n* `Polar.Subscriptions.Get()`:  `response.Meters.[].Meter.Aggregation.[max]` **Added**\n* `Polar.Subscriptions.Revoke()`:  `response.Meters.[].Meter.Aggregation.[max]` **Added**\n* `Polar.Subscriptions.Update()`:  `response.Meters.[].Meter.Aggregation.[max]` **Added**\n* `Polar.Checkouts.ClientGet()`:  `response.Organization.Status` **Added**\n* `Polar.Checkouts.ClientUpdate()`:  `response.Organization.Status` **Added**\n* `Polar.Checkouts.ClientConfirm()`:  `response.Organization.Status` **Added**\n* `Polar.CustomerPortal.Benefit-Grants.List()`:  `response.Items.[].[customerBenefitGrantGitHubRepository]` **Changed**\n* `Polar.CustomerPortal.Benefit-Grants.Get()`:  `response.[customerBenefitGrantMeterCredit]` **Changed**\n* `Polar.CustomerPortal.Benefit-Grants.Update()`:  `response.[customerBenefitGrantDiscord]` **Changed**\n* `Polar.Organizations.List()`:  `response.Items.[].Status` **Added**\n* `Polar.Organizations.Get()`:  `response.Status` **Added**\n* `Polar.Organizations.Create()`:  `response.Status` **Added**\n* `Polar.CustomerPortal.Subscriptions.Cancel()`:  `response.Product.Organization.Status` **Added**\n* `Polar.CustomerPortal.Orders.Update()`:  `response.Product.Organization.Status` **Added**\n* `Polar.CustomerPortal.Orders.ConfirmRetryPayment()`:  `request.CustomerOrderConfirmPayment` **Changed**\n* `Polar.CustomerPortal.Organizations.Get()`:  `response.Organization.Status` **Added**\n* `Polar.CustomerPortal.Orders.List()`:  `response.Items.[].Product.Organization.Status` **Added**\n* `Polar.CustomerPortal.Subscriptions.Get()`:  `response.Product.Organization.Status` **Added**\n* `Polar.CustomerPortal.Orders.Get()`:  `response.Product.Organization.Status` **Added**\n* `Polar.CustomerPortal.Subscriptions.Update()`:  `response.Product.Organization.Status` **Added**\n* `Polar.Meters.List()`:  `response.Items.[].Aggregation.[max]` **Added**\n* `Polar.Meters.Create()`: \n  *  `request.Request.Aggregation.[max]` **Added**\n  *  `response.Aggregation.[max]` **Added**\n* `Polar.Meters.Get()`:  `response.Aggregation.[max]` **Added**\n* `Polar.Meters.Update()`: \n  *  `request.MeterUpdate.Aggregation.[max]` **Added**\n  *  `response.Aggregation.[max]` **Added**\n* `Polar.CustomerMeters.List()`:  `response.Items.[].Meter.Aggregation.[max]` **Added**\n* `Polar.CustomerMeters.Get()`:  `response.Meter.Aggregation.[max]` **Added**\n"
+releaseNotes: "## Go SDK Changes Detected:\n* `Polar.CustomerPortal.Benefit-Grants.Get()`:  `response` **Changed** **Breaking** :warning:\n* `Polar.Customers.GetStateExternal()`:  `response.GrantedBenefits.[].Properties` **Changed** **Breaking** :warning:\n* `Polar.CustomerPortal.Benefit-Grants.List()`:  `response.Items.[]` **Changed** **Breaking** :warning:\n* `Polar.CustomerPortal.Benefit-Grants.Update()`: \n  *  `request.CustomerBenefitGrantUpdate` **Changed**\n  *  `response` **Changed** **Breaking** :warning:\n* `Polar.Benefits.Grants()`:  `response.Items.[].Properties` **Changed** **Breaking** :warning:\n* `Polar.Customers.GetState()`:  `response.GrantedBenefits.[].Properties` **Changed** **Breaking** :warning:\n* `Polar.CustomerPortal.Customers.DeletePaymentMethod()`:  `error.status[400]` **Added**\n* `Polar.Subscriptions.Revoke()`: \n  *  `response.Meters.[].Meter.ArchivedAt` **Added**\n  *  `error.status[409]` **Added**\n* `Polar.Subscriptions.Get()`:  `response.Meters.[].Meter.ArchivedAt` **Added**\n* `Polar.Subscriptions.List()`:  `response.Items.[].Meters.[].Meter.ArchivedAt` **Added**\n* `Polar.Subscriptions.Update()`: \n  *  `response.Meters.[].Meter.ArchivedAt` **Added**\n  *  `error.status[409]` **Added**\n* `Polar.Events.List()`:  `response.Items.[].[systemEvent]` **Changed**\n* `Polar.Events.Get()`:  `response.[systemEvent]` **Changed**\n* `Polar.Meters.List()`: \n  *  `request.Request.IsArchived` **Added**\n  *  `response.Items.[].ArchivedAt` **Added**\n* `Polar.Meters.Create()`:  `response.ArchivedAt` **Added**\n* `Polar.Meters.Get()`:  `response.ArchivedAt` **Added**\n* `Polar.Meters.Update()`: \n  *  `request.MeterUpdate.IsArchived` **Added**\n  *  `response.ArchivedAt` **Added**\n* `Polar.CustomerMeters.List()`:  `response.Items.[].Meter.ArchivedAt` **Added**\n* `Polar.CustomerMeters.Get()`:  `response.Meter.ArchivedAt` **Added**\n"

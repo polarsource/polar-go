@@ -17,8 +17,8 @@ const (
 )
 
 type Oauth2RequestTokenRequestBody struct {
-	AuthorizationCodeTokenRequest *components.AuthorizationCodeTokenRequest `queryParam:"inline"`
-	RefreshTokenRequest           *components.RefreshTokenRequest           `queryParam:"inline"`
+	AuthorizationCodeTokenRequest *components.AuthorizationCodeTokenRequest `queryParam:"inline" name:"requestBody"`
+	RefreshTokenRequest           *components.RefreshTokenRequest           `queryParam:"inline" name:"requestBody"`
 
 	Type Oauth2RequestTokenRequestBodyType
 }
@@ -43,17 +43,17 @@ func CreateOauth2RequestTokenRequestBodyRefreshTokenRequest(refreshTokenRequest 
 
 func (u *Oauth2RequestTokenRequestBody) UnmarshalJSON(data []byte) error {
 
-	var refreshTokenRequest components.RefreshTokenRequest = components.RefreshTokenRequest{}
-	if err := utils.UnmarshalJSON(data, &refreshTokenRequest, "", true, false); err == nil {
-		u.RefreshTokenRequest = &refreshTokenRequest
-		u.Type = Oauth2RequestTokenRequestBodyTypeRefreshTokenRequest
+	var authorizationCodeTokenRequest components.AuthorizationCodeTokenRequest = components.AuthorizationCodeTokenRequest{}
+	if err := utils.UnmarshalJSON(data, &authorizationCodeTokenRequest, "", true, nil); err == nil {
+		u.AuthorizationCodeTokenRequest = &authorizationCodeTokenRequest
+		u.Type = Oauth2RequestTokenRequestBodyTypeAuthorizationCodeTokenRequest
 		return nil
 	}
 
-	var authorizationCodeTokenRequest components.AuthorizationCodeTokenRequest = components.AuthorizationCodeTokenRequest{}
-	if err := utils.UnmarshalJSON(data, &authorizationCodeTokenRequest, "", true, false); err == nil {
-		u.AuthorizationCodeTokenRequest = &authorizationCodeTokenRequest
-		u.Type = Oauth2RequestTokenRequestBodyTypeAuthorizationCodeTokenRequest
+	var refreshTokenRequest components.RefreshTokenRequest = components.RefreshTokenRequest{}
+	if err := utils.UnmarshalJSON(data, &refreshTokenRequest, "", true, nil); err == nil {
+		u.RefreshTokenRequest = &refreshTokenRequest
+		u.Type = Oauth2RequestTokenRequestBodyTypeRefreshTokenRequest
 		return nil
 	}
 

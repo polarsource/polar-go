@@ -2,10 +2,25 @@
 
 package components
 
+import (
+	"github.com/polarsource/polar-go/internal/utils"
+)
+
 type BenefitGrantMetadata struct {
 	BenefitID      string      `json:"benefit_id"`
 	BenefitGrantID string      `json:"benefit_grant_id"`
 	BenefitType    BenefitType `json:"benefit_type"`
+}
+
+func (b BenefitGrantMetadata) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(b, "", false)
+}
+
+func (b *BenefitGrantMetadata) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &b, "", false, []string{"benefit_id", "benefit_grant_id", "benefit_type"}); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *BenefitGrantMetadata) GetBenefitID() string {

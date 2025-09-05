@@ -17,7 +17,7 @@ func (u UniqueAggregation) MarshalJSON() ([]byte, error) {
 }
 
 func (u *UniqueAggregation) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &u, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &u, "", false, []string{"property"}); err != nil {
 		return err
 	}
 	return nil

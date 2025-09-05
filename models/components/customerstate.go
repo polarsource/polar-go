@@ -19,10 +19,10 @@ const (
 )
 
 type CustomerStateMetadata struct {
-	Str     *string  `queryParam:"inline"`
-	Integer *int64   `queryParam:"inline"`
-	Number  *float64 `queryParam:"inline"`
-	Boolean *bool    `queryParam:"inline"`
+	Str     *string  `queryParam:"inline" name:"metadata"`
+	Integer *int64   `queryParam:"inline" name:"metadata"`
+	Number  *float64 `queryParam:"inline" name:"metadata"`
+	Boolean *bool    `queryParam:"inline" name:"metadata"`
 
 	Type CustomerStateMetadataType
 }
@@ -66,28 +66,28 @@ func CreateCustomerStateMetadataBoolean(boolean bool) CustomerStateMetadata {
 func (u *CustomerStateMetadata) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, nil); err == nil {
 		u.Str = &str
 		u.Type = CustomerStateMetadataTypeStr
 		return nil
 	}
 
 	var integer int64 = int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
 		u.Integer = &integer
 		u.Type = CustomerStateMetadataTypeInteger
 		return nil
 	}
 
 	var number float64 = float64(0)
-	if err := utils.UnmarshalJSON(data, &number, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
 		u.Number = &number
 		u.Type = CustomerStateMetadataTypeNumber
 		return nil
 	}
 
 	var boolean bool = false
-	if err := utils.UnmarshalJSON(data, &boolean, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &boolean, "", true, nil); err == nil {
 		u.Boolean = &boolean
 		u.Type = CustomerStateMetadataTypeBoolean
 		return nil
@@ -124,8 +124,8 @@ const (
 )
 
 type CustomerStateTaxID struct {
-	Str         *string      `queryParam:"inline"`
-	TaxIDFormat *TaxIDFormat `queryParam:"inline"`
+	Str         *string      `queryParam:"inline" name:"tax_id"`
+	TaxIDFormat *TaxIDFormat `queryParam:"inline" name:"tax_id"`
 
 	Type CustomerStateTaxIDType
 }
@@ -151,14 +151,14 @@ func CreateCustomerStateTaxIDTaxIDFormat(taxIDFormat TaxIDFormat) CustomerStateT
 func (u *CustomerStateTaxID) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, nil); err == nil {
 		u.Str = &str
 		u.Type = CustomerStateTaxIDTypeStr
 		return nil
 	}
 
 	var taxIDFormat TaxIDFormat = TaxIDFormat("")
-	if err := utils.UnmarshalJSON(data, &taxIDFormat, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &taxIDFormat, "", true, nil); err == nil {
 		u.TaxIDFormat = &taxIDFormat
 		u.Type = CustomerStateTaxIDTypeTaxIDFormat
 		return nil
@@ -220,7 +220,7 @@ func (c CustomerState) MarshalJSON() ([]byte, error) {
 }
 
 func (c *CustomerState) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &c, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &c, "", false, []string{"id", "created_at", "modified_at", "metadata", "external_id", "email", "email_verified", "name", "billing_address", "tax_id", "organization_id", "deleted_at", "active_subscriptions", "granted_benefits", "active_meters", "avatar_url"}); err != nil {
 		return err
 	}
 	return nil

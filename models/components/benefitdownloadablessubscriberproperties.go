@@ -2,8 +2,23 @@
 
 package components
 
+import (
+	"github.com/polarsource/polar-go/internal/utils"
+)
+
 type BenefitDownloadablesSubscriberProperties struct {
 	ActiveFiles []string `json:"active_files"`
+}
+
+func (b BenefitDownloadablesSubscriberProperties) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(b, "", false)
+}
+
+func (b *BenefitDownloadablesSubscriberProperties) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &b, "", false, []string{"active_files"}); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *BenefitDownloadablesSubscriberProperties) GetActiveFiles() []string {

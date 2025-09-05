@@ -24,7 +24,7 @@ generation:
     generateNewTests: false
     skipResponseBodyAssertions: false
 go:
-  version: 0.8.3
+  version: 0.8.4
   additionalDependencies: {}
   allowUnknownFieldsInWeakUnions: true
   baseErrorName: PolarError
@@ -46,5 +46,6 @@ go:
   modulePath: ""
   outputModelSuffix: output
   packageName: github.com/polarsource/polar-go
+  respectRequiredFields: false
   responseFormat: envelope-http
   sdkPackageName: ""

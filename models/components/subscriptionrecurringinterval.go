@@ -10,6 +10,8 @@ import (
 type SubscriptionRecurringInterval string
 
 const (
+	SubscriptionRecurringIntervalDay   SubscriptionRecurringInterval = "day"
+	SubscriptionRecurringIntervalWeek  SubscriptionRecurringInterval = "week"
 	SubscriptionRecurringIntervalMonth SubscriptionRecurringInterval = "month"
 	SubscriptionRecurringIntervalYear  SubscriptionRecurringInterval = "year"
 )
@@ -23,6 +25,10 @@ func (e *SubscriptionRecurringInterval) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	switch v {
+	case "day":
+		fallthrough
+	case "week":
+		fallthrough
 	case "month":
 		fallthrough
 	case "year":

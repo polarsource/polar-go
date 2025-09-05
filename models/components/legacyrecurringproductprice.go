@@ -18,9 +18,9 @@ const (
 )
 
 type LegacyRecurringProductPrice struct {
-	LegacyRecurringProductPriceFixed  *LegacyRecurringProductPriceFixed  `queryParam:"inline"`
-	LegacyRecurringProductPriceCustom *LegacyRecurringProductPriceCustom `queryParam:"inline"`
-	LegacyRecurringProductPriceFree   *LegacyRecurringProductPriceFree   `queryParam:"inline"`
+	LegacyRecurringProductPriceFixed  *LegacyRecurringProductPriceFixed  `queryParam:"inline" name:"LegacyRecurringProductPrice"`
+	LegacyRecurringProductPriceCustom *LegacyRecurringProductPriceCustom `queryParam:"inline" name:"LegacyRecurringProductPrice"`
+	LegacyRecurringProductPriceFree   *LegacyRecurringProductPriceFree   `queryParam:"inline" name:"LegacyRecurringProductPrice"`
 
 	Type LegacyRecurringProductPriceType
 }
@@ -66,7 +66,7 @@ func (u *LegacyRecurringProductPrice) UnmarshalJSON(data []byte) error {
 	switch dis.AmountType {
 	case "custom":
 		legacyRecurringProductPriceCustom := new(LegacyRecurringProductPriceCustom)
-		if err := utils.UnmarshalJSON(data, &legacyRecurringProductPriceCustom, "", true, false); err != nil {
+		if err := utils.UnmarshalJSON(data, &legacyRecurringProductPriceCustom, "", true, nil); err != nil {
 			return fmt.Errorf("could not unmarshal `%s` into expected (AmountType == custom) type LegacyRecurringProductPriceCustom within LegacyRecurringProductPrice: %w", string(data), err)
 		}
 
@@ -75,7 +75,7 @@ func (u *LegacyRecurringProductPrice) UnmarshalJSON(data []byte) error {
 		return nil
 	case "fixed":
 		legacyRecurringProductPriceFixed := new(LegacyRecurringProductPriceFixed)
-		if err := utils.UnmarshalJSON(data, &legacyRecurringProductPriceFixed, "", true, false); err != nil {
+		if err := utils.UnmarshalJSON(data, &legacyRecurringProductPriceFixed, "", true, nil); err != nil {
 			return fmt.Errorf("could not unmarshal `%s` into expected (AmountType == fixed) type LegacyRecurringProductPriceFixed within LegacyRecurringProductPrice: %w", string(data), err)
 		}
 
@@ -84,7 +84,7 @@ func (u *LegacyRecurringProductPrice) UnmarshalJSON(data []byte) error {
 		return nil
 	case "free":
 		legacyRecurringProductPriceFree := new(LegacyRecurringProductPriceFree)
-		if err := utils.UnmarshalJSON(data, &legacyRecurringProductPriceFree, "", true, false); err != nil {
+		if err := utils.UnmarshalJSON(data, &legacyRecurringProductPriceFree, "", true, nil); err != nil {
 			return fmt.Errorf("could not unmarshal `%s` into expected (AmountType == free) type LegacyRecurringProductPriceFree within LegacyRecurringProductPrice: %w", string(data), err)
 		}
 

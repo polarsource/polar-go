@@ -20,12 +20,12 @@ const (
 )
 
 type MetadataQuery struct {
-	Str            *string  `queryParam:"inline"`
-	Integer        *int64   `queryParam:"inline"`
-	Boolean        *bool    `queryParam:"inline"`
-	ArrayOfStr     []string `queryParam:"inline"`
-	ArrayOfInteger []int64  `queryParam:"inline"`
-	ArrayOfBoolean []bool   `queryParam:"inline"`
+	Str            *string  `queryParam:"inline" name:"MetadataQuery"`
+	Integer        *int64   `queryParam:"inline" name:"MetadataQuery"`
+	Boolean        *bool    `queryParam:"inline" name:"MetadataQuery"`
+	ArrayOfStr     []string `queryParam:"inline" name:"MetadataQuery"`
+	ArrayOfInteger []int64  `queryParam:"inline" name:"MetadataQuery"`
+	ArrayOfBoolean []bool   `queryParam:"inline" name:"MetadataQuery"`
 
 	Type MetadataQueryType
 }
@@ -87,42 +87,42 @@ func CreateMetadataQueryArrayOfBoolean(arrayOfBoolean []bool) MetadataQuery {
 func (u *MetadataQuery) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, nil); err == nil {
 		u.Str = &str
 		u.Type = MetadataQueryTypeStr
 		return nil
 	}
 
 	var integer int64 = int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
 		u.Integer = &integer
 		u.Type = MetadataQueryTypeInteger
 		return nil
 	}
 
 	var boolean bool = false
-	if err := utils.UnmarshalJSON(data, &boolean, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &boolean, "", true, nil); err == nil {
 		u.Boolean = &boolean
 		u.Type = MetadataQueryTypeBoolean
 		return nil
 	}
 
 	var arrayOfStr []string = []string{}
-	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, nil); err == nil {
 		u.ArrayOfStr = arrayOfStr
 		u.Type = MetadataQueryTypeArrayOfStr
 		return nil
 	}
 
 	var arrayOfInteger []int64 = []int64{}
-	if err := utils.UnmarshalJSON(data, &arrayOfInteger, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &arrayOfInteger, "", true, nil); err == nil {
 		u.ArrayOfInteger = arrayOfInteger
 		u.Type = MetadataQueryTypeArrayOfInteger
 		return nil
 	}
 
 	var arrayOfBoolean []bool = []bool{}
-	if err := utils.UnmarshalJSON(data, &arrayOfBoolean, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &arrayOfBoolean, "", true, nil); err == nil {
 		u.ArrayOfBoolean = arrayOfBoolean
 		u.Type = MetadataQueryTypeArrayOfBoolean
 		return nil

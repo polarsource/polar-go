@@ -16,8 +16,8 @@ const (
 )
 
 type CustomerSubscriptionUpdate struct {
-	CustomerSubscriptionUpdateProduct *CustomerSubscriptionUpdateProduct `queryParam:"inline"`
-	CustomerSubscriptionCancel        *CustomerSubscriptionCancel        `queryParam:"inline"`
+	CustomerSubscriptionUpdateProduct *CustomerSubscriptionUpdateProduct `queryParam:"inline" name:"CustomerSubscriptionUpdate"`
+	CustomerSubscriptionCancel        *CustomerSubscriptionCancel        `queryParam:"inline" name:"CustomerSubscriptionUpdate"`
 
 	Type CustomerSubscriptionUpdateType
 }
@@ -43,14 +43,14 @@ func CreateCustomerSubscriptionUpdateCustomerSubscriptionCancel(customerSubscrip
 func (u *CustomerSubscriptionUpdate) UnmarshalJSON(data []byte) error {
 
 	var customerSubscriptionUpdateProduct CustomerSubscriptionUpdateProduct = CustomerSubscriptionUpdateProduct{}
-	if err := utils.UnmarshalJSON(data, &customerSubscriptionUpdateProduct, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &customerSubscriptionUpdateProduct, "", true, nil); err == nil {
 		u.CustomerSubscriptionUpdateProduct = &customerSubscriptionUpdateProduct
 		u.Type = CustomerSubscriptionUpdateTypeCustomerSubscriptionUpdateProduct
 		return nil
 	}
 
 	var customerSubscriptionCancel CustomerSubscriptionCancel = CustomerSubscriptionCancel{}
-	if err := utils.UnmarshalJSON(data, &customerSubscriptionCancel, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &customerSubscriptionCancel, "", true, nil); err == nil {
 		u.CustomerSubscriptionCancel = &customerSubscriptionCancel
 		u.Type = CustomerSubscriptionUpdateTypeCustomerSubscriptionCancel
 		return nil

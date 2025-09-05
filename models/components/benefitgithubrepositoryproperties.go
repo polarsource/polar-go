@@ -5,6 +5,7 @@ package components
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/polarsource/polar-go/internal/utils"
 )
 
 // Permission - The permission level to grant. Read more about roles and their permissions on [GitHub documentation](https://docs.github.com/en/organizations/managing-user-access-to-your-organizations-repositories/managing-repository-roles/repository-roles-for-an-organization#permissions-for-each-role).
@@ -51,6 +52,17 @@ type BenefitGitHubRepositoryProperties struct {
 	RepositoryName string `json:"repository_name"`
 	// The permission level to grant. Read more about roles and their permissions on [GitHub documentation](https://docs.github.com/en/organizations/managing-user-access-to-your-organizations-repositories/managing-repository-roles/repository-roles-for-an-organization#permissions-for-each-role).
 	Permission Permission `json:"permission"`
+}
+
+func (b BenefitGitHubRepositoryProperties) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(b, "", false)
+}
+
+func (b *BenefitGitHubRepositoryProperties) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &b, "", false, []string{"repository_owner", "repository_name", "permission"}); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *BenefitGitHubRepositoryProperties) GetRepositoryOwner() string {

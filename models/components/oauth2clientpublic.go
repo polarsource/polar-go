@@ -25,7 +25,7 @@ func (o OAuth2ClientPublic) MarshalJSON() ([]byte, error) {
 }
 
 func (o *OAuth2ClientPublic) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &o, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &o, "", false, []string{"created_at", "modified_at", "client_id", "client_name", "client_uri", "logo_uri", "tos_uri", "policy_uri"}); err != nil {
 		return err
 	}
 	return nil

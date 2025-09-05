@@ -2,12 +2,27 @@
 
 package components
 
+import (
+	"github.com/polarsource/polar-go/internal/utils"
+)
+
 // BenefitGitHubRepositorySubscriberProperties - Properties available to subscribers for a benefit of type `github_repository`.
 type BenefitGitHubRepositorySubscriberProperties struct {
 	// The owner of the repository.
 	RepositoryOwner string `json:"repository_owner"`
 	// The name of the repository.
 	RepositoryName string `json:"repository_name"`
+}
+
+func (b BenefitGitHubRepositorySubscriberProperties) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(b, "", false)
+}
+
+func (b *BenefitGitHubRepositorySubscriberProperties) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &b, "", false, []string{"repository_owner", "repository_name"}); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *BenefitGitHubRepositorySubscriberProperties) GetRepositoryOwner() string {

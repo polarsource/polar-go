@@ -2,12 +2,27 @@
 
 package components
 
+import (
+	"github.com/polarsource/polar-go/internal/utils"
+)
+
 // CardPaymentMetadata - Additional metadata for a card payment method.
 type CardPaymentMetadata struct {
 	// The brand of the card used for the payment.
 	Brand string `json:"brand"`
 	// The last 4 digits of the card number.
 	Last4 string `json:"last4"`
+}
+
+func (c CardPaymentMetadata) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(c, "", false)
+}
+
+func (c *CardPaymentMetadata) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &c, "", false, []string{"brand", "last4"}); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *CardPaymentMetadata) GetBrand() string {

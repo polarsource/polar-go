@@ -17,8 +17,8 @@ const (
 
 // UnitAmount - The price per unit in cents. Supports up to 12 decimal places.
 type UnitAmount struct {
-	Number *float64 `queryParam:"inline"`
-	Str    *string  `queryParam:"inline"`
+	Number *float64 `queryParam:"inline" name:"Unit_Amount"`
+	Str    *string  `queryParam:"inline" name:"Unit_Amount"`
 
 	Type UnitAmountType
 }
@@ -44,14 +44,14 @@ func CreateUnitAmountStr(str string) UnitAmount {
 func (u *UnitAmount) UnmarshalJSON(data []byte) error {
 
 	var number float64 = float64(0)
-	if err := utils.UnmarshalJSON(data, &number, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
 		u.Number = &number
 		u.Type = UnitAmountTypeNumber
 		return nil
 	}
 
 	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, nil); err == nil {
 		u.Str = &str
 		u.Type = UnitAmountTypeStr
 		return nil
@@ -90,7 +90,7 @@ func (p ProductPriceMeteredUnitCreate) MarshalJSON() ([]byte, error) {
 }
 
 func (p *ProductPriceMeteredUnitCreate) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &p, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &p, "", false, []string{"amount_type", "meter_id", "unit_amount"}); err != nil {
 		return err
 	}
 	return nil

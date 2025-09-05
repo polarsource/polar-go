@@ -34,7 +34,7 @@ func (p ProductMediaFileRead) MarshalJSON() ([]byte, error) {
 }
 
 func (p *ProductMediaFileRead) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &p, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &p, "", false, []string{"id", "organization_id", "name", "path", "mime_type", "size", "storage_version", "checksum_etag", "checksum_sha256_base64", "checksum_sha256_hex", "last_modified_at", "version", "service", "is_uploaded", "created_at", "size_readable", "public_url"}); err != nil {
 		return err
 	}
 	return nil

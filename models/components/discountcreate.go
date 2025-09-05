@@ -18,10 +18,10 @@ const (
 )
 
 type DiscountCreate struct {
-	DiscountFixedOnceForeverDurationCreate      *DiscountFixedOnceForeverDurationCreate      `queryParam:"inline"`
-	DiscountFixedRepeatDurationCreate           *DiscountFixedRepeatDurationCreate           `queryParam:"inline"`
-	DiscountPercentageOnceForeverDurationCreate *DiscountPercentageOnceForeverDurationCreate `queryParam:"inline"`
-	DiscountPercentageRepeatDurationCreate      *DiscountPercentageRepeatDurationCreate      `queryParam:"inline"`
+	DiscountFixedOnceForeverDurationCreate      *DiscountFixedOnceForeverDurationCreate      `queryParam:"inline" name:"DiscountCreate"`
+	DiscountFixedRepeatDurationCreate           *DiscountFixedRepeatDurationCreate           `queryParam:"inline" name:"DiscountCreate"`
+	DiscountPercentageOnceForeverDurationCreate *DiscountPercentageOnceForeverDurationCreate `queryParam:"inline" name:"DiscountCreate"`
+	DiscountPercentageRepeatDurationCreate      *DiscountPercentageRepeatDurationCreate      `queryParam:"inline" name:"DiscountCreate"`
 
 	Type DiscountCreateType
 }
@@ -64,31 +64,31 @@ func CreateDiscountCreateDiscountPercentageRepeatDurationCreate(discountPercenta
 
 func (u *DiscountCreate) UnmarshalJSON(data []byte) error {
 
-	var discountPercentageOnceForeverDurationCreate DiscountPercentageOnceForeverDurationCreate = DiscountPercentageOnceForeverDurationCreate{}
-	if err := utils.UnmarshalJSON(data, &discountPercentageOnceForeverDurationCreate, "", true, false); err == nil {
-		u.DiscountPercentageOnceForeverDurationCreate = &discountPercentageOnceForeverDurationCreate
-		u.Type = DiscountCreateTypeDiscountPercentageOnceForeverDurationCreate
-		return nil
-	}
-
-	var discountFixedOnceForeverDurationCreate DiscountFixedOnceForeverDurationCreate = DiscountFixedOnceForeverDurationCreate{}
-	if err := utils.UnmarshalJSON(data, &discountFixedOnceForeverDurationCreate, "", true, false); err == nil {
-		u.DiscountFixedOnceForeverDurationCreate = &discountFixedOnceForeverDurationCreate
-		u.Type = DiscountCreateTypeDiscountFixedOnceForeverDurationCreate
+	var discountFixedRepeatDurationCreate DiscountFixedRepeatDurationCreate = DiscountFixedRepeatDurationCreate{}
+	if err := utils.UnmarshalJSON(data, &discountFixedRepeatDurationCreate, "", true, nil); err == nil {
+		u.DiscountFixedRepeatDurationCreate = &discountFixedRepeatDurationCreate
+		u.Type = DiscountCreateTypeDiscountFixedRepeatDurationCreate
 		return nil
 	}
 
 	var discountPercentageRepeatDurationCreate DiscountPercentageRepeatDurationCreate = DiscountPercentageRepeatDurationCreate{}
-	if err := utils.UnmarshalJSON(data, &discountPercentageRepeatDurationCreate, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &discountPercentageRepeatDurationCreate, "", true, nil); err == nil {
 		u.DiscountPercentageRepeatDurationCreate = &discountPercentageRepeatDurationCreate
 		u.Type = DiscountCreateTypeDiscountPercentageRepeatDurationCreate
 		return nil
 	}
 
-	var discountFixedRepeatDurationCreate DiscountFixedRepeatDurationCreate = DiscountFixedRepeatDurationCreate{}
-	if err := utils.UnmarshalJSON(data, &discountFixedRepeatDurationCreate, "", true, false); err == nil {
-		u.DiscountFixedRepeatDurationCreate = &discountFixedRepeatDurationCreate
-		u.Type = DiscountCreateTypeDiscountFixedRepeatDurationCreate
+	var discountFixedOnceForeverDurationCreate DiscountFixedOnceForeverDurationCreate = DiscountFixedOnceForeverDurationCreate{}
+	if err := utils.UnmarshalJSON(data, &discountFixedOnceForeverDurationCreate, "", true, nil); err == nil {
+		u.DiscountFixedOnceForeverDurationCreate = &discountFixedOnceForeverDurationCreate
+		u.Type = DiscountCreateTypeDiscountFixedOnceForeverDurationCreate
+		return nil
+	}
+
+	var discountPercentageOnceForeverDurationCreate DiscountPercentageOnceForeverDurationCreate = DiscountPercentageOnceForeverDurationCreate{}
+	if err := utils.UnmarshalJSON(data, &discountPercentageOnceForeverDurationCreate, "", true, nil); err == nil {
+		u.DiscountPercentageOnceForeverDurationCreate = &discountPercentageOnceForeverDurationCreate
+		u.Type = DiscountCreateTypeDiscountPercentageOnceForeverDurationCreate
 		return nil
 	}
 

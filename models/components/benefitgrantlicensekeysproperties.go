@@ -2,9 +2,24 @@
 
 package components
 
+import (
+	"github.com/polarsource/polar-go/internal/utils"
+)
+
 type BenefitGrantLicenseKeysProperties struct {
 	LicenseKeyID *string `json:"license_key_id,omitempty"`
 	DisplayKey   *string `json:"display_key,omitempty"`
+}
+
+func (b BenefitGrantLicenseKeysProperties) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(b, "", false)
+}
+
+func (b *BenefitGrantLicenseKeysProperties) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &b, "", false, nil); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *BenefitGrantLicenseKeysProperties) GetLicenseKeyID() *string {

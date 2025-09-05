@@ -16,8 +16,8 @@ const (
 )
 
 type CustomerPaymentMethod struct {
-	PaymentMethodCard    *PaymentMethodCard    `queryParam:"inline"`
-	PaymentMethodGeneric *PaymentMethodGeneric `queryParam:"inline"`
+	PaymentMethodCard    *PaymentMethodCard    `queryParam:"inline" name:"CustomerPaymentMethod"`
+	PaymentMethodGeneric *PaymentMethodGeneric `queryParam:"inline" name:"CustomerPaymentMethod"`
 
 	Type CustomerPaymentMethodType
 }
@@ -42,17 +42,17 @@ func CreateCustomerPaymentMethodPaymentMethodGeneric(paymentMethodGeneric Paymen
 
 func (u *CustomerPaymentMethod) UnmarshalJSON(data []byte) error {
 
-	var paymentMethodGeneric PaymentMethodGeneric = PaymentMethodGeneric{}
-	if err := utils.UnmarshalJSON(data, &paymentMethodGeneric, "", true, false); err == nil {
-		u.PaymentMethodGeneric = &paymentMethodGeneric
-		u.Type = CustomerPaymentMethodTypePaymentMethodGeneric
+	var paymentMethodCard PaymentMethodCard = PaymentMethodCard{}
+	if err := utils.UnmarshalJSON(data, &paymentMethodCard, "", true, nil); err == nil {
+		u.PaymentMethodCard = &paymentMethodCard
+		u.Type = CustomerPaymentMethodTypePaymentMethodCard
 		return nil
 	}
 
-	var paymentMethodCard PaymentMethodCard = PaymentMethodCard{}
-	if err := utils.UnmarshalJSON(data, &paymentMethodCard, "", true, false); err == nil {
-		u.PaymentMethodCard = &paymentMethodCard
-		u.Type = CustomerPaymentMethodTypePaymentMethodCard
+	var paymentMethodGeneric PaymentMethodGeneric = PaymentMethodGeneric{}
+	if err := utils.UnmarshalJSON(data, &paymentMethodGeneric, "", true, nil); err == nil {
+		u.PaymentMethodGeneric = &paymentMethodGeneric
+		u.Type = CustomerPaymentMethodTypePaymentMethodGeneric
 		return nil
 	}
 

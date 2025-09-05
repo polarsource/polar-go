@@ -24,7 +24,7 @@ func (p ProductPriceCustomCreate) MarshalJSON() ([]byte, error) {
 }
 
 func (p *ProductPriceCustomCreate) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &p, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &p, "", false, []string{"amount_type"}); err != nil {
 		return err
 	}
 	return nil

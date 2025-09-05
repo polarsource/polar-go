@@ -5,6 +5,7 @@ package components
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/polarsource/polar-go/internal/utils"
 )
 
 type Func string
@@ -42,6 +43,17 @@ func (e *Func) UnmarshalJSON(data []byte) error {
 type PropertyAggregation struct {
 	Func     Func   `json:"func"`
 	Property string `json:"property"`
+}
+
+func (p PropertyAggregation) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(p, "", false)
+}
+
+func (p *PropertyAggregation) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &p, "", false, []string{"func", "property"}); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *PropertyAggregation) GetFunc() Func {

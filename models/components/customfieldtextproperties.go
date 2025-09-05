@@ -2,6 +2,10 @@
 
 package components
 
+import (
+	"github.com/polarsource/polar-go/internal/utils"
+)
+
 type CustomFieldTextProperties struct {
 	FormLabel       *string `json:"form_label,omitempty"`
 	FormHelpText    *string `json:"form_help_text,omitempty"`
@@ -9,6 +13,17 @@ type CustomFieldTextProperties struct {
 	Textarea        *bool   `json:"textarea,omitempty"`
 	MinLength       *int64  `json:"min_length,omitempty"`
 	MaxLength       *int64  `json:"max_length,omitempty"`
+}
+
+func (c CustomFieldTextProperties) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(c, "", false)
+}
+
+func (c *CustomFieldTextProperties) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &c, "", false, nil); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *CustomFieldTextProperties) GetFormLabel() *string {

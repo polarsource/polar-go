@@ -2,6 +2,10 @@
 
 package components
 
+import (
+	"github.com/polarsource/polar-go/internal/utils"
+)
+
 type Address struct {
 	Line1      *string `json:"line1,omitempty"`
 	Line2      *string `json:"line2,omitempty"`
@@ -9,6 +13,17 @@ type Address struct {
 	City       *string `json:"city,omitempty"`
 	State      *string `json:"state,omitempty"`
 	Country    string  `json:"country"`
+}
+
+func (a Address) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(a, "", false)
+}
+
+func (a *Address) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &a, "", false, []string{"country"}); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *Address) GetLine1() *string {

@@ -2,13 +2,28 @@
 
 package components
 
+import (
+	"github.com/polarsource/polar-go/internal/utils"
+)
+
 type CustomerBenefitGrantGitHubRepositoryPropertiesUpdate struct {
-	AccountID string `json:"account_id"`
+	AccountID *string `json:"account_id"`
 }
 
-func (o *CustomerBenefitGrantGitHubRepositoryPropertiesUpdate) GetAccountID() string {
+func (c CustomerBenefitGrantGitHubRepositoryPropertiesUpdate) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(c, "", false)
+}
+
+func (c *CustomerBenefitGrantGitHubRepositoryPropertiesUpdate) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &c, "", false, []string{"account_id"}); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (o *CustomerBenefitGrantGitHubRepositoryPropertiesUpdate) GetAccountID() *string {
 	if o == nil {
-		return ""
+		return nil
 	}
 	return o.AccountID
 }

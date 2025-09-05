@@ -30,7 +30,7 @@ func (b BenefitPublic) MarshalJSON() ([]byte, error) {
 }
 
 func (b *BenefitPublic) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &b, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &b, "", false, []string{"id", "created_at", "modified_at", "type", "description", "selectable", "deletable", "organization_id"}); err != nil {
 		return err
 	}
 	return nil

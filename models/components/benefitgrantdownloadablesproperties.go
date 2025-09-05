@@ -2,8 +2,23 @@
 
 package components
 
+import (
+	"github.com/polarsource/polar-go/internal/utils"
+)
+
 type BenefitGrantDownloadablesProperties struct {
 	Files []string `json:"files,omitempty"`
+}
+
+func (b BenefitGrantDownloadablesProperties) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(b, "", false)
+}
+
+func (b *BenefitGrantDownloadablesProperties) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &b, "", false, nil); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *BenefitGrantDownloadablesProperties) GetFiles() []string {

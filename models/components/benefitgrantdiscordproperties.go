@@ -2,10 +2,26 @@
 
 package components
 
+import (
+	"github.com/polarsource/polar-go/internal/utils"
+)
+
 type BenefitGrantDiscordProperties struct {
-	AccountID *string `json:"account_id,omitempty"`
-	GuildID   *string `json:"guild_id,omitempty"`
-	RoleID    *string `json:"role_id,omitempty"`
+	AccountID        *string `json:"account_id,omitempty"`
+	GuildID          *string `json:"guild_id,omitempty"`
+	RoleID           *string `json:"role_id,omitempty"`
+	GrantedAccountID *string `json:"granted_account_id,omitempty"`
+}
+
+func (b BenefitGrantDiscordProperties) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(b, "", false)
+}
+
+func (b *BenefitGrantDiscordProperties) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &b, "", false, nil); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *BenefitGrantDiscordProperties) GetAccountID() *string {
@@ -27,4 +43,11 @@ func (o *BenefitGrantDiscordProperties) GetRoleID() *string {
 		return nil
 	}
 	return o.RoleID
+}
+
+func (o *BenefitGrantDiscordProperties) GetGrantedAccountID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.GrantedAccountID
 }

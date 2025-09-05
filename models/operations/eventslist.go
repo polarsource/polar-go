@@ -19,8 +19,8 @@ const (
 
 // EventsListQueryParamOrganizationIDFilter - Filter by organization ID.
 type EventsListQueryParamOrganizationIDFilter struct {
-	Str        *string  `queryParam:"inline"`
-	ArrayOfStr []string `queryParam:"inline"`
+	Str        *string  `queryParam:"inline" name:"OrganizationID_Filter"`
+	ArrayOfStr []string `queryParam:"inline" name:"OrganizationID_Filter"`
 
 	Type EventsListQueryParamOrganizationIDFilterType
 }
@@ -46,14 +46,14 @@ func CreateEventsListQueryParamOrganizationIDFilterArrayOfStr(arrayOfStr []strin
 func (u *EventsListQueryParamOrganizationIDFilter) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, nil); err == nil {
 		u.Str = &str
 		u.Type = EventsListQueryParamOrganizationIDFilterTypeStr
 		return nil
 	}
 
 	var arrayOfStr []string = []string{}
-	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, nil); err == nil {
 		u.ArrayOfStr = arrayOfStr
 		u.Type = EventsListQueryParamOrganizationIDFilterTypeArrayOfStr
 		return nil
@@ -83,8 +83,8 @@ const (
 
 // EventsListQueryParamCustomerIDFilter - Filter by customer ID.
 type EventsListQueryParamCustomerIDFilter struct {
-	Str        *string  `queryParam:"inline"`
-	ArrayOfStr []string `queryParam:"inline"`
+	Str        *string  `queryParam:"inline" name:"CustomerID_Filter"`
+	ArrayOfStr []string `queryParam:"inline" name:"CustomerID_Filter"`
 
 	Type EventsListQueryParamCustomerIDFilterType
 }
@@ -110,14 +110,14 @@ func CreateEventsListQueryParamCustomerIDFilterArrayOfStr(arrayOfStr []string) E
 func (u *EventsListQueryParamCustomerIDFilter) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, nil); err == nil {
 		u.Str = &str
 		u.Type = EventsListQueryParamCustomerIDFilterTypeStr
 		return nil
 	}
 
 	var arrayOfStr []string = []string{}
-	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, nil); err == nil {
 		u.ArrayOfStr = arrayOfStr
 		u.Type = EventsListQueryParamCustomerIDFilterTypeArrayOfStr
 		return nil
@@ -147,8 +147,8 @@ const (
 
 // QueryParamExternalCustomerIDFilter - Filter by external customer ID.
 type QueryParamExternalCustomerIDFilter struct {
-	Str        *string  `queryParam:"inline"`
-	ArrayOfStr []string `queryParam:"inline"`
+	Str        *string  `queryParam:"inline" name:"ExternalCustomerID_Filter"`
+	ArrayOfStr []string `queryParam:"inline" name:"ExternalCustomerID_Filter"`
 
 	Type QueryParamExternalCustomerIDFilterType
 }
@@ -174,14 +174,14 @@ func CreateQueryParamExternalCustomerIDFilterArrayOfStr(arrayOfStr []string) Que
 func (u *QueryParamExternalCustomerIDFilter) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, nil); err == nil {
 		u.Str = &str
 		u.Type = QueryParamExternalCustomerIDFilterTypeStr
 		return nil
 	}
 
 	var arrayOfStr []string = []string{}
-	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, nil); err == nil {
 		u.ArrayOfStr = arrayOfStr
 		u.Type = QueryParamExternalCustomerIDFilterTypeArrayOfStr
 		return nil
@@ -211,8 +211,8 @@ const (
 
 // NameFilter - Filter by event name.
 type NameFilter struct {
-	Str        *string  `queryParam:"inline"`
-	ArrayOfStr []string `queryParam:"inline"`
+	Str        *string  `queryParam:"inline" name:"Name_Filter"`
+	ArrayOfStr []string `queryParam:"inline" name:"Name_Filter"`
 
 	Type NameFilterType
 }
@@ -238,14 +238,14 @@ func CreateNameFilterArrayOfStr(arrayOfStr []string) NameFilter {
 func (u *NameFilter) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, nil); err == nil {
 		u.Str = &str
 		u.Type = NameFilterTypeStr
 		return nil
 	}
 
 	var arrayOfStr []string = []string{}
-	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, nil); err == nil {
 		u.ArrayOfStr = arrayOfStr
 		u.Type = NameFilterTypeArrayOfStr
 		return nil
@@ -275,8 +275,8 @@ const (
 
 // SourceFilter - Filter by event source.
 type SourceFilter struct {
-	EventSource        *components.EventSource  `queryParam:"inline"`
-	ArrayOfEventSource []components.EventSource `queryParam:"inline"`
+	EventSource        *components.EventSource  `queryParam:"inline" name:"Source_Filter"`
+	ArrayOfEventSource []components.EventSource `queryParam:"inline" name:"Source_Filter"`
 
 	Type SourceFilterType
 }
@@ -302,14 +302,14 @@ func CreateSourceFilterArrayOfEventSource(arrayOfEventSource []components.EventS
 func (u *SourceFilter) UnmarshalJSON(data []byte) error {
 
 	var eventSource components.EventSource = components.EventSource("")
-	if err := utils.UnmarshalJSON(data, &eventSource, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &eventSource, "", true, nil); err == nil {
 		u.EventSource = &eventSource
 		u.Type = SourceFilterTypeEventSource
 		return nil
 	}
 
 	var arrayOfEventSource []components.EventSource = []components.EventSource{}
-	if err := utils.UnmarshalJSON(data, &arrayOfEventSource, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &arrayOfEventSource, "", true, nil); err == nil {
 		u.ArrayOfEventSource = arrayOfEventSource
 		u.Type = SourceFilterTypeArrayOfEventSource
 		return nil
@@ -364,7 +364,7 @@ func (e EventsListRequest) MarshalJSON() ([]byte, error) {
 }
 
 func (e *EventsListRequest) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &e, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &e, "", false, nil); err != nil {
 		return err
 	}
 	return nil

@@ -2,12 +2,27 @@
 
 package components
 
+import (
+	"github.com/polarsource/polar-go/internal/utils"
+)
+
 type CustomFieldDateProperties struct {
 	FormLabel       *string `json:"form_label,omitempty"`
 	FormHelpText    *string `json:"form_help_text,omitempty"`
 	FormPlaceholder *string `json:"form_placeholder,omitempty"`
 	Ge              *int64  `json:"ge,omitempty"`
 	Le              *int64  `json:"le,omitempty"`
+}
+
+func (c CustomFieldDateProperties) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(c, "", false)
+}
+
+func (c *CustomFieldDateProperties) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &c, "", false, nil); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *CustomFieldDateProperties) GetFormLabel() *string {

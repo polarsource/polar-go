@@ -32,7 +32,7 @@ func (f FileUpload) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FileUpload) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &f, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &f, "", false, []string{"id", "organization_id", "name", "path", "mime_type", "size", "storage_version", "checksum_etag", "checksum_sha256_base64", "checksum_sha256_hex", "last_modified_at", "upload", "version", "service", "size_readable"}); err != nil {
 		return err
 	}
 	return nil

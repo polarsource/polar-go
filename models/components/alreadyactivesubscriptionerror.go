@@ -16,7 +16,7 @@ func (a AlreadyActiveSubscriptionError) MarshalJSON() ([]byte, error) {
 }
 
 func (a *AlreadyActiveSubscriptionError) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &a, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &a, "", false, []string{"error", "detail"}); err != nil {
 		return err
 	}
 	return nil

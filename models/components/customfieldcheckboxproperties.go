@@ -2,10 +2,25 @@
 
 package components
 
+import (
+	"github.com/polarsource/polar-go/internal/utils"
+)
+
 type CustomFieldCheckboxProperties struct {
 	FormLabel       *string `json:"form_label,omitempty"`
 	FormHelpText    *string `json:"form_help_text,omitempty"`
 	FormPlaceholder *string `json:"form_placeholder,omitempty"`
+}
+
+func (c CustomFieldCheckboxProperties) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(c, "", false)
+}
+
+func (c *CustomFieldCheckboxProperties) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &c, "", false, nil); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *CustomFieldCheckboxProperties) GetFormLabel() *string {

@@ -5,6 +5,7 @@ package components
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/polarsource/polar-go/internal/utils"
 )
 
 type Timeframe string
@@ -39,6 +40,17 @@ func (e *Timeframe) UnmarshalJSON(data []byte) error {
 type BenefitLicenseKeyExpirationProperties struct {
 	TTL       int64     `json:"ttl"`
 	Timeframe Timeframe `json:"timeframe"`
+}
+
+func (b BenefitLicenseKeyExpirationProperties) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(b, "", false)
+}
+
+func (b *BenefitLicenseKeyExpirationProperties) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &b, "", false, []string{"ttl", "timeframe"}); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *BenefitLicenseKeyExpirationProperties) GetTTL() int64 {

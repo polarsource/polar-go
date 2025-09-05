@@ -19,8 +19,8 @@ const (
 
 // Oauth2AuthorizeResponseOauth2Authorize - Successful Response
 type Oauth2AuthorizeResponseOauth2Authorize struct {
-	AuthorizeResponseUser         *components.AuthorizeResponseUser         `queryParam:"inline"`
-	AuthorizeResponseOrganization *components.AuthorizeResponseOrganization `queryParam:"inline"`
+	AuthorizeResponseUser         *components.AuthorizeResponseUser         `queryParam:"inline" name:"Response_Oauth2_Authorize"`
+	AuthorizeResponseOrganization *components.AuthorizeResponseOrganization `queryParam:"inline" name:"Response_Oauth2_Authorize"`
 
 	Type Oauth2AuthorizeResponseOauth2AuthorizeType
 }
@@ -57,7 +57,7 @@ func (u *Oauth2AuthorizeResponseOauth2Authorize) UnmarshalJSON(data []byte) erro
 	switch dis.SubType {
 	case "user":
 		authorizeResponseUser := new(components.AuthorizeResponseUser)
-		if err := utils.UnmarshalJSON(data, &authorizeResponseUser, "", true, false); err != nil {
+		if err := utils.UnmarshalJSON(data, &authorizeResponseUser, "", true, nil); err != nil {
 			return fmt.Errorf("could not unmarshal `%s` into expected (SubType == user) type components.AuthorizeResponseUser within Oauth2AuthorizeResponseOauth2Authorize: %w", string(data), err)
 		}
 
@@ -66,7 +66,7 @@ func (u *Oauth2AuthorizeResponseOauth2Authorize) UnmarshalJSON(data []byte) erro
 		return nil
 	case "organization":
 		authorizeResponseOrganization := new(components.AuthorizeResponseOrganization)
-		if err := utils.UnmarshalJSON(data, &authorizeResponseOrganization, "", true, false); err != nil {
+		if err := utils.UnmarshalJSON(data, &authorizeResponseOrganization, "", true, nil); err != nil {
 			return fmt.Errorf("could not unmarshal `%s` into expected (SubType == organization) type components.AuthorizeResponseOrganization within Oauth2AuthorizeResponseOauth2Authorize: %w", string(data), err)
 		}
 

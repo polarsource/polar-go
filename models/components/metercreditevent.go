@@ -33,7 +33,7 @@ func (m MeterCreditEvent) MarshalJSON() ([]byte, error) {
 }
 
 func (m *MeterCreditEvent) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &m, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &m, "", false, []string{"id", "timestamp", "organization_id", "customer_id", "customer", "external_customer_id", "source", "name", "metadata"}); err != nil {
 		return err
 	}
 	return nil

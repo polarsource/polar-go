@@ -19,10 +19,10 @@ const (
 )
 
 type OrderSubscriptionMetadata struct {
-	Str     *string  `queryParam:"inline"`
-	Integer *int64   `queryParam:"inline"`
-	Number  *float64 `queryParam:"inline"`
-	Boolean *bool    `queryParam:"inline"`
+	Str     *string  `queryParam:"inline" name:"metadata"`
+	Integer *int64   `queryParam:"inline" name:"metadata"`
+	Number  *float64 `queryParam:"inline" name:"metadata"`
+	Boolean *bool    `queryParam:"inline" name:"metadata"`
 
 	Type OrderSubscriptionMetadataType
 }
@@ -66,28 +66,28 @@ func CreateOrderSubscriptionMetadataBoolean(boolean bool) OrderSubscriptionMetad
 func (u *OrderSubscriptionMetadata) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, nil); err == nil {
 		u.Str = &str
 		u.Type = OrderSubscriptionMetadataTypeStr
 		return nil
 	}
 
 	var integer int64 = int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
 		u.Integer = &integer
 		u.Type = OrderSubscriptionMetadataTypeInteger
 		return nil
 	}
 
 	var number float64 = float64(0)
-	if err := utils.UnmarshalJSON(data, &number, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
 		u.Number = &number
 		u.Type = OrderSubscriptionMetadataTypeNumber
 		return nil
 	}
 
 	var boolean bool = false
-	if err := utils.UnmarshalJSON(data, &boolean, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &boolean, "", true, nil); err == nil {
 		u.Boolean = &boolean
 		u.Type = OrderSubscriptionMetadataTypeBoolean
 		return nil
@@ -160,7 +160,7 @@ func (o OrderSubscription) MarshalJSON() ([]byte, error) {
 }
 
 func (o *OrderSubscription) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &o, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &o, "", false, []string{"metadata", "created_at", "modified_at", "id", "amount", "currency", "recurring_interval", "status", "current_period_start", "current_period_end", "cancel_at_period_end", "canceled_at", "started_at", "ends_at", "ended_at", "customer_id", "product_id", "discount_id", "checkout_id", "customer_cancellation_reason", "customer_cancellation_comment"}); err != nil {
 		return err
 	}
 	return nil

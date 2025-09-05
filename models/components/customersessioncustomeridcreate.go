@@ -2,10 +2,25 @@
 
 package components
 
+import (
+	"github.com/polarsource/polar-go/internal/utils"
+)
+
 // CustomerSessionCustomerIDCreate - Schema for creating a customer session using a customer ID.
 type CustomerSessionCustomerIDCreate struct {
 	// ID of the customer to create a session for.
 	CustomerID string `json:"customer_id"`
+}
+
+func (c CustomerSessionCustomerIDCreate) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(c, "", false)
+}
+
+func (c *CustomerSessionCustomerIDCreate) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &c, "", false, []string{"customer_id"}); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *CustomerSessionCustomerIDCreate) GetCustomerID() string {

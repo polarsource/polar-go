@@ -18,7 +18,7 @@ func (s S3DownloadURL) MarshalJSON() ([]byte, error) {
 }
 
 func (s *S3DownloadURL) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &s, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &s, "", false, []string{"url", "expires_at"}); err != nil {
 		return err
 	}
 	return nil

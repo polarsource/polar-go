@@ -20,7 +20,7 @@ func (m MetricsLimits) MarshalJSON() ([]byte, error) {
 }
 
 func (m *MetricsLimits) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &m, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &m, "", false, []string{"min_date", "intervals"}); err != nil {
 		return err
 	}
 	return nil

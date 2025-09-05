@@ -19,8 +19,8 @@ const (
 
 // MetersQuantitiesQueryParamCustomerIDFilter - Filter by customer ID.
 type MetersQuantitiesQueryParamCustomerIDFilter struct {
-	Str        *string  `queryParam:"inline"`
-	ArrayOfStr []string `queryParam:"inline"`
+	Str        *string  `queryParam:"inline" name:"CustomerID_Filter"`
+	ArrayOfStr []string `queryParam:"inline" name:"CustomerID_Filter"`
 
 	Type MetersQuantitiesQueryParamCustomerIDFilterType
 }
@@ -46,14 +46,14 @@ func CreateMetersQuantitiesQueryParamCustomerIDFilterArrayOfStr(arrayOfStr []str
 func (u *MetersQuantitiesQueryParamCustomerIDFilter) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, nil); err == nil {
 		u.Str = &str
 		u.Type = MetersQuantitiesQueryParamCustomerIDFilterTypeStr
 		return nil
 	}
 
 	var arrayOfStr []string = []string{}
-	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, nil); err == nil {
 		u.ArrayOfStr = arrayOfStr
 		u.Type = MetersQuantitiesQueryParamCustomerIDFilterTypeArrayOfStr
 		return nil
@@ -83,8 +83,8 @@ const (
 
 // MetersQuantitiesQueryParamExternalCustomerIDFilter - Filter by external customer ID.
 type MetersQuantitiesQueryParamExternalCustomerIDFilter struct {
-	Str        *string  `queryParam:"inline"`
-	ArrayOfStr []string `queryParam:"inline"`
+	Str        *string  `queryParam:"inline" name:"ExternalCustomerID_Filter"`
+	ArrayOfStr []string `queryParam:"inline" name:"ExternalCustomerID_Filter"`
 
 	Type MetersQuantitiesQueryParamExternalCustomerIDFilterType
 }
@@ -110,14 +110,14 @@ func CreateMetersQuantitiesQueryParamExternalCustomerIDFilterArrayOfStr(arrayOfS
 func (u *MetersQuantitiesQueryParamExternalCustomerIDFilter) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &str, "", true, nil); err == nil {
 		u.Str = &str
 		u.Type = MetersQuantitiesQueryParamExternalCustomerIDFilterTypeStr
 		return nil
 	}
 
 	var arrayOfStr []string = []string{}
-	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, nil); err == nil {
 		u.ArrayOfStr = arrayOfStr
 		u.Type = MetersQuantitiesQueryParamExternalCustomerIDFilterTypeArrayOfStr
 		return nil
@@ -160,7 +160,7 @@ func (m MetersQuantitiesRequest) MarshalJSON() ([]byte, error) {
 }
 
 func (m *MetersQuantitiesRequest) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &m, "", false, false); err != nil {
+	if err := utils.UnmarshalJSON(data, &m, "", false, []string{"id", "start_timestamp", "end_timestamp", "interval"}); err != nil {
 		return err
 	}
 	return nil

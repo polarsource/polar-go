@@ -19,8 +19,8 @@ const (
 
 // OrdersGenerateInvoiceResponse422OrdersGenerateInvoice - Order is not paid or is missing billing name or address.
 type OrdersGenerateInvoiceResponse422OrdersGenerateInvoice struct {
-	MissingInvoiceBillingDetails *components.MissingInvoiceBillingDetails `queryParam:"inline"`
-	NotPaidOrder                 *components.NotPaidOrder                 `queryParam:"inline"`
+	MissingInvoiceBillingDetails *components.MissingInvoiceBillingDetails `queryParam:"inline" name:"Response_422_Orders_Generate_Invoice"`
+	NotPaidOrder                 *components.NotPaidOrder                 `queryParam:"inline" name:"Response_422_Orders_Generate_Invoice"`
 
 	Type OrdersGenerateInvoiceResponse422OrdersGenerateInvoiceType
 
@@ -50,14 +50,14 @@ func CreateOrdersGenerateInvoiceResponse422OrdersGenerateInvoiceNotPaidOrder(not
 func (u *OrdersGenerateInvoiceResponse422OrdersGenerateInvoice) UnmarshalJSON(data []byte) error {
 
 	var missingInvoiceBillingDetails components.MissingInvoiceBillingDetails = components.MissingInvoiceBillingDetails{}
-	if err := utils.UnmarshalJSON(data, &missingInvoiceBillingDetails, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &missingInvoiceBillingDetails, "", true, nil); err == nil {
 		u.MissingInvoiceBillingDetails = &missingInvoiceBillingDetails
 		u.Type = OrdersGenerateInvoiceResponse422OrdersGenerateInvoiceTypeMissingInvoiceBillingDetails
 		return nil
 	}
 
 	var notPaidOrder components.NotPaidOrder = components.NotPaidOrder{}
-	if err := utils.UnmarshalJSON(data, &notPaidOrder, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &notPaidOrder, "", true, nil); err == nil {
 		u.NotPaidOrder = &notPaidOrder
 		u.Type = OrdersGenerateInvoiceResponse422OrdersGenerateInvoiceTypeNotPaidOrder
 		return nil

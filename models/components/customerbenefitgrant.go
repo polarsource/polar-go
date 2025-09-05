@@ -20,12 +20,12 @@ const (
 )
 
 type CustomerBenefitGrant struct {
-	CustomerBenefitGrantDiscord          *CustomerBenefitGrantDiscord          `queryParam:"inline"`
-	CustomerBenefitGrantGitHubRepository *CustomerBenefitGrantGitHubRepository `queryParam:"inline"`
-	CustomerBenefitGrantDownloadables    *CustomerBenefitGrantDownloadables    `queryParam:"inline"`
-	CustomerBenefitGrantLicenseKeys      *CustomerBenefitGrantLicenseKeys      `queryParam:"inline"`
-	CustomerBenefitGrantCustom           *CustomerBenefitGrantCustom           `queryParam:"inline"`
-	CustomerBenefitGrantMeterCredit      *CustomerBenefitGrantMeterCredit      `queryParam:"inline"`
+	CustomerBenefitGrantDiscord          *CustomerBenefitGrantDiscord          `queryParam:"inline" name:"CustomerBenefitGrant"`
+	CustomerBenefitGrantGitHubRepository *CustomerBenefitGrantGitHubRepository `queryParam:"inline" name:"CustomerBenefitGrant"`
+	CustomerBenefitGrantDownloadables    *CustomerBenefitGrantDownloadables    `queryParam:"inline" name:"CustomerBenefitGrant"`
+	CustomerBenefitGrantLicenseKeys      *CustomerBenefitGrantLicenseKeys      `queryParam:"inline" name:"CustomerBenefitGrant"`
+	CustomerBenefitGrantCustom           *CustomerBenefitGrantCustom           `queryParam:"inline" name:"CustomerBenefitGrant"`
+	CustomerBenefitGrantMeterCredit      *CustomerBenefitGrantMeterCredit      `queryParam:"inline" name:"CustomerBenefitGrant"`
 
 	Type CustomerBenefitGrantType
 }
@@ -87,42 +87,42 @@ func CreateCustomerBenefitGrantCustomerBenefitGrantMeterCredit(customerBenefitGr
 func (u *CustomerBenefitGrant) UnmarshalJSON(data []byte) error {
 
 	var customerBenefitGrantDiscord CustomerBenefitGrantDiscord = CustomerBenefitGrantDiscord{}
-	if err := utils.UnmarshalJSON(data, &customerBenefitGrantDiscord, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &customerBenefitGrantDiscord, "", true, nil); err == nil {
 		u.CustomerBenefitGrantDiscord = &customerBenefitGrantDiscord
 		u.Type = CustomerBenefitGrantTypeCustomerBenefitGrantDiscord
 		return nil
 	}
 
 	var customerBenefitGrantGitHubRepository CustomerBenefitGrantGitHubRepository = CustomerBenefitGrantGitHubRepository{}
-	if err := utils.UnmarshalJSON(data, &customerBenefitGrantGitHubRepository, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &customerBenefitGrantGitHubRepository, "", true, nil); err == nil {
 		u.CustomerBenefitGrantGitHubRepository = &customerBenefitGrantGitHubRepository
 		u.Type = CustomerBenefitGrantTypeCustomerBenefitGrantGitHubRepository
 		return nil
 	}
 
 	var customerBenefitGrantDownloadables CustomerBenefitGrantDownloadables = CustomerBenefitGrantDownloadables{}
-	if err := utils.UnmarshalJSON(data, &customerBenefitGrantDownloadables, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &customerBenefitGrantDownloadables, "", true, nil); err == nil {
 		u.CustomerBenefitGrantDownloadables = &customerBenefitGrantDownloadables
 		u.Type = CustomerBenefitGrantTypeCustomerBenefitGrantDownloadables
 		return nil
 	}
 
 	var customerBenefitGrantLicenseKeys CustomerBenefitGrantLicenseKeys = CustomerBenefitGrantLicenseKeys{}
-	if err := utils.UnmarshalJSON(data, &customerBenefitGrantLicenseKeys, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &customerBenefitGrantLicenseKeys, "", true, nil); err == nil {
 		u.CustomerBenefitGrantLicenseKeys = &customerBenefitGrantLicenseKeys
 		u.Type = CustomerBenefitGrantTypeCustomerBenefitGrantLicenseKeys
 		return nil
 	}
 
 	var customerBenefitGrantCustom CustomerBenefitGrantCustom = CustomerBenefitGrantCustom{}
-	if err := utils.UnmarshalJSON(data, &customerBenefitGrantCustom, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &customerBenefitGrantCustom, "", true, nil); err == nil {
 		u.CustomerBenefitGrantCustom = &customerBenefitGrantCustom
 		u.Type = CustomerBenefitGrantTypeCustomerBenefitGrantCustom
 		return nil
 	}
 
 	var customerBenefitGrantMeterCredit CustomerBenefitGrantMeterCredit = CustomerBenefitGrantMeterCredit{}
-	if err := utils.UnmarshalJSON(data, &customerBenefitGrantMeterCredit, "", true, false); err == nil {
+	if err := utils.UnmarshalJSON(data, &customerBenefitGrantMeterCredit, "", true, nil); err == nil {
 		u.CustomerBenefitGrantMeterCredit = &customerBenefitGrantMeterCredit
 		u.Type = CustomerBenefitGrantTypeCustomerBenefitGrantMeterCredit
 		return nil

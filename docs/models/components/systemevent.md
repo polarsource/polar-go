@@ -39,3 +39,21 @@ systemEvent := components.CreateSystemEventMeterCredited(components.MeterCreditE
 systemEvent := components.CreateSystemEventMeterReset(components.MeterResetEvent{/* values here */})
 ```
 
+### SubscriptionCycledEvent
+
+```go
+systemEvent := components.CreateSystemEventSubscriptionCycled(components.SubscriptionCycledEvent{/* values here */})
+```
+
+### SubscriptionProductUpdatedEvent
+
+```go
+systemEvent := components.CreateSystemEventSubscriptionProductUpdated(components.SubscriptionProductUpdatedEvent{/* values here */})
+```
+
+### SubscriptionRevokedEvent
+
+```go
+systemEvent := components.CreateSystemEventSubscriptionRevoked(components.SubscriptionRevokedEvent{/* values here */})
+```
+
