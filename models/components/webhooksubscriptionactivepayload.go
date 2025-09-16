@@ -4,6 +4,7 @@ package components
 
 import (
 	"github.com/polarsource/polar-go/internal/utils"
+	"time"
 )
 
 // WebhookSubscriptionActivePayload - Sent when a subscription becomes active,
@@ -11,8 +12,9 @@ import (
 //
 // **Discord & Slack support:** Full
 type WebhookSubscriptionActivePayload struct {
-	type_ string       `const:"subscription.active" json:"type"`
-	Data  Subscription `json:"data"`
+	type_     string       `const:"subscription.active" json:"type"`
+	Timestamp time.Time    `json:"timestamp"`
+	Data      Subscription `json:"data"`
 }
 
 func (w WebhookSubscriptionActivePayload) MarshalJSON() ([]byte, error) {
@@ -20,7 +22,7 @@ func (w WebhookSubscriptionActivePayload) MarshalJSON() ([]byte, error) {
 }
 
 func (w *WebhookSubscriptionActivePayload) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &w, "", false, []string{"type", "data"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &w, "", false, []string{"type", "timestamp", "data"}); err != nil {
 		return err
 	}
 	return nil
@@ -28,6 +30,13 @@ func (w *WebhookSubscriptionActivePayload) UnmarshalJSON(data []byte) error {
 
 func (o *WebhookSubscriptionActivePayload) GetType() string {
 	return "subscription.active"
+}
+
+func (o *WebhookSubscriptionActivePayload) GetTimestamp() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.Timestamp
 }
 
 func (o *WebhookSubscriptionActivePayload) GetData() Subscription {

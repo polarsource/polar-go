@@ -4,14 +4,16 @@ package components
 
 import (
 	"github.com/polarsource/polar-go/internal/utils"
+	"time"
 )
 
 // WebhookSubscriptionUncanceledPayload - Sent when a subscription is uncanceled.
 //
 // **Discord & Slack support:** Full
 type WebhookSubscriptionUncanceledPayload struct {
-	type_ string       `const:"subscription.uncanceled" json:"type"`
-	Data  Subscription `json:"data"`
+	type_     string       `const:"subscription.uncanceled" json:"type"`
+	Timestamp time.Time    `json:"timestamp"`
+	Data      Subscription `json:"data"`
 }
 
 func (w WebhookSubscriptionUncanceledPayload) MarshalJSON() ([]byte, error) {
@@ -19,7 +21,7 @@ func (w WebhookSubscriptionUncanceledPayload) MarshalJSON() ([]byte, error) {
 }
 
 func (w *WebhookSubscriptionUncanceledPayload) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &w, "", false, []string{"type", "data"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &w, "", false, []string{"type", "timestamp", "data"}); err != nil {
 		return err
 	}
 	return nil
@@ -27,6 +29,13 @@ func (w *WebhookSubscriptionUncanceledPayload) UnmarshalJSON(data []byte) error 
 
 func (o *WebhookSubscriptionUncanceledPayload) GetType() string {
 	return "subscription.uncanceled"
+}
+
+func (o *WebhookSubscriptionUncanceledPayload) GetTimestamp() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.Timestamp
 }
 
 func (o *WebhookSubscriptionUncanceledPayload) GetData() Subscription {

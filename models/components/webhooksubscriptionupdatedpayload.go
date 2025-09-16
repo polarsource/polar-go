@@ -4,6 +4,7 @@ package components
 
 import (
 	"github.com/polarsource/polar-go/internal/utils"
+	"time"
 )
 
 // WebhookSubscriptionUpdatedPayload - Sent when a subscription is updated. This event fires for all changes to the subscription, including renewals.
@@ -14,8 +15,9 @@ import (
 //
 // **Discord & Slack support:** On cancellation and revocation. Renewals are skipped.
 type WebhookSubscriptionUpdatedPayload struct {
-	type_ string       `const:"subscription.updated" json:"type"`
-	Data  Subscription `json:"data"`
+	type_     string       `const:"subscription.updated" json:"type"`
+	Timestamp time.Time    `json:"timestamp"`
+	Data      Subscription `json:"data"`
 }
 
 func (w WebhookSubscriptionUpdatedPayload) MarshalJSON() ([]byte, error) {
@@ -23,7 +25,7 @@ func (w WebhookSubscriptionUpdatedPayload) MarshalJSON() ([]byte, error) {
 }
 
 func (w *WebhookSubscriptionUpdatedPayload) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &w, "", false, []string{"type", "data"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &w, "", false, []string{"type", "timestamp", "data"}); err != nil {
 		return err
 	}
 	return nil
@@ -31,6 +33,13 @@ func (w *WebhookSubscriptionUpdatedPayload) UnmarshalJSON(data []byte) error {
 
 func (o *WebhookSubscriptionUpdatedPayload) GetType() string {
 	return "subscription.updated"
+}
+
+func (o *WebhookSubscriptionUpdatedPayload) GetTimestamp() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.Timestamp
 }
 
 func (o *WebhookSubscriptionUpdatedPayload) GetData() Subscription {

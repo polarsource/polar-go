@@ -6,418 +6,155 @@ import (
 	"errors"
 	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
-	"time"
 )
 
-type BenefitGrantWebhookPropertiesType string
+type BenefitGrantWebhookType string
 
 const (
-	BenefitGrantWebhookPropertiesTypeBenefitGrantDiscordProperties          BenefitGrantWebhookPropertiesType = "BenefitGrantDiscordProperties"
-	BenefitGrantWebhookPropertiesTypeBenefitGrantGitHubRepositoryProperties BenefitGrantWebhookPropertiesType = "BenefitGrantGitHubRepositoryProperties"
-	BenefitGrantWebhookPropertiesTypeBenefitGrantDownloadablesProperties    BenefitGrantWebhookPropertiesType = "BenefitGrantDownloadablesProperties"
-	BenefitGrantWebhookPropertiesTypeBenefitGrantLicenseKeysProperties      BenefitGrantWebhookPropertiesType = "BenefitGrantLicenseKeysProperties"
-	BenefitGrantWebhookPropertiesTypeBenefitGrantCustomProperties           BenefitGrantWebhookPropertiesType = "BenefitGrantCustomProperties"
+	BenefitGrantWebhookTypeBenefitGrantDiscordWebhook          BenefitGrantWebhookType = "BenefitGrantDiscordWebhook"
+	BenefitGrantWebhookTypeBenefitGrantCustomWebhook           BenefitGrantWebhookType = "BenefitGrantCustomWebhook"
+	BenefitGrantWebhookTypeBenefitGrantGitHubRepositoryWebhook BenefitGrantWebhookType = "BenefitGrantGitHubRepositoryWebhook"
+	BenefitGrantWebhookTypeBenefitGrantDownloadablesWebhook    BenefitGrantWebhookType = "BenefitGrantDownloadablesWebhook"
+	BenefitGrantWebhookTypeBenefitGrantLicenseKeysWebhook      BenefitGrantWebhookType = "BenefitGrantLicenseKeysWebhook"
+	BenefitGrantWebhookTypeBenefitGrantMeterCreditWebhook      BenefitGrantWebhookType = "BenefitGrantMeterCreditWebhook"
 )
-
-type BenefitGrantWebhookProperties struct {
-	BenefitGrantDiscordProperties          *BenefitGrantDiscordProperties          `queryParam:"inline" name:"Properties"`
-	BenefitGrantGitHubRepositoryProperties *BenefitGrantGitHubRepositoryProperties `queryParam:"inline" name:"Properties"`
-	BenefitGrantDownloadablesProperties    *BenefitGrantDownloadablesProperties    `queryParam:"inline" name:"Properties"`
-	BenefitGrantLicenseKeysProperties      *BenefitGrantLicenseKeysProperties      `queryParam:"inline" name:"Properties"`
-	BenefitGrantCustomProperties           *BenefitGrantCustomProperties           `queryParam:"inline" name:"Properties"`
-
-	Type BenefitGrantWebhookPropertiesType
-}
-
-func CreateBenefitGrantWebhookPropertiesBenefitGrantDiscordProperties(benefitGrantDiscordProperties BenefitGrantDiscordProperties) BenefitGrantWebhookProperties {
-	typ := BenefitGrantWebhookPropertiesTypeBenefitGrantDiscordProperties
-
-	return BenefitGrantWebhookProperties{
-		BenefitGrantDiscordProperties: &benefitGrantDiscordProperties,
-		Type:                          typ,
-	}
-}
-
-func CreateBenefitGrantWebhookPropertiesBenefitGrantGitHubRepositoryProperties(benefitGrantGitHubRepositoryProperties BenefitGrantGitHubRepositoryProperties) BenefitGrantWebhookProperties {
-	typ := BenefitGrantWebhookPropertiesTypeBenefitGrantGitHubRepositoryProperties
-
-	return BenefitGrantWebhookProperties{
-		BenefitGrantGitHubRepositoryProperties: &benefitGrantGitHubRepositoryProperties,
-		Type:                                   typ,
-	}
-}
-
-func CreateBenefitGrantWebhookPropertiesBenefitGrantDownloadablesProperties(benefitGrantDownloadablesProperties BenefitGrantDownloadablesProperties) BenefitGrantWebhookProperties {
-	typ := BenefitGrantWebhookPropertiesTypeBenefitGrantDownloadablesProperties
-
-	return BenefitGrantWebhookProperties{
-		BenefitGrantDownloadablesProperties: &benefitGrantDownloadablesProperties,
-		Type:                                typ,
-	}
-}
-
-func CreateBenefitGrantWebhookPropertiesBenefitGrantLicenseKeysProperties(benefitGrantLicenseKeysProperties BenefitGrantLicenseKeysProperties) BenefitGrantWebhookProperties {
-	typ := BenefitGrantWebhookPropertiesTypeBenefitGrantLicenseKeysProperties
-
-	return BenefitGrantWebhookProperties{
-		BenefitGrantLicenseKeysProperties: &benefitGrantLicenseKeysProperties,
-		Type:                              typ,
-	}
-}
-
-func CreateBenefitGrantWebhookPropertiesBenefitGrantCustomProperties(benefitGrantCustomProperties BenefitGrantCustomProperties) BenefitGrantWebhookProperties {
-	typ := BenefitGrantWebhookPropertiesTypeBenefitGrantCustomProperties
-
-	return BenefitGrantWebhookProperties{
-		BenefitGrantCustomProperties: &benefitGrantCustomProperties,
-		Type:                         typ,
-	}
-}
-
-func (u *BenefitGrantWebhookProperties) UnmarshalJSON(data []byte) error {
-
-	var benefitGrantDiscordProperties BenefitGrantDiscordProperties = BenefitGrantDiscordProperties{}
-	if err := utils.UnmarshalJSON(data, &benefitGrantDiscordProperties, "", true, nil); err == nil {
-		u.BenefitGrantDiscordProperties = &benefitGrantDiscordProperties
-		u.Type = BenefitGrantWebhookPropertiesTypeBenefitGrantDiscordProperties
-		return nil
-	}
-
-	var benefitGrantGitHubRepositoryProperties BenefitGrantGitHubRepositoryProperties = BenefitGrantGitHubRepositoryProperties{}
-	if err := utils.UnmarshalJSON(data, &benefitGrantGitHubRepositoryProperties, "", true, nil); err == nil {
-		u.BenefitGrantGitHubRepositoryProperties = &benefitGrantGitHubRepositoryProperties
-		u.Type = BenefitGrantWebhookPropertiesTypeBenefitGrantGitHubRepositoryProperties
-		return nil
-	}
-
-	var benefitGrantDownloadablesProperties BenefitGrantDownloadablesProperties = BenefitGrantDownloadablesProperties{}
-	if err := utils.UnmarshalJSON(data, &benefitGrantDownloadablesProperties, "", true, nil); err == nil {
-		u.BenefitGrantDownloadablesProperties = &benefitGrantDownloadablesProperties
-		u.Type = BenefitGrantWebhookPropertiesTypeBenefitGrantDownloadablesProperties
-		return nil
-	}
-
-	var benefitGrantLicenseKeysProperties BenefitGrantLicenseKeysProperties = BenefitGrantLicenseKeysProperties{}
-	if err := utils.UnmarshalJSON(data, &benefitGrantLicenseKeysProperties, "", true, nil); err == nil {
-		u.BenefitGrantLicenseKeysProperties = &benefitGrantLicenseKeysProperties
-		u.Type = BenefitGrantWebhookPropertiesTypeBenefitGrantLicenseKeysProperties
-		return nil
-	}
-
-	var benefitGrantCustomProperties BenefitGrantCustomProperties = BenefitGrantCustomProperties{}
-	if err := utils.UnmarshalJSON(data, &benefitGrantCustomProperties, "", true, nil); err == nil {
-		u.BenefitGrantCustomProperties = &benefitGrantCustomProperties
-		u.Type = BenefitGrantWebhookPropertiesTypeBenefitGrantCustomProperties
-		return nil
-	}
-
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for BenefitGrantWebhookProperties", string(data))
-}
-
-func (u BenefitGrantWebhookProperties) MarshalJSON() ([]byte, error) {
-	if u.BenefitGrantDiscordProperties != nil {
-		return utils.MarshalJSON(u.BenefitGrantDiscordProperties, "", true)
-	}
-
-	if u.BenefitGrantGitHubRepositoryProperties != nil {
-		return utils.MarshalJSON(u.BenefitGrantGitHubRepositoryProperties, "", true)
-	}
-
-	if u.BenefitGrantDownloadablesProperties != nil {
-		return utils.MarshalJSON(u.BenefitGrantDownloadablesProperties, "", true)
-	}
-
-	if u.BenefitGrantLicenseKeysProperties != nil {
-		return utils.MarshalJSON(u.BenefitGrantLicenseKeysProperties, "", true)
-	}
-
-	if u.BenefitGrantCustomProperties != nil {
-		return utils.MarshalJSON(u.BenefitGrantCustomProperties, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type BenefitGrantWebhookProperties: all fields are null")
-}
-
-type PreviousPropertiesType string
-
-const (
-	PreviousPropertiesTypeBenefitGrantDiscordProperties          PreviousPropertiesType = "BenefitGrantDiscordProperties"
-	PreviousPropertiesTypeBenefitGrantGitHubRepositoryProperties PreviousPropertiesType = "BenefitGrantGitHubRepositoryProperties"
-	PreviousPropertiesTypeBenefitGrantDownloadablesProperties    PreviousPropertiesType = "BenefitGrantDownloadablesProperties"
-	PreviousPropertiesTypeBenefitGrantLicenseKeysProperties      PreviousPropertiesType = "BenefitGrantLicenseKeysProperties"
-	PreviousPropertiesTypeBenefitGrantCustomProperties           PreviousPropertiesType = "BenefitGrantCustomProperties"
-)
-
-type PreviousProperties struct {
-	BenefitGrantDiscordProperties          *BenefitGrantDiscordProperties          `queryParam:"inline" name:"Previous_Properties"`
-	BenefitGrantGitHubRepositoryProperties *BenefitGrantGitHubRepositoryProperties `queryParam:"inline" name:"Previous_Properties"`
-	BenefitGrantDownloadablesProperties    *BenefitGrantDownloadablesProperties    `queryParam:"inline" name:"Previous_Properties"`
-	BenefitGrantLicenseKeysProperties      *BenefitGrantLicenseKeysProperties      `queryParam:"inline" name:"Previous_Properties"`
-	BenefitGrantCustomProperties           *BenefitGrantCustomProperties           `queryParam:"inline" name:"Previous_Properties"`
-
-	Type PreviousPropertiesType
-}
-
-func CreatePreviousPropertiesBenefitGrantDiscordProperties(benefitGrantDiscordProperties BenefitGrantDiscordProperties) PreviousProperties {
-	typ := PreviousPropertiesTypeBenefitGrantDiscordProperties
-
-	return PreviousProperties{
-		BenefitGrantDiscordProperties: &benefitGrantDiscordProperties,
-		Type:                          typ,
-	}
-}
-
-func CreatePreviousPropertiesBenefitGrantGitHubRepositoryProperties(benefitGrantGitHubRepositoryProperties BenefitGrantGitHubRepositoryProperties) PreviousProperties {
-	typ := PreviousPropertiesTypeBenefitGrantGitHubRepositoryProperties
-
-	return PreviousProperties{
-		BenefitGrantGitHubRepositoryProperties: &benefitGrantGitHubRepositoryProperties,
-		Type:                                   typ,
-	}
-}
-
-func CreatePreviousPropertiesBenefitGrantDownloadablesProperties(benefitGrantDownloadablesProperties BenefitGrantDownloadablesProperties) PreviousProperties {
-	typ := PreviousPropertiesTypeBenefitGrantDownloadablesProperties
-
-	return PreviousProperties{
-		BenefitGrantDownloadablesProperties: &benefitGrantDownloadablesProperties,
-		Type:                                typ,
-	}
-}
-
-func CreatePreviousPropertiesBenefitGrantLicenseKeysProperties(benefitGrantLicenseKeysProperties BenefitGrantLicenseKeysProperties) PreviousProperties {
-	typ := PreviousPropertiesTypeBenefitGrantLicenseKeysProperties
-
-	return PreviousProperties{
-		BenefitGrantLicenseKeysProperties: &benefitGrantLicenseKeysProperties,
-		Type:                              typ,
-	}
-}
-
-func CreatePreviousPropertiesBenefitGrantCustomProperties(benefitGrantCustomProperties BenefitGrantCustomProperties) PreviousProperties {
-	typ := PreviousPropertiesTypeBenefitGrantCustomProperties
-
-	return PreviousProperties{
-		BenefitGrantCustomProperties: &benefitGrantCustomProperties,
-		Type:                         typ,
-	}
-}
-
-func (u *PreviousProperties) UnmarshalJSON(data []byte) error {
-
-	var benefitGrantDiscordProperties BenefitGrantDiscordProperties = BenefitGrantDiscordProperties{}
-	if err := utils.UnmarshalJSON(data, &benefitGrantDiscordProperties, "", true, nil); err == nil {
-		u.BenefitGrantDiscordProperties = &benefitGrantDiscordProperties
-		u.Type = PreviousPropertiesTypeBenefitGrantDiscordProperties
-		return nil
-	}
-
-	var benefitGrantGitHubRepositoryProperties BenefitGrantGitHubRepositoryProperties = BenefitGrantGitHubRepositoryProperties{}
-	if err := utils.UnmarshalJSON(data, &benefitGrantGitHubRepositoryProperties, "", true, nil); err == nil {
-		u.BenefitGrantGitHubRepositoryProperties = &benefitGrantGitHubRepositoryProperties
-		u.Type = PreviousPropertiesTypeBenefitGrantGitHubRepositoryProperties
-		return nil
-	}
-
-	var benefitGrantDownloadablesProperties BenefitGrantDownloadablesProperties = BenefitGrantDownloadablesProperties{}
-	if err := utils.UnmarshalJSON(data, &benefitGrantDownloadablesProperties, "", true, nil); err == nil {
-		u.BenefitGrantDownloadablesProperties = &benefitGrantDownloadablesProperties
-		u.Type = PreviousPropertiesTypeBenefitGrantDownloadablesProperties
-		return nil
-	}
-
-	var benefitGrantLicenseKeysProperties BenefitGrantLicenseKeysProperties = BenefitGrantLicenseKeysProperties{}
-	if err := utils.UnmarshalJSON(data, &benefitGrantLicenseKeysProperties, "", true, nil); err == nil {
-		u.BenefitGrantLicenseKeysProperties = &benefitGrantLicenseKeysProperties
-		u.Type = PreviousPropertiesTypeBenefitGrantLicenseKeysProperties
-		return nil
-	}
-
-	var benefitGrantCustomProperties BenefitGrantCustomProperties = BenefitGrantCustomProperties{}
-	if err := utils.UnmarshalJSON(data, &benefitGrantCustomProperties, "", true, nil); err == nil {
-		u.BenefitGrantCustomProperties = &benefitGrantCustomProperties
-		u.Type = PreviousPropertiesTypeBenefitGrantCustomProperties
-		return nil
-	}
-
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for PreviousProperties", string(data))
-}
-
-func (u PreviousProperties) MarshalJSON() ([]byte, error) {
-	if u.BenefitGrantDiscordProperties != nil {
-		return utils.MarshalJSON(u.BenefitGrantDiscordProperties, "", true)
-	}
-
-	if u.BenefitGrantGitHubRepositoryProperties != nil {
-		return utils.MarshalJSON(u.BenefitGrantGitHubRepositoryProperties, "", true)
-	}
-
-	if u.BenefitGrantDownloadablesProperties != nil {
-		return utils.MarshalJSON(u.BenefitGrantDownloadablesProperties, "", true)
-	}
-
-	if u.BenefitGrantLicenseKeysProperties != nil {
-		return utils.MarshalJSON(u.BenefitGrantLicenseKeysProperties, "", true)
-	}
-
-	if u.BenefitGrantCustomProperties != nil {
-		return utils.MarshalJSON(u.BenefitGrantCustomProperties, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type PreviousProperties: all fields are null")
-}
 
 type BenefitGrantWebhook struct {
-	// Creation timestamp of the object.
-	CreatedAt time.Time `json:"created_at"`
-	// Last modification timestamp of the object.
-	ModifiedAt *time.Time `json:"modified_at"`
-	// The ID of the grant.
-	ID string `json:"id"`
-	// The timestamp when the benefit was granted. If `None`, the benefit is not granted.
-	GrantedAt *time.Time `json:"granted_at,omitempty"`
-	// Whether the benefit is granted.
-	IsGranted bool `json:"is_granted"`
-	// The timestamp when the benefit was revoked. If `None`, the benefit is not revoked.
-	RevokedAt *time.Time `json:"revoked_at,omitempty"`
-	// Whether the benefit is revoked.
-	IsRevoked bool `json:"is_revoked"`
-	// The ID of the subscription that granted this benefit.
-	SubscriptionID *string `json:"subscription_id"`
-	// The ID of the order that granted this benefit.
-	OrderID *string `json:"order_id"`
-	// The ID of the customer concerned by this grant.
-	CustomerID string `json:"customer_id"`
-	// The ID of the benefit concerned by this grant.
-	BenefitID string `json:"benefit_id"`
-	// The error information if the benefit grant failed with an unrecoverable error.
-	Error *BenefitGrantError `json:"error,omitempty"`
-	// A customer in an organization.
-	Customer           Customer                      `json:"customer"`
-	Properties         BenefitGrantWebhookProperties `json:"properties"`
-	Benefit            Benefit                       `json:"benefit"`
-	PreviousProperties *PreviousProperties           `json:"previous_properties,omitempty"`
+	BenefitGrantDiscordWebhook          *BenefitGrantDiscordWebhook          `queryParam:"inline" name:"BenefitGrantWebhook"`
+	BenefitGrantCustomWebhook           *BenefitGrantCustomWebhook           `queryParam:"inline" name:"BenefitGrantWebhook"`
+	BenefitGrantGitHubRepositoryWebhook *BenefitGrantGitHubRepositoryWebhook `queryParam:"inline" name:"BenefitGrantWebhook"`
+	BenefitGrantDownloadablesWebhook    *BenefitGrantDownloadablesWebhook    `queryParam:"inline" name:"BenefitGrantWebhook"`
+	BenefitGrantLicenseKeysWebhook      *BenefitGrantLicenseKeysWebhook      `queryParam:"inline" name:"BenefitGrantWebhook"`
+	BenefitGrantMeterCreditWebhook      *BenefitGrantMeterCreditWebhook      `queryParam:"inline" name:"BenefitGrantWebhook"`
+
+	Type BenefitGrantWebhookType
 }
 
-func (b BenefitGrantWebhook) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(b, "", false)
-}
+func CreateBenefitGrantWebhookBenefitGrantDiscordWebhook(benefitGrantDiscordWebhook BenefitGrantDiscordWebhook) BenefitGrantWebhook {
+	typ := BenefitGrantWebhookTypeBenefitGrantDiscordWebhook
 
-func (b *BenefitGrantWebhook) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &b, "", false, []string{"created_at", "modified_at", "id", "is_granted", "is_revoked", "subscription_id", "order_id", "customer_id", "benefit_id", "customer", "properties", "benefit"}); err != nil {
-		return err
+	return BenefitGrantWebhook{
+		BenefitGrantDiscordWebhook: &benefitGrantDiscordWebhook,
+		Type:                       typ,
 	}
-	return nil
 }
 
-func (o *BenefitGrantWebhook) GetCreatedAt() time.Time {
-	if o == nil {
-		return time.Time{}
+func CreateBenefitGrantWebhookBenefitGrantCustomWebhook(benefitGrantCustomWebhook BenefitGrantCustomWebhook) BenefitGrantWebhook {
+	typ := BenefitGrantWebhookTypeBenefitGrantCustomWebhook
+
+	return BenefitGrantWebhook{
+		BenefitGrantCustomWebhook: &benefitGrantCustomWebhook,
+		Type:                      typ,
 	}
-	return o.CreatedAt
 }
 
-func (o *BenefitGrantWebhook) GetModifiedAt() *time.Time {
-	if o == nil {
+func CreateBenefitGrantWebhookBenefitGrantGitHubRepositoryWebhook(benefitGrantGitHubRepositoryWebhook BenefitGrantGitHubRepositoryWebhook) BenefitGrantWebhook {
+	typ := BenefitGrantWebhookTypeBenefitGrantGitHubRepositoryWebhook
+
+	return BenefitGrantWebhook{
+		BenefitGrantGitHubRepositoryWebhook: &benefitGrantGitHubRepositoryWebhook,
+		Type:                                typ,
+	}
+}
+
+func CreateBenefitGrantWebhookBenefitGrantDownloadablesWebhook(benefitGrantDownloadablesWebhook BenefitGrantDownloadablesWebhook) BenefitGrantWebhook {
+	typ := BenefitGrantWebhookTypeBenefitGrantDownloadablesWebhook
+
+	return BenefitGrantWebhook{
+		BenefitGrantDownloadablesWebhook: &benefitGrantDownloadablesWebhook,
+		Type:                             typ,
+	}
+}
+
+func CreateBenefitGrantWebhookBenefitGrantLicenseKeysWebhook(benefitGrantLicenseKeysWebhook BenefitGrantLicenseKeysWebhook) BenefitGrantWebhook {
+	typ := BenefitGrantWebhookTypeBenefitGrantLicenseKeysWebhook
+
+	return BenefitGrantWebhook{
+		BenefitGrantLicenseKeysWebhook: &benefitGrantLicenseKeysWebhook,
+		Type:                           typ,
+	}
+}
+
+func CreateBenefitGrantWebhookBenefitGrantMeterCreditWebhook(benefitGrantMeterCreditWebhook BenefitGrantMeterCreditWebhook) BenefitGrantWebhook {
+	typ := BenefitGrantWebhookTypeBenefitGrantMeterCreditWebhook
+
+	return BenefitGrantWebhook{
+		BenefitGrantMeterCreditWebhook: &benefitGrantMeterCreditWebhook,
+		Type:                           typ,
+	}
+}
+
+func (u *BenefitGrantWebhook) UnmarshalJSON(data []byte) error {
+
+	var benefitGrantDiscordWebhook BenefitGrantDiscordWebhook = BenefitGrantDiscordWebhook{}
+	if err := utils.UnmarshalJSON(data, &benefitGrantDiscordWebhook, "", true, nil); err == nil {
+		u.BenefitGrantDiscordWebhook = &benefitGrantDiscordWebhook
+		u.Type = BenefitGrantWebhookTypeBenefitGrantDiscordWebhook
 		return nil
 	}
-	return o.ModifiedAt
-}
 
-func (o *BenefitGrantWebhook) GetID() string {
-	if o == nil {
-		return ""
-	}
-	return o.ID
-}
-
-func (o *BenefitGrantWebhook) GetGrantedAt() *time.Time {
-	if o == nil {
+	var benefitGrantCustomWebhook BenefitGrantCustomWebhook = BenefitGrantCustomWebhook{}
+	if err := utils.UnmarshalJSON(data, &benefitGrantCustomWebhook, "", true, nil); err == nil {
+		u.BenefitGrantCustomWebhook = &benefitGrantCustomWebhook
+		u.Type = BenefitGrantWebhookTypeBenefitGrantCustomWebhook
 		return nil
 	}
-	return o.GrantedAt
-}
 
-func (o *BenefitGrantWebhook) GetIsGranted() bool {
-	if o == nil {
-		return false
-	}
-	return o.IsGranted
-}
-
-func (o *BenefitGrantWebhook) GetRevokedAt() *time.Time {
-	if o == nil {
+	var benefitGrantGitHubRepositoryWebhook BenefitGrantGitHubRepositoryWebhook = BenefitGrantGitHubRepositoryWebhook{}
+	if err := utils.UnmarshalJSON(data, &benefitGrantGitHubRepositoryWebhook, "", true, nil); err == nil {
+		u.BenefitGrantGitHubRepositoryWebhook = &benefitGrantGitHubRepositoryWebhook
+		u.Type = BenefitGrantWebhookTypeBenefitGrantGitHubRepositoryWebhook
 		return nil
 	}
-	return o.RevokedAt
-}
 
-func (o *BenefitGrantWebhook) GetIsRevoked() bool {
-	if o == nil {
-		return false
-	}
-	return o.IsRevoked
-}
-
-func (o *BenefitGrantWebhook) GetSubscriptionID() *string {
-	if o == nil {
+	var benefitGrantDownloadablesWebhook BenefitGrantDownloadablesWebhook = BenefitGrantDownloadablesWebhook{}
+	if err := utils.UnmarshalJSON(data, &benefitGrantDownloadablesWebhook, "", true, nil); err == nil {
+		u.BenefitGrantDownloadablesWebhook = &benefitGrantDownloadablesWebhook
+		u.Type = BenefitGrantWebhookTypeBenefitGrantDownloadablesWebhook
 		return nil
 	}
-	return o.SubscriptionID
-}
 
-func (o *BenefitGrantWebhook) GetOrderID() *string {
-	if o == nil {
+	var benefitGrantLicenseKeysWebhook BenefitGrantLicenseKeysWebhook = BenefitGrantLicenseKeysWebhook{}
+	if err := utils.UnmarshalJSON(data, &benefitGrantLicenseKeysWebhook, "", true, nil); err == nil {
+		u.BenefitGrantLicenseKeysWebhook = &benefitGrantLicenseKeysWebhook
+		u.Type = BenefitGrantWebhookTypeBenefitGrantLicenseKeysWebhook
 		return nil
 	}
-	return o.OrderID
-}
 
-func (o *BenefitGrantWebhook) GetCustomerID() string {
-	if o == nil {
-		return ""
-	}
-	return o.CustomerID
-}
-
-func (o *BenefitGrantWebhook) GetBenefitID() string {
-	if o == nil {
-		return ""
-	}
-	return o.BenefitID
-}
-
-func (o *BenefitGrantWebhook) GetError() *BenefitGrantError {
-	if o == nil {
+	var benefitGrantMeterCreditWebhook BenefitGrantMeterCreditWebhook = BenefitGrantMeterCreditWebhook{}
+	if err := utils.UnmarshalJSON(data, &benefitGrantMeterCreditWebhook, "", true, nil); err == nil {
+		u.BenefitGrantMeterCreditWebhook = &benefitGrantMeterCreditWebhook
+		u.Type = BenefitGrantWebhookTypeBenefitGrantMeterCreditWebhook
 		return nil
 	}
-	return o.Error
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for BenefitGrantWebhook", string(data))
 }
 
-func (o *BenefitGrantWebhook) GetCustomer() Customer {
-	if o == nil {
-		return Customer{}
+func (u BenefitGrantWebhook) MarshalJSON() ([]byte, error) {
+	if u.BenefitGrantDiscordWebhook != nil {
+		return utils.MarshalJSON(u.BenefitGrantDiscordWebhook, "", true)
 	}
-	return o.Customer
-}
 
-func (o *BenefitGrantWebhook) GetProperties() BenefitGrantWebhookProperties {
-	if o == nil {
-		return BenefitGrantWebhookProperties{}
+	if u.BenefitGrantCustomWebhook != nil {
+		return utils.MarshalJSON(u.BenefitGrantCustomWebhook, "", true)
 	}
-	return o.Properties
-}
 
-func (o *BenefitGrantWebhook) GetBenefit() Benefit {
-	if o == nil {
-		return Benefit{}
+	if u.BenefitGrantGitHubRepositoryWebhook != nil {
+		return utils.MarshalJSON(u.BenefitGrantGitHubRepositoryWebhook, "", true)
 	}
-	return o.Benefit
-}
 
-func (o *BenefitGrantWebhook) GetPreviousProperties() *PreviousProperties {
-	if o == nil {
-		return nil
+	if u.BenefitGrantDownloadablesWebhook != nil {
+		return utils.MarshalJSON(u.BenefitGrantDownloadablesWebhook, "", true)
 	}
-	return o.PreviousProperties
+
+	if u.BenefitGrantLicenseKeysWebhook != nil {
+		return utils.MarshalJSON(u.BenefitGrantLicenseKeysWebhook, "", true)
+	}
+
+	if u.BenefitGrantMeterCreditWebhook != nil {
+		return utils.MarshalJSON(u.BenefitGrantMeterCreditWebhook, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type BenefitGrantWebhook: all fields are null")
 }

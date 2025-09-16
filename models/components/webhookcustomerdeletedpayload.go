@@ -4,13 +4,15 @@ package components
 
 import (
 	"github.com/polarsource/polar-go/internal/utils"
+	"time"
 )
 
 // WebhookCustomerDeletedPayload - Sent when a customer is deleted.
 //
 // **Discord & Slack support:** Basic
 type WebhookCustomerDeletedPayload struct {
-	type_ string `const:"customer.deleted" json:"type"`
+	type_     string    `const:"customer.deleted" json:"type"`
+	Timestamp time.Time `json:"timestamp"`
 	// A customer in an organization.
 	Data Customer `json:"data"`
 }
@@ -20,7 +22,7 @@ func (w WebhookCustomerDeletedPayload) MarshalJSON() ([]byte, error) {
 }
 
 func (w *WebhookCustomerDeletedPayload) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &w, "", false, []string{"type", "data"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &w, "", false, []string{"type", "timestamp", "data"}); err != nil {
 		return err
 	}
 	return nil
@@ -28,6 +30,13 @@ func (w *WebhookCustomerDeletedPayload) UnmarshalJSON(data []byte) error {
 
 func (o *WebhookCustomerDeletedPayload) GetType() string {
 	return "customer.deleted"
+}
+
+func (o *WebhookCustomerDeletedPayload) GetTimestamp() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.Timestamp
 }
 
 func (o *WebhookCustomerDeletedPayload) GetData() Customer {

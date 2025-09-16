@@ -4,6 +4,7 @@ package components
 
 import (
 	"github.com/polarsource/polar-go/internal/utils"
+	"time"
 )
 
 // WebhookOrderPaidPayload - Sent when an order is paid.
@@ -12,8 +13,9 @@ import (
 //
 // **Discord & Slack support:** Full
 type WebhookOrderPaidPayload struct {
-	type_ string `const:"order.paid" json:"type"`
-	Data  Order  `json:"data"`
+	type_     string    `const:"order.paid" json:"type"`
+	Timestamp time.Time `json:"timestamp"`
+	Data      Order     `json:"data"`
 }
 
 func (w WebhookOrderPaidPayload) MarshalJSON() ([]byte, error) {
@@ -21,7 +23,7 @@ func (w WebhookOrderPaidPayload) MarshalJSON() ([]byte, error) {
 }
 
 func (w *WebhookOrderPaidPayload) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &w, "", false, []string{"type", "data"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &w, "", false, []string{"type", "timestamp", "data"}); err != nil {
 		return err
 	}
 	return nil
@@ -29,6 +31,13 @@ func (w *WebhookOrderPaidPayload) UnmarshalJSON(data []byte) error {
 
 func (o *WebhookOrderPaidPayload) GetType() string {
 	return "order.paid"
+}
+
+func (o *WebhookOrderPaidPayload) GetTimestamp() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.Timestamp
 }
 
 func (o *WebhookOrderPaidPayload) GetData() Order {

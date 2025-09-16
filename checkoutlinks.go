@@ -335,7 +335,7 @@ func (s *CheckoutLinks) List(ctx context.Context, request operations.CheckoutLin
 // Create a checkout link.
 //
 // **Scopes**: `checkout_links:write`
-func (s *CheckoutLinks) Create(ctx context.Context, request operations.CheckoutLinksCreateCheckoutLinkCreate, opts ...operations.Option) (*operations.CheckoutLinksCreateResponse, error) {
+func (s *CheckoutLinks) Create(ctx context.Context, request components.CheckoutLinkCreate, opts ...operations.Option) (*operations.CheckoutLinksCreateResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,

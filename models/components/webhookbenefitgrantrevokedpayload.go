@@ -4,14 +4,16 @@ package components
 
 import (
 	"github.com/polarsource/polar-go/internal/utils"
+	"time"
 )
 
 // WebhookBenefitGrantRevokedPayload - Sent when a benefit grant is revoked.
 //
 // **Discord & Slack support:** Basic
 type WebhookBenefitGrantRevokedPayload struct {
-	type_ string              `const:"benefit_grant.revoked" json:"type"`
-	Data  BenefitGrantWebhook `json:"data"`
+	type_     string              `const:"benefit_grant.revoked" json:"type"`
+	Timestamp time.Time           `json:"timestamp"`
+	Data      BenefitGrantWebhook `json:"data"`
 }
 
 func (w WebhookBenefitGrantRevokedPayload) MarshalJSON() ([]byte, error) {
@@ -19,7 +21,7 @@ func (w WebhookBenefitGrantRevokedPayload) MarshalJSON() ([]byte, error) {
 }
 
 func (w *WebhookBenefitGrantRevokedPayload) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &w, "", false, []string{"type", "data"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &w, "", false, []string{"type", "timestamp", "data"}); err != nil {
 		return err
 	}
 	return nil
@@ -27,6 +29,13 @@ func (w *WebhookBenefitGrantRevokedPayload) UnmarshalJSON(data []byte) error {
 
 func (o *WebhookBenefitGrantRevokedPayload) GetType() string {
 	return "benefit_grant.revoked"
+}
+
+func (o *WebhookBenefitGrantRevokedPayload) GetTimestamp() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.Timestamp
 }
 
 func (o *WebhookBenefitGrantRevokedPayload) GetData() BenefitGrantWebhook {

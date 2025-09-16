@@ -4,6 +4,7 @@ package components
 
 import (
 	"github.com/polarsource/polar-go/internal/utils"
+	"time"
 )
 
 // WebhookSubscriptionRevokedPayload - Sent when a subscription is revoked, the user loses access immediately.
@@ -11,8 +12,9 @@ import (
 //
 // **Discord & Slack support:** Full
 type WebhookSubscriptionRevokedPayload struct {
-	type_ string       `const:"subscription.revoked" json:"type"`
-	Data  Subscription `json:"data"`
+	type_     string       `const:"subscription.revoked" json:"type"`
+	Timestamp time.Time    `json:"timestamp"`
+	Data      Subscription `json:"data"`
 }
 
 func (w WebhookSubscriptionRevokedPayload) MarshalJSON() ([]byte, error) {
@@ -20,7 +22,7 @@ func (w WebhookSubscriptionRevokedPayload) MarshalJSON() ([]byte, error) {
 }
 
 func (w *WebhookSubscriptionRevokedPayload) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &w, "", false, []string{"type", "data"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &w, "", false, []string{"type", "timestamp", "data"}); err != nil {
 		return err
 	}
 	return nil
@@ -28,6 +30,13 @@ func (w *WebhookSubscriptionRevokedPayload) UnmarshalJSON(data []byte) error {
 
 func (o *WebhookSubscriptionRevokedPayload) GetType() string {
 	return "subscription.revoked"
+}
+
+func (o *WebhookSubscriptionRevokedPayload) GetTimestamp() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.Timestamp
 }
 
 func (o *WebhookSubscriptionRevokedPayload) GetData() Subscription {

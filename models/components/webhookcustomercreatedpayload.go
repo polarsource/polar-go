@@ -4,6 +4,7 @@ package components
 
 import (
 	"github.com/polarsource/polar-go/internal/utils"
+	"time"
 )
 
 // WebhookCustomerCreatedPayload - Sent when a new customer is created.
@@ -15,7 +16,8 @@ import (
 //
 // **Discord & Slack support:** Basic
 type WebhookCustomerCreatedPayload struct {
-	type_ string `const:"customer.created" json:"type"`
+	type_     string    `const:"customer.created" json:"type"`
+	Timestamp time.Time `json:"timestamp"`
 	// A customer in an organization.
 	Data Customer `json:"data"`
 }
@@ -25,7 +27,7 @@ func (w WebhookCustomerCreatedPayload) MarshalJSON() ([]byte, error) {
 }
 
 func (w *WebhookCustomerCreatedPayload) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &w, "", false, []string{"type", "data"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &w, "", false, []string{"type", "timestamp", "data"}); err != nil {
 		return err
 	}
 	return nil
@@ -33,6 +35,13 @@ func (w *WebhookCustomerCreatedPayload) UnmarshalJSON(data []byte) error {
 
 func (o *WebhookCustomerCreatedPayload) GetType() string {
 	return "customer.created"
+}
+
+func (o *WebhookCustomerCreatedPayload) GetTimestamp() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.Timestamp
 }
 
 func (o *WebhookCustomerCreatedPayload) GetData() Customer {

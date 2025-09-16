@@ -4,14 +4,16 @@ package components
 
 import (
 	"github.com/polarsource/polar-go/internal/utils"
+	"time"
 )
 
 // WebhookBenefitGrantUpdatedPayload - Sent when a benefit grant is updated.
 //
 // **Discord & Slack support:** Basic
 type WebhookBenefitGrantUpdatedPayload struct {
-	type_ string              `const:"benefit_grant.updated" json:"type"`
-	Data  BenefitGrantWebhook `json:"data"`
+	type_     string              `const:"benefit_grant.updated" json:"type"`
+	Timestamp time.Time           `json:"timestamp"`
+	Data      BenefitGrantWebhook `json:"data"`
 }
 
 func (w WebhookBenefitGrantUpdatedPayload) MarshalJSON() ([]byte, error) {
@@ -19,7 +21,7 @@ func (w WebhookBenefitGrantUpdatedPayload) MarshalJSON() ([]byte, error) {
 }
 
 func (w *WebhookBenefitGrantUpdatedPayload) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &w, "", false, []string{"type", "data"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &w, "", false, []string{"type", "timestamp", "data"}); err != nil {
 		return err
 	}
 	return nil
@@ -27,6 +29,13 @@ func (w *WebhookBenefitGrantUpdatedPayload) UnmarshalJSON(data []byte) error {
 
 func (o *WebhookBenefitGrantUpdatedPayload) GetType() string {
 	return "benefit_grant.updated"
+}
+
+func (o *WebhookBenefitGrantUpdatedPayload) GetTimestamp() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.Timestamp
 }
 
 func (o *WebhookBenefitGrantUpdatedPayload) GetData() BenefitGrantWebhook {

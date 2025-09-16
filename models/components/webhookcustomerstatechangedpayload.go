@@ -4,6 +4,7 @@ package components
 
 import (
 	"github.com/polarsource/polar-go/internal/utils"
+	"time"
 )
 
 // WebhookCustomerStateChangedPayload - Sent when a customer state has changed.
@@ -16,7 +17,8 @@ import (
 //
 // **Discord & Slack support:** Basic
 type WebhookCustomerStateChangedPayload struct {
-	type_ string `const:"customer.state_changed" json:"type"`
+	type_     string    `const:"customer.state_changed" json:"type"`
+	Timestamp time.Time `json:"timestamp"`
 	// A customer along with additional state information:
 	//
 	// * Active subscriptions
@@ -30,7 +32,7 @@ func (w WebhookCustomerStateChangedPayload) MarshalJSON() ([]byte, error) {
 }
 
 func (w *WebhookCustomerStateChangedPayload) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &w, "", false, []string{"type", "data"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &w, "", false, []string{"type", "timestamp", "data"}); err != nil {
 		return err
 	}
 	return nil
@@ -38,6 +40,13 @@ func (w *WebhookCustomerStateChangedPayload) UnmarshalJSON(data []byte) error {
 
 func (o *WebhookCustomerStateChangedPayload) GetType() string {
 	return "customer.state_changed"
+}
+
+func (o *WebhookCustomerStateChangedPayload) GetTimestamp() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.Timestamp
 }
 
 func (o *WebhookCustomerStateChangedPayload) GetData() CustomerState {

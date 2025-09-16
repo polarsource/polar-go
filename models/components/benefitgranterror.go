@@ -2,10 +2,25 @@
 
 package components
 
+import (
+	"github.com/polarsource/polar-go/internal/utils"
+)
+
 type BenefitGrantError struct {
 	Message   string `json:"message"`
 	Type      string `json:"type"`
 	Timestamp string `json:"timestamp"`
+}
+
+func (b BenefitGrantError) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(b, "", false)
+}
+
+func (b *BenefitGrantError) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &b, "", false, []string{"message", "type", "timestamp"}); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (o *BenefitGrantError) GetMessage() string {

@@ -4,6 +4,7 @@ package components
 
 import (
 	"github.com/polarsource/polar-go/internal/utils"
+	"time"
 )
 
 // WebhookSubscriptionCreatedPayload - Sent when a new subscription is created.
@@ -12,8 +13,9 @@ import (
 //
 // **Discord & Slack support:** Full
 type WebhookSubscriptionCreatedPayload struct {
-	type_ string       `const:"subscription.created" json:"type"`
-	Data  Subscription `json:"data"`
+	type_     string       `const:"subscription.created" json:"type"`
+	Timestamp time.Time    `json:"timestamp"`
+	Data      Subscription `json:"data"`
 }
 
 func (w WebhookSubscriptionCreatedPayload) MarshalJSON() ([]byte, error) {
@@ -21,7 +23,7 @@ func (w WebhookSubscriptionCreatedPayload) MarshalJSON() ([]byte, error) {
 }
 
 func (w *WebhookSubscriptionCreatedPayload) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &w, "", false, []string{"type", "data"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &w, "", false, []string{"type", "timestamp", "data"}); err != nil {
 		return err
 	}
 	return nil
@@ -29,6 +31,13 @@ func (w *WebhookSubscriptionCreatedPayload) UnmarshalJSON(data []byte) error {
 
 func (o *WebhookSubscriptionCreatedPayload) GetType() string {
 	return "subscription.created"
+}
+
+func (o *WebhookSubscriptionCreatedPayload) GetTimestamp() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.Timestamp
 }
 
 func (o *WebhookSubscriptionCreatedPayload) GetData() Subscription {

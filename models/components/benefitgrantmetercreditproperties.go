@@ -7,9 +7,9 @@ import (
 )
 
 type BenefitGrantMeterCreditProperties struct {
-	LastCreditedMeterID string `json:"last_credited_meter_id"`
-	LastCreditedUnits   int64  `json:"last_credited_units"`
-	LastCreditedAt      string `json:"last_credited_at"`
+	LastCreditedMeterID *string `json:"last_credited_meter_id,omitempty"`
+	LastCreditedUnits   *int64  `json:"last_credited_units,omitempty"`
+	LastCreditedAt      *string `json:"last_credited_at,omitempty"`
 }
 
 func (b BenefitGrantMeterCreditProperties) MarshalJSON() ([]byte, error) {
@@ -17,29 +17,29 @@ func (b BenefitGrantMeterCreditProperties) MarshalJSON() ([]byte, error) {
 }
 
 func (b *BenefitGrantMeterCreditProperties) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &b, "", false, []string{"last_credited_meter_id", "last_credited_units", "last_credited_at"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &b, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *BenefitGrantMeterCreditProperties) GetLastCreditedMeterID() string {
+func (o *BenefitGrantMeterCreditProperties) GetLastCreditedMeterID() *string {
 	if o == nil {
-		return ""
+		return nil
 	}
 	return o.LastCreditedMeterID
 }
 
-func (o *BenefitGrantMeterCreditProperties) GetLastCreditedUnits() int64 {
+func (o *BenefitGrantMeterCreditProperties) GetLastCreditedUnits() *int64 {
 	if o == nil {
-		return 0
+		return nil
 	}
 	return o.LastCreditedUnits
 }
 
-func (o *BenefitGrantMeterCreditProperties) GetLastCreditedAt() string {
+func (o *BenefitGrantMeterCreditProperties) GetLastCreditedAt() *string {
 	if o == nil {
-		return ""
+		return nil
 	}
 	return o.LastCreditedAt
 }

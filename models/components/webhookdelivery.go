@@ -15,10 +15,12 @@ type WebhookDelivery struct {
 	ModifiedAt *time.Time `json:"modified_at"`
 	// The ID of the object.
 	ID string `json:"id"`
-	// The HTTP code returned by the URL. `null` if the endpoint was unreachable.
-	HTTPCode *int64 `json:"http_code,omitempty"`
 	// Whether the delivery was successful.
 	Succeeded bool `json:"succeeded"`
+	// The HTTP code returned by the URL. `null` if the endpoint was unreachable.
+	HTTPCode *int64 `json:"http_code"`
+	// The response body returned by the URL, or the error message if the endpoint was unreachable.
+	Response *string `json:"response"`
 	// A webhook event.
 	//
 	// An event represent something that happened in the system
@@ -34,7 +36,7 @@ func (w WebhookDelivery) MarshalJSON() ([]byte, error) {
 }
 
 func (w *WebhookDelivery) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &w, "", false, []string{"created_at", "modified_at", "id", "succeeded", "webhook_event"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &w, "", false, []string{"created_at", "modified_at", "id", "succeeded", "http_code", "response", "webhook_event"}); err != nil {
 		return err
 	}
 	return nil
@@ -61,6 +63,13 @@ func (o *WebhookDelivery) GetID() string {
 	return o.ID
 }
 
+func (o *WebhookDelivery) GetSucceeded() bool {
+	if o == nil {
+		return false
+	}
+	return o.Succeeded
+}
+
 func (o *WebhookDelivery) GetHTTPCode() *int64 {
 	if o == nil {
 		return nil
@@ -68,11 +77,11 @@ func (o *WebhookDelivery) GetHTTPCode() *int64 {
 	return o.HTTPCode
 }
 
-func (o *WebhookDelivery) GetSucceeded() bool {
+func (o *WebhookDelivery) GetResponse() *string {
 	if o == nil {
-		return false
+		return nil
 	}
-	return o.Succeeded
+	return o.Response
 }
 
 func (o *WebhookDelivery) GetWebhookEvent() WebhookEvent {

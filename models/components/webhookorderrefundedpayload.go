@@ -4,14 +4,16 @@ package components
 
 import (
 	"github.com/polarsource/polar-go/internal/utils"
+	"time"
 )
 
 // WebhookOrderRefundedPayload - Sent when an order is fully or partially refunded.
 //
 // **Discord & Slack support:** Full
 type WebhookOrderRefundedPayload struct {
-	type_ string `const:"order.refunded" json:"type"`
-	Data  Order  `json:"data"`
+	type_     string    `const:"order.refunded" json:"type"`
+	Timestamp time.Time `json:"timestamp"`
+	Data      Order     `json:"data"`
 }
 
 func (w WebhookOrderRefundedPayload) MarshalJSON() ([]byte, error) {
@@ -19,7 +21,7 @@ func (w WebhookOrderRefundedPayload) MarshalJSON() ([]byte, error) {
 }
 
 func (w *WebhookOrderRefundedPayload) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &w, "", false, []string{"type", "data"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &w, "", false, []string{"type", "timestamp", "data"}); err != nil {
 		return err
 	}
 	return nil
@@ -27,6 +29,13 @@ func (w *WebhookOrderRefundedPayload) UnmarshalJSON(data []byte) error {
 
 func (o *WebhookOrderRefundedPayload) GetType() string {
 	return "order.refunded"
+}
+
+func (o *WebhookOrderRefundedPayload) GetTimestamp() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.Timestamp
 }
 
 func (o *WebhookOrderRefundedPayload) GetData() Order {

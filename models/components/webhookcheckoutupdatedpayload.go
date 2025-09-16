@@ -4,13 +4,15 @@ package components
 
 import (
 	"github.com/polarsource/polar-go/internal/utils"
+	"time"
 )
 
 // WebhookCheckoutUpdatedPayload - Sent when a checkout is updated.
 //
 // **Discord & Slack support:** Basic
 type WebhookCheckoutUpdatedPayload struct {
-	type_ string `const:"checkout.updated" json:"type"`
+	type_     string    `const:"checkout.updated" json:"type"`
+	Timestamp time.Time `json:"timestamp"`
 	// Checkout session data retrieved using an access token.
 	Data Checkout `json:"data"`
 }
@@ -20,7 +22,7 @@ func (w WebhookCheckoutUpdatedPayload) MarshalJSON() ([]byte, error) {
 }
 
 func (w *WebhookCheckoutUpdatedPayload) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &w, "", false, []string{"type", "data"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &w, "", false, []string{"type", "timestamp", "data"}); err != nil {
 		return err
 	}
 	return nil
@@ -28,6 +30,13 @@ func (w *WebhookCheckoutUpdatedPayload) UnmarshalJSON(data []byte) error {
 
 func (o *WebhookCheckoutUpdatedPayload) GetType() string {
 	return "checkout.updated"
+}
+
+func (o *WebhookCheckoutUpdatedPayload) GetTimestamp() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.Timestamp
 }
 
 func (o *WebhookCheckoutUpdatedPayload) GetData() Checkout {

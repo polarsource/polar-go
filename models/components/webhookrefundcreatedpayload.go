@@ -4,14 +4,16 @@ package components
 
 import (
 	"github.com/polarsource/polar-go/internal/utils"
+	"time"
 )
 
 // WebhookRefundCreatedPayload - Sent when a refund is created regardless of status.
 //
 // **Discord & Slack support:** Full
 type WebhookRefundCreatedPayload struct {
-	type_ string `const:"refund.created" json:"type"`
-	Data  Refund `json:"data"`
+	type_     string    `const:"refund.created" json:"type"`
+	Timestamp time.Time `json:"timestamp"`
+	Data      Refund    `json:"data"`
 }
 
 func (w WebhookRefundCreatedPayload) MarshalJSON() ([]byte, error) {
@@ -19,7 +21,7 @@ func (w WebhookRefundCreatedPayload) MarshalJSON() ([]byte, error) {
 }
 
 func (w *WebhookRefundCreatedPayload) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &w, "", false, []string{"type", "data"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &w, "", false, []string{"type", "timestamp", "data"}); err != nil {
 		return err
 	}
 	return nil
@@ -27,6 +29,13 @@ func (w *WebhookRefundCreatedPayload) UnmarshalJSON(data []byte) error {
 
 func (o *WebhookRefundCreatedPayload) GetType() string {
 	return "refund.created"
+}
+
+func (o *WebhookRefundCreatedPayload) GetTimestamp() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.Timestamp
 }
 
 func (o *WebhookRefundCreatedPayload) GetData() Refund {

@@ -9,3 +9,5 @@
 | `BenefitSortPropertyMinusCreatedAt`   | -created_at                           |
 | `BenefitSortPropertyDescription`      | description                           |
 | `BenefitSortPropertyMinusDescription` | -description                          |
+| `BenefitSortPropertyType`             | type                                  |
+| `BenefitSortPropertyMinusType`        | -type                                 |

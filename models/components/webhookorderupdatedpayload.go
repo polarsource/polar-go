@@ -4,6 +4,7 @@ package components
 
 import (
 	"github.com/polarsource/polar-go/internal/utils"
+	"time"
 )
 
 // WebhookOrderUpdatedPayload - Sent when an order is updated.
@@ -15,8 +16,9 @@ import (
 //
 // **Discord & Slack support:** Full
 type WebhookOrderUpdatedPayload struct {
-	type_ string `const:"order.updated" json:"type"`
-	Data  Order  `json:"data"`
+	type_     string    `const:"order.updated" json:"type"`
+	Timestamp time.Time `json:"timestamp"`
+	Data      Order     `json:"data"`
 }
 
 func (w WebhookOrderUpdatedPayload) MarshalJSON() ([]byte, error) {
@@ -24,7 +26,7 @@ func (w WebhookOrderUpdatedPayload) MarshalJSON() ([]byte, error) {
 }
 
 func (w *WebhookOrderUpdatedPayload) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &w, "", false, []string{"type", "data"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &w, "", false, []string{"type", "timestamp", "data"}); err != nil {
 		return err
 	}
 	return nil
@@ -32,6 +34,13 @@ func (w *WebhookOrderUpdatedPayload) UnmarshalJSON(data []byte) error {
 
 func (o *WebhookOrderUpdatedPayload) GetType() string {
 	return "order.updated"
+}
+
+func (o *WebhookOrderUpdatedPayload) GetTimestamp() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.Timestamp
 }
 
 func (o *WebhookOrderUpdatedPayload) GetData() Order {

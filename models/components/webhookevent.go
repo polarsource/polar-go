@@ -26,7 +26,10 @@ type WebhookEvent struct {
 	// Whether this event was successfully delivered. `null` if no delivery has been attempted.
 	Succeeded *bool `json:"succeeded,omitempty"`
 	// The payload of the webhook event.
-	Payload string `json:"payload"`
+	Payload *string          `json:"payload"`
+	Type    WebhookEventType `json:"type"`
+	// Whether this event is archived. Archived events can't be redelivered, and the payload is not accessible anymore.
+	IsArchived bool `json:"is_archived"`
 }
 
 func (w WebhookEvent) MarshalJSON() ([]byte, error) {
@@ -34,7 +37,7 @@ func (w WebhookEvent) MarshalJSON() ([]byte, error) {
 }
 
 func (w *WebhookEvent) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &w, "", false, []string{"created_at", "modified_at", "id", "payload"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &w, "", false, []string{"created_at", "modified_at", "id", "payload", "type", "is_archived"}); err != nil {
 		return err
 	}
 	return nil
@@ -75,9 +78,23 @@ func (o *WebhookEvent) GetSucceeded() *bool {
 	return o.Succeeded
 }
 
-func (o *WebhookEvent) GetPayload() string {
+func (o *WebhookEvent) GetPayload() *string {
 	if o == nil {
-		return ""
+		return nil
 	}
 	return o.Payload
+}
+
+func (o *WebhookEvent) GetType() WebhookEventType {
+	if o == nil {
+		return WebhookEventType("")
+	}
+	return o.Type
+}
+
+func (o *WebhookEvent) GetIsArchived() bool {
+	if o == nil {
+		return false
+	}
+	return o.IsArchived
 }

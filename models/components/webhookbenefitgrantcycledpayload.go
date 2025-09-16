@@ -4,6 +4,7 @@ package components
 
 import (
 	"github.com/polarsource/polar-go/internal/utils"
+	"time"
 )
 
 // WebhookBenefitGrantCycledPayload - Sent when a benefit grant is cycled,
@@ -11,8 +12,9 @@ import (
 //
 // **Discord & Slack support:** Basic
 type WebhookBenefitGrantCycledPayload struct {
-	type_ string              `const:"benefit_grant.cycled" json:"type"`
-	Data  BenefitGrantWebhook `json:"data"`
+	type_     string              `const:"benefit_grant.cycled" json:"type"`
+	Timestamp time.Time           `json:"timestamp"`
+	Data      BenefitGrantWebhook `json:"data"`
 }
 
 func (w WebhookBenefitGrantCycledPayload) MarshalJSON() ([]byte, error) {
@@ -20,7 +22,7 @@ func (w WebhookBenefitGrantCycledPayload) MarshalJSON() ([]byte, error) {
 }
 
 func (w *WebhookBenefitGrantCycledPayload) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &w, "", false, []string{"type", "data"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &w, "", false, []string{"type", "timestamp", "data"}); err != nil {
 		return err
 	}
 	return nil
@@ -28,6 +30,13 @@ func (w *WebhookBenefitGrantCycledPayload) UnmarshalJSON(data []byte) error {
 
 func (o *WebhookBenefitGrantCycledPayload) GetType() string {
 	return "benefit_grant.cycled"
+}
+
+func (o *WebhookBenefitGrantCycledPayload) GetTimestamp() time.Time {
+	if o == nil {
+		return time.Time{}
+	}
+	return o.Timestamp
 }
 
 func (o *WebhookBenefitGrantCycledPayload) GetData() BenefitGrantWebhook {
