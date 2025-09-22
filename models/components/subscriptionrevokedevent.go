@@ -39,59 +39,59 @@ func (s *SubscriptionRevokedEvent) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SubscriptionRevokedEvent) GetID() string {
-	if o == nil {
+func (s *SubscriptionRevokedEvent) GetID() string {
+	if s == nil {
 		return ""
 	}
-	return o.ID
+	return s.ID
 }
 
-func (o *SubscriptionRevokedEvent) GetTimestamp() time.Time {
-	if o == nil {
+func (s *SubscriptionRevokedEvent) GetTimestamp() time.Time {
+	if s == nil {
 		return time.Time{}
 	}
-	return o.Timestamp
+	return s.Timestamp
 }
 
-func (o *SubscriptionRevokedEvent) GetOrganizationID() string {
-	if o == nil {
+func (s *SubscriptionRevokedEvent) GetOrganizationID() string {
+	if s == nil {
 		return ""
 	}
-	return o.OrganizationID
+	return s.OrganizationID
 }
 
-func (o *SubscriptionRevokedEvent) GetCustomerID() *string {
-	if o == nil {
+func (s *SubscriptionRevokedEvent) GetCustomerID() *string {
+	if s == nil {
 		return nil
 	}
-	return o.CustomerID
+	return s.CustomerID
 }
 
-func (o *SubscriptionRevokedEvent) GetCustomer() *Customer {
-	if o == nil {
+func (s *SubscriptionRevokedEvent) GetCustomer() *Customer {
+	if s == nil {
 		return nil
 	}
-	return o.Customer
+	return s.Customer
 }
 
-func (o *SubscriptionRevokedEvent) GetExternalCustomerID() *string {
-	if o == nil {
+func (s *SubscriptionRevokedEvent) GetExternalCustomerID() *string {
+	if s == nil {
 		return nil
 	}
-	return o.ExternalCustomerID
+	return s.ExternalCustomerID
 }
 
-func (o *SubscriptionRevokedEvent) GetSource() string {
+func (s *SubscriptionRevokedEvent) GetSource() string {
 	return "system"
 }
 
-func (o *SubscriptionRevokedEvent) GetName() string {
+func (s *SubscriptionRevokedEvent) GetName() string {
 	return "subscription.revoked"
 }
 
-func (o *SubscriptionRevokedEvent) GetMetadata() SubscriptionRevokedMetadata {
-	if o == nil {
+func (s *SubscriptionRevokedEvent) GetMetadata() SubscriptionRevokedMetadata {
+	if s == nil {
 		return SubscriptionRevokedMetadata{}
 	}
-	return o.Metadata
+	return s.Metadata
 }

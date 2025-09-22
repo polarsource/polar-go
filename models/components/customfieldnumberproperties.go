@@ -25,37 +25,37 @@ func (c *CustomFieldNumberProperties) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *CustomFieldNumberProperties) GetFormLabel() *string {
-	if o == nil {
+func (c *CustomFieldNumberProperties) GetFormLabel() *string {
+	if c == nil {
 		return nil
 	}
-	return o.FormLabel
+	return c.FormLabel
 }
 
-func (o *CustomFieldNumberProperties) GetFormHelpText() *string {
-	if o == nil {
+func (c *CustomFieldNumberProperties) GetFormHelpText() *string {
+	if c == nil {
 		return nil
 	}
-	return o.FormHelpText
+	return c.FormHelpText
 }
 
-func (o *CustomFieldNumberProperties) GetFormPlaceholder() *string {
-	if o == nil {
+func (c *CustomFieldNumberProperties) GetFormPlaceholder() *string {
+	if c == nil {
 		return nil
 	}
-	return o.FormPlaceholder
+	return c.FormPlaceholder
 }
 
-func (o *CustomFieldNumberProperties) GetGe() *int64 {
-	if o == nil {
+func (c *CustomFieldNumberProperties) GetGe() *int64 {
+	if c == nil {
 		return nil
 	}
-	return o.Ge
+	return c.Ge
 }
 
-func (o *CustomFieldNumberProperties) GetLe() *int64 {
-	if o == nil {
+func (c *CustomFieldNumberProperties) GetLe() *int64 {
+	if c == nil {
 		return nil
 	}
-	return o.Le
+	return c.Le
 }

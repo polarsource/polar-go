@@ -53,114 +53,114 @@ func (b *BenefitGrantCustomWebhook) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *BenefitGrantCustomWebhook) GetCreatedAt() time.Time {
-	if o == nil {
+func (b *BenefitGrantCustomWebhook) GetCreatedAt() time.Time {
+	if b == nil {
 		return time.Time{}
 	}
-	return o.CreatedAt
+	return b.CreatedAt
 }
 
-func (o *BenefitGrantCustomWebhook) GetModifiedAt() *time.Time {
-	if o == nil {
+func (b *BenefitGrantCustomWebhook) GetModifiedAt() *time.Time {
+	if b == nil {
 		return nil
 	}
-	return o.ModifiedAt
+	return b.ModifiedAt
 }
 
-func (o *BenefitGrantCustomWebhook) GetID() string {
-	if o == nil {
+func (b *BenefitGrantCustomWebhook) GetID() string {
+	if b == nil {
 		return ""
 	}
-	return o.ID
+	return b.ID
 }
 
-func (o *BenefitGrantCustomWebhook) GetGrantedAt() *time.Time {
-	if o == nil {
+func (b *BenefitGrantCustomWebhook) GetGrantedAt() *time.Time {
+	if b == nil {
 		return nil
 	}
-	return o.GrantedAt
+	return b.GrantedAt
 }
 
-func (o *BenefitGrantCustomWebhook) GetIsGranted() bool {
-	if o == nil {
+func (b *BenefitGrantCustomWebhook) GetIsGranted() bool {
+	if b == nil {
 		return false
 	}
-	return o.IsGranted
+	return b.IsGranted
 }
 
-func (o *BenefitGrantCustomWebhook) GetRevokedAt() *time.Time {
-	if o == nil {
+func (b *BenefitGrantCustomWebhook) GetRevokedAt() *time.Time {
+	if b == nil {
 		return nil
 	}
-	return o.RevokedAt
+	return b.RevokedAt
 }
 
-func (o *BenefitGrantCustomWebhook) GetIsRevoked() bool {
-	if o == nil {
+func (b *BenefitGrantCustomWebhook) GetIsRevoked() bool {
+	if b == nil {
 		return false
 	}
-	return o.IsRevoked
+	return b.IsRevoked
 }
 
-func (o *BenefitGrantCustomWebhook) GetSubscriptionID() *string {
-	if o == nil {
+func (b *BenefitGrantCustomWebhook) GetSubscriptionID() *string {
+	if b == nil {
 		return nil
 	}
-	return o.SubscriptionID
+	return b.SubscriptionID
 }
 
-func (o *BenefitGrantCustomWebhook) GetOrderID() *string {
-	if o == nil {
+func (b *BenefitGrantCustomWebhook) GetOrderID() *string {
+	if b == nil {
 		return nil
 	}
-	return o.OrderID
+	return b.OrderID
 }
 
-func (o *BenefitGrantCustomWebhook) GetCustomerID() string {
-	if o == nil {
+func (b *BenefitGrantCustomWebhook) GetCustomerID() string {
+	if b == nil {
 		return ""
 	}
-	return o.CustomerID
+	return b.CustomerID
 }
 
-func (o *BenefitGrantCustomWebhook) GetBenefitID() string {
-	if o == nil {
+func (b *BenefitGrantCustomWebhook) GetBenefitID() string {
+	if b == nil {
 		return ""
 	}
-	return o.BenefitID
+	return b.BenefitID
 }
 
-func (o *BenefitGrantCustomWebhook) GetError() *BenefitGrantError {
-	if o == nil {
+func (b *BenefitGrantCustomWebhook) GetError() *BenefitGrantError {
+	if b == nil {
 		return nil
 	}
-	return o.Error
+	return b.Error
 }
 
-func (o *BenefitGrantCustomWebhook) GetCustomer() Customer {
-	if o == nil {
+func (b *BenefitGrantCustomWebhook) GetCustomer() Customer {
+	if b == nil {
 		return Customer{}
 	}
-	return o.Customer
+	return b.Customer
 }
 
-func (o *BenefitGrantCustomWebhook) GetBenefit() BenefitCustom {
-	if o == nil {
+func (b *BenefitGrantCustomWebhook) GetBenefit() BenefitCustom {
+	if b == nil {
 		return BenefitCustom{}
 	}
-	return o.Benefit
+	return b.Benefit
 }
 
-func (o *BenefitGrantCustomWebhook) GetProperties() BenefitGrantCustomProperties {
-	if o == nil {
+func (b *BenefitGrantCustomWebhook) GetProperties() BenefitGrantCustomProperties {
+	if b == nil {
 		return BenefitGrantCustomProperties{}
 	}
-	return o.Properties
+	return b.Properties
 }
 
-func (o *BenefitGrantCustomWebhook) GetPreviousProperties() *BenefitGrantCustomProperties {
-	if o == nil {
+func (b *BenefitGrantCustomWebhook) GetPreviousProperties() *BenefitGrantCustomProperties {
+	if b == nil {
 		return nil
 	}
-	return o.PreviousProperties
+	return b.PreviousProperties
 }

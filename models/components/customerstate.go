@@ -226,114 +226,114 @@ func (c *CustomerState) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *CustomerState) GetID() string {
-	if o == nil {
+func (c *CustomerState) GetID() string {
+	if c == nil {
 		return ""
 	}
-	return o.ID
+	return c.ID
 }
 
-func (o *CustomerState) GetCreatedAt() time.Time {
-	if o == nil {
+func (c *CustomerState) GetCreatedAt() time.Time {
+	if c == nil {
 		return time.Time{}
 	}
-	return o.CreatedAt
+	return c.CreatedAt
 }
 
-func (o *CustomerState) GetModifiedAt() *time.Time {
-	if o == nil {
+func (c *CustomerState) GetModifiedAt() *time.Time {
+	if c == nil {
 		return nil
 	}
-	return o.ModifiedAt
+	return c.ModifiedAt
 }
 
-func (o *CustomerState) GetMetadata() map[string]CustomerStateMetadata {
-	if o == nil {
+func (c *CustomerState) GetMetadata() map[string]CustomerStateMetadata {
+	if c == nil {
 		return map[string]CustomerStateMetadata{}
 	}
-	return o.Metadata
+	return c.Metadata
 }
 
-func (o *CustomerState) GetExternalID() *string {
-	if o == nil {
+func (c *CustomerState) GetExternalID() *string {
+	if c == nil {
 		return nil
 	}
-	return o.ExternalID
+	return c.ExternalID
 }
 
-func (o *CustomerState) GetEmail() string {
-	if o == nil {
+func (c *CustomerState) GetEmail() string {
+	if c == nil {
 		return ""
 	}
-	return o.Email
+	return c.Email
 }
 
-func (o *CustomerState) GetEmailVerified() bool {
-	if o == nil {
+func (c *CustomerState) GetEmailVerified() bool {
+	if c == nil {
 		return false
 	}
-	return o.EmailVerified
+	return c.EmailVerified
 }
 
-func (o *CustomerState) GetName() *string {
-	if o == nil {
+func (c *CustomerState) GetName() *string {
+	if c == nil {
 		return nil
 	}
-	return o.Name
+	return c.Name
 }
 
-func (o *CustomerState) GetBillingAddress() *Address {
-	if o == nil {
+func (c *CustomerState) GetBillingAddress() *Address {
+	if c == nil {
 		return nil
 	}
-	return o.BillingAddress
+	return c.BillingAddress
 }
 
-func (o *CustomerState) GetTaxID() []*CustomerStateTaxID {
-	if o == nil {
+func (c *CustomerState) GetTaxID() []*CustomerStateTaxID {
+	if c == nil {
 		return nil
 	}
-	return o.TaxID
+	return c.TaxID
 }
 
-func (o *CustomerState) GetOrganizationID() string {
-	if o == nil {
+func (c *CustomerState) GetOrganizationID() string {
+	if c == nil {
 		return ""
 	}
-	return o.OrganizationID
+	return c.OrganizationID
 }
 
-func (o *CustomerState) GetDeletedAt() *time.Time {
-	if o == nil {
+func (c *CustomerState) GetDeletedAt() *time.Time {
+	if c == nil {
 		return nil
 	}
-	return o.DeletedAt
+	return c.DeletedAt
 }
 
-func (o *CustomerState) GetActiveSubscriptions() []CustomerStateSubscription {
-	if o == nil {
+func (c *CustomerState) GetActiveSubscriptions() []CustomerStateSubscription {
+	if c == nil {
 		return []CustomerStateSubscription{}
 	}
-	return o.ActiveSubscriptions
+	return c.ActiveSubscriptions
 }
 
-func (o *CustomerState) GetGrantedBenefits() []CustomerStateBenefitGrant {
-	if o == nil {
+func (c *CustomerState) GetGrantedBenefits() []CustomerStateBenefitGrant {
+	if c == nil {
 		return []CustomerStateBenefitGrant{}
 	}
-	return o.GrantedBenefits
+	return c.GrantedBenefits
 }
 
-func (o *CustomerState) GetActiveMeters() []CustomerStateMeter {
-	if o == nil {
+func (c *CustomerState) GetActiveMeters() []CustomerStateMeter {
+	if c == nil {
 		return []CustomerStateMeter{}
 	}
-	return o.ActiveMeters
+	return c.ActiveMeters
 }
 
-func (o *CustomerState) GetAvatarURL() string {
-	if o == nil {
+func (c *CustomerState) GetAvatarURL() string {
+	if c == nil {
 		return ""
 	}
-	return o.AvatarURL
+	return c.AvatarURL
 }

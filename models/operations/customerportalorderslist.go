@@ -13,11 +13,11 @@ type CustomerPortalOrdersListSecurity struct {
 	CustomerSession string `security:"scheme,type=http,subtype=bearer,name=Authorization,env=polar_customer_session"`
 }
 
-func (o *CustomerPortalOrdersListSecurity) GetCustomerSession() string {
-	if o == nil {
+func (c *CustomerPortalOrdersListSecurity) GetCustomerSession() string {
+	if c == nil {
 		return ""
 	}
-	return o.CustomerSession
+	return c.CustomerSession
 }
 
 type CustomerPortalOrdersListQueryParamOrganizationIDFilterType string
@@ -306,60 +306,60 @@ func (c *CustomerPortalOrdersListRequest) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *CustomerPortalOrdersListRequest) GetOrganizationID() *CustomerPortalOrdersListQueryParamOrganizationIDFilter {
-	if o == nil {
+func (c *CustomerPortalOrdersListRequest) GetOrganizationID() *CustomerPortalOrdersListQueryParamOrganizationIDFilter {
+	if c == nil {
 		return nil
 	}
-	return o.OrganizationID
+	return c.OrganizationID
 }
 
-func (o *CustomerPortalOrdersListRequest) GetProductID() *CustomerPortalOrdersListQueryParamProductIDFilter {
-	if o == nil {
+func (c *CustomerPortalOrdersListRequest) GetProductID() *CustomerPortalOrdersListQueryParamProductIDFilter {
+	if c == nil {
 		return nil
 	}
-	return o.ProductID
+	return c.ProductID
 }
 
-func (o *CustomerPortalOrdersListRequest) GetProductBillingType() *CustomerPortalOrdersListQueryParamProductBillingTypeFilter {
-	if o == nil {
+func (c *CustomerPortalOrdersListRequest) GetProductBillingType() *CustomerPortalOrdersListQueryParamProductBillingTypeFilter {
+	if c == nil {
 		return nil
 	}
-	return o.ProductBillingType
+	return c.ProductBillingType
 }
 
-func (o *CustomerPortalOrdersListRequest) GetSubscriptionID() *CustomerPortalOrdersListQueryParamSubscriptionIDFilter {
-	if o == nil {
+func (c *CustomerPortalOrdersListRequest) GetSubscriptionID() *CustomerPortalOrdersListQueryParamSubscriptionIDFilter {
+	if c == nil {
 		return nil
 	}
-	return o.SubscriptionID
+	return c.SubscriptionID
 }
 
-func (o *CustomerPortalOrdersListRequest) GetQuery() *string {
-	if o == nil {
+func (c *CustomerPortalOrdersListRequest) GetQuery() *string {
+	if c == nil {
 		return nil
 	}
-	return o.Query
+	return c.Query
 }
 
-func (o *CustomerPortalOrdersListRequest) GetPage() *int64 {
-	if o == nil {
+func (c *CustomerPortalOrdersListRequest) GetPage() *int64 {
+	if c == nil {
 		return nil
 	}
-	return o.Page
+	return c.Page
 }
 
-func (o *CustomerPortalOrdersListRequest) GetLimit() *int64 {
-	if o == nil {
+func (c *CustomerPortalOrdersListRequest) GetLimit() *int64 {
+	if c == nil {
 		return nil
 	}
-	return o.Limit
+	return c.Limit
 }
 
-func (o *CustomerPortalOrdersListRequest) GetSorting() []components.CustomerOrderSortProperty {
-	if o == nil {
+func (c *CustomerPortalOrdersListRequest) GetSorting() []components.CustomerOrderSortProperty {
+	if c == nil {
 		return nil
 	}
-	return o.Sorting
+	return c.Sorting
 }
 
 type CustomerPortalOrdersListResponse struct {
@@ -370,16 +370,16 @@ type CustomerPortalOrdersListResponse struct {
 	Next func() (*CustomerPortalOrdersListResponse, error)
 }
 
-func (o *CustomerPortalOrdersListResponse) GetHTTPMeta() components.HTTPMetadata {
-	if o == nil {
+func (c *CustomerPortalOrdersListResponse) GetHTTPMeta() components.HTTPMetadata {
+	if c == nil {
 		return components.HTTPMetadata{}
 	}
-	return o.HTTPMeta
+	return c.HTTPMeta
 }
 
-func (o *CustomerPortalOrdersListResponse) GetListResourceCustomerOrder() *components.ListResourceCustomerOrder {
-	if o == nil {
+func (c *CustomerPortalOrdersListResponse) GetListResourceCustomerOrder() *components.ListResourceCustomerOrder {
+	if c == nil {
 		return nil
 	}
-	return o.ListResourceCustomerOrder
+	return c.ListResourceCustomerOrder
 }

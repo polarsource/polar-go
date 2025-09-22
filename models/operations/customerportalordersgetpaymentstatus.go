@@ -10,11 +10,11 @@ type CustomerPortalOrdersGetPaymentStatusSecurity struct {
 	CustomerSession string `security:"scheme,type=http,subtype=bearer,name=Authorization,env=polar_customer_session"`
 }
 
-func (o *CustomerPortalOrdersGetPaymentStatusSecurity) GetCustomerSession() string {
-	if o == nil {
+func (c *CustomerPortalOrdersGetPaymentStatusSecurity) GetCustomerSession() string {
+	if c == nil {
 		return ""
 	}
-	return o.CustomerSession
+	return c.CustomerSession
 }
 
 type CustomerPortalOrdersGetPaymentStatusRequest struct {
@@ -22,11 +22,11 @@ type CustomerPortalOrdersGetPaymentStatusRequest struct {
 	ID string `pathParam:"style=simple,explode=false,name=id"`
 }
 
-func (o *CustomerPortalOrdersGetPaymentStatusRequest) GetID() string {
-	if o == nil {
+func (c *CustomerPortalOrdersGetPaymentStatusRequest) GetID() string {
+	if c == nil {
 		return ""
 	}
-	return o.ID
+	return c.ID
 }
 
 type CustomerPortalOrdersGetPaymentStatusResponse struct {
@@ -35,16 +35,16 @@ type CustomerPortalOrdersGetPaymentStatusResponse struct {
 	CustomerOrderPaymentStatus *components.CustomerOrderPaymentStatus
 }
 
-func (o *CustomerPortalOrdersGetPaymentStatusResponse) GetHTTPMeta() components.HTTPMetadata {
-	if o == nil {
+func (c *CustomerPortalOrdersGetPaymentStatusResponse) GetHTTPMeta() components.HTTPMetadata {
+	if c == nil {
 		return components.HTTPMetadata{}
 	}
-	return o.HTTPMeta
+	return c.HTTPMeta
 }
 
-func (o *CustomerPortalOrdersGetPaymentStatusResponse) GetCustomerOrderPaymentStatus() *components.CustomerOrderPaymentStatus {
-	if o == nil {
+func (c *CustomerPortalOrdersGetPaymentStatusResponse) GetCustomerOrderPaymentStatus() *components.CustomerOrderPaymentStatus {
+	if c == nil {
 		return nil
 	}
-	return o.CustomerOrderPaymentStatus
+	return c.CustomerOrderPaymentStatus
 }

@@ -11,44 +11,44 @@ type CheckoutBillingAddressFields struct {
 	Line2      BillingAddressFieldMode `json:"line2"`
 }
 
-func (o *CheckoutBillingAddressFields) GetCountry() BillingAddressFieldMode {
-	if o == nil {
+func (c *CheckoutBillingAddressFields) GetCountry() BillingAddressFieldMode {
+	if c == nil {
 		return BillingAddressFieldMode("")
 	}
-	return o.Country
+	return c.Country
 }
 
-func (o *CheckoutBillingAddressFields) GetState() BillingAddressFieldMode {
-	if o == nil {
+func (c *CheckoutBillingAddressFields) GetState() BillingAddressFieldMode {
+	if c == nil {
 		return BillingAddressFieldMode("")
 	}
-	return o.State
+	return c.State
 }
 
-func (o *CheckoutBillingAddressFields) GetCity() BillingAddressFieldMode {
-	if o == nil {
+func (c *CheckoutBillingAddressFields) GetCity() BillingAddressFieldMode {
+	if c == nil {
 		return BillingAddressFieldMode("")
 	}
-	return o.City
+	return c.City
 }
 
-func (o *CheckoutBillingAddressFields) GetPostalCode() BillingAddressFieldMode {
-	if o == nil {
+func (c *CheckoutBillingAddressFields) GetPostalCode() BillingAddressFieldMode {
+	if c == nil {
 		return BillingAddressFieldMode("")
 	}
-	return o.PostalCode
+	return c.PostalCode
 }
 
-func (o *CheckoutBillingAddressFields) GetLine1() BillingAddressFieldMode {
-	if o == nil {
+func (c *CheckoutBillingAddressFields) GetLine1() BillingAddressFieldMode {
+	if c == nil {
 		return BillingAddressFieldMode("")
 	}
-	return o.Line1
+	return c.Line1
 }
 
-func (o *CheckoutBillingAddressFields) GetLine2() BillingAddressFieldMode {
-	if o == nil {
+func (c *CheckoutBillingAddressFields) GetLine2() BillingAddressFieldMode {
+	if c == nil {
 		return BillingAddressFieldMode("")
 	}
-	return o.Line2
+	return c.Line2
 }

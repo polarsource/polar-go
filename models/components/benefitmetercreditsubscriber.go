@@ -149,76 +149,76 @@ func (b *BenefitMeterCreditSubscriber) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *BenefitMeterCreditSubscriber) GetID() string {
-	if o == nil {
+func (b *BenefitMeterCreditSubscriber) GetID() string {
+	if b == nil {
 		return ""
 	}
-	return o.ID
+	return b.ID
 }
 
-func (o *BenefitMeterCreditSubscriber) GetCreatedAt() time.Time {
-	if o == nil {
+func (b *BenefitMeterCreditSubscriber) GetCreatedAt() time.Time {
+	if b == nil {
 		return time.Time{}
 	}
-	return o.CreatedAt
+	return b.CreatedAt
 }
 
-func (o *BenefitMeterCreditSubscriber) GetModifiedAt() *time.Time {
-	if o == nil {
+func (b *BenefitMeterCreditSubscriber) GetModifiedAt() *time.Time {
+	if b == nil {
 		return nil
 	}
-	return o.ModifiedAt
+	return b.ModifiedAt
 }
 
-func (o *BenefitMeterCreditSubscriber) GetType() string {
+func (b *BenefitMeterCreditSubscriber) GetType() string {
 	return "meter_credit"
 }
 
-func (o *BenefitMeterCreditSubscriber) GetDescription() string {
-	if o == nil {
+func (b *BenefitMeterCreditSubscriber) GetDescription() string {
+	if b == nil {
 		return ""
 	}
-	return o.Description
+	return b.Description
 }
 
-func (o *BenefitMeterCreditSubscriber) GetSelectable() bool {
-	if o == nil {
+func (b *BenefitMeterCreditSubscriber) GetSelectable() bool {
+	if b == nil {
 		return false
 	}
-	return o.Selectable
+	return b.Selectable
 }
 
-func (o *BenefitMeterCreditSubscriber) GetDeletable() bool {
-	if o == nil {
+func (b *BenefitMeterCreditSubscriber) GetDeletable() bool {
+	if b == nil {
 		return false
 	}
-	return o.Deletable
+	return b.Deletable
 }
 
-func (o *BenefitMeterCreditSubscriber) GetOrganizationID() string {
-	if o == nil {
+func (b *BenefitMeterCreditSubscriber) GetOrganizationID() string {
+	if b == nil {
 		return ""
 	}
-	return o.OrganizationID
+	return b.OrganizationID
 }
 
-func (o *BenefitMeterCreditSubscriber) GetMetadata() map[string]BenefitMeterCreditSubscriberMetadata {
-	if o == nil {
+func (b *BenefitMeterCreditSubscriber) GetMetadata() map[string]BenefitMeterCreditSubscriberMetadata {
+	if b == nil {
 		return map[string]BenefitMeterCreditSubscriberMetadata{}
 	}
-	return o.Metadata
+	return b.Metadata
 }
 
-func (o *BenefitMeterCreditSubscriber) GetOrganization() Organization {
-	if o == nil {
+func (b *BenefitMeterCreditSubscriber) GetOrganization() Organization {
+	if b == nil {
 		return Organization{}
 	}
-	return o.Organization
+	return b.Organization
 }
 
-func (o *BenefitMeterCreditSubscriber) GetProperties() BenefitMeterCreditSubscriberProperties {
-	if o == nil {
+func (b *BenefitMeterCreditSubscriber) GetProperties() BenefitMeterCreditSubscriberProperties {
+	if b == nil {
 		return BenefitMeterCreditSubscriberProperties{}
 	}
-	return o.Properties
+	return b.Properties
 }

@@ -12,18 +12,18 @@ type MetersUpdateRequest struct {
 	MeterUpdate components.MeterUpdate `request:"mediaType=application/json"`
 }
 
-func (o *MetersUpdateRequest) GetID() string {
-	if o == nil {
+func (m *MetersUpdateRequest) GetID() string {
+	if m == nil {
 		return ""
 	}
-	return o.ID
+	return m.ID
 }
 
-func (o *MetersUpdateRequest) GetMeterUpdate() components.MeterUpdate {
-	if o == nil {
+func (m *MetersUpdateRequest) GetMeterUpdate() components.MeterUpdate {
+	if m == nil {
 		return components.MeterUpdate{}
 	}
-	return o.MeterUpdate
+	return m.MeterUpdate
 }
 
 type MetersUpdateResponse struct {
@@ -32,16 +32,16 @@ type MetersUpdateResponse struct {
 	Meter *components.Meter
 }
 
-func (o *MetersUpdateResponse) GetHTTPMeta() components.HTTPMetadata {
-	if o == nil {
+func (m *MetersUpdateResponse) GetHTTPMeta() components.HTTPMetadata {
+	if m == nil {
 		return components.HTTPMetadata{}
 	}
-	return o.HTTPMeta
+	return m.HTTPMeta
 }
 
-func (o *MetersUpdateResponse) GetMeter() *components.Meter {
-	if o == nil {
+func (m *MetersUpdateResponse) GetMeter() *components.Meter {
+	if m == nil {
 		return nil
 	}
-	return o.Meter
+	return m.Meter
 }

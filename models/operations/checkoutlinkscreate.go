@@ -12,16 +12,16 @@ type CheckoutLinksCreateResponse struct {
 	CheckoutLink *components.CheckoutLink
 }
 
-func (o *CheckoutLinksCreateResponse) GetHTTPMeta() components.HTTPMetadata {
-	if o == nil {
+func (c *CheckoutLinksCreateResponse) GetHTTPMeta() components.HTTPMetadata {
+	if c == nil {
 		return components.HTTPMetadata{}
 	}
-	return o.HTTPMeta
+	return c.HTTPMeta
 }
 
-func (o *CheckoutLinksCreateResponse) GetCheckoutLink() *components.CheckoutLink {
-	if o == nil {
+func (c *CheckoutLinksCreateResponse) GetCheckoutLink() *components.CheckoutLink {
+	if c == nil {
 		return nil
 	}
-	return o.CheckoutLink
+	return c.CheckoutLink
 }

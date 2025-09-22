@@ -37,23 +37,23 @@ func (c *CustomerSubscriptionCancel) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *CustomerSubscriptionCancel) GetCancelAtPeriodEnd() *bool {
-	if o == nil {
+func (c *CustomerSubscriptionCancel) GetCancelAtPeriodEnd() *bool {
+	if c == nil {
 		return nil
 	}
-	return o.CancelAtPeriodEnd
+	return c.CancelAtPeriodEnd
 }
 
-func (o *CustomerSubscriptionCancel) GetCancellationReason() *CustomerCancellationReason {
-	if o == nil {
+func (c *CustomerSubscriptionCancel) GetCancellationReason() *CustomerCancellationReason {
+	if c == nil {
 		return nil
 	}
-	return o.CancellationReason
+	return c.CancellationReason
 }
 
-func (o *CustomerSubscriptionCancel) GetCancellationComment() *string {
-	if o == nil {
+func (c *CustomerSubscriptionCancel) GetCancellationComment() *string {
+	if c == nil {
 		return nil
 	}
-	return o.CancellationComment
+	return c.CancellationComment
 }

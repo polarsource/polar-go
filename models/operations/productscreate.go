@@ -12,16 +12,16 @@ type ProductsCreateResponse struct {
 	Product *components.Product
 }
 
-func (o *ProductsCreateResponse) GetHTTPMeta() components.HTTPMetadata {
-	if o == nil {
+func (p *ProductsCreateResponse) GetHTTPMeta() components.HTTPMetadata {
+	if p == nil {
 		return components.HTTPMetadata{}
 	}
-	return o.HTTPMeta
+	return p.HTTPMeta
 }
 
-func (o *ProductsCreateResponse) GetProduct() *components.Product {
-	if o == nil {
+func (p *ProductsCreateResponse) GetProduct() *components.Product {
+	if p == nil {
 		return nil
 	}
-	return o.Product
+	return p.Product
 }

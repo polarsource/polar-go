@@ -8,23 +8,23 @@ type LicenseKeyDeactivate struct {
 	ActivationID   string `json:"activation_id"`
 }
 
-func (o *LicenseKeyDeactivate) GetKey() string {
-	if o == nil {
+func (l *LicenseKeyDeactivate) GetKey() string {
+	if l == nil {
 		return ""
 	}
-	return o.Key
+	return l.Key
 }
 
-func (o *LicenseKeyDeactivate) GetOrganizationID() string {
-	if o == nil {
+func (l *LicenseKeyDeactivate) GetOrganizationID() string {
+	if l == nil {
 		return ""
 	}
-	return o.OrganizationID
+	return l.OrganizationID
 }
 
-func (o *LicenseKeyDeactivate) GetActivationID() string {
-	if o == nil {
+func (l *LicenseKeyDeactivate) GetActivationID() string {
+	if l == nil {
 		return ""
 	}
-	return o.ActivationID
+	return l.ActivationID
 }

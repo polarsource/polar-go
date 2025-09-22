@@ -27,6 +27,8 @@ type CustomerOrder struct {
 	TaxAmount int64 `json:"tax_amount"`
 	// Amount in cents, after discounts and taxes.
 	TotalAmount int64 `json:"total_amount"`
+	// How much of this invoice was paid using the customer's balance. Amount in cents.
+	FromBalanceAmount int64 `json:"from_balance_amount"`
 	// Amount refunded in cents.
 	RefundedAmount int64 `json:"refunded_amount"`
 	// Sales tax refunded in cents.
@@ -58,197 +60,204 @@ func (c CustomerOrder) MarshalJSON() ([]byte, error) {
 }
 
 func (c *CustomerOrder) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &c, "", false, []string{"id", "created_at", "modified_at", "status", "paid", "subtotal_amount", "discount_amount", "net_amount", "tax_amount", "total_amount", "refunded_amount", "refunded_tax_amount", "currency", "billing_reason", "billing_name", "billing_address", "is_invoice_generated", "customer_id", "product_id", "discount_id", "subscription_id", "checkout_id", "user_id", "product", "subscription", "items"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &c, "", false, []string{"id", "created_at", "modified_at", "status", "paid", "subtotal_amount", "discount_amount", "net_amount", "tax_amount", "total_amount", "from_balance_amount", "refunded_amount", "refunded_tax_amount", "currency", "billing_reason", "billing_name", "billing_address", "is_invoice_generated", "customer_id", "product_id", "discount_id", "subscription_id", "checkout_id", "user_id", "product", "subscription", "items"}); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *CustomerOrder) GetID() string {
-	if o == nil {
+func (c *CustomerOrder) GetID() string {
+	if c == nil {
 		return ""
 	}
-	return o.ID
+	return c.ID
 }
 
-func (o *CustomerOrder) GetCreatedAt() time.Time {
-	if o == nil {
+func (c *CustomerOrder) GetCreatedAt() time.Time {
+	if c == nil {
 		return time.Time{}
 	}
-	return o.CreatedAt
+	return c.CreatedAt
 }
 
-func (o *CustomerOrder) GetModifiedAt() *time.Time {
-	if o == nil {
+func (c *CustomerOrder) GetModifiedAt() *time.Time {
+	if c == nil {
 		return nil
 	}
-	return o.ModifiedAt
+	return c.ModifiedAt
 }
 
-func (o *CustomerOrder) GetStatus() OrderStatus {
-	if o == nil {
+func (c *CustomerOrder) GetStatus() OrderStatus {
+	if c == nil {
 		return OrderStatus("")
 	}
-	return o.Status
+	return c.Status
 }
 
-func (o *CustomerOrder) GetPaid() bool {
-	if o == nil {
+func (c *CustomerOrder) GetPaid() bool {
+	if c == nil {
 		return false
 	}
-	return o.Paid
+	return c.Paid
 }
 
-func (o *CustomerOrder) GetSubtotalAmount() int64 {
-	if o == nil {
+func (c *CustomerOrder) GetSubtotalAmount() int64 {
+	if c == nil {
 		return 0
 	}
-	return o.SubtotalAmount
+	return c.SubtotalAmount
 }
 
-func (o *CustomerOrder) GetDiscountAmount() int64 {
-	if o == nil {
+func (c *CustomerOrder) GetDiscountAmount() int64 {
+	if c == nil {
 		return 0
 	}
-	return o.DiscountAmount
+	return c.DiscountAmount
 }
 
-func (o *CustomerOrder) GetNetAmount() int64 {
-	if o == nil {
+func (c *CustomerOrder) GetNetAmount() int64 {
+	if c == nil {
 		return 0
 	}
-	return o.NetAmount
+	return c.NetAmount
 }
 
-func (o *CustomerOrder) GetTaxAmount() int64 {
-	if o == nil {
+func (c *CustomerOrder) GetTaxAmount() int64 {
+	if c == nil {
 		return 0
 	}
-	return o.TaxAmount
+	return c.TaxAmount
 }
 
-func (o *CustomerOrder) GetTotalAmount() int64 {
-	if o == nil {
+func (c *CustomerOrder) GetTotalAmount() int64 {
+	if c == nil {
 		return 0
 	}
-	return o.TotalAmount
+	return c.TotalAmount
 }
 
-func (o *CustomerOrder) GetRefundedAmount() int64 {
-	if o == nil {
+func (c *CustomerOrder) GetFromBalanceAmount() int64 {
+	if c == nil {
 		return 0
 	}
-	return o.RefundedAmount
+	return c.FromBalanceAmount
 }
 
-func (o *CustomerOrder) GetRefundedTaxAmount() int64 {
-	if o == nil {
+func (c *CustomerOrder) GetRefundedAmount() int64 {
+	if c == nil {
 		return 0
 	}
-	return o.RefundedTaxAmount
+	return c.RefundedAmount
 }
 
-func (o *CustomerOrder) GetCurrency() string {
-	if o == nil {
+func (c *CustomerOrder) GetRefundedTaxAmount() int64 {
+	if c == nil {
+		return 0
+	}
+	return c.RefundedTaxAmount
+}
+
+func (c *CustomerOrder) GetCurrency() string {
+	if c == nil {
 		return ""
 	}
-	return o.Currency
+	return c.Currency
 }
 
-func (o *CustomerOrder) GetBillingReason() OrderBillingReason {
-	if o == nil {
+func (c *CustomerOrder) GetBillingReason() OrderBillingReason {
+	if c == nil {
 		return OrderBillingReason("")
 	}
-	return o.BillingReason
+	return c.BillingReason
 }
 
-func (o *CustomerOrder) GetBillingName() *string {
-	if o == nil {
+func (c *CustomerOrder) GetBillingName() *string {
+	if c == nil {
 		return nil
 	}
-	return o.BillingName
+	return c.BillingName
 }
 
-func (o *CustomerOrder) GetBillingAddress() *Address {
-	if o == nil {
+func (c *CustomerOrder) GetBillingAddress() *Address {
+	if c == nil {
 		return nil
 	}
-	return o.BillingAddress
+	return c.BillingAddress
 }
 
-func (o *CustomerOrder) GetIsInvoiceGenerated() bool {
-	if o == nil {
+func (c *CustomerOrder) GetIsInvoiceGenerated() bool {
+	if c == nil {
 		return false
 	}
-	return o.IsInvoiceGenerated
+	return c.IsInvoiceGenerated
 }
 
-func (o *CustomerOrder) GetCustomerID() string {
-	if o == nil {
+func (c *CustomerOrder) GetCustomerID() string {
+	if c == nil {
 		return ""
 	}
-	return o.CustomerID
+	return c.CustomerID
 }
 
-func (o *CustomerOrder) GetProductID() string {
-	if o == nil {
+func (c *CustomerOrder) GetProductID() string {
+	if c == nil {
 		return ""
 	}
-	return o.ProductID
+	return c.ProductID
 }
 
-func (o *CustomerOrder) GetDiscountID() *string {
-	if o == nil {
+func (c *CustomerOrder) GetDiscountID() *string {
+	if c == nil {
 		return nil
 	}
-	return o.DiscountID
+	return c.DiscountID
 }
 
-func (o *CustomerOrder) GetSubscriptionID() *string {
-	if o == nil {
+func (c *CustomerOrder) GetSubscriptionID() *string {
+	if c == nil {
 		return nil
 	}
-	return o.SubscriptionID
+	return c.SubscriptionID
 }
 
-func (o *CustomerOrder) GetCheckoutID() *string {
-	if o == nil {
+func (c *CustomerOrder) GetCheckoutID() *string {
+	if c == nil {
 		return nil
 	}
-	return o.CheckoutID
+	return c.CheckoutID
 }
 
-func (o *CustomerOrder) GetUserID() string {
-	if o == nil {
+func (c *CustomerOrder) GetUserID() string {
+	if c == nil {
 		return ""
 	}
-	return o.UserID
+	return c.UserID
 }
 
-func (o *CustomerOrder) GetProduct() CustomerOrderProduct {
-	if o == nil {
+func (c *CustomerOrder) GetProduct() CustomerOrderProduct {
+	if c == nil {
 		return CustomerOrderProduct{}
 	}
-	return o.Product
+	return c.Product
 }
 
-func (o *CustomerOrder) GetSubscription() *CustomerOrderSubscription {
-	if o == nil {
+func (c *CustomerOrder) GetSubscription() *CustomerOrderSubscription {
+	if c == nil {
 		return nil
 	}
-	return o.Subscription
+	return c.Subscription
 }
 
-func (o *CustomerOrder) GetItems() []OrderItemSchema {
-	if o == nil {
+func (c *CustomerOrder) GetItems() []OrderItemSchema {
+	if c == nil {
 		return []OrderItemSchema{}
 	}
-	return o.Items
+	return c.Items
 }
 
-func (o *CustomerOrder) GetNextPaymentAttemptAt() *time.Time {
-	if o == nil {
+func (c *CustomerOrder) GetNextPaymentAttemptAt() *time.Time {
+	if c == nil {
 		return nil
 	}
-	return o.NextPaymentAttemptAt
+	return c.NextPaymentAttemptAt
 }

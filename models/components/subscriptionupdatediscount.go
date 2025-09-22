@@ -22,9 +22,9 @@ func (s *SubscriptionUpdateDiscount) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SubscriptionUpdateDiscount) GetDiscountID() *string {
-	if o == nil {
+func (s *SubscriptionUpdateDiscount) GetDiscountID() *string {
+	if s == nil {
 		return nil
 	}
-	return o.DiscountID
+	return s.DiscountID
 }

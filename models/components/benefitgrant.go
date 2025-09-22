@@ -165,6 +165,7 @@ type BenefitGrant struct {
 	Error *BenefitGrantError `json:"error,omitempty"`
 	// A customer in an organization.
 	Customer   Customer   `json:"customer"`
+	Benefit    Benefit    `json:"benefit"`
 	Properties Properties `json:"properties"`
 }
 
@@ -173,106 +174,113 @@ func (b BenefitGrant) MarshalJSON() ([]byte, error) {
 }
 
 func (b *BenefitGrant) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &b, "", false, []string{"created_at", "modified_at", "id", "is_granted", "is_revoked", "subscription_id", "order_id", "customer_id", "benefit_id", "customer", "properties"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &b, "", false, []string{"created_at", "modified_at", "id", "is_granted", "is_revoked", "subscription_id", "order_id", "customer_id", "benefit_id", "customer", "benefit", "properties"}); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *BenefitGrant) GetCreatedAt() time.Time {
-	if o == nil {
+func (b *BenefitGrant) GetCreatedAt() time.Time {
+	if b == nil {
 		return time.Time{}
 	}
-	return o.CreatedAt
+	return b.CreatedAt
 }
 
-func (o *BenefitGrant) GetModifiedAt() *time.Time {
-	if o == nil {
+func (b *BenefitGrant) GetModifiedAt() *time.Time {
+	if b == nil {
 		return nil
 	}
-	return o.ModifiedAt
+	return b.ModifiedAt
 }
 
-func (o *BenefitGrant) GetID() string {
-	if o == nil {
+func (b *BenefitGrant) GetID() string {
+	if b == nil {
 		return ""
 	}
-	return o.ID
+	return b.ID
 }
 
-func (o *BenefitGrant) GetGrantedAt() *time.Time {
-	if o == nil {
+func (b *BenefitGrant) GetGrantedAt() *time.Time {
+	if b == nil {
 		return nil
 	}
-	return o.GrantedAt
+	return b.GrantedAt
 }
 
-func (o *BenefitGrant) GetIsGranted() bool {
-	if o == nil {
+func (b *BenefitGrant) GetIsGranted() bool {
+	if b == nil {
 		return false
 	}
-	return o.IsGranted
+	return b.IsGranted
 }
 
-func (o *BenefitGrant) GetRevokedAt() *time.Time {
-	if o == nil {
+func (b *BenefitGrant) GetRevokedAt() *time.Time {
+	if b == nil {
 		return nil
 	}
-	return o.RevokedAt
+	return b.RevokedAt
 }
 
-func (o *BenefitGrant) GetIsRevoked() bool {
-	if o == nil {
+func (b *BenefitGrant) GetIsRevoked() bool {
+	if b == nil {
 		return false
 	}
-	return o.IsRevoked
+	return b.IsRevoked
 }
 
-func (o *BenefitGrant) GetSubscriptionID() *string {
-	if o == nil {
+func (b *BenefitGrant) GetSubscriptionID() *string {
+	if b == nil {
 		return nil
 	}
-	return o.SubscriptionID
+	return b.SubscriptionID
 }
 
-func (o *BenefitGrant) GetOrderID() *string {
-	if o == nil {
+func (b *BenefitGrant) GetOrderID() *string {
+	if b == nil {
 		return nil
 	}
-	return o.OrderID
+	return b.OrderID
 }
 
-func (o *BenefitGrant) GetCustomerID() string {
-	if o == nil {
+func (b *BenefitGrant) GetCustomerID() string {
+	if b == nil {
 		return ""
 	}
-	return o.CustomerID
+	return b.CustomerID
 }
 
-func (o *BenefitGrant) GetBenefitID() string {
-	if o == nil {
+func (b *BenefitGrant) GetBenefitID() string {
+	if b == nil {
 		return ""
 	}
-	return o.BenefitID
+	return b.BenefitID
 }
 
-func (o *BenefitGrant) GetError() *BenefitGrantError {
-	if o == nil {
+func (b *BenefitGrant) GetError() *BenefitGrantError {
+	if b == nil {
 		return nil
 	}
-	return o.Error
+	return b.Error
 }
 
-func (o *BenefitGrant) GetCustomer() Customer {
-	if o == nil {
+func (b *BenefitGrant) GetCustomer() Customer {
+	if b == nil {
 		return Customer{}
 	}
-	return o.Customer
+	return b.Customer
 }
 
-func (o *BenefitGrant) GetProperties() Properties {
-	if o == nil {
+func (b *BenefitGrant) GetBenefit() Benefit {
+	if b == nil {
+		return Benefit{}
+	}
+	return b.Benefit
+}
+
+func (b *BenefitGrant) GetProperties() Properties {
+	if b == nil {
 		return Properties{}
 	}
-	return o.Properties
+	return b.Properties
 }

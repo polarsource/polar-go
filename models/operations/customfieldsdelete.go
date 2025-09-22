@@ -11,20 +11,20 @@ type CustomFieldsDeleteRequest struct {
 	ID string `pathParam:"style=simple,explode=false,name=id"`
 }
 
-func (o *CustomFieldsDeleteRequest) GetID() string {
-	if o == nil {
+func (c *CustomFieldsDeleteRequest) GetID() string {
+	if c == nil {
 		return ""
 	}
-	return o.ID
+	return c.ID
 }
 
 type CustomFieldsDeleteResponse struct {
 	HTTPMeta components.HTTPMetadata `json:"-"`
 }
 
-func (o *CustomFieldsDeleteResponse) GetHTTPMeta() components.HTTPMetadata {
-	if o == nil {
+func (c *CustomFieldsDeleteResponse) GetHTTPMeta() components.HTTPMetadata {
+	if c == nil {
 		return components.HTTPMetadata{}
 	}
-	return o.HTTPMeta
+	return c.HTTPMeta
 }

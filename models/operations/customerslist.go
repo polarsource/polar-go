@@ -101,53 +101,53 @@ func (c *CustomersListRequest) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *CustomersListRequest) GetOrganizationID() *CustomersListQueryParamOrganizationIDFilter {
-	if o == nil {
+func (c *CustomersListRequest) GetOrganizationID() *CustomersListQueryParamOrganizationIDFilter {
+	if c == nil {
 		return nil
 	}
-	return o.OrganizationID
+	return c.OrganizationID
 }
 
-func (o *CustomersListRequest) GetEmail() *string {
-	if o == nil {
+func (c *CustomersListRequest) GetEmail() *string {
+	if c == nil {
 		return nil
 	}
-	return o.Email
+	return c.Email
 }
 
-func (o *CustomersListRequest) GetQuery() *string {
-	if o == nil {
+func (c *CustomersListRequest) GetQuery() *string {
+	if c == nil {
 		return nil
 	}
-	return o.Query
+	return c.Query
 }
 
-func (o *CustomersListRequest) GetPage() *int64 {
-	if o == nil {
+func (c *CustomersListRequest) GetPage() *int64 {
+	if c == nil {
 		return nil
 	}
-	return o.Page
+	return c.Page
 }
 
-func (o *CustomersListRequest) GetLimit() *int64 {
-	if o == nil {
+func (c *CustomersListRequest) GetLimit() *int64 {
+	if c == nil {
 		return nil
 	}
-	return o.Limit
+	return c.Limit
 }
 
-func (o *CustomersListRequest) GetSorting() []components.CustomerSortProperty {
-	if o == nil {
+func (c *CustomersListRequest) GetSorting() []components.CustomerSortProperty {
+	if c == nil {
 		return nil
 	}
-	return o.Sorting
+	return c.Sorting
 }
 
-func (o *CustomersListRequest) GetMetadata() map[string]components.MetadataQuery {
-	if o == nil {
+func (c *CustomersListRequest) GetMetadata() map[string]components.MetadataQuery {
+	if c == nil {
 		return nil
 	}
-	return o.Metadata
+	return c.Metadata
 }
 
 type CustomersListResponse struct {
@@ -158,16 +158,16 @@ type CustomersListResponse struct {
 	Next func() (*CustomersListResponse, error)
 }
 
-func (o *CustomersListResponse) GetHTTPMeta() components.HTTPMetadata {
-	if o == nil {
+func (c *CustomersListResponse) GetHTTPMeta() components.HTTPMetadata {
+	if c == nil {
 		return components.HTTPMetadata{}
 	}
-	return o.HTTPMeta
+	return c.HTTPMeta
 }
 
-func (o *CustomersListResponse) GetListResourceCustomer() *components.ListResourceCustomer {
-	if o == nil {
+func (c *CustomersListResponse) GetListResourceCustomer() *components.ListResourceCustomer {
+	if c == nil {
 		return nil
 	}
-	return o.ListResourceCustomer
+	return c.ListResourceCustomer
 }

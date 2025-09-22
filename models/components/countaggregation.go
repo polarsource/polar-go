@@ -22,6 +22,6 @@ func (c *CountAggregation) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *CountAggregation) GetFunc() *string {
-	return types.String("count")
+func (c *CountAggregation) GetFunc() *string {
+	return types.Pointer("count")
 }

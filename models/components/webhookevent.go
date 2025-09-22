@@ -43,58 +43,58 @@ func (w *WebhookEvent) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *WebhookEvent) GetCreatedAt() time.Time {
-	if o == nil {
+func (w *WebhookEvent) GetCreatedAt() time.Time {
+	if w == nil {
 		return time.Time{}
 	}
-	return o.CreatedAt
+	return w.CreatedAt
 }
 
-func (o *WebhookEvent) GetModifiedAt() *time.Time {
-	if o == nil {
+func (w *WebhookEvent) GetModifiedAt() *time.Time {
+	if w == nil {
 		return nil
 	}
-	return o.ModifiedAt
+	return w.ModifiedAt
 }
 
-func (o *WebhookEvent) GetID() string {
-	if o == nil {
+func (w *WebhookEvent) GetID() string {
+	if w == nil {
 		return ""
 	}
-	return o.ID
+	return w.ID
 }
 
-func (o *WebhookEvent) GetLastHTTPCode() *int64 {
-	if o == nil {
+func (w *WebhookEvent) GetLastHTTPCode() *int64 {
+	if w == nil {
 		return nil
 	}
-	return o.LastHTTPCode
+	return w.LastHTTPCode
 }
 
-func (o *WebhookEvent) GetSucceeded() *bool {
-	if o == nil {
+func (w *WebhookEvent) GetSucceeded() *bool {
+	if w == nil {
 		return nil
 	}
-	return o.Succeeded
+	return w.Succeeded
 }
 
-func (o *WebhookEvent) GetPayload() *string {
-	if o == nil {
+func (w *WebhookEvent) GetPayload() *string {
+	if w == nil {
 		return nil
 	}
-	return o.Payload
+	return w.Payload
 }
 
-func (o *WebhookEvent) GetType() WebhookEventType {
-	if o == nil {
+func (w *WebhookEvent) GetType() WebhookEventType {
+	if w == nil {
 		return WebhookEventType("")
 	}
-	return o.Type
+	return w.Type
 }
 
-func (o *WebhookEvent) GetIsArchived() bool {
-	if o == nil {
+func (w *WebhookEvent) GetIsArchived() bool {
+	if w == nil {
 		return false
 	}
-	return o.IsArchived
+	return w.IsArchived
 }

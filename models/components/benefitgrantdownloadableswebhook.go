@@ -50,114 +50,114 @@ func (b *BenefitGrantDownloadablesWebhook) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *BenefitGrantDownloadablesWebhook) GetCreatedAt() time.Time {
-	if o == nil {
+func (b *BenefitGrantDownloadablesWebhook) GetCreatedAt() time.Time {
+	if b == nil {
 		return time.Time{}
 	}
-	return o.CreatedAt
+	return b.CreatedAt
 }
 
-func (o *BenefitGrantDownloadablesWebhook) GetModifiedAt() *time.Time {
-	if o == nil {
+func (b *BenefitGrantDownloadablesWebhook) GetModifiedAt() *time.Time {
+	if b == nil {
 		return nil
 	}
-	return o.ModifiedAt
+	return b.ModifiedAt
 }
 
-func (o *BenefitGrantDownloadablesWebhook) GetID() string {
-	if o == nil {
+func (b *BenefitGrantDownloadablesWebhook) GetID() string {
+	if b == nil {
 		return ""
 	}
-	return o.ID
+	return b.ID
 }
 
-func (o *BenefitGrantDownloadablesWebhook) GetGrantedAt() *time.Time {
-	if o == nil {
+func (b *BenefitGrantDownloadablesWebhook) GetGrantedAt() *time.Time {
+	if b == nil {
 		return nil
 	}
-	return o.GrantedAt
+	return b.GrantedAt
 }
 
-func (o *BenefitGrantDownloadablesWebhook) GetIsGranted() bool {
-	if o == nil {
+func (b *BenefitGrantDownloadablesWebhook) GetIsGranted() bool {
+	if b == nil {
 		return false
 	}
-	return o.IsGranted
+	return b.IsGranted
 }
 
-func (o *BenefitGrantDownloadablesWebhook) GetRevokedAt() *time.Time {
-	if o == nil {
+func (b *BenefitGrantDownloadablesWebhook) GetRevokedAt() *time.Time {
+	if b == nil {
 		return nil
 	}
-	return o.RevokedAt
+	return b.RevokedAt
 }
 
-func (o *BenefitGrantDownloadablesWebhook) GetIsRevoked() bool {
-	if o == nil {
+func (b *BenefitGrantDownloadablesWebhook) GetIsRevoked() bool {
+	if b == nil {
 		return false
 	}
-	return o.IsRevoked
+	return b.IsRevoked
 }
 
-func (o *BenefitGrantDownloadablesWebhook) GetSubscriptionID() *string {
-	if o == nil {
+func (b *BenefitGrantDownloadablesWebhook) GetSubscriptionID() *string {
+	if b == nil {
 		return nil
 	}
-	return o.SubscriptionID
+	return b.SubscriptionID
 }
 
-func (o *BenefitGrantDownloadablesWebhook) GetOrderID() *string {
-	if o == nil {
+func (b *BenefitGrantDownloadablesWebhook) GetOrderID() *string {
+	if b == nil {
 		return nil
 	}
-	return o.OrderID
+	return b.OrderID
 }
 
-func (o *BenefitGrantDownloadablesWebhook) GetCustomerID() string {
-	if o == nil {
+func (b *BenefitGrantDownloadablesWebhook) GetCustomerID() string {
+	if b == nil {
 		return ""
 	}
-	return o.CustomerID
+	return b.CustomerID
 }
 
-func (o *BenefitGrantDownloadablesWebhook) GetBenefitID() string {
-	if o == nil {
+func (b *BenefitGrantDownloadablesWebhook) GetBenefitID() string {
+	if b == nil {
 		return ""
 	}
-	return o.BenefitID
+	return b.BenefitID
 }
 
-func (o *BenefitGrantDownloadablesWebhook) GetError() *BenefitGrantError {
-	if o == nil {
+func (b *BenefitGrantDownloadablesWebhook) GetError() *BenefitGrantError {
+	if b == nil {
 		return nil
 	}
-	return o.Error
+	return b.Error
 }
 
-func (o *BenefitGrantDownloadablesWebhook) GetCustomer() Customer {
-	if o == nil {
+func (b *BenefitGrantDownloadablesWebhook) GetCustomer() Customer {
+	if b == nil {
 		return Customer{}
 	}
-	return o.Customer
+	return b.Customer
 }
 
-func (o *BenefitGrantDownloadablesWebhook) GetBenefit() BenefitDownloadables {
-	if o == nil {
+func (b *BenefitGrantDownloadablesWebhook) GetBenefit() BenefitDownloadables {
+	if b == nil {
 		return BenefitDownloadables{}
 	}
-	return o.Benefit
+	return b.Benefit
 }
 
-func (o *BenefitGrantDownloadablesWebhook) GetProperties() BenefitGrantDownloadablesProperties {
-	if o == nil {
+func (b *BenefitGrantDownloadablesWebhook) GetProperties() BenefitGrantDownloadablesProperties {
+	if b == nil {
 		return BenefitGrantDownloadablesProperties{}
 	}
-	return o.Properties
+	return b.Properties
 }
 
-func (o *BenefitGrantDownloadablesWebhook) GetPreviousProperties() *BenefitGrantDownloadablesProperties {
-	if o == nil {
+func (b *BenefitGrantDownloadablesWebhook) GetPreviousProperties() *BenefitGrantDownloadablesProperties {
+	if b == nil {
 		return nil
 	}
-	return o.PreviousProperties
+	return b.PreviousProperties
 }

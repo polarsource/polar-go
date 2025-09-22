@@ -272,58 +272,58 @@ type ProductUpdate struct {
 	AttachedCustomFields []AttachedCustomFieldCreate `json:"attached_custom_fields,omitempty"`
 }
 
-func (o *ProductUpdate) GetMetadata() map[string]ProductUpdateMetadata {
-	if o == nil {
+func (p *ProductUpdate) GetMetadata() map[string]ProductUpdateMetadata {
+	if p == nil {
 		return nil
 	}
-	return o.Metadata
+	return p.Metadata
 }
 
-func (o *ProductUpdate) GetName() *string {
-	if o == nil {
+func (p *ProductUpdate) GetName() *string {
+	if p == nil {
 		return nil
 	}
-	return o.Name
+	return p.Name
 }
 
-func (o *ProductUpdate) GetDescription() *string {
-	if o == nil {
+func (p *ProductUpdate) GetDescription() *string {
+	if p == nil {
 		return nil
 	}
-	return o.Description
+	return p.Description
 }
 
-func (o *ProductUpdate) GetRecurringInterval() *SubscriptionRecurringInterval {
-	if o == nil {
+func (p *ProductUpdate) GetRecurringInterval() *SubscriptionRecurringInterval {
+	if p == nil {
 		return nil
 	}
-	return o.RecurringInterval
+	return p.RecurringInterval
 }
 
-func (o *ProductUpdate) GetIsArchived() *bool {
-	if o == nil {
+func (p *ProductUpdate) GetIsArchived() *bool {
+	if p == nil {
 		return nil
 	}
-	return o.IsArchived
+	return p.IsArchived
 }
 
-func (o *ProductUpdate) GetPrices() []ProductUpdatePrices {
-	if o == nil {
+func (p *ProductUpdate) GetPrices() []ProductUpdatePrices {
+	if p == nil {
 		return nil
 	}
-	return o.Prices
+	return p.Prices
 }
 
-func (o *ProductUpdate) GetMedias() []string {
-	if o == nil {
+func (p *ProductUpdate) GetMedias() []string {
+	if p == nil {
 		return nil
 	}
-	return o.Medias
+	return p.Medias
 }
 
-func (o *ProductUpdate) GetAttachedCustomFields() []AttachedCustomFieldCreate {
-	if o == nil {
+func (p *ProductUpdate) GetAttachedCustomFields() []AttachedCustomFieldCreate {
+	if p == nil {
 		return nil
 	}
-	return o.AttachedCustomFields
+	return p.AttachedCustomFields
 }

@@ -42,7 +42,7 @@ func main() {
 
     res, err := s.LicenseKeys.List(ctx, polargo.Pointer(operations.CreateLicenseKeysListQueryParamOrganizationIDFilterStr(
         "1dbfc517-0bbf-4301-9ba8-555ca42b9737",
-    )), nil, polargo.Int64(1), polargo.Int64(10))
+    )), nil, polargo.Pointer[int64](1), polargo.Pointer[int64](10))
     if err != nil {
         log.Fatal(err)
     }

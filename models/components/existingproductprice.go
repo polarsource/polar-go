@@ -24,9 +24,9 @@ func (e *ExistingProductPrice) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *ExistingProductPrice) GetID() string {
-	if o == nil {
+func (e *ExistingProductPrice) GetID() string {
+	if e == nil {
 		return ""
 	}
-	return o.ID
+	return e.ID
 }

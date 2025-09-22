@@ -22,13 +22,13 @@ func (n *NotOpenCheckout) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *NotOpenCheckout) GetError() string {
+func (n *NotOpenCheckout) GetError() string {
 	return "NotOpenCheckout"
 }
 
-func (o *NotOpenCheckout) GetDetail() string {
-	if o == nil {
+func (n *NotOpenCheckout) GetDetail() string {
+	if n == nil {
 		return ""
 	}
-	return o.Detail
+	return n.Detail
 }

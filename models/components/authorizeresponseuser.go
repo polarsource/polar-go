@@ -24,27 +24,27 @@ func (a *AuthorizeResponseUser) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *AuthorizeResponseUser) GetClient() OAuth2ClientPublic {
-	if o == nil {
+func (a *AuthorizeResponseUser) GetClient() OAuth2ClientPublic {
+	if a == nil {
 		return OAuth2ClientPublic{}
 	}
-	return o.Client
+	return a.Client
 }
 
-func (o *AuthorizeResponseUser) GetSubType() string {
+func (a *AuthorizeResponseUser) GetSubType() string {
 	return "user"
 }
 
-func (o *AuthorizeResponseUser) GetSub() *AuthorizeUser {
-	if o == nil {
+func (a *AuthorizeResponseUser) GetSub() *AuthorizeUser {
+	if a == nil {
 		return nil
 	}
-	return o.Sub
+	return a.Sub
 }
 
-func (o *AuthorizeResponseUser) GetScopes() []Scope {
-	if o == nil {
+func (a *AuthorizeResponseUser) GetScopes() []Scope {
+	if a == nil {
 		return []Scope{}
 	}
-	return o.Scopes
+	return a.Scopes
 }

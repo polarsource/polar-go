@@ -173,9 +173,9 @@ func main() {
     res, err := s.CustomerPortal.Orders.Update(ctx, operations.CustomerPortalOrdersUpdateSecurity{
         CustomerSession: os.Getenv("POLAR_CUSTOMER_SESSION"),
     }, "<value>", components.CustomerOrderUpdate{
-        BillingName: polargo.String("<value>"),
-        BillingAddress: &components.Address{
-            Country: "US",
+        BillingName: polargo.Pointer("<value>"),
+        BillingAddress: &components.AddressInput{
+            Country: components.CountryAlpha2InputUs,
         },
     })
     if err != nil {

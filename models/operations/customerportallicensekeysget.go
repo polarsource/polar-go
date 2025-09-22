@@ -10,22 +10,22 @@ type CustomerPortalLicenseKeysGetSecurity struct {
 	CustomerSession string `security:"scheme,type=http,subtype=bearer,name=Authorization,env=polar_customer_session"`
 }
 
-func (o *CustomerPortalLicenseKeysGetSecurity) GetCustomerSession() string {
-	if o == nil {
+func (c *CustomerPortalLicenseKeysGetSecurity) GetCustomerSession() string {
+	if c == nil {
 		return ""
 	}
-	return o.CustomerSession
+	return c.CustomerSession
 }
 
 type CustomerPortalLicenseKeysGetRequest struct {
 	ID string `pathParam:"style=simple,explode=false,name=id"`
 }
 
-func (o *CustomerPortalLicenseKeysGetRequest) GetID() string {
-	if o == nil {
+func (c *CustomerPortalLicenseKeysGetRequest) GetID() string {
+	if c == nil {
 		return ""
 	}
-	return o.ID
+	return c.ID
 }
 
 type CustomerPortalLicenseKeysGetResponse struct {
@@ -34,16 +34,16 @@ type CustomerPortalLicenseKeysGetResponse struct {
 	LicenseKeyWithActivations *components.LicenseKeyWithActivations
 }
 
-func (o *CustomerPortalLicenseKeysGetResponse) GetHTTPMeta() components.HTTPMetadata {
-	if o == nil {
+func (c *CustomerPortalLicenseKeysGetResponse) GetHTTPMeta() components.HTTPMetadata {
+	if c == nil {
 		return components.HTTPMetadata{}
 	}
-	return o.HTTPMeta
+	return c.HTTPMeta
 }
 
-func (o *CustomerPortalLicenseKeysGetResponse) GetLicenseKeyWithActivations() *components.LicenseKeyWithActivations {
-	if o == nil {
+func (c *CustomerPortalLicenseKeysGetResponse) GetLicenseKeyWithActivations() *components.LicenseKeyWithActivations {
+	if c == nil {
 		return nil
 	}
-	return o.LicenseKeyWithActivations
+	return c.LicenseKeyWithActivations
 }

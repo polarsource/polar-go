@@ -22,13 +22,13 @@ func (a *AlreadyActiveSubscriptionError) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *AlreadyActiveSubscriptionError) GetError() string {
+func (a *AlreadyActiveSubscriptionError) GetError() string {
 	return "AlreadyActiveSubscriptionError"
 }
 
-func (o *AlreadyActiveSubscriptionError) GetDetail() string {
-	if o == nil {
+func (a *AlreadyActiveSubscriptionError) GetDetail() string {
+	if a == nil {
 		return ""
 	}
-	return o.Detail
+	return a.Detail
 }

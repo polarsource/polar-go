@@ -8,23 +8,23 @@ type S3FileUploadCompletedPart struct {
 	ChecksumSha256Base64 *string `json:"checksum_sha256_base64"`
 }
 
-func (o *S3FileUploadCompletedPart) GetNumber() int64 {
-	if o == nil {
+func (s *S3FileUploadCompletedPart) GetNumber() int64 {
+	if s == nil {
 		return 0
 	}
-	return o.Number
+	return s.Number
 }
 
-func (o *S3FileUploadCompletedPart) GetChecksumEtag() string {
-	if o == nil {
+func (s *S3FileUploadCompletedPart) GetChecksumEtag() string {
+	if s == nil {
 		return ""
 	}
-	return o.ChecksumEtag
+	return s.ChecksumEtag
 }
 
-func (o *S3FileUploadCompletedPart) GetChecksumSha256Base64() *string {
-	if o == nil {
+func (s *S3FileUploadCompletedPart) GetChecksumSha256Base64() *string {
+	if s == nil {
 		return nil
 	}
-	return o.ChecksumSha256Base64
+	return s.ChecksumSha256Base64
 }

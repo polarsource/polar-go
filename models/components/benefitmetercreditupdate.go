@@ -145,27 +145,27 @@ func (b *BenefitMeterCreditUpdate) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *BenefitMeterCreditUpdate) GetMetadata() map[string]BenefitMeterCreditUpdateMetadata {
-	if o == nil {
+func (b *BenefitMeterCreditUpdate) GetMetadata() map[string]BenefitMeterCreditUpdateMetadata {
+	if b == nil {
 		return nil
 	}
-	return o.Metadata
+	return b.Metadata
 }
 
-func (o *BenefitMeterCreditUpdate) GetDescription() *string {
-	if o == nil {
+func (b *BenefitMeterCreditUpdate) GetDescription() *string {
+	if b == nil {
 		return nil
 	}
-	return o.Description
+	return b.Description
 }
 
-func (o *BenefitMeterCreditUpdate) GetType() string {
+func (b *BenefitMeterCreditUpdate) GetType() string {
 	return "meter_credit"
 }
 
-func (o *BenefitMeterCreditUpdate) GetProperties() *BenefitMeterCreditCreateProperties {
-	if o == nil {
+func (b *BenefitMeterCreditUpdate) GetProperties() *BenefitMeterCreditCreateProperties {
+	if b == nil {
 		return nil
 	}
-	return o.Properties
+	return b.Properties
 }

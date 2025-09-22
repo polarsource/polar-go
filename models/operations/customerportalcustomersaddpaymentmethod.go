@@ -10,11 +10,11 @@ type CustomerPortalCustomersAddPaymentMethodSecurity struct {
 	CustomerSession string `security:"scheme,type=http,subtype=bearer,name=Authorization,env=polar_customer_session"`
 }
 
-func (o *CustomerPortalCustomersAddPaymentMethodSecurity) GetCustomerSession() string {
-	if o == nil {
+func (c *CustomerPortalCustomersAddPaymentMethodSecurity) GetCustomerSession() string {
+	if c == nil {
 		return ""
 	}
-	return o.CustomerSession
+	return c.CustomerSession
 }
 
 type CustomerPortalCustomersAddPaymentMethodResponse struct {
@@ -23,16 +23,16 @@ type CustomerPortalCustomersAddPaymentMethodResponse struct {
 	CustomerPaymentMethod *components.CustomerPaymentMethod
 }
 
-func (o *CustomerPortalCustomersAddPaymentMethodResponse) GetHTTPMeta() components.HTTPMetadata {
-	if o == nil {
+func (c *CustomerPortalCustomersAddPaymentMethodResponse) GetHTTPMeta() components.HTTPMetadata {
+	if c == nil {
 		return components.HTTPMetadata{}
 	}
-	return o.HTTPMeta
+	return c.HTTPMeta
 }
 
-func (o *CustomerPortalCustomersAddPaymentMethodResponse) GetCustomerPaymentMethod() *components.CustomerPaymentMethod {
-	if o == nil {
+func (c *CustomerPortalCustomersAddPaymentMethodResponse) GetCustomerPaymentMethod() *components.CustomerPaymentMethod {
+	if c == nil {
 		return nil
 	}
-	return o.CustomerPaymentMethod
+	return c.CustomerPaymentMethod
 }

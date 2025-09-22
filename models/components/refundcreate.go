@@ -154,44 +154,44 @@ func (r *RefundCreate) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *RefundCreate) GetMetadata() map[string]RefundCreateMetadata {
-	if o == nil {
+func (r *RefundCreate) GetMetadata() map[string]RefundCreateMetadata {
+	if r == nil {
 		return nil
 	}
-	return o.Metadata
+	return r.Metadata
 }
 
-func (o *RefundCreate) GetOrderID() string {
-	if o == nil {
+func (r *RefundCreate) GetOrderID() string {
+	if r == nil {
 		return ""
 	}
-	return o.OrderID
+	return r.OrderID
 }
 
-func (o *RefundCreate) GetReason() RefundReason {
-	if o == nil {
+func (r *RefundCreate) GetReason() RefundReason {
+	if r == nil {
 		return RefundReason("")
 	}
-	return o.Reason
+	return r.Reason
 }
 
-func (o *RefundCreate) GetAmount() int64 {
-	if o == nil {
+func (r *RefundCreate) GetAmount() int64 {
+	if r == nil {
 		return 0
 	}
-	return o.Amount
+	return r.Amount
 }
 
-func (o *RefundCreate) GetComment() *string {
-	if o == nil {
+func (r *RefundCreate) GetComment() *string {
+	if r == nil {
 		return nil
 	}
-	return o.Comment
+	return r.Comment
 }
 
-func (o *RefundCreate) GetRevokeBenefits() *bool {
-	if o == nil {
+func (r *RefundCreate) GetRevokeBenefits() *bool {
+	if r == nil {
 		return nil
 	}
-	return o.RevokeBenefits
+	return r.RevokeBenefits
 }

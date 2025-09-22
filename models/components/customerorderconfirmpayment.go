@@ -11,23 +11,23 @@ type CustomerOrderConfirmPayment struct {
 	PaymentProcessor *PaymentProcessor `json:"payment_processor,omitempty"`
 }
 
-func (o *CustomerOrderConfirmPayment) GetConfirmationTokenID() *string {
-	if o == nil {
+func (c *CustomerOrderConfirmPayment) GetConfirmationTokenID() *string {
+	if c == nil {
 		return nil
 	}
-	return o.ConfirmationTokenID
+	return c.ConfirmationTokenID
 }
 
-func (o *CustomerOrderConfirmPayment) GetPaymentMethodID() *string {
-	if o == nil {
+func (c *CustomerOrderConfirmPayment) GetPaymentMethodID() *string {
+	if c == nil {
 		return nil
 	}
-	return o.PaymentMethodID
+	return c.PaymentMethodID
 }
 
-func (o *CustomerOrderConfirmPayment) GetPaymentProcessor() *PaymentProcessor {
-	if o == nil {
+func (c *CustomerOrderConfirmPayment) GetPaymentProcessor() *PaymentProcessor {
+	if c == nil {
 		return nil
 	}
-	return o.PaymentProcessor
+	return c.PaymentProcessor
 }

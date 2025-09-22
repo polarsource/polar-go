@@ -146,34 +146,34 @@ func (c *CustomFieldUpdateCheckbox) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *CustomFieldUpdateCheckbox) GetMetadata() map[string]CustomFieldUpdateCheckboxMetadata {
-	if o == nil {
+func (c *CustomFieldUpdateCheckbox) GetMetadata() map[string]CustomFieldUpdateCheckboxMetadata {
+	if c == nil {
 		return nil
 	}
-	return o.Metadata
+	return c.Metadata
 }
 
-func (o *CustomFieldUpdateCheckbox) GetName() *string {
-	if o == nil {
+func (c *CustomFieldUpdateCheckbox) GetName() *string {
+	if c == nil {
 		return nil
 	}
-	return o.Name
+	return c.Name
 }
 
-func (o *CustomFieldUpdateCheckbox) GetSlug() *string {
-	if o == nil {
+func (c *CustomFieldUpdateCheckbox) GetSlug() *string {
+	if c == nil {
 		return nil
 	}
-	return o.Slug
+	return c.Slug
 }
 
-func (o *CustomFieldUpdateCheckbox) GetType() string {
+func (c *CustomFieldUpdateCheckbox) GetType() string {
 	return "checkbox"
 }
 
-func (o *CustomFieldUpdateCheckbox) GetProperties() *CustomFieldCheckboxProperties {
-	if o == nil {
+func (c *CustomFieldUpdateCheckbox) GetProperties() *CustomFieldCheckboxProperties {
+	if c == nil {
 		return nil
 	}
-	return o.Properties
+	return c.Properties
 }

@@ -11,11 +11,11 @@ type WebhooksGetWebhookEndpointRequest struct {
 	ID string `pathParam:"style=simple,explode=false,name=id"`
 }
 
-func (o *WebhooksGetWebhookEndpointRequest) GetID() string {
-	if o == nil {
+func (w *WebhooksGetWebhookEndpointRequest) GetID() string {
+	if w == nil {
 		return ""
 	}
-	return o.ID
+	return w.ID
 }
 
 type WebhooksGetWebhookEndpointResponse struct {
@@ -24,16 +24,16 @@ type WebhooksGetWebhookEndpointResponse struct {
 	WebhookEndpoint *components.WebhookEndpoint
 }
 
-func (o *WebhooksGetWebhookEndpointResponse) GetHTTPMeta() components.HTTPMetadata {
-	if o == nil {
+func (w *WebhooksGetWebhookEndpointResponse) GetHTTPMeta() components.HTTPMetadata {
+	if w == nil {
 		return components.HTTPMetadata{}
 	}
-	return o.HTTPMeta
+	return w.HTTPMeta
 }
 
-func (o *WebhooksGetWebhookEndpointResponse) GetWebhookEndpoint() *components.WebhookEndpoint {
-	if o == nil {
+func (w *WebhooksGetWebhookEndpointResponse) GetWebhookEndpoint() *components.WebhookEndpoint {
+	if w == nil {
 		return nil
 	}
-	return o.WebhookEndpoint
+	return w.WebhookEndpoint
 }

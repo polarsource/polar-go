@@ -12,16 +12,16 @@ type EndpointbenefitGrantRevokedPostResponse struct {
 	Any any
 }
 
-func (o *EndpointbenefitGrantRevokedPostResponse) GetHTTPMeta() components.HTTPMetadata {
-	if o == nil {
+func (e *EndpointbenefitGrantRevokedPostResponse) GetHTTPMeta() components.HTTPMetadata {
+	if e == nil {
 		return components.HTTPMetadata{}
 	}
-	return o.HTTPMeta
+	return e.HTTPMeta
 }
 
-func (o *EndpointbenefitGrantRevokedPostResponse) GetAny() any {
-	if o == nil {
+func (e *EndpointbenefitGrantRevokedPostResponse) GetAny() any {
+	if e == nil {
 		return nil
 	}
-	return o.Any
+	return e.Any
 }

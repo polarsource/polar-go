@@ -11,23 +11,23 @@ type Metric struct {
 	Type        MetricType `json:"type"`
 }
 
-func (o *Metric) GetSlug() string {
-	if o == nil {
+func (m *Metric) GetSlug() string {
+	if m == nil {
 		return ""
 	}
-	return o.Slug
+	return m.Slug
 }
 
-func (o *Metric) GetDisplayName() string {
-	if o == nil {
+func (m *Metric) GetDisplayName() string {
+	if m == nil {
 		return ""
 	}
-	return o.DisplayName
+	return m.DisplayName
 }
 
-func (o *Metric) GetType() MetricType {
-	if o == nil {
+func (m *Metric) GetType() MetricType {
+	if m == nil {
 		return MetricType("")
 	}
-	return o.Type
+	return m.Type
 }

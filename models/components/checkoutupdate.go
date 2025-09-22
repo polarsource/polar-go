@@ -339,14 +339,14 @@ type CheckoutUpdate struct {
 	// ID of the product price to checkout. Must correspond to a price present in the checkout's product list.
 	//
 	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
-	ProductPriceID         *string  `json:"product_price_id,omitempty"`
-	Amount                 *int64   `json:"amount,omitempty"`
-	IsBusinessCustomer     *bool    `json:"is_business_customer,omitempty"`
-	CustomerName           *string  `json:"customer_name,omitempty"`
-	CustomerEmail          *string  `json:"customer_email,omitempty"`
-	CustomerBillingName    *string  `json:"customer_billing_name,omitempty"`
-	CustomerBillingAddress *Address `json:"customer_billing_address,omitempty"`
-	CustomerTaxID          *string  `json:"customer_tax_id,omitempty"`
+	ProductPriceID         *string       `json:"product_price_id,omitempty"`
+	Amount                 *int64        `json:"amount,omitempty"`
+	IsBusinessCustomer     *bool         `json:"is_business_customer,omitempty"`
+	CustomerName           *string       `json:"customer_name,omitempty"`
+	CustomerEmail          *string       `json:"customer_email,omitempty"`
+	CustomerBillingName    *string       `json:"customer_billing_name,omitempty"`
+	CustomerBillingAddress *AddressInput `json:"customer_billing_address,omitempty"`
+	CustomerTaxID          *string       `json:"customer_tax_id,omitempty"`
 	// Key-value object allowing you to store additional information.
 	//
 	// The key must be a string with a maximum length of **40 characters**.
@@ -384,128 +384,128 @@ type CheckoutUpdate struct {
 	EmbedOrigin *string `json:"embed_origin,omitempty"`
 }
 
-func (o *CheckoutUpdate) GetCustomFieldData() map[string]*CheckoutUpdateCustomFieldData {
-	if o == nil {
+func (c *CheckoutUpdate) GetCustomFieldData() map[string]*CheckoutUpdateCustomFieldData {
+	if c == nil {
 		return nil
 	}
-	return o.CustomFieldData
+	return c.CustomFieldData
 }
 
-func (o *CheckoutUpdate) GetProductID() *string {
-	if o == nil {
+func (c *CheckoutUpdate) GetProductID() *string {
+	if c == nil {
 		return nil
 	}
-	return o.ProductID
+	return c.ProductID
 }
 
-func (o *CheckoutUpdate) GetProductPriceID() *string {
-	if o == nil {
+func (c *CheckoutUpdate) GetProductPriceID() *string {
+	if c == nil {
 		return nil
 	}
-	return o.ProductPriceID
+	return c.ProductPriceID
 }
 
-func (o *CheckoutUpdate) GetAmount() *int64 {
-	if o == nil {
+func (c *CheckoutUpdate) GetAmount() *int64 {
+	if c == nil {
 		return nil
 	}
-	return o.Amount
+	return c.Amount
 }
 
-func (o *CheckoutUpdate) GetIsBusinessCustomer() *bool {
-	if o == nil {
+func (c *CheckoutUpdate) GetIsBusinessCustomer() *bool {
+	if c == nil {
 		return nil
 	}
-	return o.IsBusinessCustomer
+	return c.IsBusinessCustomer
 }
 
-func (o *CheckoutUpdate) GetCustomerName() *string {
-	if o == nil {
+func (c *CheckoutUpdate) GetCustomerName() *string {
+	if c == nil {
 		return nil
 	}
-	return o.CustomerName
+	return c.CustomerName
 }
 
-func (o *CheckoutUpdate) GetCustomerEmail() *string {
-	if o == nil {
+func (c *CheckoutUpdate) GetCustomerEmail() *string {
+	if c == nil {
 		return nil
 	}
-	return o.CustomerEmail
+	return c.CustomerEmail
 }
 
-func (o *CheckoutUpdate) GetCustomerBillingName() *string {
-	if o == nil {
+func (c *CheckoutUpdate) GetCustomerBillingName() *string {
+	if c == nil {
 		return nil
 	}
-	return o.CustomerBillingName
+	return c.CustomerBillingName
 }
 
-func (o *CheckoutUpdate) GetCustomerBillingAddress() *Address {
-	if o == nil {
+func (c *CheckoutUpdate) GetCustomerBillingAddress() *AddressInput {
+	if c == nil {
 		return nil
 	}
-	return o.CustomerBillingAddress
+	return c.CustomerBillingAddress
 }
 
-func (o *CheckoutUpdate) GetCustomerTaxID() *string {
-	if o == nil {
+func (c *CheckoutUpdate) GetCustomerTaxID() *string {
+	if c == nil {
 		return nil
 	}
-	return o.CustomerTaxID
+	return c.CustomerTaxID
 }
 
-func (o *CheckoutUpdate) GetMetadata() map[string]CheckoutUpdateMetadata {
-	if o == nil {
+func (c *CheckoutUpdate) GetMetadata() map[string]CheckoutUpdateMetadata {
+	if c == nil {
 		return nil
 	}
-	return o.Metadata
+	return c.Metadata
 }
 
-func (o *CheckoutUpdate) GetDiscountID() *string {
-	if o == nil {
+func (c *CheckoutUpdate) GetDiscountID() *string {
+	if c == nil {
 		return nil
 	}
-	return o.DiscountID
+	return c.DiscountID
 }
 
-func (o *CheckoutUpdate) GetAllowDiscountCodes() *bool {
-	if o == nil {
+func (c *CheckoutUpdate) GetAllowDiscountCodes() *bool {
+	if c == nil {
 		return nil
 	}
-	return o.AllowDiscountCodes
+	return c.AllowDiscountCodes
 }
 
-func (o *CheckoutUpdate) GetRequireBillingAddress() *bool {
-	if o == nil {
+func (c *CheckoutUpdate) GetRequireBillingAddress() *bool {
+	if c == nil {
 		return nil
 	}
-	return o.RequireBillingAddress
+	return c.RequireBillingAddress
 }
 
-func (o *CheckoutUpdate) GetCustomerIPAddress() *string {
-	if o == nil {
+func (c *CheckoutUpdate) GetCustomerIPAddress() *string {
+	if c == nil {
 		return nil
 	}
-	return o.CustomerIPAddress
+	return c.CustomerIPAddress
 }
 
-func (o *CheckoutUpdate) GetCustomerMetadata() map[string]CheckoutUpdateCustomerMetadata {
-	if o == nil {
+func (c *CheckoutUpdate) GetCustomerMetadata() map[string]CheckoutUpdateCustomerMetadata {
+	if c == nil {
 		return nil
 	}
-	return o.CustomerMetadata
+	return c.CustomerMetadata
 }
 
-func (o *CheckoutUpdate) GetSuccessURL() *string {
-	if o == nil {
+func (c *CheckoutUpdate) GetSuccessURL() *string {
+	if c == nil {
 		return nil
 	}
-	return o.SuccessURL
+	return c.SuccessURL
 }
 
-func (o *CheckoutUpdate) GetEmbedOrigin() *string {
-	if o == nil {
+func (c *CheckoutUpdate) GetEmbedOrigin() *string {
+	if c == nil {
 		return nil
 	}
-	return o.EmbedOrigin
+	return c.EmbedOrigin
 }

@@ -156,55 +156,55 @@ func (c *CheckoutLinkCreateProducts) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *CheckoutLinkCreateProducts) GetMetadata() map[string]CheckoutLinkCreateProductsMetadata {
-	if o == nil {
+func (c *CheckoutLinkCreateProducts) GetMetadata() map[string]CheckoutLinkCreateProductsMetadata {
+	if c == nil {
 		return nil
 	}
-	return o.Metadata
+	return c.Metadata
 }
 
-func (o *CheckoutLinkCreateProducts) GetPaymentProcessor() string {
+func (c *CheckoutLinkCreateProducts) GetPaymentProcessor() string {
 	return "stripe"
 }
 
-func (o *CheckoutLinkCreateProducts) GetLabel() *string {
-	if o == nil {
+func (c *CheckoutLinkCreateProducts) GetLabel() *string {
+	if c == nil {
 		return nil
 	}
-	return o.Label
+	return c.Label
 }
 
-func (o *CheckoutLinkCreateProducts) GetAllowDiscountCodes() *bool {
-	if o == nil {
+func (c *CheckoutLinkCreateProducts) GetAllowDiscountCodes() *bool {
+	if c == nil {
 		return nil
 	}
-	return o.AllowDiscountCodes
+	return c.AllowDiscountCodes
 }
 
-func (o *CheckoutLinkCreateProducts) GetRequireBillingAddress() *bool {
-	if o == nil {
+func (c *CheckoutLinkCreateProducts) GetRequireBillingAddress() *bool {
+	if c == nil {
 		return nil
 	}
-	return o.RequireBillingAddress
+	return c.RequireBillingAddress
 }
 
-func (o *CheckoutLinkCreateProducts) GetDiscountID() *string {
-	if o == nil {
+func (c *CheckoutLinkCreateProducts) GetDiscountID() *string {
+	if c == nil {
 		return nil
 	}
-	return o.DiscountID
+	return c.DiscountID
 }
 
-func (o *CheckoutLinkCreateProducts) GetSuccessURL() *string {
-	if o == nil {
+func (c *CheckoutLinkCreateProducts) GetSuccessURL() *string {
+	if c == nil {
 		return nil
 	}
-	return o.SuccessURL
+	return c.SuccessURL
 }
 
-func (o *CheckoutLinkCreateProducts) GetProducts() []string {
-	if o == nil {
+func (c *CheckoutLinkCreateProducts) GetProducts() []string {
+	if c == nil {
 		return []string{}
 	}
-	return o.Products
+	return c.Products
 }

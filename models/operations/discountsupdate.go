@@ -12,18 +12,18 @@ type DiscountsUpdateRequest struct {
 	DiscountUpdate components.DiscountUpdate `request:"mediaType=application/json"`
 }
 
-func (o *DiscountsUpdateRequest) GetID() string {
-	if o == nil {
+func (d *DiscountsUpdateRequest) GetID() string {
+	if d == nil {
 		return ""
 	}
-	return o.ID
+	return d.ID
 }
 
-func (o *DiscountsUpdateRequest) GetDiscountUpdate() components.DiscountUpdate {
-	if o == nil {
+func (d *DiscountsUpdateRequest) GetDiscountUpdate() components.DiscountUpdate {
+	if d == nil {
 		return components.DiscountUpdate{}
 	}
-	return o.DiscountUpdate
+	return d.DiscountUpdate
 }
 
 type DiscountsUpdateResponse struct {
@@ -32,16 +32,16 @@ type DiscountsUpdateResponse struct {
 	Discount *components.Discount
 }
 
-func (o *DiscountsUpdateResponse) GetHTTPMeta() components.HTTPMetadata {
-	if o == nil {
+func (d *DiscountsUpdateResponse) GetHTTPMeta() components.HTTPMetadata {
+	if d == nil {
 		return components.HTTPMetadata{}
 	}
-	return o.HTTPMeta
+	return d.HTTPMeta
 }
 
-func (o *DiscountsUpdateResponse) GetDiscount() *components.Discount {
-	if o == nil {
+func (d *DiscountsUpdateResponse) GetDiscount() *components.Discount {
+	if d == nil {
 		return nil
 	}
-	return o.Discount
+	return d.Discount
 }

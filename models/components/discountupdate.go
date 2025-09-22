@@ -155,93 +155,93 @@ func (d *DiscountUpdate) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *DiscountUpdate) GetMetadata() map[string]DiscountUpdateMetadata {
-	if o == nil {
+func (d *DiscountUpdate) GetMetadata() map[string]DiscountUpdateMetadata {
+	if d == nil {
 		return nil
 	}
-	return o.Metadata
+	return d.Metadata
 }
 
-func (o *DiscountUpdate) GetName() *string {
-	if o == nil {
+func (d *DiscountUpdate) GetName() *string {
+	if d == nil {
 		return nil
 	}
-	return o.Name
+	return d.Name
 }
 
-func (o *DiscountUpdate) GetCode() *string {
-	if o == nil {
+func (d *DiscountUpdate) GetCode() *string {
+	if d == nil {
 		return nil
 	}
-	return o.Code
+	return d.Code
 }
 
-func (o *DiscountUpdate) GetStartsAt() *time.Time {
-	if o == nil {
+func (d *DiscountUpdate) GetStartsAt() *time.Time {
+	if d == nil {
 		return nil
 	}
-	return o.StartsAt
+	return d.StartsAt
 }
 
-func (o *DiscountUpdate) GetEndsAt() *time.Time {
-	if o == nil {
+func (d *DiscountUpdate) GetEndsAt() *time.Time {
+	if d == nil {
 		return nil
 	}
-	return o.EndsAt
+	return d.EndsAt
 }
 
-func (o *DiscountUpdate) GetMaxRedemptions() *int64 {
-	if o == nil {
+func (d *DiscountUpdate) GetMaxRedemptions() *int64 {
+	if d == nil {
 		return nil
 	}
-	return o.MaxRedemptions
+	return d.MaxRedemptions
 }
 
-func (o *DiscountUpdate) GetDuration() *DiscountDuration {
-	if o == nil {
+func (d *DiscountUpdate) GetDuration() *DiscountDuration {
+	if d == nil {
 		return nil
 	}
-	return o.Duration
+	return d.Duration
 }
 
-func (o *DiscountUpdate) GetDurationInMonths() *int64 {
-	if o == nil {
+func (d *DiscountUpdate) GetDurationInMonths() *int64 {
+	if d == nil {
 		return nil
 	}
-	return o.DurationInMonths
+	return d.DurationInMonths
 }
 
-func (o *DiscountUpdate) GetType() *DiscountType {
-	if o == nil {
+func (d *DiscountUpdate) GetType() *DiscountType {
+	if d == nil {
 		return nil
 	}
-	return o.Type
+	return d.Type
 }
 
-func (o *DiscountUpdate) GetAmount() *int64 {
-	if o == nil {
+func (d *DiscountUpdate) GetAmount() *int64 {
+	if d == nil {
 		return nil
 	}
-	return o.Amount
+	return d.Amount
 }
 
-func (o *DiscountUpdate) GetCurrency() *string {
-	if o == nil {
+func (d *DiscountUpdate) GetCurrency() *string {
+	if d == nil {
 		return nil
 	}
-	return o.Currency
+	return d.Currency
 }
 
-func (o *DiscountUpdate) GetBasisPoints() *int64 {
-	if o == nil {
+func (d *DiscountUpdate) GetBasisPoints() *int64 {
+	if d == nil {
 		return nil
 	}
-	return o.BasisPoints
+	return d.BasisPoints
 }
 
-func (o *DiscountUpdate) GetProducts() []string {
-	if o == nil {
+func (d *DiscountUpdate) GetProducts() []string {
+	if d == nil {
 		return nil
 	}
-	return o.Products
+	return d.Products
 }

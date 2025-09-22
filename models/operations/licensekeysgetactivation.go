@@ -11,18 +11,18 @@ type LicenseKeysGetActivationRequest struct {
 	ActivationID string `pathParam:"style=simple,explode=false,name=activation_id"`
 }
 
-func (o *LicenseKeysGetActivationRequest) GetID() string {
-	if o == nil {
+func (l *LicenseKeysGetActivationRequest) GetID() string {
+	if l == nil {
 		return ""
 	}
-	return o.ID
+	return l.ID
 }
 
-func (o *LicenseKeysGetActivationRequest) GetActivationID() string {
-	if o == nil {
+func (l *LicenseKeysGetActivationRequest) GetActivationID() string {
+	if l == nil {
 		return ""
 	}
-	return o.ActivationID
+	return l.ActivationID
 }
 
 type LicenseKeysGetActivationResponse struct {
@@ -31,16 +31,16 @@ type LicenseKeysGetActivationResponse struct {
 	LicenseKeyActivationRead *components.LicenseKeyActivationRead
 }
 
-func (o *LicenseKeysGetActivationResponse) GetHTTPMeta() components.HTTPMetadata {
-	if o == nil {
+func (l *LicenseKeysGetActivationResponse) GetHTTPMeta() components.HTTPMetadata {
+	if l == nil {
 		return components.HTTPMetadata{}
 	}
-	return o.HTTPMeta
+	return l.HTTPMeta
 }
 
-func (o *LicenseKeysGetActivationResponse) GetLicenseKeyActivationRead() *components.LicenseKeyActivationRead {
-	if o == nil {
+func (l *LicenseKeysGetActivationResponse) GetLicenseKeyActivationRead() *components.LicenseKeyActivationRead {
+	if l == nil {
 		return nil
 	}
-	return o.LicenseKeyActivationRead
+	return l.LicenseKeyActivationRead
 }

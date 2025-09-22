@@ -21,9 +21,9 @@ func (s *SubscriptionCycledMetadata) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SubscriptionCycledMetadata) GetSubscriptionID() string {
-	if o == nil {
+func (s *SubscriptionCycledMetadata) GetSubscriptionID() string {
+	if s == nil {
 		return ""
 	}
-	return o.SubscriptionID
+	return s.SubscriptionID
 }

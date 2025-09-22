@@ -12,16 +12,16 @@ type MetersCreateResponse struct {
 	Meter *components.Meter
 }
 
-func (o *MetersCreateResponse) GetHTTPMeta() components.HTTPMetadata {
-	if o == nil {
+func (m *MetersCreateResponse) GetHTTPMeta() components.HTTPMetadata {
+	if m == nil {
 		return components.HTTPMetadata{}
 	}
-	return o.HTTPMeta
+	return m.HTTPMeta
 }
 
-func (o *MetersCreateResponse) GetMeter() *components.Meter {
-	if o == nil {
+func (m *MetersCreateResponse) GetMeter() *components.Meter {
+	if m == nil {
 		return nil
 	}
-	return o.Meter
+	return m.Meter
 }

@@ -252,37 +252,37 @@ type LicenseKeyActivate struct {
 	Meta map[string]LicenseKeyActivateMeta `json:"meta,omitempty"`
 }
 
-func (o *LicenseKeyActivate) GetKey() string {
-	if o == nil {
+func (l *LicenseKeyActivate) GetKey() string {
+	if l == nil {
 		return ""
 	}
-	return o.Key
+	return l.Key
 }
 
-func (o *LicenseKeyActivate) GetOrganizationID() string {
-	if o == nil {
+func (l *LicenseKeyActivate) GetOrganizationID() string {
+	if l == nil {
 		return ""
 	}
-	return o.OrganizationID
+	return l.OrganizationID
 }
 
-func (o *LicenseKeyActivate) GetLabel() string {
-	if o == nil {
+func (l *LicenseKeyActivate) GetLabel() string {
+	if l == nil {
 		return ""
 	}
-	return o.Label
+	return l.Label
 }
 
-func (o *LicenseKeyActivate) GetConditions() map[string]LicenseKeyActivateConditions {
-	if o == nil {
+func (l *LicenseKeyActivate) GetConditions() map[string]LicenseKeyActivateConditions {
+	if l == nil {
 		return nil
 	}
-	return o.Conditions
+	return l.Conditions
 }
 
-func (o *LicenseKeyActivate) GetMeta() map[string]LicenseKeyActivateMeta {
-	if o == nil {
+func (l *LicenseKeyActivate) GetMeta() map[string]LicenseKeyActivateMeta {
+	if l == nil {
 		return nil
 	}
-	return o.Meta
+	return l.Meta
 }

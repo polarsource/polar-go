@@ -10,11 +10,11 @@ type CustomerPortalBenefitGrantsUpdateSecurity struct {
 	CustomerSession string `security:"scheme,type=http,subtype=bearer,name=Authorization,env=polar_customer_session"`
 }
 
-func (o *CustomerPortalBenefitGrantsUpdateSecurity) GetCustomerSession() string {
-	if o == nil {
+func (c *CustomerPortalBenefitGrantsUpdateSecurity) GetCustomerSession() string {
+	if c == nil {
 		return ""
 	}
-	return o.CustomerSession
+	return c.CustomerSession
 }
 
 type CustomerPortalBenefitGrantsUpdateRequest struct {
@@ -23,42 +23,42 @@ type CustomerPortalBenefitGrantsUpdateRequest struct {
 	CustomerBenefitGrantUpdate components.CustomerBenefitGrantUpdate `request:"mediaType=application/json"`
 }
 
-func (o *CustomerPortalBenefitGrantsUpdateRequest) GetID() string {
-	if o == nil {
+func (c *CustomerPortalBenefitGrantsUpdateRequest) GetID() string {
+	if c == nil {
 		return ""
 	}
-	return o.ID
+	return c.ID
 }
 
-func (o *CustomerPortalBenefitGrantsUpdateRequest) GetCustomerBenefitGrantUpdate() components.CustomerBenefitGrantUpdate {
-	if o == nil {
+func (c *CustomerPortalBenefitGrantsUpdateRequest) GetCustomerBenefitGrantUpdate() components.CustomerBenefitGrantUpdate {
+	if c == nil {
 		return components.CustomerBenefitGrantUpdate{}
 	}
-	return o.CustomerBenefitGrantUpdate
+	return c.CustomerBenefitGrantUpdate
 }
 
-func (o *CustomerPortalBenefitGrantsUpdateRequest) GetCustomerBenefitGrantUpdateCustom() *components.CustomerBenefitGrantCustomUpdate {
-	return o.GetCustomerBenefitGrantUpdate().CustomerBenefitGrantCustomUpdate
+func (c *CustomerPortalBenefitGrantsUpdateRequest) GetCustomerBenefitGrantUpdateCustom() *components.CustomerBenefitGrantCustomUpdate {
+	return c.GetCustomerBenefitGrantUpdate().CustomerBenefitGrantCustomUpdate
 }
 
-func (o *CustomerPortalBenefitGrantsUpdateRequest) GetCustomerBenefitGrantUpdateDiscord() *components.CustomerBenefitGrantDiscordUpdate {
-	return o.GetCustomerBenefitGrantUpdate().CustomerBenefitGrantDiscordUpdate
+func (c *CustomerPortalBenefitGrantsUpdateRequest) GetCustomerBenefitGrantUpdateDiscord() *components.CustomerBenefitGrantDiscordUpdate {
+	return c.GetCustomerBenefitGrantUpdate().CustomerBenefitGrantDiscordUpdate
 }
 
-func (o *CustomerPortalBenefitGrantsUpdateRequest) GetCustomerBenefitGrantUpdateDownloadables() *components.CustomerBenefitGrantDownloadablesUpdate {
-	return o.GetCustomerBenefitGrantUpdate().CustomerBenefitGrantDownloadablesUpdate
+func (c *CustomerPortalBenefitGrantsUpdateRequest) GetCustomerBenefitGrantUpdateDownloadables() *components.CustomerBenefitGrantDownloadablesUpdate {
+	return c.GetCustomerBenefitGrantUpdate().CustomerBenefitGrantDownloadablesUpdate
 }
 
-func (o *CustomerPortalBenefitGrantsUpdateRequest) GetCustomerBenefitGrantUpdateGithubRepository() *components.CustomerBenefitGrantGitHubRepositoryUpdate {
-	return o.GetCustomerBenefitGrantUpdate().CustomerBenefitGrantGitHubRepositoryUpdate
+func (c *CustomerPortalBenefitGrantsUpdateRequest) GetCustomerBenefitGrantUpdateGithubRepository() *components.CustomerBenefitGrantGitHubRepositoryUpdate {
+	return c.GetCustomerBenefitGrantUpdate().CustomerBenefitGrantGitHubRepositoryUpdate
 }
 
-func (o *CustomerPortalBenefitGrantsUpdateRequest) GetCustomerBenefitGrantUpdateLicenseKeys() *components.CustomerBenefitGrantLicenseKeysUpdate {
-	return o.GetCustomerBenefitGrantUpdate().CustomerBenefitGrantLicenseKeysUpdate
+func (c *CustomerPortalBenefitGrantsUpdateRequest) GetCustomerBenefitGrantUpdateLicenseKeys() *components.CustomerBenefitGrantLicenseKeysUpdate {
+	return c.GetCustomerBenefitGrantUpdate().CustomerBenefitGrantLicenseKeysUpdate
 }
 
-func (o *CustomerPortalBenefitGrantsUpdateRequest) GetCustomerBenefitGrantUpdateMeterCredit() *components.CustomerBenefitGrantMeterCreditUpdate {
-	return o.GetCustomerBenefitGrantUpdate().CustomerBenefitGrantMeterCreditUpdate
+func (c *CustomerPortalBenefitGrantsUpdateRequest) GetCustomerBenefitGrantUpdateMeterCredit() *components.CustomerBenefitGrantMeterCreditUpdate {
+	return c.GetCustomerBenefitGrantUpdate().CustomerBenefitGrantMeterCreditUpdate
 }
 
 type CustomerPortalBenefitGrantsUpdateResponse struct {
@@ -67,16 +67,16 @@ type CustomerPortalBenefitGrantsUpdateResponse struct {
 	CustomerBenefitGrant *components.CustomerBenefitGrant
 }
 
-func (o *CustomerPortalBenefitGrantsUpdateResponse) GetHTTPMeta() components.HTTPMetadata {
-	if o == nil {
+func (c *CustomerPortalBenefitGrantsUpdateResponse) GetHTTPMeta() components.HTTPMetadata {
+	if c == nil {
 		return components.HTTPMetadata{}
 	}
-	return o.HTTPMeta
+	return c.HTTPMeta
 }
 
-func (o *CustomerPortalBenefitGrantsUpdateResponse) GetCustomerBenefitGrant() *components.CustomerBenefitGrant {
-	if o == nil {
+func (c *CustomerPortalBenefitGrantsUpdateResponse) GetCustomerBenefitGrant() *components.CustomerBenefitGrant {
+	if c == nil {
 		return nil
 	}
-	return o.CustomerBenefitGrant
+	return c.CustomerBenefitGrant
 }

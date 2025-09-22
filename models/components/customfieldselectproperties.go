@@ -24,30 +24,30 @@ func (c *CustomFieldSelectProperties) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *CustomFieldSelectProperties) GetFormLabel() *string {
-	if o == nil {
+func (c *CustomFieldSelectProperties) GetFormLabel() *string {
+	if c == nil {
 		return nil
 	}
-	return o.FormLabel
+	return c.FormLabel
 }
 
-func (o *CustomFieldSelectProperties) GetFormHelpText() *string {
-	if o == nil {
+func (c *CustomFieldSelectProperties) GetFormHelpText() *string {
+	if c == nil {
 		return nil
 	}
-	return o.FormHelpText
+	return c.FormHelpText
 }
 
-func (o *CustomFieldSelectProperties) GetFormPlaceholder() *string {
-	if o == nil {
+func (c *CustomFieldSelectProperties) GetFormPlaceholder() *string {
+	if c == nil {
 		return nil
 	}
-	return o.FormPlaceholder
+	return c.FormPlaceholder
 }
 
-func (o *CustomFieldSelectProperties) GetOptions() []CustomFieldSelectOption {
-	if o == nil {
+func (c *CustomFieldSelectProperties) GetOptions() []CustomFieldSelectOption {
+	if c == nil {
 		return []CustomFieldSelectOption{}
 	}
-	return o.Options
+	return c.Options
 }

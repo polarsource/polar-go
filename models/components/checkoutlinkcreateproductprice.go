@@ -157,55 +157,55 @@ func (c *CheckoutLinkCreateProductPrice) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *CheckoutLinkCreateProductPrice) GetMetadata() map[string]CheckoutLinkCreateProductPriceMetadata {
-	if o == nil {
+func (c *CheckoutLinkCreateProductPrice) GetMetadata() map[string]CheckoutLinkCreateProductPriceMetadata {
+	if c == nil {
 		return nil
 	}
-	return o.Metadata
+	return c.Metadata
 }
 
-func (o *CheckoutLinkCreateProductPrice) GetPaymentProcessor() string {
+func (c *CheckoutLinkCreateProductPrice) GetPaymentProcessor() string {
 	return "stripe"
 }
 
-func (o *CheckoutLinkCreateProductPrice) GetLabel() *string {
-	if o == nil {
+func (c *CheckoutLinkCreateProductPrice) GetLabel() *string {
+	if c == nil {
 		return nil
 	}
-	return o.Label
+	return c.Label
 }
 
-func (o *CheckoutLinkCreateProductPrice) GetAllowDiscountCodes() *bool {
-	if o == nil {
+func (c *CheckoutLinkCreateProductPrice) GetAllowDiscountCodes() *bool {
+	if c == nil {
 		return nil
 	}
-	return o.AllowDiscountCodes
+	return c.AllowDiscountCodes
 }
 
-func (o *CheckoutLinkCreateProductPrice) GetRequireBillingAddress() *bool {
-	if o == nil {
+func (c *CheckoutLinkCreateProductPrice) GetRequireBillingAddress() *bool {
+	if c == nil {
 		return nil
 	}
-	return o.RequireBillingAddress
+	return c.RequireBillingAddress
 }
 
-func (o *CheckoutLinkCreateProductPrice) GetDiscountID() *string {
-	if o == nil {
+func (c *CheckoutLinkCreateProductPrice) GetDiscountID() *string {
+	if c == nil {
 		return nil
 	}
-	return o.DiscountID
+	return c.DiscountID
 }
 
-func (o *CheckoutLinkCreateProductPrice) GetSuccessURL() *string {
-	if o == nil {
+func (c *CheckoutLinkCreateProductPrice) GetSuccessURL() *string {
+	if c == nil {
 		return nil
 	}
-	return o.SuccessURL
+	return c.SuccessURL
 }
 
-func (o *CheckoutLinkCreateProductPrice) GetProductPriceID() string {
-	if o == nil {
+func (c *CheckoutLinkCreateProductPrice) GetProductPriceID() string {
+	if c == nil {
 		return ""
 	}
-	return o.ProductPriceID
+	return c.ProductPriceID
 }

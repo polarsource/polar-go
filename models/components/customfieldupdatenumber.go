@@ -146,34 +146,34 @@ func (c *CustomFieldUpdateNumber) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *CustomFieldUpdateNumber) GetMetadata() map[string]CustomFieldUpdateNumberMetadata {
-	if o == nil {
+func (c *CustomFieldUpdateNumber) GetMetadata() map[string]CustomFieldUpdateNumberMetadata {
+	if c == nil {
 		return nil
 	}
-	return o.Metadata
+	return c.Metadata
 }
 
-func (o *CustomFieldUpdateNumber) GetName() *string {
-	if o == nil {
+func (c *CustomFieldUpdateNumber) GetName() *string {
+	if c == nil {
 		return nil
 	}
-	return o.Name
+	return c.Name
 }
 
-func (o *CustomFieldUpdateNumber) GetSlug() *string {
-	if o == nil {
+func (c *CustomFieldUpdateNumber) GetSlug() *string {
+	if c == nil {
 		return nil
 	}
-	return o.Slug
+	return c.Slug
 }
 
-func (o *CustomFieldUpdateNumber) GetType() string {
+func (c *CustomFieldUpdateNumber) GetType() string {
 	return "number"
 }
 
-func (o *CustomFieldUpdateNumber) GetProperties() *CustomFieldNumberProperties {
-	if o == nil {
+func (c *CustomFieldUpdateNumber) GetProperties() *CustomFieldNumberProperties {
+	if c == nil {
 		return nil
 	}
-	return o.Properties
+	return c.Properties
 }

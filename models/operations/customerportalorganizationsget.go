@@ -11,11 +11,11 @@ type CustomerPortalOrganizationsGetRequest struct {
 	Slug string `pathParam:"style=simple,explode=false,name=slug"`
 }
 
-func (o *CustomerPortalOrganizationsGetRequest) GetSlug() string {
-	if o == nil {
+func (c *CustomerPortalOrganizationsGetRequest) GetSlug() string {
+	if c == nil {
 		return ""
 	}
-	return o.Slug
+	return c.Slug
 }
 
 type CustomerPortalOrganizationsGetResponse struct {
@@ -24,16 +24,16 @@ type CustomerPortalOrganizationsGetResponse struct {
 	CustomerOrganization *components.CustomerOrganization
 }
 
-func (o *CustomerPortalOrganizationsGetResponse) GetHTTPMeta() components.HTTPMetadata {
-	if o == nil {
+func (c *CustomerPortalOrganizationsGetResponse) GetHTTPMeta() components.HTTPMetadata {
+	if c == nil {
 		return components.HTTPMetadata{}
 	}
-	return o.HTTPMeta
+	return c.HTTPMeta
 }
 
-func (o *CustomerPortalOrganizationsGetResponse) GetCustomerOrganization() *components.CustomerOrganization {
-	if o == nil {
+func (c *CustomerPortalOrganizationsGetResponse) GetCustomerOrganization() *components.CustomerOrganization {
+	if c == nil {
 		return nil
 	}
-	return o.CustomerOrganization
+	return c.CustomerOrganization
 }

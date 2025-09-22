@@ -100,79 +100,79 @@ func (c *CustomerPortalCustomer) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *CustomerPortalCustomer) GetCreatedAt() time.Time {
-	if o == nil {
+func (c *CustomerPortalCustomer) GetCreatedAt() time.Time {
+	if c == nil {
 		return time.Time{}
 	}
-	return o.CreatedAt
+	return c.CreatedAt
 }
 
-func (o *CustomerPortalCustomer) GetModifiedAt() *time.Time {
-	if o == nil {
+func (c *CustomerPortalCustomer) GetModifiedAt() *time.Time {
+	if c == nil {
 		return nil
 	}
-	return o.ModifiedAt
+	return c.ModifiedAt
 }
 
-func (o *CustomerPortalCustomer) GetID() string {
-	if o == nil {
+func (c *CustomerPortalCustomer) GetID() string {
+	if c == nil {
 		return ""
 	}
-	return o.ID
+	return c.ID
 }
 
-func (o *CustomerPortalCustomer) GetEmail() string {
-	if o == nil {
+func (c *CustomerPortalCustomer) GetEmail() string {
+	if c == nil {
 		return ""
 	}
-	return o.Email
+	return c.Email
 }
 
-func (o *CustomerPortalCustomer) GetEmailVerified() bool {
-	if o == nil {
+func (c *CustomerPortalCustomer) GetEmailVerified() bool {
+	if c == nil {
 		return false
 	}
-	return o.EmailVerified
+	return c.EmailVerified
 }
 
-func (o *CustomerPortalCustomer) GetName() *string {
-	if o == nil {
+func (c *CustomerPortalCustomer) GetName() *string {
+	if c == nil {
 		return nil
 	}
-	return o.Name
+	return c.Name
 }
 
-func (o *CustomerPortalCustomer) GetBillingName() *string {
-	if o == nil {
+func (c *CustomerPortalCustomer) GetBillingName() *string {
+	if c == nil {
 		return nil
 	}
-	return o.BillingName
+	return c.BillingName
 }
 
-func (o *CustomerPortalCustomer) GetBillingAddress() *Address {
-	if o == nil {
+func (c *CustomerPortalCustomer) GetBillingAddress() *Address {
+	if c == nil {
 		return nil
 	}
-	return o.BillingAddress
+	return c.BillingAddress
 }
 
-func (o *CustomerPortalCustomer) GetTaxID() []*CustomerPortalCustomerTaxID {
-	if o == nil {
+func (c *CustomerPortalCustomer) GetTaxID() []*CustomerPortalCustomerTaxID {
+	if c == nil {
 		return nil
 	}
-	return o.TaxID
+	return c.TaxID
 }
 
-func (o *CustomerPortalCustomer) GetOauthAccounts() map[string]CustomerPortalOAuthAccount {
-	if o == nil {
+func (c *CustomerPortalCustomer) GetOauthAccounts() map[string]CustomerPortalOAuthAccount {
+	if c == nil {
 		return map[string]CustomerPortalOAuthAccount{}
 	}
-	return o.OauthAccounts
+	return c.OauthAccounts
 }
 
-func (o *CustomerPortalCustomer) GetDefaultPaymentMethodID() *string {
-	if o == nil {
+func (c *CustomerPortalCustomer) GetDefaultPaymentMethodID() *string {
+	if c == nil {
 		return nil
 	}
-	return o.DefaultPaymentMethodID
+	return c.DefaultPaymentMethodID
 }

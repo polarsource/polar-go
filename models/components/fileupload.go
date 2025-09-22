@@ -38,114 +38,114 @@ func (f *FileUpload) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *FileUpload) GetID() string {
-	if o == nil {
+func (f *FileUpload) GetID() string {
+	if f == nil {
 		return ""
 	}
-	return o.ID
+	return f.ID
 }
 
-func (o *FileUpload) GetOrganizationID() string {
-	if o == nil {
+func (f *FileUpload) GetOrganizationID() string {
+	if f == nil {
 		return ""
 	}
-	return o.OrganizationID
+	return f.OrganizationID
 }
 
-func (o *FileUpload) GetName() string {
-	if o == nil {
+func (f *FileUpload) GetName() string {
+	if f == nil {
 		return ""
 	}
-	return o.Name
+	return f.Name
 }
 
-func (o *FileUpload) GetPath() string {
-	if o == nil {
+func (f *FileUpload) GetPath() string {
+	if f == nil {
 		return ""
 	}
-	return o.Path
+	return f.Path
 }
 
-func (o *FileUpload) GetMimeType() string {
-	if o == nil {
+func (f *FileUpload) GetMimeType() string {
+	if f == nil {
 		return ""
 	}
-	return o.MimeType
+	return f.MimeType
 }
 
-func (o *FileUpload) GetSize() int64 {
-	if o == nil {
+func (f *FileUpload) GetSize() int64 {
+	if f == nil {
 		return 0
 	}
-	return o.Size
+	return f.Size
 }
 
-func (o *FileUpload) GetStorageVersion() *string {
-	if o == nil {
+func (f *FileUpload) GetStorageVersion() *string {
+	if f == nil {
 		return nil
 	}
-	return o.StorageVersion
+	return f.StorageVersion
 }
 
-func (o *FileUpload) GetChecksumEtag() *string {
-	if o == nil {
+func (f *FileUpload) GetChecksumEtag() *string {
+	if f == nil {
 		return nil
 	}
-	return o.ChecksumEtag
+	return f.ChecksumEtag
 }
 
-func (o *FileUpload) GetChecksumSha256Base64() *string {
-	if o == nil {
+func (f *FileUpload) GetChecksumSha256Base64() *string {
+	if f == nil {
 		return nil
 	}
-	return o.ChecksumSha256Base64
+	return f.ChecksumSha256Base64
 }
 
-func (o *FileUpload) GetChecksumSha256Hex() *string {
-	if o == nil {
+func (f *FileUpload) GetChecksumSha256Hex() *string {
+	if f == nil {
 		return nil
 	}
-	return o.ChecksumSha256Hex
+	return f.ChecksumSha256Hex
 }
 
-func (o *FileUpload) GetLastModifiedAt() *time.Time {
-	if o == nil {
+func (f *FileUpload) GetLastModifiedAt() *time.Time {
+	if f == nil {
 		return nil
 	}
-	return o.LastModifiedAt
+	return f.LastModifiedAt
 }
 
-func (o *FileUpload) GetUpload() S3FileUploadMultipart {
-	if o == nil {
+func (f *FileUpload) GetUpload() S3FileUploadMultipart {
+	if f == nil {
 		return S3FileUploadMultipart{}
 	}
-	return o.Upload
+	return f.Upload
 }
 
-func (o *FileUpload) GetVersion() *string {
-	if o == nil {
+func (f *FileUpload) GetVersion() *string {
+	if f == nil {
 		return nil
 	}
-	return o.Version
+	return f.Version
 }
 
-func (o *FileUpload) GetIsUploaded() *bool {
-	if o == nil {
+func (f *FileUpload) GetIsUploaded() *bool {
+	if f == nil {
 		return nil
 	}
-	return o.IsUploaded
+	return f.IsUploaded
 }
 
-func (o *FileUpload) GetService() FileServiceTypes {
-	if o == nil {
+func (f *FileUpload) GetService() FileServiceTypes {
+	if f == nil {
 		return FileServiceTypes("")
 	}
-	return o.Service
+	return f.Service
 }
 
-func (o *FileUpload) GetSizeReadable() string {
-	if o == nil {
+func (f *FileUpload) GetSizeReadable() string {
+	if f == nil {
 		return ""
 	}
-	return o.SizeReadable
+	return f.SizeReadable
 }

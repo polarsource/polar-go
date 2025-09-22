@@ -111,93 +111,93 @@ func (c *CustomerSubscriptionProduct) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *CustomerSubscriptionProduct) GetCreatedAt() time.Time {
-	if o == nil {
+func (c *CustomerSubscriptionProduct) GetCreatedAt() time.Time {
+	if c == nil {
 		return time.Time{}
 	}
-	return o.CreatedAt
+	return c.CreatedAt
 }
 
-func (o *CustomerSubscriptionProduct) GetModifiedAt() *time.Time {
-	if o == nil {
+func (c *CustomerSubscriptionProduct) GetModifiedAt() *time.Time {
+	if c == nil {
 		return nil
 	}
-	return o.ModifiedAt
+	return c.ModifiedAt
 }
 
-func (o *CustomerSubscriptionProduct) GetID() string {
-	if o == nil {
+func (c *CustomerSubscriptionProduct) GetID() string {
+	if c == nil {
 		return ""
 	}
-	return o.ID
+	return c.ID
 }
 
-func (o *CustomerSubscriptionProduct) GetName() string {
-	if o == nil {
+func (c *CustomerSubscriptionProduct) GetName() string {
+	if c == nil {
 		return ""
 	}
-	return o.Name
+	return c.Name
 }
 
-func (o *CustomerSubscriptionProduct) GetDescription() *string {
-	if o == nil {
+func (c *CustomerSubscriptionProduct) GetDescription() *string {
+	if c == nil {
 		return nil
 	}
-	return o.Description
+	return c.Description
 }
 
-func (o *CustomerSubscriptionProduct) GetRecurringInterval() *SubscriptionRecurringInterval {
-	if o == nil {
+func (c *CustomerSubscriptionProduct) GetRecurringInterval() *SubscriptionRecurringInterval {
+	if c == nil {
 		return nil
 	}
-	return o.RecurringInterval
+	return c.RecurringInterval
 }
 
-func (o *CustomerSubscriptionProduct) GetIsRecurring() bool {
-	if o == nil {
+func (c *CustomerSubscriptionProduct) GetIsRecurring() bool {
+	if c == nil {
 		return false
 	}
-	return o.IsRecurring
+	return c.IsRecurring
 }
 
-func (o *CustomerSubscriptionProduct) GetIsArchived() bool {
-	if o == nil {
+func (c *CustomerSubscriptionProduct) GetIsArchived() bool {
+	if c == nil {
 		return false
 	}
-	return o.IsArchived
+	return c.IsArchived
 }
 
-func (o *CustomerSubscriptionProduct) GetOrganizationID() string {
-	if o == nil {
+func (c *CustomerSubscriptionProduct) GetOrganizationID() string {
+	if c == nil {
 		return ""
 	}
-	return o.OrganizationID
+	return c.OrganizationID
 }
 
-func (o *CustomerSubscriptionProduct) GetPrices() []CustomerSubscriptionProductPrices {
-	if o == nil {
+func (c *CustomerSubscriptionProduct) GetPrices() []CustomerSubscriptionProductPrices {
+	if c == nil {
 		return []CustomerSubscriptionProductPrices{}
 	}
-	return o.Prices
+	return c.Prices
 }
 
-func (o *CustomerSubscriptionProduct) GetBenefits() []BenefitPublic {
-	if o == nil {
+func (c *CustomerSubscriptionProduct) GetBenefits() []BenefitPublic {
+	if c == nil {
 		return []BenefitPublic{}
 	}
-	return o.Benefits
+	return c.Benefits
 }
 
-func (o *CustomerSubscriptionProduct) GetMedias() []ProductMediaFileRead {
-	if o == nil {
+func (c *CustomerSubscriptionProduct) GetMedias() []ProductMediaFileRead {
+	if c == nil {
 		return []ProductMediaFileRead{}
 	}
-	return o.Medias
+	return c.Medias
 }
 
-func (o *CustomerSubscriptionProduct) GetOrganization() Organization {
-	if o == nil {
+func (c *CustomerSubscriptionProduct) GetOrganization() Organization {
+	if c == nil {
 		return Organization{}
 	}
-	return o.Organization
+	return c.Organization
 }

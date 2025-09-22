@@ -12,16 +12,16 @@ type EventsIngestResponse struct {
 	EventsIngestResponse *components.EventsIngestResponse
 }
 
-func (o *EventsIngestResponse) GetHTTPMeta() components.HTTPMetadata {
-	if o == nil {
+func (e *EventsIngestResponse) GetHTTPMeta() components.HTTPMetadata {
+	if e == nil {
 		return components.HTTPMetadata{}
 	}
-	return o.HTTPMeta
+	return e.HTTPMeta
 }
 
-func (o *EventsIngestResponse) GetEventsIngestResponse() *components.EventsIngestResponse {
-	if o == nil {
+func (e *EventsIngestResponse) GetEventsIngestResponse() *components.EventsIngestResponse {
+	if e == nil {
 		return nil
 	}
-	return o.EventsIngestResponse
+	return e.EventsIngestResponse
 }

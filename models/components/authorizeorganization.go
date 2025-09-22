@@ -23,23 +23,23 @@ func (a *AuthorizeOrganization) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *AuthorizeOrganization) GetID() string {
-	if o == nil {
+func (a *AuthorizeOrganization) GetID() string {
+	if a == nil {
 		return ""
 	}
-	return o.ID
+	return a.ID
 }
 
-func (o *AuthorizeOrganization) GetSlug() string {
-	if o == nil {
+func (a *AuthorizeOrganization) GetSlug() string {
+	if a == nil {
 		return ""
 	}
-	return o.Slug
+	return a.Slug
 }
 
-func (o *AuthorizeOrganization) GetAvatarURL() *string {
-	if o == nil {
+func (a *AuthorizeOrganization) GetAvatarURL() *string {
+	if a == nil {
 		return nil
 	}
-	return o.AvatarURL
+	return a.AvatarURL
 }

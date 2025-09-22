@@ -40,30 +40,30 @@ type IntrospectTokenRequest struct {
 	ClientSecret  string                               `form:"name=client_secret"`
 }
 
-func (o *IntrospectTokenRequest) GetToken() string {
-	if o == nil {
+func (i *IntrospectTokenRequest) GetToken() string {
+	if i == nil {
 		return ""
 	}
-	return o.Token
+	return i.Token
 }
 
-func (o *IntrospectTokenRequest) GetTokenTypeHint() *IntrospectTokenRequestTokenTypeHint {
-	if o == nil {
+func (i *IntrospectTokenRequest) GetTokenTypeHint() *IntrospectTokenRequestTokenTypeHint {
+	if i == nil {
 		return nil
 	}
-	return o.TokenTypeHint
+	return i.TokenTypeHint
 }
 
-func (o *IntrospectTokenRequest) GetClientID() string {
-	if o == nil {
+func (i *IntrospectTokenRequest) GetClientID() string {
+	if i == nil {
 		return ""
 	}
-	return o.ClientID
+	return i.ClientID
 }
 
-func (o *IntrospectTokenRequest) GetClientSecret() string {
-	if o == nil {
+func (i *IntrospectTokenRequest) GetClientSecret() string {
+	if i == nil {
 		return ""
 	}
-	return o.ClientSecret
+	return i.ClientSecret
 }

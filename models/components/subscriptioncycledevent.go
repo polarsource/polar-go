@@ -39,59 +39,59 @@ func (s *SubscriptionCycledEvent) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SubscriptionCycledEvent) GetID() string {
-	if o == nil {
+func (s *SubscriptionCycledEvent) GetID() string {
+	if s == nil {
 		return ""
 	}
-	return o.ID
+	return s.ID
 }
 
-func (o *SubscriptionCycledEvent) GetTimestamp() time.Time {
-	if o == nil {
+func (s *SubscriptionCycledEvent) GetTimestamp() time.Time {
+	if s == nil {
 		return time.Time{}
 	}
-	return o.Timestamp
+	return s.Timestamp
 }
 
-func (o *SubscriptionCycledEvent) GetOrganizationID() string {
-	if o == nil {
+func (s *SubscriptionCycledEvent) GetOrganizationID() string {
+	if s == nil {
 		return ""
 	}
-	return o.OrganizationID
+	return s.OrganizationID
 }
 
-func (o *SubscriptionCycledEvent) GetCustomerID() *string {
-	if o == nil {
+func (s *SubscriptionCycledEvent) GetCustomerID() *string {
+	if s == nil {
 		return nil
 	}
-	return o.CustomerID
+	return s.CustomerID
 }
 
-func (o *SubscriptionCycledEvent) GetCustomer() *Customer {
-	if o == nil {
+func (s *SubscriptionCycledEvent) GetCustomer() *Customer {
+	if s == nil {
 		return nil
 	}
-	return o.Customer
+	return s.Customer
 }
 
-func (o *SubscriptionCycledEvent) GetExternalCustomerID() *string {
-	if o == nil {
+func (s *SubscriptionCycledEvent) GetExternalCustomerID() *string {
+	if s == nil {
 		return nil
 	}
-	return o.ExternalCustomerID
+	return s.ExternalCustomerID
 }
 
-func (o *SubscriptionCycledEvent) GetSource() string {
+func (s *SubscriptionCycledEvent) GetSource() string {
 	return "system"
 }
 
-func (o *SubscriptionCycledEvent) GetName() string {
+func (s *SubscriptionCycledEvent) GetName() string {
 	return "subscription.cycled"
 }
 
-func (o *SubscriptionCycledEvent) GetMetadata() SubscriptionCycledMetadata {
-	if o == nil {
+func (s *SubscriptionCycledEvent) GetMetadata() SubscriptionCycledMetadata {
+	if s == nil {
 		return SubscriptionCycledMetadata{}
 	}
-	return o.Metadata
+	return s.Metadata
 }

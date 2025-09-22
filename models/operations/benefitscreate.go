@@ -12,16 +12,16 @@ type BenefitsCreateResponse struct {
 	Benefit *components.Benefit
 }
 
-func (o *BenefitsCreateResponse) GetHTTPMeta() components.HTTPMetadata {
-	if o == nil {
+func (b *BenefitsCreateResponse) GetHTTPMeta() components.HTTPMetadata {
+	if b == nil {
 		return components.HTTPMetadata{}
 	}
-	return o.HTTPMeta
+	return b.HTTPMeta
 }
 
-func (o *BenefitsCreateResponse) GetBenefit() *components.Benefit {
-	if o == nil {
+func (b *BenefitsCreateResponse) GetBenefit() *components.Benefit {
+	if b == nil {
 		return nil
 	}
-	return o.Benefit
+	return b.Benefit
 }

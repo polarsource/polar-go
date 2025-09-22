@@ -8,16 +8,16 @@ type MeterQuantities struct {
 	Total float64 `json:"total"`
 }
 
-func (o *MeterQuantities) GetQuantities() []MeterQuantity {
-	if o == nil {
+func (m *MeterQuantities) GetQuantities() []MeterQuantity {
+	if m == nil {
 		return []MeterQuantity{}
 	}
-	return o.Quantities
+	return m.Quantities
 }
 
-func (o *MeterQuantities) GetTotal() float64 {
-	if o == nil {
+func (m *MeterQuantities) GetTotal() float64 {
+	if m == nil {
 		return 0.0
 	}
-	return o.Total
+	return m.Total
 }

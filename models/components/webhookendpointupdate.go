@@ -11,30 +11,30 @@ type WebhookEndpointUpdate struct {
 	Events []WebhookEventType `json:"events,omitempty"`
 }
 
-func (o *WebhookEndpointUpdate) GetURL() *string {
-	if o == nil {
+func (w *WebhookEndpointUpdate) GetURL() *string {
+	if w == nil {
 		return nil
 	}
-	return o.URL
+	return w.URL
 }
 
-func (o *WebhookEndpointUpdate) GetSecret() *string {
-	if o == nil {
+func (w *WebhookEndpointUpdate) GetSecret() *string {
+	if w == nil {
 		return nil
 	}
-	return o.Secret
+	return w.Secret
 }
 
-func (o *WebhookEndpointUpdate) GetFormat() *WebhookFormat {
-	if o == nil {
+func (w *WebhookEndpointUpdate) GetFormat() *WebhookFormat {
+	if w == nil {
 		return nil
 	}
-	return o.Format
+	return w.Format
 }
 
-func (o *WebhookEndpointUpdate) GetEvents() []WebhookEventType {
-	if o == nil {
+func (w *WebhookEndpointUpdate) GetEvents() []WebhookEventType {
+	if w == nil {
 		return nil
 	}
-	return o.Events
+	return w.Events
 }

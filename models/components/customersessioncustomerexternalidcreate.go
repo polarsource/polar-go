@@ -23,9 +23,9 @@ func (c *CustomerSessionCustomerExternalIDCreate) UnmarshalJSON(data []byte) err
 	return nil
 }
 
-func (o *CustomerSessionCustomerExternalIDCreate) GetExternalCustomerID() string {
-	if o == nil {
+func (c *CustomerSessionCustomerExternalIDCreate) GetExternalCustomerID() string {
+	if c == nil {
 		return ""
 	}
-	return o.ExternalCustomerID
+	return c.ExternalCustomerID
 }

@@ -12,18 +12,18 @@ type CheckoutsClientConfirmRequest struct {
 	CheckoutConfirmStripe components.CheckoutConfirmStripe `request:"mediaType=application/json"`
 }
 
-func (o *CheckoutsClientConfirmRequest) GetClientSecret() string {
-	if o == nil {
+func (c *CheckoutsClientConfirmRequest) GetClientSecret() string {
+	if c == nil {
 		return ""
 	}
-	return o.ClientSecret
+	return c.ClientSecret
 }
 
-func (o *CheckoutsClientConfirmRequest) GetCheckoutConfirmStripe() components.CheckoutConfirmStripe {
-	if o == nil {
+func (c *CheckoutsClientConfirmRequest) GetCheckoutConfirmStripe() components.CheckoutConfirmStripe {
+	if c == nil {
 		return components.CheckoutConfirmStripe{}
 	}
-	return o.CheckoutConfirmStripe
+	return c.CheckoutConfirmStripe
 }
 
 type CheckoutsClientConfirmResponse struct {
@@ -32,16 +32,16 @@ type CheckoutsClientConfirmResponse struct {
 	CheckoutPublicConfirmed *components.CheckoutPublicConfirmed
 }
 
-func (o *CheckoutsClientConfirmResponse) GetHTTPMeta() components.HTTPMetadata {
-	if o == nil {
+func (c *CheckoutsClientConfirmResponse) GetHTTPMeta() components.HTTPMetadata {
+	if c == nil {
 		return components.HTTPMetadata{}
 	}
-	return o.HTTPMeta
+	return c.HTTPMeta
 }
 
-func (o *CheckoutsClientConfirmResponse) GetCheckoutPublicConfirmed() *components.CheckoutPublicConfirmed {
-	if o == nil {
+func (c *CheckoutsClientConfirmResponse) GetCheckoutPublicConfirmed() *components.CheckoutPublicConfirmed {
+	if c == nil {
 		return nil
 	}
-	return o.CheckoutPublicConfirmed
+	return c.CheckoutPublicConfirmed
 }

@@ -117,16 +117,16 @@ type ListResourceFileRead struct {
 	Pagination Pagination `json:"pagination"`
 }
 
-func (o *ListResourceFileRead) GetItems() []FileRead {
-	if o == nil {
+func (l *ListResourceFileRead) GetItems() []FileRead {
+	if l == nil {
 		return []FileRead{}
 	}
-	return o.Items
+	return l.Items
 }
 
-func (o *ListResourceFileRead) GetPagination() Pagination {
-	if o == nil {
+func (l *ListResourceFileRead) GetPagination() Pagination {
+	if l == nil {
 		return Pagination{}
 	}
-	return o.Pagination
+	return l.Pagination
 }

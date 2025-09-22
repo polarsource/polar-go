@@ -8,23 +8,23 @@ type S3FileUploadMultipart struct {
 	Parts []S3FileUploadPart `json:"parts"`
 }
 
-func (o *S3FileUploadMultipart) GetID() string {
-	if o == nil {
+func (s *S3FileUploadMultipart) GetID() string {
+	if s == nil {
 		return ""
 	}
-	return o.ID
+	return s.ID
 }
 
-func (o *S3FileUploadMultipart) GetPath() string {
-	if o == nil {
+func (s *S3FileUploadMultipart) GetPath() string {
+	if s == nil {
 		return ""
 	}
-	return o.Path
+	return s.Path
 }
 
-func (o *S3FileUploadMultipart) GetParts() []S3FileUploadPart {
-	if o == nil {
+func (s *S3FileUploadMultipart) GetParts() []S3FileUploadPart {
+	if s == nil {
 		return []S3FileUploadPart{}
 	}
-	return o.Parts
+	return s.Parts
 }

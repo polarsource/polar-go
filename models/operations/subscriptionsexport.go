@@ -78,11 +78,11 @@ type SubscriptionsExportRequest struct {
 	OrganizationID *OrganizationID `queryParam:"style=form,explode=true,name=organization_id"`
 }
 
-func (o *SubscriptionsExportRequest) GetOrganizationID() *OrganizationID {
-	if o == nil {
+func (s *SubscriptionsExportRequest) GetOrganizationID() *OrganizationID {
+	if s == nil {
 		return nil
 	}
-	return o.OrganizationID
+	return s.OrganizationID
 }
 
 type SubscriptionsExportResponse struct {
@@ -91,16 +91,16 @@ type SubscriptionsExportResponse struct {
 	Any any
 }
 
-func (o *SubscriptionsExportResponse) GetHTTPMeta() components.HTTPMetadata {
-	if o == nil {
+func (s *SubscriptionsExportResponse) GetHTTPMeta() components.HTTPMetadata {
+	if s == nil {
 		return components.HTTPMetadata{}
 	}
-	return o.HTTPMeta
+	return s.HTTPMeta
 }
 
-func (o *SubscriptionsExportResponse) GetAny() any {
-	if o == nil {
+func (s *SubscriptionsExportResponse) GetAny() any {
+	if s == nil {
 		return nil
 	}
-	return o.Any
+	return s.Any
 }

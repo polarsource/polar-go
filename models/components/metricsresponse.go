@@ -10,23 +10,23 @@ type MetricsResponse struct {
 	Metrics Metrics        `json:"metrics"`
 }
 
-func (o *MetricsResponse) GetPeriods() []MetricPeriod {
-	if o == nil {
+func (m *MetricsResponse) GetPeriods() []MetricPeriod {
+	if m == nil {
 		return []MetricPeriod{}
 	}
-	return o.Periods
+	return m.Periods
 }
 
-func (o *MetricsResponse) GetTotals() MetricsTotals {
-	if o == nil {
+func (m *MetricsResponse) GetTotals() MetricsTotals {
+	if m == nil {
 		return MetricsTotals{}
 	}
-	return o.Totals
+	return m.Totals
 }
 
-func (o *MetricsResponse) GetMetrics() Metrics {
-	if o == nil {
+func (m *MetricsResponse) GetMetrics() Metrics {
+	if m == nil {
 		return Metrics{}
 	}
-	return o.Metrics
+	return m.Metrics
 }

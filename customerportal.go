@@ -8,7 +8,7 @@ import (
 )
 
 type CustomerPortal struct {
-	BenefitGrants  *BenefitGrants
+	BenefitGrants  *PolarBenefitGrants
 	Customers      *PolarCustomers
 	CustomerMeters *PolarCustomerMeters
 	Downloadables  *Downloadables
@@ -27,7 +27,7 @@ func newCustomerPortal(rootSDK *Polar, sdkConfig config.SDKConfiguration, hooks 
 		rootSDK:          rootSDK,
 		sdkConfiguration: sdkConfig,
 		hooks:            hooks,
-		BenefitGrants:    newBenefitGrants(rootSDK, sdkConfig, hooks),
+		BenefitGrants:    newPolarBenefitGrants(rootSDK, sdkConfig, hooks),
 		Customers:        newPolarCustomers(rootSDK, sdkConfig, hooks),
 		CustomerMeters:   newPolarCustomerMeters(rootSDK, sdkConfig, hooks),
 		Downloadables:    newDownloadables(rootSDK, sdkConfig, hooks),

@@ -28,30 +28,30 @@ func (b *BenefitDiscordProperties) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *BenefitDiscordProperties) GetGuildID() string {
-	if o == nil {
+func (b *BenefitDiscordProperties) GetGuildID() string {
+	if b == nil {
 		return ""
 	}
-	return o.GuildID
+	return b.GuildID
 }
 
-func (o *BenefitDiscordProperties) GetRoleID() string {
-	if o == nil {
+func (b *BenefitDiscordProperties) GetRoleID() string {
+	if b == nil {
 		return ""
 	}
-	return o.RoleID
+	return b.RoleID
 }
 
-func (o *BenefitDiscordProperties) GetKickMember() bool {
-	if o == nil {
+func (b *BenefitDiscordProperties) GetKickMember() bool {
+	if b == nil {
 		return false
 	}
-	return o.KickMember
+	return b.KickMember
 }
 
-func (o *BenefitDiscordProperties) GetGuildToken() string {
-	if o == nil {
+func (b *BenefitDiscordProperties) GetGuildToken() string {
+	if b == nil {
 		return ""
 	}
-	return o.GuildToken
+	return b.GuildToken
 }

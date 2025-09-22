@@ -149,76 +149,76 @@ func (b *BenefitGitHubRepositorySubscriber) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *BenefitGitHubRepositorySubscriber) GetID() string {
-	if o == nil {
+func (b *BenefitGitHubRepositorySubscriber) GetID() string {
+	if b == nil {
 		return ""
 	}
-	return o.ID
+	return b.ID
 }
 
-func (o *BenefitGitHubRepositorySubscriber) GetCreatedAt() time.Time {
-	if o == nil {
+func (b *BenefitGitHubRepositorySubscriber) GetCreatedAt() time.Time {
+	if b == nil {
 		return time.Time{}
 	}
-	return o.CreatedAt
+	return b.CreatedAt
 }
 
-func (o *BenefitGitHubRepositorySubscriber) GetModifiedAt() *time.Time {
-	if o == nil {
+func (b *BenefitGitHubRepositorySubscriber) GetModifiedAt() *time.Time {
+	if b == nil {
 		return nil
 	}
-	return o.ModifiedAt
+	return b.ModifiedAt
 }
 
-func (o *BenefitGitHubRepositorySubscriber) GetType() string {
+func (b *BenefitGitHubRepositorySubscriber) GetType() string {
 	return "github_repository"
 }
 
-func (o *BenefitGitHubRepositorySubscriber) GetDescription() string {
-	if o == nil {
+func (b *BenefitGitHubRepositorySubscriber) GetDescription() string {
+	if b == nil {
 		return ""
 	}
-	return o.Description
+	return b.Description
 }
 
-func (o *BenefitGitHubRepositorySubscriber) GetSelectable() bool {
-	if o == nil {
+func (b *BenefitGitHubRepositorySubscriber) GetSelectable() bool {
+	if b == nil {
 		return false
 	}
-	return o.Selectable
+	return b.Selectable
 }
 
-func (o *BenefitGitHubRepositorySubscriber) GetDeletable() bool {
-	if o == nil {
+func (b *BenefitGitHubRepositorySubscriber) GetDeletable() bool {
+	if b == nil {
 		return false
 	}
-	return o.Deletable
+	return b.Deletable
 }
 
-func (o *BenefitGitHubRepositorySubscriber) GetOrganizationID() string {
-	if o == nil {
+func (b *BenefitGitHubRepositorySubscriber) GetOrganizationID() string {
+	if b == nil {
 		return ""
 	}
-	return o.OrganizationID
+	return b.OrganizationID
 }
 
-func (o *BenefitGitHubRepositorySubscriber) GetMetadata() map[string]BenefitGitHubRepositorySubscriberMetadata {
-	if o == nil {
+func (b *BenefitGitHubRepositorySubscriber) GetMetadata() map[string]BenefitGitHubRepositorySubscriberMetadata {
+	if b == nil {
 		return map[string]BenefitGitHubRepositorySubscriberMetadata{}
 	}
-	return o.Metadata
+	return b.Metadata
 }
 
-func (o *BenefitGitHubRepositorySubscriber) GetOrganization() Organization {
-	if o == nil {
+func (b *BenefitGitHubRepositorySubscriber) GetOrganization() Organization {
+	if b == nil {
 		return Organization{}
 	}
-	return o.Organization
+	return b.Organization
 }
 
-func (o *BenefitGitHubRepositorySubscriber) GetProperties() BenefitGitHubRepositorySubscriberProperties {
-	if o == nil {
+func (b *BenefitGitHubRepositorySubscriber) GetProperties() BenefitGitHubRepositorySubscriberProperties {
+	if b == nil {
 		return BenefitGitHubRepositorySubscriberProperties{}
 	}
-	return o.Properties
+	return b.Properties
 }

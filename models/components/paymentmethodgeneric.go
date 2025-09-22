@@ -30,44 +30,44 @@ func (p *PaymentMethodGeneric) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *PaymentMethodGeneric) GetID() string {
-	if o == nil {
+func (p *PaymentMethodGeneric) GetID() string {
+	if p == nil {
 		return ""
 	}
-	return o.ID
+	return p.ID
 }
 
-func (o *PaymentMethodGeneric) GetCreatedAt() time.Time {
-	if o == nil {
+func (p *PaymentMethodGeneric) GetCreatedAt() time.Time {
+	if p == nil {
 		return time.Time{}
 	}
-	return o.CreatedAt
+	return p.CreatedAt
 }
 
-func (o *PaymentMethodGeneric) GetModifiedAt() *time.Time {
-	if o == nil {
+func (p *PaymentMethodGeneric) GetModifiedAt() *time.Time {
+	if p == nil {
 		return nil
 	}
-	return o.ModifiedAt
+	return p.ModifiedAt
 }
 
-func (o *PaymentMethodGeneric) GetProcessor() PaymentProcessor {
-	if o == nil {
+func (p *PaymentMethodGeneric) GetProcessor() PaymentProcessor {
+	if p == nil {
 		return PaymentProcessor("")
 	}
-	return o.Processor
+	return p.Processor
 }
 
-func (o *PaymentMethodGeneric) GetCustomerID() string {
-	if o == nil {
+func (p *PaymentMethodGeneric) GetCustomerID() string {
+	if p == nil {
 		return ""
 	}
-	return o.CustomerID
+	return p.CustomerID
 }
 
-func (o *PaymentMethodGeneric) GetType() string {
-	if o == nil {
+func (p *PaymentMethodGeneric) GetType() string {
+	if p == nil {
 		return ""
 	}
-	return o.Type
+	return p.Type
 }

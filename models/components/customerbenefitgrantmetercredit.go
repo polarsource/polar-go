@@ -38,100 +38,100 @@ func (c *CustomerBenefitGrantMeterCredit) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *CustomerBenefitGrantMeterCredit) GetCreatedAt() time.Time {
-	if o == nil {
+func (c *CustomerBenefitGrantMeterCredit) GetCreatedAt() time.Time {
+	if c == nil {
 		return time.Time{}
 	}
-	return o.CreatedAt
+	return c.CreatedAt
 }
 
-func (o *CustomerBenefitGrantMeterCredit) GetModifiedAt() *time.Time {
-	if o == nil {
+func (c *CustomerBenefitGrantMeterCredit) GetModifiedAt() *time.Time {
+	if c == nil {
 		return nil
 	}
-	return o.ModifiedAt
+	return c.ModifiedAt
 }
 
-func (o *CustomerBenefitGrantMeterCredit) GetID() string {
-	if o == nil {
+func (c *CustomerBenefitGrantMeterCredit) GetID() string {
+	if c == nil {
 		return ""
 	}
-	return o.ID
+	return c.ID
 }
 
-func (o *CustomerBenefitGrantMeterCredit) GetGrantedAt() *time.Time {
-	if o == nil {
+func (c *CustomerBenefitGrantMeterCredit) GetGrantedAt() *time.Time {
+	if c == nil {
 		return nil
 	}
-	return o.GrantedAt
+	return c.GrantedAt
 }
 
-func (o *CustomerBenefitGrantMeterCredit) GetRevokedAt() *time.Time {
-	if o == nil {
+func (c *CustomerBenefitGrantMeterCredit) GetRevokedAt() *time.Time {
+	if c == nil {
 		return nil
 	}
-	return o.RevokedAt
+	return c.RevokedAt
 }
 
-func (o *CustomerBenefitGrantMeterCredit) GetCustomerID() string {
-	if o == nil {
+func (c *CustomerBenefitGrantMeterCredit) GetCustomerID() string {
+	if c == nil {
 		return ""
 	}
-	return o.CustomerID
+	return c.CustomerID
 }
 
-func (o *CustomerBenefitGrantMeterCredit) GetBenefitID() string {
-	if o == nil {
+func (c *CustomerBenefitGrantMeterCredit) GetBenefitID() string {
+	if c == nil {
 		return ""
 	}
-	return o.BenefitID
+	return c.BenefitID
 }
 
-func (o *CustomerBenefitGrantMeterCredit) GetSubscriptionID() *string {
-	if o == nil {
+func (c *CustomerBenefitGrantMeterCredit) GetSubscriptionID() *string {
+	if c == nil {
 		return nil
 	}
-	return o.SubscriptionID
+	return c.SubscriptionID
 }
 
-func (o *CustomerBenefitGrantMeterCredit) GetOrderID() *string {
-	if o == nil {
+func (c *CustomerBenefitGrantMeterCredit) GetOrderID() *string {
+	if c == nil {
 		return nil
 	}
-	return o.OrderID
+	return c.OrderID
 }
 
-func (o *CustomerBenefitGrantMeterCredit) GetIsGranted() bool {
-	if o == nil {
+func (c *CustomerBenefitGrantMeterCredit) GetIsGranted() bool {
+	if c == nil {
 		return false
 	}
-	return o.IsGranted
+	return c.IsGranted
 }
 
-func (o *CustomerBenefitGrantMeterCredit) GetIsRevoked() bool {
-	if o == nil {
+func (c *CustomerBenefitGrantMeterCredit) GetIsRevoked() bool {
+	if c == nil {
 		return false
 	}
-	return o.IsRevoked
+	return c.IsRevoked
 }
 
-func (o *CustomerBenefitGrantMeterCredit) GetCustomer() CustomerPortalCustomer {
-	if o == nil {
+func (c *CustomerBenefitGrantMeterCredit) GetCustomer() CustomerPortalCustomer {
+	if c == nil {
 		return CustomerPortalCustomer{}
 	}
-	return o.Customer
+	return c.Customer
 }
 
-func (o *CustomerBenefitGrantMeterCredit) GetBenefit() BenefitMeterCreditSubscriber {
-	if o == nil {
+func (c *CustomerBenefitGrantMeterCredit) GetBenefit() BenefitMeterCreditSubscriber {
+	if c == nil {
 		return BenefitMeterCreditSubscriber{}
 	}
-	return o.Benefit
+	return c.Benefit
 }
 
-func (o *CustomerBenefitGrantMeterCredit) GetProperties() BenefitGrantMeterCreditProperties {
-	if o == nil {
+func (c *CustomerBenefitGrantMeterCredit) GetProperties() BenefitGrantMeterCreditProperties {
+	if c == nil {
 		return BenefitGrantMeterCreditProperties{}
 	}
-	return o.Properties
+	return c.Properties
 }

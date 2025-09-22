@@ -96,39 +96,39 @@ func (b *BenefitsGrantsRequest) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *BenefitsGrantsRequest) GetID() string {
-	if o == nil {
+func (b *BenefitsGrantsRequest) GetID() string {
+	if b == nil {
 		return ""
 	}
-	return o.ID
+	return b.ID
 }
 
-func (o *BenefitsGrantsRequest) GetIsGranted() *bool {
-	if o == nil {
+func (b *BenefitsGrantsRequest) GetIsGranted() *bool {
+	if b == nil {
 		return nil
 	}
-	return o.IsGranted
+	return b.IsGranted
 }
 
-func (o *BenefitsGrantsRequest) GetCustomerID() *QueryParamCustomerIDFilter {
-	if o == nil {
+func (b *BenefitsGrantsRequest) GetCustomerID() *QueryParamCustomerIDFilter {
+	if b == nil {
 		return nil
 	}
-	return o.CustomerID
+	return b.CustomerID
 }
 
-func (o *BenefitsGrantsRequest) GetPage() *int64 {
-	if o == nil {
+func (b *BenefitsGrantsRequest) GetPage() *int64 {
+	if b == nil {
 		return nil
 	}
-	return o.Page
+	return b.Page
 }
 
-func (o *BenefitsGrantsRequest) GetLimit() *int64 {
-	if o == nil {
+func (b *BenefitsGrantsRequest) GetLimit() *int64 {
+	if b == nil {
 		return nil
 	}
-	return o.Limit
+	return b.Limit
 }
 
 type BenefitsGrantsResponse struct {
@@ -139,16 +139,16 @@ type BenefitsGrantsResponse struct {
 	Next func() (*BenefitsGrantsResponse, error)
 }
 
-func (o *BenefitsGrantsResponse) GetHTTPMeta() components.HTTPMetadata {
-	if o == nil {
+func (b *BenefitsGrantsResponse) GetHTTPMeta() components.HTTPMetadata {
+	if b == nil {
 		return components.HTTPMetadata{}
 	}
-	return o.HTTPMeta
+	return b.HTTPMeta
 }
 
-func (o *BenefitsGrantsResponse) GetListResourceBenefitGrant() *components.ListResourceBenefitGrant {
-	if o == nil {
+func (b *BenefitsGrantsResponse) GetListResourceBenefitGrant() *components.ListResourceBenefitGrant {
+	if b == nil {
 		return nil
 	}
-	return o.ListResourceBenefitGrant
+	return b.ListResourceBenefitGrant
 }

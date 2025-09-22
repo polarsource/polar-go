@@ -42,51 +42,51 @@ func (w *WebhookDelivery) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *WebhookDelivery) GetCreatedAt() time.Time {
-	if o == nil {
+func (w *WebhookDelivery) GetCreatedAt() time.Time {
+	if w == nil {
 		return time.Time{}
 	}
-	return o.CreatedAt
+	return w.CreatedAt
 }
 
-func (o *WebhookDelivery) GetModifiedAt() *time.Time {
-	if o == nil {
+func (w *WebhookDelivery) GetModifiedAt() *time.Time {
+	if w == nil {
 		return nil
 	}
-	return o.ModifiedAt
+	return w.ModifiedAt
 }
 
-func (o *WebhookDelivery) GetID() string {
-	if o == nil {
+func (w *WebhookDelivery) GetID() string {
+	if w == nil {
 		return ""
 	}
-	return o.ID
+	return w.ID
 }
 
-func (o *WebhookDelivery) GetSucceeded() bool {
-	if o == nil {
+func (w *WebhookDelivery) GetSucceeded() bool {
+	if w == nil {
 		return false
 	}
-	return o.Succeeded
+	return w.Succeeded
 }
 
-func (o *WebhookDelivery) GetHTTPCode() *int64 {
-	if o == nil {
+func (w *WebhookDelivery) GetHTTPCode() *int64 {
+	if w == nil {
 		return nil
 	}
-	return o.HTTPCode
+	return w.HTTPCode
 }
 
-func (o *WebhookDelivery) GetResponse() *string {
-	if o == nil {
+func (w *WebhookDelivery) GetResponse() *string {
+	if w == nil {
 		return nil
 	}
-	return o.Response
+	return w.Response
 }
 
-func (o *WebhookDelivery) GetWebhookEvent() WebhookEvent {
-	if o == nil {
+func (w *WebhookDelivery) GetWebhookEvent() WebhookEvent {
+	if w == nil {
 		return WebhookEvent{}
 	}
-	return o.WebhookEvent
+	return w.WebhookEvent
 }

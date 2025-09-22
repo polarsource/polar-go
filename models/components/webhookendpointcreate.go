@@ -15,37 +15,37 @@ type WebhookEndpointCreate struct {
 	OrganizationID *string `json:"organization_id,omitempty"`
 }
 
-func (o *WebhookEndpointCreate) GetURL() string {
-	if o == nil {
+func (w *WebhookEndpointCreate) GetURL() string {
+	if w == nil {
 		return ""
 	}
-	return o.URL
+	return w.URL
 }
 
-func (o *WebhookEndpointCreate) GetSecret() *string {
-	if o == nil {
+func (w *WebhookEndpointCreate) GetSecret() *string {
+	if w == nil {
 		return nil
 	}
-	return o.Secret
+	return w.Secret
 }
 
-func (o *WebhookEndpointCreate) GetFormat() WebhookFormat {
-	if o == nil {
+func (w *WebhookEndpointCreate) GetFormat() WebhookFormat {
+	if w == nil {
 		return WebhookFormat("")
 	}
-	return o.Format
+	return w.Format
 }
 
-func (o *WebhookEndpointCreate) GetEvents() []WebhookEventType {
-	if o == nil {
+func (w *WebhookEndpointCreate) GetEvents() []WebhookEventType {
+	if w == nil {
 		return []WebhookEventType{}
 	}
-	return o.Events
+	return w.Events
 }
 
-func (o *WebhookEndpointCreate) GetOrganizationID() *string {
-	if o == nil {
+func (w *WebhookEndpointCreate) GetOrganizationID() *string {
+	if w == nil {
 		return nil
 	}
-	return o.OrganizationID
+	return w.OrganizationID
 }

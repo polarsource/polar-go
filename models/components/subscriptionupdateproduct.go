@@ -24,16 +24,16 @@ func (s *SubscriptionUpdateProduct) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SubscriptionUpdateProduct) GetProductID() string {
-	if o == nil {
+func (s *SubscriptionUpdateProduct) GetProductID() string {
+	if s == nil {
 		return ""
 	}
-	return o.ProductID
+	return s.ProductID
 }
 
-func (o *SubscriptionUpdateProduct) GetProrationBehavior() *SubscriptionProrationBehavior {
-	if o == nil {
+func (s *SubscriptionUpdateProduct) GetProrationBehavior() *SubscriptionProrationBehavior {
+	if s == nil {
 		return nil
 	}
-	return o.ProrationBehavior
+	return s.ProrationBehavior
 }

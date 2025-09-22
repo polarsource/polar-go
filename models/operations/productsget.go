@@ -10,11 +10,11 @@ type ProductsGetRequest struct {
 	ID string `pathParam:"style=simple,explode=false,name=id"`
 }
 
-func (o *ProductsGetRequest) GetID() string {
-	if o == nil {
+func (p *ProductsGetRequest) GetID() string {
+	if p == nil {
 		return ""
 	}
-	return o.ID
+	return p.ID
 }
 
 type ProductsGetResponse struct {
@@ -23,16 +23,16 @@ type ProductsGetResponse struct {
 	Product *components.Product
 }
 
-func (o *ProductsGetResponse) GetHTTPMeta() components.HTTPMetadata {
-	if o == nil {
+func (p *ProductsGetResponse) GetHTTPMeta() components.HTTPMetadata {
+	if p == nil {
 		return components.HTTPMetadata{}
 	}
-	return o.HTTPMeta
+	return p.HTTPMeta
 }
 
-func (o *ProductsGetResponse) GetProduct() *components.Product {
-	if o == nil {
+func (p *ProductsGetResponse) GetProduct() *components.Product {
+	if p == nil {
 		return nil
 	}
-	return o.Product
+	return p.Product
 }

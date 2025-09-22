@@ -12,16 +12,16 @@ type RefundsCreateResponse struct {
 	Refund *components.Refund
 }
 
-func (o *RefundsCreateResponse) GetHTTPMeta() components.HTTPMetadata {
-	if o == nil {
+func (r *RefundsCreateResponse) GetHTTPMeta() components.HTTPMetadata {
+	if r == nil {
 		return components.HTTPMetadata{}
 	}
-	return o.HTTPMeta
+	return r.HTTPMeta
 }
 
-func (o *RefundsCreateResponse) GetRefund() *components.Refund {
-	if o == nil {
+func (r *RefundsCreateResponse) GetRefund() *components.Refund {
+	if r == nil {
 		return nil
 	}
-	return o.Refund
+	return r.Refund
 }

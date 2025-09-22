@@ -425,67 +425,67 @@ func (p *PaymentsListRequest) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *PaymentsListRequest) GetOrganizationID() *PaymentsListQueryParamOrganizationIDFilter {
-	if o == nil {
+func (p *PaymentsListRequest) GetOrganizationID() *PaymentsListQueryParamOrganizationIDFilter {
+	if p == nil {
 		return nil
 	}
-	return o.OrganizationID
+	return p.OrganizationID
 }
 
-func (o *PaymentsListRequest) GetCheckoutID() *PaymentsListQueryParamCheckoutIDFilter {
-	if o == nil {
+func (p *PaymentsListRequest) GetCheckoutID() *PaymentsListQueryParamCheckoutIDFilter {
+	if p == nil {
 		return nil
 	}
-	return o.CheckoutID
+	return p.CheckoutID
 }
 
-func (o *PaymentsListRequest) GetOrderID() *PaymentsListQueryParamOrderIDFilter {
-	if o == nil {
+func (p *PaymentsListRequest) GetOrderID() *PaymentsListQueryParamOrderIDFilter {
+	if p == nil {
 		return nil
 	}
-	return o.OrderID
+	return p.OrderID
 }
 
-func (o *PaymentsListRequest) GetStatus() *QueryParamStatusFilter {
-	if o == nil {
+func (p *PaymentsListRequest) GetStatus() *QueryParamStatusFilter {
+	if p == nil {
 		return nil
 	}
-	return o.Status
+	return p.Status
 }
 
-func (o *PaymentsListRequest) GetMethod() *MethodFilter {
-	if o == nil {
+func (p *PaymentsListRequest) GetMethod() *MethodFilter {
+	if p == nil {
 		return nil
 	}
-	return o.Method
+	return p.Method
 }
 
-func (o *PaymentsListRequest) GetCustomerEmail() *CustomerEmailFilter {
-	if o == nil {
+func (p *PaymentsListRequest) GetCustomerEmail() *CustomerEmailFilter {
+	if p == nil {
 		return nil
 	}
-	return o.CustomerEmail
+	return p.CustomerEmail
 }
 
-func (o *PaymentsListRequest) GetPage() *int64 {
-	if o == nil {
+func (p *PaymentsListRequest) GetPage() *int64 {
+	if p == nil {
 		return nil
 	}
-	return o.Page
+	return p.Page
 }
 
-func (o *PaymentsListRequest) GetLimit() *int64 {
-	if o == nil {
+func (p *PaymentsListRequest) GetLimit() *int64 {
+	if p == nil {
 		return nil
 	}
-	return o.Limit
+	return p.Limit
 }
 
-func (o *PaymentsListRequest) GetSorting() []components.PaymentSortProperty {
-	if o == nil {
+func (p *PaymentsListRequest) GetSorting() []components.PaymentSortProperty {
+	if p == nil {
 		return nil
 	}
-	return o.Sorting
+	return p.Sorting
 }
 
 type PaymentsListResponse struct {
@@ -496,16 +496,16 @@ type PaymentsListResponse struct {
 	Next func() (*PaymentsListResponse, error)
 }
 
-func (o *PaymentsListResponse) GetHTTPMeta() components.HTTPMetadata {
-	if o == nil {
+func (p *PaymentsListResponse) GetHTTPMeta() components.HTTPMetadata {
+	if p == nil {
 		return components.HTTPMetadata{}
 	}
-	return o.HTTPMeta
+	return p.HTTPMeta
 }
 
-func (o *PaymentsListResponse) GetListResource() *components.ListResource {
-	if o == nil {
+func (p *PaymentsListResponse) GetListResource() *components.ListResource {
+	if p == nil {
 		return nil
 	}
-	return o.ListResource
+	return p.ListResource
 }

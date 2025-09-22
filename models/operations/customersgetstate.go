@@ -11,11 +11,11 @@ type CustomersGetStateRequest struct {
 	ID string `pathParam:"style=simple,explode=false,name=id"`
 }
 
-func (o *CustomersGetStateRequest) GetID() string {
-	if o == nil {
+func (c *CustomersGetStateRequest) GetID() string {
+	if c == nil {
 		return ""
 	}
-	return o.ID
+	return c.ID
 }
 
 type CustomersGetStateResponse struct {
@@ -24,16 +24,16 @@ type CustomersGetStateResponse struct {
 	CustomerState *components.CustomerState
 }
 
-func (o *CustomersGetStateResponse) GetHTTPMeta() components.HTTPMetadata {
-	if o == nil {
+func (c *CustomersGetStateResponse) GetHTTPMeta() components.HTTPMetadata {
+	if c == nil {
 		return components.HTTPMetadata{}
 	}
-	return o.HTTPMeta
+	return c.HTTPMeta
 }
 
-func (o *CustomersGetStateResponse) GetCustomerState() *components.CustomerState {
-	if o == nil {
+func (c *CustomersGetStateResponse) GetCustomerState() *components.CustomerState {
+	if c == nil {
 		return nil
 	}
-	return o.CustomerState
+	return c.CustomerState
 }

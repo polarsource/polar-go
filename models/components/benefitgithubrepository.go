@@ -151,69 +151,69 @@ func (b *BenefitGitHubRepository) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *BenefitGitHubRepository) GetID() string {
-	if o == nil {
+func (b *BenefitGitHubRepository) GetID() string {
+	if b == nil {
 		return ""
 	}
-	return o.ID
+	return b.ID
 }
 
-func (o *BenefitGitHubRepository) GetCreatedAt() time.Time {
-	if o == nil {
+func (b *BenefitGitHubRepository) GetCreatedAt() time.Time {
+	if b == nil {
 		return time.Time{}
 	}
-	return o.CreatedAt
+	return b.CreatedAt
 }
 
-func (o *BenefitGitHubRepository) GetModifiedAt() *time.Time {
-	if o == nil {
+func (b *BenefitGitHubRepository) GetModifiedAt() *time.Time {
+	if b == nil {
 		return nil
 	}
-	return o.ModifiedAt
+	return b.ModifiedAt
 }
 
-func (o *BenefitGitHubRepository) GetType() string {
+func (b *BenefitGitHubRepository) GetType() string {
 	return "github_repository"
 }
 
-func (o *BenefitGitHubRepository) GetDescription() string {
-	if o == nil {
+func (b *BenefitGitHubRepository) GetDescription() string {
+	if b == nil {
 		return ""
 	}
-	return o.Description
+	return b.Description
 }
 
-func (o *BenefitGitHubRepository) GetSelectable() bool {
-	if o == nil {
+func (b *BenefitGitHubRepository) GetSelectable() bool {
+	if b == nil {
 		return false
 	}
-	return o.Selectable
+	return b.Selectable
 }
 
-func (o *BenefitGitHubRepository) GetDeletable() bool {
-	if o == nil {
+func (b *BenefitGitHubRepository) GetDeletable() bool {
+	if b == nil {
 		return false
 	}
-	return o.Deletable
+	return b.Deletable
 }
 
-func (o *BenefitGitHubRepository) GetOrganizationID() string {
-	if o == nil {
+func (b *BenefitGitHubRepository) GetOrganizationID() string {
+	if b == nil {
 		return ""
 	}
-	return o.OrganizationID
+	return b.OrganizationID
 }
 
-func (o *BenefitGitHubRepository) GetMetadata() map[string]BenefitGitHubRepositoryMetadata {
-	if o == nil {
+func (b *BenefitGitHubRepository) GetMetadata() map[string]BenefitGitHubRepositoryMetadata {
+	if b == nil {
 		return map[string]BenefitGitHubRepositoryMetadata{}
 	}
-	return o.Metadata
+	return b.Metadata
 }
 
-func (o *BenefitGitHubRepository) GetProperties() BenefitGitHubRepositoryProperties {
-	if o == nil {
+func (b *BenefitGitHubRepository) GetProperties() BenefitGitHubRepositoryProperties {
+	if b == nil {
 		return BenefitGitHubRepositoryProperties{}
 	}
-	return o.Properties
+	return b.Properties
 }

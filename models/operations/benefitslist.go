@@ -165,53 +165,53 @@ func (b *BenefitsListRequest) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *BenefitsListRequest) GetOrganizationID() *QueryParamOrganizationIDFilter {
-	if o == nil {
+func (b *BenefitsListRequest) GetOrganizationID() *QueryParamOrganizationIDFilter {
+	if b == nil {
 		return nil
 	}
-	return o.OrganizationID
+	return b.OrganizationID
 }
 
-func (o *BenefitsListRequest) GetTypeFilter() *BenefitTypeFilter {
-	if o == nil {
+func (b *BenefitsListRequest) GetTypeFilter() *BenefitTypeFilter {
+	if b == nil {
 		return nil
 	}
-	return o.TypeFilter
+	return b.TypeFilter
 }
 
-func (o *BenefitsListRequest) GetQuery() *string {
-	if o == nil {
+func (b *BenefitsListRequest) GetQuery() *string {
+	if b == nil {
 		return nil
 	}
-	return o.Query
+	return b.Query
 }
 
-func (o *BenefitsListRequest) GetPage() *int64 {
-	if o == nil {
+func (b *BenefitsListRequest) GetPage() *int64 {
+	if b == nil {
 		return nil
 	}
-	return o.Page
+	return b.Page
 }
 
-func (o *BenefitsListRequest) GetLimit() *int64 {
-	if o == nil {
+func (b *BenefitsListRequest) GetLimit() *int64 {
+	if b == nil {
 		return nil
 	}
-	return o.Limit
+	return b.Limit
 }
 
-func (o *BenefitsListRequest) GetSorting() []components.BenefitSortProperty {
-	if o == nil {
+func (b *BenefitsListRequest) GetSorting() []components.BenefitSortProperty {
+	if b == nil {
 		return nil
 	}
-	return o.Sorting
+	return b.Sorting
 }
 
-func (o *BenefitsListRequest) GetMetadata() map[string]components.MetadataQuery {
-	if o == nil {
+func (b *BenefitsListRequest) GetMetadata() map[string]components.MetadataQuery {
+	if b == nil {
 		return nil
 	}
-	return o.Metadata
+	return b.Metadata
 }
 
 type BenefitsListResponse struct {
@@ -222,16 +222,16 @@ type BenefitsListResponse struct {
 	Next func() (*BenefitsListResponse, error)
 }
 
-func (o *BenefitsListResponse) GetHTTPMeta() components.HTTPMetadata {
-	if o == nil {
+func (b *BenefitsListResponse) GetHTTPMeta() components.HTTPMetadata {
+	if b == nil {
 		return components.HTTPMetadata{}
 	}
-	return o.HTTPMeta
+	return b.HTTPMeta
 }
 
-func (o *BenefitsListResponse) GetListResourceBenefit() *components.ListResourceBenefit {
-	if o == nil {
+func (b *BenefitsListResponse) GetListResourceBenefit() *components.ListResourceBenefit {
+	if b == nil {
 		return nil
 	}
-	return o.ListResourceBenefit
+	return b.ListResourceBenefit
 }

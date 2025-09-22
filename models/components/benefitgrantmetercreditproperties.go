@@ -23,23 +23,23 @@ func (b *BenefitGrantMeterCreditProperties) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *BenefitGrantMeterCreditProperties) GetLastCreditedMeterID() *string {
-	if o == nil {
+func (b *BenefitGrantMeterCreditProperties) GetLastCreditedMeterID() *string {
+	if b == nil {
 		return nil
 	}
-	return o.LastCreditedMeterID
+	return b.LastCreditedMeterID
 }
 
-func (o *BenefitGrantMeterCreditProperties) GetLastCreditedUnits() *int64 {
-	if o == nil {
+func (b *BenefitGrantMeterCreditProperties) GetLastCreditedUnits() *int64 {
+	if b == nil {
 		return nil
 	}
-	return o.LastCreditedUnits
+	return b.LastCreditedUnits
 }
 
-func (o *BenefitGrantMeterCreditProperties) GetLastCreditedAt() *string {
-	if o == nil {
+func (b *BenefitGrantMeterCreditProperties) GetLastCreditedAt() *string {
+	if b == nil {
 		return nil
 	}
-	return o.LastCreditedAt
+	return b.LastCreditedAt
 }

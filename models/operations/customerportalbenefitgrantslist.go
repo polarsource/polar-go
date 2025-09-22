@@ -13,11 +13,11 @@ type CustomerPortalBenefitGrantsListSecurity struct {
 	CustomerSession string `security:"scheme,type=http,subtype=bearer,name=Authorization,env=polar_customer_session"`
 }
 
-func (o *CustomerPortalBenefitGrantsListSecurity) GetCustomerSession() string {
-	if o == nil {
+func (c *CustomerPortalBenefitGrantsListSecurity) GetCustomerSession() string {
+	if c == nil {
 		return ""
 	}
-	return o.CustomerSession
+	return c.CustomerSession
 }
 
 type QueryParamBenefitTypeFilterType string
@@ -436,67 +436,67 @@ func (c *CustomerPortalBenefitGrantsListRequest) UnmarshalJSON(data []byte) erro
 	return nil
 }
 
-func (o *CustomerPortalBenefitGrantsListRequest) GetTypeFilter() *QueryParamBenefitTypeFilter {
-	if o == nil {
+func (c *CustomerPortalBenefitGrantsListRequest) GetTypeFilter() *QueryParamBenefitTypeFilter {
+	if c == nil {
 		return nil
 	}
-	return o.TypeFilter
+	return c.TypeFilter
 }
 
-func (o *CustomerPortalBenefitGrantsListRequest) GetBenefitID() *CustomerPortalBenefitGrantsListQueryParamBenefitIDFilter {
-	if o == nil {
+func (c *CustomerPortalBenefitGrantsListRequest) GetBenefitID() *CustomerPortalBenefitGrantsListQueryParamBenefitIDFilter {
+	if c == nil {
 		return nil
 	}
-	return o.BenefitID
+	return c.BenefitID
 }
 
-func (o *CustomerPortalBenefitGrantsListRequest) GetOrganizationID() *CustomerPortalBenefitGrantsListQueryParamOrganizationIDFilter {
-	if o == nil {
+func (c *CustomerPortalBenefitGrantsListRequest) GetOrganizationID() *CustomerPortalBenefitGrantsListQueryParamOrganizationIDFilter {
+	if c == nil {
 		return nil
 	}
-	return o.OrganizationID
+	return c.OrganizationID
 }
 
-func (o *CustomerPortalBenefitGrantsListRequest) GetCheckoutID() *QueryParamCheckoutIDFilter {
-	if o == nil {
+func (c *CustomerPortalBenefitGrantsListRequest) GetCheckoutID() *QueryParamCheckoutIDFilter {
+	if c == nil {
 		return nil
 	}
-	return o.CheckoutID
+	return c.CheckoutID
 }
 
-func (o *CustomerPortalBenefitGrantsListRequest) GetOrderID() *QueryParamOrderIDFilter {
-	if o == nil {
+func (c *CustomerPortalBenefitGrantsListRequest) GetOrderID() *QueryParamOrderIDFilter {
+	if c == nil {
 		return nil
 	}
-	return o.OrderID
+	return c.OrderID
 }
 
-func (o *CustomerPortalBenefitGrantsListRequest) GetSubscriptionID() *QueryParamSubscriptionIDFilter {
-	if o == nil {
+func (c *CustomerPortalBenefitGrantsListRequest) GetSubscriptionID() *QueryParamSubscriptionIDFilter {
+	if c == nil {
 		return nil
 	}
-	return o.SubscriptionID
+	return c.SubscriptionID
 }
 
-func (o *CustomerPortalBenefitGrantsListRequest) GetPage() *int64 {
-	if o == nil {
+func (c *CustomerPortalBenefitGrantsListRequest) GetPage() *int64 {
+	if c == nil {
 		return nil
 	}
-	return o.Page
+	return c.Page
 }
 
-func (o *CustomerPortalBenefitGrantsListRequest) GetLimit() *int64 {
-	if o == nil {
+func (c *CustomerPortalBenefitGrantsListRequest) GetLimit() *int64 {
+	if c == nil {
 		return nil
 	}
-	return o.Limit
+	return c.Limit
 }
 
-func (o *CustomerPortalBenefitGrantsListRequest) GetSorting() []components.CustomerBenefitGrantSortProperty {
-	if o == nil {
+func (c *CustomerPortalBenefitGrantsListRequest) GetSorting() []components.CustomerBenefitGrantSortProperty {
+	if c == nil {
 		return nil
 	}
-	return o.Sorting
+	return c.Sorting
 }
 
 type CustomerPortalBenefitGrantsListResponse struct {
@@ -507,16 +507,16 @@ type CustomerPortalBenefitGrantsListResponse struct {
 	Next func() (*CustomerPortalBenefitGrantsListResponse, error)
 }
 
-func (o *CustomerPortalBenefitGrantsListResponse) GetHTTPMeta() components.HTTPMetadata {
-	if o == nil {
+func (c *CustomerPortalBenefitGrantsListResponse) GetHTTPMeta() components.HTTPMetadata {
+	if c == nil {
 		return components.HTTPMetadata{}
 	}
-	return o.HTTPMeta
+	return c.HTTPMeta
 }
 
-func (o *CustomerPortalBenefitGrantsListResponse) GetListResourceCustomerBenefitGrant() *components.ListResourceCustomerBenefitGrant {
-	if o == nil {
+func (c *CustomerPortalBenefitGrantsListResponse) GetListResourceCustomerBenefitGrant() *components.ListResourceCustomerBenefitGrant {
+	if c == nil {
 		return nil
 	}
-	return o.ListResourceCustomerBenefitGrant
+	return c.ListResourceCustomerBenefitGrant
 }

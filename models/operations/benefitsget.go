@@ -10,11 +10,11 @@ type BenefitsGetRequest struct {
 	ID string `pathParam:"style=simple,explode=false,name=id"`
 }
 
-func (o *BenefitsGetRequest) GetID() string {
-	if o == nil {
+func (b *BenefitsGetRequest) GetID() string {
+	if b == nil {
 		return ""
 	}
-	return o.ID
+	return b.ID
 }
 
 type BenefitsGetResponse struct {
@@ -23,16 +23,16 @@ type BenefitsGetResponse struct {
 	Benefit *components.Benefit
 }
 
-func (o *BenefitsGetResponse) GetHTTPMeta() components.HTTPMetadata {
-	if o == nil {
+func (b *BenefitsGetResponse) GetHTTPMeta() components.HTTPMetadata {
+	if b == nil {
 		return components.HTTPMetadata{}
 	}
-	return o.HTTPMeta
+	return b.HTTPMeta
 }
 
-func (o *BenefitsGetResponse) GetBenefit() *components.Benefit {
-	if o == nil {
+func (b *BenefitsGetResponse) GetBenefit() *components.Benefit {
+	if b == nil {
 		return nil
 	}
-	return o.Benefit
+	return b.Benefit
 }

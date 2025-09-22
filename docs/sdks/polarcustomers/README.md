@@ -93,8 +93,8 @@ func main() {
     s := polargo.New()
 
     res, err := s.CustomerPortal.Customers.Update(ctx, components.CustomerPortalCustomerUpdate{
-        BillingAddress: &components.Address{
-            Country: "US",
+        BillingAddress: &components.AddressInput{
+            Country: components.CountryAlpha2InputUs,
         },
     }, operations.CustomerPortalCustomersUpdateSecurity{
         CustomerSession: os.Getenv("POLAR_CUSTOMER_SESSION"),
@@ -155,7 +155,7 @@ func main() {
 
     res, err := s.CustomerPortal.Customers.ListPaymentMethods(ctx, operations.CustomerPortalCustomersListPaymentMethodsSecurity{
         CustomerSession: os.Getenv("POLAR_CUSTOMER_SESSION"),
-    }, polargo.Int64(1), polargo.Int64(10))
+    }, polargo.Pointer[int64](1), polargo.Pointer[int64](10))
     if err != nil {
         log.Fatal(err)
     }

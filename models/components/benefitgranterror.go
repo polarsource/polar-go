@@ -23,23 +23,23 @@ func (b *BenefitGrantError) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *BenefitGrantError) GetMessage() string {
-	if o == nil {
+func (b *BenefitGrantError) GetMessage() string {
+	if b == nil {
 		return ""
 	}
-	return o.Message
+	return b.Message
 }
 
-func (o *BenefitGrantError) GetType() string {
-	if o == nil {
+func (b *BenefitGrantError) GetType() string {
+	if b == nil {
 		return ""
 	}
-	return o.Type
+	return b.Type
 }
 
-func (o *BenefitGrantError) GetTimestamp() string {
-	if o == nil {
+func (b *BenefitGrantError) GetTimestamp() string {
+	if b == nil {
 		return ""
 	}
-	return o.Timestamp
+	return b.Timestamp
 }

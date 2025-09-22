@@ -38,100 +38,100 @@ func (c *CustomerBenefitGrantCustom) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *CustomerBenefitGrantCustom) GetCreatedAt() time.Time {
-	if o == nil {
+func (c *CustomerBenefitGrantCustom) GetCreatedAt() time.Time {
+	if c == nil {
 		return time.Time{}
 	}
-	return o.CreatedAt
+	return c.CreatedAt
 }
 
-func (o *CustomerBenefitGrantCustom) GetModifiedAt() *time.Time {
-	if o == nil {
+func (c *CustomerBenefitGrantCustom) GetModifiedAt() *time.Time {
+	if c == nil {
 		return nil
 	}
-	return o.ModifiedAt
+	return c.ModifiedAt
 }
 
-func (o *CustomerBenefitGrantCustom) GetID() string {
-	if o == nil {
+func (c *CustomerBenefitGrantCustom) GetID() string {
+	if c == nil {
 		return ""
 	}
-	return o.ID
+	return c.ID
 }
 
-func (o *CustomerBenefitGrantCustom) GetGrantedAt() *time.Time {
-	if o == nil {
+func (c *CustomerBenefitGrantCustom) GetGrantedAt() *time.Time {
+	if c == nil {
 		return nil
 	}
-	return o.GrantedAt
+	return c.GrantedAt
 }
 
-func (o *CustomerBenefitGrantCustom) GetRevokedAt() *time.Time {
-	if o == nil {
+func (c *CustomerBenefitGrantCustom) GetRevokedAt() *time.Time {
+	if c == nil {
 		return nil
 	}
-	return o.RevokedAt
+	return c.RevokedAt
 }
 
-func (o *CustomerBenefitGrantCustom) GetCustomerID() string {
-	if o == nil {
+func (c *CustomerBenefitGrantCustom) GetCustomerID() string {
+	if c == nil {
 		return ""
 	}
-	return o.CustomerID
+	return c.CustomerID
 }
 
-func (o *CustomerBenefitGrantCustom) GetBenefitID() string {
-	if o == nil {
+func (c *CustomerBenefitGrantCustom) GetBenefitID() string {
+	if c == nil {
 		return ""
 	}
-	return o.BenefitID
+	return c.BenefitID
 }
 
-func (o *CustomerBenefitGrantCustom) GetSubscriptionID() *string {
-	if o == nil {
+func (c *CustomerBenefitGrantCustom) GetSubscriptionID() *string {
+	if c == nil {
 		return nil
 	}
-	return o.SubscriptionID
+	return c.SubscriptionID
 }
 
-func (o *CustomerBenefitGrantCustom) GetOrderID() *string {
-	if o == nil {
+func (c *CustomerBenefitGrantCustom) GetOrderID() *string {
+	if c == nil {
 		return nil
 	}
-	return o.OrderID
+	return c.OrderID
 }
 
-func (o *CustomerBenefitGrantCustom) GetIsGranted() bool {
-	if o == nil {
+func (c *CustomerBenefitGrantCustom) GetIsGranted() bool {
+	if c == nil {
 		return false
 	}
-	return o.IsGranted
+	return c.IsGranted
 }
 
-func (o *CustomerBenefitGrantCustom) GetIsRevoked() bool {
-	if o == nil {
+func (c *CustomerBenefitGrantCustom) GetIsRevoked() bool {
+	if c == nil {
 		return false
 	}
-	return o.IsRevoked
+	return c.IsRevoked
 }
 
-func (o *CustomerBenefitGrantCustom) GetCustomer() CustomerPortalCustomer {
-	if o == nil {
+func (c *CustomerBenefitGrantCustom) GetCustomer() CustomerPortalCustomer {
+	if c == nil {
 		return CustomerPortalCustomer{}
 	}
-	return o.Customer
+	return c.Customer
 }
 
-func (o *CustomerBenefitGrantCustom) GetBenefit() BenefitCustomSubscriber {
-	if o == nil {
+func (c *CustomerBenefitGrantCustom) GetBenefit() BenefitCustomSubscriber {
+	if c == nil {
 		return BenefitCustomSubscriber{}
 	}
-	return o.Benefit
+	return c.Benefit
 }
 
-func (o *CustomerBenefitGrantCustom) GetProperties() BenefitGrantCustomProperties {
-	if o == nil {
+func (c *CustomerBenefitGrantCustom) GetProperties() BenefitGrantCustomProperties {
+	if c == nil {
 		return BenefitGrantCustomProperties{}
 	}
-	return o.Properties
+	return c.Properties
 }

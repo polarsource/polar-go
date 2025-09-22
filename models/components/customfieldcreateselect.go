@@ -150,41 +150,41 @@ func (c *CustomFieldCreateSelect) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *CustomFieldCreateSelect) GetMetadata() map[string]CustomFieldCreateSelectMetadata {
-	if o == nil {
+func (c *CustomFieldCreateSelect) GetMetadata() map[string]CustomFieldCreateSelectMetadata {
+	if c == nil {
 		return nil
 	}
-	return o.Metadata
+	return c.Metadata
 }
 
-func (o *CustomFieldCreateSelect) GetType() string {
+func (c *CustomFieldCreateSelect) GetType() string {
 	return "select"
 }
 
-func (o *CustomFieldCreateSelect) GetSlug() string {
-	if o == nil {
+func (c *CustomFieldCreateSelect) GetSlug() string {
+	if c == nil {
 		return ""
 	}
-	return o.Slug
+	return c.Slug
 }
 
-func (o *CustomFieldCreateSelect) GetName() string {
-	if o == nil {
+func (c *CustomFieldCreateSelect) GetName() string {
+	if c == nil {
 		return ""
 	}
-	return o.Name
+	return c.Name
 }
 
-func (o *CustomFieldCreateSelect) GetOrganizationID() *string {
-	if o == nil {
+func (c *CustomFieldCreateSelect) GetOrganizationID() *string {
+	if c == nil {
 		return nil
 	}
-	return o.OrganizationID
+	return c.OrganizationID
 }
 
-func (o *CustomFieldCreateSelect) GetProperties() CustomFieldSelectProperties {
-	if o == nil {
+func (c *CustomFieldCreateSelect) GetProperties() CustomFieldSelectProperties {
+	if c == nil {
 		return CustomFieldSelectProperties{}
 	}
-	return o.Properties
+	return c.Properties
 }

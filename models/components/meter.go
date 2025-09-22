@@ -320,89 +320,89 @@ func (m *Meter) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *Meter) GetMetadata() map[string]MeterMetadata {
-	if o == nil {
+func (m *Meter) GetMetadata() map[string]MeterMetadata {
+	if m == nil {
 		return map[string]MeterMetadata{}
 	}
-	return o.Metadata
+	return m.Metadata
 }
 
-func (o *Meter) GetCreatedAt() time.Time {
-	if o == nil {
+func (m *Meter) GetCreatedAt() time.Time {
+	if m == nil {
 		return time.Time{}
 	}
-	return o.CreatedAt
+	return m.CreatedAt
 }
 
-func (o *Meter) GetModifiedAt() *time.Time {
-	if o == nil {
+func (m *Meter) GetModifiedAt() *time.Time {
+	if m == nil {
 		return nil
 	}
-	return o.ModifiedAt
+	return m.ModifiedAt
 }
 
-func (o *Meter) GetID() string {
-	if o == nil {
+func (m *Meter) GetID() string {
+	if m == nil {
 		return ""
 	}
-	return o.ID
+	return m.ID
 }
 
-func (o *Meter) GetName() string {
-	if o == nil {
+func (m *Meter) GetName() string {
+	if m == nil {
 		return ""
 	}
-	return o.Name
+	return m.Name
 }
 
-func (o *Meter) GetFilter() Filter {
-	if o == nil {
+func (m *Meter) GetFilter() Filter {
+	if m == nil {
 		return Filter{}
 	}
-	return o.Filter
+	return m.Filter
 }
 
-func (o *Meter) GetAggregation() MeterAggregation {
-	if o == nil {
+func (m *Meter) GetAggregation() MeterAggregation {
+	if m == nil {
 		return MeterAggregation{}
 	}
-	return o.Aggregation
+	return m.Aggregation
 }
 
-func (o *Meter) GetAggregationAvg() *PropertyAggregation {
-	return o.GetAggregation().PropertyAggregation
+func (m *Meter) GetAggregationAvg() *PropertyAggregation {
+	return m.GetAggregation().PropertyAggregation
 }
 
-func (o *Meter) GetAggregationCount() *CountAggregation {
-	return o.GetAggregation().CountAggregation
+func (m *Meter) GetAggregationCount() *CountAggregation {
+	return m.GetAggregation().CountAggregation
 }
 
-func (o *Meter) GetAggregationMax() *PropertyAggregation {
-	return o.GetAggregation().PropertyAggregation
+func (m *Meter) GetAggregationMax() *PropertyAggregation {
+	return m.GetAggregation().PropertyAggregation
 }
 
-func (o *Meter) GetAggregationMin() *PropertyAggregation {
-	return o.GetAggregation().PropertyAggregation
+func (m *Meter) GetAggregationMin() *PropertyAggregation {
+	return m.GetAggregation().PropertyAggregation
 }
 
-func (o *Meter) GetAggregationSum() *PropertyAggregation {
-	return o.GetAggregation().PropertyAggregation
+func (m *Meter) GetAggregationSum() *PropertyAggregation {
+	return m.GetAggregation().PropertyAggregation
 }
 
-func (o *Meter) GetAggregationUnique() *UniqueAggregation {
-	return o.GetAggregation().UniqueAggregation
+func (m *Meter) GetAggregationUnique() *UniqueAggregation {
+	return m.GetAggregation().UniqueAggregation
 }
 
-func (o *Meter) GetOrganizationID() string {
-	if o == nil {
+func (m *Meter) GetOrganizationID() string {
+	if m == nil {
 		return ""
 	}
-	return o.OrganizationID
+	return m.OrganizationID
 }
 
-func (o *Meter) GetArchivedAt() *time.Time {
-	if o == nil {
+func (m *Meter) GetArchivedAt() *time.Time {
+	if m == nil {
 		return nil
 	}
-	return o.ArchivedAt
+	return m.ArchivedAt
 }

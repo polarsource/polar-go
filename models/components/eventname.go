@@ -30,37 +30,37 @@ func (e *EventName) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *EventName) GetName() string {
-	if o == nil {
+func (e *EventName) GetName() string {
+	if e == nil {
 		return ""
 	}
-	return o.Name
+	return e.Name
 }
 
-func (o *EventName) GetSource() EventSource {
-	if o == nil {
+func (e *EventName) GetSource() EventSource {
+	if e == nil {
 		return EventSource("")
 	}
-	return o.Source
+	return e.Source
 }
 
-func (o *EventName) GetOccurrences() int64 {
-	if o == nil {
+func (e *EventName) GetOccurrences() int64 {
+	if e == nil {
 		return 0
 	}
-	return o.Occurrences
+	return e.Occurrences
 }
 
-func (o *EventName) GetFirstSeen() time.Time {
-	if o == nil {
+func (e *EventName) GetFirstSeen() time.Time {
+	if e == nil {
 		return time.Time{}
 	}
-	return o.FirstSeen
+	return e.FirstSeen
 }
 
-func (o *EventName) GetLastSeen() time.Time {
-	if o == nil {
+func (e *EventName) GetLastSeen() time.Time {
+	if e == nil {
 		return time.Time{}
 	}
-	return o.LastSeen
+	return e.LastSeen
 }

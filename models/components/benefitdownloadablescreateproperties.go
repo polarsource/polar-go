@@ -22,16 +22,16 @@ func (b *BenefitDownloadablesCreateProperties) UnmarshalJSON(data []byte) error 
 	return nil
 }
 
-func (o *BenefitDownloadablesCreateProperties) GetArchived() map[string]bool {
-	if o == nil {
+func (b *BenefitDownloadablesCreateProperties) GetArchived() map[string]bool {
+	if b == nil {
 		return nil
 	}
-	return o.Archived
+	return b.Archived
 }
 
-func (o *BenefitDownloadablesCreateProperties) GetFiles() []string {
-	if o == nil {
+func (b *BenefitDownloadablesCreateProperties) GetFiles() []string {
+	if b == nil {
 		return []string{}
 	}
-	return o.Files
+	return b.Files
 }

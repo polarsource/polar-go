@@ -235,74 +235,74 @@ func (p *ProductsListRequest) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *ProductsListRequest) GetID() *QueryParamProductIDFilter {
-	if o == nil {
+func (p *ProductsListRequest) GetID() *QueryParamProductIDFilter {
+	if p == nil {
 		return nil
 	}
-	return o.ID
+	return p.ID
 }
 
-func (o *ProductsListRequest) GetOrganizationID() *ProductsListQueryParamOrganizationIDFilter {
-	if o == nil {
+func (p *ProductsListRequest) GetOrganizationID() *ProductsListQueryParamOrganizationIDFilter {
+	if p == nil {
 		return nil
 	}
-	return o.OrganizationID
+	return p.OrganizationID
 }
 
-func (o *ProductsListRequest) GetQuery() *string {
-	if o == nil {
+func (p *ProductsListRequest) GetQuery() *string {
+	if p == nil {
 		return nil
 	}
-	return o.Query
+	return p.Query
 }
 
-func (o *ProductsListRequest) GetIsArchived() *bool {
-	if o == nil {
+func (p *ProductsListRequest) GetIsArchived() *bool {
+	if p == nil {
 		return nil
 	}
-	return o.IsArchived
+	return p.IsArchived
 }
 
-func (o *ProductsListRequest) GetIsRecurring() *bool {
-	if o == nil {
+func (p *ProductsListRequest) GetIsRecurring() *bool {
+	if p == nil {
 		return nil
 	}
-	return o.IsRecurring
+	return p.IsRecurring
 }
 
-func (o *ProductsListRequest) GetBenefitID() *BenefitIDFilter {
-	if o == nil {
+func (p *ProductsListRequest) GetBenefitID() *BenefitIDFilter {
+	if p == nil {
 		return nil
 	}
-	return o.BenefitID
+	return p.BenefitID
 }
 
-func (o *ProductsListRequest) GetPage() *int64 {
-	if o == nil {
+func (p *ProductsListRequest) GetPage() *int64 {
+	if p == nil {
 		return nil
 	}
-	return o.Page
+	return p.Page
 }
 
-func (o *ProductsListRequest) GetLimit() *int64 {
-	if o == nil {
+func (p *ProductsListRequest) GetLimit() *int64 {
+	if p == nil {
 		return nil
 	}
-	return o.Limit
+	return p.Limit
 }
 
-func (o *ProductsListRequest) GetSorting() []components.ProductSortProperty {
-	if o == nil {
+func (p *ProductsListRequest) GetSorting() []components.ProductSortProperty {
+	if p == nil {
 		return nil
 	}
-	return o.Sorting
+	return p.Sorting
 }
 
-func (o *ProductsListRequest) GetMetadata() map[string]components.MetadataQuery {
-	if o == nil {
+func (p *ProductsListRequest) GetMetadata() map[string]components.MetadataQuery {
+	if p == nil {
 		return nil
 	}
-	return o.Metadata
+	return p.Metadata
 }
 
 type ProductsListResponse struct {
@@ -313,16 +313,16 @@ type ProductsListResponse struct {
 	Next func() (*ProductsListResponse, error)
 }
 
-func (o *ProductsListResponse) GetHTTPMeta() components.HTTPMetadata {
-	if o == nil {
+func (p *ProductsListResponse) GetHTTPMeta() components.HTTPMetadata {
+	if p == nil {
 		return components.HTTPMetadata{}
 	}
-	return o.HTTPMeta
+	return p.HTTPMeta
 }
 
-func (o *ProductsListResponse) GetListResourceProduct() *components.ListResourceProduct {
-	if o == nil {
+func (p *ProductsListResponse) GetListResourceProduct() *components.ListResourceProduct {
+	if p == nil {
 		return nil
 	}
-	return o.ListResourceProduct
+	return p.ListResourceProduct
 }

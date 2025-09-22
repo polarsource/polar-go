@@ -12,16 +12,16 @@ type EndpointbenefitUpdatedPostResponse struct {
 	Any any
 }
 
-func (o *EndpointbenefitUpdatedPostResponse) GetHTTPMeta() components.HTTPMetadata {
-	if o == nil {
+func (e *EndpointbenefitUpdatedPostResponse) GetHTTPMeta() components.HTTPMetadata {
+	if e == nil {
 		return components.HTTPMetadata{}
 	}
-	return o.HTTPMeta
+	return e.HTTPMeta
 }
 
-func (o *EndpointbenefitUpdatedPostResponse) GetAny() any {
-	if o == nil {
+func (e *EndpointbenefitUpdatedPostResponse) GetAny() any {
+	if e == nil {
 		return nil
 	}
-	return o.Any
+	return e.Any
 }

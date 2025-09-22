@@ -146,62 +146,62 @@ func (c *CustomFieldNumber) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *CustomFieldNumber) GetCreatedAt() time.Time {
-	if o == nil {
+func (c *CustomFieldNumber) GetCreatedAt() time.Time {
+	if c == nil {
 		return time.Time{}
 	}
-	return o.CreatedAt
+	return c.CreatedAt
 }
 
-func (o *CustomFieldNumber) GetModifiedAt() *time.Time {
-	if o == nil {
+func (c *CustomFieldNumber) GetModifiedAt() *time.Time {
+	if c == nil {
 		return nil
 	}
-	return o.ModifiedAt
+	return c.ModifiedAt
 }
 
-func (o *CustomFieldNumber) GetID() string {
-	if o == nil {
+func (c *CustomFieldNumber) GetID() string {
+	if c == nil {
 		return ""
 	}
-	return o.ID
+	return c.ID
 }
 
-func (o *CustomFieldNumber) GetMetadata() map[string]CustomFieldNumberMetadata {
-	if o == nil {
+func (c *CustomFieldNumber) GetMetadata() map[string]CustomFieldNumberMetadata {
+	if c == nil {
 		return map[string]CustomFieldNumberMetadata{}
 	}
-	return o.Metadata
+	return c.Metadata
 }
 
-func (o *CustomFieldNumber) GetType() string {
+func (c *CustomFieldNumber) GetType() string {
 	return "number"
 }
 
-func (o *CustomFieldNumber) GetSlug() string {
-	if o == nil {
+func (c *CustomFieldNumber) GetSlug() string {
+	if c == nil {
 		return ""
 	}
-	return o.Slug
+	return c.Slug
 }
 
-func (o *CustomFieldNumber) GetName() string {
-	if o == nil {
+func (c *CustomFieldNumber) GetName() string {
+	if c == nil {
 		return ""
 	}
-	return o.Name
+	return c.Name
 }
 
-func (o *CustomFieldNumber) GetOrganizationID() string {
-	if o == nil {
+func (c *CustomFieldNumber) GetOrganizationID() string {
+	if c == nil {
 		return ""
 	}
-	return o.OrganizationID
+	return c.OrganizationID
 }
 
-func (o *CustomFieldNumber) GetProperties() CustomFieldNumberProperties {
-	if o == nil {
+func (c *CustomFieldNumber) GetProperties() CustomFieldNumberProperties {
+	if c == nil {
 		return CustomFieldNumberProperties{}
 	}
-	return o.Properties
+	return c.Properties
 }

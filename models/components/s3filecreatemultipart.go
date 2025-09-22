@@ -21,9 +21,9 @@ func (s *S3FileCreateMultipart) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *S3FileCreateMultipart) GetParts() []S3FileCreatePart {
-	if o == nil {
+func (s *S3FileCreateMultipart) GetParts() []S3FileCreatePart {
+	if s == nil {
 		return []S3FileCreatePart{}
 	}
-	return o.Parts
+	return s.Parts
 }

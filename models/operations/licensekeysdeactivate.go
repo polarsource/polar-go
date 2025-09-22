@@ -10,9 +10,9 @@ type LicenseKeysDeactivateResponse struct {
 	HTTPMeta components.HTTPMetadata `json:"-"`
 }
 
-func (o *LicenseKeysDeactivateResponse) GetHTTPMeta() components.HTTPMetadata {
-	if o == nil {
+func (l *LicenseKeysDeactivateResponse) GetHTTPMeta() components.HTTPMetadata {
+	if l == nil {
 		return components.HTTPMetadata{}
 	}
-	return o.HTTPMeta
+	return l.HTTPMeta
 }

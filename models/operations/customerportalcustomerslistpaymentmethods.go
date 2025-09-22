@@ -11,11 +11,11 @@ type CustomerPortalCustomersListPaymentMethodsSecurity struct {
 	CustomerSession string `security:"scheme,type=http,subtype=bearer,name=Authorization,env=polar_customer_session"`
 }
 
-func (o *CustomerPortalCustomersListPaymentMethodsSecurity) GetCustomerSession() string {
-	if o == nil {
+func (c *CustomerPortalCustomersListPaymentMethodsSecurity) GetCustomerSession() string {
+	if c == nil {
 		return ""
 	}
-	return o.CustomerSession
+	return c.CustomerSession
 }
 
 type CustomerPortalCustomersListPaymentMethodsRequest struct {
@@ -36,18 +36,18 @@ func (c *CustomerPortalCustomersListPaymentMethodsRequest) UnmarshalJSON(data []
 	return nil
 }
 
-func (o *CustomerPortalCustomersListPaymentMethodsRequest) GetPage() *int64 {
-	if o == nil {
+func (c *CustomerPortalCustomersListPaymentMethodsRequest) GetPage() *int64 {
+	if c == nil {
 		return nil
 	}
-	return o.Page
+	return c.Page
 }
 
-func (o *CustomerPortalCustomersListPaymentMethodsRequest) GetLimit() *int64 {
-	if o == nil {
+func (c *CustomerPortalCustomersListPaymentMethodsRequest) GetLimit() *int64 {
+	if c == nil {
 		return nil
 	}
-	return o.Limit
+	return c.Limit
 }
 
 type CustomerPortalCustomersListPaymentMethodsResponse struct {
@@ -58,16 +58,16 @@ type CustomerPortalCustomersListPaymentMethodsResponse struct {
 	Next func() (*CustomerPortalCustomersListPaymentMethodsResponse, error)
 }
 
-func (o *CustomerPortalCustomersListPaymentMethodsResponse) GetHTTPMeta() components.HTTPMetadata {
-	if o == nil {
+func (c *CustomerPortalCustomersListPaymentMethodsResponse) GetHTTPMeta() components.HTTPMetadata {
+	if c == nil {
 		return components.HTTPMetadata{}
 	}
-	return o.HTTPMeta
+	return c.HTTPMeta
 }
 
-func (o *CustomerPortalCustomersListPaymentMethodsResponse) GetListResourceCustomerPaymentMethod() *components.ListResourceCustomerPaymentMethod {
-	if o == nil {
+func (c *CustomerPortalCustomersListPaymentMethodsResponse) GetListResourceCustomerPaymentMethod() *components.ListResourceCustomerPaymentMethod {
+	if c == nil {
 		return nil
 	}
-	return o.ListResourceCustomerPaymentMethod
+	return c.ListResourceCustomerPaymentMethod
 }

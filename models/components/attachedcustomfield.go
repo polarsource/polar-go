@@ -13,50 +13,50 @@ type AttachedCustomField struct {
 	Required bool `json:"required"`
 }
 
-func (o *AttachedCustomField) GetCustomFieldID() string {
-	if o == nil {
+func (a *AttachedCustomField) GetCustomFieldID() string {
+	if a == nil {
 		return ""
 	}
-	return o.CustomFieldID
+	return a.CustomFieldID
 }
 
-func (o *AttachedCustomField) GetCustomField() CustomField {
-	if o == nil {
+func (a *AttachedCustomField) GetCustomField() CustomField {
+	if a == nil {
 		return CustomField{}
 	}
-	return o.CustomField
+	return a.CustomField
 }
 
-func (o *AttachedCustomField) GetCustomFieldCheckbox() *CustomFieldCheckbox {
-	return o.GetCustomField().CustomFieldCheckbox
+func (a *AttachedCustomField) GetCustomFieldCheckbox() *CustomFieldCheckbox {
+	return a.GetCustomField().CustomFieldCheckbox
 }
 
-func (o *AttachedCustomField) GetCustomFieldDate() *CustomFieldDate {
-	return o.GetCustomField().CustomFieldDate
+func (a *AttachedCustomField) GetCustomFieldDate() *CustomFieldDate {
+	return a.GetCustomField().CustomFieldDate
 }
 
-func (o *AttachedCustomField) GetCustomFieldNumber() *CustomFieldNumber {
-	return o.GetCustomField().CustomFieldNumber
+func (a *AttachedCustomField) GetCustomFieldNumber() *CustomFieldNumber {
+	return a.GetCustomField().CustomFieldNumber
 }
 
-func (o *AttachedCustomField) GetCustomFieldSelect() *CustomFieldSelect {
-	return o.GetCustomField().CustomFieldSelect
+func (a *AttachedCustomField) GetCustomFieldSelect() *CustomFieldSelect {
+	return a.GetCustomField().CustomFieldSelect
 }
 
-func (o *AttachedCustomField) GetCustomFieldText() *CustomFieldText {
-	return o.GetCustomField().CustomFieldText
+func (a *AttachedCustomField) GetCustomFieldText() *CustomFieldText {
+	return a.GetCustomField().CustomFieldText
 }
 
-func (o *AttachedCustomField) GetOrder() int64 {
-	if o == nil {
+func (a *AttachedCustomField) GetOrder() int64 {
+	if a == nil {
 		return 0
 	}
-	return o.Order
+	return a.Order
 }
 
-func (o *AttachedCustomField) GetRequired() bool {
-	if o == nil {
+func (a *AttachedCustomField) GetRequired() bool {
+	if a == nil {
 		return false
 	}
-	return o.Required
+	return a.Required
 }

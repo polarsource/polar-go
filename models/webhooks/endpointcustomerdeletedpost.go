@@ -12,16 +12,16 @@ type EndpointcustomerDeletedPostResponse struct {
 	Any any
 }
 
-func (o *EndpointcustomerDeletedPostResponse) GetHTTPMeta() components.HTTPMetadata {
-	if o == nil {
+func (e *EndpointcustomerDeletedPostResponse) GetHTTPMeta() components.HTTPMetadata {
+	if e == nil {
 		return components.HTTPMetadata{}
 	}
-	return o.HTTPMeta
+	return e.HTTPMeta
 }
 
-func (o *EndpointcustomerDeletedPostResponse) GetAny() any {
-	if o == nil {
+func (e *EndpointcustomerDeletedPostResponse) GetAny() any {
+	if e == nil {
 		return nil
 	}
-	return o.Any
+	return e.Any
 }

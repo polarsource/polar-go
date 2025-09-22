@@ -7,16 +7,16 @@ type ListResourceCustomField struct {
 	Pagination Pagination    `json:"pagination"`
 }
 
-func (o *ListResourceCustomField) GetItems() []CustomField {
-	if o == nil {
+func (l *ListResourceCustomField) GetItems() []CustomField {
+	if l == nil {
 		return []CustomField{}
 	}
-	return o.Items
+	return l.Items
 }
 
-func (o *ListResourceCustomField) GetPagination() Pagination {
-	if o == nil {
+func (l *ListResourceCustomField) GetPagination() Pagination {
+	if l == nil {
 		return Pagination{}
 	}
-	return o.Pagination
+	return l.Pagination
 }

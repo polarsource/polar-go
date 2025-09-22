@@ -151,69 +151,69 @@ func (b *BenefitCustom) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *BenefitCustom) GetID() string {
-	if o == nil {
+func (b *BenefitCustom) GetID() string {
+	if b == nil {
 		return ""
 	}
-	return o.ID
+	return b.ID
 }
 
-func (o *BenefitCustom) GetCreatedAt() time.Time {
-	if o == nil {
+func (b *BenefitCustom) GetCreatedAt() time.Time {
+	if b == nil {
 		return time.Time{}
 	}
-	return o.CreatedAt
+	return b.CreatedAt
 }
 
-func (o *BenefitCustom) GetModifiedAt() *time.Time {
-	if o == nil {
+func (b *BenefitCustom) GetModifiedAt() *time.Time {
+	if b == nil {
 		return nil
 	}
-	return o.ModifiedAt
+	return b.ModifiedAt
 }
 
-func (o *BenefitCustom) GetType() string {
+func (b *BenefitCustom) GetType() string {
 	return "custom"
 }
 
-func (o *BenefitCustom) GetDescription() string {
-	if o == nil {
+func (b *BenefitCustom) GetDescription() string {
+	if b == nil {
 		return ""
 	}
-	return o.Description
+	return b.Description
 }
 
-func (o *BenefitCustom) GetSelectable() bool {
-	if o == nil {
+func (b *BenefitCustom) GetSelectable() bool {
+	if b == nil {
 		return false
 	}
-	return o.Selectable
+	return b.Selectable
 }
 
-func (o *BenefitCustom) GetDeletable() bool {
-	if o == nil {
+func (b *BenefitCustom) GetDeletable() bool {
+	if b == nil {
 		return false
 	}
-	return o.Deletable
+	return b.Deletable
 }
 
-func (o *BenefitCustom) GetOrganizationID() string {
-	if o == nil {
+func (b *BenefitCustom) GetOrganizationID() string {
+	if b == nil {
 		return ""
 	}
-	return o.OrganizationID
+	return b.OrganizationID
 }
 
-func (o *BenefitCustom) GetMetadata() map[string]BenefitCustomMetadata {
-	if o == nil {
+func (b *BenefitCustom) GetMetadata() map[string]BenefitCustomMetadata {
+	if b == nil {
 		return map[string]BenefitCustomMetadata{}
 	}
-	return o.Metadata
+	return b.Metadata
 }
 
-func (o *BenefitCustom) GetProperties() BenefitCustomProperties {
-	if o == nil {
+func (b *BenefitCustom) GetProperties() BenefitCustomProperties {
+	if b == nil {
 		return BenefitCustomProperties{}
 	}
-	return o.Properties
+	return b.Properties
 }

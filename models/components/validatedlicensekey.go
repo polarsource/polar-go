@@ -42,121 +42,121 @@ func (v *ValidatedLicenseKey) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *ValidatedLicenseKey) GetID() string {
-	if o == nil {
+func (v *ValidatedLicenseKey) GetID() string {
+	if v == nil {
 		return ""
 	}
-	return o.ID
+	return v.ID
 }
 
-func (o *ValidatedLicenseKey) GetCreatedAt() time.Time {
-	if o == nil {
+func (v *ValidatedLicenseKey) GetCreatedAt() time.Time {
+	if v == nil {
 		return time.Time{}
 	}
-	return o.CreatedAt
+	return v.CreatedAt
 }
 
-func (o *ValidatedLicenseKey) GetModifiedAt() *time.Time {
-	if o == nil {
+func (v *ValidatedLicenseKey) GetModifiedAt() *time.Time {
+	if v == nil {
 		return nil
 	}
-	return o.ModifiedAt
+	return v.ModifiedAt
 }
 
-func (o *ValidatedLicenseKey) GetOrganizationID() string {
-	if o == nil {
+func (v *ValidatedLicenseKey) GetOrganizationID() string {
+	if v == nil {
 		return ""
 	}
-	return o.OrganizationID
+	return v.OrganizationID
 }
 
-func (o *ValidatedLicenseKey) GetCustomerID() string {
-	if o == nil {
+func (v *ValidatedLicenseKey) GetCustomerID() string {
+	if v == nil {
 		return ""
 	}
-	return o.CustomerID
+	return v.CustomerID
 }
 
-func (o *ValidatedLicenseKey) GetCustomer() LicenseKeyCustomer {
-	if o == nil {
+func (v *ValidatedLicenseKey) GetCustomer() LicenseKeyCustomer {
+	if v == nil {
 		return LicenseKeyCustomer{}
 	}
-	return o.Customer
+	return v.Customer
 }
 
-func (o *ValidatedLicenseKey) GetBenefitID() string {
-	if o == nil {
+func (v *ValidatedLicenseKey) GetBenefitID() string {
+	if v == nil {
 		return ""
 	}
-	return o.BenefitID
+	return v.BenefitID
 }
 
-func (o *ValidatedLicenseKey) GetKey() string {
-	if o == nil {
+func (v *ValidatedLicenseKey) GetKey() string {
+	if v == nil {
 		return ""
 	}
-	return o.Key
+	return v.Key
 }
 
-func (o *ValidatedLicenseKey) GetDisplayKey() string {
-	if o == nil {
+func (v *ValidatedLicenseKey) GetDisplayKey() string {
+	if v == nil {
 		return ""
 	}
-	return o.DisplayKey
+	return v.DisplayKey
 }
 
-func (o *ValidatedLicenseKey) GetStatus() LicenseKeyStatus {
-	if o == nil {
+func (v *ValidatedLicenseKey) GetStatus() LicenseKeyStatus {
+	if v == nil {
 		return LicenseKeyStatus("")
 	}
-	return o.Status
+	return v.Status
 }
 
-func (o *ValidatedLicenseKey) GetLimitActivations() *int64 {
-	if o == nil {
+func (v *ValidatedLicenseKey) GetLimitActivations() *int64 {
+	if v == nil {
 		return nil
 	}
-	return o.LimitActivations
+	return v.LimitActivations
 }
 
-func (o *ValidatedLicenseKey) GetUsage() int64 {
-	if o == nil {
+func (v *ValidatedLicenseKey) GetUsage() int64 {
+	if v == nil {
 		return 0
 	}
-	return o.Usage
+	return v.Usage
 }
 
-func (o *ValidatedLicenseKey) GetLimitUsage() *int64 {
-	if o == nil {
+func (v *ValidatedLicenseKey) GetLimitUsage() *int64 {
+	if v == nil {
 		return nil
 	}
-	return o.LimitUsage
+	return v.LimitUsage
 }
 
-func (o *ValidatedLicenseKey) GetValidations() int64 {
-	if o == nil {
+func (v *ValidatedLicenseKey) GetValidations() int64 {
+	if v == nil {
 		return 0
 	}
-	return o.Validations
+	return v.Validations
 }
 
-func (o *ValidatedLicenseKey) GetLastValidatedAt() *time.Time {
-	if o == nil {
+func (v *ValidatedLicenseKey) GetLastValidatedAt() *time.Time {
+	if v == nil {
 		return nil
 	}
-	return o.LastValidatedAt
+	return v.LastValidatedAt
 }
 
-func (o *ValidatedLicenseKey) GetExpiresAt() *time.Time {
-	if o == nil {
+func (v *ValidatedLicenseKey) GetExpiresAt() *time.Time {
+	if v == nil {
 		return nil
 	}
-	return o.ExpiresAt
+	return v.ExpiresAt
 }
 
-func (o *ValidatedLicenseKey) GetActivation() *LicenseKeyActivationBase {
-	if o == nil {
+func (v *ValidatedLicenseKey) GetActivation() *LicenseKeyActivationBase {
+	if v == nil {
 		return nil
 	}
-	return o.Activation
+	return v.Activation
 }

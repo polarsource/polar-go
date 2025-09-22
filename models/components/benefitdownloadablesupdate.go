@@ -145,27 +145,27 @@ func (b *BenefitDownloadablesUpdate) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *BenefitDownloadablesUpdate) GetMetadata() map[string]BenefitDownloadablesUpdateMetadata {
-	if o == nil {
+func (b *BenefitDownloadablesUpdate) GetMetadata() map[string]BenefitDownloadablesUpdateMetadata {
+	if b == nil {
 		return nil
 	}
-	return o.Metadata
+	return b.Metadata
 }
 
-func (o *BenefitDownloadablesUpdate) GetDescription() *string {
-	if o == nil {
+func (b *BenefitDownloadablesUpdate) GetDescription() *string {
+	if b == nil {
 		return nil
 	}
-	return o.Description
+	return b.Description
 }
 
-func (o *BenefitDownloadablesUpdate) GetType() string {
+func (b *BenefitDownloadablesUpdate) GetType() string {
 	return "downloadables"
 }
 
-func (o *BenefitDownloadablesUpdate) GetProperties() *BenefitDownloadablesCreateProperties {
-	if o == nil {
+func (b *BenefitDownloadablesUpdate) GetProperties() *BenefitDownloadablesCreateProperties {
+	if b == nil {
 		return nil
 	}
-	return o.Properties
+	return b.Properties
 }

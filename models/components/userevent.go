@@ -148,62 +148,62 @@ func (u *UserEvent) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *UserEvent) GetMetadata() map[string]UserEventMetadata {
-	if o == nil {
+func (u *UserEvent) GetMetadata() map[string]UserEventMetadata {
+	if u == nil {
 		return map[string]UserEventMetadata{}
 	}
-	return o.Metadata
+	return u.Metadata
 }
 
-func (o *UserEvent) GetID() string {
-	if o == nil {
+func (u *UserEvent) GetID() string {
+	if u == nil {
 		return ""
 	}
-	return o.ID
+	return u.ID
 }
 
-func (o *UserEvent) GetTimestamp() time.Time {
-	if o == nil {
+func (u *UserEvent) GetTimestamp() time.Time {
+	if u == nil {
 		return time.Time{}
 	}
-	return o.Timestamp
+	return u.Timestamp
 }
 
-func (o *UserEvent) GetOrganizationID() string {
-	if o == nil {
+func (u *UserEvent) GetOrganizationID() string {
+	if u == nil {
 		return ""
 	}
-	return o.OrganizationID
+	return u.OrganizationID
 }
 
-func (o *UserEvent) GetCustomerID() *string {
-	if o == nil {
+func (u *UserEvent) GetCustomerID() *string {
+	if u == nil {
 		return nil
 	}
-	return o.CustomerID
+	return u.CustomerID
 }
 
-func (o *UserEvent) GetCustomer() *Customer {
-	if o == nil {
+func (u *UserEvent) GetCustomer() *Customer {
+	if u == nil {
 		return nil
 	}
-	return o.Customer
+	return u.Customer
 }
 
-func (o *UserEvent) GetExternalCustomerID() *string {
-	if o == nil {
+func (u *UserEvent) GetExternalCustomerID() *string {
+	if u == nil {
 		return nil
 	}
-	return o.ExternalCustomerID
+	return u.ExternalCustomerID
 }
 
-func (o *UserEvent) GetName() string {
-	if o == nil {
+func (u *UserEvent) GetName() string {
+	if u == nil {
 		return ""
 	}
-	return o.Name
+	return u.Name
 }
 
-func (o *UserEvent) GetSource() string {
+func (u *UserEvent) GetSource() string {
 	return "user"
 }

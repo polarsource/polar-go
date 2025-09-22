@@ -10,20 +10,20 @@ type FilesDeleteRequest struct {
 	ID string `pathParam:"style=simple,explode=false,name=id"`
 }
 
-func (o *FilesDeleteRequest) GetID() string {
-	if o == nil {
+func (f *FilesDeleteRequest) GetID() string {
+	if f == nil {
 		return ""
 	}
-	return o.ID
+	return f.ID
 }
 
 type FilesDeleteResponse struct {
 	HTTPMeta components.HTTPMetadata `json:"-"`
 }
 
-func (o *FilesDeleteResponse) GetHTTPMeta() components.HTTPMetadata {
-	if o == nil {
+func (f *FilesDeleteResponse) GetHTTPMeta() components.HTTPMetadata {
+	if f == nil {
 		return components.HTTPMetadata{}
 	}
-	return o.HTTPMeta
+	return f.HTTPMeta
 }

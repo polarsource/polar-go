@@ -27,20 +27,20 @@ func (w *WebhookOrderRefundedPayload) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *WebhookOrderRefundedPayload) GetType() string {
+func (w *WebhookOrderRefundedPayload) GetType() string {
 	return "order.refunded"
 }
 
-func (o *WebhookOrderRefundedPayload) GetTimestamp() time.Time {
-	if o == nil {
+func (w *WebhookOrderRefundedPayload) GetTimestamp() time.Time {
+	if w == nil {
 		return time.Time{}
 	}
-	return o.Timestamp
+	return w.Timestamp
 }
 
-func (o *WebhookOrderRefundedPayload) GetData() Order {
-	if o == nil {
+func (w *WebhookOrderRefundedPayload) GetData() Order {
+	if w == nil {
 		return Order{}
 	}
-	return o.Data
+	return w.Data
 }

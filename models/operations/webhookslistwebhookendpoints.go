@@ -93,25 +93,25 @@ func (w *WebhooksListWebhookEndpointsRequest) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *WebhooksListWebhookEndpointsRequest) GetOrganizationID() *QueryParamOrganizationID {
-	if o == nil {
+func (w *WebhooksListWebhookEndpointsRequest) GetOrganizationID() *QueryParamOrganizationID {
+	if w == nil {
 		return nil
 	}
-	return o.OrganizationID
+	return w.OrganizationID
 }
 
-func (o *WebhooksListWebhookEndpointsRequest) GetPage() *int64 {
-	if o == nil {
+func (w *WebhooksListWebhookEndpointsRequest) GetPage() *int64 {
+	if w == nil {
 		return nil
 	}
-	return o.Page
+	return w.Page
 }
 
-func (o *WebhooksListWebhookEndpointsRequest) GetLimit() *int64 {
-	if o == nil {
+func (w *WebhooksListWebhookEndpointsRequest) GetLimit() *int64 {
+	if w == nil {
 		return nil
 	}
-	return o.Limit
+	return w.Limit
 }
 
 type WebhooksListWebhookEndpointsResponse struct {
@@ -122,16 +122,16 @@ type WebhooksListWebhookEndpointsResponse struct {
 	Next func() (*WebhooksListWebhookEndpointsResponse, error)
 }
 
-func (o *WebhooksListWebhookEndpointsResponse) GetHTTPMeta() components.HTTPMetadata {
-	if o == nil {
+func (w *WebhooksListWebhookEndpointsResponse) GetHTTPMeta() components.HTTPMetadata {
+	if w == nil {
 		return components.HTTPMetadata{}
 	}
-	return o.HTTPMeta
+	return w.HTTPMeta
 }
 
-func (o *WebhooksListWebhookEndpointsResponse) GetListResourceWebhookEndpoint() *components.ListResourceWebhookEndpoint {
-	if o == nil {
+func (w *WebhooksListWebhookEndpointsResponse) GetListResourceWebhookEndpoint() *components.ListResourceWebhookEndpoint {
+	if w == nil {
 		return nil
 	}
-	return o.ListResourceWebhookEndpoint
+	return w.ListResourceWebhookEndpoint
 }

@@ -149,34 +149,34 @@ func (b *BenefitCustomCreate) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *BenefitCustomCreate) GetMetadata() map[string]BenefitCustomCreateMetadata {
-	if o == nil {
+func (b *BenefitCustomCreate) GetMetadata() map[string]BenefitCustomCreateMetadata {
+	if b == nil {
 		return nil
 	}
-	return o.Metadata
+	return b.Metadata
 }
 
-func (o *BenefitCustomCreate) GetType() string {
+func (b *BenefitCustomCreate) GetType() string {
 	return "custom"
 }
 
-func (o *BenefitCustomCreate) GetDescription() string {
-	if o == nil {
+func (b *BenefitCustomCreate) GetDescription() string {
+	if b == nil {
 		return ""
 	}
-	return o.Description
+	return b.Description
 }
 
-func (o *BenefitCustomCreate) GetOrganizationID() *string {
-	if o == nil {
+func (b *BenefitCustomCreate) GetOrganizationID() *string {
+	if b == nil {
 		return nil
 	}
-	return o.OrganizationID
+	return b.OrganizationID
 }
 
-func (o *BenefitCustomCreate) GetProperties() BenefitCustomCreateProperties {
-	if o == nil {
+func (b *BenefitCustomCreate) GetProperties() BenefitCustomCreateProperties {
+	if b == nil {
 		return BenefitCustomCreateProperties{}
 	}
-	return o.Properties
+	return b.Properties
 }

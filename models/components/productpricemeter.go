@@ -25,16 +25,16 @@ func (p *ProductPriceMeter) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *ProductPriceMeter) GetID() string {
-	if o == nil {
+func (p *ProductPriceMeter) GetID() string {
+	if p == nil {
 		return ""
 	}
-	return o.ID
+	return p.ID
 }
 
-func (o *ProductPriceMeter) GetName() string {
-	if o == nil {
+func (p *ProductPriceMeter) GetName() string {
+	if p == nil {
 		return ""
 	}
-	return o.Name
+	return p.Name
 }

@@ -31,48 +31,48 @@ func (p *PaymentMethodCard) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *PaymentMethodCard) GetID() string {
-	if o == nil {
+func (p *PaymentMethodCard) GetID() string {
+	if p == nil {
 		return ""
 	}
-	return o.ID
+	return p.ID
 }
 
-func (o *PaymentMethodCard) GetCreatedAt() time.Time {
-	if o == nil {
+func (p *PaymentMethodCard) GetCreatedAt() time.Time {
+	if p == nil {
 		return time.Time{}
 	}
-	return o.CreatedAt
+	return p.CreatedAt
 }
 
-func (o *PaymentMethodCard) GetModifiedAt() *time.Time {
-	if o == nil {
+func (p *PaymentMethodCard) GetModifiedAt() *time.Time {
+	if p == nil {
 		return nil
 	}
-	return o.ModifiedAt
+	return p.ModifiedAt
 }
 
-func (o *PaymentMethodCard) GetProcessor() PaymentProcessor {
-	if o == nil {
+func (p *PaymentMethodCard) GetProcessor() PaymentProcessor {
+	if p == nil {
 		return PaymentProcessor("")
 	}
-	return o.Processor
+	return p.Processor
 }
 
-func (o *PaymentMethodCard) GetCustomerID() string {
-	if o == nil {
+func (p *PaymentMethodCard) GetCustomerID() string {
+	if p == nil {
 		return ""
 	}
-	return o.CustomerID
+	return p.CustomerID
 }
 
-func (o *PaymentMethodCard) GetType() string {
+func (p *PaymentMethodCard) GetType() string {
 	return "card"
 }
 
-func (o *PaymentMethodCard) GetMethodMetadata() PaymentMethodCardMetadata {
-	if o == nil {
+func (p *PaymentMethodCard) GetMethodMetadata() PaymentMethodCardMetadata {
+	if p == nil {
 		return PaymentMethodCardMetadata{}
 	}
-	return o.MethodMetadata
+	return p.MethodMetadata
 }

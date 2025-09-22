@@ -11,11 +11,11 @@ type CheckoutsClientGetRequest struct {
 	ClientSecret string `pathParam:"style=simple,explode=false,name=client_secret"`
 }
 
-func (o *CheckoutsClientGetRequest) GetClientSecret() string {
-	if o == nil {
+func (c *CheckoutsClientGetRequest) GetClientSecret() string {
+	if c == nil {
 		return ""
 	}
-	return o.ClientSecret
+	return c.ClientSecret
 }
 
 type CheckoutsClientGetResponse struct {
@@ -24,16 +24,16 @@ type CheckoutsClientGetResponse struct {
 	CheckoutPublic *components.CheckoutPublic
 }
 
-func (o *CheckoutsClientGetResponse) GetHTTPMeta() components.HTTPMetadata {
-	if o == nil {
+func (c *CheckoutsClientGetResponse) GetHTTPMeta() components.HTTPMetadata {
+	if c == nil {
 		return components.HTTPMetadata{}
 	}
-	return o.HTTPMeta
+	return c.HTTPMeta
 }
 
-func (o *CheckoutsClientGetResponse) GetCheckoutPublic() *components.CheckoutPublic {
-	if o == nil {
+func (c *CheckoutsClientGetResponse) GetCheckoutPublic() *components.CheckoutPublic {
+	if c == nil {
 		return nil
 	}
-	return o.CheckoutPublic
+	return c.CheckoutPublic
 }

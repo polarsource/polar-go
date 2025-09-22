@@ -14,7 +14,7 @@ Developer-friendly & type-safe Go SDK specifically catered to leverage *github.c
 
 Polar API: Polar HTTP and Webhooks API
 
-Read the docs at https://docs.polar.sh/api-reference
+Read the docs at https://polar.sh/docs/api-reference
 <!-- End Summary [summary] -->
 
 <!-- Start Table of Contents [toc] -->
@@ -68,7 +68,7 @@ func main() {
 		polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
 	)
 
-	res, err := s.Organizations.List(ctx, nil, polargo.Int64(1), polargo.Int64(10), nil)
+	res, err := s.Organizations.List(ctx, nil, polargo.Pointer[int64](1), polargo.Pointer[int64](10), nil)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -121,7 +121,7 @@ func main() {
 		polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
 	)
 
-	res, err := s.Organizations.List(ctx, nil, polargo.Int64(1), polargo.Int64(10), nil)
+	res, err := s.Organizations.List(ctx, nil, polargo.Pointer[int64](1), polargo.Pointer[int64](10), nil)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -199,6 +199,10 @@ func main() {
 <details open>
 <summary>Available methods</summary>
 
+### [BenefitGrants](docs/sdks/benefitgrants/README.md)
+
+* [List](docs/sdks/benefitgrants/README.md#list) - List Benefit Grants
+
 ### [Benefits](docs/sdks/benefits/README.md)
 
 * [List](docs/sdks/benefits/README.md#list) - List Benefits
@@ -234,11 +238,11 @@ func main() {
 ### [CustomerPortal](docs/sdks/customerportal/README.md)
 
 
-#### [CustomerPortal.BenefitGrants](docs/sdks/benefitgrants/README.md)
+#### [CustomerPortal.BenefitGrants](docs/sdks/polarbenefitgrants/README.md)
 
-* [List](docs/sdks/benefitgrants/README.md#list) - List Benefit Grants
-* [Get](docs/sdks/benefitgrants/README.md#get) - Get Benefit Grant
-* [Update](docs/sdks/benefitgrants/README.md#update) - Update Benefit Grant
+* [List](docs/sdks/polarbenefitgrants/README.md#list) - List Benefit Grants
+* [Get](docs/sdks/polarbenefitgrants/README.md#get) - Get Benefit Grant
+* [Update](docs/sdks/polarbenefitgrants/README.md#update) - Update Benefit Grant
 
 #### [CustomerPortal.CustomerMeters](docs/sdks/polarcustomermeters/README.md)
 
@@ -290,6 +294,7 @@ func main() {
 
 * [List](docs/sdks/customers/README.md#list) - List Customers
 * [Create](docs/sdks/customers/README.md#create) - Create Customer
+* [Export](docs/sdks/customers/README.md#export) - Export Customers
 * [Get](docs/sdks/customers/README.md#get) - Get Customer
 * [Update](docs/sdks/customers/README.md#update) - Update Customer
 * [Delete](docs/sdks/customers/README.md#delete) - Delete Customer
@@ -446,7 +451,7 @@ func main() {
 		polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
 	)
 
-	res, err := s.Organizations.List(ctx, nil, polargo.Int64(1), polargo.Int64(10), nil)
+	res, err := s.Organizations.List(ctx, nil, polargo.Pointer[int64](1), polargo.Pointer[int64](10), nil)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -495,7 +500,7 @@ func main() {
 		polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
 	)
 
-	res, err := s.Organizations.List(ctx, nil, polargo.Int64(1), polargo.Int64(10), nil, operations.WithRetries(
+	res, err := s.Organizations.List(ctx, nil, polargo.Pointer[int64](1), polargo.Pointer[int64](10), nil, operations.WithRetries(
 		retry.Config{
 			Strategy: "backoff",
 			Backoff: &retry.BackoffStrategy{
@@ -558,7 +563,7 @@ func main() {
 		polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
 	)
 
-	res, err := s.Organizations.List(ctx, nil, polargo.Int64(1), polargo.Int64(10), nil)
+	res, err := s.Organizations.List(ctx, nil, polargo.Pointer[int64](1), polargo.Pointer[int64](10), nil)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -617,7 +622,7 @@ func main() {
 		polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
 	)
 
-	res, err := s.Organizations.List(ctx, nil, polargo.Int64(1), polargo.Int64(10), nil)
+	res, err := s.Organizations.List(ctx, nil, polargo.Pointer[int64](1), polargo.Pointer[int64](10), nil)
 	if err != nil {
 
 		var e *apierrors.HTTPValidationError
@@ -669,7 +674,7 @@ func main() {
 		polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
 	)
 
-	res, err := s.Organizations.List(ctx, nil, polargo.Int64(1), polargo.Int64(10), nil)
+	res, err := s.Organizations.List(ctx, nil, polargo.Pointer[int64](1), polargo.Pointer[int64](10), nil)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -713,7 +718,7 @@ func main() {
 		polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
 	)
 
-	res, err := s.Organizations.List(ctx, nil, polargo.Int64(1), polargo.Int64(10), nil)
+	res, err := s.Organizations.List(ctx, nil, polargo.Pointer[int64](1), polargo.Pointer[int64](10), nil)
 	if err != nil {
 		log.Fatal(err)
 	}

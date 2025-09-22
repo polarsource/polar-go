@@ -12,16 +12,16 @@ type WebhooksCreateWebhookEndpointResponse struct {
 	WebhookEndpoint *components.WebhookEndpoint
 }
 
-func (o *WebhooksCreateWebhookEndpointResponse) GetHTTPMeta() components.HTTPMetadata {
-	if o == nil {
+func (w *WebhooksCreateWebhookEndpointResponse) GetHTTPMeta() components.HTTPMetadata {
+	if w == nil {
 		return components.HTTPMetadata{}
 	}
-	return o.HTTPMeta
+	return w.HTTPMeta
 }
 
-func (o *WebhooksCreateWebhookEndpointResponse) GetWebhookEndpoint() *components.WebhookEndpoint {
-	if o == nil {
+func (w *WebhooksCreateWebhookEndpointResponse) GetWebhookEndpoint() *components.WebhookEndpoint {
+	if w == nil {
 		return nil
 	}
-	return o.WebhookEndpoint
+	return w.WebhookEndpoint
 }

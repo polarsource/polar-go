@@ -145,27 +145,27 @@ func (b *BenefitLicenseKeysUpdate) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *BenefitLicenseKeysUpdate) GetMetadata() map[string]BenefitLicenseKeysUpdateMetadata {
-	if o == nil {
+func (b *BenefitLicenseKeysUpdate) GetMetadata() map[string]BenefitLicenseKeysUpdateMetadata {
+	if b == nil {
 		return nil
 	}
-	return o.Metadata
+	return b.Metadata
 }
 
-func (o *BenefitLicenseKeysUpdate) GetDescription() *string {
-	if o == nil {
+func (b *BenefitLicenseKeysUpdate) GetDescription() *string {
+	if b == nil {
 		return nil
 	}
-	return o.Description
+	return b.Description
 }
 
-func (o *BenefitLicenseKeysUpdate) GetType() string {
+func (b *BenefitLicenseKeysUpdate) GetType() string {
 	return "license_keys"
 }
 
-func (o *BenefitLicenseKeysUpdate) GetProperties() *BenefitLicenseKeysCreateProperties {
-	if o == nil {
+func (b *BenefitLicenseKeysUpdate) GetProperties() *BenefitLicenseKeysCreateProperties {
+	if b == nil {
 		return nil
 	}
-	return o.Properties
+	return b.Properties
 }

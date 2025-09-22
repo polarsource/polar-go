@@ -271,125 +271,125 @@ func (c *CustomerStateSubscription) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *CustomerStateSubscription) GetID() string {
-	if o == nil {
+func (c *CustomerStateSubscription) GetID() string {
+	if c == nil {
 		return ""
 	}
-	return o.ID
+	return c.ID
 }
 
-func (o *CustomerStateSubscription) GetCreatedAt() time.Time {
-	if o == nil {
+func (c *CustomerStateSubscription) GetCreatedAt() time.Time {
+	if c == nil {
 		return time.Time{}
 	}
-	return o.CreatedAt
+	return c.CreatedAt
 }
 
-func (o *CustomerStateSubscription) GetModifiedAt() *time.Time {
-	if o == nil {
+func (c *CustomerStateSubscription) GetModifiedAt() *time.Time {
+	if c == nil {
 		return nil
 	}
-	return o.ModifiedAt
+	return c.ModifiedAt
 }
 
-func (o *CustomerStateSubscription) GetCustomFieldData() map[string]*CustomerStateSubscriptionCustomFieldData {
-	if o == nil {
+func (c *CustomerStateSubscription) GetCustomFieldData() map[string]*CustomerStateSubscriptionCustomFieldData {
+	if c == nil {
 		return nil
 	}
-	return o.CustomFieldData
+	return c.CustomFieldData
 }
 
-func (o *CustomerStateSubscription) GetMetadata() map[string]CustomerStateSubscriptionMetadata {
-	if o == nil {
+func (c *CustomerStateSubscription) GetMetadata() map[string]CustomerStateSubscriptionMetadata {
+	if c == nil {
 		return map[string]CustomerStateSubscriptionMetadata{}
 	}
-	return o.Metadata
+	return c.Metadata
 }
 
-func (o *CustomerStateSubscription) GetStatus() string {
+func (c *CustomerStateSubscription) GetStatus() string {
 	return "active"
 }
 
-func (o *CustomerStateSubscription) GetAmount() int64 {
-	if o == nil {
+func (c *CustomerStateSubscription) GetAmount() int64 {
+	if c == nil {
 		return 0
 	}
-	return o.Amount
+	return c.Amount
 }
 
-func (o *CustomerStateSubscription) GetCurrency() string {
-	if o == nil {
+func (c *CustomerStateSubscription) GetCurrency() string {
+	if c == nil {
 		return ""
 	}
-	return o.Currency
+	return c.Currency
 }
 
-func (o *CustomerStateSubscription) GetRecurringInterval() SubscriptionRecurringInterval {
-	if o == nil {
+func (c *CustomerStateSubscription) GetRecurringInterval() SubscriptionRecurringInterval {
+	if c == nil {
 		return SubscriptionRecurringInterval("")
 	}
-	return o.RecurringInterval
+	return c.RecurringInterval
 }
 
-func (o *CustomerStateSubscription) GetCurrentPeriodStart() time.Time {
-	if o == nil {
+func (c *CustomerStateSubscription) GetCurrentPeriodStart() time.Time {
+	if c == nil {
 		return time.Time{}
 	}
-	return o.CurrentPeriodStart
+	return c.CurrentPeriodStart
 }
 
-func (o *CustomerStateSubscription) GetCurrentPeriodEnd() *time.Time {
-	if o == nil {
+func (c *CustomerStateSubscription) GetCurrentPeriodEnd() *time.Time {
+	if c == nil {
 		return nil
 	}
-	return o.CurrentPeriodEnd
+	return c.CurrentPeriodEnd
 }
 
-func (o *CustomerStateSubscription) GetCancelAtPeriodEnd() bool {
-	if o == nil {
+func (c *CustomerStateSubscription) GetCancelAtPeriodEnd() bool {
+	if c == nil {
 		return false
 	}
-	return o.CancelAtPeriodEnd
+	return c.CancelAtPeriodEnd
 }
 
-func (o *CustomerStateSubscription) GetCanceledAt() *time.Time {
-	if o == nil {
+func (c *CustomerStateSubscription) GetCanceledAt() *time.Time {
+	if c == nil {
 		return nil
 	}
-	return o.CanceledAt
+	return c.CanceledAt
 }
 
-func (o *CustomerStateSubscription) GetStartedAt() *time.Time {
-	if o == nil {
+func (c *CustomerStateSubscription) GetStartedAt() *time.Time {
+	if c == nil {
 		return nil
 	}
-	return o.StartedAt
+	return c.StartedAt
 }
 
-func (o *CustomerStateSubscription) GetEndsAt() *time.Time {
-	if o == nil {
+func (c *CustomerStateSubscription) GetEndsAt() *time.Time {
+	if c == nil {
 		return nil
 	}
-	return o.EndsAt
+	return c.EndsAt
 }
 
-func (o *CustomerStateSubscription) GetProductID() string {
-	if o == nil {
+func (c *CustomerStateSubscription) GetProductID() string {
+	if c == nil {
 		return ""
 	}
-	return o.ProductID
+	return c.ProductID
 }
 
-func (o *CustomerStateSubscription) GetDiscountID() *string {
-	if o == nil {
+func (c *CustomerStateSubscription) GetDiscountID() *string {
+	if c == nil {
 		return nil
 	}
-	return o.DiscountID
+	return c.DiscountID
 }
 
-func (o *CustomerStateSubscription) GetMeters() []CustomerStateSubscriptionMeter {
-	if o == nil {
+func (c *CustomerStateSubscription) GetMeters() []CustomerStateSubscriptionMeter {
+	if c == nil {
 		return []CustomerStateSubscriptionMeter{}
 	}
-	return o.Meters
+	return c.Meters
 }

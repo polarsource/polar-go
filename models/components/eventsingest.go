@@ -76,9 +76,9 @@ type EventsIngest struct {
 	Events []Events `json:"events"`
 }
 
-func (o *EventsIngest) GetEvents() []Events {
-	if o == nil {
+func (e *EventsIngest) GetEvents() []Events {
+	if e == nil {
 		return []Events{}
 	}
-	return o.Events
+	return e.Events
 }

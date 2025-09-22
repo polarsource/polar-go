@@ -362,13 +362,13 @@ type CheckoutCreate struct {
 	// Whether the customer is a business or an individual. If `true`, the customer will be required to fill their full billing address and billing name.
 	IsBusinessCustomer *bool `default:"false" json:"is_business_customer"`
 	// ID of the customer in your system. If a matching customer exists on Polar, the resulting order will be linked to this customer. Otherwise, a new customer will be created with this external ID set.
-	ExternalCustomerID     *string  `json:"external_customer_id,omitempty"`
-	CustomerName           *string  `json:"customer_name,omitempty"`
-	CustomerEmail          *string  `json:"customer_email,omitempty"`
-	CustomerIPAddress      *string  `json:"customer_ip_address,omitempty"`
-	CustomerBillingName    *string  `json:"customer_billing_name,omitempty"`
-	CustomerBillingAddress *Address `json:"customer_billing_address,omitempty"`
-	CustomerTaxID          *string  `json:"customer_tax_id,omitempty"`
+	ExternalCustomerID     *string       `json:"external_customer_id,omitempty"`
+	CustomerName           *string       `json:"customer_name,omitempty"`
+	CustomerEmail          *string       `json:"customer_email,omitempty"`
+	CustomerIPAddress      *string       `json:"customer_ip_address,omitempty"`
+	CustomerBillingName    *string       `json:"customer_billing_name,omitempty"`
+	CustomerBillingAddress *AddressInput `json:"customer_billing_address,omitempty"`
+	CustomerTaxID          *string       `json:"customer_tax_id,omitempty"`
 	// Key-value object allowing you to store additional information that'll be copied to the created customer.
 	//
 	// The key must be a string with a maximum length of **40 characters**.
@@ -402,142 +402,142 @@ func (c *CheckoutCreate) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *CheckoutCreate) GetMetadata() map[string]CheckoutCreateMetadata {
-	if o == nil {
+func (c *CheckoutCreate) GetMetadata() map[string]CheckoutCreateMetadata {
+	if c == nil {
 		return nil
 	}
-	return o.Metadata
+	return c.Metadata
 }
 
-func (o *CheckoutCreate) GetCustomFieldData() map[string]*CheckoutCreateCustomFieldData {
-	if o == nil {
+func (c *CheckoutCreate) GetCustomFieldData() map[string]*CheckoutCreateCustomFieldData {
+	if c == nil {
 		return nil
 	}
-	return o.CustomFieldData
+	return c.CustomFieldData
 }
 
-func (o *CheckoutCreate) GetDiscountID() *string {
-	if o == nil {
+func (c *CheckoutCreate) GetDiscountID() *string {
+	if c == nil {
 		return nil
 	}
-	return o.DiscountID
+	return c.DiscountID
 }
 
-func (o *CheckoutCreate) GetAllowDiscountCodes() *bool {
-	if o == nil {
+func (c *CheckoutCreate) GetAllowDiscountCodes() *bool {
+	if c == nil {
 		return nil
 	}
-	return o.AllowDiscountCodes
+	return c.AllowDiscountCodes
 }
 
-func (o *CheckoutCreate) GetRequireBillingAddress() *bool {
-	if o == nil {
+func (c *CheckoutCreate) GetRequireBillingAddress() *bool {
+	if c == nil {
 		return nil
 	}
-	return o.RequireBillingAddress
+	return c.RequireBillingAddress
 }
 
-func (o *CheckoutCreate) GetAmount() *int64 {
-	if o == nil {
+func (c *CheckoutCreate) GetAmount() *int64 {
+	if c == nil {
 		return nil
 	}
-	return o.Amount
+	return c.Amount
 }
 
-func (o *CheckoutCreate) GetCustomerID() *string {
-	if o == nil {
+func (c *CheckoutCreate) GetCustomerID() *string {
+	if c == nil {
 		return nil
 	}
-	return o.CustomerID
+	return c.CustomerID
 }
 
-func (o *CheckoutCreate) GetIsBusinessCustomer() *bool {
-	if o == nil {
+func (c *CheckoutCreate) GetIsBusinessCustomer() *bool {
+	if c == nil {
 		return nil
 	}
-	return o.IsBusinessCustomer
+	return c.IsBusinessCustomer
 }
 
-func (o *CheckoutCreate) GetExternalCustomerID() *string {
-	if o == nil {
+func (c *CheckoutCreate) GetExternalCustomerID() *string {
+	if c == nil {
 		return nil
 	}
-	return o.ExternalCustomerID
+	return c.ExternalCustomerID
 }
 
-func (o *CheckoutCreate) GetCustomerName() *string {
-	if o == nil {
+func (c *CheckoutCreate) GetCustomerName() *string {
+	if c == nil {
 		return nil
 	}
-	return o.CustomerName
+	return c.CustomerName
 }
 
-func (o *CheckoutCreate) GetCustomerEmail() *string {
-	if o == nil {
+func (c *CheckoutCreate) GetCustomerEmail() *string {
+	if c == nil {
 		return nil
 	}
-	return o.CustomerEmail
+	return c.CustomerEmail
 }
 
-func (o *CheckoutCreate) GetCustomerIPAddress() *string {
-	if o == nil {
+func (c *CheckoutCreate) GetCustomerIPAddress() *string {
+	if c == nil {
 		return nil
 	}
-	return o.CustomerIPAddress
+	return c.CustomerIPAddress
 }
 
-func (o *CheckoutCreate) GetCustomerBillingName() *string {
-	if o == nil {
+func (c *CheckoutCreate) GetCustomerBillingName() *string {
+	if c == nil {
 		return nil
 	}
-	return o.CustomerBillingName
+	return c.CustomerBillingName
 }
 
-func (o *CheckoutCreate) GetCustomerBillingAddress() *Address {
-	if o == nil {
+func (c *CheckoutCreate) GetCustomerBillingAddress() *AddressInput {
+	if c == nil {
 		return nil
 	}
-	return o.CustomerBillingAddress
+	return c.CustomerBillingAddress
 }
 
-func (o *CheckoutCreate) GetCustomerTaxID() *string {
-	if o == nil {
+func (c *CheckoutCreate) GetCustomerTaxID() *string {
+	if c == nil {
 		return nil
 	}
-	return o.CustomerTaxID
+	return c.CustomerTaxID
 }
 
-func (o *CheckoutCreate) GetCustomerMetadata() map[string]CheckoutCreateCustomerMetadata {
-	if o == nil {
+func (c *CheckoutCreate) GetCustomerMetadata() map[string]CheckoutCreateCustomerMetadata {
+	if c == nil {
 		return nil
 	}
-	return o.CustomerMetadata
+	return c.CustomerMetadata
 }
 
-func (o *CheckoutCreate) GetSubscriptionID() *string {
-	if o == nil {
+func (c *CheckoutCreate) GetSubscriptionID() *string {
+	if c == nil {
 		return nil
 	}
-	return o.SubscriptionID
+	return c.SubscriptionID
 }
 
-func (o *CheckoutCreate) GetSuccessURL() *string {
-	if o == nil {
+func (c *CheckoutCreate) GetSuccessURL() *string {
+	if c == nil {
 		return nil
 	}
-	return o.SuccessURL
+	return c.SuccessURL
 }
 
-func (o *CheckoutCreate) GetEmbedOrigin() *string {
-	if o == nil {
+func (c *CheckoutCreate) GetEmbedOrigin() *string {
+	if c == nil {
 		return nil
 	}
-	return o.EmbedOrigin
+	return c.EmbedOrigin
 }
 
-func (o *CheckoutCreate) GetProducts() []string {
-	if o == nil {
+func (c *CheckoutCreate) GetProducts() []string {
+	if c == nil {
 		return []string{}
 	}
-	return o.Products
+	return c.Products
 }

@@ -8,9 +8,9 @@ type CustomerOrderInvoice struct {
 	URL string `json:"url"`
 }
 
-func (o *CustomerOrderInvoice) GetURL() string {
-	if o == nil {
+func (c *CustomerOrderInvoice) GetURL() string {
+	if c == nil {
 		return ""
 	}
-	return o.URL
+	return c.URL
 }

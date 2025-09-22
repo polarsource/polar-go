@@ -8,23 +8,23 @@ type FileUploadCompleted struct {
 	Parts []S3FileUploadCompletedPart `json:"parts"`
 }
 
-func (o *FileUploadCompleted) GetID() string {
-	if o == nil {
+func (f *FileUploadCompleted) GetID() string {
+	if f == nil {
 		return ""
 	}
-	return o.ID
+	return f.ID
 }
 
-func (o *FileUploadCompleted) GetPath() string {
-	if o == nil {
+func (f *FileUploadCompleted) GetPath() string {
+	if f == nil {
 		return ""
 	}
-	return o.Path
+	return f.Path
 }
 
-func (o *FileUploadCompleted) GetParts() []S3FileUploadCompletedPart {
-	if o == nil {
+func (f *FileUploadCompleted) GetParts() []S3FileUploadCompletedPart {
+	if f == nil {
 		return []S3FileUploadCompletedPart{}
 	}
-	return o.Parts
+	return f.Parts
 }

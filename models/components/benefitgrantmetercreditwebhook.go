@@ -53,114 +53,114 @@ func (b *BenefitGrantMeterCreditWebhook) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *BenefitGrantMeterCreditWebhook) GetCreatedAt() time.Time {
-	if o == nil {
+func (b *BenefitGrantMeterCreditWebhook) GetCreatedAt() time.Time {
+	if b == nil {
 		return time.Time{}
 	}
-	return o.CreatedAt
+	return b.CreatedAt
 }
 
-func (o *BenefitGrantMeterCreditWebhook) GetModifiedAt() *time.Time {
-	if o == nil {
+func (b *BenefitGrantMeterCreditWebhook) GetModifiedAt() *time.Time {
+	if b == nil {
 		return nil
 	}
-	return o.ModifiedAt
+	return b.ModifiedAt
 }
 
-func (o *BenefitGrantMeterCreditWebhook) GetID() string {
-	if o == nil {
+func (b *BenefitGrantMeterCreditWebhook) GetID() string {
+	if b == nil {
 		return ""
 	}
-	return o.ID
+	return b.ID
 }
 
-func (o *BenefitGrantMeterCreditWebhook) GetGrantedAt() *time.Time {
-	if o == nil {
+func (b *BenefitGrantMeterCreditWebhook) GetGrantedAt() *time.Time {
+	if b == nil {
 		return nil
 	}
-	return o.GrantedAt
+	return b.GrantedAt
 }
 
-func (o *BenefitGrantMeterCreditWebhook) GetIsGranted() bool {
-	if o == nil {
+func (b *BenefitGrantMeterCreditWebhook) GetIsGranted() bool {
+	if b == nil {
 		return false
 	}
-	return o.IsGranted
+	return b.IsGranted
 }
 
-func (o *BenefitGrantMeterCreditWebhook) GetRevokedAt() *time.Time {
-	if o == nil {
+func (b *BenefitGrantMeterCreditWebhook) GetRevokedAt() *time.Time {
+	if b == nil {
 		return nil
 	}
-	return o.RevokedAt
+	return b.RevokedAt
 }
 
-func (o *BenefitGrantMeterCreditWebhook) GetIsRevoked() bool {
-	if o == nil {
+func (b *BenefitGrantMeterCreditWebhook) GetIsRevoked() bool {
+	if b == nil {
 		return false
 	}
-	return o.IsRevoked
+	return b.IsRevoked
 }
 
-func (o *BenefitGrantMeterCreditWebhook) GetSubscriptionID() *string {
-	if o == nil {
+func (b *BenefitGrantMeterCreditWebhook) GetSubscriptionID() *string {
+	if b == nil {
 		return nil
 	}
-	return o.SubscriptionID
+	return b.SubscriptionID
 }
 
-func (o *BenefitGrantMeterCreditWebhook) GetOrderID() *string {
-	if o == nil {
+func (b *BenefitGrantMeterCreditWebhook) GetOrderID() *string {
+	if b == nil {
 		return nil
 	}
-	return o.OrderID
+	return b.OrderID
 }
 
-func (o *BenefitGrantMeterCreditWebhook) GetCustomerID() string {
-	if o == nil {
+func (b *BenefitGrantMeterCreditWebhook) GetCustomerID() string {
+	if b == nil {
 		return ""
 	}
-	return o.CustomerID
+	return b.CustomerID
 }
 
-func (o *BenefitGrantMeterCreditWebhook) GetBenefitID() string {
-	if o == nil {
+func (b *BenefitGrantMeterCreditWebhook) GetBenefitID() string {
+	if b == nil {
 		return ""
 	}
-	return o.BenefitID
+	return b.BenefitID
 }
 
-func (o *BenefitGrantMeterCreditWebhook) GetError() *BenefitGrantError {
-	if o == nil {
+func (b *BenefitGrantMeterCreditWebhook) GetError() *BenefitGrantError {
+	if b == nil {
 		return nil
 	}
-	return o.Error
+	return b.Error
 }
 
-func (o *BenefitGrantMeterCreditWebhook) GetCustomer() Customer {
-	if o == nil {
+func (b *BenefitGrantMeterCreditWebhook) GetCustomer() Customer {
+	if b == nil {
 		return Customer{}
 	}
-	return o.Customer
+	return b.Customer
 }
 
-func (o *BenefitGrantMeterCreditWebhook) GetBenefit() BenefitMeterCredit {
-	if o == nil {
+func (b *BenefitGrantMeterCreditWebhook) GetBenefit() BenefitMeterCredit {
+	if b == nil {
 		return BenefitMeterCredit{}
 	}
-	return o.Benefit
+	return b.Benefit
 }
 
-func (o *BenefitGrantMeterCreditWebhook) GetProperties() BenefitGrantMeterCreditProperties {
-	if o == nil {
+func (b *BenefitGrantMeterCreditWebhook) GetProperties() BenefitGrantMeterCreditProperties {
+	if b == nil {
 		return BenefitGrantMeterCreditProperties{}
 	}
-	return o.Properties
+	return b.Properties
 }
 
-func (o *BenefitGrantMeterCreditWebhook) GetPreviousProperties() *BenefitGrantMeterCreditProperties {
-	if o == nil {
+func (b *BenefitGrantMeterCreditWebhook) GetPreviousProperties() *BenefitGrantMeterCreditProperties {
+	if b == nil {
 		return nil
 	}
-	return o.PreviousProperties
+	return b.PreviousProperties
 }

@@ -38,114 +38,114 @@ func (f *FileDownload) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *FileDownload) GetID() string {
-	if o == nil {
+func (f *FileDownload) GetID() string {
+	if f == nil {
 		return ""
 	}
-	return o.ID
+	return f.ID
 }
 
-func (o *FileDownload) GetOrganizationID() string {
-	if o == nil {
+func (f *FileDownload) GetOrganizationID() string {
+	if f == nil {
 		return ""
 	}
-	return o.OrganizationID
+	return f.OrganizationID
 }
 
-func (o *FileDownload) GetName() string {
-	if o == nil {
+func (f *FileDownload) GetName() string {
+	if f == nil {
 		return ""
 	}
-	return o.Name
+	return f.Name
 }
 
-func (o *FileDownload) GetPath() string {
-	if o == nil {
+func (f *FileDownload) GetPath() string {
+	if f == nil {
 		return ""
 	}
-	return o.Path
+	return f.Path
 }
 
-func (o *FileDownload) GetMimeType() string {
-	if o == nil {
+func (f *FileDownload) GetMimeType() string {
+	if f == nil {
 		return ""
 	}
-	return o.MimeType
+	return f.MimeType
 }
 
-func (o *FileDownload) GetSize() int64 {
-	if o == nil {
+func (f *FileDownload) GetSize() int64 {
+	if f == nil {
 		return 0
 	}
-	return o.Size
+	return f.Size
 }
 
-func (o *FileDownload) GetStorageVersion() *string {
-	if o == nil {
+func (f *FileDownload) GetStorageVersion() *string {
+	if f == nil {
 		return nil
 	}
-	return o.StorageVersion
+	return f.StorageVersion
 }
 
-func (o *FileDownload) GetChecksumEtag() *string {
-	if o == nil {
+func (f *FileDownload) GetChecksumEtag() *string {
+	if f == nil {
 		return nil
 	}
-	return o.ChecksumEtag
+	return f.ChecksumEtag
 }
 
-func (o *FileDownload) GetChecksumSha256Base64() *string {
-	if o == nil {
+func (f *FileDownload) GetChecksumSha256Base64() *string {
+	if f == nil {
 		return nil
 	}
-	return o.ChecksumSha256Base64
+	return f.ChecksumSha256Base64
 }
 
-func (o *FileDownload) GetChecksumSha256Hex() *string {
-	if o == nil {
+func (f *FileDownload) GetChecksumSha256Hex() *string {
+	if f == nil {
 		return nil
 	}
-	return o.ChecksumSha256Hex
+	return f.ChecksumSha256Hex
 }
 
-func (o *FileDownload) GetLastModifiedAt() *time.Time {
-	if o == nil {
+func (f *FileDownload) GetLastModifiedAt() *time.Time {
+	if f == nil {
 		return nil
 	}
-	return o.LastModifiedAt
+	return f.LastModifiedAt
 }
 
-func (o *FileDownload) GetDownload() S3DownloadURL {
-	if o == nil {
+func (f *FileDownload) GetDownload() S3DownloadURL {
+	if f == nil {
 		return S3DownloadURL{}
 	}
-	return o.Download
+	return f.Download
 }
 
-func (o *FileDownload) GetVersion() *string {
-	if o == nil {
+func (f *FileDownload) GetVersion() *string {
+	if f == nil {
 		return nil
 	}
-	return o.Version
+	return f.Version
 }
 
-func (o *FileDownload) GetIsUploaded() bool {
-	if o == nil {
+func (f *FileDownload) GetIsUploaded() bool {
+	if f == nil {
 		return false
 	}
-	return o.IsUploaded
+	return f.IsUploaded
 }
 
-func (o *FileDownload) GetService() FileServiceTypes {
-	if o == nil {
+func (f *FileDownload) GetService() FileServiceTypes {
+	if f == nil {
 		return FileServiceTypes("")
 	}
-	return o.Service
+	return f.Service
 }
 
-func (o *FileDownload) GetSizeReadable() string {
-	if o == nil {
+func (f *FileDownload) GetSizeReadable() string {
+	if f == nil {
 		return ""
 	}
-	return o.SizeReadable
+	return f.SizeReadable
 }

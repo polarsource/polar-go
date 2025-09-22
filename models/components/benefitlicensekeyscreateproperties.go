@@ -24,30 +24,30 @@ func (b *BenefitLicenseKeysCreateProperties) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *BenefitLicenseKeysCreateProperties) GetPrefix() *string {
-	if o == nil {
+func (b *BenefitLicenseKeysCreateProperties) GetPrefix() *string {
+	if b == nil {
 		return nil
 	}
-	return o.Prefix
+	return b.Prefix
 }
 
-func (o *BenefitLicenseKeysCreateProperties) GetExpires() *BenefitLicenseKeyExpirationProperties {
-	if o == nil {
+func (b *BenefitLicenseKeysCreateProperties) GetExpires() *BenefitLicenseKeyExpirationProperties {
+	if b == nil {
 		return nil
 	}
-	return o.Expires
+	return b.Expires
 }
 
-func (o *BenefitLicenseKeysCreateProperties) GetActivations() *BenefitLicenseKeyActivationCreateProperties {
-	if o == nil {
+func (b *BenefitLicenseKeysCreateProperties) GetActivations() *BenefitLicenseKeyActivationCreateProperties {
+	if b == nil {
 		return nil
 	}
-	return o.Activations
+	return b.Activations
 }
 
-func (o *BenefitLicenseKeysCreateProperties) GetLimitUsage() *int64 {
-	if o == nil {
+func (b *BenefitLicenseKeysCreateProperties) GetLimitUsage() *int64 {
+	if b == nil {
 		return nil
 	}
-	return o.LimitUsage
+	return b.LimitUsage
 }

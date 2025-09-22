@@ -39,111 +39,111 @@ func (d *DownloadableFileRead) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *DownloadableFileRead) GetID() string {
-	if o == nil {
+func (d *DownloadableFileRead) GetID() string {
+	if d == nil {
 		return ""
 	}
-	return o.ID
+	return d.ID
 }
 
-func (o *DownloadableFileRead) GetOrganizationID() string {
-	if o == nil {
+func (d *DownloadableFileRead) GetOrganizationID() string {
+	if d == nil {
 		return ""
 	}
-	return o.OrganizationID
+	return d.OrganizationID
 }
 
-func (o *DownloadableFileRead) GetName() string {
-	if o == nil {
+func (d *DownloadableFileRead) GetName() string {
+	if d == nil {
 		return ""
 	}
-	return o.Name
+	return d.Name
 }
 
-func (o *DownloadableFileRead) GetPath() string {
-	if o == nil {
+func (d *DownloadableFileRead) GetPath() string {
+	if d == nil {
 		return ""
 	}
-	return o.Path
+	return d.Path
 }
 
-func (o *DownloadableFileRead) GetMimeType() string {
-	if o == nil {
+func (d *DownloadableFileRead) GetMimeType() string {
+	if d == nil {
 		return ""
 	}
-	return o.MimeType
+	return d.MimeType
 }
 
-func (o *DownloadableFileRead) GetSize() int64 {
-	if o == nil {
+func (d *DownloadableFileRead) GetSize() int64 {
+	if d == nil {
 		return 0
 	}
-	return o.Size
+	return d.Size
 }
 
-func (o *DownloadableFileRead) GetStorageVersion() *string {
-	if o == nil {
+func (d *DownloadableFileRead) GetStorageVersion() *string {
+	if d == nil {
 		return nil
 	}
-	return o.StorageVersion
+	return d.StorageVersion
 }
 
-func (o *DownloadableFileRead) GetChecksumEtag() *string {
-	if o == nil {
+func (d *DownloadableFileRead) GetChecksumEtag() *string {
+	if d == nil {
 		return nil
 	}
-	return o.ChecksumEtag
+	return d.ChecksumEtag
 }
 
-func (o *DownloadableFileRead) GetChecksumSha256Base64() *string {
-	if o == nil {
+func (d *DownloadableFileRead) GetChecksumSha256Base64() *string {
+	if d == nil {
 		return nil
 	}
-	return o.ChecksumSha256Base64
+	return d.ChecksumSha256Base64
 }
 
-func (o *DownloadableFileRead) GetChecksumSha256Hex() *string {
-	if o == nil {
+func (d *DownloadableFileRead) GetChecksumSha256Hex() *string {
+	if d == nil {
 		return nil
 	}
-	return o.ChecksumSha256Hex
+	return d.ChecksumSha256Hex
 }
 
-func (o *DownloadableFileRead) GetLastModifiedAt() *time.Time {
-	if o == nil {
+func (d *DownloadableFileRead) GetLastModifiedAt() *time.Time {
+	if d == nil {
 		return nil
 	}
-	return o.LastModifiedAt
+	return d.LastModifiedAt
 }
 
-func (o *DownloadableFileRead) GetVersion() *string {
-	if o == nil {
+func (d *DownloadableFileRead) GetVersion() *string {
+	if d == nil {
 		return nil
 	}
-	return o.Version
+	return d.Version
 }
 
-func (o *DownloadableFileRead) GetService() string {
+func (d *DownloadableFileRead) GetService() string {
 	return "downloadable"
 }
 
-func (o *DownloadableFileRead) GetIsUploaded() bool {
-	if o == nil {
+func (d *DownloadableFileRead) GetIsUploaded() bool {
+	if d == nil {
 		return false
 	}
-	return o.IsUploaded
+	return d.IsUploaded
 }
 
-func (o *DownloadableFileRead) GetCreatedAt() time.Time {
-	if o == nil {
+func (d *DownloadableFileRead) GetCreatedAt() time.Time {
+	if d == nil {
 		return time.Time{}
 	}
-	return o.CreatedAt
+	return d.CreatedAt
 }
 
-func (o *DownloadableFileRead) GetSizeReadable() string {
-	if o == nil {
+func (d *DownloadableFileRead) GetSizeReadable() string {
+	if d == nil {
 		return ""
 	}
-	return o.SizeReadable
+	return d.SizeReadable
 }

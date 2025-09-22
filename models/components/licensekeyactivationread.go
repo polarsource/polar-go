@@ -137,51 +137,51 @@ func (l *LicenseKeyActivationRead) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *LicenseKeyActivationRead) GetID() string {
-	if o == nil {
+func (l *LicenseKeyActivationRead) GetID() string {
+	if l == nil {
 		return ""
 	}
-	return o.ID
+	return l.ID
 }
 
-func (o *LicenseKeyActivationRead) GetLicenseKeyID() string {
-	if o == nil {
+func (l *LicenseKeyActivationRead) GetLicenseKeyID() string {
+	if l == nil {
 		return ""
 	}
-	return o.LicenseKeyID
+	return l.LicenseKeyID
 }
 
-func (o *LicenseKeyActivationRead) GetLabel() string {
-	if o == nil {
+func (l *LicenseKeyActivationRead) GetLabel() string {
+	if l == nil {
 		return ""
 	}
-	return o.Label
+	return l.Label
 }
 
-func (o *LicenseKeyActivationRead) GetMeta() map[string]LicenseKeyActivationReadMeta {
-	if o == nil {
+func (l *LicenseKeyActivationRead) GetMeta() map[string]LicenseKeyActivationReadMeta {
+	if l == nil {
 		return map[string]LicenseKeyActivationReadMeta{}
 	}
-	return o.Meta
+	return l.Meta
 }
 
-func (o *LicenseKeyActivationRead) GetCreatedAt() time.Time {
-	if o == nil {
+func (l *LicenseKeyActivationRead) GetCreatedAt() time.Time {
+	if l == nil {
 		return time.Time{}
 	}
-	return o.CreatedAt
+	return l.CreatedAt
 }
 
-func (o *LicenseKeyActivationRead) GetModifiedAt() *time.Time {
-	if o == nil {
+func (l *LicenseKeyActivationRead) GetModifiedAt() *time.Time {
+	if l == nil {
 		return nil
 	}
-	return o.ModifiedAt
+	return l.ModifiedAt
 }
 
-func (o *LicenseKeyActivationRead) GetLicenseKey() LicenseKeyRead {
-	if o == nil {
+func (l *LicenseKeyActivationRead) GetLicenseKey() LicenseKeyRead {
+	if l == nil {
 		return LicenseKeyRead{}
 	}
-	return o.LicenseKey
+	return l.LicenseKey
 }

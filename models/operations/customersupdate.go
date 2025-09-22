@@ -12,18 +12,18 @@ type CustomersUpdateRequest struct {
 	CustomerUpdate components.CustomerUpdate `request:"mediaType=application/json"`
 }
 
-func (o *CustomersUpdateRequest) GetID() string {
-	if o == nil {
+func (c *CustomersUpdateRequest) GetID() string {
+	if c == nil {
 		return ""
 	}
-	return o.ID
+	return c.ID
 }
 
-func (o *CustomersUpdateRequest) GetCustomerUpdate() components.CustomerUpdate {
-	if o == nil {
+func (c *CustomersUpdateRequest) GetCustomerUpdate() components.CustomerUpdate {
+	if c == nil {
 		return components.CustomerUpdate{}
 	}
-	return o.CustomerUpdate
+	return c.CustomerUpdate
 }
 
 type CustomersUpdateResponse struct {
@@ -32,16 +32,16 @@ type CustomersUpdateResponse struct {
 	Customer *components.Customer
 }
 
-func (o *CustomersUpdateResponse) GetHTTPMeta() components.HTTPMetadata {
-	if o == nil {
+func (c *CustomersUpdateResponse) GetHTTPMeta() components.HTTPMetadata {
+	if c == nil {
 		return components.HTTPMetadata{}
 	}
-	return o.HTTPMeta
+	return c.HTTPMeta
 }
 
-func (o *CustomersUpdateResponse) GetCustomer() *components.Customer {
-	if o == nil {
+func (c *CustomersUpdateResponse) GetCustomer() *components.Customer {
+	if c == nil {
 		return nil
 	}
-	return o.Customer
+	return c.Customer
 }

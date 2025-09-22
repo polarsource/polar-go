@@ -157,114 +157,114 @@ func (d *DiscountFixedOnceForeverDuration) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *DiscountFixedOnceForeverDuration) GetDuration() DiscountDuration {
-	if o == nil {
+func (d *DiscountFixedOnceForeverDuration) GetDuration() DiscountDuration {
+	if d == nil {
 		return DiscountDuration("")
 	}
-	return o.Duration
+	return d.Duration
 }
 
-func (o *DiscountFixedOnceForeverDuration) GetType() DiscountType {
-	if o == nil {
+func (d *DiscountFixedOnceForeverDuration) GetType() DiscountType {
+	if d == nil {
 		return DiscountType("")
 	}
-	return o.Type
+	return d.Type
 }
 
-func (o *DiscountFixedOnceForeverDuration) GetAmount() int64 {
-	if o == nil {
+func (d *DiscountFixedOnceForeverDuration) GetAmount() int64 {
+	if d == nil {
 		return 0
 	}
-	return o.Amount
+	return d.Amount
 }
 
-func (o *DiscountFixedOnceForeverDuration) GetCurrency() string {
-	if o == nil {
+func (d *DiscountFixedOnceForeverDuration) GetCurrency() string {
+	if d == nil {
 		return ""
 	}
-	return o.Currency
+	return d.Currency
 }
 
-func (o *DiscountFixedOnceForeverDuration) GetCreatedAt() time.Time {
-	if o == nil {
+func (d *DiscountFixedOnceForeverDuration) GetCreatedAt() time.Time {
+	if d == nil {
 		return time.Time{}
 	}
-	return o.CreatedAt
+	return d.CreatedAt
 }
 
-func (o *DiscountFixedOnceForeverDuration) GetModifiedAt() *time.Time {
-	if o == nil {
+func (d *DiscountFixedOnceForeverDuration) GetModifiedAt() *time.Time {
+	if d == nil {
 		return nil
 	}
-	return o.ModifiedAt
+	return d.ModifiedAt
 }
 
-func (o *DiscountFixedOnceForeverDuration) GetID() string {
-	if o == nil {
+func (d *DiscountFixedOnceForeverDuration) GetID() string {
+	if d == nil {
 		return ""
 	}
-	return o.ID
+	return d.ID
 }
 
-func (o *DiscountFixedOnceForeverDuration) GetMetadata() map[string]DiscountFixedOnceForeverDurationMetadata {
-	if o == nil {
+func (d *DiscountFixedOnceForeverDuration) GetMetadata() map[string]DiscountFixedOnceForeverDurationMetadata {
+	if d == nil {
 		return map[string]DiscountFixedOnceForeverDurationMetadata{}
 	}
-	return o.Metadata
+	return d.Metadata
 }
 
-func (o *DiscountFixedOnceForeverDuration) GetName() string {
-	if o == nil {
+func (d *DiscountFixedOnceForeverDuration) GetName() string {
+	if d == nil {
 		return ""
 	}
-	return o.Name
+	return d.Name
 }
 
-func (o *DiscountFixedOnceForeverDuration) GetCode() *string {
-	if o == nil {
+func (d *DiscountFixedOnceForeverDuration) GetCode() *string {
+	if d == nil {
 		return nil
 	}
-	return o.Code
+	return d.Code
 }
 
-func (o *DiscountFixedOnceForeverDuration) GetStartsAt() *time.Time {
-	if o == nil {
+func (d *DiscountFixedOnceForeverDuration) GetStartsAt() *time.Time {
+	if d == nil {
 		return nil
 	}
-	return o.StartsAt
+	return d.StartsAt
 }
 
-func (o *DiscountFixedOnceForeverDuration) GetEndsAt() *time.Time {
-	if o == nil {
+func (d *DiscountFixedOnceForeverDuration) GetEndsAt() *time.Time {
+	if d == nil {
 		return nil
 	}
-	return o.EndsAt
+	return d.EndsAt
 }
 
-func (o *DiscountFixedOnceForeverDuration) GetMaxRedemptions() *int64 {
-	if o == nil {
+func (d *DiscountFixedOnceForeverDuration) GetMaxRedemptions() *int64 {
+	if d == nil {
 		return nil
 	}
-	return o.MaxRedemptions
+	return d.MaxRedemptions
 }
 
-func (o *DiscountFixedOnceForeverDuration) GetRedemptionsCount() int64 {
-	if o == nil {
+func (d *DiscountFixedOnceForeverDuration) GetRedemptionsCount() int64 {
+	if d == nil {
 		return 0
 	}
-	return o.RedemptionsCount
+	return d.RedemptionsCount
 }
 
-func (o *DiscountFixedOnceForeverDuration) GetOrganizationID() string {
-	if o == nil {
+func (d *DiscountFixedOnceForeverDuration) GetOrganizationID() string {
+	if d == nil {
 		return ""
 	}
-	return o.OrganizationID
+	return d.OrganizationID
 }
 
-func (o *DiscountFixedOnceForeverDuration) GetProducts() []DiscountProduct {
-	if o == nil {
+func (d *DiscountFixedOnceForeverDuration) GetProducts() []DiscountProduct {
+	if d == nil {
 		return []DiscountProduct{}
 	}
-	return o.Products
+	return d.Products
 }

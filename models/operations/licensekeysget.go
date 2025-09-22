@@ -10,11 +10,11 @@ type LicenseKeysGetRequest struct {
 	ID string `pathParam:"style=simple,explode=false,name=id"`
 }
 
-func (o *LicenseKeysGetRequest) GetID() string {
-	if o == nil {
+func (l *LicenseKeysGetRequest) GetID() string {
+	if l == nil {
 		return ""
 	}
-	return o.ID
+	return l.ID
 }
 
 type LicenseKeysGetResponse struct {
@@ -23,16 +23,16 @@ type LicenseKeysGetResponse struct {
 	LicenseKeyWithActivations *components.LicenseKeyWithActivations
 }
 
-func (o *LicenseKeysGetResponse) GetHTTPMeta() components.HTTPMetadata {
-	if o == nil {
+func (l *LicenseKeysGetResponse) GetHTTPMeta() components.HTTPMetadata {
+	if l == nil {
 		return components.HTTPMetadata{}
 	}
-	return o.HTTPMeta
+	return l.HTTPMeta
 }
 
-func (o *LicenseKeysGetResponse) GetLicenseKeyWithActivations() *components.LicenseKeyWithActivations {
-	if o == nil {
+func (l *LicenseKeysGetResponse) GetLicenseKeyWithActivations() *components.LicenseKeyWithActivations {
+	if l == nil {
 		return nil
 	}
-	return o.LicenseKeyWithActivations
+	return l.LicenseKeyWithActivations
 }

@@ -1395,31 +1395,607 @@ func (u CheckoutsConversion) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type CheckoutsConversion: all fields are null")
 }
 
+type CanceledSubscriptionsType string
+
+const (
+	CanceledSubscriptionsTypeInteger CanceledSubscriptionsType = "integer"
+	CanceledSubscriptionsTypeNumber  CanceledSubscriptionsType = "number"
+)
+
+type CanceledSubscriptions struct {
+	Integer *int64   `queryParam:"inline" name:"Canceled_Subscriptions"`
+	Number  *float64 `queryParam:"inline" name:"Canceled_Subscriptions"`
+
+	Type CanceledSubscriptionsType
+}
+
+func CreateCanceledSubscriptionsInteger(integer int64) CanceledSubscriptions {
+	typ := CanceledSubscriptionsTypeInteger
+
+	return CanceledSubscriptions{
+		Integer: &integer,
+		Type:    typ,
+	}
+}
+
+func CreateCanceledSubscriptionsNumber(number float64) CanceledSubscriptions {
+	typ := CanceledSubscriptionsTypeNumber
+
+	return CanceledSubscriptions{
+		Number: &number,
+		Type:   typ,
+	}
+}
+
+func (u *CanceledSubscriptions) UnmarshalJSON(data []byte) error {
+
+	var integer int64 = int64(0)
+	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
+		u.Integer = &integer
+		u.Type = CanceledSubscriptionsTypeInteger
+		return nil
+	}
+
+	var number float64 = float64(0)
+	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
+		u.Number = &number
+		u.Type = CanceledSubscriptionsTypeNumber
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for CanceledSubscriptions", string(data))
+}
+
+func (u CanceledSubscriptions) MarshalJSON() ([]byte, error) {
+	if u.Integer != nil {
+		return utils.MarshalJSON(u.Integer, "", true)
+	}
+
+	if u.Number != nil {
+		return utils.MarshalJSON(u.Number, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type CanceledSubscriptions: all fields are null")
+}
+
+type CanceledSubscriptionsCustomerServiceType string
+
+const (
+	CanceledSubscriptionsCustomerServiceTypeInteger CanceledSubscriptionsCustomerServiceType = "integer"
+	CanceledSubscriptionsCustomerServiceTypeNumber  CanceledSubscriptionsCustomerServiceType = "number"
+)
+
+type CanceledSubscriptionsCustomerService struct {
+	Integer *int64   `queryParam:"inline" name:"Canceled_Subscriptions_Customer_Service"`
+	Number  *float64 `queryParam:"inline" name:"Canceled_Subscriptions_Customer_Service"`
+
+	Type CanceledSubscriptionsCustomerServiceType
+}
+
+func CreateCanceledSubscriptionsCustomerServiceInteger(integer int64) CanceledSubscriptionsCustomerService {
+	typ := CanceledSubscriptionsCustomerServiceTypeInteger
+
+	return CanceledSubscriptionsCustomerService{
+		Integer: &integer,
+		Type:    typ,
+	}
+}
+
+func CreateCanceledSubscriptionsCustomerServiceNumber(number float64) CanceledSubscriptionsCustomerService {
+	typ := CanceledSubscriptionsCustomerServiceTypeNumber
+
+	return CanceledSubscriptionsCustomerService{
+		Number: &number,
+		Type:   typ,
+	}
+}
+
+func (u *CanceledSubscriptionsCustomerService) UnmarshalJSON(data []byte) error {
+
+	var integer int64 = int64(0)
+	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
+		u.Integer = &integer
+		u.Type = CanceledSubscriptionsCustomerServiceTypeInteger
+		return nil
+	}
+
+	var number float64 = float64(0)
+	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
+		u.Number = &number
+		u.Type = CanceledSubscriptionsCustomerServiceTypeNumber
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for CanceledSubscriptionsCustomerService", string(data))
+}
+
+func (u CanceledSubscriptionsCustomerService) MarshalJSON() ([]byte, error) {
+	if u.Integer != nil {
+		return utils.MarshalJSON(u.Integer, "", true)
+	}
+
+	if u.Number != nil {
+		return utils.MarshalJSON(u.Number, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type CanceledSubscriptionsCustomerService: all fields are null")
+}
+
+type CanceledSubscriptionsLowQualityType string
+
+const (
+	CanceledSubscriptionsLowQualityTypeInteger CanceledSubscriptionsLowQualityType = "integer"
+	CanceledSubscriptionsLowQualityTypeNumber  CanceledSubscriptionsLowQualityType = "number"
+)
+
+type CanceledSubscriptionsLowQuality struct {
+	Integer *int64   `queryParam:"inline" name:"Canceled_Subscriptions_Low_Quality"`
+	Number  *float64 `queryParam:"inline" name:"Canceled_Subscriptions_Low_Quality"`
+
+	Type CanceledSubscriptionsLowQualityType
+}
+
+func CreateCanceledSubscriptionsLowQualityInteger(integer int64) CanceledSubscriptionsLowQuality {
+	typ := CanceledSubscriptionsLowQualityTypeInteger
+
+	return CanceledSubscriptionsLowQuality{
+		Integer: &integer,
+		Type:    typ,
+	}
+}
+
+func CreateCanceledSubscriptionsLowQualityNumber(number float64) CanceledSubscriptionsLowQuality {
+	typ := CanceledSubscriptionsLowQualityTypeNumber
+
+	return CanceledSubscriptionsLowQuality{
+		Number: &number,
+		Type:   typ,
+	}
+}
+
+func (u *CanceledSubscriptionsLowQuality) UnmarshalJSON(data []byte) error {
+
+	var integer int64 = int64(0)
+	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
+		u.Integer = &integer
+		u.Type = CanceledSubscriptionsLowQualityTypeInteger
+		return nil
+	}
+
+	var number float64 = float64(0)
+	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
+		u.Number = &number
+		u.Type = CanceledSubscriptionsLowQualityTypeNumber
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for CanceledSubscriptionsLowQuality", string(data))
+}
+
+func (u CanceledSubscriptionsLowQuality) MarshalJSON() ([]byte, error) {
+	if u.Integer != nil {
+		return utils.MarshalJSON(u.Integer, "", true)
+	}
+
+	if u.Number != nil {
+		return utils.MarshalJSON(u.Number, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type CanceledSubscriptionsLowQuality: all fields are null")
+}
+
+type CanceledSubscriptionsMissingFeaturesType string
+
+const (
+	CanceledSubscriptionsMissingFeaturesTypeInteger CanceledSubscriptionsMissingFeaturesType = "integer"
+	CanceledSubscriptionsMissingFeaturesTypeNumber  CanceledSubscriptionsMissingFeaturesType = "number"
+)
+
+type CanceledSubscriptionsMissingFeatures struct {
+	Integer *int64   `queryParam:"inline" name:"Canceled_Subscriptions_Missing_Features"`
+	Number  *float64 `queryParam:"inline" name:"Canceled_Subscriptions_Missing_Features"`
+
+	Type CanceledSubscriptionsMissingFeaturesType
+}
+
+func CreateCanceledSubscriptionsMissingFeaturesInteger(integer int64) CanceledSubscriptionsMissingFeatures {
+	typ := CanceledSubscriptionsMissingFeaturesTypeInteger
+
+	return CanceledSubscriptionsMissingFeatures{
+		Integer: &integer,
+		Type:    typ,
+	}
+}
+
+func CreateCanceledSubscriptionsMissingFeaturesNumber(number float64) CanceledSubscriptionsMissingFeatures {
+	typ := CanceledSubscriptionsMissingFeaturesTypeNumber
+
+	return CanceledSubscriptionsMissingFeatures{
+		Number: &number,
+		Type:   typ,
+	}
+}
+
+func (u *CanceledSubscriptionsMissingFeatures) UnmarshalJSON(data []byte) error {
+
+	var integer int64 = int64(0)
+	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
+		u.Integer = &integer
+		u.Type = CanceledSubscriptionsMissingFeaturesTypeInteger
+		return nil
+	}
+
+	var number float64 = float64(0)
+	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
+		u.Number = &number
+		u.Type = CanceledSubscriptionsMissingFeaturesTypeNumber
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for CanceledSubscriptionsMissingFeatures", string(data))
+}
+
+func (u CanceledSubscriptionsMissingFeatures) MarshalJSON() ([]byte, error) {
+	if u.Integer != nil {
+		return utils.MarshalJSON(u.Integer, "", true)
+	}
+
+	if u.Number != nil {
+		return utils.MarshalJSON(u.Number, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type CanceledSubscriptionsMissingFeatures: all fields are null")
+}
+
+type CanceledSubscriptionsSwitchedServiceType string
+
+const (
+	CanceledSubscriptionsSwitchedServiceTypeInteger CanceledSubscriptionsSwitchedServiceType = "integer"
+	CanceledSubscriptionsSwitchedServiceTypeNumber  CanceledSubscriptionsSwitchedServiceType = "number"
+)
+
+type CanceledSubscriptionsSwitchedService struct {
+	Integer *int64   `queryParam:"inline" name:"Canceled_Subscriptions_Switched_Service"`
+	Number  *float64 `queryParam:"inline" name:"Canceled_Subscriptions_Switched_Service"`
+
+	Type CanceledSubscriptionsSwitchedServiceType
+}
+
+func CreateCanceledSubscriptionsSwitchedServiceInteger(integer int64) CanceledSubscriptionsSwitchedService {
+	typ := CanceledSubscriptionsSwitchedServiceTypeInteger
+
+	return CanceledSubscriptionsSwitchedService{
+		Integer: &integer,
+		Type:    typ,
+	}
+}
+
+func CreateCanceledSubscriptionsSwitchedServiceNumber(number float64) CanceledSubscriptionsSwitchedService {
+	typ := CanceledSubscriptionsSwitchedServiceTypeNumber
+
+	return CanceledSubscriptionsSwitchedService{
+		Number: &number,
+		Type:   typ,
+	}
+}
+
+func (u *CanceledSubscriptionsSwitchedService) UnmarshalJSON(data []byte) error {
+
+	var integer int64 = int64(0)
+	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
+		u.Integer = &integer
+		u.Type = CanceledSubscriptionsSwitchedServiceTypeInteger
+		return nil
+	}
+
+	var number float64 = float64(0)
+	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
+		u.Number = &number
+		u.Type = CanceledSubscriptionsSwitchedServiceTypeNumber
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for CanceledSubscriptionsSwitchedService", string(data))
+}
+
+func (u CanceledSubscriptionsSwitchedService) MarshalJSON() ([]byte, error) {
+	if u.Integer != nil {
+		return utils.MarshalJSON(u.Integer, "", true)
+	}
+
+	if u.Number != nil {
+		return utils.MarshalJSON(u.Number, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type CanceledSubscriptionsSwitchedService: all fields are null")
+}
+
+type CanceledSubscriptionsTooComplexType string
+
+const (
+	CanceledSubscriptionsTooComplexTypeInteger CanceledSubscriptionsTooComplexType = "integer"
+	CanceledSubscriptionsTooComplexTypeNumber  CanceledSubscriptionsTooComplexType = "number"
+)
+
+type CanceledSubscriptionsTooComplex struct {
+	Integer *int64   `queryParam:"inline" name:"Canceled_Subscriptions_Too_Complex"`
+	Number  *float64 `queryParam:"inline" name:"Canceled_Subscriptions_Too_Complex"`
+
+	Type CanceledSubscriptionsTooComplexType
+}
+
+func CreateCanceledSubscriptionsTooComplexInteger(integer int64) CanceledSubscriptionsTooComplex {
+	typ := CanceledSubscriptionsTooComplexTypeInteger
+
+	return CanceledSubscriptionsTooComplex{
+		Integer: &integer,
+		Type:    typ,
+	}
+}
+
+func CreateCanceledSubscriptionsTooComplexNumber(number float64) CanceledSubscriptionsTooComplex {
+	typ := CanceledSubscriptionsTooComplexTypeNumber
+
+	return CanceledSubscriptionsTooComplex{
+		Number: &number,
+		Type:   typ,
+	}
+}
+
+func (u *CanceledSubscriptionsTooComplex) UnmarshalJSON(data []byte) error {
+
+	var integer int64 = int64(0)
+	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
+		u.Integer = &integer
+		u.Type = CanceledSubscriptionsTooComplexTypeInteger
+		return nil
+	}
+
+	var number float64 = float64(0)
+	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
+		u.Number = &number
+		u.Type = CanceledSubscriptionsTooComplexTypeNumber
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for CanceledSubscriptionsTooComplex", string(data))
+}
+
+func (u CanceledSubscriptionsTooComplex) MarshalJSON() ([]byte, error) {
+	if u.Integer != nil {
+		return utils.MarshalJSON(u.Integer, "", true)
+	}
+
+	if u.Number != nil {
+		return utils.MarshalJSON(u.Number, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type CanceledSubscriptionsTooComplex: all fields are null")
+}
+
+type CanceledSubscriptionsTooExpensiveType string
+
+const (
+	CanceledSubscriptionsTooExpensiveTypeInteger CanceledSubscriptionsTooExpensiveType = "integer"
+	CanceledSubscriptionsTooExpensiveTypeNumber  CanceledSubscriptionsTooExpensiveType = "number"
+)
+
+type CanceledSubscriptionsTooExpensive struct {
+	Integer *int64   `queryParam:"inline" name:"Canceled_Subscriptions_Too_Expensive"`
+	Number  *float64 `queryParam:"inline" name:"Canceled_Subscriptions_Too_Expensive"`
+
+	Type CanceledSubscriptionsTooExpensiveType
+}
+
+func CreateCanceledSubscriptionsTooExpensiveInteger(integer int64) CanceledSubscriptionsTooExpensive {
+	typ := CanceledSubscriptionsTooExpensiveTypeInteger
+
+	return CanceledSubscriptionsTooExpensive{
+		Integer: &integer,
+		Type:    typ,
+	}
+}
+
+func CreateCanceledSubscriptionsTooExpensiveNumber(number float64) CanceledSubscriptionsTooExpensive {
+	typ := CanceledSubscriptionsTooExpensiveTypeNumber
+
+	return CanceledSubscriptionsTooExpensive{
+		Number: &number,
+		Type:   typ,
+	}
+}
+
+func (u *CanceledSubscriptionsTooExpensive) UnmarshalJSON(data []byte) error {
+
+	var integer int64 = int64(0)
+	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
+		u.Integer = &integer
+		u.Type = CanceledSubscriptionsTooExpensiveTypeInteger
+		return nil
+	}
+
+	var number float64 = float64(0)
+	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
+		u.Number = &number
+		u.Type = CanceledSubscriptionsTooExpensiveTypeNumber
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for CanceledSubscriptionsTooExpensive", string(data))
+}
+
+func (u CanceledSubscriptionsTooExpensive) MarshalJSON() ([]byte, error) {
+	if u.Integer != nil {
+		return utils.MarshalJSON(u.Integer, "", true)
+	}
+
+	if u.Number != nil {
+		return utils.MarshalJSON(u.Number, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type CanceledSubscriptionsTooExpensive: all fields are null")
+}
+
+type CanceledSubscriptionsUnusedType string
+
+const (
+	CanceledSubscriptionsUnusedTypeInteger CanceledSubscriptionsUnusedType = "integer"
+	CanceledSubscriptionsUnusedTypeNumber  CanceledSubscriptionsUnusedType = "number"
+)
+
+type CanceledSubscriptionsUnused struct {
+	Integer *int64   `queryParam:"inline" name:"Canceled_Subscriptions_Unused"`
+	Number  *float64 `queryParam:"inline" name:"Canceled_Subscriptions_Unused"`
+
+	Type CanceledSubscriptionsUnusedType
+}
+
+func CreateCanceledSubscriptionsUnusedInteger(integer int64) CanceledSubscriptionsUnused {
+	typ := CanceledSubscriptionsUnusedTypeInteger
+
+	return CanceledSubscriptionsUnused{
+		Integer: &integer,
+		Type:    typ,
+	}
+}
+
+func CreateCanceledSubscriptionsUnusedNumber(number float64) CanceledSubscriptionsUnused {
+	typ := CanceledSubscriptionsUnusedTypeNumber
+
+	return CanceledSubscriptionsUnused{
+		Number: &number,
+		Type:   typ,
+	}
+}
+
+func (u *CanceledSubscriptionsUnused) UnmarshalJSON(data []byte) error {
+
+	var integer int64 = int64(0)
+	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
+		u.Integer = &integer
+		u.Type = CanceledSubscriptionsUnusedTypeInteger
+		return nil
+	}
+
+	var number float64 = float64(0)
+	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
+		u.Number = &number
+		u.Type = CanceledSubscriptionsUnusedTypeNumber
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for CanceledSubscriptionsUnused", string(data))
+}
+
+func (u CanceledSubscriptionsUnused) MarshalJSON() ([]byte, error) {
+	if u.Integer != nil {
+		return utils.MarshalJSON(u.Integer, "", true)
+	}
+
+	if u.Number != nil {
+		return utils.MarshalJSON(u.Number, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type CanceledSubscriptionsUnused: all fields are null")
+}
+
+type CanceledSubscriptionsOtherType string
+
+const (
+	CanceledSubscriptionsOtherTypeInteger CanceledSubscriptionsOtherType = "integer"
+	CanceledSubscriptionsOtherTypeNumber  CanceledSubscriptionsOtherType = "number"
+)
+
+type CanceledSubscriptionsOther struct {
+	Integer *int64   `queryParam:"inline" name:"Canceled_Subscriptions_Other"`
+	Number  *float64 `queryParam:"inline" name:"Canceled_Subscriptions_Other"`
+
+	Type CanceledSubscriptionsOtherType
+}
+
+func CreateCanceledSubscriptionsOtherInteger(integer int64) CanceledSubscriptionsOther {
+	typ := CanceledSubscriptionsOtherTypeInteger
+
+	return CanceledSubscriptionsOther{
+		Integer: &integer,
+		Type:    typ,
+	}
+}
+
+func CreateCanceledSubscriptionsOtherNumber(number float64) CanceledSubscriptionsOther {
+	typ := CanceledSubscriptionsOtherTypeNumber
+
+	return CanceledSubscriptionsOther{
+		Number: &number,
+		Type:   typ,
+	}
+}
+
+func (u *CanceledSubscriptionsOther) UnmarshalJSON(data []byte) error {
+
+	var integer int64 = int64(0)
+	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
+		u.Integer = &integer
+		u.Type = CanceledSubscriptionsOtherTypeInteger
+		return nil
+	}
+
+	var number float64 = float64(0)
+	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
+		u.Number = &number
+		u.Type = CanceledSubscriptionsOtherTypeNumber
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for CanceledSubscriptionsOther", string(data))
+}
+
+func (u CanceledSubscriptionsOther) MarshalJSON() ([]byte, error) {
+	if u.Integer != nil {
+		return utils.MarshalJSON(u.Integer, "", true)
+	}
+
+	if u.Number != nil {
+		return utils.MarshalJSON(u.Number, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type CanceledSubscriptionsOther: all fields are null")
+}
+
 type MetricPeriod struct {
 	// Timestamp of this period data.
-	Timestamp                        time.Time                        `json:"timestamp"`
-	Orders                           Orders                           `json:"orders"`
-	Revenue                          Revenue                          `json:"revenue"`
-	NetRevenue                       NetRevenue                       `json:"net_revenue"`
-	CumulativeRevenue                CumulativeRevenue                `json:"cumulative_revenue"`
-	NetCumulativeRevenue             NetCumulativeRevenue             `json:"net_cumulative_revenue"`
-	AverageOrderValue                AverageOrderValue                `json:"average_order_value"`
-	NetAverageOrderValue             NetAverageOrderValue             `json:"net_average_order_value"`
-	OneTimeProducts                  OneTimeProducts                  `json:"one_time_products"`
-	OneTimeProductsRevenue           OneTimeProductsRevenue           `json:"one_time_products_revenue"`
-	OneTimeProductsNetRevenue        OneTimeProductsNetRevenue        `json:"one_time_products_net_revenue"`
-	NewSubscriptions                 NewSubscriptions                 `json:"new_subscriptions"`
-	NewSubscriptionsRevenue          NewSubscriptionsRevenue          `json:"new_subscriptions_revenue"`
-	NewSubscriptionsNetRevenue       NewSubscriptionsNetRevenue       `json:"new_subscriptions_net_revenue"`
-	RenewedSubscriptions             RenewedSubscriptions             `json:"renewed_subscriptions"`
-	RenewedSubscriptionsRevenue      RenewedSubscriptionsRevenue      `json:"renewed_subscriptions_revenue"`
-	RenewedSubscriptionsNetRevenue   RenewedSubscriptionsNetRevenue   `json:"renewed_subscriptions_net_revenue"`
-	ActiveSubscriptions              ActiveSubscriptions              `json:"active_subscriptions"`
-	MonthlyRecurringRevenue          MonthlyRecurringRevenue          `json:"monthly_recurring_revenue"`
-	CommittedMonthlyRecurringRevenue CommittedMonthlyRecurringRevenue `json:"committed_monthly_recurring_revenue"`
-	Checkouts                        Checkouts                        `json:"checkouts"`
-	SucceededCheckouts               SucceededCheckouts               `json:"succeeded_checkouts"`
-	CheckoutsConversion              CheckoutsConversion              `json:"checkouts_conversion"`
+	Timestamp                            time.Time                            `json:"timestamp"`
+	Orders                               Orders                               `json:"orders"`
+	Revenue                              Revenue                              `json:"revenue"`
+	NetRevenue                           NetRevenue                           `json:"net_revenue"`
+	CumulativeRevenue                    CumulativeRevenue                    `json:"cumulative_revenue"`
+	NetCumulativeRevenue                 NetCumulativeRevenue                 `json:"net_cumulative_revenue"`
+	AverageOrderValue                    AverageOrderValue                    `json:"average_order_value"`
+	NetAverageOrderValue                 NetAverageOrderValue                 `json:"net_average_order_value"`
+	OneTimeProducts                      OneTimeProducts                      `json:"one_time_products"`
+	OneTimeProductsRevenue               OneTimeProductsRevenue               `json:"one_time_products_revenue"`
+	OneTimeProductsNetRevenue            OneTimeProductsNetRevenue            `json:"one_time_products_net_revenue"`
+	NewSubscriptions                     NewSubscriptions                     `json:"new_subscriptions"`
+	NewSubscriptionsRevenue              NewSubscriptionsRevenue              `json:"new_subscriptions_revenue"`
+	NewSubscriptionsNetRevenue           NewSubscriptionsNetRevenue           `json:"new_subscriptions_net_revenue"`
+	RenewedSubscriptions                 RenewedSubscriptions                 `json:"renewed_subscriptions"`
+	RenewedSubscriptionsRevenue          RenewedSubscriptionsRevenue          `json:"renewed_subscriptions_revenue"`
+	RenewedSubscriptionsNetRevenue       RenewedSubscriptionsNetRevenue       `json:"renewed_subscriptions_net_revenue"`
+	ActiveSubscriptions                  ActiveSubscriptions                  `json:"active_subscriptions"`
+	MonthlyRecurringRevenue              MonthlyRecurringRevenue              `json:"monthly_recurring_revenue"`
+	CommittedMonthlyRecurringRevenue     CommittedMonthlyRecurringRevenue     `json:"committed_monthly_recurring_revenue"`
+	Checkouts                            Checkouts                            `json:"checkouts"`
+	SucceededCheckouts                   SucceededCheckouts                   `json:"succeeded_checkouts"`
+	CheckoutsConversion                  CheckoutsConversion                  `json:"checkouts_conversion"`
+	CanceledSubscriptions                CanceledSubscriptions                `json:"canceled_subscriptions"`
+	CanceledSubscriptionsCustomerService CanceledSubscriptionsCustomerService `json:"canceled_subscriptions_customer_service"`
+	CanceledSubscriptionsLowQuality      CanceledSubscriptionsLowQuality      `json:"canceled_subscriptions_low_quality"`
+	CanceledSubscriptionsMissingFeatures CanceledSubscriptionsMissingFeatures `json:"canceled_subscriptions_missing_features"`
+	CanceledSubscriptionsSwitchedService CanceledSubscriptionsSwitchedService `json:"canceled_subscriptions_switched_service"`
+	CanceledSubscriptionsTooComplex      CanceledSubscriptionsTooComplex      `json:"canceled_subscriptions_too_complex"`
+	CanceledSubscriptionsTooExpensive    CanceledSubscriptionsTooExpensive    `json:"canceled_subscriptions_too_expensive"`
+	CanceledSubscriptionsUnused          CanceledSubscriptionsUnused          `json:"canceled_subscriptions_unused"`
+	CanceledSubscriptionsOther           CanceledSubscriptionsOther           `json:"canceled_subscriptions_other"`
 }
 
 func (m MetricPeriod) MarshalJSON() ([]byte, error) {
@@ -1427,169 +2003,232 @@ func (m MetricPeriod) MarshalJSON() ([]byte, error) {
 }
 
 func (m *MetricPeriod) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &m, "", false, []string{"timestamp", "orders", "revenue", "net_revenue", "cumulative_revenue", "net_cumulative_revenue", "average_order_value", "net_average_order_value", "one_time_products", "one_time_products_revenue", "one_time_products_net_revenue", "new_subscriptions", "new_subscriptions_revenue", "new_subscriptions_net_revenue", "renewed_subscriptions", "renewed_subscriptions_revenue", "renewed_subscriptions_net_revenue", "active_subscriptions", "monthly_recurring_revenue", "committed_monthly_recurring_revenue", "checkouts", "succeeded_checkouts", "checkouts_conversion"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &m, "", false, []string{"timestamp", "orders", "revenue", "net_revenue", "cumulative_revenue", "net_cumulative_revenue", "average_order_value", "net_average_order_value", "one_time_products", "one_time_products_revenue", "one_time_products_net_revenue", "new_subscriptions", "new_subscriptions_revenue", "new_subscriptions_net_revenue", "renewed_subscriptions", "renewed_subscriptions_revenue", "renewed_subscriptions_net_revenue", "active_subscriptions", "monthly_recurring_revenue", "committed_monthly_recurring_revenue", "checkouts", "succeeded_checkouts", "checkouts_conversion", "canceled_subscriptions", "canceled_subscriptions_customer_service", "canceled_subscriptions_low_quality", "canceled_subscriptions_missing_features", "canceled_subscriptions_switched_service", "canceled_subscriptions_too_complex", "canceled_subscriptions_too_expensive", "canceled_subscriptions_unused", "canceled_subscriptions_other"}); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *MetricPeriod) GetTimestamp() time.Time {
-	if o == nil {
+func (m *MetricPeriod) GetTimestamp() time.Time {
+	if m == nil {
 		return time.Time{}
 	}
-	return o.Timestamp
+	return m.Timestamp
 }
 
-func (o *MetricPeriod) GetOrders() Orders {
-	if o == nil {
+func (m *MetricPeriod) GetOrders() Orders {
+	if m == nil {
 		return Orders{}
 	}
-	return o.Orders
+	return m.Orders
 }
 
-func (o *MetricPeriod) GetRevenue() Revenue {
-	if o == nil {
+func (m *MetricPeriod) GetRevenue() Revenue {
+	if m == nil {
 		return Revenue{}
 	}
-	return o.Revenue
+	return m.Revenue
 }
 
-func (o *MetricPeriod) GetNetRevenue() NetRevenue {
-	if o == nil {
+func (m *MetricPeriod) GetNetRevenue() NetRevenue {
+	if m == nil {
 		return NetRevenue{}
 	}
-	return o.NetRevenue
+	return m.NetRevenue
 }
 
-func (o *MetricPeriod) GetCumulativeRevenue() CumulativeRevenue {
-	if o == nil {
+func (m *MetricPeriod) GetCumulativeRevenue() CumulativeRevenue {
+	if m == nil {
 		return CumulativeRevenue{}
 	}
-	return o.CumulativeRevenue
+	return m.CumulativeRevenue
 }
 
-func (o *MetricPeriod) GetNetCumulativeRevenue() NetCumulativeRevenue {
-	if o == nil {
+func (m *MetricPeriod) GetNetCumulativeRevenue() NetCumulativeRevenue {
+	if m == nil {
 		return NetCumulativeRevenue{}
 	}
-	return o.NetCumulativeRevenue
+	return m.NetCumulativeRevenue
 }
 
-func (o *MetricPeriod) GetAverageOrderValue() AverageOrderValue {
-	if o == nil {
+func (m *MetricPeriod) GetAverageOrderValue() AverageOrderValue {
+	if m == nil {
 		return AverageOrderValue{}
 	}
-	return o.AverageOrderValue
+	return m.AverageOrderValue
 }
 
-func (o *MetricPeriod) GetNetAverageOrderValue() NetAverageOrderValue {
-	if o == nil {
+func (m *MetricPeriod) GetNetAverageOrderValue() NetAverageOrderValue {
+	if m == nil {
 		return NetAverageOrderValue{}
 	}
-	return o.NetAverageOrderValue
+	return m.NetAverageOrderValue
 }
 
-func (o *MetricPeriod) GetOneTimeProducts() OneTimeProducts {
-	if o == nil {
+func (m *MetricPeriod) GetOneTimeProducts() OneTimeProducts {
+	if m == nil {
 		return OneTimeProducts{}
 	}
-	return o.OneTimeProducts
+	return m.OneTimeProducts
 }
 
-func (o *MetricPeriod) GetOneTimeProductsRevenue() OneTimeProductsRevenue {
-	if o == nil {
+func (m *MetricPeriod) GetOneTimeProductsRevenue() OneTimeProductsRevenue {
+	if m == nil {
 		return OneTimeProductsRevenue{}
 	}
-	return o.OneTimeProductsRevenue
+	return m.OneTimeProductsRevenue
 }
 
-func (o *MetricPeriod) GetOneTimeProductsNetRevenue() OneTimeProductsNetRevenue {
-	if o == nil {
+func (m *MetricPeriod) GetOneTimeProductsNetRevenue() OneTimeProductsNetRevenue {
+	if m == nil {
 		return OneTimeProductsNetRevenue{}
 	}
-	return o.OneTimeProductsNetRevenue
+	return m.OneTimeProductsNetRevenue
 }
 
-func (o *MetricPeriod) GetNewSubscriptions() NewSubscriptions {
-	if o == nil {
+func (m *MetricPeriod) GetNewSubscriptions() NewSubscriptions {
+	if m == nil {
 		return NewSubscriptions{}
 	}
-	return o.NewSubscriptions
+	return m.NewSubscriptions
 }
 
-func (o *MetricPeriod) GetNewSubscriptionsRevenue() NewSubscriptionsRevenue {
-	if o == nil {
+func (m *MetricPeriod) GetNewSubscriptionsRevenue() NewSubscriptionsRevenue {
+	if m == nil {
 		return NewSubscriptionsRevenue{}
 	}
-	return o.NewSubscriptionsRevenue
+	return m.NewSubscriptionsRevenue
 }
 
-func (o *MetricPeriod) GetNewSubscriptionsNetRevenue() NewSubscriptionsNetRevenue {
-	if o == nil {
+func (m *MetricPeriod) GetNewSubscriptionsNetRevenue() NewSubscriptionsNetRevenue {
+	if m == nil {
 		return NewSubscriptionsNetRevenue{}
 	}
-	return o.NewSubscriptionsNetRevenue
+	return m.NewSubscriptionsNetRevenue
 }
 
-func (o *MetricPeriod) GetRenewedSubscriptions() RenewedSubscriptions {
-	if o == nil {
+func (m *MetricPeriod) GetRenewedSubscriptions() RenewedSubscriptions {
+	if m == nil {
 		return RenewedSubscriptions{}
 	}
-	return o.RenewedSubscriptions
+	return m.RenewedSubscriptions
 }
 
-func (o *MetricPeriod) GetRenewedSubscriptionsRevenue() RenewedSubscriptionsRevenue {
-	if o == nil {
+func (m *MetricPeriod) GetRenewedSubscriptionsRevenue() RenewedSubscriptionsRevenue {
+	if m == nil {
 		return RenewedSubscriptionsRevenue{}
 	}
-	return o.RenewedSubscriptionsRevenue
+	return m.RenewedSubscriptionsRevenue
 }
 
-func (o *MetricPeriod) GetRenewedSubscriptionsNetRevenue() RenewedSubscriptionsNetRevenue {
-	if o == nil {
+func (m *MetricPeriod) GetRenewedSubscriptionsNetRevenue() RenewedSubscriptionsNetRevenue {
+	if m == nil {
 		return RenewedSubscriptionsNetRevenue{}
 	}
-	return o.RenewedSubscriptionsNetRevenue
+	return m.RenewedSubscriptionsNetRevenue
 }
 
-func (o *MetricPeriod) GetActiveSubscriptions() ActiveSubscriptions {
-	if o == nil {
+func (m *MetricPeriod) GetActiveSubscriptions() ActiveSubscriptions {
+	if m == nil {
 		return ActiveSubscriptions{}
 	}
-	return o.ActiveSubscriptions
+	return m.ActiveSubscriptions
 }
 
-func (o *MetricPeriod) GetMonthlyRecurringRevenue() MonthlyRecurringRevenue {
-	if o == nil {
+func (m *MetricPeriod) GetMonthlyRecurringRevenue() MonthlyRecurringRevenue {
+	if m == nil {
 		return MonthlyRecurringRevenue{}
 	}
-	return o.MonthlyRecurringRevenue
+	return m.MonthlyRecurringRevenue
 }
 
-func (o *MetricPeriod) GetCommittedMonthlyRecurringRevenue() CommittedMonthlyRecurringRevenue {
-	if o == nil {
+func (m *MetricPeriod) GetCommittedMonthlyRecurringRevenue() CommittedMonthlyRecurringRevenue {
+	if m == nil {
 		return CommittedMonthlyRecurringRevenue{}
 	}
-	return o.CommittedMonthlyRecurringRevenue
+	return m.CommittedMonthlyRecurringRevenue
 }
 
-func (o *MetricPeriod) GetCheckouts() Checkouts {
-	if o == nil {
+func (m *MetricPeriod) GetCheckouts() Checkouts {
+	if m == nil {
 		return Checkouts{}
 	}
-	return o.Checkouts
+	return m.Checkouts
 }
 
-func (o *MetricPeriod) GetSucceededCheckouts() SucceededCheckouts {
-	if o == nil {
+func (m *MetricPeriod) GetSucceededCheckouts() SucceededCheckouts {
+	if m == nil {
 		return SucceededCheckouts{}
 	}
-	return o.SucceededCheckouts
+	return m.SucceededCheckouts
 }
 
-func (o *MetricPeriod) GetCheckoutsConversion() CheckoutsConversion {
-	if o == nil {
+func (m *MetricPeriod) GetCheckoutsConversion() CheckoutsConversion {
+	if m == nil {
 		return CheckoutsConversion{}
 	}
-	return o.CheckoutsConversion
+	return m.CheckoutsConversion
+}
+
+func (m *MetricPeriod) GetCanceledSubscriptions() CanceledSubscriptions {
+	if m == nil {
+		return CanceledSubscriptions{}
+	}
+	return m.CanceledSubscriptions
+}
+
+func (m *MetricPeriod) GetCanceledSubscriptionsCustomerService() CanceledSubscriptionsCustomerService {
+	if m == nil {
+		return CanceledSubscriptionsCustomerService{}
+	}
+	return m.CanceledSubscriptionsCustomerService
+}
+
+func (m *MetricPeriod) GetCanceledSubscriptionsLowQuality() CanceledSubscriptionsLowQuality {
+	if m == nil {
+		return CanceledSubscriptionsLowQuality{}
+	}
+	return m.CanceledSubscriptionsLowQuality
+}
+
+func (m *MetricPeriod) GetCanceledSubscriptionsMissingFeatures() CanceledSubscriptionsMissingFeatures {
+	if m == nil {
+		return CanceledSubscriptionsMissingFeatures{}
+	}
+	return m.CanceledSubscriptionsMissingFeatures
+}
+
+func (m *MetricPeriod) GetCanceledSubscriptionsSwitchedService() CanceledSubscriptionsSwitchedService {
+	if m == nil {
+		return CanceledSubscriptionsSwitchedService{}
+	}
+	return m.CanceledSubscriptionsSwitchedService
+}
+
+func (m *MetricPeriod) GetCanceledSubscriptionsTooComplex() CanceledSubscriptionsTooComplex {
+	if m == nil {
+		return CanceledSubscriptionsTooComplex{}
+	}
+	return m.CanceledSubscriptionsTooComplex
+}
+
+func (m *MetricPeriod) GetCanceledSubscriptionsTooExpensive() CanceledSubscriptionsTooExpensive {
+	if m == nil {
+		return CanceledSubscriptionsTooExpensive{}
+	}
+	return m.CanceledSubscriptionsTooExpensive
+}
+
+func (m *MetricPeriod) GetCanceledSubscriptionsUnused() CanceledSubscriptionsUnused {
+	if m == nil {
+		return CanceledSubscriptionsUnused{}
+	}
+	return m.CanceledSubscriptionsUnused
+}
+
+func (m *MetricPeriod) GetCanceledSubscriptionsOther() CanceledSubscriptionsOther {
+	if m == nil {
+		return CanceledSubscriptionsOther{}
+	}
+	return m.CanceledSubscriptionsOther
 }

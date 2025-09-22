@@ -11,11 +11,11 @@ type PaymentsGetRequest struct {
 	ID string `pathParam:"style=simple,explode=false,name=id"`
 }
 
-func (o *PaymentsGetRequest) GetID() string {
-	if o == nil {
+func (p *PaymentsGetRequest) GetID() string {
+	if p == nil {
 		return ""
 	}
-	return o.ID
+	return p.ID
 }
 
 type PaymentsGetResponse struct {
@@ -24,16 +24,16 @@ type PaymentsGetResponse struct {
 	Payment *components.Payment
 }
 
-func (o *PaymentsGetResponse) GetHTTPMeta() components.HTTPMetadata {
-	if o == nil {
+func (p *PaymentsGetResponse) GetHTTPMeta() components.HTTPMetadata {
+	if p == nil {
 		return components.HTTPMetadata{}
 	}
-	return o.HTTPMeta
+	return p.HTTPMeta
 }
 
-func (o *PaymentsGetResponse) GetPayment() *components.Payment {
-	if o == nil {
+func (p *PaymentsGetResponse) GetPayment() *components.Payment {
+	if p == nil {
 		return nil
 	}
-	return o.Payment
+	return p.Payment
 }

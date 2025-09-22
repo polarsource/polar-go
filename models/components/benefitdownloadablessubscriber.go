@@ -148,76 +148,76 @@ func (b *BenefitDownloadablesSubscriber) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *BenefitDownloadablesSubscriber) GetID() string {
-	if o == nil {
+func (b *BenefitDownloadablesSubscriber) GetID() string {
+	if b == nil {
 		return ""
 	}
-	return o.ID
+	return b.ID
 }
 
-func (o *BenefitDownloadablesSubscriber) GetCreatedAt() time.Time {
-	if o == nil {
+func (b *BenefitDownloadablesSubscriber) GetCreatedAt() time.Time {
+	if b == nil {
 		return time.Time{}
 	}
-	return o.CreatedAt
+	return b.CreatedAt
 }
 
-func (o *BenefitDownloadablesSubscriber) GetModifiedAt() *time.Time {
-	if o == nil {
+func (b *BenefitDownloadablesSubscriber) GetModifiedAt() *time.Time {
+	if b == nil {
 		return nil
 	}
-	return o.ModifiedAt
+	return b.ModifiedAt
 }
 
-func (o *BenefitDownloadablesSubscriber) GetType() string {
+func (b *BenefitDownloadablesSubscriber) GetType() string {
 	return "downloadables"
 }
 
-func (o *BenefitDownloadablesSubscriber) GetDescription() string {
-	if o == nil {
+func (b *BenefitDownloadablesSubscriber) GetDescription() string {
+	if b == nil {
 		return ""
 	}
-	return o.Description
+	return b.Description
 }
 
-func (o *BenefitDownloadablesSubscriber) GetSelectable() bool {
-	if o == nil {
+func (b *BenefitDownloadablesSubscriber) GetSelectable() bool {
+	if b == nil {
 		return false
 	}
-	return o.Selectable
+	return b.Selectable
 }
 
-func (o *BenefitDownloadablesSubscriber) GetDeletable() bool {
-	if o == nil {
+func (b *BenefitDownloadablesSubscriber) GetDeletable() bool {
+	if b == nil {
 		return false
 	}
-	return o.Deletable
+	return b.Deletable
 }
 
-func (o *BenefitDownloadablesSubscriber) GetOrganizationID() string {
-	if o == nil {
+func (b *BenefitDownloadablesSubscriber) GetOrganizationID() string {
+	if b == nil {
 		return ""
 	}
-	return o.OrganizationID
+	return b.OrganizationID
 }
 
-func (o *BenefitDownloadablesSubscriber) GetMetadata() map[string]BenefitDownloadablesSubscriberMetadata {
-	if o == nil {
+func (b *BenefitDownloadablesSubscriber) GetMetadata() map[string]BenefitDownloadablesSubscriberMetadata {
+	if b == nil {
 		return map[string]BenefitDownloadablesSubscriberMetadata{}
 	}
-	return o.Metadata
+	return b.Metadata
 }
 
-func (o *BenefitDownloadablesSubscriber) GetOrganization() Organization {
-	if o == nil {
+func (b *BenefitDownloadablesSubscriber) GetOrganization() Organization {
+	if b == nil {
 		return Organization{}
 	}
-	return o.Organization
+	return b.Organization
 }
 
-func (o *BenefitDownloadablesSubscriber) GetProperties() BenefitDownloadablesSubscriberProperties {
-	if o == nil {
+func (b *BenefitDownloadablesSubscriber) GetProperties() BenefitDownloadablesSubscriberProperties {
+	if b == nil {
 		return BenefitDownloadablesSubscriberProperties{}
 	}
-	return o.Properties
+	return b.Properties
 }

@@ -8,23 +8,23 @@ type DownloadableRead struct {
 	File      FileDownload `json:"file"`
 }
 
-func (o *DownloadableRead) GetID() string {
-	if o == nil {
+func (d *DownloadableRead) GetID() string {
+	if d == nil {
 		return ""
 	}
-	return o.ID
+	return d.ID
 }
 
-func (o *DownloadableRead) GetBenefitID() string {
-	if o == nil {
+func (d *DownloadableRead) GetBenefitID() string {
+	if d == nil {
 		return ""
 	}
-	return o.BenefitID
+	return d.BenefitID
 }
 
-func (o *DownloadableRead) GetFile() FileDownload {
-	if o == nil {
+func (d *DownloadableRead) GetFile() FileDownload {
+	if d == nil {
 		return FileDownload{}
 	}
-	return o.File
+	return d.File
 }

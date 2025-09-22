@@ -39,59 +39,59 @@ func (m *MeterCreditEvent) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *MeterCreditEvent) GetID() string {
-	if o == nil {
+func (m *MeterCreditEvent) GetID() string {
+	if m == nil {
 		return ""
 	}
-	return o.ID
+	return m.ID
 }
 
-func (o *MeterCreditEvent) GetTimestamp() time.Time {
-	if o == nil {
+func (m *MeterCreditEvent) GetTimestamp() time.Time {
+	if m == nil {
 		return time.Time{}
 	}
-	return o.Timestamp
+	return m.Timestamp
 }
 
-func (o *MeterCreditEvent) GetOrganizationID() string {
-	if o == nil {
+func (m *MeterCreditEvent) GetOrganizationID() string {
+	if m == nil {
 		return ""
 	}
-	return o.OrganizationID
+	return m.OrganizationID
 }
 
-func (o *MeterCreditEvent) GetCustomerID() *string {
-	if o == nil {
+func (m *MeterCreditEvent) GetCustomerID() *string {
+	if m == nil {
 		return nil
 	}
-	return o.CustomerID
+	return m.CustomerID
 }
 
-func (o *MeterCreditEvent) GetCustomer() *Customer {
-	if o == nil {
+func (m *MeterCreditEvent) GetCustomer() *Customer {
+	if m == nil {
 		return nil
 	}
-	return o.Customer
+	return m.Customer
 }
 
-func (o *MeterCreditEvent) GetExternalCustomerID() *string {
-	if o == nil {
+func (m *MeterCreditEvent) GetExternalCustomerID() *string {
+	if m == nil {
 		return nil
 	}
-	return o.ExternalCustomerID
+	return m.ExternalCustomerID
 }
 
-func (o *MeterCreditEvent) GetSource() string {
+func (m *MeterCreditEvent) GetSource() string {
 	return "system"
 }
 
-func (o *MeterCreditEvent) GetName() string {
+func (m *MeterCreditEvent) GetName() string {
 	return "meter.credited"
 }
 
-func (o *MeterCreditEvent) GetMetadata() MeterCreditedMetadata {
-	if o == nil {
+func (m *MeterCreditEvent) GetMetadata() MeterCreditedMetadata {
+	if m == nil {
 		return MeterCreditedMetadata{}
 	}
-	return o.Metadata
+	return m.Metadata
 }

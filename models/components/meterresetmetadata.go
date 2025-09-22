@@ -21,9 +21,9 @@ func (m *MeterResetMetadata) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *MeterResetMetadata) GetMeterID() string {
-	if o == nil {
+func (m *MeterResetMetadata) GetMeterID() string {
+	if m == nil {
 		return ""
 	}
-	return o.MeterID
+	return m.MeterID
 }

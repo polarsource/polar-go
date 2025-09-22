@@ -10,12 +10,16 @@ import (
 type OrganizationSortProperty string
 
 const (
-	OrganizationSortPropertyCreatedAt      OrganizationSortProperty = "created_at"
-	OrganizationSortPropertyMinusCreatedAt OrganizationSortProperty = "-created_at"
-	OrganizationSortPropertySlug           OrganizationSortProperty = "slug"
-	OrganizationSortPropertyMinusSlug      OrganizationSortProperty = "-slug"
-	OrganizationSortPropertyName           OrganizationSortProperty = "name"
-	OrganizationSortPropertyMinusName      OrganizationSortProperty = "-name"
+	OrganizationSortPropertyCreatedAt                OrganizationSortProperty = "created_at"
+	OrganizationSortPropertyMinusCreatedAt           OrganizationSortProperty = "-created_at"
+	OrganizationSortPropertySlug                     OrganizationSortProperty = "slug"
+	OrganizationSortPropertyMinusSlug                OrganizationSortProperty = "-slug"
+	OrganizationSortPropertyName                     OrganizationSortProperty = "name"
+	OrganizationSortPropertyMinusName                OrganizationSortProperty = "-name"
+	OrganizationSortPropertyNextReviewThreshold      OrganizationSortProperty = "next_review_threshold"
+	OrganizationSortPropertyMinusNextReviewThreshold OrganizationSortProperty = "-next_review_threshold"
+	OrganizationSortPropertyDaysInStatus             OrganizationSortProperty = "days_in_status"
+	OrganizationSortPropertyMinusDaysInStatus        OrganizationSortProperty = "-days_in_status"
 )
 
 func (e OrganizationSortProperty) ToPointer() *OrganizationSortProperty {
@@ -38,6 +42,14 @@ func (e *OrganizationSortProperty) UnmarshalJSON(data []byte) error {
 	case "name":
 		fallthrough
 	case "-name":
+		fallthrough
+	case "next_review_threshold":
+		fallthrough
+	case "-next_review_threshold":
+		fallthrough
+	case "days_in_status":
+		fallthrough
+	case "-days_in_status":
 		*e = OrganizationSortProperty(v)
 		return nil
 	default:

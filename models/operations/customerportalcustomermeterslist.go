@@ -13,11 +13,11 @@ type CustomerPortalCustomerMetersListSecurity struct {
 	CustomerSession string `security:"scheme,type=http,subtype=bearer,name=Authorization,env=polar_customer_session"`
 }
 
-func (o *CustomerPortalCustomerMetersListSecurity) GetCustomerSession() string {
-	if o == nil {
+func (c *CustomerPortalCustomerMetersListSecurity) GetCustomerSession() string {
+	if c == nil {
 		return ""
 	}
-	return o.CustomerSession
+	return c.CustomerSession
 }
 
 type MeterIDFilterType string
@@ -108,39 +108,39 @@ func (c *CustomerPortalCustomerMetersListRequest) UnmarshalJSON(data []byte) err
 	return nil
 }
 
-func (o *CustomerPortalCustomerMetersListRequest) GetMeterID() *MeterIDFilter {
-	if o == nil {
+func (c *CustomerPortalCustomerMetersListRequest) GetMeterID() *MeterIDFilter {
+	if c == nil {
 		return nil
 	}
-	return o.MeterID
+	return c.MeterID
 }
 
-func (o *CustomerPortalCustomerMetersListRequest) GetQuery() *string {
-	if o == nil {
+func (c *CustomerPortalCustomerMetersListRequest) GetQuery() *string {
+	if c == nil {
 		return nil
 	}
-	return o.Query
+	return c.Query
 }
 
-func (o *CustomerPortalCustomerMetersListRequest) GetPage() *int64 {
-	if o == nil {
+func (c *CustomerPortalCustomerMetersListRequest) GetPage() *int64 {
+	if c == nil {
 		return nil
 	}
-	return o.Page
+	return c.Page
 }
 
-func (o *CustomerPortalCustomerMetersListRequest) GetLimit() *int64 {
-	if o == nil {
+func (c *CustomerPortalCustomerMetersListRequest) GetLimit() *int64 {
+	if c == nil {
 		return nil
 	}
-	return o.Limit
+	return c.Limit
 }
 
-func (o *CustomerPortalCustomerMetersListRequest) GetSorting() []components.CustomerCustomerMeterSortProperty {
-	if o == nil {
+func (c *CustomerPortalCustomerMetersListRequest) GetSorting() []components.CustomerCustomerMeterSortProperty {
+	if c == nil {
 		return nil
 	}
-	return o.Sorting
+	return c.Sorting
 }
 
 type CustomerPortalCustomerMetersListResponse struct {
@@ -151,16 +151,16 @@ type CustomerPortalCustomerMetersListResponse struct {
 	Next func() (*CustomerPortalCustomerMetersListResponse, error)
 }
 
-func (o *CustomerPortalCustomerMetersListResponse) GetHTTPMeta() components.HTTPMetadata {
-	if o == nil {
+func (c *CustomerPortalCustomerMetersListResponse) GetHTTPMeta() components.HTTPMetadata {
+	if c == nil {
 		return components.HTTPMetadata{}
 	}
-	return o.HTTPMeta
+	return c.HTTPMeta
 }
 
-func (o *CustomerPortalCustomerMetersListResponse) GetListResourceCustomerCustomerMeter() *components.ListResourceCustomerCustomerMeter {
-	if o == nil {
+func (c *CustomerPortalCustomerMetersListResponse) GetListResourceCustomerCustomerMeter() *components.ListResourceCustomerCustomerMeter {
+	if c == nil {
 		return nil
 	}
-	return o.ListResourceCustomerCustomerMeter
+	return c.ListResourceCustomerCustomerMeter
 }

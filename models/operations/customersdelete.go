@@ -11,20 +11,20 @@ type CustomersDeleteRequest struct {
 	ID string `pathParam:"style=simple,explode=false,name=id"`
 }
 
-func (o *CustomersDeleteRequest) GetID() string {
-	if o == nil {
+func (c *CustomersDeleteRequest) GetID() string {
+	if c == nil {
 		return ""
 	}
-	return o.ID
+	return c.ID
 }
 
 type CustomersDeleteResponse struct {
 	HTTPMeta components.HTTPMetadata `json:"-"`
 }
 
-func (o *CustomersDeleteResponse) GetHTTPMeta() components.HTTPMetadata {
-	if o == nil {
+func (c *CustomersDeleteResponse) GetHTTPMeta() components.HTTPMetadata {
+	if c == nil {
 		return components.HTTPMetadata{}
 	}
-	return o.HTTPMeta
+	return c.HTTPMeta
 }

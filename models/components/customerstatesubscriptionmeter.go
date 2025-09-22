@@ -36,51 +36,51 @@ func (c *CustomerStateSubscriptionMeter) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *CustomerStateSubscriptionMeter) GetCreatedAt() time.Time {
-	if o == nil {
+func (c *CustomerStateSubscriptionMeter) GetCreatedAt() time.Time {
+	if c == nil {
 		return time.Time{}
 	}
-	return o.CreatedAt
+	return c.CreatedAt
 }
 
-func (o *CustomerStateSubscriptionMeter) GetModifiedAt() *time.Time {
-	if o == nil {
+func (c *CustomerStateSubscriptionMeter) GetModifiedAt() *time.Time {
+	if c == nil {
 		return nil
 	}
-	return o.ModifiedAt
+	return c.ModifiedAt
 }
 
-func (o *CustomerStateSubscriptionMeter) GetID() string {
-	if o == nil {
+func (c *CustomerStateSubscriptionMeter) GetID() string {
+	if c == nil {
 		return ""
 	}
-	return o.ID
+	return c.ID
 }
 
-func (o *CustomerStateSubscriptionMeter) GetConsumedUnits() float64 {
-	if o == nil {
+func (c *CustomerStateSubscriptionMeter) GetConsumedUnits() float64 {
+	if c == nil {
 		return 0.0
 	}
-	return o.ConsumedUnits
+	return c.ConsumedUnits
 }
 
-func (o *CustomerStateSubscriptionMeter) GetCreditedUnits() int64 {
-	if o == nil {
+func (c *CustomerStateSubscriptionMeter) GetCreditedUnits() int64 {
+	if c == nil {
 		return 0
 	}
-	return o.CreditedUnits
+	return c.CreditedUnits
 }
 
-func (o *CustomerStateSubscriptionMeter) GetAmount() int64 {
-	if o == nil {
+func (c *CustomerStateSubscriptionMeter) GetAmount() int64 {
+	if c == nil {
 		return 0
 	}
-	return o.Amount
+	return c.Amount
 }
 
-func (o *CustomerStateSubscriptionMeter) GetMeterID() string {
-	if o == nil {
+func (c *CustomerStateSubscriptionMeter) GetMeterID() string {
+	if c == nil {
 		return ""
 	}
-	return o.MeterID
+	return c.MeterID
 }

@@ -125,91 +125,91 @@ type CheckoutUpdatePublic struct {
 	// ID of the product price to checkout. Must correspond to a price present in the checkout's product list.
 	//
 	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
-	ProductPriceID         *string  `json:"product_price_id,omitempty"`
-	Amount                 *int64   `json:"amount,omitempty"`
-	IsBusinessCustomer     *bool    `json:"is_business_customer,omitempty"`
-	CustomerName           *string  `json:"customer_name,omitempty"`
-	CustomerEmail          *string  `json:"customer_email,omitempty"`
-	CustomerBillingName    *string  `json:"customer_billing_name,omitempty"`
-	CustomerBillingAddress *Address `json:"customer_billing_address,omitempty"`
-	CustomerTaxID          *string  `json:"customer_tax_id,omitempty"`
+	ProductPriceID         *string       `json:"product_price_id,omitempty"`
+	Amount                 *int64        `json:"amount,omitempty"`
+	IsBusinessCustomer     *bool         `json:"is_business_customer,omitempty"`
+	CustomerName           *string       `json:"customer_name,omitempty"`
+	CustomerEmail          *string       `json:"customer_email,omitempty"`
+	CustomerBillingName    *string       `json:"customer_billing_name,omitempty"`
+	CustomerBillingAddress *AddressInput `json:"customer_billing_address,omitempty"`
+	CustomerTaxID          *string       `json:"customer_tax_id,omitempty"`
 	// Discount code to apply to the checkout.
 	DiscountCode *string `json:"discount_code,omitempty"`
 }
 
-func (o *CheckoutUpdatePublic) GetCustomFieldData() map[string]*CheckoutUpdatePublicCustomFieldData {
-	if o == nil {
+func (c *CheckoutUpdatePublic) GetCustomFieldData() map[string]*CheckoutUpdatePublicCustomFieldData {
+	if c == nil {
 		return nil
 	}
-	return o.CustomFieldData
+	return c.CustomFieldData
 }
 
-func (o *CheckoutUpdatePublic) GetProductID() *string {
-	if o == nil {
+func (c *CheckoutUpdatePublic) GetProductID() *string {
+	if c == nil {
 		return nil
 	}
-	return o.ProductID
+	return c.ProductID
 }
 
-func (o *CheckoutUpdatePublic) GetProductPriceID() *string {
-	if o == nil {
+func (c *CheckoutUpdatePublic) GetProductPriceID() *string {
+	if c == nil {
 		return nil
 	}
-	return o.ProductPriceID
+	return c.ProductPriceID
 }
 
-func (o *CheckoutUpdatePublic) GetAmount() *int64 {
-	if o == nil {
+func (c *CheckoutUpdatePublic) GetAmount() *int64 {
+	if c == nil {
 		return nil
 	}
-	return o.Amount
+	return c.Amount
 }
 
-func (o *CheckoutUpdatePublic) GetIsBusinessCustomer() *bool {
-	if o == nil {
+func (c *CheckoutUpdatePublic) GetIsBusinessCustomer() *bool {
+	if c == nil {
 		return nil
 	}
-	return o.IsBusinessCustomer
+	return c.IsBusinessCustomer
 }
 
-func (o *CheckoutUpdatePublic) GetCustomerName() *string {
-	if o == nil {
+func (c *CheckoutUpdatePublic) GetCustomerName() *string {
+	if c == nil {
 		return nil
 	}
-	return o.CustomerName
+	return c.CustomerName
 }
 
-func (o *CheckoutUpdatePublic) GetCustomerEmail() *string {
-	if o == nil {
+func (c *CheckoutUpdatePublic) GetCustomerEmail() *string {
+	if c == nil {
 		return nil
 	}
-	return o.CustomerEmail
+	return c.CustomerEmail
 }
 
-func (o *CheckoutUpdatePublic) GetCustomerBillingName() *string {
-	if o == nil {
+func (c *CheckoutUpdatePublic) GetCustomerBillingName() *string {
+	if c == nil {
 		return nil
 	}
-	return o.CustomerBillingName
+	return c.CustomerBillingName
 }
 
-func (o *CheckoutUpdatePublic) GetCustomerBillingAddress() *Address {
-	if o == nil {
+func (c *CheckoutUpdatePublic) GetCustomerBillingAddress() *AddressInput {
+	if c == nil {
 		return nil
 	}
-	return o.CustomerBillingAddress
+	return c.CustomerBillingAddress
 }
 
-func (o *CheckoutUpdatePublic) GetCustomerTaxID() *string {
-	if o == nil {
+func (c *CheckoutUpdatePublic) GetCustomerTaxID() *string {
+	if c == nil {
 		return nil
 	}
-	return o.CustomerTaxID
+	return c.CustomerTaxID
 }
 
-func (o *CheckoutUpdatePublic) GetDiscountCode() *string {
-	if o == nil {
+func (c *CheckoutUpdatePublic) GetDiscountCode() *string {
+	if c == nil {
 		return nil
 	}
-	return o.DiscountCode
+	return c.DiscountCode
 }

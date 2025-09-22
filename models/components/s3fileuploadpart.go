@@ -28,51 +28,51 @@ func (s *S3FileUploadPart) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *S3FileUploadPart) GetNumber() int64 {
-	if o == nil {
+func (s *S3FileUploadPart) GetNumber() int64 {
+	if s == nil {
 		return 0
 	}
-	return o.Number
+	return s.Number
 }
 
-func (o *S3FileUploadPart) GetChunkStart() int64 {
-	if o == nil {
+func (s *S3FileUploadPart) GetChunkStart() int64 {
+	if s == nil {
 		return 0
 	}
-	return o.ChunkStart
+	return s.ChunkStart
 }
 
-func (o *S3FileUploadPart) GetChunkEnd() int64 {
-	if o == nil {
+func (s *S3FileUploadPart) GetChunkEnd() int64 {
+	if s == nil {
 		return 0
 	}
-	return o.ChunkEnd
+	return s.ChunkEnd
 }
 
-func (o *S3FileUploadPart) GetChecksumSha256Base64() *string {
-	if o == nil {
+func (s *S3FileUploadPart) GetChecksumSha256Base64() *string {
+	if s == nil {
 		return nil
 	}
-	return o.ChecksumSha256Base64
+	return s.ChecksumSha256Base64
 }
 
-func (o *S3FileUploadPart) GetURL() string {
-	if o == nil {
+func (s *S3FileUploadPart) GetURL() string {
+	if s == nil {
 		return ""
 	}
-	return o.URL
+	return s.URL
 }
 
-func (o *S3FileUploadPart) GetExpiresAt() time.Time {
-	if o == nil {
+func (s *S3FileUploadPart) GetExpiresAt() time.Time {
+	if s == nil {
 		return time.Time{}
 	}
-	return o.ExpiresAt
+	return s.ExpiresAt
 }
 
-func (o *S3FileUploadPart) GetHeaders() map[string]string {
-	if o == nil {
+func (s *S3FileUploadPart) GetHeaders() map[string]string {
+	if s == nil {
 		return nil
 	}
-	return o.Headers
+	return s.Headers
 }

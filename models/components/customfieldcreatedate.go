@@ -150,41 +150,41 @@ func (c *CustomFieldCreateDate) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *CustomFieldCreateDate) GetMetadata() map[string]CustomFieldCreateDateMetadata {
-	if o == nil {
+func (c *CustomFieldCreateDate) GetMetadata() map[string]CustomFieldCreateDateMetadata {
+	if c == nil {
 		return nil
 	}
-	return o.Metadata
+	return c.Metadata
 }
 
-func (o *CustomFieldCreateDate) GetType() string {
+func (c *CustomFieldCreateDate) GetType() string {
 	return "date"
 }
 
-func (o *CustomFieldCreateDate) GetSlug() string {
-	if o == nil {
+func (c *CustomFieldCreateDate) GetSlug() string {
+	if c == nil {
 		return ""
 	}
-	return o.Slug
+	return c.Slug
 }
 
-func (o *CustomFieldCreateDate) GetName() string {
-	if o == nil {
+func (c *CustomFieldCreateDate) GetName() string {
+	if c == nil {
 		return ""
 	}
-	return o.Name
+	return c.Name
 }
 
-func (o *CustomFieldCreateDate) GetOrganizationID() *string {
-	if o == nil {
+func (c *CustomFieldCreateDate) GetOrganizationID() *string {
+	if c == nil {
 		return nil
 	}
-	return o.OrganizationID
+	return c.OrganizationID
 }
 
-func (o *CustomFieldCreateDate) GetProperties() CustomFieldDateProperties {
-	if o == nil {
+func (c *CustomFieldCreateDate) GetProperties() CustomFieldDateProperties {
+	if c == nil {
 		return CustomFieldDateProperties{}
 	}
-	return o.Properties
+	return c.Properties
 }

@@ -10,20 +10,20 @@ type BenefitsDeleteRequest struct {
 	ID string `pathParam:"style=simple,explode=false,name=id"`
 }
 
-func (o *BenefitsDeleteRequest) GetID() string {
-	if o == nil {
+func (b *BenefitsDeleteRequest) GetID() string {
+	if b == nil {
 		return ""
 	}
-	return o.ID
+	return b.ID
 }
 
 type BenefitsDeleteResponse struct {
 	HTTPMeta components.HTTPMetadata `json:"-"`
 }
 
-func (o *BenefitsDeleteResponse) GetHTTPMeta() components.HTTPMetadata {
-	if o == nil {
+func (b *BenefitsDeleteResponse) GetHTTPMeta() components.HTTPMetadata {
+	if b == nil {
 		return components.HTTPMetadata{}
 	}
-	return o.HTTPMeta
+	return b.HTTPMeta
 }

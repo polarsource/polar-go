@@ -166,53 +166,53 @@ func (m *MetersQuantitiesRequest) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *MetersQuantitiesRequest) GetID() string {
-	if o == nil {
+func (m *MetersQuantitiesRequest) GetID() string {
+	if m == nil {
 		return ""
 	}
-	return o.ID
+	return m.ID
 }
 
-func (o *MetersQuantitiesRequest) GetStartTimestamp() time.Time {
-	if o == nil {
+func (m *MetersQuantitiesRequest) GetStartTimestamp() time.Time {
+	if m == nil {
 		return time.Time{}
 	}
-	return o.StartTimestamp
+	return m.StartTimestamp
 }
 
-func (o *MetersQuantitiesRequest) GetEndTimestamp() time.Time {
-	if o == nil {
+func (m *MetersQuantitiesRequest) GetEndTimestamp() time.Time {
+	if m == nil {
 		return time.Time{}
 	}
-	return o.EndTimestamp
+	return m.EndTimestamp
 }
 
-func (o *MetersQuantitiesRequest) GetInterval() components.TimeInterval {
-	if o == nil {
+func (m *MetersQuantitiesRequest) GetInterval() components.TimeInterval {
+	if m == nil {
 		return components.TimeInterval("")
 	}
-	return o.Interval
+	return m.Interval
 }
 
-func (o *MetersQuantitiesRequest) GetCustomerID() *MetersQuantitiesQueryParamCustomerIDFilter {
-	if o == nil {
+func (m *MetersQuantitiesRequest) GetCustomerID() *MetersQuantitiesQueryParamCustomerIDFilter {
+	if m == nil {
 		return nil
 	}
-	return o.CustomerID
+	return m.CustomerID
 }
 
-func (o *MetersQuantitiesRequest) GetExternalCustomerID() *MetersQuantitiesQueryParamExternalCustomerIDFilter {
-	if o == nil {
+func (m *MetersQuantitiesRequest) GetExternalCustomerID() *MetersQuantitiesQueryParamExternalCustomerIDFilter {
+	if m == nil {
 		return nil
 	}
-	return o.ExternalCustomerID
+	return m.ExternalCustomerID
 }
 
-func (o *MetersQuantitiesRequest) GetMetadata() map[string]components.MetadataQuery {
-	if o == nil {
+func (m *MetersQuantitiesRequest) GetMetadata() map[string]components.MetadataQuery {
+	if m == nil {
 		return nil
 	}
-	return o.Metadata
+	return m.Metadata
 }
 
 type MetersQuantitiesResponse struct {
@@ -221,16 +221,16 @@ type MetersQuantitiesResponse struct {
 	MeterQuantities *components.MeterQuantities
 }
 
-func (o *MetersQuantitiesResponse) GetHTTPMeta() components.HTTPMetadata {
-	if o == nil {
+func (m *MetersQuantitiesResponse) GetHTTPMeta() components.HTTPMetadata {
+	if m == nil {
 		return components.HTTPMetadata{}
 	}
-	return o.HTTPMeta
+	return m.HTTPMeta
 }
 
-func (o *MetersQuantitiesResponse) GetMeterQuantities() *components.MeterQuantities {
-	if o == nil {
+func (m *MetersQuantitiesResponse) GetMeterQuantities() *components.MeterQuantities {
+	if m == nil {
 		return nil
 	}
-	return o.MeterQuantities
+	return m.MeterQuantities
 }

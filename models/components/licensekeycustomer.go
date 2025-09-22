@@ -215,93 +215,93 @@ func (l *LicenseKeyCustomer) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *LicenseKeyCustomer) GetID() string {
-	if o == nil {
+func (l *LicenseKeyCustomer) GetID() string {
+	if l == nil {
 		return ""
 	}
-	return o.ID
+	return l.ID
 }
 
-func (o *LicenseKeyCustomer) GetCreatedAt() time.Time {
-	if o == nil {
+func (l *LicenseKeyCustomer) GetCreatedAt() time.Time {
+	if l == nil {
 		return time.Time{}
 	}
-	return o.CreatedAt
+	return l.CreatedAt
 }
 
-func (o *LicenseKeyCustomer) GetModifiedAt() *time.Time {
-	if o == nil {
+func (l *LicenseKeyCustomer) GetModifiedAt() *time.Time {
+	if l == nil {
 		return nil
 	}
-	return o.ModifiedAt
+	return l.ModifiedAt
 }
 
-func (o *LicenseKeyCustomer) GetMetadata() map[string]LicenseKeyCustomerMetadata {
-	if o == nil {
+func (l *LicenseKeyCustomer) GetMetadata() map[string]LicenseKeyCustomerMetadata {
+	if l == nil {
 		return map[string]LicenseKeyCustomerMetadata{}
 	}
-	return o.Metadata
+	return l.Metadata
 }
 
-func (o *LicenseKeyCustomer) GetExternalID() *string {
-	if o == nil {
+func (l *LicenseKeyCustomer) GetExternalID() *string {
+	if l == nil {
 		return nil
 	}
-	return o.ExternalID
+	return l.ExternalID
 }
 
-func (o *LicenseKeyCustomer) GetEmail() string {
-	if o == nil {
+func (l *LicenseKeyCustomer) GetEmail() string {
+	if l == nil {
 		return ""
 	}
-	return o.Email
+	return l.Email
 }
 
-func (o *LicenseKeyCustomer) GetEmailVerified() bool {
-	if o == nil {
+func (l *LicenseKeyCustomer) GetEmailVerified() bool {
+	if l == nil {
 		return false
 	}
-	return o.EmailVerified
+	return l.EmailVerified
 }
 
-func (o *LicenseKeyCustomer) GetName() *string {
-	if o == nil {
+func (l *LicenseKeyCustomer) GetName() *string {
+	if l == nil {
 		return nil
 	}
-	return o.Name
+	return l.Name
 }
 
-func (o *LicenseKeyCustomer) GetBillingAddress() *Address {
-	if o == nil {
+func (l *LicenseKeyCustomer) GetBillingAddress() *Address {
+	if l == nil {
 		return nil
 	}
-	return o.BillingAddress
+	return l.BillingAddress
 }
 
-func (o *LicenseKeyCustomer) GetTaxID() []*LicenseKeyCustomerTaxID {
-	if o == nil {
+func (l *LicenseKeyCustomer) GetTaxID() []*LicenseKeyCustomerTaxID {
+	if l == nil {
 		return nil
 	}
-	return o.TaxID
+	return l.TaxID
 }
 
-func (o *LicenseKeyCustomer) GetOrganizationID() string {
-	if o == nil {
+func (l *LicenseKeyCustomer) GetOrganizationID() string {
+	if l == nil {
 		return ""
 	}
-	return o.OrganizationID
+	return l.OrganizationID
 }
 
-func (o *LicenseKeyCustomer) GetDeletedAt() *time.Time {
-	if o == nil {
+func (l *LicenseKeyCustomer) GetDeletedAt() *time.Time {
+	if l == nil {
 		return nil
 	}
-	return o.DeletedAt
+	return l.DeletedAt
 }
 
-func (o *LicenseKeyCustomer) GetAvatarURL() string {
-	if o == nil {
+func (l *LicenseKeyCustomer) GetAvatarURL() string {
+	if l == nil {
 		return ""
 	}
-	return o.AvatarURL
+	return l.AvatarURL
 }

@@ -96,34 +96,34 @@ func (p *ProductPriceMeteredUnitCreate) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *ProductPriceMeteredUnitCreate) GetAmountType() string {
+func (p *ProductPriceMeteredUnitCreate) GetAmountType() string {
 	return "metered_unit"
 }
 
-func (o *ProductPriceMeteredUnitCreate) GetMeterID() string {
-	if o == nil {
+func (p *ProductPriceMeteredUnitCreate) GetMeterID() string {
+	if p == nil {
 		return ""
 	}
-	return o.MeterID
+	return p.MeterID
 }
 
-func (o *ProductPriceMeteredUnitCreate) GetPriceCurrency() *string {
-	if o == nil {
+func (p *ProductPriceMeteredUnitCreate) GetPriceCurrency() *string {
+	if p == nil {
 		return nil
 	}
-	return o.PriceCurrency
+	return p.PriceCurrency
 }
 
-func (o *ProductPriceMeteredUnitCreate) GetUnitAmount() UnitAmount {
-	if o == nil {
+func (p *ProductPriceMeteredUnitCreate) GetUnitAmount() UnitAmount {
+	if p == nil {
 		return UnitAmount{}
 	}
-	return o.UnitAmount
+	return p.UnitAmount
 }
 
-func (o *ProductPriceMeteredUnitCreate) GetCapAmount() *int64 {
-	if o == nil {
+func (p *ProductPriceMeteredUnitCreate) GetCapAmount() *int64 {
+	if p == nil {
 		return nil
 	}
-	return o.CapAmount
+	return p.CapAmount
 }

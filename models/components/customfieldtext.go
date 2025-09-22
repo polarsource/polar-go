@@ -146,62 +146,62 @@ func (c *CustomFieldText) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *CustomFieldText) GetCreatedAt() time.Time {
-	if o == nil {
+func (c *CustomFieldText) GetCreatedAt() time.Time {
+	if c == nil {
 		return time.Time{}
 	}
-	return o.CreatedAt
+	return c.CreatedAt
 }
 
-func (o *CustomFieldText) GetModifiedAt() *time.Time {
-	if o == nil {
+func (c *CustomFieldText) GetModifiedAt() *time.Time {
+	if c == nil {
 		return nil
 	}
-	return o.ModifiedAt
+	return c.ModifiedAt
 }
 
-func (o *CustomFieldText) GetID() string {
-	if o == nil {
+func (c *CustomFieldText) GetID() string {
+	if c == nil {
 		return ""
 	}
-	return o.ID
+	return c.ID
 }
 
-func (o *CustomFieldText) GetMetadata() map[string]CustomFieldTextMetadata {
-	if o == nil {
+func (c *CustomFieldText) GetMetadata() map[string]CustomFieldTextMetadata {
+	if c == nil {
 		return map[string]CustomFieldTextMetadata{}
 	}
-	return o.Metadata
+	return c.Metadata
 }
 
-func (o *CustomFieldText) GetType() string {
+func (c *CustomFieldText) GetType() string {
 	return "text"
 }
 
-func (o *CustomFieldText) GetSlug() string {
-	if o == nil {
+func (c *CustomFieldText) GetSlug() string {
+	if c == nil {
 		return ""
 	}
-	return o.Slug
+	return c.Slug
 }
 
-func (o *CustomFieldText) GetName() string {
-	if o == nil {
+func (c *CustomFieldText) GetName() string {
+	if c == nil {
 		return ""
 	}
-	return o.Name
+	return c.Name
 }
 
-func (o *CustomFieldText) GetOrganizationID() string {
-	if o == nil {
+func (c *CustomFieldText) GetOrganizationID() string {
+	if c == nil {
 		return ""
 	}
-	return o.OrganizationID
+	return c.OrganizationID
 }
 
-func (o *CustomFieldText) GetProperties() CustomFieldTextProperties {
-	if o == nil {
+func (c *CustomFieldText) GetProperties() CustomFieldTextProperties {
+	if c == nil {
 		return CustomFieldTextProperties{}
 	}
-	return o.Properties
+	return c.Properties
 }

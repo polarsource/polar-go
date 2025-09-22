@@ -12,18 +12,18 @@ type WebhooksUpdateWebhookEndpointRequest struct {
 	WebhookEndpointUpdate components.WebhookEndpointUpdate `request:"mediaType=application/json"`
 }
 
-func (o *WebhooksUpdateWebhookEndpointRequest) GetID() string {
-	if o == nil {
+func (w *WebhooksUpdateWebhookEndpointRequest) GetID() string {
+	if w == nil {
 		return ""
 	}
-	return o.ID
+	return w.ID
 }
 
-func (o *WebhooksUpdateWebhookEndpointRequest) GetWebhookEndpointUpdate() components.WebhookEndpointUpdate {
-	if o == nil {
+func (w *WebhooksUpdateWebhookEndpointRequest) GetWebhookEndpointUpdate() components.WebhookEndpointUpdate {
+	if w == nil {
 		return components.WebhookEndpointUpdate{}
 	}
-	return o.WebhookEndpointUpdate
+	return w.WebhookEndpointUpdate
 }
 
 type WebhooksUpdateWebhookEndpointResponse struct {
@@ -32,16 +32,16 @@ type WebhooksUpdateWebhookEndpointResponse struct {
 	WebhookEndpoint *components.WebhookEndpoint
 }
 
-func (o *WebhooksUpdateWebhookEndpointResponse) GetHTTPMeta() components.HTTPMetadata {
-	if o == nil {
+func (w *WebhooksUpdateWebhookEndpointResponse) GetHTTPMeta() components.HTTPMetadata {
+	if w == nil {
 		return components.HTTPMetadata{}
 	}
-	return o.HTTPMeta
+	return w.HTTPMeta
 }
 
-func (o *WebhooksUpdateWebhookEndpointResponse) GetWebhookEndpoint() *components.WebhookEndpoint {
-	if o == nil {
+func (w *WebhooksUpdateWebhookEndpointResponse) GetWebhookEndpoint() *components.WebhookEndpoint {
+	if w == nil {
 		return nil
 	}
-	return o.WebhookEndpoint
+	return w.WebhookEndpoint
 }

@@ -136,51 +136,51 @@ type LicenseKeyValidate struct {
 	Conditions map[string]Conditions `json:"conditions,omitempty"`
 }
 
-func (o *LicenseKeyValidate) GetKey() string {
-	if o == nil {
+func (l *LicenseKeyValidate) GetKey() string {
+	if l == nil {
 		return ""
 	}
-	return o.Key
+	return l.Key
 }
 
-func (o *LicenseKeyValidate) GetOrganizationID() string {
-	if o == nil {
+func (l *LicenseKeyValidate) GetOrganizationID() string {
+	if l == nil {
 		return ""
 	}
-	return o.OrganizationID
+	return l.OrganizationID
 }
 
-func (o *LicenseKeyValidate) GetActivationID() *string {
-	if o == nil {
+func (l *LicenseKeyValidate) GetActivationID() *string {
+	if l == nil {
 		return nil
 	}
-	return o.ActivationID
+	return l.ActivationID
 }
 
-func (o *LicenseKeyValidate) GetBenefitID() *string {
-	if o == nil {
+func (l *LicenseKeyValidate) GetBenefitID() *string {
+	if l == nil {
 		return nil
 	}
-	return o.BenefitID
+	return l.BenefitID
 }
 
-func (o *LicenseKeyValidate) GetCustomerID() *string {
-	if o == nil {
+func (l *LicenseKeyValidate) GetCustomerID() *string {
+	if l == nil {
 		return nil
 	}
-	return o.CustomerID
+	return l.CustomerID
 }
 
-func (o *LicenseKeyValidate) GetIncrementUsage() *int64 {
-	if o == nil {
+func (l *LicenseKeyValidate) GetIncrementUsage() *int64 {
+	if l == nil {
 		return nil
 	}
-	return o.IncrementUsage
+	return l.IncrementUsage
 }
 
-func (o *LicenseKeyValidate) GetConditions() map[string]Conditions {
-	if o == nil {
+func (l *LicenseKeyValidate) GetConditions() map[string]Conditions {
+	if l == nil {
 		return nil
 	}
-	return o.Conditions
+	return l.Conditions
 }

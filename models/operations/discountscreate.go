@@ -12,16 +12,16 @@ type DiscountsCreateResponse struct {
 	Discount *components.Discount
 }
 
-func (o *DiscountsCreateResponse) GetHTTPMeta() components.HTTPMetadata {
-	if o == nil {
+func (d *DiscountsCreateResponse) GetHTTPMeta() components.HTTPMetadata {
+	if d == nil {
 		return components.HTTPMetadata{}
 	}
-	return o.HTTPMeta
+	return d.HTTPMeta
 }
 
-func (o *DiscountsCreateResponse) GetDiscount() *components.Discount {
-	if o == nil {
+func (d *DiscountsCreateResponse) GetDiscount() *components.Discount {
+	if d == nil {
 		return nil
 	}
-	return o.Discount
+	return d.Discount
 }

@@ -11,11 +11,11 @@ type SubscriptionsGetRequest struct {
 	ID string `pathParam:"style=simple,explode=false,name=id"`
 }
 
-func (o *SubscriptionsGetRequest) GetID() string {
-	if o == nil {
+func (s *SubscriptionsGetRequest) GetID() string {
+	if s == nil {
 		return ""
 	}
-	return o.ID
+	return s.ID
 }
 
 type SubscriptionsGetResponse struct {
@@ -24,16 +24,16 @@ type SubscriptionsGetResponse struct {
 	Subscription *components.Subscription
 }
 
-func (o *SubscriptionsGetResponse) GetHTTPMeta() components.HTTPMetadata {
-	if o == nil {
+func (s *SubscriptionsGetResponse) GetHTTPMeta() components.HTTPMetadata {
+	if s == nil {
 		return components.HTTPMetadata{}
 	}
-	return o.HTTPMeta
+	return s.HTTPMeta
 }
 
-func (o *SubscriptionsGetResponse) GetSubscription() *components.Subscription {
-	if o == nil {
+func (s *SubscriptionsGetResponse) GetSubscription() *components.Subscription {
+	if s == nil {
 		return nil
 	}
-	return o.Subscription
+	return s.Subscription
 }

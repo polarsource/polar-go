@@ -26,20 +26,20 @@ func (p *ProductPriceFixedCreate) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *ProductPriceFixedCreate) GetAmountType() string {
+func (p *ProductPriceFixedCreate) GetAmountType() string {
 	return "fixed"
 }
 
-func (o *ProductPriceFixedCreate) GetPriceAmount() int64 {
-	if o == nil {
+func (p *ProductPriceFixedCreate) GetPriceAmount() int64 {
+	if p == nil {
 		return 0
 	}
-	return o.PriceAmount
+	return p.PriceAmount
 }
 
-func (o *ProductPriceFixedCreate) GetPriceCurrency() *string {
-	if o == nil {
+func (p *ProductPriceFixedCreate) GetPriceCurrency() *string {
+	if p == nil {
 		return nil
 	}
-	return o.PriceCurrency
+	return p.PriceCurrency
 }

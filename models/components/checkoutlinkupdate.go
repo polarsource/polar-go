@@ -142,51 +142,51 @@ type CheckoutLinkUpdate struct {
 	SuccessURL *string `json:"success_url,omitempty"`
 }
 
-func (o *CheckoutLinkUpdate) GetMetadata() map[string]CheckoutLinkUpdateMetadata {
-	if o == nil {
+func (c *CheckoutLinkUpdate) GetMetadata() map[string]CheckoutLinkUpdateMetadata {
+	if c == nil {
 		return nil
 	}
-	return o.Metadata
+	return c.Metadata
 }
 
-func (o *CheckoutLinkUpdate) GetProducts() []string {
-	if o == nil {
+func (c *CheckoutLinkUpdate) GetProducts() []string {
+	if c == nil {
 		return nil
 	}
-	return o.Products
+	return c.Products
 }
 
-func (o *CheckoutLinkUpdate) GetLabel() *string {
-	if o == nil {
+func (c *CheckoutLinkUpdate) GetLabel() *string {
+	if c == nil {
 		return nil
 	}
-	return o.Label
+	return c.Label
 }
 
-func (o *CheckoutLinkUpdate) GetAllowDiscountCodes() *bool {
-	if o == nil {
+func (c *CheckoutLinkUpdate) GetAllowDiscountCodes() *bool {
+	if c == nil {
 		return nil
 	}
-	return o.AllowDiscountCodes
+	return c.AllowDiscountCodes
 }
 
-func (o *CheckoutLinkUpdate) GetRequireBillingAddress() *bool {
-	if o == nil {
+func (c *CheckoutLinkUpdate) GetRequireBillingAddress() *bool {
+	if c == nil {
 		return nil
 	}
-	return o.RequireBillingAddress
+	return c.RequireBillingAddress
 }
 
-func (o *CheckoutLinkUpdate) GetDiscountID() *string {
-	if o == nil {
+func (c *CheckoutLinkUpdate) GetDiscountID() *string {
+	if c == nil {
 		return nil
 	}
-	return o.DiscountID
+	return c.DiscountID
 }
 
-func (o *CheckoutLinkUpdate) GetSuccessURL() *string {
-	if o == nil {
+func (c *CheckoutLinkUpdate) GetSuccessURL() *string {
+	if c == nil {
 		return nil
 	}
-	return o.SuccessURL
+	return c.SuccessURL
 }

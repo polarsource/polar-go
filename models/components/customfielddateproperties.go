@@ -25,37 +25,37 @@ func (c *CustomFieldDateProperties) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *CustomFieldDateProperties) GetFormLabel() *string {
-	if o == nil {
+func (c *CustomFieldDateProperties) GetFormLabel() *string {
+	if c == nil {
 		return nil
 	}
-	return o.FormLabel
+	return c.FormLabel
 }
 
-func (o *CustomFieldDateProperties) GetFormHelpText() *string {
-	if o == nil {
+func (c *CustomFieldDateProperties) GetFormHelpText() *string {
+	if c == nil {
 		return nil
 	}
-	return o.FormHelpText
+	return c.FormHelpText
 }
 
-func (o *CustomFieldDateProperties) GetFormPlaceholder() *string {
-	if o == nil {
+func (c *CustomFieldDateProperties) GetFormPlaceholder() *string {
+	if c == nil {
 		return nil
 	}
-	return o.FormPlaceholder
+	return c.FormPlaceholder
 }
 
-func (o *CustomFieldDateProperties) GetGe() *int64 {
-	if o == nil {
+func (c *CustomFieldDateProperties) GetGe() *int64 {
+	if c == nil {
 		return nil
 	}
-	return o.Ge
+	return c.Ge
 }
 
-func (o *CustomFieldDateProperties) GetLe() *int64 {
-	if o == nil {
+func (c *CustomFieldDateProperties) GetLe() *int64 {
+	if c == nil {
 		return nil
 	}
-	return o.Le
+	return c.Le
 }

@@ -22,13 +22,13 @@ func (n *NotPaidOrder) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *NotPaidOrder) GetError() string {
+func (n *NotPaidOrder) GetError() string {
 	return "NotPaidOrder"
 }
 
-func (o *NotPaidOrder) GetDetail() string {
-	if o == nil {
+func (n *NotPaidOrder) GetDetail() string {
+	if n == nil {
 		return ""
 	}
-	return o.Detail
+	return n.Detail
 }

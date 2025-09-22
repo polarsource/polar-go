@@ -40,7 +40,7 @@ func main() {
 
     res, err := s.Files.List(ctx, polargo.Pointer(operations.CreateFilesListQueryParamOrganizationIDFilterStr(
         "1dbfc517-0bbf-4301-9ba8-555ca42b9737",
-    )), nil, polargo.Int64(1), polargo.Int64(10))
+    )), nil, polargo.Pointer[int64](1), polargo.Pointer[int64](10))
     if err != nil {
         log.Fatal(err)
     }
@@ -113,7 +113,7 @@ func main() {
 
     res, err := s.Files.Create(ctx, components.CreateFileCreateDownloadable(
         components.DownloadableFileCreate{
-            OrganizationID: polargo.String("1dbfc517-0bbf-4301-9ba8-555ca42b9737"),
+            OrganizationID: polargo.Pointer("1dbfc517-0bbf-4301-9ba8-555ca42b9737"),
             Name: "<value>",
             MimeType: "<value>",
             Size: 612128,
@@ -184,17 +184,17 @@ func main() {
             components.S3FileUploadCompletedPart{
                 Number: 979613,
                 ChecksumEtag: "<value>",
-                ChecksumSha256Base64: polargo.String("<value>"),
+                ChecksumSha256Base64: polargo.Pointer("<value>"),
             },
             components.S3FileUploadCompletedPart{
                 Number: 979613,
                 ChecksumEtag: "<value>",
-                ChecksumSha256Base64: polargo.String("<value>"),
+                ChecksumSha256Base64: polargo.Pointer("<value>"),
             },
             components.S3FileUploadCompletedPart{
                 Number: 979613,
                 ChecksumEtag: "<value>",
-                ChecksumSha256Base64: polargo.String("<value>"),
+                ChecksumSha256Base64: polargo.Pointer("<value>"),
             },
         },
     })

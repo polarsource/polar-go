@@ -155,107 +155,107 @@ func (d *DiscountPercentageRepeatDurationBase) UnmarshalJSON(data []byte) error 
 	return nil
 }
 
-func (o *DiscountPercentageRepeatDurationBase) GetDuration() DiscountDuration {
-	if o == nil {
+func (d *DiscountPercentageRepeatDurationBase) GetDuration() DiscountDuration {
+	if d == nil {
 		return DiscountDuration("")
 	}
-	return o.Duration
+	return d.Duration
 }
 
-func (o *DiscountPercentageRepeatDurationBase) GetDurationInMonths() int64 {
-	if o == nil {
+func (d *DiscountPercentageRepeatDurationBase) GetDurationInMonths() int64 {
+	if d == nil {
 		return 0
 	}
-	return o.DurationInMonths
+	return d.DurationInMonths
 }
 
-func (o *DiscountPercentageRepeatDurationBase) GetType() DiscountType {
-	if o == nil {
+func (d *DiscountPercentageRepeatDurationBase) GetType() DiscountType {
+	if d == nil {
 		return DiscountType("")
 	}
-	return o.Type
+	return d.Type
 }
 
-func (o *DiscountPercentageRepeatDurationBase) GetBasisPoints() int64 {
-	if o == nil {
+func (d *DiscountPercentageRepeatDurationBase) GetBasisPoints() int64 {
+	if d == nil {
 		return 0
 	}
-	return o.BasisPoints
+	return d.BasisPoints
 }
 
-func (o *DiscountPercentageRepeatDurationBase) GetCreatedAt() time.Time {
-	if o == nil {
+func (d *DiscountPercentageRepeatDurationBase) GetCreatedAt() time.Time {
+	if d == nil {
 		return time.Time{}
 	}
-	return o.CreatedAt
+	return d.CreatedAt
 }
 
-func (o *DiscountPercentageRepeatDurationBase) GetModifiedAt() *time.Time {
-	if o == nil {
+func (d *DiscountPercentageRepeatDurationBase) GetModifiedAt() *time.Time {
+	if d == nil {
 		return nil
 	}
-	return o.ModifiedAt
+	return d.ModifiedAt
 }
 
-func (o *DiscountPercentageRepeatDurationBase) GetID() string {
-	if o == nil {
+func (d *DiscountPercentageRepeatDurationBase) GetID() string {
+	if d == nil {
 		return ""
 	}
-	return o.ID
+	return d.ID
 }
 
-func (o *DiscountPercentageRepeatDurationBase) GetMetadata() map[string]DiscountPercentageRepeatDurationBaseMetadata {
-	if o == nil {
+func (d *DiscountPercentageRepeatDurationBase) GetMetadata() map[string]DiscountPercentageRepeatDurationBaseMetadata {
+	if d == nil {
 		return map[string]DiscountPercentageRepeatDurationBaseMetadata{}
 	}
-	return o.Metadata
+	return d.Metadata
 }
 
-func (o *DiscountPercentageRepeatDurationBase) GetName() string {
-	if o == nil {
+func (d *DiscountPercentageRepeatDurationBase) GetName() string {
+	if d == nil {
 		return ""
 	}
-	return o.Name
+	return d.Name
 }
 
-func (o *DiscountPercentageRepeatDurationBase) GetCode() *string {
-	if o == nil {
+func (d *DiscountPercentageRepeatDurationBase) GetCode() *string {
+	if d == nil {
 		return nil
 	}
-	return o.Code
+	return d.Code
 }
 
-func (o *DiscountPercentageRepeatDurationBase) GetStartsAt() *time.Time {
-	if o == nil {
+func (d *DiscountPercentageRepeatDurationBase) GetStartsAt() *time.Time {
+	if d == nil {
 		return nil
 	}
-	return o.StartsAt
+	return d.StartsAt
 }
 
-func (o *DiscountPercentageRepeatDurationBase) GetEndsAt() *time.Time {
-	if o == nil {
+func (d *DiscountPercentageRepeatDurationBase) GetEndsAt() *time.Time {
+	if d == nil {
 		return nil
 	}
-	return o.EndsAt
+	return d.EndsAt
 }
 
-func (o *DiscountPercentageRepeatDurationBase) GetMaxRedemptions() *int64 {
-	if o == nil {
+func (d *DiscountPercentageRepeatDurationBase) GetMaxRedemptions() *int64 {
+	if d == nil {
 		return nil
 	}
-	return o.MaxRedemptions
+	return d.MaxRedemptions
 }
 
-func (o *DiscountPercentageRepeatDurationBase) GetRedemptionsCount() int64 {
-	if o == nil {
+func (d *DiscountPercentageRepeatDurationBase) GetRedemptionsCount() int64 {
+	if d == nil {
 		return 0
 	}
-	return o.RedemptionsCount
+	return d.RedemptionsCount
 }
 
-func (o *DiscountPercentageRepeatDurationBase) GetOrganizationID() string {
-	if o == nil {
+func (d *DiscountPercentageRepeatDurationBase) GetOrganizationID() string {
+	if d == nil {
 		return ""
 	}
-	return o.OrganizationID
+	return d.OrganizationID
 }

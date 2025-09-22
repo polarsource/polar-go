@@ -150,37 +150,37 @@ func (e *EventCreateExternalCustomer) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *EventCreateExternalCustomer) GetMetadata() map[string]EventCreateExternalCustomerMetadata {
-	if o == nil {
+func (e *EventCreateExternalCustomer) GetMetadata() map[string]EventCreateExternalCustomerMetadata {
+	if e == nil {
 		return nil
 	}
-	return o.Metadata
+	return e.Metadata
 }
 
-func (o *EventCreateExternalCustomer) GetTimestamp() *time.Time {
-	if o == nil {
+func (e *EventCreateExternalCustomer) GetTimestamp() *time.Time {
+	if e == nil {
 		return nil
 	}
-	return o.Timestamp
+	return e.Timestamp
 }
 
-func (o *EventCreateExternalCustomer) GetName() string {
-	if o == nil {
+func (e *EventCreateExternalCustomer) GetName() string {
+	if e == nil {
 		return ""
 	}
-	return o.Name
+	return e.Name
 }
 
-func (o *EventCreateExternalCustomer) GetOrganizationID() *string {
-	if o == nil {
+func (e *EventCreateExternalCustomer) GetOrganizationID() *string {
+	if e == nil {
 		return nil
 	}
-	return o.OrganizationID
+	return e.OrganizationID
 }
 
-func (o *EventCreateExternalCustomer) GetExternalCustomerID() string {
-	if o == nil {
+func (e *EventCreateExternalCustomer) GetExternalCustomerID() string {
+	if e == nil {
 		return ""
 	}
-	return o.ExternalCustomerID
+	return e.ExternalCustomerID
 }

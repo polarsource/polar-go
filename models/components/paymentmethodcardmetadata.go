@@ -25,37 +25,37 @@ func (p *PaymentMethodCardMetadata) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *PaymentMethodCardMetadata) GetBrand() string {
-	if o == nil {
+func (p *PaymentMethodCardMetadata) GetBrand() string {
+	if p == nil {
 		return ""
 	}
-	return o.Brand
+	return p.Brand
 }
 
-func (o *PaymentMethodCardMetadata) GetLast4() string {
-	if o == nil {
+func (p *PaymentMethodCardMetadata) GetLast4() string {
+	if p == nil {
 		return ""
 	}
-	return o.Last4
+	return p.Last4
 }
 
-func (o *PaymentMethodCardMetadata) GetExpMonth() int64 {
-	if o == nil {
+func (p *PaymentMethodCardMetadata) GetExpMonth() int64 {
+	if p == nil {
 		return 0
 	}
-	return o.ExpMonth
+	return p.ExpMonth
 }
 
-func (o *PaymentMethodCardMetadata) GetExpYear() int64 {
-	if o == nil {
+func (p *PaymentMethodCardMetadata) GetExpYear() int64 {
+	if p == nil {
 		return 0
 	}
-	return o.ExpYear
+	return p.ExpYear
 }
 
-func (o *PaymentMethodCardMetadata) GetWallet() *string {
-	if o == nil {
+func (p *PaymentMethodCardMetadata) GetWallet() *string {
+	if p == nil {
 		return nil
 	}
-	return o.Wallet
+	return p.Wallet
 }

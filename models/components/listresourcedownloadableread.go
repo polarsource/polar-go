@@ -7,16 +7,16 @@ type ListResourceDownloadableRead struct {
 	Pagination Pagination         `json:"pagination"`
 }
 
-func (o *ListResourceDownloadableRead) GetItems() []DownloadableRead {
-	if o == nil {
+func (l *ListResourceDownloadableRead) GetItems() []DownloadableRead {
+	if l == nil {
 		return []DownloadableRead{}
 	}
-	return o.Items
+	return l.Items
 }
 
-func (o *ListResourceDownloadableRead) GetPagination() Pagination {
-	if o == nil {
+func (l *ListResourceDownloadableRead) GetPagination() Pagination {
+	if l == nil {
 		return Pagination{}
 	}
-	return o.Pagination
+	return l.Pagination
 }

@@ -7,16 +7,16 @@ type ListResourceWebhookDelivery struct {
 	Pagination Pagination        `json:"pagination"`
 }
 
-func (o *ListResourceWebhookDelivery) GetItems() []WebhookDelivery {
-	if o == nil {
+func (l *ListResourceWebhookDelivery) GetItems() []WebhookDelivery {
+	if l == nil {
 		return []WebhookDelivery{}
 	}
-	return o.Items
+	return l.Items
 }
 
-func (o *ListResourceWebhookDelivery) GetPagination() Pagination {
-	if o == nil {
+func (l *ListResourceWebhookDelivery) GetPagination() Pagination {
+	if l == nil {
 		return Pagination{}
 	}
-	return o.Pagination
+	return l.Pagination
 }

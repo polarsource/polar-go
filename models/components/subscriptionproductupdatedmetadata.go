@@ -23,23 +23,23 @@ func (s *SubscriptionProductUpdatedMetadata) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SubscriptionProductUpdatedMetadata) GetSubscriptionID() string {
-	if o == nil {
+func (s *SubscriptionProductUpdatedMetadata) GetSubscriptionID() string {
+	if s == nil {
 		return ""
 	}
-	return o.SubscriptionID
+	return s.SubscriptionID
 }
 
-func (o *SubscriptionProductUpdatedMetadata) GetOldProductID() string {
-	if o == nil {
+func (s *SubscriptionProductUpdatedMetadata) GetOldProductID() string {
+	if s == nil {
 		return ""
 	}
-	return o.OldProductID
+	return s.OldProductID
 }
 
-func (o *SubscriptionProductUpdatedMetadata) GetNewProductID() string {
-	if o == nil {
+func (s *SubscriptionProductUpdatedMetadata) GetNewProductID() string {
+	if s == nil {
 		return ""
 	}
-	return o.NewProductID
+	return s.NewProductID
 }

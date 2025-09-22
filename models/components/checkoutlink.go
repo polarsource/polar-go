@@ -263,107 +263,107 @@ func (c *CheckoutLink) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *CheckoutLink) GetCreatedAt() time.Time {
-	if o == nil {
+func (c *CheckoutLink) GetCreatedAt() time.Time {
+	if c == nil {
 		return time.Time{}
 	}
-	return o.CreatedAt
+	return c.CreatedAt
 }
 
-func (o *CheckoutLink) GetModifiedAt() *time.Time {
-	if o == nil {
+func (c *CheckoutLink) GetModifiedAt() *time.Time {
+	if c == nil {
 		return nil
 	}
-	return o.ModifiedAt
+	return c.ModifiedAt
 }
 
-func (o *CheckoutLink) GetID() string {
-	if o == nil {
+func (c *CheckoutLink) GetID() string {
+	if c == nil {
 		return ""
 	}
-	return o.ID
+	return c.ID
 }
 
-func (o *CheckoutLink) GetMetadata() map[string]CheckoutLinkMetadata {
-	if o == nil {
+func (c *CheckoutLink) GetMetadata() map[string]CheckoutLinkMetadata {
+	if c == nil {
 		return map[string]CheckoutLinkMetadata{}
 	}
-	return o.Metadata
+	return c.Metadata
 }
 
-func (o *CheckoutLink) GetPaymentProcessor() PaymentProcessor {
-	if o == nil {
+func (c *CheckoutLink) GetPaymentProcessor() PaymentProcessor {
+	if c == nil {
 		return PaymentProcessor("")
 	}
-	return o.PaymentProcessor
+	return c.PaymentProcessor
 }
 
-func (o *CheckoutLink) GetClientSecret() string {
-	if o == nil {
+func (c *CheckoutLink) GetClientSecret() string {
+	if c == nil {
 		return ""
 	}
-	return o.ClientSecret
+	return c.ClientSecret
 }
 
-func (o *CheckoutLink) GetSuccessURL() *string {
-	if o == nil {
+func (c *CheckoutLink) GetSuccessURL() *string {
+	if c == nil {
 		return nil
 	}
-	return o.SuccessURL
+	return c.SuccessURL
 }
 
-func (o *CheckoutLink) GetLabel() *string {
-	if o == nil {
+func (c *CheckoutLink) GetLabel() *string {
+	if c == nil {
 		return nil
 	}
-	return o.Label
+	return c.Label
 }
 
-func (o *CheckoutLink) GetAllowDiscountCodes() bool {
-	if o == nil {
+func (c *CheckoutLink) GetAllowDiscountCodes() bool {
+	if c == nil {
 		return false
 	}
-	return o.AllowDiscountCodes
+	return c.AllowDiscountCodes
 }
 
-func (o *CheckoutLink) GetRequireBillingAddress() bool {
-	if o == nil {
+func (c *CheckoutLink) GetRequireBillingAddress() bool {
+	if c == nil {
 		return false
 	}
-	return o.RequireBillingAddress
+	return c.RequireBillingAddress
 }
 
-func (o *CheckoutLink) GetDiscountID() *string {
-	if o == nil {
+func (c *CheckoutLink) GetDiscountID() *string {
+	if c == nil {
 		return nil
 	}
-	return o.DiscountID
+	return c.DiscountID
 }
 
-func (o *CheckoutLink) GetOrganizationID() string {
-	if o == nil {
+func (c *CheckoutLink) GetOrganizationID() string {
+	if c == nil {
 		return ""
 	}
-	return o.OrganizationID
+	return c.OrganizationID
 }
 
-func (o *CheckoutLink) GetProducts() []CheckoutLinkProduct {
-	if o == nil {
+func (c *CheckoutLink) GetProducts() []CheckoutLinkProduct {
+	if c == nil {
 		return []CheckoutLinkProduct{}
 	}
-	return o.Products
+	return c.Products
 }
 
-func (o *CheckoutLink) GetDiscount() *CheckoutLinkDiscount {
-	if o == nil {
+func (c *CheckoutLink) GetDiscount() *CheckoutLinkDiscount {
+	if c == nil {
 		return nil
 	}
-	return o.Discount
+	return c.Discount
 }
 
-func (o *CheckoutLink) GetURL() string {
-	if o == nil {
+func (c *CheckoutLink) GetURL() string {
+	if c == nil {
 		return ""
 	}
-	return o.URL
+	return c.URL
 }

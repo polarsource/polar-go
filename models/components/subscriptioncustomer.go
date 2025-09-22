@@ -215,93 +215,93 @@ func (s *SubscriptionCustomer) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SubscriptionCustomer) GetID() string {
-	if o == nil {
+func (s *SubscriptionCustomer) GetID() string {
+	if s == nil {
 		return ""
 	}
-	return o.ID
+	return s.ID
 }
 
-func (o *SubscriptionCustomer) GetCreatedAt() time.Time {
-	if o == nil {
+func (s *SubscriptionCustomer) GetCreatedAt() time.Time {
+	if s == nil {
 		return time.Time{}
 	}
-	return o.CreatedAt
+	return s.CreatedAt
 }
 
-func (o *SubscriptionCustomer) GetModifiedAt() *time.Time {
-	if o == nil {
+func (s *SubscriptionCustomer) GetModifiedAt() *time.Time {
+	if s == nil {
 		return nil
 	}
-	return o.ModifiedAt
+	return s.ModifiedAt
 }
 
-func (o *SubscriptionCustomer) GetMetadata() map[string]SubscriptionCustomerMetadata {
-	if o == nil {
+func (s *SubscriptionCustomer) GetMetadata() map[string]SubscriptionCustomerMetadata {
+	if s == nil {
 		return map[string]SubscriptionCustomerMetadata{}
 	}
-	return o.Metadata
+	return s.Metadata
 }
 
-func (o *SubscriptionCustomer) GetExternalID() *string {
-	if o == nil {
+func (s *SubscriptionCustomer) GetExternalID() *string {
+	if s == nil {
 		return nil
 	}
-	return o.ExternalID
+	return s.ExternalID
 }
 
-func (o *SubscriptionCustomer) GetEmail() string {
-	if o == nil {
+func (s *SubscriptionCustomer) GetEmail() string {
+	if s == nil {
 		return ""
 	}
-	return o.Email
+	return s.Email
 }
 
-func (o *SubscriptionCustomer) GetEmailVerified() bool {
-	if o == nil {
+func (s *SubscriptionCustomer) GetEmailVerified() bool {
+	if s == nil {
 		return false
 	}
-	return o.EmailVerified
+	return s.EmailVerified
 }
 
-func (o *SubscriptionCustomer) GetName() *string {
-	if o == nil {
+func (s *SubscriptionCustomer) GetName() *string {
+	if s == nil {
 		return nil
 	}
-	return o.Name
+	return s.Name
 }
 
-func (o *SubscriptionCustomer) GetBillingAddress() *Address {
-	if o == nil {
+func (s *SubscriptionCustomer) GetBillingAddress() *Address {
+	if s == nil {
 		return nil
 	}
-	return o.BillingAddress
+	return s.BillingAddress
 }
 
-func (o *SubscriptionCustomer) GetTaxID() []*TaxID {
-	if o == nil {
+func (s *SubscriptionCustomer) GetTaxID() []*TaxID {
+	if s == nil {
 		return nil
 	}
-	return o.TaxID
+	return s.TaxID
 }
 
-func (o *SubscriptionCustomer) GetOrganizationID() string {
-	if o == nil {
+func (s *SubscriptionCustomer) GetOrganizationID() string {
+	if s == nil {
 		return ""
 	}
-	return o.OrganizationID
+	return s.OrganizationID
 }
 
-func (o *SubscriptionCustomer) GetDeletedAt() *time.Time {
-	if o == nil {
+func (s *SubscriptionCustomer) GetDeletedAt() *time.Time {
+	if s == nil {
 		return nil
 	}
-	return o.DeletedAt
+	return s.DeletedAt
 }
 
-func (o *SubscriptionCustomer) GetAvatarURL() string {
-	if o == nil {
+func (s *SubscriptionCustomer) GetAvatarURL() string {
+	if s == nil {
 		return ""
 	}
-	return o.AvatarURL
+	return s.AvatarURL
 }

@@ -12,16 +12,16 @@ type CustomersCreateResponse struct {
 	Customer *components.Customer
 }
 
-func (o *CustomersCreateResponse) GetHTTPMeta() components.HTTPMetadata {
-	if o == nil {
+func (c *CustomersCreateResponse) GetHTTPMeta() components.HTTPMetadata {
+	if c == nil {
 		return components.HTTPMetadata{}
 	}
-	return o.HTTPMeta
+	return c.HTTPMeta
 }
 
-func (o *CustomersCreateResponse) GetCustomer() *components.Customer {
-	if o == nil {
+func (c *CustomersCreateResponse) GetCustomer() *components.Customer {
+	if c == nil {
 		return nil
 	}
-	return o.Customer
+	return c.Customer
 }

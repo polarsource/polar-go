@@ -16,18 +16,18 @@ type FilesUploadedRequest struct {
 	FileUploadCompleted components.FileUploadCompleted `request:"mediaType=application/json"`
 }
 
-func (o *FilesUploadedRequest) GetID() string {
-	if o == nil {
+func (f *FilesUploadedRequest) GetID() string {
+	if f == nil {
 		return ""
 	}
-	return o.ID
+	return f.ID
 }
 
-func (o *FilesUploadedRequest) GetFileUploadCompleted() components.FileUploadCompleted {
-	if o == nil {
+func (f *FilesUploadedRequest) GetFileUploadCompleted() components.FileUploadCompleted {
+	if f == nil {
 		return components.FileUploadCompleted{}
 	}
-	return o.FileUploadCompleted
+	return f.FileUploadCompleted
 }
 
 type FilesUploadedResponseFilesUploadedType string
@@ -140,36 +140,36 @@ type FilesUploadedResponse struct {
 	ResponseFilesUploaded *FilesUploadedResponseFilesUploaded
 }
 
-func (o *FilesUploadedResponse) GetHTTPMeta() components.HTTPMetadata {
-	if o == nil {
+func (f *FilesUploadedResponse) GetHTTPMeta() components.HTTPMetadata {
+	if f == nil {
 		return components.HTTPMetadata{}
 	}
-	return o.HTTPMeta
+	return f.HTTPMeta
 }
 
-func (o *FilesUploadedResponse) GetResponseFilesUploaded() *FilesUploadedResponseFilesUploaded {
-	if o == nil {
+func (f *FilesUploadedResponse) GetResponseFilesUploaded() *FilesUploadedResponseFilesUploaded {
+	if f == nil {
 		return nil
 	}
-	return o.ResponseFilesUploaded
+	return f.ResponseFilesUploaded
 }
 
-func (o *FilesUploadedResponse) GetResponseFilesUploadedDownloadable() *components.DownloadableFileRead {
-	if v := o.GetResponseFilesUploaded(); v != nil {
+func (f *FilesUploadedResponse) GetResponseFilesUploadedDownloadable() *components.DownloadableFileRead {
+	if v := f.GetResponseFilesUploaded(); v != nil {
 		return v.DownloadableFileRead
 	}
 	return nil
 }
 
-func (o *FilesUploadedResponse) GetResponseFilesUploadedProductMedia() *components.ProductMediaFileRead {
-	if v := o.GetResponseFilesUploaded(); v != nil {
+func (f *FilesUploadedResponse) GetResponseFilesUploadedProductMedia() *components.ProductMediaFileRead {
+	if v := f.GetResponseFilesUploaded(); v != nil {
 		return v.ProductMediaFileRead
 	}
 	return nil
 }
 
-func (o *FilesUploadedResponse) GetResponseFilesUploadedOrganizationAvatar() *components.OrganizationAvatarFileRead {
-	if v := o.GetResponseFilesUploaded(); v != nil {
+func (f *FilesUploadedResponse) GetResponseFilesUploadedOrganizationAvatar() *components.OrganizationAvatarFileRead {
+	if v := f.GetResponseFilesUploaded(); v != nil {
 		return v.OrganizationAvatarFileRead
 	}
 	return nil

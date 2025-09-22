@@ -24,27 +24,27 @@ func (r *RefreshTokenRequest) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *RefreshTokenRequest) GetGrantType() string {
+func (r *RefreshTokenRequest) GetGrantType() string {
 	return "refresh_token"
 }
 
-func (o *RefreshTokenRequest) GetClientID() string {
-	if o == nil {
+func (r *RefreshTokenRequest) GetClientID() string {
+	if r == nil {
 		return ""
 	}
-	return o.ClientID
+	return r.ClientID
 }
 
-func (o *RefreshTokenRequest) GetClientSecret() string {
-	if o == nil {
+func (r *RefreshTokenRequest) GetClientSecret() string {
+	if r == nil {
 		return ""
 	}
-	return o.ClientSecret
+	return r.ClientSecret
 }
 
-func (o *RefreshTokenRequest) GetRefreshToken() string {
-	if o == nil {
+func (r *RefreshTokenRequest) GetRefreshToken() string {
+	if r == nil {
 		return ""
 	}
-	return o.RefreshToken
+	return r.RefreshToken
 }

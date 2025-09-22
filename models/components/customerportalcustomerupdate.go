@@ -3,28 +3,28 @@
 package components
 
 type CustomerPortalCustomerUpdate struct {
-	BillingName    *string  `json:"billing_name,omitempty"`
-	BillingAddress *Address `json:"billing_address,omitempty"`
-	TaxID          *string  `json:"tax_id,omitempty"`
+	BillingName    *string       `json:"billing_name,omitempty"`
+	BillingAddress *AddressInput `json:"billing_address,omitempty"`
+	TaxID          *string       `json:"tax_id,omitempty"`
 }
 
-func (o *CustomerPortalCustomerUpdate) GetBillingName() *string {
-	if o == nil {
+func (c *CustomerPortalCustomerUpdate) GetBillingName() *string {
+	if c == nil {
 		return nil
 	}
-	return o.BillingName
+	return c.BillingName
 }
 
-func (o *CustomerPortalCustomerUpdate) GetBillingAddress() *Address {
-	if o == nil {
+func (c *CustomerPortalCustomerUpdate) GetBillingAddress() *AddressInput {
+	if c == nil {
 		return nil
 	}
-	return o.BillingAddress
+	return c.BillingAddress
 }
 
-func (o *CustomerPortalCustomerUpdate) GetTaxID() *string {
-	if o == nil {
+func (c *CustomerPortalCustomerUpdate) GetTaxID() *string {
+	if c == nil {
 		return nil
 	}
-	return o.TaxID
+	return c.TaxID
 }

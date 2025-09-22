@@ -11,11 +11,11 @@ type CustomersGetExternalRequest struct {
 	ExternalID string `pathParam:"style=simple,explode=false,name=external_id"`
 }
 
-func (o *CustomersGetExternalRequest) GetExternalID() string {
-	if o == nil {
+func (c *CustomersGetExternalRequest) GetExternalID() string {
+	if c == nil {
 		return ""
 	}
-	return o.ExternalID
+	return c.ExternalID
 }
 
 type CustomersGetExternalResponse struct {
@@ -24,16 +24,16 @@ type CustomersGetExternalResponse struct {
 	Customer *components.Customer
 }
 
-func (o *CustomersGetExternalResponse) GetHTTPMeta() components.HTTPMetadata {
-	if o == nil {
+func (c *CustomersGetExternalResponse) GetHTTPMeta() components.HTTPMetadata {
+	if c == nil {
 		return components.HTTPMetadata{}
 	}
-	return o.HTTPMeta
+	return c.HTTPMeta
 }
 
-func (o *CustomersGetExternalResponse) GetCustomer() *components.Customer {
-	if o == nil {
+func (c *CustomersGetExternalResponse) GetCustomer() *components.Customer {
+	if c == nil {
 		return nil
 	}
-	return o.Customer
+	return c.Customer
 }

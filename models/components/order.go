@@ -350,6 +350,8 @@ type Order struct {
 	TaxAmount int64 `json:"tax_amount"`
 	// Amount in cents, after discounts and taxes.
 	TotalAmount int64 `json:"total_amount"`
+	// How much of this invoice was paid using the customer's balance. Amount in cents.
+	FromBalanceAmount int64 `json:"from_balance_amount"`
 	// Amount refunded in cents.
 	RefundedAmount int64 `json:"refunded_amount"`
 	// Sales tax refunded in cents.
@@ -384,7 +386,7 @@ func (o Order) MarshalJSON() ([]byte, error) {
 }
 
 func (o *Order) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &o, "", false, []string{"id", "created_at", "modified_at", "status", "paid", "subtotal_amount", "discount_amount", "net_amount", "tax_amount", "total_amount", "refunded_amount", "refunded_tax_amount", "currency", "billing_reason", "billing_name", "billing_address", "is_invoice_generated", "customer_id", "product_id", "discount_id", "subscription_id", "checkout_id", "metadata", "customer", "user_id", "product", "discount", "subscription", "items"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &o, "", false, []string{"id", "created_at", "modified_at", "status", "paid", "subtotal_amount", "discount_amount", "net_amount", "tax_amount", "total_amount", "from_balance_amount", "refunded_amount", "refunded_tax_amount", "currency", "billing_reason", "billing_name", "billing_address", "is_invoice_generated", "customer_id", "product_id", "discount_id", "subscription_id", "checkout_id", "metadata", "customer", "user_id", "product", "discount", "subscription", "items"}); err != nil {
 		return err
 	}
 	return nil
@@ -458,6 +460,13 @@ func (o *Order) GetTotalAmount() int64 {
 		return 0
 	}
 	return o.TotalAmount
+}
+
+func (o *Order) GetFromBalanceAmount() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.FromBalanceAmount
 }
 
 func (o *Order) GetRefundedAmount() int64 {

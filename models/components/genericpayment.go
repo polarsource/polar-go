@@ -48,100 +48,100 @@ func (g *GenericPayment) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *GenericPayment) GetCreatedAt() time.Time {
-	if o == nil {
+func (g *GenericPayment) GetCreatedAt() time.Time {
+	if g == nil {
 		return time.Time{}
 	}
-	return o.CreatedAt
+	return g.CreatedAt
 }
 
-func (o *GenericPayment) GetModifiedAt() *time.Time {
-	if o == nil {
+func (g *GenericPayment) GetModifiedAt() *time.Time {
+	if g == nil {
 		return nil
 	}
-	return o.ModifiedAt
+	return g.ModifiedAt
 }
 
-func (o *GenericPayment) GetID() string {
-	if o == nil {
+func (g *GenericPayment) GetID() string {
+	if g == nil {
 		return ""
 	}
-	return o.ID
+	return g.ID
 }
 
-func (o *GenericPayment) GetProcessor() PaymentProcessor {
-	if o == nil {
+func (g *GenericPayment) GetProcessor() PaymentProcessor {
+	if g == nil {
 		return PaymentProcessor("")
 	}
-	return o.Processor
+	return g.Processor
 }
 
-func (o *GenericPayment) GetStatus() PaymentStatus {
-	if o == nil {
+func (g *GenericPayment) GetStatus() PaymentStatus {
+	if g == nil {
 		return PaymentStatus("")
 	}
-	return o.Status
+	return g.Status
 }
 
-func (o *GenericPayment) GetAmount() int64 {
-	if o == nil {
+func (g *GenericPayment) GetAmount() int64 {
+	if g == nil {
 		return 0
 	}
-	return o.Amount
+	return g.Amount
 }
 
-func (o *GenericPayment) GetCurrency() string {
-	if o == nil {
+func (g *GenericPayment) GetCurrency() string {
+	if g == nil {
 		return ""
 	}
-	return o.Currency
+	return g.Currency
 }
 
-func (o *GenericPayment) GetMethod() string {
-	if o == nil {
+func (g *GenericPayment) GetMethod() string {
+	if g == nil {
 		return ""
 	}
-	return o.Method
+	return g.Method
 }
 
-func (o *GenericPayment) GetDeclineReason() *string {
-	if o == nil {
+func (g *GenericPayment) GetDeclineReason() *string {
+	if g == nil {
 		return nil
 	}
-	return o.DeclineReason
+	return g.DeclineReason
 }
 
-func (o *GenericPayment) GetDeclineMessage() *string {
-	if o == nil {
+func (g *GenericPayment) GetDeclineMessage() *string {
+	if g == nil {
 		return nil
 	}
-	return o.DeclineMessage
+	return g.DeclineMessage
 }
 
-func (o *GenericPayment) GetOrganizationID() string {
-	if o == nil {
+func (g *GenericPayment) GetOrganizationID() string {
+	if g == nil {
 		return ""
 	}
-	return o.OrganizationID
+	return g.OrganizationID
 }
 
-func (o *GenericPayment) GetCheckoutID() *string {
-	if o == nil {
+func (g *GenericPayment) GetCheckoutID() *string {
+	if g == nil {
 		return nil
 	}
-	return o.CheckoutID
+	return g.CheckoutID
 }
 
-func (o *GenericPayment) GetOrderID() *string {
-	if o == nil {
+func (g *GenericPayment) GetOrderID() *string {
+	if g == nil {
 		return nil
 	}
-	return o.OrderID
+	return g.OrderID
 }
 
-func (o *GenericPayment) GetProcessorMetadata() map[string]any {
-	if o == nil {
+func (g *GenericPayment) GetProcessorMetadata() map[string]any {
+	if g == nil {
 		return nil
 	}
-	return o.ProcessorMetadata
+	return g.ProcessorMetadata
 }

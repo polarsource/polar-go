@@ -25,16 +25,16 @@ func (c *CardPaymentMetadata) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *CardPaymentMetadata) GetBrand() string {
-	if o == nil {
+func (c *CardPaymentMetadata) GetBrand() string {
+	if c == nil {
 		return ""
 	}
-	return o.Brand
+	return c.Brand
 }
 
-func (o *CardPaymentMetadata) GetLast4() string {
-	if o == nil {
+func (c *CardPaymentMetadata) GetLast4() string {
+	if c == nil {
 		return ""
 	}
-	return o.Last4
+	return c.Last4
 }

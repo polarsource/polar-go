@@ -29,55 +29,55 @@ func (d *DownloadableFileCreate) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *DownloadableFileCreate) GetOrganizationID() *string {
-	if o == nil {
+func (d *DownloadableFileCreate) GetOrganizationID() *string {
+	if d == nil {
 		return nil
 	}
-	return o.OrganizationID
+	return d.OrganizationID
 }
 
-func (o *DownloadableFileCreate) GetName() string {
-	if o == nil {
+func (d *DownloadableFileCreate) GetName() string {
+	if d == nil {
 		return ""
 	}
-	return o.Name
+	return d.Name
 }
 
-func (o *DownloadableFileCreate) GetMimeType() string {
-	if o == nil {
+func (d *DownloadableFileCreate) GetMimeType() string {
+	if d == nil {
 		return ""
 	}
-	return o.MimeType
+	return d.MimeType
 }
 
-func (o *DownloadableFileCreate) GetSize() int64 {
-	if o == nil {
+func (d *DownloadableFileCreate) GetSize() int64 {
+	if d == nil {
 		return 0
 	}
-	return o.Size
+	return d.Size
 }
 
-func (o *DownloadableFileCreate) GetChecksumSha256Base64() *string {
-	if o == nil {
+func (d *DownloadableFileCreate) GetChecksumSha256Base64() *string {
+	if d == nil {
 		return nil
 	}
-	return o.ChecksumSha256Base64
+	return d.ChecksumSha256Base64
 }
 
-func (o *DownloadableFileCreate) GetUpload() S3FileCreateMultipart {
-	if o == nil {
+func (d *DownloadableFileCreate) GetUpload() S3FileCreateMultipart {
+	if d == nil {
 		return S3FileCreateMultipart{}
 	}
-	return o.Upload
+	return d.Upload
 }
 
-func (o *DownloadableFileCreate) GetService() string {
+func (d *DownloadableFileCreate) GetService() string {
 	return "downloadable"
 }
 
-func (o *DownloadableFileCreate) GetVersion() *string {
-	if o == nil {
+func (d *DownloadableFileCreate) GetVersion() *string {
+	if d == nil {
 		return nil
 	}
-	return o.Version
+	return d.Version
 }

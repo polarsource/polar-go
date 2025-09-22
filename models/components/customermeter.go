@@ -41,72 +41,72 @@ func (c *CustomerMeter) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *CustomerMeter) GetID() string {
-	if o == nil {
+func (c *CustomerMeter) GetID() string {
+	if c == nil {
 		return ""
 	}
-	return o.ID
+	return c.ID
 }
 
-func (o *CustomerMeter) GetCreatedAt() time.Time {
-	if o == nil {
+func (c *CustomerMeter) GetCreatedAt() time.Time {
+	if c == nil {
 		return time.Time{}
 	}
-	return o.CreatedAt
+	return c.CreatedAt
 }
 
-func (o *CustomerMeter) GetModifiedAt() *time.Time {
-	if o == nil {
+func (c *CustomerMeter) GetModifiedAt() *time.Time {
+	if c == nil {
 		return nil
 	}
-	return o.ModifiedAt
+	return c.ModifiedAt
 }
 
-func (o *CustomerMeter) GetCustomerID() string {
-	if o == nil {
+func (c *CustomerMeter) GetCustomerID() string {
+	if c == nil {
 		return ""
 	}
-	return o.CustomerID
+	return c.CustomerID
 }
 
-func (o *CustomerMeter) GetMeterID() string {
-	if o == nil {
+func (c *CustomerMeter) GetMeterID() string {
+	if c == nil {
 		return ""
 	}
-	return o.MeterID
+	return c.MeterID
 }
 
-func (o *CustomerMeter) GetConsumedUnits() float64 {
-	if o == nil {
+func (c *CustomerMeter) GetConsumedUnits() float64 {
+	if c == nil {
 		return 0.0
 	}
-	return o.ConsumedUnits
+	return c.ConsumedUnits
 }
 
-func (o *CustomerMeter) GetCreditedUnits() int64 {
-	if o == nil {
+func (c *CustomerMeter) GetCreditedUnits() int64 {
+	if c == nil {
 		return 0
 	}
-	return o.CreditedUnits
+	return c.CreditedUnits
 }
 
-func (o *CustomerMeter) GetBalance() float64 {
-	if o == nil {
+func (c *CustomerMeter) GetBalance() float64 {
+	if c == nil {
 		return 0.0
 	}
-	return o.Balance
+	return c.Balance
 }
 
-func (o *CustomerMeter) GetCustomer() Customer {
-	if o == nil {
+func (c *CustomerMeter) GetCustomer() Customer {
+	if c == nil {
 		return Customer{}
 	}
-	return o.Customer
+	return c.Customer
 }
 
-func (o *CustomerMeter) GetMeter() Meter {
-	if o == nil {
+func (c *CustomerMeter) GetMeter() Meter {
+	if c == nil {
 		return Meter{}
 	}
-	return o.Meter
+	return c.Meter
 }

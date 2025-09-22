@@ -26,16 +26,16 @@ func (m *MetricsLimits) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *MetricsLimits) GetMinDate() types.Date {
-	if o == nil {
+func (m *MetricsLimits) GetMinDate() types.Date {
+	if m == nil {
 		return types.Date{}
 	}
-	return o.MinDate
+	return m.MinDate
 }
 
-func (o *MetricsLimits) GetIntervals() MetricsIntervalsLimits {
-	if o == nil {
+func (m *MetricsLimits) GetIntervals() MetricsIntervalsLimits {
+	if m == nil {
 		return MetricsIntervalsLimits{}
 	}
-	return o.Intervals
+	return m.Intervals
 }

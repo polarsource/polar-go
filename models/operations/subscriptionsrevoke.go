@@ -11,11 +11,11 @@ type SubscriptionsRevokeRequest struct {
 	ID string `pathParam:"style=simple,explode=false,name=id"`
 }
 
-func (o *SubscriptionsRevokeRequest) GetID() string {
-	if o == nil {
+func (s *SubscriptionsRevokeRequest) GetID() string {
+	if s == nil {
 		return ""
 	}
-	return o.ID
+	return s.ID
 }
 
 type SubscriptionsRevokeResponse struct {
@@ -24,16 +24,16 @@ type SubscriptionsRevokeResponse struct {
 	Subscription *components.Subscription
 }
 
-func (o *SubscriptionsRevokeResponse) GetHTTPMeta() components.HTTPMetadata {
-	if o == nil {
+func (s *SubscriptionsRevokeResponse) GetHTTPMeta() components.HTTPMetadata {
+	if s == nil {
 		return components.HTTPMetadata{}
 	}
-	return o.HTTPMeta
+	return s.HTTPMeta
 }
 
-func (o *SubscriptionsRevokeResponse) GetSubscription() *components.Subscription {
-	if o == nil {
+func (s *SubscriptionsRevokeResponse) GetSubscription() *components.Subscription {
+	if s == nil {
 		return nil
 	}
-	return o.Subscription
+	return s.Subscription
 }

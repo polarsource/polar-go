@@ -27,20 +27,20 @@ func (w *WebhookSubscriptionUncanceledPayload) UnmarshalJSON(data []byte) error 
 	return nil
 }
 
-func (o *WebhookSubscriptionUncanceledPayload) GetType() string {
+func (w *WebhookSubscriptionUncanceledPayload) GetType() string {
 	return "subscription.uncanceled"
 }
 
-func (o *WebhookSubscriptionUncanceledPayload) GetTimestamp() time.Time {
-	if o == nil {
+func (w *WebhookSubscriptionUncanceledPayload) GetTimestamp() time.Time {
+	if w == nil {
 		return time.Time{}
 	}
-	return o.Timestamp
+	return w.Timestamp
 }
 
-func (o *WebhookSubscriptionUncanceledPayload) GetData() Subscription {
-	if o == nil {
+func (w *WebhookSubscriptionUncanceledPayload) GetData() Subscription {
+	if w == nil {
 		return Subscription{}
 	}
-	return o.Data
+	return w.Data
 }

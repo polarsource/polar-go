@@ -24,30 +24,30 @@ func (s *S3FileCreatePart) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *S3FileCreatePart) GetNumber() int64 {
-	if o == nil {
+func (s *S3FileCreatePart) GetNumber() int64 {
+	if s == nil {
 		return 0
 	}
-	return o.Number
+	return s.Number
 }
 
-func (o *S3FileCreatePart) GetChunkStart() int64 {
-	if o == nil {
+func (s *S3FileCreatePart) GetChunkStart() int64 {
+	if s == nil {
 		return 0
 	}
-	return o.ChunkStart
+	return s.ChunkStart
 }
 
-func (o *S3FileCreatePart) GetChunkEnd() int64 {
-	if o == nil {
+func (s *S3FileCreatePart) GetChunkEnd() int64 {
+	if s == nil {
 		return 0
 	}
-	return o.ChunkEnd
+	return s.ChunkEnd
 }
 
-func (o *S3FileCreatePart) GetChecksumSha256Base64() *string {
-	if o == nil {
+func (s *S3FileCreatePart) GetChecksumSha256Base64() *string {
+	if s == nil {
 		return nil
 	}
-	return o.ChecksumSha256Base64
+	return s.ChecksumSha256Base64
 }

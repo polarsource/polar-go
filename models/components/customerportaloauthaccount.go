@@ -22,16 +22,16 @@ func (c *CustomerPortalOAuthAccount) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *CustomerPortalOAuthAccount) GetAccountID() string {
-	if o == nil {
+func (c *CustomerPortalOAuthAccount) GetAccountID() string {
+	if c == nil {
 		return ""
 	}
-	return o.AccountID
+	return c.AccountID
 }
 
-func (o *CustomerPortalOAuthAccount) GetAccountUsername() *string {
-	if o == nil {
+func (c *CustomerPortalOAuthAccount) GetAccountUsername() *string {
+	if c == nil {
 		return nil
 	}
-	return o.AccountUsername
+	return c.AccountUsername
 }

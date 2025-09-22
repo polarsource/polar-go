@@ -29,51 +29,51 @@ func (c *CheckoutDiscountFixedOnceForeverDuration) UnmarshalJSON(data []byte) er
 	return nil
 }
 
-func (o *CheckoutDiscountFixedOnceForeverDuration) GetDuration() DiscountDuration {
-	if o == nil {
+func (c *CheckoutDiscountFixedOnceForeverDuration) GetDuration() DiscountDuration {
+	if c == nil {
 		return DiscountDuration("")
 	}
-	return o.Duration
+	return c.Duration
 }
 
-func (o *CheckoutDiscountFixedOnceForeverDuration) GetType() DiscountType {
-	if o == nil {
+func (c *CheckoutDiscountFixedOnceForeverDuration) GetType() DiscountType {
+	if c == nil {
 		return DiscountType("")
 	}
-	return o.Type
+	return c.Type
 }
 
-func (o *CheckoutDiscountFixedOnceForeverDuration) GetAmount() int64 {
-	if o == nil {
+func (c *CheckoutDiscountFixedOnceForeverDuration) GetAmount() int64 {
+	if c == nil {
 		return 0
 	}
-	return o.Amount
+	return c.Amount
 }
 
-func (o *CheckoutDiscountFixedOnceForeverDuration) GetCurrency() string {
-	if o == nil {
+func (c *CheckoutDiscountFixedOnceForeverDuration) GetCurrency() string {
+	if c == nil {
 		return ""
 	}
-	return o.Currency
+	return c.Currency
 }
 
-func (o *CheckoutDiscountFixedOnceForeverDuration) GetID() string {
-	if o == nil {
+func (c *CheckoutDiscountFixedOnceForeverDuration) GetID() string {
+	if c == nil {
 		return ""
 	}
-	return o.ID
+	return c.ID
 }
 
-func (o *CheckoutDiscountFixedOnceForeverDuration) GetName() string {
-	if o == nil {
+func (c *CheckoutDiscountFixedOnceForeverDuration) GetName() string {
+	if c == nil {
 		return ""
 	}
-	return o.Name
+	return c.Name
 }
 
-func (o *CheckoutDiscountFixedOnceForeverDuration) GetCode() *string {
-	if o == nil {
+func (c *CheckoutDiscountFixedOnceForeverDuration) GetCode() *string {
+	if c == nil {
 		return nil
 	}
-	return o.Code
+	return c.Code
 }

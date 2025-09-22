@@ -53,114 +53,114 @@ func (b *BenefitGrantDiscordWebhook) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *BenefitGrantDiscordWebhook) GetCreatedAt() time.Time {
-	if o == nil {
+func (b *BenefitGrantDiscordWebhook) GetCreatedAt() time.Time {
+	if b == nil {
 		return time.Time{}
 	}
-	return o.CreatedAt
+	return b.CreatedAt
 }
 
-func (o *BenefitGrantDiscordWebhook) GetModifiedAt() *time.Time {
-	if o == nil {
+func (b *BenefitGrantDiscordWebhook) GetModifiedAt() *time.Time {
+	if b == nil {
 		return nil
 	}
-	return o.ModifiedAt
+	return b.ModifiedAt
 }
 
-func (o *BenefitGrantDiscordWebhook) GetID() string {
-	if o == nil {
+func (b *BenefitGrantDiscordWebhook) GetID() string {
+	if b == nil {
 		return ""
 	}
-	return o.ID
+	return b.ID
 }
 
-func (o *BenefitGrantDiscordWebhook) GetGrantedAt() *time.Time {
-	if o == nil {
+func (b *BenefitGrantDiscordWebhook) GetGrantedAt() *time.Time {
+	if b == nil {
 		return nil
 	}
-	return o.GrantedAt
+	return b.GrantedAt
 }
 
-func (o *BenefitGrantDiscordWebhook) GetIsGranted() bool {
-	if o == nil {
+func (b *BenefitGrantDiscordWebhook) GetIsGranted() bool {
+	if b == nil {
 		return false
 	}
-	return o.IsGranted
+	return b.IsGranted
 }
 
-func (o *BenefitGrantDiscordWebhook) GetRevokedAt() *time.Time {
-	if o == nil {
+func (b *BenefitGrantDiscordWebhook) GetRevokedAt() *time.Time {
+	if b == nil {
 		return nil
 	}
-	return o.RevokedAt
+	return b.RevokedAt
 }
 
-func (o *BenefitGrantDiscordWebhook) GetIsRevoked() bool {
-	if o == nil {
+func (b *BenefitGrantDiscordWebhook) GetIsRevoked() bool {
+	if b == nil {
 		return false
 	}
-	return o.IsRevoked
+	return b.IsRevoked
 }
 
-func (o *BenefitGrantDiscordWebhook) GetSubscriptionID() *string {
-	if o == nil {
+func (b *BenefitGrantDiscordWebhook) GetSubscriptionID() *string {
+	if b == nil {
 		return nil
 	}
-	return o.SubscriptionID
+	return b.SubscriptionID
 }
 
-func (o *BenefitGrantDiscordWebhook) GetOrderID() *string {
-	if o == nil {
+func (b *BenefitGrantDiscordWebhook) GetOrderID() *string {
+	if b == nil {
 		return nil
 	}
-	return o.OrderID
+	return b.OrderID
 }
 
-func (o *BenefitGrantDiscordWebhook) GetCustomerID() string {
-	if o == nil {
+func (b *BenefitGrantDiscordWebhook) GetCustomerID() string {
+	if b == nil {
 		return ""
 	}
-	return o.CustomerID
+	return b.CustomerID
 }
 
-func (o *BenefitGrantDiscordWebhook) GetBenefitID() string {
-	if o == nil {
+func (b *BenefitGrantDiscordWebhook) GetBenefitID() string {
+	if b == nil {
 		return ""
 	}
-	return o.BenefitID
+	return b.BenefitID
 }
 
-func (o *BenefitGrantDiscordWebhook) GetError() *BenefitGrantError {
-	if o == nil {
+func (b *BenefitGrantDiscordWebhook) GetError() *BenefitGrantError {
+	if b == nil {
 		return nil
 	}
-	return o.Error
+	return b.Error
 }
 
-func (o *BenefitGrantDiscordWebhook) GetCustomer() Customer {
-	if o == nil {
+func (b *BenefitGrantDiscordWebhook) GetCustomer() Customer {
+	if b == nil {
 		return Customer{}
 	}
-	return o.Customer
+	return b.Customer
 }
 
-func (o *BenefitGrantDiscordWebhook) GetBenefit() BenefitDiscord {
-	if o == nil {
+func (b *BenefitGrantDiscordWebhook) GetBenefit() BenefitDiscord {
+	if b == nil {
 		return BenefitDiscord{}
 	}
-	return o.Benefit
+	return b.Benefit
 }
 
-func (o *BenefitGrantDiscordWebhook) GetProperties() BenefitGrantDiscordProperties {
-	if o == nil {
+func (b *BenefitGrantDiscordWebhook) GetProperties() BenefitGrantDiscordProperties {
+	if b == nil {
 		return BenefitGrantDiscordProperties{}
 	}
-	return o.Properties
+	return b.Properties
 }
 
-func (o *BenefitGrantDiscordWebhook) GetPreviousProperties() *BenefitGrantDiscordProperties {
-	if o == nil {
+func (b *BenefitGrantDiscordWebhook) GetPreviousProperties() *BenefitGrantDiscordProperties {
+	if b == nil {
 		return nil
 	}
-	return o.PreviousProperties
+	return b.PreviousProperties
 }

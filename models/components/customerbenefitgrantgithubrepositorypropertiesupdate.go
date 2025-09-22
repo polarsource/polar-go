@@ -21,9 +21,9 @@ func (c *CustomerBenefitGrantGitHubRepositoryPropertiesUpdate) UnmarshalJSON(dat
 	return nil
 }
 
-func (o *CustomerBenefitGrantGitHubRepositoryPropertiesUpdate) GetAccountID() *string {
-	if o == nil {
+func (c *CustomerBenefitGrantGitHubRepositoryPropertiesUpdate) GetAccountID() *string {
+	if c == nil {
 		return nil
 	}
-	return o.AccountID
+	return c.AccountID
 }

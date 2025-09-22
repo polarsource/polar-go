@@ -16,37 +16,37 @@ type MetricsIntervalsLimits struct {
 	Year MetricsIntervalLimit `json:"year"`
 }
 
-func (o *MetricsIntervalsLimits) GetHour() MetricsIntervalLimit {
-	if o == nil {
+func (m *MetricsIntervalsLimits) GetHour() MetricsIntervalLimit {
+	if m == nil {
 		return MetricsIntervalLimit{}
 	}
-	return o.Hour
+	return m.Hour
 }
 
-func (o *MetricsIntervalsLimits) GetDay() MetricsIntervalLimit {
-	if o == nil {
+func (m *MetricsIntervalsLimits) GetDay() MetricsIntervalLimit {
+	if m == nil {
 		return MetricsIntervalLimit{}
 	}
-	return o.Day
+	return m.Day
 }
 
-func (o *MetricsIntervalsLimits) GetWeek() MetricsIntervalLimit {
-	if o == nil {
+func (m *MetricsIntervalsLimits) GetWeek() MetricsIntervalLimit {
+	if m == nil {
 		return MetricsIntervalLimit{}
 	}
-	return o.Week
+	return m.Week
 }
 
-func (o *MetricsIntervalsLimits) GetMonth() MetricsIntervalLimit {
-	if o == nil {
+func (m *MetricsIntervalsLimits) GetMonth() MetricsIntervalLimit {
+	if m == nil {
 		return MetricsIntervalLimit{}
 	}
-	return o.Month
+	return m.Month
 }
 
-func (o *MetricsIntervalsLimits) GetYear() MetricsIntervalLimit {
-	if o == nil {
+func (m *MetricsIntervalsLimits) GetYear() MetricsIntervalLimit {
+	if m == nil {
 		return MetricsIntervalLimit{}
 	}
-	return o.Year
+	return m.Year
 }

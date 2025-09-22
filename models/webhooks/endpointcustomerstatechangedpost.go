@@ -12,16 +12,16 @@ type EndpointcustomerStateChangedPostResponse struct {
 	Any any
 }
 
-func (o *EndpointcustomerStateChangedPostResponse) GetHTTPMeta() components.HTTPMetadata {
-	if o == nil {
+func (e *EndpointcustomerStateChangedPostResponse) GetHTTPMeta() components.HTTPMetadata {
+	if e == nil {
 		return components.HTTPMetadata{}
 	}
-	return o.HTTPMeta
+	return e.HTTPMeta
 }
 
-func (o *EndpointcustomerStateChangedPostResponse) GetAny() any {
-	if o == nil {
+func (e *EndpointcustomerStateChangedPostResponse) GetAny() any {
+	if e == nil {
 		return nil
 	}
-	return o.Any
+	return e.Any
 }

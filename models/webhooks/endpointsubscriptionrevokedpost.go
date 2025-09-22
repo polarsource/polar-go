@@ -12,16 +12,16 @@ type EndpointsubscriptionRevokedPostResponse struct {
 	Any any
 }
 
-func (o *EndpointsubscriptionRevokedPostResponse) GetHTTPMeta() components.HTTPMetadata {
-	if o == nil {
+func (e *EndpointsubscriptionRevokedPostResponse) GetHTTPMeta() components.HTTPMetadata {
+	if e == nil {
 		return components.HTTPMetadata{}
 	}
-	return o.HTTPMeta
+	return e.HTTPMeta
 }
 
-func (o *EndpointsubscriptionRevokedPostResponse) GetAny() any {
-	if o == nil {
+func (e *EndpointsubscriptionRevokedPostResponse) GetAny() any {
+	if e == nil {
 		return nil
 	}
-	return o.Any
+	return e.Any
 }

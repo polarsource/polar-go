@@ -21,9 +21,9 @@ func (c *CustomerBenefitGrantDiscordPropertiesUpdate) UnmarshalJSON(data []byte)
 	return nil
 }
 
-func (o *CustomerBenefitGrantDiscordPropertiesUpdate) GetAccountID() *string {
-	if o == nil {
+func (c *CustomerBenefitGrantDiscordPropertiesUpdate) GetAccountID() *string {
+	if c == nil {
 		return nil
 	}
-	return o.AccountID
+	return c.AccountID
 }

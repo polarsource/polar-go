@@ -10,11 +10,11 @@ type CustomerPortalCustomerMetersGetSecurity struct {
 	CustomerSession string `security:"scheme,type=http,subtype=bearer,name=Authorization,env=polar_customer_session"`
 }
 
-func (o *CustomerPortalCustomerMetersGetSecurity) GetCustomerSession() string {
-	if o == nil {
+func (c *CustomerPortalCustomerMetersGetSecurity) GetCustomerSession() string {
+	if c == nil {
 		return ""
 	}
-	return o.CustomerSession
+	return c.CustomerSession
 }
 
 type CustomerPortalCustomerMetersGetRequest struct {
@@ -22,11 +22,11 @@ type CustomerPortalCustomerMetersGetRequest struct {
 	ID string `pathParam:"style=simple,explode=false,name=id"`
 }
 
-func (o *CustomerPortalCustomerMetersGetRequest) GetID() string {
-	if o == nil {
+func (c *CustomerPortalCustomerMetersGetRequest) GetID() string {
+	if c == nil {
 		return ""
 	}
-	return o.ID
+	return c.ID
 }
 
 type CustomerPortalCustomerMetersGetResponse struct {
@@ -35,16 +35,16 @@ type CustomerPortalCustomerMetersGetResponse struct {
 	CustomerCustomerMeter *components.CustomerCustomerMeter
 }
 
-func (o *CustomerPortalCustomerMetersGetResponse) GetHTTPMeta() components.HTTPMetadata {
-	if o == nil {
+func (c *CustomerPortalCustomerMetersGetResponse) GetHTTPMeta() components.HTTPMetadata {
+	if c == nil {
 		return components.HTTPMetadata{}
 	}
-	return o.HTTPMeta
+	return c.HTTPMeta
 }
 
-func (o *CustomerPortalCustomerMetersGetResponse) GetCustomerCustomerMeter() *components.CustomerCustomerMeter {
-	if o == nil {
+func (c *CustomerPortalCustomerMetersGetResponse) GetCustomerCustomerMeter() *components.CustomerCustomerMeter {
+	if c == nil {
 		return nil
 	}
-	return o.CustomerCustomerMeter
+	return c.CustomerCustomerMeter
 }

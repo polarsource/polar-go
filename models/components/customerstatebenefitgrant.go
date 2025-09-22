@@ -274,58 +274,58 @@ func (c *CustomerStateBenefitGrant) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *CustomerStateBenefitGrant) GetID() string {
-	if o == nil {
+func (c *CustomerStateBenefitGrant) GetID() string {
+	if c == nil {
 		return ""
 	}
-	return o.ID
+	return c.ID
 }
 
-func (o *CustomerStateBenefitGrant) GetCreatedAt() time.Time {
-	if o == nil {
+func (c *CustomerStateBenefitGrant) GetCreatedAt() time.Time {
+	if c == nil {
 		return time.Time{}
 	}
-	return o.CreatedAt
+	return c.CreatedAt
 }
 
-func (o *CustomerStateBenefitGrant) GetModifiedAt() *time.Time {
-	if o == nil {
+func (c *CustomerStateBenefitGrant) GetModifiedAt() *time.Time {
+	if c == nil {
 		return nil
 	}
-	return o.ModifiedAt
+	return c.ModifiedAt
 }
 
-func (o *CustomerStateBenefitGrant) GetGrantedAt() time.Time {
-	if o == nil {
+func (c *CustomerStateBenefitGrant) GetGrantedAt() time.Time {
+	if c == nil {
 		return time.Time{}
 	}
-	return o.GrantedAt
+	return c.GrantedAt
 }
 
-func (o *CustomerStateBenefitGrant) GetBenefitID() string {
-	if o == nil {
+func (c *CustomerStateBenefitGrant) GetBenefitID() string {
+	if c == nil {
 		return ""
 	}
-	return o.BenefitID
+	return c.BenefitID
 }
 
-func (o *CustomerStateBenefitGrant) GetBenefitType() BenefitType {
-	if o == nil {
+func (c *CustomerStateBenefitGrant) GetBenefitType() BenefitType {
+	if c == nil {
 		return BenefitType("")
 	}
-	return o.BenefitType
+	return c.BenefitType
 }
 
-func (o *CustomerStateBenefitGrant) GetBenefitMetadata() map[string]BenefitMetadata {
-	if o == nil {
+func (c *CustomerStateBenefitGrant) GetBenefitMetadata() map[string]BenefitMetadata {
+	if c == nil {
 		return map[string]BenefitMetadata{}
 	}
-	return o.BenefitMetadata
+	return c.BenefitMetadata
 }
 
-func (o *CustomerStateBenefitGrant) GetProperties() CustomerStateBenefitGrantProperties {
-	if o == nil {
+func (c *CustomerStateBenefitGrant) GetProperties() CustomerStateBenefitGrantProperties {
+	if c == nil {
 		return CustomerStateBenefitGrantProperties{}
 	}
-	return o.Properties
+	return c.Properties
 }

@@ -46,90 +46,90 @@ func (p *ProductPriceMeteredUnit) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *ProductPriceMeteredUnit) GetCreatedAt() time.Time {
-	if o == nil {
+func (p *ProductPriceMeteredUnit) GetCreatedAt() time.Time {
+	if p == nil {
 		return time.Time{}
 	}
-	return o.CreatedAt
+	return p.CreatedAt
 }
 
-func (o *ProductPriceMeteredUnit) GetModifiedAt() *time.Time {
-	if o == nil {
+func (p *ProductPriceMeteredUnit) GetModifiedAt() *time.Time {
+	if p == nil {
 		return nil
 	}
-	return o.ModifiedAt
+	return p.ModifiedAt
 }
 
-func (o *ProductPriceMeteredUnit) GetID() string {
-	if o == nil {
+func (p *ProductPriceMeteredUnit) GetID() string {
+	if p == nil {
 		return ""
 	}
-	return o.ID
+	return p.ID
 }
 
-func (o *ProductPriceMeteredUnit) GetAmountType() string {
+func (p *ProductPriceMeteredUnit) GetAmountType() string {
 	return "metered_unit"
 }
 
-func (o *ProductPriceMeteredUnit) GetIsArchived() bool {
-	if o == nil {
+func (p *ProductPriceMeteredUnit) GetIsArchived() bool {
+	if p == nil {
 		return false
 	}
-	return o.IsArchived
+	return p.IsArchived
 }
 
-func (o *ProductPriceMeteredUnit) GetProductID() string {
-	if o == nil {
+func (p *ProductPriceMeteredUnit) GetProductID() string {
+	if p == nil {
 		return ""
 	}
-	return o.ProductID
+	return p.ProductID
 }
 
-func (o *ProductPriceMeteredUnit) GetType() ProductPriceType {
-	if o == nil {
+func (p *ProductPriceMeteredUnit) GetType() ProductPriceType {
+	if p == nil {
 		return ProductPriceType("")
 	}
-	return o.Type
+	return p.Type
 }
 
-func (o *ProductPriceMeteredUnit) GetRecurringInterval() *SubscriptionRecurringInterval {
-	if o == nil {
+func (p *ProductPriceMeteredUnit) GetRecurringInterval() *SubscriptionRecurringInterval {
+	if p == nil {
 		return nil
 	}
-	return o.RecurringInterval
+	return p.RecurringInterval
 }
 
-func (o *ProductPriceMeteredUnit) GetPriceCurrency() string {
-	if o == nil {
+func (p *ProductPriceMeteredUnit) GetPriceCurrency() string {
+	if p == nil {
 		return ""
 	}
-	return o.PriceCurrency
+	return p.PriceCurrency
 }
 
-func (o *ProductPriceMeteredUnit) GetUnitAmount() string {
-	if o == nil {
+func (p *ProductPriceMeteredUnit) GetUnitAmount() string {
+	if p == nil {
 		return ""
 	}
-	return o.UnitAmount
+	return p.UnitAmount
 }
 
-func (o *ProductPriceMeteredUnit) GetCapAmount() *int64 {
-	if o == nil {
+func (p *ProductPriceMeteredUnit) GetCapAmount() *int64 {
+	if p == nil {
 		return nil
 	}
-	return o.CapAmount
+	return p.CapAmount
 }
 
-func (o *ProductPriceMeteredUnit) GetMeterID() string {
-	if o == nil {
+func (p *ProductPriceMeteredUnit) GetMeterID() string {
+	if p == nil {
 		return ""
 	}
-	return o.MeterID
+	return p.MeterID
 }
 
-func (o *ProductPriceMeteredUnit) GetMeter() ProductPriceMeter {
-	if o == nil {
+func (p *ProductPriceMeteredUnit) GetMeter() ProductPriceMeter {
+	if p == nil {
 		return ProductPriceMeter{}
 	}
-	return o.Meter
+	return p.Meter
 }

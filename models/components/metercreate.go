@@ -311,61 +311,61 @@ type MeterCreate struct {
 	OrganizationID *string `json:"organization_id,omitempty"`
 }
 
-func (o *MeterCreate) GetMetadata() map[string]MeterCreateMetadata {
-	if o == nil {
+func (m *MeterCreate) GetMetadata() map[string]MeterCreateMetadata {
+	if m == nil {
 		return nil
 	}
-	return o.Metadata
+	return m.Metadata
 }
 
-func (o *MeterCreate) GetName() string {
-	if o == nil {
+func (m *MeterCreate) GetName() string {
+	if m == nil {
 		return ""
 	}
-	return o.Name
+	return m.Name
 }
 
-func (o *MeterCreate) GetFilter() Filter {
-	if o == nil {
+func (m *MeterCreate) GetFilter() Filter {
+	if m == nil {
 		return Filter{}
 	}
-	return o.Filter
+	return m.Filter
 }
 
-func (o *MeterCreate) GetAggregation() MeterCreateAggregation {
-	if o == nil {
+func (m *MeterCreate) GetAggregation() MeterCreateAggregation {
+	if m == nil {
 		return MeterCreateAggregation{}
 	}
-	return o.Aggregation
+	return m.Aggregation
 }
 
-func (o *MeterCreate) GetAggregationAvg() *PropertyAggregation {
-	return o.GetAggregation().PropertyAggregation
+func (m *MeterCreate) GetAggregationAvg() *PropertyAggregation {
+	return m.GetAggregation().PropertyAggregation
 }
 
-func (o *MeterCreate) GetAggregationCount() *CountAggregation {
-	return o.GetAggregation().CountAggregation
+func (m *MeterCreate) GetAggregationCount() *CountAggregation {
+	return m.GetAggregation().CountAggregation
 }
 
-func (o *MeterCreate) GetAggregationMax() *PropertyAggregation {
-	return o.GetAggregation().PropertyAggregation
+func (m *MeterCreate) GetAggregationMax() *PropertyAggregation {
+	return m.GetAggregation().PropertyAggregation
 }
 
-func (o *MeterCreate) GetAggregationMin() *PropertyAggregation {
-	return o.GetAggregation().PropertyAggregation
+func (m *MeterCreate) GetAggregationMin() *PropertyAggregation {
+	return m.GetAggregation().PropertyAggregation
 }
 
-func (o *MeterCreate) GetAggregationSum() *PropertyAggregation {
-	return o.GetAggregation().PropertyAggregation
+func (m *MeterCreate) GetAggregationSum() *PropertyAggregation {
+	return m.GetAggregation().PropertyAggregation
 }
 
-func (o *MeterCreate) GetAggregationUnique() *UniqueAggregation {
-	return o.GetAggregation().UniqueAggregation
+func (m *MeterCreate) GetAggregationUnique() *UniqueAggregation {
+	return m.GetAggregation().UniqueAggregation
 }
 
-func (o *MeterCreate) GetOrganizationID() *string {
-	if o == nil {
+func (m *MeterCreate) GetOrganizationID() *string {
+	if m == nil {
 		return nil
 	}
-	return o.OrganizationID
+	return m.OrganizationID
 }

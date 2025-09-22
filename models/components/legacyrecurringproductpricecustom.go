@@ -47,84 +47,84 @@ func (l *LegacyRecurringProductPriceCustom) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *LegacyRecurringProductPriceCustom) GetCreatedAt() time.Time {
-	if o == nil {
+func (l *LegacyRecurringProductPriceCustom) GetCreatedAt() time.Time {
+	if l == nil {
 		return time.Time{}
 	}
-	return o.CreatedAt
+	return l.CreatedAt
 }
 
-func (o *LegacyRecurringProductPriceCustom) GetModifiedAt() *time.Time {
-	if o == nil {
+func (l *LegacyRecurringProductPriceCustom) GetModifiedAt() *time.Time {
+	if l == nil {
 		return nil
 	}
-	return o.ModifiedAt
+	return l.ModifiedAt
 }
 
-func (o *LegacyRecurringProductPriceCustom) GetID() string {
-	if o == nil {
+func (l *LegacyRecurringProductPriceCustom) GetID() string {
+	if l == nil {
 		return ""
 	}
-	return o.ID
+	return l.ID
 }
 
-func (o *LegacyRecurringProductPriceCustom) GetAmountType() string {
+func (l *LegacyRecurringProductPriceCustom) GetAmountType() string {
 	return "custom"
 }
 
-func (o *LegacyRecurringProductPriceCustom) GetIsArchived() bool {
-	if o == nil {
+func (l *LegacyRecurringProductPriceCustom) GetIsArchived() bool {
+	if l == nil {
 		return false
 	}
-	return o.IsArchived
+	return l.IsArchived
 }
 
-func (o *LegacyRecurringProductPriceCustom) GetProductID() string {
-	if o == nil {
+func (l *LegacyRecurringProductPriceCustom) GetProductID() string {
+	if l == nil {
 		return ""
 	}
-	return o.ProductID
+	return l.ProductID
 }
 
-func (o *LegacyRecurringProductPriceCustom) GetType() string {
+func (l *LegacyRecurringProductPriceCustom) GetType() string {
 	return "recurring"
 }
 
-func (o *LegacyRecurringProductPriceCustom) GetRecurringInterval() SubscriptionRecurringInterval {
-	if o == nil {
+func (l *LegacyRecurringProductPriceCustom) GetRecurringInterval() SubscriptionRecurringInterval {
+	if l == nil {
 		return SubscriptionRecurringInterval("")
 	}
-	return o.RecurringInterval
+	return l.RecurringInterval
 }
 
-func (o *LegacyRecurringProductPriceCustom) GetPriceCurrency() string {
-	if o == nil {
+func (l *LegacyRecurringProductPriceCustom) GetPriceCurrency() string {
+	if l == nil {
 		return ""
 	}
-	return o.PriceCurrency
+	return l.PriceCurrency
 }
 
-func (o *LegacyRecurringProductPriceCustom) GetMinimumAmount() *int64 {
-	if o == nil {
+func (l *LegacyRecurringProductPriceCustom) GetMinimumAmount() *int64 {
+	if l == nil {
 		return nil
 	}
-	return o.MinimumAmount
+	return l.MinimumAmount
 }
 
-func (o *LegacyRecurringProductPriceCustom) GetMaximumAmount() *int64 {
-	if o == nil {
+func (l *LegacyRecurringProductPriceCustom) GetMaximumAmount() *int64 {
+	if l == nil {
 		return nil
 	}
-	return o.MaximumAmount
+	return l.MaximumAmount
 }
 
-func (o *LegacyRecurringProductPriceCustom) GetPresetAmount() *int64 {
-	if o == nil {
+func (l *LegacyRecurringProductPriceCustom) GetPresetAmount() *int64 {
+	if l == nil {
 		return nil
 	}
-	return o.PresetAmount
+	return l.PresetAmount
 }
 
-func (o *LegacyRecurringProductPriceCustom) GetLegacy() bool {
+func (l *LegacyRecurringProductPriceCustom) GetLegacy() bool {
 	return true
 }

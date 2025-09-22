@@ -40,30 +40,30 @@ type RevokeTokenRequest struct {
 	ClientSecret  string         `form:"name=client_secret"`
 }
 
-func (o *RevokeTokenRequest) GetToken() string {
-	if o == nil {
+func (r *RevokeTokenRequest) GetToken() string {
+	if r == nil {
 		return ""
 	}
-	return o.Token
+	return r.Token
 }
 
-func (o *RevokeTokenRequest) GetTokenTypeHint() *TokenTypeHint {
-	if o == nil {
+func (r *RevokeTokenRequest) GetTokenTypeHint() *TokenTypeHint {
+	if r == nil {
 		return nil
 	}
-	return o.TokenTypeHint
+	return r.TokenTypeHint
 }
 
-func (o *RevokeTokenRequest) GetClientID() string {
-	if o == nil {
+func (r *RevokeTokenRequest) GetClientID() string {
+	if r == nil {
 		return ""
 	}
-	return o.ClientID
+	return r.ClientID
 }
 
-func (o *RevokeTokenRequest) GetClientSecret() string {
-	if o == nil {
+func (r *RevokeTokenRequest) GetClientSecret() string {
+	if r == nil {
 		return ""
 	}
-	return o.ClientSecret
+	return r.ClientSecret
 }

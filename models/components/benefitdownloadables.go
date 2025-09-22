@@ -147,69 +147,69 @@ func (b *BenefitDownloadables) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *BenefitDownloadables) GetID() string {
-	if o == nil {
+func (b *BenefitDownloadables) GetID() string {
+	if b == nil {
 		return ""
 	}
-	return o.ID
+	return b.ID
 }
 
-func (o *BenefitDownloadables) GetCreatedAt() time.Time {
-	if o == nil {
+func (b *BenefitDownloadables) GetCreatedAt() time.Time {
+	if b == nil {
 		return time.Time{}
 	}
-	return o.CreatedAt
+	return b.CreatedAt
 }
 
-func (o *BenefitDownloadables) GetModifiedAt() *time.Time {
-	if o == nil {
+func (b *BenefitDownloadables) GetModifiedAt() *time.Time {
+	if b == nil {
 		return nil
 	}
-	return o.ModifiedAt
+	return b.ModifiedAt
 }
 
-func (o *BenefitDownloadables) GetType() string {
+func (b *BenefitDownloadables) GetType() string {
 	return "downloadables"
 }
 
-func (o *BenefitDownloadables) GetDescription() string {
-	if o == nil {
+func (b *BenefitDownloadables) GetDescription() string {
+	if b == nil {
 		return ""
 	}
-	return o.Description
+	return b.Description
 }
 
-func (o *BenefitDownloadables) GetSelectable() bool {
-	if o == nil {
+func (b *BenefitDownloadables) GetSelectable() bool {
+	if b == nil {
 		return false
 	}
-	return o.Selectable
+	return b.Selectable
 }
 
-func (o *BenefitDownloadables) GetDeletable() bool {
-	if o == nil {
+func (b *BenefitDownloadables) GetDeletable() bool {
+	if b == nil {
 		return false
 	}
-	return o.Deletable
+	return b.Deletable
 }
 
-func (o *BenefitDownloadables) GetOrganizationID() string {
-	if o == nil {
+func (b *BenefitDownloadables) GetOrganizationID() string {
+	if b == nil {
 		return ""
 	}
-	return o.OrganizationID
+	return b.OrganizationID
 }
 
-func (o *BenefitDownloadables) GetMetadata() map[string]BenefitDownloadablesMetadata {
-	if o == nil {
+func (b *BenefitDownloadables) GetMetadata() map[string]BenefitDownloadablesMetadata {
+	if b == nil {
 		return map[string]BenefitDownloadablesMetadata{}
 	}
-	return o.Metadata
+	return b.Metadata
 }
 
-func (o *BenefitDownloadables) GetProperties() BenefitDownloadablesProperties {
-	if o == nil {
+func (b *BenefitDownloadables) GetProperties() BenefitDownloadablesProperties {
+	if b == nil {
 		return BenefitDownloadablesProperties{}
 	}
-	return o.Properties
+	return b.Properties
 }

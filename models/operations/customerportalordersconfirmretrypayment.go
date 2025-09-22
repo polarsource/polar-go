@@ -10,11 +10,11 @@ type CustomerPortalOrdersConfirmRetryPaymentSecurity struct {
 	CustomerSession string `security:"scheme,type=http,subtype=bearer,name=Authorization,env=polar_customer_session"`
 }
 
-func (o *CustomerPortalOrdersConfirmRetryPaymentSecurity) GetCustomerSession() string {
-	if o == nil {
+func (c *CustomerPortalOrdersConfirmRetryPaymentSecurity) GetCustomerSession() string {
+	if c == nil {
 		return ""
 	}
-	return o.CustomerSession
+	return c.CustomerSession
 }
 
 type CustomerPortalOrdersConfirmRetryPaymentRequest struct {
@@ -23,18 +23,18 @@ type CustomerPortalOrdersConfirmRetryPaymentRequest struct {
 	CustomerOrderConfirmPayment components.CustomerOrderConfirmPayment `request:"mediaType=application/json"`
 }
 
-func (o *CustomerPortalOrdersConfirmRetryPaymentRequest) GetID() string {
-	if o == nil {
+func (c *CustomerPortalOrdersConfirmRetryPaymentRequest) GetID() string {
+	if c == nil {
 		return ""
 	}
-	return o.ID
+	return c.ID
 }
 
-func (o *CustomerPortalOrdersConfirmRetryPaymentRequest) GetCustomerOrderConfirmPayment() components.CustomerOrderConfirmPayment {
-	if o == nil {
+func (c *CustomerPortalOrdersConfirmRetryPaymentRequest) GetCustomerOrderConfirmPayment() components.CustomerOrderConfirmPayment {
+	if c == nil {
 		return components.CustomerOrderConfirmPayment{}
 	}
-	return o.CustomerOrderConfirmPayment
+	return c.CustomerOrderConfirmPayment
 }
 
 type CustomerPortalOrdersConfirmRetryPaymentResponse struct {
@@ -43,16 +43,16 @@ type CustomerPortalOrdersConfirmRetryPaymentResponse struct {
 	CustomerOrderPaymentConfirmation *components.CustomerOrderPaymentConfirmation
 }
 
-func (o *CustomerPortalOrdersConfirmRetryPaymentResponse) GetHTTPMeta() components.HTTPMetadata {
-	if o == nil {
+func (c *CustomerPortalOrdersConfirmRetryPaymentResponse) GetHTTPMeta() components.HTTPMetadata {
+	if c == nil {
 		return components.HTTPMetadata{}
 	}
-	return o.HTTPMeta
+	return c.HTTPMeta
 }
 
-func (o *CustomerPortalOrdersConfirmRetryPaymentResponse) GetCustomerOrderPaymentConfirmation() *components.CustomerOrderPaymentConfirmation {
-	if o == nil {
+func (c *CustomerPortalOrdersConfirmRetryPaymentResponse) GetCustomerOrderPaymentConfirmation() *components.CustomerOrderPaymentConfirmation {
+	if c == nil {
 		return nil
 	}
-	return o.CustomerOrderPaymentConfirmation
+	return c.CustomerOrderPaymentConfirmation
 }

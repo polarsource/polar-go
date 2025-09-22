@@ -78,16 +78,16 @@ type CustomerSessionsCreateResponse struct {
 	CustomerSession *components.CustomerSession
 }
 
-func (o *CustomerSessionsCreateResponse) GetHTTPMeta() components.HTTPMetadata {
-	if o == nil {
+func (c *CustomerSessionsCreateResponse) GetHTTPMeta() components.HTTPMetadata {
+	if c == nil {
 		return components.HTTPMetadata{}
 	}
-	return o.HTTPMeta
+	return c.HTTPMeta
 }
 
-func (o *CustomerSessionsCreateResponse) GetCustomerSession() *components.CustomerSession {
-	if o == nil {
+func (c *CustomerSessionsCreateResponse) GetCustomerSession() *components.CustomerSession {
+	if c == nil {
 		return nil
 	}
-	return o.CustomerSession
+	return c.CustomerSession
 }

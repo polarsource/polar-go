@@ -37,58 +37,58 @@ func (s *SubscriptionMeter) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SubscriptionMeter) GetCreatedAt() time.Time {
-	if o == nil {
+func (s *SubscriptionMeter) GetCreatedAt() time.Time {
+	if s == nil {
 		return time.Time{}
 	}
-	return o.CreatedAt
+	return s.CreatedAt
 }
 
-func (o *SubscriptionMeter) GetModifiedAt() *time.Time {
-	if o == nil {
+func (s *SubscriptionMeter) GetModifiedAt() *time.Time {
+	if s == nil {
 		return nil
 	}
-	return o.ModifiedAt
+	return s.ModifiedAt
 }
 
-func (o *SubscriptionMeter) GetID() string {
-	if o == nil {
+func (s *SubscriptionMeter) GetID() string {
+	if s == nil {
 		return ""
 	}
-	return o.ID
+	return s.ID
 }
 
-func (o *SubscriptionMeter) GetConsumedUnits() float64 {
-	if o == nil {
+func (s *SubscriptionMeter) GetConsumedUnits() float64 {
+	if s == nil {
 		return 0.0
 	}
-	return o.ConsumedUnits
+	return s.ConsumedUnits
 }
 
-func (o *SubscriptionMeter) GetCreditedUnits() int64 {
-	if o == nil {
+func (s *SubscriptionMeter) GetCreditedUnits() int64 {
+	if s == nil {
 		return 0
 	}
-	return o.CreditedUnits
+	return s.CreditedUnits
 }
 
-func (o *SubscriptionMeter) GetAmount() int64 {
-	if o == nil {
+func (s *SubscriptionMeter) GetAmount() int64 {
+	if s == nil {
 		return 0
 	}
-	return o.Amount
+	return s.Amount
 }
 
-func (o *SubscriptionMeter) GetMeterID() string {
-	if o == nil {
+func (s *SubscriptionMeter) GetMeterID() string {
+	if s == nil {
 		return ""
 	}
-	return o.MeterID
+	return s.MeterID
 }
 
-func (o *SubscriptionMeter) GetMeter() Meter {
-	if o == nil {
+func (s *SubscriptionMeter) GetMeter() Meter {
+	if s == nil {
 		return Meter{}
 	}
-	return o.Meter
+	return s.Meter
 }

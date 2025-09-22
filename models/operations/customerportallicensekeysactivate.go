@@ -12,16 +12,16 @@ type CustomerPortalLicenseKeysActivateResponse struct {
 	LicenseKeyActivationRead *components.LicenseKeyActivationRead
 }
 
-func (o *CustomerPortalLicenseKeysActivateResponse) GetHTTPMeta() components.HTTPMetadata {
-	if o == nil {
+func (c *CustomerPortalLicenseKeysActivateResponse) GetHTTPMeta() components.HTTPMetadata {
+	if c == nil {
 		return components.HTTPMetadata{}
 	}
-	return o.HTTPMeta
+	return c.HTTPMeta
 }
 
-func (o *CustomerPortalLicenseKeysActivateResponse) GetLicenseKeyActivationRead() *components.LicenseKeyActivationRead {
-	if o == nil {
+func (c *CustomerPortalLicenseKeysActivateResponse) GetLicenseKeyActivationRead() *components.LicenseKeyActivationRead {
+	if c == nil {
 		return nil
 	}
-	return o.LicenseKeyActivationRead
+	return c.LicenseKeyActivationRead
 }

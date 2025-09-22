@@ -380,307 +380,307 @@ func (c *CheckoutPublicConfirmed) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *CheckoutPublicConfirmed) GetCreatedAt() time.Time {
-	if o == nil {
+func (c *CheckoutPublicConfirmed) GetCreatedAt() time.Time {
+	if c == nil {
 		return time.Time{}
 	}
-	return o.CreatedAt
+	return c.CreatedAt
 }
 
-func (o *CheckoutPublicConfirmed) GetModifiedAt() *time.Time {
-	if o == nil {
+func (c *CheckoutPublicConfirmed) GetModifiedAt() *time.Time {
+	if c == nil {
 		return nil
 	}
-	return o.ModifiedAt
+	return c.ModifiedAt
 }
 
-func (o *CheckoutPublicConfirmed) GetID() string {
-	if o == nil {
+func (c *CheckoutPublicConfirmed) GetID() string {
+	if c == nil {
 		return ""
 	}
-	return o.ID
+	return c.ID
 }
 
-func (o *CheckoutPublicConfirmed) GetCustomFieldData() map[string]*CheckoutPublicConfirmedCustomFieldData {
-	if o == nil {
+func (c *CheckoutPublicConfirmed) GetCustomFieldData() map[string]*CheckoutPublicConfirmedCustomFieldData {
+	if c == nil {
 		return nil
 	}
-	return o.CustomFieldData
+	return c.CustomFieldData
 }
 
-func (o *CheckoutPublicConfirmed) GetPaymentProcessor() PaymentProcessor {
-	if o == nil {
+func (c *CheckoutPublicConfirmed) GetPaymentProcessor() PaymentProcessor {
+	if c == nil {
 		return PaymentProcessor("")
 	}
-	return o.PaymentProcessor
+	return c.PaymentProcessor
 }
 
-func (o *CheckoutPublicConfirmed) GetStatus() string {
+func (c *CheckoutPublicConfirmed) GetStatus() string {
 	return "confirmed"
 }
 
-func (o *CheckoutPublicConfirmed) GetClientSecret() string {
-	if o == nil {
+func (c *CheckoutPublicConfirmed) GetClientSecret() string {
+	if c == nil {
 		return ""
 	}
-	return o.ClientSecret
+	return c.ClientSecret
 }
 
-func (o *CheckoutPublicConfirmed) GetURL() string {
-	if o == nil {
+func (c *CheckoutPublicConfirmed) GetURL() string {
+	if c == nil {
 		return ""
 	}
-	return o.URL
+	return c.URL
 }
 
-func (o *CheckoutPublicConfirmed) GetExpiresAt() time.Time {
-	if o == nil {
+func (c *CheckoutPublicConfirmed) GetExpiresAt() time.Time {
+	if c == nil {
 		return time.Time{}
 	}
-	return o.ExpiresAt
+	return c.ExpiresAt
 }
 
-func (o *CheckoutPublicConfirmed) GetSuccessURL() string {
-	if o == nil {
+func (c *CheckoutPublicConfirmed) GetSuccessURL() string {
+	if c == nil {
 		return ""
 	}
-	return o.SuccessURL
+	return c.SuccessURL
 }
 
-func (o *CheckoutPublicConfirmed) GetEmbedOrigin() *string {
-	if o == nil {
+func (c *CheckoutPublicConfirmed) GetEmbedOrigin() *string {
+	if c == nil {
 		return nil
 	}
-	return o.EmbedOrigin
+	return c.EmbedOrigin
 }
 
-func (o *CheckoutPublicConfirmed) GetAmount() int64 {
-	if o == nil {
+func (c *CheckoutPublicConfirmed) GetAmount() int64 {
+	if c == nil {
 		return 0
 	}
-	return o.Amount
+	return c.Amount
 }
 
-func (o *CheckoutPublicConfirmed) GetDiscountAmount() int64 {
-	if o == nil {
+func (c *CheckoutPublicConfirmed) GetDiscountAmount() int64 {
+	if c == nil {
 		return 0
 	}
-	return o.DiscountAmount
+	return c.DiscountAmount
 }
 
-func (o *CheckoutPublicConfirmed) GetNetAmount() int64 {
-	if o == nil {
+func (c *CheckoutPublicConfirmed) GetNetAmount() int64 {
+	if c == nil {
 		return 0
 	}
-	return o.NetAmount
+	return c.NetAmount
 }
 
-func (o *CheckoutPublicConfirmed) GetTaxAmount() *int64 {
-	if o == nil {
+func (c *CheckoutPublicConfirmed) GetTaxAmount() *int64 {
+	if c == nil {
 		return nil
 	}
-	return o.TaxAmount
+	return c.TaxAmount
 }
 
-func (o *CheckoutPublicConfirmed) GetTotalAmount() int64 {
-	if o == nil {
+func (c *CheckoutPublicConfirmed) GetTotalAmount() int64 {
+	if c == nil {
 		return 0
 	}
-	return o.TotalAmount
+	return c.TotalAmount
 }
 
-func (o *CheckoutPublicConfirmed) GetCurrency() string {
-	if o == nil {
+func (c *CheckoutPublicConfirmed) GetCurrency() string {
+	if c == nil {
 		return ""
 	}
-	return o.Currency
+	return c.Currency
 }
 
-func (o *CheckoutPublicConfirmed) GetProductID() string {
-	if o == nil {
+func (c *CheckoutPublicConfirmed) GetProductID() string {
+	if c == nil {
 		return ""
 	}
-	return o.ProductID
+	return c.ProductID
 }
 
-func (o *CheckoutPublicConfirmed) GetProductPriceID() string {
-	if o == nil {
+func (c *CheckoutPublicConfirmed) GetProductPriceID() string {
+	if c == nil {
 		return ""
 	}
-	return o.ProductPriceID
+	return c.ProductPriceID
 }
 
-func (o *CheckoutPublicConfirmed) GetDiscountID() *string {
-	if o == nil {
+func (c *CheckoutPublicConfirmed) GetDiscountID() *string {
+	if c == nil {
 		return nil
 	}
-	return o.DiscountID
+	return c.DiscountID
 }
 
-func (o *CheckoutPublicConfirmed) GetAllowDiscountCodes() bool {
-	if o == nil {
+func (c *CheckoutPublicConfirmed) GetAllowDiscountCodes() bool {
+	if c == nil {
 		return false
 	}
-	return o.AllowDiscountCodes
+	return c.AllowDiscountCodes
 }
 
-func (o *CheckoutPublicConfirmed) GetRequireBillingAddress() bool {
-	if o == nil {
+func (c *CheckoutPublicConfirmed) GetRequireBillingAddress() bool {
+	if c == nil {
 		return false
 	}
-	return o.RequireBillingAddress
+	return c.RequireBillingAddress
 }
 
-func (o *CheckoutPublicConfirmed) GetIsDiscountApplicable() bool {
-	if o == nil {
+func (c *CheckoutPublicConfirmed) GetIsDiscountApplicable() bool {
+	if c == nil {
 		return false
 	}
-	return o.IsDiscountApplicable
+	return c.IsDiscountApplicable
 }
 
-func (o *CheckoutPublicConfirmed) GetIsFreeProductPrice() bool {
-	if o == nil {
+func (c *CheckoutPublicConfirmed) GetIsFreeProductPrice() bool {
+	if c == nil {
 		return false
 	}
-	return o.IsFreeProductPrice
+	return c.IsFreeProductPrice
 }
 
-func (o *CheckoutPublicConfirmed) GetIsPaymentRequired() bool {
-	if o == nil {
+func (c *CheckoutPublicConfirmed) GetIsPaymentRequired() bool {
+	if c == nil {
 		return false
 	}
-	return o.IsPaymentRequired
+	return c.IsPaymentRequired
 }
 
-func (o *CheckoutPublicConfirmed) GetIsPaymentSetupRequired() bool {
-	if o == nil {
+func (c *CheckoutPublicConfirmed) GetIsPaymentSetupRequired() bool {
+	if c == nil {
 		return false
 	}
-	return o.IsPaymentSetupRequired
+	return c.IsPaymentSetupRequired
 }
 
-func (o *CheckoutPublicConfirmed) GetIsPaymentFormRequired() bool {
-	if o == nil {
+func (c *CheckoutPublicConfirmed) GetIsPaymentFormRequired() bool {
+	if c == nil {
 		return false
 	}
-	return o.IsPaymentFormRequired
+	return c.IsPaymentFormRequired
 }
 
-func (o *CheckoutPublicConfirmed) GetCustomerID() *string {
-	if o == nil {
+func (c *CheckoutPublicConfirmed) GetCustomerID() *string {
+	if c == nil {
 		return nil
 	}
-	return o.CustomerID
+	return c.CustomerID
 }
 
-func (o *CheckoutPublicConfirmed) GetIsBusinessCustomer() bool {
-	if o == nil {
+func (c *CheckoutPublicConfirmed) GetIsBusinessCustomer() bool {
+	if c == nil {
 		return false
 	}
-	return o.IsBusinessCustomer
+	return c.IsBusinessCustomer
 }
 
-func (o *CheckoutPublicConfirmed) GetCustomerName() *string {
-	if o == nil {
+func (c *CheckoutPublicConfirmed) GetCustomerName() *string {
+	if c == nil {
 		return nil
 	}
-	return o.CustomerName
+	return c.CustomerName
 }
 
-func (o *CheckoutPublicConfirmed) GetCustomerEmail() *string {
-	if o == nil {
+func (c *CheckoutPublicConfirmed) GetCustomerEmail() *string {
+	if c == nil {
 		return nil
 	}
-	return o.CustomerEmail
+	return c.CustomerEmail
 }
 
-func (o *CheckoutPublicConfirmed) GetCustomerIPAddress() *string {
-	if o == nil {
+func (c *CheckoutPublicConfirmed) GetCustomerIPAddress() *string {
+	if c == nil {
 		return nil
 	}
-	return o.CustomerIPAddress
+	return c.CustomerIPAddress
 }
 
-func (o *CheckoutPublicConfirmed) GetCustomerBillingName() *string {
-	if o == nil {
+func (c *CheckoutPublicConfirmed) GetCustomerBillingName() *string {
+	if c == nil {
 		return nil
 	}
-	return o.CustomerBillingName
+	return c.CustomerBillingName
 }
 
-func (o *CheckoutPublicConfirmed) GetCustomerBillingAddress() *Address {
-	if o == nil {
+func (c *CheckoutPublicConfirmed) GetCustomerBillingAddress() *Address {
+	if c == nil {
 		return nil
 	}
-	return o.CustomerBillingAddress
+	return c.CustomerBillingAddress
 }
 
-func (o *CheckoutPublicConfirmed) GetCustomerTaxID() *string {
-	if o == nil {
+func (c *CheckoutPublicConfirmed) GetCustomerTaxID() *string {
+	if c == nil {
 		return nil
 	}
-	return o.CustomerTaxID
+	return c.CustomerTaxID
 }
 
-func (o *CheckoutPublicConfirmed) GetPaymentProcessorMetadata() map[string]string {
-	if o == nil {
+func (c *CheckoutPublicConfirmed) GetPaymentProcessorMetadata() map[string]string {
+	if c == nil {
 		return map[string]string{}
 	}
-	return o.PaymentProcessorMetadata
+	return c.PaymentProcessorMetadata
 }
 
-func (o *CheckoutPublicConfirmed) GetBillingAddressFields() CheckoutBillingAddressFields {
-	if o == nil {
+func (c *CheckoutPublicConfirmed) GetBillingAddressFields() CheckoutBillingAddressFields {
+	if c == nil {
 		return CheckoutBillingAddressFields{}
 	}
-	return o.BillingAddressFields
+	return c.BillingAddressFields
 }
 
-func (o *CheckoutPublicConfirmed) GetProducts() []CheckoutProduct {
-	if o == nil {
+func (c *CheckoutPublicConfirmed) GetProducts() []CheckoutProduct {
+	if c == nil {
 		return []CheckoutProduct{}
 	}
-	return o.Products
+	return c.Products
 }
 
-func (o *CheckoutPublicConfirmed) GetProduct() CheckoutProduct {
-	if o == nil {
+func (c *CheckoutPublicConfirmed) GetProduct() CheckoutProduct {
+	if c == nil {
 		return CheckoutProduct{}
 	}
-	return o.Product
+	return c.Product
 }
 
-func (o *CheckoutPublicConfirmed) GetProductPrice() CheckoutPublicConfirmedProductPrice {
-	if o == nil {
+func (c *CheckoutPublicConfirmed) GetProductPrice() CheckoutPublicConfirmedProductPrice {
+	if c == nil {
 		return CheckoutPublicConfirmedProductPrice{}
 	}
-	return o.ProductPrice
+	return c.ProductPrice
 }
 
-func (o *CheckoutPublicConfirmed) GetDiscount() *CheckoutPublicConfirmedDiscount {
-	if o == nil {
+func (c *CheckoutPublicConfirmed) GetDiscount() *CheckoutPublicConfirmedDiscount {
+	if c == nil {
 		return nil
 	}
-	return o.Discount
+	return c.Discount
 }
 
-func (o *CheckoutPublicConfirmed) GetOrganization() Organization {
-	if o == nil {
+func (c *CheckoutPublicConfirmed) GetOrganization() Organization {
+	if c == nil {
 		return Organization{}
 	}
-	return o.Organization
+	return c.Organization
 }
 
-func (o *CheckoutPublicConfirmed) GetAttachedCustomFields() []AttachedCustomField {
-	if o == nil {
+func (c *CheckoutPublicConfirmed) GetAttachedCustomFields() []AttachedCustomField {
+	if c == nil {
 		return []AttachedCustomField{}
 	}
-	return o.AttachedCustomFields
+	return c.AttachedCustomFields
 }
 
-func (o *CheckoutPublicConfirmed) GetCustomerSessionToken() string {
-	if o == nil {
+func (c *CheckoutPublicConfirmed) GetCustomerSessionToken() string {
+	if c == nil {
 		return ""
 	}
-	return o.CustomerSessionToken
+	return c.CustomerSessionToken
 }

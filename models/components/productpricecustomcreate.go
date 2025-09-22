@@ -30,34 +30,34 @@ func (p *ProductPriceCustomCreate) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *ProductPriceCustomCreate) GetAmountType() string {
+func (p *ProductPriceCustomCreate) GetAmountType() string {
 	return "custom"
 }
 
-func (o *ProductPriceCustomCreate) GetPriceCurrency() *string {
-	if o == nil {
+func (p *ProductPriceCustomCreate) GetPriceCurrency() *string {
+	if p == nil {
 		return nil
 	}
-	return o.PriceCurrency
+	return p.PriceCurrency
 }
 
-func (o *ProductPriceCustomCreate) GetMinimumAmount() *int64 {
-	if o == nil {
+func (p *ProductPriceCustomCreate) GetMinimumAmount() *int64 {
+	if p == nil {
 		return nil
 	}
-	return o.MinimumAmount
+	return p.MinimumAmount
 }
 
-func (o *ProductPriceCustomCreate) GetMaximumAmount() *int64 {
-	if o == nil {
+func (p *ProductPriceCustomCreate) GetMaximumAmount() *int64 {
+	if p == nil {
 		return nil
 	}
-	return o.MaximumAmount
+	return p.MaximumAmount
 }
 
-func (o *ProductPriceCustomCreate) GetPresetAmount() *int64 {
-	if o == nil {
+func (p *ProductPriceCustomCreate) GetPresetAmount() *int64 {
+	if p == nil {
 		return nil
 	}
-	return o.PresetAmount
+	return p.PresetAmount
 }

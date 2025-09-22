@@ -163,46 +163,46 @@ func (c *CustomFieldsListRequest) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *CustomFieldsListRequest) GetOrganizationID() *CustomFieldsListQueryParamOrganizationIDFilter {
-	if o == nil {
+func (c *CustomFieldsListRequest) GetOrganizationID() *CustomFieldsListQueryParamOrganizationIDFilter {
+	if c == nil {
 		return nil
 	}
-	return o.OrganizationID
+	return c.OrganizationID
 }
 
-func (o *CustomFieldsListRequest) GetQuery() *string {
-	if o == nil {
+func (c *CustomFieldsListRequest) GetQuery() *string {
+	if c == nil {
 		return nil
 	}
-	return o.Query
+	return c.Query
 }
 
-func (o *CustomFieldsListRequest) GetTypeFilter() *CustomFieldTypeFilter {
-	if o == nil {
+func (c *CustomFieldsListRequest) GetTypeFilter() *CustomFieldTypeFilter {
+	if c == nil {
 		return nil
 	}
-	return o.TypeFilter
+	return c.TypeFilter
 }
 
-func (o *CustomFieldsListRequest) GetPage() *int64 {
-	if o == nil {
+func (c *CustomFieldsListRequest) GetPage() *int64 {
+	if c == nil {
 		return nil
 	}
-	return o.Page
+	return c.Page
 }
 
-func (o *CustomFieldsListRequest) GetLimit() *int64 {
-	if o == nil {
+func (c *CustomFieldsListRequest) GetLimit() *int64 {
+	if c == nil {
 		return nil
 	}
-	return o.Limit
+	return c.Limit
 }
 
-func (o *CustomFieldsListRequest) GetSorting() []components.CustomFieldSortProperty {
-	if o == nil {
+func (c *CustomFieldsListRequest) GetSorting() []components.CustomFieldSortProperty {
+	if c == nil {
 		return nil
 	}
-	return o.Sorting
+	return c.Sorting
 }
 
 type CustomFieldsListResponse struct {
@@ -213,16 +213,16 @@ type CustomFieldsListResponse struct {
 	Next func() (*CustomFieldsListResponse, error)
 }
 
-func (o *CustomFieldsListResponse) GetHTTPMeta() components.HTTPMetadata {
-	if o == nil {
+func (c *CustomFieldsListResponse) GetHTTPMeta() components.HTTPMetadata {
+	if c == nil {
 		return components.HTTPMetadata{}
 	}
-	return o.HTTPMeta
+	return c.HTTPMeta
 }
 
-func (o *CustomFieldsListResponse) GetListResourceCustomField() *components.ListResourceCustomField {
-	if o == nil {
+func (c *CustomFieldsListResponse) GetListResourceCustomField() *components.ListResourceCustomField {
+	if c == nil {
 		return nil
 	}
-	return o.ListResourceCustomField
+	return c.ListResourceCustomField
 }

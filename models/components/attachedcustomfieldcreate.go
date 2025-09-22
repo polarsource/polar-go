@@ -10,16 +10,16 @@ type AttachedCustomFieldCreate struct {
 	Required bool `json:"required"`
 }
 
-func (o *AttachedCustomFieldCreate) GetCustomFieldID() string {
-	if o == nil {
+func (a *AttachedCustomFieldCreate) GetCustomFieldID() string {
+	if a == nil {
 		return ""
 	}
-	return o.CustomFieldID
+	return a.CustomFieldID
 }
 
-func (o *AttachedCustomFieldCreate) GetRequired() bool {
-	if o == nil {
+func (a *AttachedCustomFieldCreate) GetRequired() bool {
+	if a == nil {
 		return false
 	}
-	return o.Required
+	return a.Required
 }

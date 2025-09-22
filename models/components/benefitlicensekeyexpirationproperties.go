@@ -53,16 +53,16 @@ func (b *BenefitLicenseKeyExpirationProperties) UnmarshalJSON(data []byte) error
 	return nil
 }
 
-func (o *BenefitLicenseKeyExpirationProperties) GetTTL() int64 {
-	if o == nil {
+func (b *BenefitLicenseKeyExpirationProperties) GetTTL() int64 {
+	if b == nil {
 		return 0
 	}
-	return o.TTL
+	return b.TTL
 }
 
-func (o *BenefitLicenseKeyExpirationProperties) GetTimeframe() Timeframe {
-	if o == nil {
+func (b *BenefitLicenseKeyExpirationProperties) GetTimeframe() Timeframe {
+	if b == nil {
 		return Timeframe("")
 	}
-	return o.Timeframe
+	return b.Timeframe
 }

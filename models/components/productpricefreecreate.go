@@ -22,6 +22,6 @@ func (p *ProductPriceFreeCreate) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *ProductPriceFreeCreate) GetAmountType() string {
+func (p *ProductPriceFreeCreate) GetAmountType() string {
 	return "free"
 }

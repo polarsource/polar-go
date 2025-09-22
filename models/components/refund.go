@@ -147,100 +147,100 @@ func (r *Refund) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *Refund) GetCreatedAt() time.Time {
-	if o == nil {
+func (r *Refund) GetCreatedAt() time.Time {
+	if r == nil {
 		return time.Time{}
 	}
-	return o.CreatedAt
+	return r.CreatedAt
 }
 
-func (o *Refund) GetModifiedAt() *time.Time {
-	if o == nil {
+func (r *Refund) GetModifiedAt() *time.Time {
+	if r == nil {
 		return nil
 	}
-	return o.ModifiedAt
+	return r.ModifiedAt
 }
 
-func (o *Refund) GetID() string {
-	if o == nil {
+func (r *Refund) GetID() string {
+	if r == nil {
 		return ""
 	}
-	return o.ID
+	return r.ID
 }
 
-func (o *Refund) GetMetadata() map[string]RefundMetadata {
-	if o == nil {
+func (r *Refund) GetMetadata() map[string]RefundMetadata {
+	if r == nil {
 		return map[string]RefundMetadata{}
 	}
-	return o.Metadata
+	return r.Metadata
 }
 
-func (o *Refund) GetStatus() RefundStatus {
-	if o == nil {
+func (r *Refund) GetStatus() RefundStatus {
+	if r == nil {
 		return RefundStatus("")
 	}
-	return o.Status
+	return r.Status
 }
 
-func (o *Refund) GetReason() RefundReason {
-	if o == nil {
+func (r *Refund) GetReason() RefundReason {
+	if r == nil {
 		return RefundReason("")
 	}
-	return o.Reason
+	return r.Reason
 }
 
-func (o *Refund) GetAmount() int64 {
-	if o == nil {
+func (r *Refund) GetAmount() int64 {
+	if r == nil {
 		return 0
 	}
-	return o.Amount
+	return r.Amount
 }
 
-func (o *Refund) GetTaxAmount() int64 {
-	if o == nil {
+func (r *Refund) GetTaxAmount() int64 {
+	if r == nil {
 		return 0
 	}
-	return o.TaxAmount
+	return r.TaxAmount
 }
 
-func (o *Refund) GetCurrency() string {
-	if o == nil {
+func (r *Refund) GetCurrency() string {
+	if r == nil {
 		return ""
 	}
-	return o.Currency
+	return r.Currency
 }
 
-func (o *Refund) GetOrganizationID() string {
-	if o == nil {
+func (r *Refund) GetOrganizationID() string {
+	if r == nil {
 		return ""
 	}
-	return o.OrganizationID
+	return r.OrganizationID
 }
 
-func (o *Refund) GetOrderID() string {
-	if o == nil {
+func (r *Refund) GetOrderID() string {
+	if r == nil {
 		return ""
 	}
-	return o.OrderID
+	return r.OrderID
 }
 
-func (o *Refund) GetSubscriptionID() *string {
-	if o == nil {
+func (r *Refund) GetSubscriptionID() *string {
+	if r == nil {
 		return nil
 	}
-	return o.SubscriptionID
+	return r.SubscriptionID
 }
 
-func (o *Refund) GetCustomerID() string {
-	if o == nil {
+func (r *Refund) GetCustomerID() string {
+	if r == nil {
 		return ""
 	}
-	return o.CustomerID
+	return r.CustomerID
 }
 
-func (o *Refund) GetRevokeBenefits() bool {
-	if o == nil {
+func (r *Refund) GetRevokeBenefits() bool {
+	if r == nil {
 		return false
 	}
-	return o.RevokeBenefits
+	return r.RevokeBenefits
 }

@@ -101,53 +101,53 @@ func (m *MetersListRequest) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *MetersListRequest) GetOrganizationID() *MetersListQueryParamOrganizationIDFilter {
-	if o == nil {
+func (m *MetersListRequest) GetOrganizationID() *MetersListQueryParamOrganizationIDFilter {
+	if m == nil {
 		return nil
 	}
-	return o.OrganizationID
+	return m.OrganizationID
 }
 
-func (o *MetersListRequest) GetQuery() *string {
-	if o == nil {
+func (m *MetersListRequest) GetQuery() *string {
+	if m == nil {
 		return nil
 	}
-	return o.Query
+	return m.Query
 }
 
-func (o *MetersListRequest) GetIsArchived() *bool {
-	if o == nil {
+func (m *MetersListRequest) GetIsArchived() *bool {
+	if m == nil {
 		return nil
 	}
-	return o.IsArchived
+	return m.IsArchived
 }
 
-func (o *MetersListRequest) GetPage() *int64 {
-	if o == nil {
+func (m *MetersListRequest) GetPage() *int64 {
+	if m == nil {
 		return nil
 	}
-	return o.Page
+	return m.Page
 }
 
-func (o *MetersListRequest) GetLimit() *int64 {
-	if o == nil {
+func (m *MetersListRequest) GetLimit() *int64 {
+	if m == nil {
 		return nil
 	}
-	return o.Limit
+	return m.Limit
 }
 
-func (o *MetersListRequest) GetSorting() []components.MeterSortProperty {
-	if o == nil {
+func (m *MetersListRequest) GetSorting() []components.MeterSortProperty {
+	if m == nil {
 		return nil
 	}
-	return o.Sorting
+	return m.Sorting
 }
 
-func (o *MetersListRequest) GetMetadata() map[string]components.MetadataQuery {
-	if o == nil {
+func (m *MetersListRequest) GetMetadata() map[string]components.MetadataQuery {
+	if m == nil {
 		return nil
 	}
-	return o.Metadata
+	return m.Metadata
 }
 
 type MetersListResponse struct {
@@ -158,16 +158,16 @@ type MetersListResponse struct {
 	Next func() (*MetersListResponse, error)
 }
 
-func (o *MetersListResponse) GetHTTPMeta() components.HTTPMetadata {
-	if o == nil {
+func (m *MetersListResponse) GetHTTPMeta() components.HTTPMetadata {
+	if m == nil {
 		return components.HTTPMetadata{}
 	}
-	return o.HTTPMeta
+	return m.HTTPMeta
 }
 
-func (o *MetersListResponse) GetListResourceMeter() *components.ListResourceMeter {
-	if o == nil {
+func (m *MetersListResponse) GetListResourceMeter() *components.ListResourceMeter {
+	if m == nil {
 		return nil
 	}
-	return o.ListResourceMeter
+	return m.ListResourceMeter
 }

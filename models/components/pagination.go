@@ -7,16 +7,16 @@ type Pagination struct {
 	MaxPage    int64 `json:"max_page"`
 }
 
-func (o *Pagination) GetTotalCount() int64 {
-	if o == nil {
+func (p *Pagination) GetTotalCount() int64 {
+	if p == nil {
 		return 0
 	}
-	return o.TotalCount
+	return p.TotalCount
 }
 
-func (o *Pagination) GetMaxPage() int64 {
-	if o == nil {
+func (p *Pagination) GetMaxPage() int64 {
+	if p == nil {
 		return 0
 	}
-	return o.MaxPage
+	return p.MaxPage
 }

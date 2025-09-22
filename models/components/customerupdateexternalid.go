@@ -195,41 +195,41 @@ type CustomerUpdateExternalID struct {
 	Email *string `json:"email,omitempty"`
 	// The name of the customer.
 	Name           *string                          `json:"name,omitempty"`
-	BillingAddress *Address                         `json:"billing_address,omitempty"`
+	BillingAddress *AddressInput                    `json:"billing_address,omitempty"`
 	TaxID          []*CustomerUpdateExternalIDTaxID `json:"tax_id,omitempty"`
 }
 
-func (o *CustomerUpdateExternalID) GetMetadata() map[string]CustomerUpdateExternalIDMetadata {
-	if o == nil {
+func (c *CustomerUpdateExternalID) GetMetadata() map[string]CustomerUpdateExternalIDMetadata {
+	if c == nil {
 		return nil
 	}
-	return o.Metadata
+	return c.Metadata
 }
 
-func (o *CustomerUpdateExternalID) GetEmail() *string {
-	if o == nil {
+func (c *CustomerUpdateExternalID) GetEmail() *string {
+	if c == nil {
 		return nil
 	}
-	return o.Email
+	return c.Email
 }
 
-func (o *CustomerUpdateExternalID) GetName() *string {
-	if o == nil {
+func (c *CustomerUpdateExternalID) GetName() *string {
+	if c == nil {
 		return nil
 	}
-	return o.Name
+	return c.Name
 }
 
-func (o *CustomerUpdateExternalID) GetBillingAddress() *Address {
-	if o == nil {
+func (c *CustomerUpdateExternalID) GetBillingAddress() *AddressInput {
+	if c == nil {
 		return nil
 	}
-	return o.BillingAddress
+	return c.BillingAddress
 }
 
-func (o *CustomerUpdateExternalID) GetTaxID() []*CustomerUpdateExternalIDTaxID {
-	if o == nil {
+func (c *CustomerUpdateExternalID) GetTaxID() []*CustomerUpdateExternalIDTaxID {
+	if c == nil {
 		return nil
 	}
-	return o.TaxID
+	return c.TaxID
 }

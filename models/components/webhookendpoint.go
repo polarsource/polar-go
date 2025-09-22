@@ -37,58 +37,58 @@ func (w *WebhookEndpoint) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *WebhookEndpoint) GetCreatedAt() time.Time {
-	if o == nil {
+func (w *WebhookEndpoint) GetCreatedAt() time.Time {
+	if w == nil {
 		return time.Time{}
 	}
-	return o.CreatedAt
+	return w.CreatedAt
 }
 
-func (o *WebhookEndpoint) GetModifiedAt() *time.Time {
-	if o == nil {
+func (w *WebhookEndpoint) GetModifiedAt() *time.Time {
+	if w == nil {
 		return nil
 	}
-	return o.ModifiedAt
+	return w.ModifiedAt
 }
 
-func (o *WebhookEndpoint) GetID() string {
-	if o == nil {
+func (w *WebhookEndpoint) GetID() string {
+	if w == nil {
 		return ""
 	}
-	return o.ID
+	return w.ID
 }
 
-func (o *WebhookEndpoint) GetURL() string {
-	if o == nil {
+func (w *WebhookEndpoint) GetURL() string {
+	if w == nil {
 		return ""
 	}
-	return o.URL
+	return w.URL
 }
 
-func (o *WebhookEndpoint) GetFormat() WebhookFormat {
-	if o == nil {
+func (w *WebhookEndpoint) GetFormat() WebhookFormat {
+	if w == nil {
 		return WebhookFormat("")
 	}
-	return o.Format
+	return w.Format
 }
 
-func (o *WebhookEndpoint) GetSecret() string {
-	if o == nil {
+func (w *WebhookEndpoint) GetSecret() string {
+	if w == nil {
 		return ""
 	}
-	return o.Secret
+	return w.Secret
 }
 
-func (o *WebhookEndpoint) GetOrganizationID() string {
-	if o == nil {
+func (w *WebhookEndpoint) GetOrganizationID() string {
+	if w == nil {
 		return ""
 	}
-	return o.OrganizationID
+	return w.OrganizationID
 }
 
-func (o *WebhookEndpoint) GetEvents() []WebhookEventType {
-	if o == nil {
+func (w *WebhookEndpoint) GetEvents() []WebhookEventType {
+	if w == nil {
 		return []WebhookEventType{}
 	}
-	return o.Events
+	return w.Events
 }

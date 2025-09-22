@@ -146,62 +146,62 @@ func (c *CustomFieldSelect) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *CustomFieldSelect) GetCreatedAt() time.Time {
-	if o == nil {
+func (c *CustomFieldSelect) GetCreatedAt() time.Time {
+	if c == nil {
 		return time.Time{}
 	}
-	return o.CreatedAt
+	return c.CreatedAt
 }
 
-func (o *CustomFieldSelect) GetModifiedAt() *time.Time {
-	if o == nil {
+func (c *CustomFieldSelect) GetModifiedAt() *time.Time {
+	if c == nil {
 		return nil
 	}
-	return o.ModifiedAt
+	return c.ModifiedAt
 }
 
-func (o *CustomFieldSelect) GetID() string {
-	if o == nil {
+func (c *CustomFieldSelect) GetID() string {
+	if c == nil {
 		return ""
 	}
-	return o.ID
+	return c.ID
 }
 
-func (o *CustomFieldSelect) GetMetadata() map[string]CustomFieldSelectMetadata {
-	if o == nil {
+func (c *CustomFieldSelect) GetMetadata() map[string]CustomFieldSelectMetadata {
+	if c == nil {
 		return map[string]CustomFieldSelectMetadata{}
 	}
-	return o.Metadata
+	return c.Metadata
 }
 
-func (o *CustomFieldSelect) GetType() string {
+func (c *CustomFieldSelect) GetType() string {
 	return "select"
 }
 
-func (o *CustomFieldSelect) GetSlug() string {
-	if o == nil {
+func (c *CustomFieldSelect) GetSlug() string {
+	if c == nil {
 		return ""
 	}
-	return o.Slug
+	return c.Slug
 }
 
-func (o *CustomFieldSelect) GetName() string {
-	if o == nil {
+func (c *CustomFieldSelect) GetName() string {
+	if c == nil {
 		return ""
 	}
-	return o.Name
+	return c.Name
 }
 
-func (o *CustomFieldSelect) GetOrganizationID() string {
-	if o == nil {
+func (c *CustomFieldSelect) GetOrganizationID() string {
+	if c == nil {
 		return ""
 	}
-	return o.OrganizationID
+	return c.OrganizationID
 }
 
-func (o *CustomFieldSelect) GetProperties() CustomFieldSelectProperties {
-	if o == nil {
+func (c *CustomFieldSelect) GetProperties() CustomFieldSelectProperties {
+	if c == nil {
 		return CustomFieldSelectProperties{}
 	}
-	return o.Properties
+	return c.Properties
 }

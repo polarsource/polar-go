@@ -44,83 +44,83 @@ func (p *ProductPriceCustom) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *ProductPriceCustom) GetCreatedAt() time.Time {
-	if o == nil {
+func (p *ProductPriceCustom) GetCreatedAt() time.Time {
+	if p == nil {
 		return time.Time{}
 	}
-	return o.CreatedAt
+	return p.CreatedAt
 }
 
-func (o *ProductPriceCustom) GetModifiedAt() *time.Time {
-	if o == nil {
+func (p *ProductPriceCustom) GetModifiedAt() *time.Time {
+	if p == nil {
 		return nil
 	}
-	return o.ModifiedAt
+	return p.ModifiedAt
 }
 
-func (o *ProductPriceCustom) GetID() string {
-	if o == nil {
+func (p *ProductPriceCustom) GetID() string {
+	if p == nil {
 		return ""
 	}
-	return o.ID
+	return p.ID
 }
 
-func (o *ProductPriceCustom) GetAmountType() string {
+func (p *ProductPriceCustom) GetAmountType() string {
 	return "custom"
 }
 
-func (o *ProductPriceCustom) GetIsArchived() bool {
-	if o == nil {
+func (p *ProductPriceCustom) GetIsArchived() bool {
+	if p == nil {
 		return false
 	}
-	return o.IsArchived
+	return p.IsArchived
 }
 
-func (o *ProductPriceCustom) GetProductID() string {
-	if o == nil {
+func (p *ProductPriceCustom) GetProductID() string {
+	if p == nil {
 		return ""
 	}
-	return o.ProductID
+	return p.ProductID
 }
 
-func (o *ProductPriceCustom) GetType() ProductPriceType {
-	if o == nil {
+func (p *ProductPriceCustom) GetType() ProductPriceType {
+	if p == nil {
 		return ProductPriceType("")
 	}
-	return o.Type
+	return p.Type
 }
 
-func (o *ProductPriceCustom) GetRecurringInterval() *SubscriptionRecurringInterval {
-	if o == nil {
+func (p *ProductPriceCustom) GetRecurringInterval() *SubscriptionRecurringInterval {
+	if p == nil {
 		return nil
 	}
-	return o.RecurringInterval
+	return p.RecurringInterval
 }
 
-func (o *ProductPriceCustom) GetPriceCurrency() string {
-	if o == nil {
+func (p *ProductPriceCustom) GetPriceCurrency() string {
+	if p == nil {
 		return ""
 	}
-	return o.PriceCurrency
+	return p.PriceCurrency
 }
 
-func (o *ProductPriceCustom) GetMinimumAmount() *int64 {
-	if o == nil {
+func (p *ProductPriceCustom) GetMinimumAmount() *int64 {
+	if p == nil {
 		return nil
 	}
-	return o.MinimumAmount
+	return p.MinimumAmount
 }
 
-func (o *ProductPriceCustom) GetMaximumAmount() *int64 {
-	if o == nil {
+func (p *ProductPriceCustom) GetMaximumAmount() *int64 {
+	if p == nil {
 		return nil
 	}
-	return o.MaximumAmount
+	return p.MaximumAmount
 }
 
-func (o *ProductPriceCustom) GetPresetAmount() *int64 {
-	if o == nil {
+func (p *ProductPriceCustom) GetPresetAmount() *int64 {
+	if p == nil {
 		return nil
 	}
-	return o.PresetAmount
+	return p.PresetAmount
 }

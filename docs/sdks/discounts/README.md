@@ -116,7 +116,7 @@ func main() {
             Type: components.DiscountTypeFixed,
             BasisPoints: 449604,
             Name: "<value>",
-            OrganizationID: polargo.String("1dbfc517-0bbf-4301-9ba8-555ca42b9737"),
+            OrganizationID: polargo.Pointer("1dbfc517-0bbf-4301-9ba8-555ca42b9737"),
         },
     ))
     if err != nil {

@@ -148,34 +148,34 @@ func (b *BenefitGitHubRepositoryCreate) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *BenefitGitHubRepositoryCreate) GetMetadata() map[string]BenefitGitHubRepositoryCreateMetadata {
-	if o == nil {
+func (b *BenefitGitHubRepositoryCreate) GetMetadata() map[string]BenefitGitHubRepositoryCreateMetadata {
+	if b == nil {
 		return nil
 	}
-	return o.Metadata
+	return b.Metadata
 }
 
-func (o *BenefitGitHubRepositoryCreate) GetType() string {
+func (b *BenefitGitHubRepositoryCreate) GetType() string {
 	return "github_repository"
 }
 
-func (o *BenefitGitHubRepositoryCreate) GetDescription() string {
-	if o == nil {
+func (b *BenefitGitHubRepositoryCreate) GetDescription() string {
+	if b == nil {
 		return ""
 	}
-	return o.Description
+	return b.Description
 }
 
-func (o *BenefitGitHubRepositoryCreate) GetOrganizationID() *string {
-	if o == nil {
+func (b *BenefitGitHubRepositoryCreate) GetOrganizationID() *string {
+	if b == nil {
 		return nil
 	}
-	return o.OrganizationID
+	return b.OrganizationID
 }
 
-func (o *BenefitGitHubRepositoryCreate) GetProperties() BenefitGitHubRepositoryCreateProperties {
-	if o == nil {
+func (b *BenefitGitHubRepositoryCreate) GetProperties() BenefitGitHubRepositoryCreateProperties {
+	if b == nil {
 		return BenefitGitHubRepositoryCreateProperties{}
 	}
-	return o.Properties
+	return b.Properties
 }

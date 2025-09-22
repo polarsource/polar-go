@@ -151,69 +151,69 @@ func (b *BenefitMeterCredit) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *BenefitMeterCredit) GetID() string {
-	if o == nil {
+func (b *BenefitMeterCredit) GetID() string {
+	if b == nil {
 		return ""
 	}
-	return o.ID
+	return b.ID
 }
 
-func (o *BenefitMeterCredit) GetCreatedAt() time.Time {
-	if o == nil {
+func (b *BenefitMeterCredit) GetCreatedAt() time.Time {
+	if b == nil {
 		return time.Time{}
 	}
-	return o.CreatedAt
+	return b.CreatedAt
 }
 
-func (o *BenefitMeterCredit) GetModifiedAt() *time.Time {
-	if o == nil {
+func (b *BenefitMeterCredit) GetModifiedAt() *time.Time {
+	if b == nil {
 		return nil
 	}
-	return o.ModifiedAt
+	return b.ModifiedAt
 }
 
-func (o *BenefitMeterCredit) GetType() string {
+func (b *BenefitMeterCredit) GetType() string {
 	return "meter_credit"
 }
 
-func (o *BenefitMeterCredit) GetDescription() string {
-	if o == nil {
+func (b *BenefitMeterCredit) GetDescription() string {
+	if b == nil {
 		return ""
 	}
-	return o.Description
+	return b.Description
 }
 
-func (o *BenefitMeterCredit) GetSelectable() bool {
-	if o == nil {
+func (b *BenefitMeterCredit) GetSelectable() bool {
+	if b == nil {
 		return false
 	}
-	return o.Selectable
+	return b.Selectable
 }
 
-func (o *BenefitMeterCredit) GetDeletable() bool {
-	if o == nil {
+func (b *BenefitMeterCredit) GetDeletable() bool {
+	if b == nil {
 		return false
 	}
-	return o.Deletable
+	return b.Deletable
 }
 
-func (o *BenefitMeterCredit) GetOrganizationID() string {
-	if o == nil {
+func (b *BenefitMeterCredit) GetOrganizationID() string {
+	if b == nil {
 		return ""
 	}
-	return o.OrganizationID
+	return b.OrganizationID
 }
 
-func (o *BenefitMeterCredit) GetMetadata() map[string]BenefitMeterCreditMetadata {
-	if o == nil {
+func (b *BenefitMeterCredit) GetMetadata() map[string]BenefitMeterCreditMetadata {
+	if b == nil {
 		return map[string]BenefitMeterCreditMetadata{}
 	}
-	return o.Metadata
+	return b.Metadata
 }
 
-func (o *BenefitMeterCredit) GetProperties() BenefitMeterCreditProperties {
-	if o == nil {
+func (b *BenefitMeterCredit) GetProperties() BenefitMeterCreditProperties {
+	if b == nil {
 		return BenefitMeterCreditProperties{}
 	}
-	return o.Properties
+	return b.Properties
 }

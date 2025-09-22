@@ -26,41 +26,41 @@ func (t *TokenResponse) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *TokenResponse) GetAccessToken() string {
-	if o == nil {
+func (t *TokenResponse) GetAccessToken() string {
+	if t == nil {
 		return ""
 	}
-	return o.AccessToken
+	return t.AccessToken
 }
 
-func (o *TokenResponse) GetTokenType() string {
+func (t *TokenResponse) GetTokenType() string {
 	return "Bearer"
 }
 
-func (o *TokenResponse) GetExpiresIn() int64 {
-	if o == nil {
+func (t *TokenResponse) GetExpiresIn() int64 {
+	if t == nil {
 		return 0
 	}
-	return o.ExpiresIn
+	return t.ExpiresIn
 }
 
-func (o *TokenResponse) GetRefreshToken() *string {
-	if o == nil {
+func (t *TokenResponse) GetRefreshToken() *string {
+	if t == nil {
 		return nil
 	}
-	return o.RefreshToken
+	return t.RefreshToken
 }
 
-func (o *TokenResponse) GetScope() string {
-	if o == nil {
+func (t *TokenResponse) GetScope() string {
+	if t == nil {
 		return ""
 	}
-	return o.Scope
+	return t.Scope
 }
 
-func (o *TokenResponse) GetIDToken() string {
-	if o == nil {
+func (t *TokenResponse) GetIDToken() string {
+	if t == nil {
 		return ""
 	}
-	return o.IDToken
+	return t.IDToken
 }

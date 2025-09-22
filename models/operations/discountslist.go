@@ -97,39 +97,39 @@ func (d *DiscountsListRequest) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *DiscountsListRequest) GetOrganizationID() *DiscountsListQueryParamOrganizationIDFilter {
-	if o == nil {
+func (d *DiscountsListRequest) GetOrganizationID() *DiscountsListQueryParamOrganizationIDFilter {
+	if d == nil {
 		return nil
 	}
-	return o.OrganizationID
+	return d.OrganizationID
 }
 
-func (o *DiscountsListRequest) GetQuery() *string {
-	if o == nil {
+func (d *DiscountsListRequest) GetQuery() *string {
+	if d == nil {
 		return nil
 	}
-	return o.Query
+	return d.Query
 }
 
-func (o *DiscountsListRequest) GetPage() *int64 {
-	if o == nil {
+func (d *DiscountsListRequest) GetPage() *int64 {
+	if d == nil {
 		return nil
 	}
-	return o.Page
+	return d.Page
 }
 
-func (o *DiscountsListRequest) GetLimit() *int64 {
-	if o == nil {
+func (d *DiscountsListRequest) GetLimit() *int64 {
+	if d == nil {
 		return nil
 	}
-	return o.Limit
+	return d.Limit
 }
 
-func (o *DiscountsListRequest) GetSorting() []components.DiscountSortProperty {
-	if o == nil {
+func (d *DiscountsListRequest) GetSorting() []components.DiscountSortProperty {
+	if d == nil {
 		return nil
 	}
-	return o.Sorting
+	return d.Sorting
 }
 
 type DiscountsListResponse struct {
@@ -140,16 +140,16 @@ type DiscountsListResponse struct {
 	Next func() (*DiscountsListResponse, error)
 }
 
-func (o *DiscountsListResponse) GetHTTPMeta() components.HTTPMetadata {
-	if o == nil {
+func (d *DiscountsListResponse) GetHTTPMeta() components.HTTPMetadata {
+	if d == nil {
 		return components.HTTPMetadata{}
 	}
-	return o.HTTPMeta
+	return d.HTTPMeta
 }
 
-func (o *DiscountsListResponse) GetListResourceDiscount() *components.ListResourceDiscount {
-	if o == nil {
+func (d *DiscountsListResponse) GetListResourceDiscount() *components.ListResourceDiscount {
+	if d == nil {
 		return nil
 	}
-	return o.ListResourceDiscount
+	return d.ListResourceDiscount
 }

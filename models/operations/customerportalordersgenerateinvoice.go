@@ -10,11 +10,11 @@ type CustomerPortalOrdersGenerateInvoiceSecurity struct {
 	CustomerSession string `security:"scheme,type=http,subtype=bearer,name=Authorization,env=polar_customer_session"`
 }
 
-func (o *CustomerPortalOrdersGenerateInvoiceSecurity) GetCustomerSession() string {
-	if o == nil {
+func (c *CustomerPortalOrdersGenerateInvoiceSecurity) GetCustomerSession() string {
+	if c == nil {
 		return ""
 	}
-	return o.CustomerSession
+	return c.CustomerSession
 }
 
 type CustomerPortalOrdersGenerateInvoiceRequest struct {
@@ -22,11 +22,11 @@ type CustomerPortalOrdersGenerateInvoiceRequest struct {
 	ID string `pathParam:"style=simple,explode=false,name=id"`
 }
 
-func (o *CustomerPortalOrdersGenerateInvoiceRequest) GetID() string {
-	if o == nil {
+func (c *CustomerPortalOrdersGenerateInvoiceRequest) GetID() string {
+	if c == nil {
 		return ""
 	}
-	return o.ID
+	return c.ID
 }
 
 type CustomerPortalOrdersGenerateInvoiceResponse struct {
@@ -35,16 +35,16 @@ type CustomerPortalOrdersGenerateInvoiceResponse struct {
 	Any any
 }
 
-func (o *CustomerPortalOrdersGenerateInvoiceResponse) GetHTTPMeta() components.HTTPMetadata {
-	if o == nil {
+func (c *CustomerPortalOrdersGenerateInvoiceResponse) GetHTTPMeta() components.HTTPMetadata {
+	if c == nil {
 		return components.HTTPMetadata{}
 	}
-	return o.HTTPMeta
+	return c.HTTPMeta
 }
 
-func (o *CustomerPortalOrdersGenerateInvoiceResponse) GetAny() any {
-	if o == nil {
+func (c *CustomerPortalOrdersGenerateInvoiceResponse) GetAny() any {
+	if c == nil {
 		return nil
 	}
-	return o.Any
+	return c.Any
 }

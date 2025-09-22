@@ -7,16 +7,16 @@ type ListResourceEvent struct {
 	Pagination Pagination `json:"pagination"`
 }
 
-func (o *ListResourceEvent) GetItems() []Event {
-	if o == nil {
+func (l *ListResourceEvent) GetItems() []Event {
+	if l == nil {
 		return []Event{}
 	}
-	return o.Items
+	return l.Items
 }
 
-func (o *ListResourceEvent) GetPagination() Pagination {
-	if o == nil {
+func (l *ListResourceEvent) GetPagination() Pagination {
+	if l == nil {
 		return Pagination{}
 	}
-	return o.Pagination
+	return l.Pagination
 }

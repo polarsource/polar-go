@@ -252,58 +252,58 @@ type ProductCreate struct {
 	OrganizationID *string `json:"organization_id,omitempty"`
 }
 
-func (o *ProductCreate) GetMetadata() map[string]ProductCreateMetadata {
-	if o == nil {
+func (p *ProductCreate) GetMetadata() map[string]ProductCreateMetadata {
+	if p == nil {
 		return nil
 	}
-	return o.Metadata
+	return p.Metadata
 }
 
-func (o *ProductCreate) GetName() string {
-	if o == nil {
+func (p *ProductCreate) GetName() string {
+	if p == nil {
 		return ""
 	}
-	return o.Name
+	return p.Name
 }
 
-func (o *ProductCreate) GetDescription() *string {
-	if o == nil {
+func (p *ProductCreate) GetDescription() *string {
+	if p == nil {
 		return nil
 	}
-	return o.Description
+	return p.Description
 }
 
-func (o *ProductCreate) GetRecurringInterval() *SubscriptionRecurringInterval {
-	if o == nil {
+func (p *ProductCreate) GetRecurringInterval() *SubscriptionRecurringInterval {
+	if p == nil {
 		return nil
 	}
-	return o.RecurringInterval
+	return p.RecurringInterval
 }
 
-func (o *ProductCreate) GetPrices() []ProductCreatePrices {
-	if o == nil {
+func (p *ProductCreate) GetPrices() []ProductCreatePrices {
+	if p == nil {
 		return []ProductCreatePrices{}
 	}
-	return o.Prices
+	return p.Prices
 }
 
-func (o *ProductCreate) GetMedias() []string {
-	if o == nil {
+func (p *ProductCreate) GetMedias() []string {
+	if p == nil {
 		return nil
 	}
-	return o.Medias
+	return p.Medias
 }
 
-func (o *ProductCreate) GetAttachedCustomFields() []AttachedCustomFieldCreate {
-	if o == nil {
+func (p *ProductCreate) GetAttachedCustomFields() []AttachedCustomFieldCreate {
+	if p == nil {
 		return nil
 	}
-	return o.AttachedCustomFields
+	return p.AttachedCustomFields
 }
 
-func (o *ProductCreate) GetOrganizationID() *string {
-	if o == nil {
+func (p *ProductCreate) GetOrganizationID() *string {
+	if p == nil {
 		return nil
 	}
-	return o.OrganizationID
+	return p.OrganizationID
 }

@@ -12,18 +12,18 @@ type CustomersUpdateExternalRequest struct {
 	CustomerUpdateExternalID components.CustomerUpdateExternalID `request:"mediaType=application/json"`
 }
 
-func (o *CustomersUpdateExternalRequest) GetExternalID() string {
-	if o == nil {
+func (c *CustomersUpdateExternalRequest) GetExternalID() string {
+	if c == nil {
 		return ""
 	}
-	return o.ExternalID
+	return c.ExternalID
 }
 
-func (o *CustomersUpdateExternalRequest) GetCustomerUpdateExternalID() components.CustomerUpdateExternalID {
-	if o == nil {
+func (c *CustomersUpdateExternalRequest) GetCustomerUpdateExternalID() components.CustomerUpdateExternalID {
+	if c == nil {
 		return components.CustomerUpdateExternalID{}
 	}
-	return o.CustomerUpdateExternalID
+	return c.CustomerUpdateExternalID
 }
 
 type CustomersUpdateExternalResponse struct {
@@ -32,16 +32,16 @@ type CustomersUpdateExternalResponse struct {
 	Customer *components.Customer
 }
 
-func (o *CustomersUpdateExternalResponse) GetHTTPMeta() components.HTTPMetadata {
-	if o == nil {
+func (c *CustomersUpdateExternalResponse) GetHTTPMeta() components.HTTPMetadata {
+	if c == nil {
 		return components.HTTPMetadata{}
 	}
-	return o.HTTPMeta
+	return c.HTTPMeta
 }
 
-func (o *CustomersUpdateExternalResponse) GetCustomer() *components.Customer {
-	if o == nil {
+func (c *CustomersUpdateExternalResponse) GetCustomer() *components.Customer {
+	if c == nil {
 		return nil
 	}
-	return o.Customer
+	return c.Customer
 }

@@ -125,100 +125,100 @@ type CheckoutConfirmStripe struct {
 	// ID of the product price to checkout. Must correspond to a price present in the checkout's product list.
 	//
 	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
-	ProductPriceID         *string  `json:"product_price_id,omitempty"`
-	Amount                 *int64   `json:"amount,omitempty"`
-	IsBusinessCustomer     *bool    `json:"is_business_customer,omitempty"`
-	CustomerName           *string  `json:"customer_name,omitempty"`
-	CustomerEmail          *string  `json:"customer_email,omitempty"`
-	CustomerBillingName    *string  `json:"customer_billing_name,omitempty"`
-	CustomerBillingAddress *Address `json:"customer_billing_address,omitempty"`
-	CustomerTaxID          *string  `json:"customer_tax_id,omitempty"`
+	ProductPriceID         *string       `json:"product_price_id,omitempty"`
+	Amount                 *int64        `json:"amount,omitempty"`
+	IsBusinessCustomer     *bool         `json:"is_business_customer,omitempty"`
+	CustomerName           *string       `json:"customer_name,omitempty"`
+	CustomerEmail          *string       `json:"customer_email,omitempty"`
+	CustomerBillingName    *string       `json:"customer_billing_name,omitempty"`
+	CustomerBillingAddress *AddressInput `json:"customer_billing_address,omitempty"`
+	CustomerTaxID          *string       `json:"customer_tax_id,omitempty"`
 	// Discount code to apply to the checkout.
 	DiscountCode *string `json:"discount_code,omitempty"`
 	// ID of the Stripe confirmation token. Required for fixed prices and custom prices.
 	ConfirmationTokenID *string `json:"confirmation_token_id,omitempty"`
 }
 
-func (o *CheckoutConfirmStripe) GetCustomFieldData() map[string]*CheckoutConfirmStripeCustomFieldData {
-	if o == nil {
+func (c *CheckoutConfirmStripe) GetCustomFieldData() map[string]*CheckoutConfirmStripeCustomFieldData {
+	if c == nil {
 		return nil
 	}
-	return o.CustomFieldData
+	return c.CustomFieldData
 }
 
-func (o *CheckoutConfirmStripe) GetProductID() *string {
-	if o == nil {
+func (c *CheckoutConfirmStripe) GetProductID() *string {
+	if c == nil {
 		return nil
 	}
-	return o.ProductID
+	return c.ProductID
 }
 
-func (o *CheckoutConfirmStripe) GetProductPriceID() *string {
-	if o == nil {
+func (c *CheckoutConfirmStripe) GetProductPriceID() *string {
+	if c == nil {
 		return nil
 	}
-	return o.ProductPriceID
+	return c.ProductPriceID
 }
 
-func (o *CheckoutConfirmStripe) GetAmount() *int64 {
-	if o == nil {
+func (c *CheckoutConfirmStripe) GetAmount() *int64 {
+	if c == nil {
 		return nil
 	}
-	return o.Amount
+	return c.Amount
 }
 
-func (o *CheckoutConfirmStripe) GetIsBusinessCustomer() *bool {
-	if o == nil {
+func (c *CheckoutConfirmStripe) GetIsBusinessCustomer() *bool {
+	if c == nil {
 		return nil
 	}
-	return o.IsBusinessCustomer
+	return c.IsBusinessCustomer
 }
 
-func (o *CheckoutConfirmStripe) GetCustomerName() *string {
-	if o == nil {
+func (c *CheckoutConfirmStripe) GetCustomerName() *string {
+	if c == nil {
 		return nil
 	}
-	return o.CustomerName
+	return c.CustomerName
 }
 
-func (o *CheckoutConfirmStripe) GetCustomerEmail() *string {
-	if o == nil {
+func (c *CheckoutConfirmStripe) GetCustomerEmail() *string {
+	if c == nil {
 		return nil
 	}
-	return o.CustomerEmail
+	return c.CustomerEmail
 }
 
-func (o *CheckoutConfirmStripe) GetCustomerBillingName() *string {
-	if o == nil {
+func (c *CheckoutConfirmStripe) GetCustomerBillingName() *string {
+	if c == nil {
 		return nil
 	}
-	return o.CustomerBillingName
+	return c.CustomerBillingName
 }
 
-func (o *CheckoutConfirmStripe) GetCustomerBillingAddress() *Address {
-	if o == nil {
+func (c *CheckoutConfirmStripe) GetCustomerBillingAddress() *AddressInput {
+	if c == nil {
 		return nil
 	}
-	return o.CustomerBillingAddress
+	return c.CustomerBillingAddress
 }
 
-func (o *CheckoutConfirmStripe) GetCustomerTaxID() *string {
-	if o == nil {
+func (c *CheckoutConfirmStripe) GetCustomerTaxID() *string {
+	if c == nil {
 		return nil
 	}
-	return o.CustomerTaxID
+	return c.CustomerTaxID
 }
 
-func (o *CheckoutConfirmStripe) GetDiscountCode() *string {
-	if o == nil {
+func (c *CheckoutConfirmStripe) GetDiscountCode() *string {
+	if c == nil {
 		return nil
 	}
-	return o.DiscountCode
+	return c.DiscountCode
 }
 
-func (o *CheckoutConfirmStripe) GetConfirmationTokenID() *string {
-	if o == nil {
+func (c *CheckoutConfirmStripe) GetConfirmationTokenID() *string {
+	if c == nil {
 		return nil
 	}
-	return o.ConfirmationTokenID
+	return c.ConfirmationTokenID
 }

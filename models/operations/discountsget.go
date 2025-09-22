@@ -11,11 +11,11 @@ type DiscountsGetRequest struct {
 	ID string `pathParam:"style=simple,explode=false,name=id"`
 }
 
-func (o *DiscountsGetRequest) GetID() string {
-	if o == nil {
+func (d *DiscountsGetRequest) GetID() string {
+	if d == nil {
 		return ""
 	}
-	return o.ID
+	return d.ID
 }
 
 type DiscountsGetResponse struct {
@@ -24,16 +24,16 @@ type DiscountsGetResponse struct {
 	Discount *components.Discount
 }
 
-func (o *DiscountsGetResponse) GetHTTPMeta() components.HTTPMetadata {
-	if o == nil {
+func (d *DiscountsGetResponse) GetHTTPMeta() components.HTTPMetadata {
+	if d == nil {
 		return components.HTTPMetadata{}
 	}
-	return o.HTTPMeta
+	return d.HTTPMeta
 }
 
-func (o *DiscountsGetResponse) GetDiscount() *components.Discount {
-	if o == nil {
+func (d *DiscountsGetResponse) GetDiscount() *components.Discount {
+	if d == nil {
 		return nil
 	}
-	return o.Discount
+	return d.Discount
 }

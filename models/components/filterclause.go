@@ -110,23 +110,23 @@ func (f *FilterClause) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *FilterClause) GetProperty() string {
-	if o == nil {
+func (f *FilterClause) GetProperty() string {
+	if f == nil {
 		return ""
 	}
-	return o.Property
+	return f.Property
 }
 
-func (o *FilterClause) GetOperator() FilterOperator {
-	if o == nil {
+func (f *FilterClause) GetOperator() FilterOperator {
+	if f == nil {
 		return FilterOperator("")
 	}
-	return o.Operator
+	return f.Operator
 }
 
-func (o *FilterClause) GetValue() Value {
-	if o == nil {
+func (f *FilterClause) GetValue() Value {
+	if f == nil {
 		return Value{}
 	}
-	return o.Value
+	return f.Value
 }

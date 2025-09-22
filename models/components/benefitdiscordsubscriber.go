@@ -149,76 +149,76 @@ func (b *BenefitDiscordSubscriber) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *BenefitDiscordSubscriber) GetID() string {
-	if o == nil {
+func (b *BenefitDiscordSubscriber) GetID() string {
+	if b == nil {
 		return ""
 	}
-	return o.ID
+	return b.ID
 }
 
-func (o *BenefitDiscordSubscriber) GetCreatedAt() time.Time {
-	if o == nil {
+func (b *BenefitDiscordSubscriber) GetCreatedAt() time.Time {
+	if b == nil {
 		return time.Time{}
 	}
-	return o.CreatedAt
+	return b.CreatedAt
 }
 
-func (o *BenefitDiscordSubscriber) GetModifiedAt() *time.Time {
-	if o == nil {
+func (b *BenefitDiscordSubscriber) GetModifiedAt() *time.Time {
+	if b == nil {
 		return nil
 	}
-	return o.ModifiedAt
+	return b.ModifiedAt
 }
 
-func (o *BenefitDiscordSubscriber) GetType() string {
+func (b *BenefitDiscordSubscriber) GetType() string {
 	return "discord"
 }
 
-func (o *BenefitDiscordSubscriber) GetDescription() string {
-	if o == nil {
+func (b *BenefitDiscordSubscriber) GetDescription() string {
+	if b == nil {
 		return ""
 	}
-	return o.Description
+	return b.Description
 }
 
-func (o *BenefitDiscordSubscriber) GetSelectable() bool {
-	if o == nil {
+func (b *BenefitDiscordSubscriber) GetSelectable() bool {
+	if b == nil {
 		return false
 	}
-	return o.Selectable
+	return b.Selectable
 }
 
-func (o *BenefitDiscordSubscriber) GetDeletable() bool {
-	if o == nil {
+func (b *BenefitDiscordSubscriber) GetDeletable() bool {
+	if b == nil {
 		return false
 	}
-	return o.Deletable
+	return b.Deletable
 }
 
-func (o *BenefitDiscordSubscriber) GetOrganizationID() string {
-	if o == nil {
+func (b *BenefitDiscordSubscriber) GetOrganizationID() string {
+	if b == nil {
 		return ""
 	}
-	return o.OrganizationID
+	return b.OrganizationID
 }
 
-func (o *BenefitDiscordSubscriber) GetMetadata() map[string]BenefitDiscordSubscriberMetadata {
-	if o == nil {
+func (b *BenefitDiscordSubscriber) GetMetadata() map[string]BenefitDiscordSubscriberMetadata {
+	if b == nil {
 		return map[string]BenefitDiscordSubscriberMetadata{}
 	}
-	return o.Metadata
+	return b.Metadata
 }
 
-func (o *BenefitDiscordSubscriber) GetOrganization() Organization {
-	if o == nil {
+func (b *BenefitDiscordSubscriber) GetOrganization() Organization {
+	if b == nil {
 		return Organization{}
 	}
-	return o.Organization
+	return b.Organization
 }
 
-func (o *BenefitDiscordSubscriber) GetProperties() BenefitDiscordSubscriberProperties {
-	if o == nil {
+func (b *BenefitDiscordSubscriber) GetProperties() BenefitDiscordSubscriberProperties {
+	if b == nil {
 		return BenefitDiscordSubscriberProperties{}
 	}
-	return o.Properties
+	return b.Properties
 }

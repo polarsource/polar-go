@@ -10,11 +10,11 @@ type CustomerPortalSubscriptionsUpdateSecurity struct {
 	CustomerSession string `security:"scheme,type=http,subtype=bearer,name=Authorization,env=polar_customer_session"`
 }
 
-func (o *CustomerPortalSubscriptionsUpdateSecurity) GetCustomerSession() string {
-	if o == nil {
+func (c *CustomerPortalSubscriptionsUpdateSecurity) GetCustomerSession() string {
+	if c == nil {
 		return ""
 	}
-	return o.CustomerSession
+	return c.CustomerSession
 }
 
 type CustomerPortalSubscriptionsUpdateRequest struct {
@@ -23,18 +23,18 @@ type CustomerPortalSubscriptionsUpdateRequest struct {
 	CustomerSubscriptionUpdate components.CustomerSubscriptionUpdate `request:"mediaType=application/json"`
 }
 
-func (o *CustomerPortalSubscriptionsUpdateRequest) GetID() string {
-	if o == nil {
+func (c *CustomerPortalSubscriptionsUpdateRequest) GetID() string {
+	if c == nil {
 		return ""
 	}
-	return o.ID
+	return c.ID
 }
 
-func (o *CustomerPortalSubscriptionsUpdateRequest) GetCustomerSubscriptionUpdate() components.CustomerSubscriptionUpdate {
-	if o == nil {
+func (c *CustomerPortalSubscriptionsUpdateRequest) GetCustomerSubscriptionUpdate() components.CustomerSubscriptionUpdate {
+	if c == nil {
 		return components.CustomerSubscriptionUpdate{}
 	}
-	return o.CustomerSubscriptionUpdate
+	return c.CustomerSubscriptionUpdate
 }
 
 type CustomerPortalSubscriptionsUpdateResponse struct {
@@ -43,16 +43,16 @@ type CustomerPortalSubscriptionsUpdateResponse struct {
 	CustomerSubscription *components.CustomerSubscription
 }
 
-func (o *CustomerPortalSubscriptionsUpdateResponse) GetHTTPMeta() components.HTTPMetadata {
-	if o == nil {
+func (c *CustomerPortalSubscriptionsUpdateResponse) GetHTTPMeta() components.HTTPMetadata {
+	if c == nil {
 		return components.HTTPMetadata{}
 	}
-	return o.HTTPMeta
+	return c.HTTPMeta
 }
 
-func (o *CustomerPortalSubscriptionsUpdateResponse) GetCustomerSubscription() *components.CustomerSubscription {
-	if o == nil {
+func (c *CustomerPortalSubscriptionsUpdateResponse) GetCustomerSubscription() *components.CustomerSubscription {
+	if c == nil {
 		return nil
 	}
-	return o.CustomerSubscription
+	return c.CustomerSubscription
 }

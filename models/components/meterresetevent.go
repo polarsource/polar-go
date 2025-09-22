@@ -39,59 +39,59 @@ func (m *MeterResetEvent) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *MeterResetEvent) GetID() string {
-	if o == nil {
+func (m *MeterResetEvent) GetID() string {
+	if m == nil {
 		return ""
 	}
-	return o.ID
+	return m.ID
 }
 
-func (o *MeterResetEvent) GetTimestamp() time.Time {
-	if o == nil {
+func (m *MeterResetEvent) GetTimestamp() time.Time {
+	if m == nil {
 		return time.Time{}
 	}
-	return o.Timestamp
+	return m.Timestamp
 }
 
-func (o *MeterResetEvent) GetOrganizationID() string {
-	if o == nil {
+func (m *MeterResetEvent) GetOrganizationID() string {
+	if m == nil {
 		return ""
 	}
-	return o.OrganizationID
+	return m.OrganizationID
 }
 
-func (o *MeterResetEvent) GetCustomerID() *string {
-	if o == nil {
+func (m *MeterResetEvent) GetCustomerID() *string {
+	if m == nil {
 		return nil
 	}
-	return o.CustomerID
+	return m.CustomerID
 }
 
-func (o *MeterResetEvent) GetCustomer() *Customer {
-	if o == nil {
+func (m *MeterResetEvent) GetCustomer() *Customer {
+	if m == nil {
 		return nil
 	}
-	return o.Customer
+	return m.Customer
 }
 
-func (o *MeterResetEvent) GetExternalCustomerID() *string {
-	if o == nil {
+func (m *MeterResetEvent) GetExternalCustomerID() *string {
+	if m == nil {
 		return nil
 	}
-	return o.ExternalCustomerID
+	return m.ExternalCustomerID
 }
 
-func (o *MeterResetEvent) GetSource() string {
+func (m *MeterResetEvent) GetSource() string {
 	return "system"
 }
 
-func (o *MeterResetEvent) GetName() string {
+func (m *MeterResetEvent) GetName() string {
 	return "meter.reset"
 }
 
-func (o *MeterResetEvent) GetMetadata() MeterResetMetadata {
-	if o == nil {
+func (m *MeterResetEvent) GetMetadata() MeterResetMetadata {
+	if m == nil {
 		return MeterResetMetadata{}
 	}
-	return o.Metadata
+	return m.Metadata
 }

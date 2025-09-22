@@ -21,6 +21,6 @@ func (c *CustomerBenefitGrantDownloadablesUpdate) UnmarshalJSON(data []byte) err
 	return nil
 }
 
-func (o *CustomerBenefitGrantDownloadablesUpdate) GetBenefitType() string {
+func (c *CustomerBenefitGrantDownloadablesUpdate) GetBenefitType() string {
 	return "downloadables"
 }

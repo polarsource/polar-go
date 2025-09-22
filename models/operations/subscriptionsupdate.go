@@ -12,18 +12,18 @@ type SubscriptionsUpdateRequest struct {
 	SubscriptionUpdate components.SubscriptionUpdate `request:"mediaType=application/json"`
 }
 
-func (o *SubscriptionsUpdateRequest) GetID() string {
-	if o == nil {
+func (s *SubscriptionsUpdateRequest) GetID() string {
+	if s == nil {
 		return ""
 	}
-	return o.ID
+	return s.ID
 }
 
-func (o *SubscriptionsUpdateRequest) GetSubscriptionUpdate() components.SubscriptionUpdate {
-	if o == nil {
+func (s *SubscriptionsUpdateRequest) GetSubscriptionUpdate() components.SubscriptionUpdate {
+	if s == nil {
 		return components.SubscriptionUpdate{}
 	}
-	return o.SubscriptionUpdate
+	return s.SubscriptionUpdate
 }
 
 type SubscriptionsUpdateResponse struct {
@@ -32,16 +32,16 @@ type SubscriptionsUpdateResponse struct {
 	Subscription *components.Subscription
 }
 
-func (o *SubscriptionsUpdateResponse) GetHTTPMeta() components.HTTPMetadata {
-	if o == nil {
+func (s *SubscriptionsUpdateResponse) GetHTTPMeta() components.HTTPMetadata {
+	if s == nil {
 		return components.HTTPMetadata{}
 	}
-	return o.HTTPMeta
+	return s.HTTPMeta
 }
 
-func (o *SubscriptionsUpdateResponse) GetSubscription() *components.Subscription {
-	if o == nil {
+func (s *SubscriptionsUpdateResponse) GetSubscription() *components.Subscription {
+	if s == nil {
 		return nil
 	}
-	return o.Subscription
+	return s.Subscription
 }

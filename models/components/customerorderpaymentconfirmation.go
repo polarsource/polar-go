@@ -12,23 +12,23 @@ type CustomerOrderPaymentConfirmation struct {
 	Error *string `json:"error,omitempty"`
 }
 
-func (o *CustomerOrderPaymentConfirmation) GetStatus() string {
-	if o == nil {
+func (c *CustomerOrderPaymentConfirmation) GetStatus() string {
+	if c == nil {
 		return ""
 	}
-	return o.Status
+	return c.Status
 }
 
-func (o *CustomerOrderPaymentConfirmation) GetClientSecret() *string {
-	if o == nil {
+func (c *CustomerOrderPaymentConfirmation) GetClientSecret() *string {
+	if c == nil {
 		return nil
 	}
-	return o.ClientSecret
+	return c.ClientSecret
 }
 
-func (o *CustomerOrderPaymentConfirmation) GetError() *string {
-	if o == nil {
+func (c *CustomerOrderPaymentConfirmation) GetError() *string {
+	if c == nil {
 		return nil
 	}
-	return o.Error
+	return c.Error
 }

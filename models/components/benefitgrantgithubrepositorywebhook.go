@@ -53,114 +53,114 @@ func (b *BenefitGrantGitHubRepositoryWebhook) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *BenefitGrantGitHubRepositoryWebhook) GetCreatedAt() time.Time {
-	if o == nil {
+func (b *BenefitGrantGitHubRepositoryWebhook) GetCreatedAt() time.Time {
+	if b == nil {
 		return time.Time{}
 	}
-	return o.CreatedAt
+	return b.CreatedAt
 }
 
-func (o *BenefitGrantGitHubRepositoryWebhook) GetModifiedAt() *time.Time {
-	if o == nil {
+func (b *BenefitGrantGitHubRepositoryWebhook) GetModifiedAt() *time.Time {
+	if b == nil {
 		return nil
 	}
-	return o.ModifiedAt
+	return b.ModifiedAt
 }
 
-func (o *BenefitGrantGitHubRepositoryWebhook) GetID() string {
-	if o == nil {
+func (b *BenefitGrantGitHubRepositoryWebhook) GetID() string {
+	if b == nil {
 		return ""
 	}
-	return o.ID
+	return b.ID
 }
 
-func (o *BenefitGrantGitHubRepositoryWebhook) GetGrantedAt() *time.Time {
-	if o == nil {
+func (b *BenefitGrantGitHubRepositoryWebhook) GetGrantedAt() *time.Time {
+	if b == nil {
 		return nil
 	}
-	return o.GrantedAt
+	return b.GrantedAt
 }
 
-func (o *BenefitGrantGitHubRepositoryWebhook) GetIsGranted() bool {
-	if o == nil {
+func (b *BenefitGrantGitHubRepositoryWebhook) GetIsGranted() bool {
+	if b == nil {
 		return false
 	}
-	return o.IsGranted
+	return b.IsGranted
 }
 
-func (o *BenefitGrantGitHubRepositoryWebhook) GetRevokedAt() *time.Time {
-	if o == nil {
+func (b *BenefitGrantGitHubRepositoryWebhook) GetRevokedAt() *time.Time {
+	if b == nil {
 		return nil
 	}
-	return o.RevokedAt
+	return b.RevokedAt
 }
 
-func (o *BenefitGrantGitHubRepositoryWebhook) GetIsRevoked() bool {
-	if o == nil {
+func (b *BenefitGrantGitHubRepositoryWebhook) GetIsRevoked() bool {
+	if b == nil {
 		return false
 	}
-	return o.IsRevoked
+	return b.IsRevoked
 }
 
-func (o *BenefitGrantGitHubRepositoryWebhook) GetSubscriptionID() *string {
-	if o == nil {
+func (b *BenefitGrantGitHubRepositoryWebhook) GetSubscriptionID() *string {
+	if b == nil {
 		return nil
 	}
-	return o.SubscriptionID
+	return b.SubscriptionID
 }
 
-func (o *BenefitGrantGitHubRepositoryWebhook) GetOrderID() *string {
-	if o == nil {
+func (b *BenefitGrantGitHubRepositoryWebhook) GetOrderID() *string {
+	if b == nil {
 		return nil
 	}
-	return o.OrderID
+	return b.OrderID
 }
 
-func (o *BenefitGrantGitHubRepositoryWebhook) GetCustomerID() string {
-	if o == nil {
+func (b *BenefitGrantGitHubRepositoryWebhook) GetCustomerID() string {
+	if b == nil {
 		return ""
 	}
-	return o.CustomerID
+	return b.CustomerID
 }
 
-func (o *BenefitGrantGitHubRepositoryWebhook) GetBenefitID() string {
-	if o == nil {
+func (b *BenefitGrantGitHubRepositoryWebhook) GetBenefitID() string {
+	if b == nil {
 		return ""
 	}
-	return o.BenefitID
+	return b.BenefitID
 }
 
-func (o *BenefitGrantGitHubRepositoryWebhook) GetError() *BenefitGrantError {
-	if o == nil {
+func (b *BenefitGrantGitHubRepositoryWebhook) GetError() *BenefitGrantError {
+	if b == nil {
 		return nil
 	}
-	return o.Error
+	return b.Error
 }
 
-func (o *BenefitGrantGitHubRepositoryWebhook) GetCustomer() Customer {
-	if o == nil {
+func (b *BenefitGrantGitHubRepositoryWebhook) GetCustomer() Customer {
+	if b == nil {
 		return Customer{}
 	}
-	return o.Customer
+	return b.Customer
 }
 
-func (o *BenefitGrantGitHubRepositoryWebhook) GetBenefit() BenefitGitHubRepository {
-	if o == nil {
+func (b *BenefitGrantGitHubRepositoryWebhook) GetBenefit() BenefitGitHubRepository {
+	if b == nil {
 		return BenefitGitHubRepository{}
 	}
-	return o.Benefit
+	return b.Benefit
 }
 
-func (o *BenefitGrantGitHubRepositoryWebhook) GetProperties() BenefitGrantGitHubRepositoryProperties {
-	if o == nil {
+func (b *BenefitGrantGitHubRepositoryWebhook) GetProperties() BenefitGrantGitHubRepositoryProperties {
+	if b == nil {
 		return BenefitGrantGitHubRepositoryProperties{}
 	}
-	return o.Properties
+	return b.Properties
 }
 
-func (o *BenefitGrantGitHubRepositoryWebhook) GetPreviousProperties() *BenefitGrantGitHubRepositoryProperties {
-	if o == nil {
+func (b *BenefitGrantGitHubRepositoryWebhook) GetPreviousProperties() *BenefitGrantGitHubRepositoryProperties {
+	if b == nil {
 		return nil
 	}
-	return o.PreviousProperties
+	return b.PreviousProperties
 }

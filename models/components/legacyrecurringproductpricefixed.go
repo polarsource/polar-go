@@ -43,70 +43,70 @@ func (l *LegacyRecurringProductPriceFixed) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *LegacyRecurringProductPriceFixed) GetCreatedAt() time.Time {
-	if o == nil {
+func (l *LegacyRecurringProductPriceFixed) GetCreatedAt() time.Time {
+	if l == nil {
 		return time.Time{}
 	}
-	return o.CreatedAt
+	return l.CreatedAt
 }
 
-func (o *LegacyRecurringProductPriceFixed) GetModifiedAt() *time.Time {
-	if o == nil {
+func (l *LegacyRecurringProductPriceFixed) GetModifiedAt() *time.Time {
+	if l == nil {
 		return nil
 	}
-	return o.ModifiedAt
+	return l.ModifiedAt
 }
 
-func (o *LegacyRecurringProductPriceFixed) GetID() string {
-	if o == nil {
+func (l *LegacyRecurringProductPriceFixed) GetID() string {
+	if l == nil {
 		return ""
 	}
-	return o.ID
+	return l.ID
 }
 
-func (o *LegacyRecurringProductPriceFixed) GetAmountType() string {
+func (l *LegacyRecurringProductPriceFixed) GetAmountType() string {
 	return "fixed"
 }
 
-func (o *LegacyRecurringProductPriceFixed) GetIsArchived() bool {
-	if o == nil {
+func (l *LegacyRecurringProductPriceFixed) GetIsArchived() bool {
+	if l == nil {
 		return false
 	}
-	return o.IsArchived
+	return l.IsArchived
 }
 
-func (o *LegacyRecurringProductPriceFixed) GetProductID() string {
-	if o == nil {
+func (l *LegacyRecurringProductPriceFixed) GetProductID() string {
+	if l == nil {
 		return ""
 	}
-	return o.ProductID
+	return l.ProductID
 }
 
-func (o *LegacyRecurringProductPriceFixed) GetType() string {
+func (l *LegacyRecurringProductPriceFixed) GetType() string {
 	return "recurring"
 }
 
-func (o *LegacyRecurringProductPriceFixed) GetRecurringInterval() SubscriptionRecurringInterval {
-	if o == nil {
+func (l *LegacyRecurringProductPriceFixed) GetRecurringInterval() SubscriptionRecurringInterval {
+	if l == nil {
 		return SubscriptionRecurringInterval("")
 	}
-	return o.RecurringInterval
+	return l.RecurringInterval
 }
 
-func (o *LegacyRecurringProductPriceFixed) GetPriceCurrency() string {
-	if o == nil {
+func (l *LegacyRecurringProductPriceFixed) GetPriceCurrency() string {
+	if l == nil {
 		return ""
 	}
-	return o.PriceCurrency
+	return l.PriceCurrency
 }
 
-func (o *LegacyRecurringProductPriceFixed) GetPriceAmount() int64 {
-	if o == nil {
+func (l *LegacyRecurringProductPriceFixed) GetPriceAmount() int64 {
+	if l == nil {
 		return 0
 	}
-	return o.PriceAmount
+	return l.PriceAmount
 }
 
-func (o *LegacyRecurringProductPriceFixed) GetLegacy() bool {
+func (l *LegacyRecurringProductPriceFixed) GetLegacy() bool {
 	return true
 }

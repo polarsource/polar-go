@@ -159,121 +159,121 @@ func (d *DiscountFixedRepeatDuration) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *DiscountFixedRepeatDuration) GetDuration() DiscountDuration {
-	if o == nil {
+func (d *DiscountFixedRepeatDuration) GetDuration() DiscountDuration {
+	if d == nil {
 		return DiscountDuration("")
 	}
-	return o.Duration
+	return d.Duration
 }
 
-func (o *DiscountFixedRepeatDuration) GetDurationInMonths() int64 {
-	if o == nil {
+func (d *DiscountFixedRepeatDuration) GetDurationInMonths() int64 {
+	if d == nil {
 		return 0
 	}
-	return o.DurationInMonths
+	return d.DurationInMonths
 }
 
-func (o *DiscountFixedRepeatDuration) GetType() DiscountType {
-	if o == nil {
+func (d *DiscountFixedRepeatDuration) GetType() DiscountType {
+	if d == nil {
 		return DiscountType("")
 	}
-	return o.Type
+	return d.Type
 }
 
-func (o *DiscountFixedRepeatDuration) GetAmount() int64 {
-	if o == nil {
+func (d *DiscountFixedRepeatDuration) GetAmount() int64 {
+	if d == nil {
 		return 0
 	}
-	return o.Amount
+	return d.Amount
 }
 
-func (o *DiscountFixedRepeatDuration) GetCurrency() string {
-	if o == nil {
+func (d *DiscountFixedRepeatDuration) GetCurrency() string {
+	if d == nil {
 		return ""
 	}
-	return o.Currency
+	return d.Currency
 }
 
-func (o *DiscountFixedRepeatDuration) GetCreatedAt() time.Time {
-	if o == nil {
+func (d *DiscountFixedRepeatDuration) GetCreatedAt() time.Time {
+	if d == nil {
 		return time.Time{}
 	}
-	return o.CreatedAt
+	return d.CreatedAt
 }
 
-func (o *DiscountFixedRepeatDuration) GetModifiedAt() *time.Time {
-	if o == nil {
+func (d *DiscountFixedRepeatDuration) GetModifiedAt() *time.Time {
+	if d == nil {
 		return nil
 	}
-	return o.ModifiedAt
+	return d.ModifiedAt
 }
 
-func (o *DiscountFixedRepeatDuration) GetID() string {
-	if o == nil {
+func (d *DiscountFixedRepeatDuration) GetID() string {
+	if d == nil {
 		return ""
 	}
-	return o.ID
+	return d.ID
 }
 
-func (o *DiscountFixedRepeatDuration) GetMetadata() map[string]DiscountFixedRepeatDurationMetadata {
-	if o == nil {
+func (d *DiscountFixedRepeatDuration) GetMetadata() map[string]DiscountFixedRepeatDurationMetadata {
+	if d == nil {
 		return map[string]DiscountFixedRepeatDurationMetadata{}
 	}
-	return o.Metadata
+	return d.Metadata
 }
 
-func (o *DiscountFixedRepeatDuration) GetName() string {
-	if o == nil {
+func (d *DiscountFixedRepeatDuration) GetName() string {
+	if d == nil {
 		return ""
 	}
-	return o.Name
+	return d.Name
 }
 
-func (o *DiscountFixedRepeatDuration) GetCode() *string {
-	if o == nil {
+func (d *DiscountFixedRepeatDuration) GetCode() *string {
+	if d == nil {
 		return nil
 	}
-	return o.Code
+	return d.Code
 }
 
-func (o *DiscountFixedRepeatDuration) GetStartsAt() *time.Time {
-	if o == nil {
+func (d *DiscountFixedRepeatDuration) GetStartsAt() *time.Time {
+	if d == nil {
 		return nil
 	}
-	return o.StartsAt
+	return d.StartsAt
 }
 
-func (o *DiscountFixedRepeatDuration) GetEndsAt() *time.Time {
-	if o == nil {
+func (d *DiscountFixedRepeatDuration) GetEndsAt() *time.Time {
+	if d == nil {
 		return nil
 	}
-	return o.EndsAt
+	return d.EndsAt
 }
 
-func (o *DiscountFixedRepeatDuration) GetMaxRedemptions() *int64 {
-	if o == nil {
+func (d *DiscountFixedRepeatDuration) GetMaxRedemptions() *int64 {
+	if d == nil {
 		return nil
 	}
-	return o.MaxRedemptions
+	return d.MaxRedemptions
 }
 
-func (o *DiscountFixedRepeatDuration) GetRedemptionsCount() int64 {
-	if o == nil {
+func (d *DiscountFixedRepeatDuration) GetRedemptionsCount() int64 {
+	if d == nil {
 		return 0
 	}
-	return o.RedemptionsCount
+	return d.RedemptionsCount
 }
 
-func (o *DiscountFixedRepeatDuration) GetOrganizationID() string {
-	if o == nil {
+func (d *DiscountFixedRepeatDuration) GetOrganizationID() string {
+	if d == nil {
 		return ""
 	}
-	return o.OrganizationID
+	return d.OrganizationID
 }
 
-func (o *DiscountFixedRepeatDuration) GetProducts() []DiscountProduct {
-	if o == nil {
+func (d *DiscountFixedRepeatDuration) GetProducts() []DiscountProduct {
+	if d == nil {
 		return []DiscountProduct{}
 	}
-	return o.Products
+	return d.Products
 }

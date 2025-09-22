@@ -221,100 +221,100 @@ func (p *Product) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *Product) GetCreatedAt() time.Time {
-	if o == nil {
+func (p *Product) GetCreatedAt() time.Time {
+	if p == nil {
 		return time.Time{}
 	}
-	return o.CreatedAt
+	return p.CreatedAt
 }
 
-func (o *Product) GetModifiedAt() *time.Time {
-	if o == nil {
+func (p *Product) GetModifiedAt() *time.Time {
+	if p == nil {
 		return nil
 	}
-	return o.ModifiedAt
+	return p.ModifiedAt
 }
 
-func (o *Product) GetID() string {
-	if o == nil {
+func (p *Product) GetID() string {
+	if p == nil {
 		return ""
 	}
-	return o.ID
+	return p.ID
 }
 
-func (o *Product) GetName() string {
-	if o == nil {
+func (p *Product) GetName() string {
+	if p == nil {
 		return ""
 	}
-	return o.Name
+	return p.Name
 }
 
-func (o *Product) GetDescription() *string {
-	if o == nil {
+func (p *Product) GetDescription() *string {
+	if p == nil {
 		return nil
 	}
-	return o.Description
+	return p.Description
 }
 
-func (o *Product) GetRecurringInterval() *SubscriptionRecurringInterval {
-	if o == nil {
+func (p *Product) GetRecurringInterval() *SubscriptionRecurringInterval {
+	if p == nil {
 		return nil
 	}
-	return o.RecurringInterval
+	return p.RecurringInterval
 }
 
-func (o *Product) GetIsRecurring() bool {
-	if o == nil {
+func (p *Product) GetIsRecurring() bool {
+	if p == nil {
 		return false
 	}
-	return o.IsRecurring
+	return p.IsRecurring
 }
 
-func (o *Product) GetIsArchived() bool {
-	if o == nil {
+func (p *Product) GetIsArchived() bool {
+	if p == nil {
 		return false
 	}
-	return o.IsArchived
+	return p.IsArchived
 }
 
-func (o *Product) GetOrganizationID() string {
-	if o == nil {
+func (p *Product) GetOrganizationID() string {
+	if p == nil {
 		return ""
 	}
-	return o.OrganizationID
+	return p.OrganizationID
 }
 
-func (o *Product) GetMetadata() map[string]ProductMetadata {
-	if o == nil {
+func (p *Product) GetMetadata() map[string]ProductMetadata {
+	if p == nil {
 		return map[string]ProductMetadata{}
 	}
-	return o.Metadata
+	return p.Metadata
 }
 
-func (o *Product) GetPrices() []Prices {
-	if o == nil {
+func (p *Product) GetPrices() []Prices {
+	if p == nil {
 		return []Prices{}
 	}
-	return o.Prices
+	return p.Prices
 }
 
-func (o *Product) GetBenefits() []Benefit {
-	if o == nil {
+func (p *Product) GetBenefits() []Benefit {
+	if p == nil {
 		return []Benefit{}
 	}
-	return o.Benefits
+	return p.Benefits
 }
 
-func (o *Product) GetMedias() []ProductMediaFileRead {
-	if o == nil {
+func (p *Product) GetMedias() []ProductMediaFileRead {
+	if p == nil {
 		return []ProductMediaFileRead{}
 	}
-	return o.Medias
+	return p.Medias
 }
 
-func (o *Product) GetAttachedCustomFields() []AttachedCustomField {
-	if o == nil {
+func (p *Product) GetAttachedCustomFields() []AttachedCustomField {
+	if p == nil {
 		return []AttachedCustomField{}
 	}
-	return o.AttachedCustomFields
+	return p.AttachedCustomFields
 }

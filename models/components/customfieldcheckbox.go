@@ -146,62 +146,62 @@ func (c *CustomFieldCheckbox) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *CustomFieldCheckbox) GetCreatedAt() time.Time {
-	if o == nil {
+func (c *CustomFieldCheckbox) GetCreatedAt() time.Time {
+	if c == nil {
 		return time.Time{}
 	}
-	return o.CreatedAt
+	return c.CreatedAt
 }
 
-func (o *CustomFieldCheckbox) GetModifiedAt() *time.Time {
-	if o == nil {
+func (c *CustomFieldCheckbox) GetModifiedAt() *time.Time {
+	if c == nil {
 		return nil
 	}
-	return o.ModifiedAt
+	return c.ModifiedAt
 }
 
-func (o *CustomFieldCheckbox) GetID() string {
-	if o == nil {
+func (c *CustomFieldCheckbox) GetID() string {
+	if c == nil {
 		return ""
 	}
-	return o.ID
+	return c.ID
 }
 
-func (o *CustomFieldCheckbox) GetMetadata() map[string]CustomFieldCheckboxMetadata {
-	if o == nil {
+func (c *CustomFieldCheckbox) GetMetadata() map[string]CustomFieldCheckboxMetadata {
+	if c == nil {
 		return map[string]CustomFieldCheckboxMetadata{}
 	}
-	return o.Metadata
+	return c.Metadata
 }
 
-func (o *CustomFieldCheckbox) GetType() string {
+func (c *CustomFieldCheckbox) GetType() string {
 	return "checkbox"
 }
 
-func (o *CustomFieldCheckbox) GetSlug() string {
-	if o == nil {
+func (c *CustomFieldCheckbox) GetSlug() string {
+	if c == nil {
 		return ""
 	}
-	return o.Slug
+	return c.Slug
 }
 
-func (o *CustomFieldCheckbox) GetName() string {
-	if o == nil {
+func (c *CustomFieldCheckbox) GetName() string {
+	if c == nil {
 		return ""
 	}
-	return o.Name
+	return c.Name
 }
 
-func (o *CustomFieldCheckbox) GetOrganizationID() string {
-	if o == nil {
+func (c *CustomFieldCheckbox) GetOrganizationID() string {
+	if c == nil {
 		return ""
 	}
-	return o.OrganizationID
+	return c.OrganizationID
 }
 
-func (o *CustomFieldCheckbox) GetProperties() CustomFieldCheckboxProperties {
-	if o == nil {
+func (c *CustomFieldCheckbox) GetProperties() CustomFieldCheckboxProperties {
+	if c == nil {
 		return CustomFieldCheckboxProperties{}
 	}
-	return o.Properties
+	return c.Properties
 }

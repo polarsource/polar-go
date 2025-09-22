@@ -11,20 +11,20 @@ type WebhooksDeleteWebhookEndpointRequest struct {
 	ID string `pathParam:"style=simple,explode=false,name=id"`
 }
 
-func (o *WebhooksDeleteWebhookEndpointRequest) GetID() string {
-	if o == nil {
+func (w *WebhooksDeleteWebhookEndpointRequest) GetID() string {
+	if w == nil {
 		return ""
 	}
-	return o.ID
+	return w.ID
 }
 
 type WebhooksDeleteWebhookEndpointResponse struct {
 	HTTPMeta components.HTTPMetadata `json:"-"`
 }
 
-func (o *WebhooksDeleteWebhookEndpointResponse) GetHTTPMeta() components.HTTPMetadata {
-	if o == nil {
+func (w *WebhooksDeleteWebhookEndpointResponse) GetHTTPMeta() components.HTTPMetadata {
+	if w == nil {
 		return components.HTTPMetadata{}
 	}
-	return o.HTTPMeta
+	return w.HTTPMeta
 }

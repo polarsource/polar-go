@@ -11,11 +11,11 @@ type EventsGetRequest struct {
 	ID string `pathParam:"style=simple,explode=false,name=id"`
 }
 
-func (o *EventsGetRequest) GetID() string {
-	if o == nil {
+func (e *EventsGetRequest) GetID() string {
+	if e == nil {
 		return ""
 	}
-	return o.ID
+	return e.ID
 }
 
 type EventsGetResponse struct {
@@ -24,16 +24,16 @@ type EventsGetResponse struct {
 	Event *components.Event
 }
 
-func (o *EventsGetResponse) GetHTTPMeta() components.HTTPMetadata {
-	if o == nil {
+func (e *EventsGetResponse) GetHTTPMeta() components.HTTPMetadata {
+	if e == nil {
 		return components.HTTPMetadata{}
 	}
-	return o.HTTPMeta
+	return e.HTTPMeta
 }
 
-func (o *EventsGetResponse) GetEvent() *components.Event {
-	if o == nil {
+func (e *EventsGetResponse) GetEvent() *components.Event {
+	if e == nil {
 		return nil
 	}
-	return o.Event
+	return e.Event
 }

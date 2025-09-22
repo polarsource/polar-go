@@ -7,7 +7,7 @@ type OrderUpdate struct {
 	// The name of the customer that should appear on the invoice. Can't be updated after the invoice is generated.
 	BillingName *string `json:"billing_name"`
 	// The address of the customer that should appear on the invoice. Can't be updated after the invoice is generated.
-	BillingAddress *Address `json:"billing_address"`
+	BillingAddress *AddressInput `json:"billing_address"`
 }
 
 func (o *OrderUpdate) GetBillingName() *string {
@@ -17,7 +17,7 @@ func (o *OrderUpdate) GetBillingName() *string {
 	return o.BillingName
 }
 
-func (o *OrderUpdate) GetBillingAddress() *Address {
+func (o *OrderUpdate) GetBillingAddress() *AddressInput {
 	if o == nil {
 		return nil
 	}

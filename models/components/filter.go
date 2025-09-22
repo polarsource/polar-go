@@ -76,16 +76,16 @@ type Filter struct {
 	Clauses     []Clauses         `json:"clauses"`
 }
 
-func (o *Filter) GetConjunction() FilterConjunction {
-	if o == nil {
+func (f *Filter) GetConjunction() FilterConjunction {
+	if f == nil {
 		return FilterConjunction("")
 	}
-	return o.Conjunction
+	return f.Conjunction
 }
 
-func (o *Filter) GetClauses() []Clauses {
-	if o == nil {
+func (f *Filter) GetClauses() []Clauses {
+	if f == nil {
 		return []Clauses{}
 	}
-	return o.Clauses
+	return f.Clauses
 }

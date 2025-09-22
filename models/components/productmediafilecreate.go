@@ -31,55 +31,55 @@ func (p *ProductMediaFileCreate) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *ProductMediaFileCreate) GetOrganizationID() *string {
-	if o == nil {
+func (p *ProductMediaFileCreate) GetOrganizationID() *string {
+	if p == nil {
 		return nil
 	}
-	return o.OrganizationID
+	return p.OrganizationID
 }
 
-func (o *ProductMediaFileCreate) GetName() string {
-	if o == nil {
+func (p *ProductMediaFileCreate) GetName() string {
+	if p == nil {
 		return ""
 	}
-	return o.Name
+	return p.Name
 }
 
-func (o *ProductMediaFileCreate) GetMimeType() string {
-	if o == nil {
+func (p *ProductMediaFileCreate) GetMimeType() string {
+	if p == nil {
 		return ""
 	}
-	return o.MimeType
+	return p.MimeType
 }
 
-func (o *ProductMediaFileCreate) GetSize() int64 {
-	if o == nil {
+func (p *ProductMediaFileCreate) GetSize() int64 {
+	if p == nil {
 		return 0
 	}
-	return o.Size
+	return p.Size
 }
 
-func (o *ProductMediaFileCreate) GetChecksumSha256Base64() *string {
-	if o == nil {
+func (p *ProductMediaFileCreate) GetChecksumSha256Base64() *string {
+	if p == nil {
 		return nil
 	}
-	return o.ChecksumSha256Base64
+	return p.ChecksumSha256Base64
 }
 
-func (o *ProductMediaFileCreate) GetUpload() S3FileCreateMultipart {
-	if o == nil {
+func (p *ProductMediaFileCreate) GetUpload() S3FileCreateMultipart {
+	if p == nil {
 		return S3FileCreateMultipart{}
 	}
-	return o.Upload
+	return p.Upload
 }
 
-func (o *ProductMediaFileCreate) GetService() string {
+func (p *ProductMediaFileCreate) GetService() string {
 	return "product_media"
 }
 
-func (o *ProductMediaFileCreate) GetVersion() *string {
-	if o == nil {
+func (p *ProductMediaFileCreate) GetVersion() *string {
+	if p == nil {
 		return nil
 	}
-	return o.Version
+	return p.Version
 }

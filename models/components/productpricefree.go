@@ -36,55 +36,55 @@ func (p *ProductPriceFree) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *ProductPriceFree) GetCreatedAt() time.Time {
-	if o == nil {
+func (p *ProductPriceFree) GetCreatedAt() time.Time {
+	if p == nil {
 		return time.Time{}
 	}
-	return o.CreatedAt
+	return p.CreatedAt
 }
 
-func (o *ProductPriceFree) GetModifiedAt() *time.Time {
-	if o == nil {
+func (p *ProductPriceFree) GetModifiedAt() *time.Time {
+	if p == nil {
 		return nil
 	}
-	return o.ModifiedAt
+	return p.ModifiedAt
 }
 
-func (o *ProductPriceFree) GetID() string {
-	if o == nil {
+func (p *ProductPriceFree) GetID() string {
+	if p == nil {
 		return ""
 	}
-	return o.ID
+	return p.ID
 }
 
-func (o *ProductPriceFree) GetAmountType() string {
+func (p *ProductPriceFree) GetAmountType() string {
 	return "free"
 }
 
-func (o *ProductPriceFree) GetIsArchived() bool {
-	if o == nil {
+func (p *ProductPriceFree) GetIsArchived() bool {
+	if p == nil {
 		return false
 	}
-	return o.IsArchived
+	return p.IsArchived
 }
 
-func (o *ProductPriceFree) GetProductID() string {
-	if o == nil {
+func (p *ProductPriceFree) GetProductID() string {
+	if p == nil {
 		return ""
 	}
-	return o.ProductID
+	return p.ProductID
 }
 
-func (o *ProductPriceFree) GetType() ProductPriceType {
-	if o == nil {
+func (p *ProductPriceFree) GetType() ProductPriceType {
+	if p == nil {
 		return ProductPriceType("")
 	}
-	return o.Type
+	return p.Type
 }
 
-func (o *ProductPriceFree) GetRecurringInterval() *SubscriptionRecurringInterval {
-	if o == nil {
+func (p *ProductPriceFree) GetRecurringInterval() *SubscriptionRecurringInterval {
+	if p == nil {
 		return nil
 	}
-	return o.RecurringInterval
+	return p.RecurringInterval
 }

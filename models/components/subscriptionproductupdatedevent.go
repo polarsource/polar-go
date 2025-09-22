@@ -39,59 +39,59 @@ func (s *SubscriptionProductUpdatedEvent) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SubscriptionProductUpdatedEvent) GetID() string {
-	if o == nil {
+func (s *SubscriptionProductUpdatedEvent) GetID() string {
+	if s == nil {
 		return ""
 	}
-	return o.ID
+	return s.ID
 }
 
-func (o *SubscriptionProductUpdatedEvent) GetTimestamp() time.Time {
-	if o == nil {
+func (s *SubscriptionProductUpdatedEvent) GetTimestamp() time.Time {
+	if s == nil {
 		return time.Time{}
 	}
-	return o.Timestamp
+	return s.Timestamp
 }
 
-func (o *SubscriptionProductUpdatedEvent) GetOrganizationID() string {
-	if o == nil {
+func (s *SubscriptionProductUpdatedEvent) GetOrganizationID() string {
+	if s == nil {
 		return ""
 	}
-	return o.OrganizationID
+	return s.OrganizationID
 }
 
-func (o *SubscriptionProductUpdatedEvent) GetCustomerID() *string {
-	if o == nil {
+func (s *SubscriptionProductUpdatedEvent) GetCustomerID() *string {
+	if s == nil {
 		return nil
 	}
-	return o.CustomerID
+	return s.CustomerID
 }
 
-func (o *SubscriptionProductUpdatedEvent) GetCustomer() *Customer {
-	if o == nil {
+func (s *SubscriptionProductUpdatedEvent) GetCustomer() *Customer {
+	if s == nil {
 		return nil
 	}
-	return o.Customer
+	return s.Customer
 }
 
-func (o *SubscriptionProductUpdatedEvent) GetExternalCustomerID() *string {
-	if o == nil {
+func (s *SubscriptionProductUpdatedEvent) GetExternalCustomerID() *string {
+	if s == nil {
 		return nil
 	}
-	return o.ExternalCustomerID
+	return s.ExternalCustomerID
 }
 
-func (o *SubscriptionProductUpdatedEvent) GetSource() string {
+func (s *SubscriptionProductUpdatedEvent) GetSource() string {
 	return "system"
 }
 
-func (o *SubscriptionProductUpdatedEvent) GetName() string {
+func (s *SubscriptionProductUpdatedEvent) GetName() string {
 	return "subscription.product_updated"
 }
 
-func (o *SubscriptionProductUpdatedEvent) GetMetadata() SubscriptionProductUpdatedMetadata {
-	if o == nil {
+func (s *SubscriptionProductUpdatedEvent) GetMetadata() SubscriptionProductUpdatedMetadata {
+	if s == nil {
 		return SubscriptionProductUpdatedMetadata{}
 	}
-	return o.Metadata
+	return s.Metadata
 }

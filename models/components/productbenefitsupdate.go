@@ -8,9 +8,9 @@ type ProductBenefitsUpdate struct {
 	Benefits []string `json:"benefits"`
 }
 
-func (o *ProductBenefitsUpdate) GetBenefits() []string {
-	if o == nil {
+func (p *ProductBenefitsUpdate) GetBenefits() []string {
+	if p == nil {
 		return []string{}
 	}
-	return o.Benefits
+	return p.Benefits
 }

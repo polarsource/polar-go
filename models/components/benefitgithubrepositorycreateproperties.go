@@ -65,23 +65,23 @@ func (b *BenefitGitHubRepositoryCreateProperties) UnmarshalJSON(data []byte) err
 	return nil
 }
 
-func (o *BenefitGitHubRepositoryCreateProperties) GetRepositoryOwner() string {
-	if o == nil {
+func (b *BenefitGitHubRepositoryCreateProperties) GetRepositoryOwner() string {
+	if b == nil {
 		return ""
 	}
-	return o.RepositoryOwner
+	return b.RepositoryOwner
 }
 
-func (o *BenefitGitHubRepositoryCreateProperties) GetRepositoryName() string {
-	if o == nil {
+func (b *BenefitGitHubRepositoryCreateProperties) GetRepositoryName() string {
+	if b == nil {
 		return ""
 	}
-	return o.RepositoryName
+	return b.RepositoryName
 }
 
-func (o *BenefitGitHubRepositoryCreateProperties) GetPermission() BenefitGitHubRepositoryCreatePropertiesPermission {
-	if o == nil {
+func (b *BenefitGitHubRepositoryCreateProperties) GetPermission() BenefitGitHubRepositoryCreatePropertiesPermission {
+	if b == nil {
 		return BenefitGitHubRepositoryCreatePropertiesPermission("")
 	}
-	return o.Permission
+	return b.Permission
 }

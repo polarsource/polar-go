@@ -24,23 +24,23 @@ func (b *BenefitMeterCreditProperties) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *BenefitMeterCreditProperties) GetUnits() int64 {
-	if o == nil {
+func (b *BenefitMeterCreditProperties) GetUnits() int64 {
+	if b == nil {
 		return 0
 	}
-	return o.Units
+	return b.Units
 }
 
-func (o *BenefitMeterCreditProperties) GetRollover() bool {
-	if o == nil {
+func (b *BenefitMeterCreditProperties) GetRollover() bool {
+	if b == nil {
 		return false
 	}
-	return o.Rollover
+	return b.Rollover
 }
 
-func (o *BenefitMeterCreditProperties) GetMeterID() string {
-	if o == nil {
+func (b *BenefitMeterCreditProperties) GetMeterID() string {
+	if b == nil {
 		return ""
 	}
-	return o.MeterID
+	return b.MeterID
 }

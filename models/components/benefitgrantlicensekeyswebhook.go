@@ -50,114 +50,114 @@ func (b *BenefitGrantLicenseKeysWebhook) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *BenefitGrantLicenseKeysWebhook) GetCreatedAt() time.Time {
-	if o == nil {
+func (b *BenefitGrantLicenseKeysWebhook) GetCreatedAt() time.Time {
+	if b == nil {
 		return time.Time{}
 	}
-	return o.CreatedAt
+	return b.CreatedAt
 }
 
-func (o *BenefitGrantLicenseKeysWebhook) GetModifiedAt() *time.Time {
-	if o == nil {
+func (b *BenefitGrantLicenseKeysWebhook) GetModifiedAt() *time.Time {
+	if b == nil {
 		return nil
 	}
-	return o.ModifiedAt
+	return b.ModifiedAt
 }
 
-func (o *BenefitGrantLicenseKeysWebhook) GetID() string {
-	if o == nil {
+func (b *BenefitGrantLicenseKeysWebhook) GetID() string {
+	if b == nil {
 		return ""
 	}
-	return o.ID
+	return b.ID
 }
 
-func (o *BenefitGrantLicenseKeysWebhook) GetGrantedAt() *time.Time {
-	if o == nil {
+func (b *BenefitGrantLicenseKeysWebhook) GetGrantedAt() *time.Time {
+	if b == nil {
 		return nil
 	}
-	return o.GrantedAt
+	return b.GrantedAt
 }
 
-func (o *BenefitGrantLicenseKeysWebhook) GetIsGranted() bool {
-	if o == nil {
+func (b *BenefitGrantLicenseKeysWebhook) GetIsGranted() bool {
+	if b == nil {
 		return false
 	}
-	return o.IsGranted
+	return b.IsGranted
 }
 
-func (o *BenefitGrantLicenseKeysWebhook) GetRevokedAt() *time.Time {
-	if o == nil {
+func (b *BenefitGrantLicenseKeysWebhook) GetRevokedAt() *time.Time {
+	if b == nil {
 		return nil
 	}
-	return o.RevokedAt
+	return b.RevokedAt
 }
 
-func (o *BenefitGrantLicenseKeysWebhook) GetIsRevoked() bool {
-	if o == nil {
+func (b *BenefitGrantLicenseKeysWebhook) GetIsRevoked() bool {
+	if b == nil {
 		return false
 	}
-	return o.IsRevoked
+	return b.IsRevoked
 }
 
-func (o *BenefitGrantLicenseKeysWebhook) GetSubscriptionID() *string {
-	if o == nil {
+func (b *BenefitGrantLicenseKeysWebhook) GetSubscriptionID() *string {
+	if b == nil {
 		return nil
 	}
-	return o.SubscriptionID
+	return b.SubscriptionID
 }
 
-func (o *BenefitGrantLicenseKeysWebhook) GetOrderID() *string {
-	if o == nil {
+func (b *BenefitGrantLicenseKeysWebhook) GetOrderID() *string {
+	if b == nil {
 		return nil
 	}
-	return o.OrderID
+	return b.OrderID
 }
 
-func (o *BenefitGrantLicenseKeysWebhook) GetCustomerID() string {
-	if o == nil {
+func (b *BenefitGrantLicenseKeysWebhook) GetCustomerID() string {
+	if b == nil {
 		return ""
 	}
-	return o.CustomerID
+	return b.CustomerID
 }
 
-func (o *BenefitGrantLicenseKeysWebhook) GetBenefitID() string {
-	if o == nil {
+func (b *BenefitGrantLicenseKeysWebhook) GetBenefitID() string {
+	if b == nil {
 		return ""
 	}
-	return o.BenefitID
+	return b.BenefitID
 }
 
-func (o *BenefitGrantLicenseKeysWebhook) GetError() *BenefitGrantError {
-	if o == nil {
+func (b *BenefitGrantLicenseKeysWebhook) GetError() *BenefitGrantError {
+	if b == nil {
 		return nil
 	}
-	return o.Error
+	return b.Error
 }
 
-func (o *BenefitGrantLicenseKeysWebhook) GetCustomer() Customer {
-	if o == nil {
+func (b *BenefitGrantLicenseKeysWebhook) GetCustomer() Customer {
+	if b == nil {
 		return Customer{}
 	}
-	return o.Customer
+	return b.Customer
 }
 
-func (o *BenefitGrantLicenseKeysWebhook) GetBenefit() BenefitLicenseKeys {
-	if o == nil {
+func (b *BenefitGrantLicenseKeysWebhook) GetBenefit() BenefitLicenseKeys {
+	if b == nil {
 		return BenefitLicenseKeys{}
 	}
-	return o.Benefit
+	return b.Benefit
 }
 
-func (o *BenefitGrantLicenseKeysWebhook) GetProperties() BenefitGrantLicenseKeysProperties {
-	if o == nil {
+func (b *BenefitGrantLicenseKeysWebhook) GetProperties() BenefitGrantLicenseKeysProperties {
+	if b == nil {
 		return BenefitGrantLicenseKeysProperties{}
 	}
-	return o.Properties
+	return b.Properties
 }
 
-func (o *BenefitGrantLicenseKeysWebhook) GetPreviousProperties() *BenefitGrantLicenseKeysProperties {
-	if o == nil {
+func (b *BenefitGrantLicenseKeysWebhook) GetPreviousProperties() *BenefitGrantLicenseKeysProperties {
+	if b == nil {
 		return nil
 	}
-	return o.PreviousProperties
+	return b.PreviousProperties
 }

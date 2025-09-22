@@ -12,16 +12,16 @@ type FilesCreateResponse struct {
 	FileUpload *components.FileUpload
 }
 
-func (o *FilesCreateResponse) GetHTTPMeta() components.HTTPMetadata {
-	if o == nil {
+func (f *FilesCreateResponse) GetHTTPMeta() components.HTTPMetadata {
+	if f == nil {
 		return components.HTTPMetadata{}
 	}
-	return o.HTTPMeta
+	return f.HTTPMeta
 }
 
-func (o *FilesCreateResponse) GetFileUpload() *components.FileUpload {
-	if o == nil {
+func (f *FilesCreateResponse) GetFileUpload() *components.FileUpload {
+	if f == nil {
 		return nil
 	}
-	return o.FileUpload
+	return f.FileUpload
 }

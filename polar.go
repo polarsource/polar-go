@@ -2,7 +2,7 @@
 
 package polargo
 
-// Generated from OpenAPI doc version 0.1.0 and generator version 2.698.4
+// Generated from OpenAPI doc version 0.1.0 and generator version 2.709.0
 
 import (
 	"context"
@@ -56,13 +56,14 @@ func Float64(f float64) *float64 { return &f }
 func Pointer[T any](v T) *T { return &v }
 
 // Polar API: Polar HTTP and Webhooks API
-// Read the docs at https://docs.polar.sh/api-reference
+// Read the docs at https://polar.sh/docs/api-reference
 type Polar struct {
 	SDKVersion       string
 	Organizations    *Organizations
 	Subscriptions    *Subscriptions
 	Oauth2           *Oauth2
 	Benefits         *Benefits
+	BenefitGrants    *BenefitGrants
 	Webhooks         *Webhooks
 	Products         *Products
 	Orders           *Orders
@@ -158,9 +159,9 @@ func WithTimeout(timeout time.Duration) SDKOption {
 // New creates a new instance of the SDK with the provided options
 func New(opts ...SDKOption) *Polar {
 	sdk := &Polar{
-		SDKVersion: "0.8.5",
+		SDKVersion: "0.9.0",
 		sdkConfiguration: config.SDKConfiguration{
-			UserAgent:  "speakeasy-sdk/go 0.8.5 2.698.4 0.1.0 github.com/polarsource/polar-go",
+			UserAgent:  "speakeasy-sdk/go 0.9.0 2.709.0 0.1.0 github.com/polarsource/polar-go",
 			ServerList: ServerList,
 		},
 		hooks: hooks.New(),
@@ -192,6 +193,7 @@ func New(opts ...SDKOption) *Polar {
 	sdk.Subscriptions = newSubscriptions(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.Oauth2 = newOauth2(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.Benefits = newBenefits(sdk, sdk.sdkConfiguration, sdk.hooks)
+	sdk.BenefitGrants = newBenefitGrants(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.Webhooks = newWebhooks(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.Products = newProducts(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.Orders = newOrders(sdk, sdk.sdkConfiguration, sdk.hooks)

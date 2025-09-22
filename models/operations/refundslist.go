@@ -361,67 +361,67 @@ func (r *RefundsListRequest) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *RefundsListRequest) GetID() *RefundIDFilter {
-	if o == nil {
+func (r *RefundsListRequest) GetID() *RefundIDFilter {
+	if r == nil {
 		return nil
 	}
-	return o.ID
+	return r.ID
 }
 
-func (o *RefundsListRequest) GetOrganizationID() *RefundsListQueryParamOrganizationIDFilter {
-	if o == nil {
+func (r *RefundsListRequest) GetOrganizationID() *RefundsListQueryParamOrganizationIDFilter {
+	if r == nil {
 		return nil
 	}
-	return o.OrganizationID
+	return r.OrganizationID
 }
 
-func (o *RefundsListRequest) GetOrderID() *OrderIDFilter {
-	if o == nil {
+func (r *RefundsListRequest) GetOrderID() *OrderIDFilter {
+	if r == nil {
 		return nil
 	}
-	return o.OrderID
+	return r.OrderID
 }
 
-func (o *RefundsListRequest) GetSubscriptionID() *SubscriptionIDFilter {
-	if o == nil {
+func (r *RefundsListRequest) GetSubscriptionID() *SubscriptionIDFilter {
+	if r == nil {
 		return nil
 	}
-	return o.SubscriptionID
+	return r.SubscriptionID
 }
 
-func (o *RefundsListRequest) GetCustomerID() *RefundsListQueryParamCustomerIDFilter {
-	if o == nil {
+func (r *RefundsListRequest) GetCustomerID() *RefundsListQueryParamCustomerIDFilter {
+	if r == nil {
 		return nil
 	}
-	return o.CustomerID
+	return r.CustomerID
 }
 
-func (o *RefundsListRequest) GetSucceeded() *bool {
-	if o == nil {
+func (r *RefundsListRequest) GetSucceeded() *bool {
+	if r == nil {
 		return nil
 	}
-	return o.Succeeded
+	return r.Succeeded
 }
 
-func (o *RefundsListRequest) GetPage() *int64 {
-	if o == nil {
+func (r *RefundsListRequest) GetPage() *int64 {
+	if r == nil {
 		return nil
 	}
-	return o.Page
+	return r.Page
 }
 
-func (o *RefundsListRequest) GetLimit() *int64 {
-	if o == nil {
+func (r *RefundsListRequest) GetLimit() *int64 {
+	if r == nil {
 		return nil
 	}
-	return o.Limit
+	return r.Limit
 }
 
-func (o *RefundsListRequest) GetSorting() []components.RefundSortProperty {
-	if o == nil {
+func (r *RefundsListRequest) GetSorting() []components.RefundSortProperty {
+	if r == nil {
 		return nil
 	}
-	return o.Sorting
+	return r.Sorting
 }
 
 type RefundsListResponse struct {
@@ -432,16 +432,16 @@ type RefundsListResponse struct {
 	Next func() (*RefundsListResponse, error)
 }
 
-func (o *RefundsListResponse) GetHTTPMeta() components.HTTPMetadata {
-	if o == nil {
+func (r *RefundsListResponse) GetHTTPMeta() components.HTTPMetadata {
+	if r == nil {
 		return components.HTTPMetadata{}
 	}
-	return o.HTTPMeta
+	return r.HTTPMeta
 }
 
-func (o *RefundsListResponse) GetListResourceRefund() *components.ListResourceRefund {
-	if o == nil {
+func (r *RefundsListResponse) GetListResourceRefund() *components.ListResourceRefund {
+	if r == nil {
 		return nil
 	}
-	return o.ListResourceRefund
+	return r.ListResourceRefund
 }

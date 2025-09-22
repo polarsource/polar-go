@@ -39,56 +39,56 @@ func (l *LegacyRecurringProductPriceFree) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *LegacyRecurringProductPriceFree) GetCreatedAt() time.Time {
-	if o == nil {
+func (l *LegacyRecurringProductPriceFree) GetCreatedAt() time.Time {
+	if l == nil {
 		return time.Time{}
 	}
-	return o.CreatedAt
+	return l.CreatedAt
 }
 
-func (o *LegacyRecurringProductPriceFree) GetModifiedAt() *time.Time {
-	if o == nil {
+func (l *LegacyRecurringProductPriceFree) GetModifiedAt() *time.Time {
+	if l == nil {
 		return nil
 	}
-	return o.ModifiedAt
+	return l.ModifiedAt
 }
 
-func (o *LegacyRecurringProductPriceFree) GetID() string {
-	if o == nil {
+func (l *LegacyRecurringProductPriceFree) GetID() string {
+	if l == nil {
 		return ""
 	}
-	return o.ID
+	return l.ID
 }
 
-func (o *LegacyRecurringProductPriceFree) GetAmountType() string {
+func (l *LegacyRecurringProductPriceFree) GetAmountType() string {
 	return "free"
 }
 
-func (o *LegacyRecurringProductPriceFree) GetIsArchived() bool {
-	if o == nil {
+func (l *LegacyRecurringProductPriceFree) GetIsArchived() bool {
+	if l == nil {
 		return false
 	}
-	return o.IsArchived
+	return l.IsArchived
 }
 
-func (o *LegacyRecurringProductPriceFree) GetProductID() string {
-	if o == nil {
+func (l *LegacyRecurringProductPriceFree) GetProductID() string {
+	if l == nil {
 		return ""
 	}
-	return o.ProductID
+	return l.ProductID
 }
 
-func (o *LegacyRecurringProductPriceFree) GetType() string {
+func (l *LegacyRecurringProductPriceFree) GetType() string {
 	return "recurring"
 }
 
-func (o *LegacyRecurringProductPriceFree) GetRecurringInterval() SubscriptionRecurringInterval {
-	if o == nil {
+func (l *LegacyRecurringProductPriceFree) GetRecurringInterval() SubscriptionRecurringInterval {
+	if l == nil {
 		return SubscriptionRecurringInterval("")
 	}
-	return o.RecurringInterval
+	return l.RecurringInterval
 }
 
-func (o *LegacyRecurringProductPriceFree) GetLegacy() bool {
+func (l *LegacyRecurringProductPriceFree) GetLegacy() bool {
 	return true
 }

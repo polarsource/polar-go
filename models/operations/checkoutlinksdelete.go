@@ -11,20 +11,20 @@ type CheckoutLinksDeleteRequest struct {
 	ID string `pathParam:"style=simple,explode=false,name=id"`
 }
 
-func (o *CheckoutLinksDeleteRequest) GetID() string {
-	if o == nil {
+func (c *CheckoutLinksDeleteRequest) GetID() string {
+	if c == nil {
 		return ""
 	}
-	return o.ID
+	return c.ID
 }
 
 type CheckoutLinksDeleteResponse struct {
 	HTTPMeta components.HTTPMetadata `json:"-"`
 }
 
-func (o *CheckoutLinksDeleteResponse) GetHTTPMeta() components.HTTPMetadata {
-	if o == nil {
+func (c *CheckoutLinksDeleteResponse) GetHTTPMeta() components.HTTPMetadata {
+	if c == nil {
 		return components.HTTPMetadata{}
 	}
-	return o.HTTPMeta
+	return c.HTTPMeta
 }

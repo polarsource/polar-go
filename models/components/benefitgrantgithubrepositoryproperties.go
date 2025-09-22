@@ -62,37 +62,37 @@ func (b *BenefitGrantGitHubRepositoryProperties) UnmarshalJSON(data []byte) erro
 	return nil
 }
 
-func (o *BenefitGrantGitHubRepositoryProperties) GetAccountID() *string {
-	if o == nil {
+func (b *BenefitGrantGitHubRepositoryProperties) GetAccountID() *string {
+	if b == nil {
 		return nil
 	}
-	return o.AccountID
+	return b.AccountID
 }
 
-func (o *BenefitGrantGitHubRepositoryProperties) GetRepositoryOwner() *string {
-	if o == nil {
+func (b *BenefitGrantGitHubRepositoryProperties) GetRepositoryOwner() *string {
+	if b == nil {
 		return nil
 	}
-	return o.RepositoryOwner
+	return b.RepositoryOwner
 }
 
-func (o *BenefitGrantGitHubRepositoryProperties) GetRepositoryName() *string {
-	if o == nil {
+func (b *BenefitGrantGitHubRepositoryProperties) GetRepositoryName() *string {
+	if b == nil {
 		return nil
 	}
-	return o.RepositoryName
+	return b.RepositoryName
 }
 
-func (o *BenefitGrantGitHubRepositoryProperties) GetPermission() *BenefitGrantGitHubRepositoryPropertiesPermission {
-	if o == nil {
+func (b *BenefitGrantGitHubRepositoryProperties) GetPermission() *BenefitGrantGitHubRepositoryPropertiesPermission {
+	if b == nil {
 		return nil
 	}
-	return o.Permission
+	return b.Permission
 }
 
-func (o *BenefitGrantGitHubRepositoryProperties) GetGrantedAccountID() *string {
-	if o == nil {
+func (b *BenefitGrantGitHubRepositoryProperties) GetGrantedAccountID() *string {
+	if b == nil {
 		return nil
 	}
-	return o.GrantedAccountID
+	return b.GrantedAccountID
 }

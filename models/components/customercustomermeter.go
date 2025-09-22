@@ -38,65 +38,65 @@ func (c *CustomerCustomerMeter) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *CustomerCustomerMeter) GetID() string {
-	if o == nil {
+func (c *CustomerCustomerMeter) GetID() string {
+	if c == nil {
 		return ""
 	}
-	return o.ID
+	return c.ID
 }
 
-func (o *CustomerCustomerMeter) GetCreatedAt() time.Time {
-	if o == nil {
+func (c *CustomerCustomerMeter) GetCreatedAt() time.Time {
+	if c == nil {
 		return time.Time{}
 	}
-	return o.CreatedAt
+	return c.CreatedAt
 }
 
-func (o *CustomerCustomerMeter) GetModifiedAt() *time.Time {
-	if o == nil {
+func (c *CustomerCustomerMeter) GetModifiedAt() *time.Time {
+	if c == nil {
 		return nil
 	}
-	return o.ModifiedAt
+	return c.ModifiedAt
 }
 
-func (o *CustomerCustomerMeter) GetCustomerID() string {
-	if o == nil {
+func (c *CustomerCustomerMeter) GetCustomerID() string {
+	if c == nil {
 		return ""
 	}
-	return o.CustomerID
+	return c.CustomerID
 }
 
-func (o *CustomerCustomerMeter) GetMeterID() string {
-	if o == nil {
+func (c *CustomerCustomerMeter) GetMeterID() string {
+	if c == nil {
 		return ""
 	}
-	return o.MeterID
+	return c.MeterID
 }
 
-func (o *CustomerCustomerMeter) GetConsumedUnits() float64 {
-	if o == nil {
+func (c *CustomerCustomerMeter) GetConsumedUnits() float64 {
+	if c == nil {
 		return 0.0
 	}
-	return o.ConsumedUnits
+	return c.ConsumedUnits
 }
 
-func (o *CustomerCustomerMeter) GetCreditedUnits() int64 {
-	if o == nil {
+func (c *CustomerCustomerMeter) GetCreditedUnits() int64 {
+	if c == nil {
 		return 0
 	}
-	return o.CreditedUnits
+	return c.CreditedUnits
 }
 
-func (o *CustomerCustomerMeter) GetBalance() float64 {
-	if o == nil {
+func (c *CustomerCustomerMeter) GetBalance() float64 {
+	if c == nil {
 		return 0.0
 	}
-	return o.Balance
+	return c.Balance
 }
 
-func (o *CustomerCustomerMeter) GetMeter() CustomerCustomerMeterMeter {
-	if o == nil {
+func (c *CustomerCustomerMeter) GetMeter() CustomerCustomerMeterMeter {
+	if c == nil {
 		return CustomerCustomerMeterMeter{}
 	}
-	return o.Meter
+	return c.Meter
 }

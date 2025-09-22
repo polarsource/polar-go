@@ -26,37 +26,37 @@ func (l *LicenseKeyUpdate) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *LicenseKeyUpdate) GetStatus() *LicenseKeyStatus {
-	if o == nil {
+func (l *LicenseKeyUpdate) GetStatus() *LicenseKeyStatus {
+	if l == nil {
 		return nil
 	}
-	return o.Status
+	return l.Status
 }
 
-func (o *LicenseKeyUpdate) GetUsage() *int64 {
-	if o == nil {
+func (l *LicenseKeyUpdate) GetUsage() *int64 {
+	if l == nil {
 		return nil
 	}
-	return o.Usage
+	return l.Usage
 }
 
-func (o *LicenseKeyUpdate) GetLimitActivations() *int64 {
-	if o == nil {
+func (l *LicenseKeyUpdate) GetLimitActivations() *int64 {
+	if l == nil {
 		return nil
 	}
-	return o.LimitActivations
+	return l.LimitActivations
 }
 
-func (o *LicenseKeyUpdate) GetLimitUsage() *int64 {
-	if o == nil {
+func (l *LicenseKeyUpdate) GetLimitUsage() *int64 {
+	if l == nil {
 		return nil
 	}
-	return o.LimitUsage
+	return l.LimitUsage
 }
 
-func (o *LicenseKeyUpdate) GetExpiresAt() *time.Time {
-	if o == nil {
+func (l *LicenseKeyUpdate) GetExpiresAt() *time.Time {
+	if l == nil {
 		return nil
 	}
-	return o.ExpiresAt
+	return l.ExpiresAt
 }

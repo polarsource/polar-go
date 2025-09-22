@@ -28,20 +28,20 @@ func (w *WebhookCustomerDeletedPayload) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *WebhookCustomerDeletedPayload) GetType() string {
+func (w *WebhookCustomerDeletedPayload) GetType() string {
 	return "customer.deleted"
 }
 
-func (o *WebhookCustomerDeletedPayload) GetTimestamp() time.Time {
-	if o == nil {
+func (w *WebhookCustomerDeletedPayload) GetTimestamp() time.Time {
+	if w == nil {
 		return time.Time{}
 	}
-	return o.Timestamp
+	return w.Timestamp
 }
 
-func (o *WebhookCustomerDeletedPayload) GetData() Customer {
-	if o == nil {
+func (w *WebhookCustomerDeletedPayload) GetData() Customer {
+	if w == nil {
 		return Customer{}
 	}
-	return o.Data
+	return w.Data
 }

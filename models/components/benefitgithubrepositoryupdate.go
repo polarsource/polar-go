@@ -145,27 +145,27 @@ func (b *BenefitGitHubRepositoryUpdate) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *BenefitGitHubRepositoryUpdate) GetMetadata() map[string]BenefitGitHubRepositoryUpdateMetadata {
-	if o == nil {
+func (b *BenefitGitHubRepositoryUpdate) GetMetadata() map[string]BenefitGitHubRepositoryUpdateMetadata {
+	if b == nil {
 		return nil
 	}
-	return o.Metadata
+	return b.Metadata
 }
 
-func (o *BenefitGitHubRepositoryUpdate) GetDescription() *string {
-	if o == nil {
+func (b *BenefitGitHubRepositoryUpdate) GetDescription() *string {
+	if b == nil {
 		return nil
 	}
-	return o.Description
+	return b.Description
 }
 
-func (o *BenefitGitHubRepositoryUpdate) GetType() string {
+func (b *BenefitGitHubRepositoryUpdate) GetType() string {
 	return "github_repository"
 }
 
-func (o *BenefitGitHubRepositoryUpdate) GetProperties() *BenefitGitHubRepositoryCreateProperties {
-	if o == nil {
+func (b *BenefitGitHubRepositoryUpdate) GetProperties() *BenefitGitHubRepositoryCreateProperties {
+	if b == nil {
 		return nil
 	}
-	return o.Properties
+	return b.Properties
 }

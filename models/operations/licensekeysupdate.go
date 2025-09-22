@@ -11,18 +11,18 @@ type LicenseKeysUpdateRequest struct {
 	LicenseKeyUpdate components.LicenseKeyUpdate `request:"mediaType=application/json"`
 }
 
-func (o *LicenseKeysUpdateRequest) GetID() string {
-	if o == nil {
+func (l *LicenseKeysUpdateRequest) GetID() string {
+	if l == nil {
 		return ""
 	}
-	return o.ID
+	return l.ID
 }
 
-func (o *LicenseKeysUpdateRequest) GetLicenseKeyUpdate() components.LicenseKeyUpdate {
-	if o == nil {
+func (l *LicenseKeysUpdateRequest) GetLicenseKeyUpdate() components.LicenseKeyUpdate {
+	if l == nil {
 		return components.LicenseKeyUpdate{}
 	}
-	return o.LicenseKeyUpdate
+	return l.LicenseKeyUpdate
 }
 
 type LicenseKeysUpdateResponse struct {
@@ -31,16 +31,16 @@ type LicenseKeysUpdateResponse struct {
 	LicenseKeyRead *components.LicenseKeyRead
 }
 
-func (o *LicenseKeysUpdateResponse) GetHTTPMeta() components.HTTPMetadata {
-	if o == nil {
+func (l *LicenseKeysUpdateResponse) GetHTTPMeta() components.HTTPMetadata {
+	if l == nil {
 		return components.HTTPMetadata{}
 	}
-	return o.HTTPMeta
+	return l.HTTPMeta
 }
 
-func (o *LicenseKeysUpdateResponse) GetLicenseKeyRead() *components.LicenseKeyRead {
-	if o == nil {
+func (l *LicenseKeysUpdateResponse) GetLicenseKeyRead() *components.LicenseKeyRead {
+	if l == nil {
 		return nil
 	}
-	return o.LicenseKeyRead
+	return l.LicenseKeyRead
 }

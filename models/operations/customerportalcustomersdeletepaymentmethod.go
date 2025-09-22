@@ -10,31 +10,31 @@ type CustomerPortalCustomersDeletePaymentMethodSecurity struct {
 	CustomerSession string `security:"scheme,type=http,subtype=bearer,name=Authorization,env=polar_customer_session"`
 }
 
-func (o *CustomerPortalCustomersDeletePaymentMethodSecurity) GetCustomerSession() string {
-	if o == nil {
+func (c *CustomerPortalCustomersDeletePaymentMethodSecurity) GetCustomerSession() string {
+	if c == nil {
 		return ""
 	}
-	return o.CustomerSession
+	return c.CustomerSession
 }
 
 type CustomerPortalCustomersDeletePaymentMethodRequest struct {
 	ID string `pathParam:"style=simple,explode=false,name=id"`
 }
 
-func (o *CustomerPortalCustomersDeletePaymentMethodRequest) GetID() string {
-	if o == nil {
+func (c *CustomerPortalCustomersDeletePaymentMethodRequest) GetID() string {
+	if c == nil {
 		return ""
 	}
-	return o.ID
+	return c.ID
 }
 
 type CustomerPortalCustomersDeletePaymentMethodResponse struct {
 	HTTPMeta components.HTTPMetadata `json:"-"`
 }
 
-func (o *CustomerPortalCustomersDeletePaymentMethodResponse) GetHTTPMeta() components.HTTPMetadata {
-	if o == nil {
+func (c *CustomerPortalCustomersDeletePaymentMethodResponse) GetHTTPMeta() components.HTTPMetadata {
+	if c == nil {
 		return components.HTTPMetadata{}
 	}
-	return o.HTTPMeta
+	return c.HTTPMeta
 }

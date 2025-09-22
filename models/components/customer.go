@@ -216,93 +216,93 @@ func (c *Customer) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *Customer) GetID() string {
-	if o == nil {
+func (c *Customer) GetID() string {
+	if c == nil {
 		return ""
 	}
-	return o.ID
+	return c.ID
 }
 
-func (o *Customer) GetCreatedAt() time.Time {
-	if o == nil {
+func (c *Customer) GetCreatedAt() time.Time {
+	if c == nil {
 		return time.Time{}
 	}
-	return o.CreatedAt
+	return c.CreatedAt
 }
 
-func (o *Customer) GetModifiedAt() *time.Time {
-	if o == nil {
+func (c *Customer) GetModifiedAt() *time.Time {
+	if c == nil {
 		return nil
 	}
-	return o.ModifiedAt
+	return c.ModifiedAt
 }
 
-func (o *Customer) GetMetadata() map[string]CustomerMetadata1 {
-	if o == nil {
+func (c *Customer) GetMetadata() map[string]CustomerMetadata1 {
+	if c == nil {
 		return map[string]CustomerMetadata1{}
 	}
-	return o.Metadata
+	return c.Metadata
 }
 
-func (o *Customer) GetExternalID() *string {
-	if o == nil {
+func (c *Customer) GetExternalID() *string {
+	if c == nil {
 		return nil
 	}
-	return o.ExternalID
+	return c.ExternalID
 }
 
-func (o *Customer) GetEmail() string {
-	if o == nil {
+func (c *Customer) GetEmail() string {
+	if c == nil {
 		return ""
 	}
-	return o.Email
+	return c.Email
 }
 
-func (o *Customer) GetEmailVerified() bool {
-	if o == nil {
+func (c *Customer) GetEmailVerified() bool {
+	if c == nil {
 		return false
 	}
-	return o.EmailVerified
+	return c.EmailVerified
 }
 
-func (o *Customer) GetName() *string {
-	if o == nil {
+func (c *Customer) GetName() *string {
+	if c == nil {
 		return nil
 	}
-	return o.Name
+	return c.Name
 }
 
-func (o *Customer) GetBillingAddress() *Address {
-	if o == nil {
+func (c *Customer) GetBillingAddress() *Address {
+	if c == nil {
 		return nil
 	}
-	return o.BillingAddress
+	return c.BillingAddress
 }
 
-func (o *Customer) GetTaxID() []*CustomerTaxID {
-	if o == nil {
+func (c *Customer) GetTaxID() []*CustomerTaxID {
+	if c == nil {
 		return nil
 	}
-	return o.TaxID
+	return c.TaxID
 }
 
-func (o *Customer) GetOrganizationID() string {
-	if o == nil {
+func (c *Customer) GetOrganizationID() string {
+	if c == nil {
 		return ""
 	}
-	return o.OrganizationID
+	return c.OrganizationID
 }
 
-func (o *Customer) GetDeletedAt() *time.Time {
-	if o == nil {
+func (c *Customer) GetDeletedAt() *time.Time {
+	if c == nil {
 		return nil
 	}
-	return o.DeletedAt
+	return c.DeletedAt
 }
 
-func (o *Customer) GetAvatarURL() string {
-	if o == nil {
+func (c *Customer) GetAvatarURL() string {
+	if c == nil {
 		return ""
 	}
-	return o.AvatarURL
+	return c.AvatarURL
 }

@@ -23,13 +23,13 @@ func (u *UniqueAggregation) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *UniqueAggregation) GetFunc() *string {
-	return types.String("unique")
+func (u *UniqueAggregation) GetFunc() *string {
+	return types.Pointer("unique")
 }
 
-func (o *UniqueAggregation) GetProperty() string {
-	if o == nil {
+func (u *UniqueAggregation) GetProperty() string {
+	if u == nil {
 		return ""
 	}
-	return o.Property
+	return u.Property
 }

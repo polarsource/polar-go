@@ -158,114 +158,114 @@ func (d *DiscountPercentageRepeatDuration) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *DiscountPercentageRepeatDuration) GetDuration() DiscountDuration {
-	if o == nil {
+func (d *DiscountPercentageRepeatDuration) GetDuration() DiscountDuration {
+	if d == nil {
 		return DiscountDuration("")
 	}
-	return o.Duration
+	return d.Duration
 }
 
-func (o *DiscountPercentageRepeatDuration) GetDurationInMonths() int64 {
-	if o == nil {
+func (d *DiscountPercentageRepeatDuration) GetDurationInMonths() int64 {
+	if d == nil {
 		return 0
 	}
-	return o.DurationInMonths
+	return d.DurationInMonths
 }
 
-func (o *DiscountPercentageRepeatDuration) GetType() DiscountType {
-	if o == nil {
+func (d *DiscountPercentageRepeatDuration) GetType() DiscountType {
+	if d == nil {
 		return DiscountType("")
 	}
-	return o.Type
+	return d.Type
 }
 
-func (o *DiscountPercentageRepeatDuration) GetBasisPoints() int64 {
-	if o == nil {
+func (d *DiscountPercentageRepeatDuration) GetBasisPoints() int64 {
+	if d == nil {
 		return 0
 	}
-	return o.BasisPoints
+	return d.BasisPoints
 }
 
-func (o *DiscountPercentageRepeatDuration) GetCreatedAt() time.Time {
-	if o == nil {
+func (d *DiscountPercentageRepeatDuration) GetCreatedAt() time.Time {
+	if d == nil {
 		return time.Time{}
 	}
-	return o.CreatedAt
+	return d.CreatedAt
 }
 
-func (o *DiscountPercentageRepeatDuration) GetModifiedAt() *time.Time {
-	if o == nil {
+func (d *DiscountPercentageRepeatDuration) GetModifiedAt() *time.Time {
+	if d == nil {
 		return nil
 	}
-	return o.ModifiedAt
+	return d.ModifiedAt
 }
 
-func (o *DiscountPercentageRepeatDuration) GetID() string {
-	if o == nil {
+func (d *DiscountPercentageRepeatDuration) GetID() string {
+	if d == nil {
 		return ""
 	}
-	return o.ID
+	return d.ID
 }
 
-func (o *DiscountPercentageRepeatDuration) GetMetadata() map[string]DiscountPercentageRepeatDurationMetadata {
-	if o == nil {
+func (d *DiscountPercentageRepeatDuration) GetMetadata() map[string]DiscountPercentageRepeatDurationMetadata {
+	if d == nil {
 		return map[string]DiscountPercentageRepeatDurationMetadata{}
 	}
-	return o.Metadata
+	return d.Metadata
 }
 
-func (o *DiscountPercentageRepeatDuration) GetName() string {
-	if o == nil {
+func (d *DiscountPercentageRepeatDuration) GetName() string {
+	if d == nil {
 		return ""
 	}
-	return o.Name
+	return d.Name
 }
 
-func (o *DiscountPercentageRepeatDuration) GetCode() *string {
-	if o == nil {
+func (d *DiscountPercentageRepeatDuration) GetCode() *string {
+	if d == nil {
 		return nil
 	}
-	return o.Code
+	return d.Code
 }
 
-func (o *DiscountPercentageRepeatDuration) GetStartsAt() *time.Time {
-	if o == nil {
+func (d *DiscountPercentageRepeatDuration) GetStartsAt() *time.Time {
+	if d == nil {
 		return nil
 	}
-	return o.StartsAt
+	return d.StartsAt
 }
 
-func (o *DiscountPercentageRepeatDuration) GetEndsAt() *time.Time {
-	if o == nil {
+func (d *DiscountPercentageRepeatDuration) GetEndsAt() *time.Time {
+	if d == nil {
 		return nil
 	}
-	return o.EndsAt
+	return d.EndsAt
 }
 
-func (o *DiscountPercentageRepeatDuration) GetMaxRedemptions() *int64 {
-	if o == nil {
+func (d *DiscountPercentageRepeatDuration) GetMaxRedemptions() *int64 {
+	if d == nil {
 		return nil
 	}
-	return o.MaxRedemptions
+	return d.MaxRedemptions
 }
 
-func (o *DiscountPercentageRepeatDuration) GetRedemptionsCount() int64 {
-	if o == nil {
+func (d *DiscountPercentageRepeatDuration) GetRedemptionsCount() int64 {
+	if d == nil {
 		return 0
 	}
-	return o.RedemptionsCount
+	return d.RedemptionsCount
 }
 
-func (o *DiscountPercentageRepeatDuration) GetOrganizationID() string {
-	if o == nil {
+func (d *DiscountPercentageRepeatDuration) GetOrganizationID() string {
+	if d == nil {
 		return ""
 	}
-	return o.OrganizationID
+	return d.OrganizationID
 }
 
-func (o *DiscountPercentageRepeatDuration) GetProducts() []DiscountProduct {
-	if o == nil {
+func (d *DiscountPercentageRepeatDuration) GetProducts() []DiscountProduct {
+	if d == nil {
 		return []DiscountProduct{}
 	}
-	return o.Products
+	return d.Products
 }

@@ -22,13 +22,13 @@ func (m *MissingInvoiceBillingDetails) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *MissingInvoiceBillingDetails) GetError() string {
+func (m *MissingInvoiceBillingDetails) GetError() string {
 	return "MissingInvoiceBillingDetails"
 }
 
-func (o *MissingInvoiceBillingDetails) GetDetail() string {
-	if o == nil {
+func (m *MissingInvoiceBillingDetails) GetDetail() string {
+	if m == nil {
 		return ""
 	}
-	return o.Detail
+	return m.Detail
 }

@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
 	"github.com/polarsource/polar-go/models/components"
+	"time"
 )
 
 type EndpointIDType string
@@ -76,6 +77,10 @@ func (u EndpointID) MarshalJSON() ([]byte, error) {
 type WebhooksListWebhookDeliveriesRequest struct {
 	// Filter by webhook endpoint ID.
 	EndpointID *EndpointID `queryParam:"style=form,explode=true,name=endpoint_id"`
+	// Filter deliveries after this timestamp.
+	StartTimestamp *time.Time `queryParam:"style=form,explode=true,name=start_timestamp"`
+	// Filter deliveries before this timestamp.
+	EndTimestamp *time.Time `queryParam:"style=form,explode=true,name=end_timestamp"`
 	// Page number, defaults to 1.
 	Page *int64 `default:"1" queryParam:"style=form,explode=true,name=page"`
 	// Size of a page, defaults to 10. Maximum is 100.
@@ -93,25 +98,39 @@ func (w *WebhooksListWebhookDeliveriesRequest) UnmarshalJSON(data []byte) error 
 	return nil
 }
 
-func (o *WebhooksListWebhookDeliveriesRequest) GetEndpointID() *EndpointID {
-	if o == nil {
+func (w *WebhooksListWebhookDeliveriesRequest) GetEndpointID() *EndpointID {
+	if w == nil {
 		return nil
 	}
-	return o.EndpointID
+	return w.EndpointID
 }
 
-func (o *WebhooksListWebhookDeliveriesRequest) GetPage() *int64 {
-	if o == nil {
+func (w *WebhooksListWebhookDeliveriesRequest) GetStartTimestamp() *time.Time {
+	if w == nil {
 		return nil
 	}
-	return o.Page
+	return w.StartTimestamp
 }
 
-func (o *WebhooksListWebhookDeliveriesRequest) GetLimit() *int64 {
-	if o == nil {
+func (w *WebhooksListWebhookDeliveriesRequest) GetEndTimestamp() *time.Time {
+	if w == nil {
 		return nil
 	}
-	return o.Limit
+	return w.EndTimestamp
+}
+
+func (w *WebhooksListWebhookDeliveriesRequest) GetPage() *int64 {
+	if w == nil {
+		return nil
+	}
+	return w.Page
+}
+
+func (w *WebhooksListWebhookDeliveriesRequest) GetLimit() *int64 {
+	if w == nil {
+		return nil
+	}
+	return w.Limit
 }
 
 type WebhooksListWebhookDeliveriesResponse struct {
@@ -122,16 +141,16 @@ type WebhooksListWebhookDeliveriesResponse struct {
 	Next func() (*WebhooksListWebhookDeliveriesResponse, error)
 }
 
-func (o *WebhooksListWebhookDeliveriesResponse) GetHTTPMeta() components.HTTPMetadata {
-	if o == nil {
+func (w *WebhooksListWebhookDeliveriesResponse) GetHTTPMeta() components.HTTPMetadata {
+	if w == nil {
 		return components.HTTPMetadata{}
 	}
-	return o.HTTPMeta
+	return w.HTTPMeta
 }
 
-func (o *WebhooksListWebhookDeliveriesResponse) GetListResourceWebhookDelivery() *components.ListResourceWebhookDelivery {
-	if o == nil {
+func (w *WebhooksListWebhookDeliveriesResponse) GetListResourceWebhookDelivery() *components.ListResourceWebhookDelivery {
+	if w == nil {
 		return nil
 	}
-	return o.ListResourceWebhookDelivery
+	return w.ListResourceWebhookDelivery
 }

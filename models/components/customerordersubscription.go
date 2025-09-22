@@ -56,142 +56,142 @@ func (c *CustomerOrderSubscription) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *CustomerOrderSubscription) GetCreatedAt() time.Time {
-	if o == nil {
+func (c *CustomerOrderSubscription) GetCreatedAt() time.Time {
+	if c == nil {
 		return time.Time{}
 	}
-	return o.CreatedAt
+	return c.CreatedAt
 }
 
-func (o *CustomerOrderSubscription) GetModifiedAt() *time.Time {
-	if o == nil {
+func (c *CustomerOrderSubscription) GetModifiedAt() *time.Time {
+	if c == nil {
 		return nil
 	}
-	return o.ModifiedAt
+	return c.ModifiedAt
 }
 
-func (o *CustomerOrderSubscription) GetID() string {
-	if o == nil {
+func (c *CustomerOrderSubscription) GetID() string {
+	if c == nil {
 		return ""
 	}
-	return o.ID
+	return c.ID
 }
 
-func (o *CustomerOrderSubscription) GetAmount() int64 {
-	if o == nil {
+func (c *CustomerOrderSubscription) GetAmount() int64 {
+	if c == nil {
 		return 0
 	}
-	return o.Amount
+	return c.Amount
 }
 
-func (o *CustomerOrderSubscription) GetCurrency() string {
-	if o == nil {
+func (c *CustomerOrderSubscription) GetCurrency() string {
+	if c == nil {
 		return ""
 	}
-	return o.Currency
+	return c.Currency
 }
 
-func (o *CustomerOrderSubscription) GetRecurringInterval() SubscriptionRecurringInterval {
-	if o == nil {
+func (c *CustomerOrderSubscription) GetRecurringInterval() SubscriptionRecurringInterval {
+	if c == nil {
 		return SubscriptionRecurringInterval("")
 	}
-	return o.RecurringInterval
+	return c.RecurringInterval
 }
 
-func (o *CustomerOrderSubscription) GetStatus() SubscriptionStatus {
-	if o == nil {
+func (c *CustomerOrderSubscription) GetStatus() SubscriptionStatus {
+	if c == nil {
 		return SubscriptionStatus("")
 	}
-	return o.Status
+	return c.Status
 }
 
-func (o *CustomerOrderSubscription) GetCurrentPeriodStart() time.Time {
-	if o == nil {
+func (c *CustomerOrderSubscription) GetCurrentPeriodStart() time.Time {
+	if c == nil {
 		return time.Time{}
 	}
-	return o.CurrentPeriodStart
+	return c.CurrentPeriodStart
 }
 
-func (o *CustomerOrderSubscription) GetCurrentPeriodEnd() *time.Time {
-	if o == nil {
+func (c *CustomerOrderSubscription) GetCurrentPeriodEnd() *time.Time {
+	if c == nil {
 		return nil
 	}
-	return o.CurrentPeriodEnd
+	return c.CurrentPeriodEnd
 }
 
-func (o *CustomerOrderSubscription) GetCancelAtPeriodEnd() bool {
-	if o == nil {
+func (c *CustomerOrderSubscription) GetCancelAtPeriodEnd() bool {
+	if c == nil {
 		return false
 	}
-	return o.CancelAtPeriodEnd
+	return c.CancelAtPeriodEnd
 }
 
-func (o *CustomerOrderSubscription) GetCanceledAt() *time.Time {
-	if o == nil {
+func (c *CustomerOrderSubscription) GetCanceledAt() *time.Time {
+	if c == nil {
 		return nil
 	}
-	return o.CanceledAt
+	return c.CanceledAt
 }
 
-func (o *CustomerOrderSubscription) GetStartedAt() *time.Time {
-	if o == nil {
+func (c *CustomerOrderSubscription) GetStartedAt() *time.Time {
+	if c == nil {
 		return nil
 	}
-	return o.StartedAt
+	return c.StartedAt
 }
 
-func (o *CustomerOrderSubscription) GetEndsAt() *time.Time {
-	if o == nil {
+func (c *CustomerOrderSubscription) GetEndsAt() *time.Time {
+	if c == nil {
 		return nil
 	}
-	return o.EndsAt
+	return c.EndsAt
 }
 
-func (o *CustomerOrderSubscription) GetEndedAt() *time.Time {
-	if o == nil {
+func (c *CustomerOrderSubscription) GetEndedAt() *time.Time {
+	if c == nil {
 		return nil
 	}
-	return o.EndedAt
+	return c.EndedAt
 }
 
-func (o *CustomerOrderSubscription) GetCustomerID() string {
-	if o == nil {
+func (c *CustomerOrderSubscription) GetCustomerID() string {
+	if c == nil {
 		return ""
 	}
-	return o.CustomerID
+	return c.CustomerID
 }
 
-func (o *CustomerOrderSubscription) GetProductID() string {
-	if o == nil {
+func (c *CustomerOrderSubscription) GetProductID() string {
+	if c == nil {
 		return ""
 	}
-	return o.ProductID
+	return c.ProductID
 }
 
-func (o *CustomerOrderSubscription) GetDiscountID() *string {
-	if o == nil {
+func (c *CustomerOrderSubscription) GetDiscountID() *string {
+	if c == nil {
 		return nil
 	}
-	return o.DiscountID
+	return c.DiscountID
 }
 
-func (o *CustomerOrderSubscription) GetCheckoutID() *string {
-	if o == nil {
+func (c *CustomerOrderSubscription) GetCheckoutID() *string {
+	if c == nil {
 		return nil
 	}
-	return o.CheckoutID
+	return c.CheckoutID
 }
 
-func (o *CustomerOrderSubscription) GetCustomerCancellationReason() *CustomerCancellationReason {
-	if o == nil {
+func (c *CustomerOrderSubscription) GetCustomerCancellationReason() *CustomerCancellationReason {
+	if c == nil {
 		return nil
 	}
-	return o.CustomerCancellationReason
+	return c.CustomerCancellationReason
 }
 
-func (o *CustomerOrderSubscription) GetCustomerCancellationComment() *string {
-	if o == nil {
+func (c *CustomerOrderSubscription) GetCustomerCancellationComment() *string {
+	if c == nil {
 		return nil
 	}
-	return o.CustomerCancellationComment
+	return c.CustomerCancellationComment
 }

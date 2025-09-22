@@ -136,44 +136,44 @@ func (l *LicenseKeyActivationBase) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *LicenseKeyActivationBase) GetID() string {
-	if o == nil {
+func (l *LicenseKeyActivationBase) GetID() string {
+	if l == nil {
 		return ""
 	}
-	return o.ID
+	return l.ID
 }
 
-func (o *LicenseKeyActivationBase) GetLicenseKeyID() string {
-	if o == nil {
+func (l *LicenseKeyActivationBase) GetLicenseKeyID() string {
+	if l == nil {
 		return ""
 	}
-	return o.LicenseKeyID
+	return l.LicenseKeyID
 }
 
-func (o *LicenseKeyActivationBase) GetLabel() string {
-	if o == nil {
+func (l *LicenseKeyActivationBase) GetLabel() string {
+	if l == nil {
 		return ""
 	}
-	return o.Label
+	return l.Label
 }
 
-func (o *LicenseKeyActivationBase) GetMeta() map[string]Meta {
-	if o == nil {
+func (l *LicenseKeyActivationBase) GetMeta() map[string]Meta {
+	if l == nil {
 		return map[string]Meta{}
 	}
-	return o.Meta
+	return l.Meta
 }
 
-func (o *LicenseKeyActivationBase) GetCreatedAt() time.Time {
-	if o == nil {
+func (l *LicenseKeyActivationBase) GetCreatedAt() time.Time {
+	if l == nil {
 		return time.Time{}
 	}
-	return o.CreatedAt
+	return l.CreatedAt
 }
 
-func (o *LicenseKeyActivationBase) GetModifiedAt() *time.Time {
-	if o == nil {
+func (l *LicenseKeyActivationBase) GetModifiedAt() *time.Time {
+	if l == nil {
 		return nil
 	}
-	return o.ModifiedAt
+	return l.ModifiedAt
 }

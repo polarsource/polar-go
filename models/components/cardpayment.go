@@ -50,104 +50,104 @@ func (c *CardPayment) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *CardPayment) GetCreatedAt() time.Time {
-	if o == nil {
+func (c *CardPayment) GetCreatedAt() time.Time {
+	if c == nil {
 		return time.Time{}
 	}
-	return o.CreatedAt
+	return c.CreatedAt
 }
 
-func (o *CardPayment) GetModifiedAt() *time.Time {
-	if o == nil {
+func (c *CardPayment) GetModifiedAt() *time.Time {
+	if c == nil {
 		return nil
 	}
-	return o.ModifiedAt
+	return c.ModifiedAt
 }
 
-func (o *CardPayment) GetID() string {
-	if o == nil {
+func (c *CardPayment) GetID() string {
+	if c == nil {
 		return ""
 	}
-	return o.ID
+	return c.ID
 }
 
-func (o *CardPayment) GetProcessor() PaymentProcessor {
-	if o == nil {
+func (c *CardPayment) GetProcessor() PaymentProcessor {
+	if c == nil {
 		return PaymentProcessor("")
 	}
-	return o.Processor
+	return c.Processor
 }
 
-func (o *CardPayment) GetStatus() PaymentStatus {
-	if o == nil {
+func (c *CardPayment) GetStatus() PaymentStatus {
+	if c == nil {
 		return PaymentStatus("")
 	}
-	return o.Status
+	return c.Status
 }
 
-func (o *CardPayment) GetAmount() int64 {
-	if o == nil {
+func (c *CardPayment) GetAmount() int64 {
+	if c == nil {
 		return 0
 	}
-	return o.Amount
+	return c.Amount
 }
 
-func (o *CardPayment) GetCurrency() string {
-	if o == nil {
+func (c *CardPayment) GetCurrency() string {
+	if c == nil {
 		return ""
 	}
-	return o.Currency
+	return c.Currency
 }
 
-func (o *CardPayment) GetMethod() string {
+func (c *CardPayment) GetMethod() string {
 	return "card"
 }
 
-func (o *CardPayment) GetDeclineReason() *string {
-	if o == nil {
+func (c *CardPayment) GetDeclineReason() *string {
+	if c == nil {
 		return nil
 	}
-	return o.DeclineReason
+	return c.DeclineReason
 }
 
-func (o *CardPayment) GetDeclineMessage() *string {
-	if o == nil {
+func (c *CardPayment) GetDeclineMessage() *string {
+	if c == nil {
 		return nil
 	}
-	return o.DeclineMessage
+	return c.DeclineMessage
 }
 
-func (o *CardPayment) GetOrganizationID() string {
-	if o == nil {
+func (c *CardPayment) GetOrganizationID() string {
+	if c == nil {
 		return ""
 	}
-	return o.OrganizationID
+	return c.OrganizationID
 }
 
-func (o *CardPayment) GetCheckoutID() *string {
-	if o == nil {
+func (c *CardPayment) GetCheckoutID() *string {
+	if c == nil {
 		return nil
 	}
-	return o.CheckoutID
+	return c.CheckoutID
 }
 
-func (o *CardPayment) GetOrderID() *string {
-	if o == nil {
+func (c *CardPayment) GetOrderID() *string {
+	if c == nil {
 		return nil
 	}
-	return o.OrderID
+	return c.OrderID
 }
 
-func (o *CardPayment) GetProcessorMetadata() map[string]any {
-	if o == nil {
+func (c *CardPayment) GetProcessorMetadata() map[string]any {
+	if c == nil {
 		return nil
 	}
-	return o.ProcessorMetadata
+	return c.ProcessorMetadata
 }
 
-func (o *CardPayment) GetMethodMetadata() CardPaymentMetadata {
-	if o == nil {
+func (c *CardPayment) GetMethodMetadata() CardPaymentMetadata {
+	if c == nil {
 		return CardPaymentMetadata{}
 	}
-	return o.MethodMetadata
+	return c.MethodMetadata
 }

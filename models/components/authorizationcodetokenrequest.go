@@ -25,34 +25,34 @@ func (a *AuthorizationCodeTokenRequest) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *AuthorizationCodeTokenRequest) GetGrantType() string {
+func (a *AuthorizationCodeTokenRequest) GetGrantType() string {
 	return "authorization_code"
 }
 
-func (o *AuthorizationCodeTokenRequest) GetClientID() string {
-	if o == nil {
+func (a *AuthorizationCodeTokenRequest) GetClientID() string {
+	if a == nil {
 		return ""
 	}
-	return o.ClientID
+	return a.ClientID
 }
 
-func (o *AuthorizationCodeTokenRequest) GetClientSecret() string {
-	if o == nil {
+func (a *AuthorizationCodeTokenRequest) GetClientSecret() string {
+	if a == nil {
 		return ""
 	}
-	return o.ClientSecret
+	return a.ClientSecret
 }
 
-func (o *AuthorizationCodeTokenRequest) GetCode() string {
-	if o == nil {
+func (a *AuthorizationCodeTokenRequest) GetCode() string {
+	if a == nil {
 		return ""
 	}
-	return o.Code
+	return a.Code
 }
 
-func (o *AuthorizationCodeTokenRequest) GetRedirectURI() string {
-	if o == nil {
+func (a *AuthorizationCodeTokenRequest) GetRedirectURI() string {
+	if a == nil {
 		return ""
 	}
-	return o.RedirectURI
+	return a.RedirectURI
 }

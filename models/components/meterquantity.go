@@ -25,16 +25,16 @@ func (m *MeterQuantity) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *MeterQuantity) GetTimestamp() time.Time {
-	if o == nil {
+func (m *MeterQuantity) GetTimestamp() time.Time {
+	if m == nil {
 		return time.Time{}
 	}
-	return o.Timestamp
+	return m.Timestamp
 }
 
-func (o *MeterQuantity) GetQuantity() float64 {
-	if o == nil {
+func (m *MeterQuantity) GetQuantity() float64 {
+	if m == nil {
 		return 0.0
 	}
-	return o.Quantity
+	return m.Quantity
 }

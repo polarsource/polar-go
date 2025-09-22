@@ -21,6 +21,6 @@ func (c *CustomerBenefitGrantLicenseKeysUpdate) UnmarshalJSON(data []byte) error
 	return nil
 }
 
-func (o *CustomerBenefitGrantLicenseKeysUpdate) GetBenefitType() string {
+func (c *CustomerBenefitGrantLicenseKeysUpdate) GetBenefitType() string {
 	return "license_keys"
 }

@@ -22,16 +22,16 @@ func (b *BenefitGrantLicenseKeysProperties) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *BenefitGrantLicenseKeysProperties) GetLicenseKeyID() *string {
-	if o == nil {
+func (b *BenefitGrantLicenseKeysProperties) GetLicenseKeyID() *string {
+	if b == nil {
 		return nil
 	}
-	return o.LicenseKeyID
+	return b.LicenseKeyID
 }
 
-func (o *BenefitGrantLicenseKeysProperties) GetDisplayKey() *string {
-	if o == nil {
+func (b *BenefitGrantLicenseKeysProperties) GetDisplayKey() *string {
+	if b == nil {
 		return nil
 	}
-	return o.DisplayKey
+	return b.DisplayKey
 }

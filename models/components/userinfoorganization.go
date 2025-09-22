@@ -22,16 +22,16 @@ func (u *UserInfoOrganization) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *UserInfoOrganization) GetSub() string {
-	if o == nil {
+func (u *UserInfoOrganization) GetSub() string {
+	if u == nil {
 		return ""
 	}
-	return o.Sub
+	return u.Sub
 }
 
-func (o *UserInfoOrganization) GetName() *string {
-	if o == nil {
+func (u *UserInfoOrganization) GetName() *string {
+	if u == nil {
 		return nil
 	}
-	return o.Name
+	return u.Name
 }

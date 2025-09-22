@@ -22,16 +22,16 @@ func (c *CustomFieldSelectOption) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *CustomFieldSelectOption) GetValue() string {
-	if o == nil {
+func (c *CustomFieldSelectOption) GetValue() string {
+	if c == nil {
 		return ""
 	}
-	return o.Value
+	return c.Value
 }
 
-func (o *CustomFieldSelectOption) GetLabel() string {
-	if o == nil {
+func (c *CustomFieldSelectOption) GetLabel() string {
+	if c == nil {
 		return ""
 	}
-	return o.Label
+	return c.Label
 }

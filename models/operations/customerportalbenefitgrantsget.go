@@ -10,11 +10,11 @@ type CustomerPortalBenefitGrantsGetSecurity struct {
 	CustomerSession string `security:"scheme,type=http,subtype=bearer,name=Authorization,env=polar_customer_session"`
 }
 
-func (o *CustomerPortalBenefitGrantsGetSecurity) GetCustomerSession() string {
-	if o == nil {
+func (c *CustomerPortalBenefitGrantsGetSecurity) GetCustomerSession() string {
+	if c == nil {
 		return ""
 	}
-	return o.CustomerSession
+	return c.CustomerSession
 }
 
 type CustomerPortalBenefitGrantsGetRequest struct {
@@ -22,11 +22,11 @@ type CustomerPortalBenefitGrantsGetRequest struct {
 	ID string `pathParam:"style=simple,explode=false,name=id"`
 }
 
-func (o *CustomerPortalBenefitGrantsGetRequest) GetID() string {
-	if o == nil {
+func (c *CustomerPortalBenefitGrantsGetRequest) GetID() string {
+	if c == nil {
 		return ""
 	}
-	return o.ID
+	return c.ID
 }
 
 type CustomerPortalBenefitGrantsGetResponse struct {
@@ -35,16 +35,16 @@ type CustomerPortalBenefitGrantsGetResponse struct {
 	CustomerBenefitGrant *components.CustomerBenefitGrant
 }
 
-func (o *CustomerPortalBenefitGrantsGetResponse) GetHTTPMeta() components.HTTPMetadata {
-	if o == nil {
+func (c *CustomerPortalBenefitGrantsGetResponse) GetHTTPMeta() components.HTTPMetadata {
+	if c == nil {
 		return components.HTTPMetadata{}
 	}
-	return o.HTTPMeta
+	return c.HTTPMeta
 }
 
-func (o *CustomerPortalBenefitGrantsGetResponse) GetCustomerBenefitGrant() *components.CustomerBenefitGrant {
-	if o == nil {
+func (c *CustomerPortalBenefitGrantsGetResponse) GetCustomerBenefitGrant() *components.CustomerBenefitGrant {
+	if c == nil {
 		return nil
 	}
-	return o.CustomerBenefitGrant
+	return c.CustomerBenefitGrant
 }

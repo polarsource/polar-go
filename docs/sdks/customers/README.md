@@ -7,6 +7,7 @@
 
 * [List](#list) - List Customers
 * [Create](#create) - Create Customer
+* [Export](#export) - Export Customers
 * [Get](#get) - Get Customer
 * [Update](#update) - Update Customer
 * [Delete](#delete) - Delete Customer
@@ -116,11 +117,11 @@ func main() {
     )
 
     res, err := s.Customers.Create(ctx, components.CustomerCreate{
-        ExternalID: polargo.String("usr_1337"),
+        ExternalID: polargo.Pointer("usr_1337"),
         Email: "customer@example.com",
-        Name: polargo.String("John Doe"),
-        BillingAddress: &components.Address{
-            Country: "US",
+        Name: polargo.Pointer("John Doe"),
+        BillingAddress: &components.AddressInput{
+            Country: components.CountryAlpha2InputUs,
         },
         TaxID: []*components.CustomerCreateTaxID{
             polargo.Pointer(components.CreateCustomerCreateTaxIDStr(
@@ -130,7 +131,7 @@ func main() {
                 "us_ein",
             )),
         },
-        OrganizationID: polargo.String("1dbfc517-0bbf-4301-9ba8-555ca42b9737"),
+        OrganizationID: polargo.Pointer("1dbfc517-0bbf-4301-9ba8-555ca42b9737"),
     })
     if err != nil {
         log.Fatal(err)
@@ -152,6 +153,64 @@ func main() {
 ### Response
 
 **[*operations.CustomersCreateResponse](../../models/operations/customerscreateresponse.md), error**
+
+### Errors
+
+| Error Type                    | Status Code                   | Content Type                  |
+| ----------------------------- | ----------------------------- | ----------------------------- |
+| apierrors.HTTPValidationError | 422                           | application/json              |
+| apierrors.APIError            | 4XX, 5XX                      | \*/\*                         |
+
+## Export
+
+Export customers as a CSV file.
+
+**Scopes**: `customers:read` `customers:write`
+
+### Example Usage
+
+<!-- UsageSnippet language="go" operationID="customers:export" method="get" path="/v1/customers/export" -->
+```go
+package main
+
+import(
+	"context"
+	"os"
+	polargo "github.com/polarsource/polar-go"
+	"github.com/polarsource/polar-go/models/operations"
+	"log"
+)
+
+func main() {
+    ctx := context.Background()
+
+    s := polargo.New(
+        polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
+    )
+
+    res, err := s.Customers.Export(ctx, polargo.Pointer(operations.CreateCustomersExportQueryParamOrganizationIDStr(
+        "1dbfc517-0bbf-4301-9ba8-555ca42b9737",
+    )))
+    if err != nil {
+        log.Fatal(err)
+    }
+    if res.Any != nil {
+        // handle response
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                                                                                 | Type                                                                                                                      | Required                                                                                                                  | Description                                                                                                               |
+| ------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- |
+| `ctx`                                                                                                                     | [context.Context](https://pkg.go.dev/context#Context)                                                                     | :heavy_check_mark:                                                                                                        | The context to use for the request.                                                                                       |
+| `organizationID`                                                                                                          | [*operations.CustomersExportQueryParamOrganizationID](../../models/operations/customersexportqueryparamorganizationid.md) | :heavy_minus_sign:                                                                                                        | Filter by organization ID.                                                                                                |
+| `opts`                                                                                                                    | [][operations.Option](../../models/operations/option.md)                                                                  | :heavy_minus_sign:                                                                                                        | The options for this request.                                                                                             |
+
+### Response
+
+**[*operations.CustomersExportResponse](../../models/operations/customersexportresponse.md), error**
 
 ### Errors
 
@@ -244,10 +303,10 @@ func main() {
     )
 
     res, err := s.Customers.Update(ctx, "<value>", components.CustomerUpdate{
-        Email: polargo.String("customer@example.com"),
-        Name: polargo.String("John Doe"),
-        BillingAddress: &components.Address{
-            Country: "US",
+        Email: polargo.Pointer("customer@example.com"),
+        Name: polargo.Pointer("John Doe"),
+        BillingAddress: &components.AddressInput{
+            Country: components.CountryAlpha2InputUs,
         },
         TaxID: []*components.CustomerUpdateTaxID{
             polargo.Pointer(components.CreateCustomerUpdateTaxIDStr(
@@ -257,7 +316,7 @@ func main() {
                 "us_ein",
             )),
         },
-        ExternalID: polargo.String("usr_1337"),
+        ExternalID: polargo.Pointer("usr_1337"),
     })
     if err != nil {
         log.Fatal(err)
@@ -441,10 +500,10 @@ func main() {
     )
 
     res, err := s.Customers.UpdateExternal(ctx, "<id>", components.CustomerUpdateExternalID{
-        Email: polargo.String("customer@example.com"),
-        Name: polargo.String("John Doe"),
-        BillingAddress: &components.Address{
-            Country: "US",
+        Email: polargo.Pointer("customer@example.com"),
+        Name: polargo.Pointer("John Doe"),
+        BillingAddress: &components.AddressInput{
+            Country: components.CountryAlpha2InputUs,
         },
         TaxID: []*components.CustomerUpdateExternalIDTaxID{
             polargo.Pointer(components.CreateCustomerUpdateExternalIDTaxIDStr(

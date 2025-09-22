@@ -197,57 +197,57 @@ type CustomerCreate struct {
 	Email string `json:"email"`
 	// The name of the customer.
 	Name           *string                `json:"name,omitempty"`
-	BillingAddress *Address               `json:"billing_address,omitempty"`
+	BillingAddress *AddressInput          `json:"billing_address,omitempty"`
 	TaxID          []*CustomerCreateTaxID `json:"tax_id,omitempty"`
 	// The ID of the organization owning the customer. **Required unless you use an organization token.**
 	OrganizationID *string `json:"organization_id,omitempty"`
 }
 
-func (o *CustomerCreate) GetMetadata() map[string]CustomerCreateMetadata {
-	if o == nil {
+func (c *CustomerCreate) GetMetadata() map[string]CustomerCreateMetadata {
+	if c == nil {
 		return nil
 	}
-	return o.Metadata
+	return c.Metadata
 }
 
-func (o *CustomerCreate) GetExternalID() *string {
-	if o == nil {
+func (c *CustomerCreate) GetExternalID() *string {
+	if c == nil {
 		return nil
 	}
-	return o.ExternalID
+	return c.ExternalID
 }
 
-func (o *CustomerCreate) GetEmail() string {
-	if o == nil {
+func (c *CustomerCreate) GetEmail() string {
+	if c == nil {
 		return ""
 	}
-	return o.Email
+	return c.Email
 }
 
-func (o *CustomerCreate) GetName() *string {
-	if o == nil {
+func (c *CustomerCreate) GetName() *string {
+	if c == nil {
 		return nil
 	}
-	return o.Name
+	return c.Name
 }
 
-func (o *CustomerCreate) GetBillingAddress() *Address {
-	if o == nil {
+func (c *CustomerCreate) GetBillingAddress() *AddressInput {
+	if c == nil {
 		return nil
 	}
-	return o.BillingAddress
+	return c.BillingAddress
 }
 
-func (o *CustomerCreate) GetTaxID() []*CustomerCreateTaxID {
-	if o == nil {
+func (c *CustomerCreate) GetTaxID() []*CustomerCreateTaxID {
+	if c == nil {
 		return nil
 	}
-	return o.TaxID
+	return c.TaxID
 }
 
-func (o *CustomerCreate) GetOrganizationID() *string {
-	if o == nil {
+func (c *CustomerCreate) GetOrganizationID() *string {
+	if c == nil {
 		return nil
 	}
-	return o.OrganizationID
+	return c.OrganizationID
 }

@@ -33,10 +33,10 @@ func newBenefitGrants(rootSDK *Polar, sdkConfig config.SDKConfiguration, hooks *
 }
 
 // List Benefit Grants
-// List benefits grants of the authenticated customer.
+// List benefit grants across all benefits for the authenticated organization.
 //
-// **Scopes**: `customer_portal:read` `customer_portal:write`
-func (s *BenefitGrants) List(ctx context.Context, request operations.CustomerPortalBenefitGrantsListRequest, security operations.CustomerPortalBenefitGrantsListSecurity, opts ...operations.Option) (*operations.CustomerPortalBenefitGrantsListResponse, error) {
+// **Scopes**: `benefits:read` `benefits:write`
+func (s *BenefitGrants) List(ctx context.Context, request operations.BenefitGrantsListRequest, opts ...operations.Option) (*operations.BenefitGrantsListResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -55,7 +55,7 @@ func (s *BenefitGrants) List(ctx context.Context, request operations.CustomerPor
 	} else {
 		baseURL = *o.ServerURL
 	}
-	opURL, err := url.JoinPath(baseURL, "/v1/customer-portal/benefit-grants/")
+	opURL, err := url.JoinPath(baseURL, "/v1/benefit-grants/")
 	if err != nil {
 		return nil, fmt.Errorf("error generating URL: %w", err)
 	}
@@ -65,9 +65,9 @@ func (s *BenefitGrants) List(ctx context.Context, request operations.CustomerPor
 		SDKConfiguration: s.sdkConfiguration,
 		BaseURL:          baseURL,
 		Context:          ctx,
-		OperationID:      "customer_portal:benefit-grants:list",
-		OAuth2Scopes:     nil,
-		SecuritySource:   utils.AsSecuritySource(security),
+		OperationID:      "benefit-grants:list",
+		OAuth2Scopes:     []string{},
+		SecuritySource:   s.sdkConfiguration.Security,
 	}
 
 	timeout := o.Timeout
@@ -92,7 +92,7 @@ func (s *BenefitGrants) List(ctx context.Context, request operations.CustomerPor
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
-	if err := utils.PopulateSecurity(ctx, req, utils.AsSecuritySource(security)); err != nil {
+	if err := utils.PopulateSecurity(ctx, req, s.sdkConfiguration.Security); err != nil {
 		return nil, err
 	}
 
@@ -191,13 +191,13 @@ func (s *BenefitGrants) List(ctx context.Context, request operations.CustomerPor
 		}
 	}
 
-	res := &operations.CustomerPortalBenefitGrantsListResponse{
+	res := &operations.BenefitGrantsListResponse{
 		HTTPMeta: components.HTTPMetadata{
 			Request:  req,
 			Response: httpRes,
 		},
 	}
-	res.Next = func() (*operations.CustomerPortalBenefitGrantsListResponse, error) {
+	res.Next = func() (*operations.BenefitGrantsListResponse, error) {
 		rawBody, err := utils.ConsumeRawBody(httpRes)
 		if err != nil {
 			return nil, err
@@ -253,18 +253,14 @@ func (s *BenefitGrants) List(ctx context.Context, request operations.CustomerPor
 
 		return s.List(
 			ctx,
-			operations.CustomerPortalBenefitGrantsListRequest{
-				TypeFilter:     request.TypeFilter,
-				BenefitID:      request.BenefitID,
+			operations.BenefitGrantsListRequest{
 				OrganizationID: request.OrganizationID,
-				CheckoutID:     request.CheckoutID,
-				OrderID:        request.OrderID,
-				SubscriptionID: request.SubscriptionID,
+				CustomerID:     request.CustomerID,
+				IsGranted:      request.IsGranted,
 				Page:           &nP,
 				Limit:          request.Limit,
 				Sorting:        request.Sorting,
 			},
-			security,
 			opts...,
 		)
 	}
@@ -278,549 +274,12 @@ func (s *BenefitGrants) List(ctx context.Context, request operations.CustomerPor
 				return nil, err
 			}
 
-			var out components.ListResourceCustomerBenefitGrant
+			var out components.ListResourceBenefitGrant
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.ListResourceCustomerBenefitGrant = &out
-		default:
-			rawBody, err := utils.ConsumeRawBody(httpRes)
-			if err != nil {
-				return nil, err
-			}
-			return nil, apierrors.NewAPIError(fmt.Sprintf("unknown content-type received: %s", httpRes.Header.Get("Content-Type")), httpRes.StatusCode, string(rawBody), httpRes)
-		}
-	case httpRes.StatusCode == 422:
-		switch {
-		case utils.MatchContentType(httpRes.Header.Get("Content-Type"), `application/json`):
-			rawBody, err := utils.ConsumeRawBody(httpRes)
-			if err != nil {
-				return nil, err
-			}
-
-			var out apierrors.HTTPValidationError
-			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
-				return nil, err
-			}
-
-			return nil, &out
-		default:
-			rawBody, err := utils.ConsumeRawBody(httpRes)
-			if err != nil {
-				return nil, err
-			}
-			return nil, apierrors.NewAPIError(fmt.Sprintf("unknown content-type received: %s", httpRes.Header.Get("Content-Type")), httpRes.StatusCode, string(rawBody), httpRes)
-		}
-	case httpRes.StatusCode >= 400 && httpRes.StatusCode < 500:
-		rawBody, err := utils.ConsumeRawBody(httpRes)
-		if err != nil {
-			return nil, err
-		}
-		return nil, apierrors.NewAPIError("API error occurred", httpRes.StatusCode, string(rawBody), httpRes)
-	case httpRes.StatusCode >= 500 && httpRes.StatusCode < 600:
-		rawBody, err := utils.ConsumeRawBody(httpRes)
-		if err != nil {
-			return nil, err
-		}
-		return nil, apierrors.NewAPIError("API error occurred", httpRes.StatusCode, string(rawBody), httpRes)
-	default:
-		rawBody, err := utils.ConsumeRawBody(httpRes)
-		if err != nil {
-			return nil, err
-		}
-		return nil, apierrors.NewAPIError("unknown status code returned", httpRes.StatusCode, string(rawBody), httpRes)
-	}
-
-	return res, nil
-
-}
-
-// Get Benefit Grant
-// Get a benefit grant by ID for the authenticated customer.
-//
-// **Scopes**: `customer_portal:read` `customer_portal:write`
-func (s *BenefitGrants) Get(ctx context.Context, security operations.CustomerPortalBenefitGrantsGetSecurity, id string, opts ...operations.Option) (*operations.CustomerPortalBenefitGrantsGetResponse, error) {
-	request := operations.CustomerPortalBenefitGrantsGetRequest{
-		ID: id,
-	}
-
-	o := operations.Options{}
-	supportedOptions := []string{
-		operations.SupportedOptionRetries,
-		operations.SupportedOptionTimeout,
-	}
-
-	for _, opt := range opts {
-		if err := opt(&o, supportedOptions...); err != nil {
-			return nil, fmt.Errorf("error applying option: %w", err)
-		}
-	}
-
-	var baseURL string
-	if o.ServerURL == nil {
-		baseURL = utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
-	} else {
-		baseURL = *o.ServerURL
-	}
-	opURL, err := utils.GenerateURL(ctx, baseURL, "/v1/customer-portal/benefit-grants/{id}", request, nil)
-	if err != nil {
-		return nil, fmt.Errorf("error generating URL: %w", err)
-	}
-
-	hookCtx := hooks.HookContext{
-		SDK:              s.rootSDK,
-		SDKConfiguration: s.sdkConfiguration,
-		BaseURL:          baseURL,
-		Context:          ctx,
-		OperationID:      "customer_portal:benefit-grants:get",
-		OAuth2Scopes:     nil,
-		SecuritySource:   utils.AsSecuritySource(security),
-	}
-
-	timeout := o.Timeout
-	if timeout == nil {
-		timeout = s.sdkConfiguration.Timeout
-	}
-
-	if timeout != nil {
-		var cancel context.CancelFunc
-		ctx, cancel = context.WithTimeout(ctx, *timeout)
-		defer cancel()
-	}
-
-	req, err := http.NewRequestWithContext(ctx, "GET", opURL, nil)
-	if err != nil {
-		return nil, fmt.Errorf("error creating request: %w", err)
-	}
-	req.Header.Set("Accept", "application/json")
-	req.Header.Set("User-Agent", s.sdkConfiguration.UserAgent)
-
-	if err := utils.PopulateSecurity(ctx, req, utils.AsSecuritySource(security)); err != nil {
-		return nil, err
-	}
-
-	for k, v := range o.SetHeaders {
-		req.Header.Set(k, v)
-	}
-
-	globalRetryConfig := s.sdkConfiguration.RetryConfig
-	retryConfig := o.Retries
-	if retryConfig == nil {
-		if globalRetryConfig != nil {
-			retryConfig = globalRetryConfig
-		}
-	}
-
-	var httpRes *http.Response
-	if retryConfig != nil {
-		httpRes, err = utils.Retry(ctx, utils.Retries{
-			Config: retryConfig,
-			StatusCodes: []string{
-				"429",
-				"500",
-				"502",
-				"503",
-				"504",
-			},
-		}, func() (*http.Response, error) {
-			if req.Body != nil && req.Body != http.NoBody && req.GetBody != nil {
-				copyBody, err := req.GetBody()
-
-				if err != nil {
-					return nil, err
-				}
-
-				req.Body = copyBody
-			}
-
-			req, err = s.hooks.BeforeRequest(hooks.BeforeRequestContext{HookContext: hookCtx}, req)
-			if err != nil {
-				if retry.IsPermanentError(err) || retry.IsTemporaryError(err) {
-					return nil, err
-				}
-
-				return nil, retry.Permanent(err)
-			}
-
-			httpRes, err := s.sdkConfiguration.Client.Do(req)
-			if err != nil || httpRes == nil {
-				if err != nil {
-					err = fmt.Errorf("error sending request: %w", err)
-				} else {
-					err = fmt.Errorf("error sending request: no response")
-				}
-
-				_, err = s.hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
-			}
-			return httpRes, err
-		})
-
-		if err != nil {
-			return nil, err
-		} else {
-			httpRes, err = s.hooks.AfterSuccess(hooks.AfterSuccessContext{HookContext: hookCtx}, httpRes)
-			if err != nil {
-				return nil, err
-			}
-		}
-	} else {
-		req, err = s.hooks.BeforeRequest(hooks.BeforeRequestContext{HookContext: hookCtx}, req)
-		if err != nil {
-			return nil, err
-		}
-
-		httpRes, err = s.sdkConfiguration.Client.Do(req)
-		if err != nil || httpRes == nil {
-			if err != nil {
-				err = fmt.Errorf("error sending request: %w", err)
-			} else {
-				err = fmt.Errorf("error sending request: no response")
-			}
-
-			_, err = s.hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
-			return nil, err
-		} else if utils.MatchStatusCodes([]string{"404", "422", "4XX", "5XX"}, httpRes.StatusCode) {
-			_httpRes, err := s.hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
-			if err != nil {
-				return nil, err
-			} else if _httpRes != nil {
-				httpRes = _httpRes
-			}
-		} else {
-			httpRes, err = s.hooks.AfterSuccess(hooks.AfterSuccessContext{HookContext: hookCtx}, httpRes)
-			if err != nil {
-				return nil, err
-			}
-		}
-	}
-
-	res := &operations.CustomerPortalBenefitGrantsGetResponse{
-		HTTPMeta: components.HTTPMetadata{
-			Request:  req,
-			Response: httpRes,
-		},
-	}
-
-	switch {
-	case httpRes.StatusCode == 200:
-		switch {
-		case utils.MatchContentType(httpRes.Header.Get("Content-Type"), `application/json`):
-			rawBody, err := utils.ConsumeRawBody(httpRes)
-			if err != nil {
-				return nil, err
-			}
-
-			var out components.CustomerBenefitGrant
-			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
-				return nil, err
-			}
-
-			res.CustomerBenefitGrant = &out
-		default:
-			rawBody, err := utils.ConsumeRawBody(httpRes)
-			if err != nil {
-				return nil, err
-			}
-			return nil, apierrors.NewAPIError(fmt.Sprintf("unknown content-type received: %s", httpRes.Header.Get("Content-Type")), httpRes.StatusCode, string(rawBody), httpRes)
-		}
-	case httpRes.StatusCode == 404:
-		switch {
-		case utils.MatchContentType(httpRes.Header.Get("Content-Type"), `application/json`):
-			rawBody, err := utils.ConsumeRawBody(httpRes)
-			if err != nil {
-				return nil, err
-			}
-
-			var out apierrors.ResourceNotFound
-			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
-				return nil, err
-			}
-
-			return nil, &out
-		default:
-			rawBody, err := utils.ConsumeRawBody(httpRes)
-			if err != nil {
-				return nil, err
-			}
-			return nil, apierrors.NewAPIError(fmt.Sprintf("unknown content-type received: %s", httpRes.Header.Get("Content-Type")), httpRes.StatusCode, string(rawBody), httpRes)
-		}
-	case httpRes.StatusCode == 422:
-		switch {
-		case utils.MatchContentType(httpRes.Header.Get("Content-Type"), `application/json`):
-			rawBody, err := utils.ConsumeRawBody(httpRes)
-			if err != nil {
-				return nil, err
-			}
-
-			var out apierrors.HTTPValidationError
-			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
-				return nil, err
-			}
-
-			return nil, &out
-		default:
-			rawBody, err := utils.ConsumeRawBody(httpRes)
-			if err != nil {
-				return nil, err
-			}
-			return nil, apierrors.NewAPIError(fmt.Sprintf("unknown content-type received: %s", httpRes.Header.Get("Content-Type")), httpRes.StatusCode, string(rawBody), httpRes)
-		}
-	case httpRes.StatusCode >= 400 && httpRes.StatusCode < 500:
-		rawBody, err := utils.ConsumeRawBody(httpRes)
-		if err != nil {
-			return nil, err
-		}
-		return nil, apierrors.NewAPIError("API error occurred", httpRes.StatusCode, string(rawBody), httpRes)
-	case httpRes.StatusCode >= 500 && httpRes.StatusCode < 600:
-		rawBody, err := utils.ConsumeRawBody(httpRes)
-		if err != nil {
-			return nil, err
-		}
-		return nil, apierrors.NewAPIError("API error occurred", httpRes.StatusCode, string(rawBody), httpRes)
-	default:
-		rawBody, err := utils.ConsumeRawBody(httpRes)
-		if err != nil {
-			return nil, err
-		}
-		return nil, apierrors.NewAPIError("unknown status code returned", httpRes.StatusCode, string(rawBody), httpRes)
-	}
-
-	return res, nil
-
-}
-
-// Update Benefit Grant
-// Update a benefit grant for the authenticated customer.
-//
-// **Scopes**: `customer_portal:write`
-func (s *BenefitGrants) Update(ctx context.Context, security operations.CustomerPortalBenefitGrantsUpdateSecurity, id string, customerBenefitGrantUpdate components.CustomerBenefitGrantUpdate, opts ...operations.Option) (*operations.CustomerPortalBenefitGrantsUpdateResponse, error) {
-	request := operations.CustomerPortalBenefitGrantsUpdateRequest{
-		ID:                         id,
-		CustomerBenefitGrantUpdate: customerBenefitGrantUpdate,
-	}
-
-	o := operations.Options{}
-	supportedOptions := []string{
-		operations.SupportedOptionRetries,
-		operations.SupportedOptionTimeout,
-	}
-
-	for _, opt := range opts {
-		if err := opt(&o, supportedOptions...); err != nil {
-			return nil, fmt.Errorf("error applying option: %w", err)
-		}
-	}
-
-	var baseURL string
-	if o.ServerURL == nil {
-		baseURL = utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
-	} else {
-		baseURL = *o.ServerURL
-	}
-	opURL, err := utils.GenerateURL(ctx, baseURL, "/v1/customer-portal/benefit-grants/{id}", request, nil)
-	if err != nil {
-		return nil, fmt.Errorf("error generating URL: %w", err)
-	}
-
-	hookCtx := hooks.HookContext{
-		SDK:              s.rootSDK,
-		SDKConfiguration: s.sdkConfiguration,
-		BaseURL:          baseURL,
-		Context:          ctx,
-		OperationID:      "customer_portal:benefit-grants:update",
-		OAuth2Scopes:     nil,
-		SecuritySource:   utils.AsSecuritySource(security),
-	}
-	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "CustomerBenefitGrantUpdate", "json", `request:"mediaType=application/json"`)
-	if err != nil {
-		return nil, err
-	}
-
-	timeout := o.Timeout
-	if timeout == nil {
-		timeout = s.sdkConfiguration.Timeout
-	}
-
-	if timeout != nil {
-		var cancel context.CancelFunc
-		ctx, cancel = context.WithTimeout(ctx, *timeout)
-		defer cancel()
-	}
-
-	req, err := http.NewRequestWithContext(ctx, "PATCH", opURL, bodyReader)
-	if err != nil {
-		return nil, fmt.Errorf("error creating request: %w", err)
-	}
-	req.Header.Set("Accept", "application/json")
-	req.Header.Set("User-Agent", s.sdkConfiguration.UserAgent)
-	if reqContentType != "" {
-		req.Header.Set("Content-Type", reqContentType)
-	}
-
-	if err := utils.PopulateSecurity(ctx, req, utils.AsSecuritySource(security)); err != nil {
-		return nil, err
-	}
-
-	for k, v := range o.SetHeaders {
-		req.Header.Set(k, v)
-	}
-
-	globalRetryConfig := s.sdkConfiguration.RetryConfig
-	retryConfig := o.Retries
-	if retryConfig == nil {
-		if globalRetryConfig != nil {
-			retryConfig = globalRetryConfig
-		}
-	}
-
-	var httpRes *http.Response
-	if retryConfig != nil {
-		httpRes, err = utils.Retry(ctx, utils.Retries{
-			Config: retryConfig,
-			StatusCodes: []string{
-				"429",
-				"500",
-				"502",
-				"503",
-				"504",
-			},
-		}, func() (*http.Response, error) {
-			if req.Body != nil && req.Body != http.NoBody && req.GetBody != nil {
-				copyBody, err := req.GetBody()
-
-				if err != nil {
-					return nil, err
-				}
-
-				req.Body = copyBody
-			}
-
-			req, err = s.hooks.BeforeRequest(hooks.BeforeRequestContext{HookContext: hookCtx}, req)
-			if err != nil {
-				if retry.IsPermanentError(err) || retry.IsTemporaryError(err) {
-					return nil, err
-				}
-
-				return nil, retry.Permanent(err)
-			}
-
-			httpRes, err := s.sdkConfiguration.Client.Do(req)
-			if err != nil || httpRes == nil {
-				if err != nil {
-					err = fmt.Errorf("error sending request: %w", err)
-				} else {
-					err = fmt.Errorf("error sending request: no response")
-				}
-
-				_, err = s.hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
-			}
-			return httpRes, err
-		})
-
-		if err != nil {
-			return nil, err
-		} else {
-			httpRes, err = s.hooks.AfterSuccess(hooks.AfterSuccessContext{HookContext: hookCtx}, httpRes)
-			if err != nil {
-				return nil, err
-			}
-		}
-	} else {
-		req, err = s.hooks.BeforeRequest(hooks.BeforeRequestContext{HookContext: hookCtx}, req)
-		if err != nil {
-			return nil, err
-		}
-
-		httpRes, err = s.sdkConfiguration.Client.Do(req)
-		if err != nil || httpRes == nil {
-			if err != nil {
-				err = fmt.Errorf("error sending request: %w", err)
-			} else {
-				err = fmt.Errorf("error sending request: no response")
-			}
-
-			_, err = s.hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
-			return nil, err
-		} else if utils.MatchStatusCodes([]string{"403", "404", "422", "4XX", "5XX"}, httpRes.StatusCode) {
-			_httpRes, err := s.hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
-			if err != nil {
-				return nil, err
-			} else if _httpRes != nil {
-				httpRes = _httpRes
-			}
-		} else {
-			httpRes, err = s.hooks.AfterSuccess(hooks.AfterSuccessContext{HookContext: hookCtx}, httpRes)
-			if err != nil {
-				return nil, err
-			}
-		}
-	}
-
-	res := &operations.CustomerPortalBenefitGrantsUpdateResponse{
-		HTTPMeta: components.HTTPMetadata{
-			Request:  req,
-			Response: httpRes,
-		},
-	}
-
-	switch {
-	case httpRes.StatusCode == 200:
-		switch {
-		case utils.MatchContentType(httpRes.Header.Get("Content-Type"), `application/json`):
-			rawBody, err := utils.ConsumeRawBody(httpRes)
-			if err != nil {
-				return nil, err
-			}
-
-			var out components.CustomerBenefitGrant
-			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
-				return nil, err
-			}
-
-			res.CustomerBenefitGrant = &out
-		default:
-			rawBody, err := utils.ConsumeRawBody(httpRes)
-			if err != nil {
-				return nil, err
-			}
-			return nil, apierrors.NewAPIError(fmt.Sprintf("unknown content-type received: %s", httpRes.Header.Get("Content-Type")), httpRes.StatusCode, string(rawBody), httpRes)
-		}
-	case httpRes.StatusCode == 403:
-		switch {
-		case utils.MatchContentType(httpRes.Header.Get("Content-Type"), `application/json`):
-			rawBody, err := utils.ConsumeRawBody(httpRes)
-			if err != nil {
-				return nil, err
-			}
-
-			var out apierrors.NotPermitted
-			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
-				return nil, err
-			}
-
-			return nil, &out
-		default:
-			rawBody, err := utils.ConsumeRawBody(httpRes)
-			if err != nil {
-				return nil, err
-			}
-			return nil, apierrors.NewAPIError(fmt.Sprintf("unknown content-type received: %s", httpRes.Header.Get("Content-Type")), httpRes.StatusCode, string(rawBody), httpRes)
-		}
-	case httpRes.StatusCode == 404:
-		switch {
-		case utils.MatchContentType(httpRes.Header.Get("Content-Type"), `application/json`):
-			rawBody, err := utils.ConsumeRawBody(httpRes)
-			if err != nil {
-				return nil, err
-			}
-
-			var out apierrors.ResourceNotFound
-			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
-				return nil, err
-			}
-
-			return nil, &out
+			res.ListResourceBenefitGrant = &out
 		default:
 			rawBody, err := utils.ConsumeRawBody(httpRes)
 			if err != nil {

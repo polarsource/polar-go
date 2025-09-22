@@ -12,18 +12,18 @@ type CheckoutsClientUpdateRequest struct {
 	CheckoutUpdatePublic components.CheckoutUpdatePublic `request:"mediaType=application/json"`
 }
 
-func (o *CheckoutsClientUpdateRequest) GetClientSecret() string {
-	if o == nil {
+func (c *CheckoutsClientUpdateRequest) GetClientSecret() string {
+	if c == nil {
 		return ""
 	}
-	return o.ClientSecret
+	return c.ClientSecret
 }
 
-func (o *CheckoutsClientUpdateRequest) GetCheckoutUpdatePublic() components.CheckoutUpdatePublic {
-	if o == nil {
+func (c *CheckoutsClientUpdateRequest) GetCheckoutUpdatePublic() components.CheckoutUpdatePublic {
+	if c == nil {
 		return components.CheckoutUpdatePublic{}
 	}
-	return o.CheckoutUpdatePublic
+	return c.CheckoutUpdatePublic
 }
 
 type CheckoutsClientUpdateResponse struct {
@@ -32,16 +32,16 @@ type CheckoutsClientUpdateResponse struct {
 	CheckoutPublic *components.CheckoutPublic
 }
 
-func (o *CheckoutsClientUpdateResponse) GetHTTPMeta() components.HTTPMetadata {
-	if o == nil {
+func (c *CheckoutsClientUpdateResponse) GetHTTPMeta() components.HTTPMetadata {
+	if c == nil {
 		return components.HTTPMetadata{}
 	}
-	return o.HTTPMeta
+	return c.HTTPMeta
 }
 
-func (o *CheckoutsClientUpdateResponse) GetCheckoutPublic() *components.CheckoutPublic {
-	if o == nil {
+func (c *CheckoutsClientUpdateResponse) GetCheckoutPublic() *components.CheckoutPublic {
+	if c == nil {
 		return nil
 	}
-	return o.CheckoutPublic
+	return c.CheckoutPublic
 }

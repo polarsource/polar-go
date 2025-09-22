@@ -22,13 +22,13 @@ func (c *CustomerBenefitGrantGitHubRepositoryUpdate) UnmarshalJSON(data []byte) 
 	return nil
 }
 
-func (o *CustomerBenefitGrantGitHubRepositoryUpdate) GetBenefitType() string {
+func (c *CustomerBenefitGrantGitHubRepositoryUpdate) GetBenefitType() string {
 	return "github_repository"
 }
 
-func (o *CustomerBenefitGrantGitHubRepositoryUpdate) GetProperties() CustomerBenefitGrantGitHubRepositoryPropertiesUpdate {
-	if o == nil {
+func (c *CustomerBenefitGrantGitHubRepositoryUpdate) GetProperties() CustomerBenefitGrantGitHubRepositoryPropertiesUpdate {
+	if c == nil {
 		return CustomerBenefitGrantGitHubRepositoryPropertiesUpdate{}
 	}
-	return o.Properties
+	return c.Properties
 }

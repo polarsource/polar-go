@@ -24,30 +24,30 @@ func (b *BenefitGrantDiscordProperties) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *BenefitGrantDiscordProperties) GetAccountID() *string {
-	if o == nil {
+func (b *BenefitGrantDiscordProperties) GetAccountID() *string {
+	if b == nil {
 		return nil
 	}
-	return o.AccountID
+	return b.AccountID
 }
 
-func (o *BenefitGrantDiscordProperties) GetGuildID() *string {
-	if o == nil {
+func (b *BenefitGrantDiscordProperties) GetGuildID() *string {
+	if b == nil {
 		return nil
 	}
-	return o.GuildID
+	return b.GuildID
 }
 
-func (o *BenefitGrantDiscordProperties) GetRoleID() *string {
-	if o == nil {
+func (b *BenefitGrantDiscordProperties) GetRoleID() *string {
+	if b == nil {
 		return nil
 	}
-	return o.RoleID
+	return b.RoleID
 }
 
-func (o *BenefitGrantDiscordProperties) GetGrantedAccountID() *string {
-	if o == nil {
+func (b *BenefitGrantDiscordProperties) GetGrantedAccountID() *string {
+	if b == nil {
 		return nil
 	}
-	return o.GrantedAccountID
+	return b.GrantedAccountID
 }

@@ -150,72 +150,72 @@ func (d *DiscountProduct) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *DiscountProduct) GetMetadata() map[string]DiscountProductMetadata {
-	if o == nil {
+func (d *DiscountProduct) GetMetadata() map[string]DiscountProductMetadata {
+	if d == nil {
 		return map[string]DiscountProductMetadata{}
 	}
-	return o.Metadata
+	return d.Metadata
 }
 
-func (o *DiscountProduct) GetCreatedAt() time.Time {
-	if o == nil {
+func (d *DiscountProduct) GetCreatedAt() time.Time {
+	if d == nil {
 		return time.Time{}
 	}
-	return o.CreatedAt
+	return d.CreatedAt
 }
 
-func (o *DiscountProduct) GetModifiedAt() *time.Time {
-	if o == nil {
+func (d *DiscountProduct) GetModifiedAt() *time.Time {
+	if d == nil {
 		return nil
 	}
-	return o.ModifiedAt
+	return d.ModifiedAt
 }
 
-func (o *DiscountProduct) GetID() string {
-	if o == nil {
+func (d *DiscountProduct) GetID() string {
+	if d == nil {
 		return ""
 	}
-	return o.ID
+	return d.ID
 }
 
-func (o *DiscountProduct) GetName() string {
-	if o == nil {
+func (d *DiscountProduct) GetName() string {
+	if d == nil {
 		return ""
 	}
-	return o.Name
+	return d.Name
 }
 
-func (o *DiscountProduct) GetDescription() *string {
-	if o == nil {
+func (d *DiscountProduct) GetDescription() *string {
+	if d == nil {
 		return nil
 	}
-	return o.Description
+	return d.Description
 }
 
-func (o *DiscountProduct) GetRecurringInterval() *SubscriptionRecurringInterval {
-	if o == nil {
+func (d *DiscountProduct) GetRecurringInterval() *SubscriptionRecurringInterval {
+	if d == nil {
 		return nil
 	}
-	return o.RecurringInterval
+	return d.RecurringInterval
 }
 
-func (o *DiscountProduct) GetIsRecurring() bool {
-	if o == nil {
+func (d *DiscountProduct) GetIsRecurring() bool {
+	if d == nil {
 		return false
 	}
-	return o.IsRecurring
+	return d.IsRecurring
 }
 
-func (o *DiscountProduct) GetIsArchived() bool {
-	if o == nil {
+func (d *DiscountProduct) GetIsArchived() bool {
+	if d == nil {
 		return false
 	}
-	return o.IsArchived
+	return d.IsArchived
 }
 
-func (o *DiscountProduct) GetOrganizationID() string {
-	if o == nil {
+func (d *DiscountProduct) GetOrganizationID() string {
+	if d == nil {
 		return ""
 	}
-	return o.OrganizationID
+	return d.OrganizationID
 }

@@ -7,16 +7,16 @@ type ListResourceCheckout struct {
 	Pagination Pagination `json:"pagination"`
 }
 
-func (o *ListResourceCheckout) GetItems() []Checkout {
-	if o == nil {
+func (l *ListResourceCheckout) GetItems() []Checkout {
+	if l == nil {
 		return []Checkout{}
 	}
-	return o.Items
+	return l.Items
 }
 
-func (o *ListResourceCheckout) GetPagination() Pagination {
-	if o == nil {
+func (l *ListResourceCheckout) GetPagination() Pagination {
+	if l == nil {
 		return Pagination{}
 	}
-	return o.Pagination
+	return l.Pagination
 }

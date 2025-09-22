@@ -21,6 +21,6 @@ func (c *CustomerBenefitGrantMeterCreditUpdate) UnmarshalJSON(data []byte) error
 	return nil
 }
 
-func (o *CustomerBenefitGrantMeterCreditUpdate) GetBenefitType() string {
+func (c *CustomerBenefitGrantMeterCreditUpdate) GetBenefitType() string {
 	return "meter_credit"
 }

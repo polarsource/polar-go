@@ -23,23 +23,23 @@ func (b *BenefitGrantMetadata) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *BenefitGrantMetadata) GetBenefitID() string {
-	if o == nil {
+func (b *BenefitGrantMetadata) GetBenefitID() string {
+	if b == nil {
 		return ""
 	}
-	return o.BenefitID
+	return b.BenefitID
 }
 
-func (o *BenefitGrantMetadata) GetBenefitGrantID() string {
-	if o == nil {
+func (b *BenefitGrantMetadata) GetBenefitGrantID() string {
+	if b == nil {
 		return ""
 	}
-	return o.BenefitGrantID
+	return b.BenefitGrantID
 }
 
-func (o *BenefitGrantMetadata) GetBenefitType() BenefitType {
-	if o == nil {
+func (b *BenefitGrantMetadata) GetBenefitType() BenefitType {
+	if b == nil {
 		return BenefitType("")
 	}
-	return o.BenefitType
+	return b.BenefitType
 }

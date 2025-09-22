@@ -13,11 +13,11 @@ type CustomerPortalSubscriptionsListSecurity struct {
 	CustomerSession string `security:"scheme,type=http,subtype=bearer,name=Authorization,env=polar_customer_session"`
 }
 
-func (o *CustomerPortalSubscriptionsListSecurity) GetCustomerSession() string {
-	if o == nil {
+func (c *CustomerPortalSubscriptionsListSecurity) GetCustomerSession() string {
+	if c == nil {
 		return ""
 	}
-	return o.CustomerSession
+	return c.CustomerSession
 }
 
 type CustomerPortalSubscriptionsListQueryParamOrganizationIDFilterType string
@@ -176,53 +176,53 @@ func (c *CustomerPortalSubscriptionsListRequest) UnmarshalJSON(data []byte) erro
 	return nil
 }
 
-func (o *CustomerPortalSubscriptionsListRequest) GetOrganizationID() *CustomerPortalSubscriptionsListQueryParamOrganizationIDFilter {
-	if o == nil {
+func (c *CustomerPortalSubscriptionsListRequest) GetOrganizationID() *CustomerPortalSubscriptionsListQueryParamOrganizationIDFilter {
+	if c == nil {
 		return nil
 	}
-	return o.OrganizationID
+	return c.OrganizationID
 }
 
-func (o *CustomerPortalSubscriptionsListRequest) GetProductID() *CustomerPortalSubscriptionsListQueryParamProductIDFilter {
-	if o == nil {
+func (c *CustomerPortalSubscriptionsListRequest) GetProductID() *CustomerPortalSubscriptionsListQueryParamProductIDFilter {
+	if c == nil {
 		return nil
 	}
-	return o.ProductID
+	return c.ProductID
 }
 
-func (o *CustomerPortalSubscriptionsListRequest) GetActive() *bool {
-	if o == nil {
+func (c *CustomerPortalSubscriptionsListRequest) GetActive() *bool {
+	if c == nil {
 		return nil
 	}
-	return o.Active
+	return c.Active
 }
 
-func (o *CustomerPortalSubscriptionsListRequest) GetQuery() *string {
-	if o == nil {
+func (c *CustomerPortalSubscriptionsListRequest) GetQuery() *string {
+	if c == nil {
 		return nil
 	}
-	return o.Query
+	return c.Query
 }
 
-func (o *CustomerPortalSubscriptionsListRequest) GetPage() *int64 {
-	if o == nil {
+func (c *CustomerPortalSubscriptionsListRequest) GetPage() *int64 {
+	if c == nil {
 		return nil
 	}
-	return o.Page
+	return c.Page
 }
 
-func (o *CustomerPortalSubscriptionsListRequest) GetLimit() *int64 {
-	if o == nil {
+func (c *CustomerPortalSubscriptionsListRequest) GetLimit() *int64 {
+	if c == nil {
 		return nil
 	}
-	return o.Limit
+	return c.Limit
 }
 
-func (o *CustomerPortalSubscriptionsListRequest) GetSorting() []components.CustomerSubscriptionSortProperty {
-	if o == nil {
+func (c *CustomerPortalSubscriptionsListRequest) GetSorting() []components.CustomerSubscriptionSortProperty {
+	if c == nil {
 		return nil
 	}
-	return o.Sorting
+	return c.Sorting
 }
 
 type CustomerPortalSubscriptionsListResponse struct {
@@ -233,16 +233,16 @@ type CustomerPortalSubscriptionsListResponse struct {
 	Next func() (*CustomerPortalSubscriptionsListResponse, error)
 }
 
-func (o *CustomerPortalSubscriptionsListResponse) GetHTTPMeta() components.HTTPMetadata {
-	if o == nil {
+func (c *CustomerPortalSubscriptionsListResponse) GetHTTPMeta() components.HTTPMetadata {
+	if c == nil {
 		return components.HTTPMetadata{}
 	}
-	return o.HTTPMeta
+	return c.HTTPMeta
 }
 
-func (o *CustomerPortalSubscriptionsListResponse) GetListResourceCustomerSubscription() *components.ListResourceCustomerSubscription {
-	if o == nil {
+func (c *CustomerPortalSubscriptionsListResponse) GetListResourceCustomerSubscription() *components.ListResourceCustomerSubscription {
+	if c == nil {
 		return nil
 	}
-	return o.ListResourceCustomerSubscription
+	return c.ListResourceCustomerSubscription
 }

@@ -7,9 +7,9 @@ type EventsIngestResponse struct {
 	Inserted int64 `json:"inserted"`
 }
 
-func (o *EventsIngestResponse) GetInserted() int64 {
-	if o == nil {
+func (e *EventsIngestResponse) GetInserted() int64 {
+	if e == nil {
 		return 0
 	}
-	return o.Inserted
+	return e.Inserted
 }

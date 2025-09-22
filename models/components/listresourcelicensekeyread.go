@@ -7,16 +7,16 @@ type ListResourceLicenseKeyRead struct {
 	Pagination Pagination       `json:"pagination"`
 }
 
-func (o *ListResourceLicenseKeyRead) GetItems() []LicenseKeyRead {
-	if o == nil {
+func (l *ListResourceLicenseKeyRead) GetItems() []LicenseKeyRead {
+	if l == nil {
 		return []LicenseKeyRead{}
 	}
-	return o.Items
+	return l.Items
 }
 
-func (o *ListResourceLicenseKeyRead) GetPagination() Pagination {
-	if o == nil {
+func (l *ListResourceLicenseKeyRead) GetPagination() Pagination {
+	if l == nil {
 		return Pagination{}
 	}
-	return o.Pagination
+	return l.Pagination
 }

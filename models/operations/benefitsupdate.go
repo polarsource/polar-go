@@ -165,18 +165,18 @@ type BenefitsUpdateRequest struct {
 	RequestBody BenefitsUpdateBenefitUpdate `request:"mediaType=application/json"`
 }
 
-func (o *BenefitsUpdateRequest) GetID() string {
-	if o == nil {
+func (b *BenefitsUpdateRequest) GetID() string {
+	if b == nil {
 		return ""
 	}
-	return o.ID
+	return b.ID
 }
 
-func (o *BenefitsUpdateRequest) GetRequestBody() BenefitsUpdateBenefitUpdate {
-	if o == nil {
+func (b *BenefitsUpdateRequest) GetRequestBody() BenefitsUpdateBenefitUpdate {
+	if b == nil {
 		return BenefitsUpdateBenefitUpdate{}
 	}
-	return o.RequestBody
+	return b.RequestBody
 }
 
 type BenefitsUpdateResponse struct {
@@ -185,16 +185,16 @@ type BenefitsUpdateResponse struct {
 	Benefit *components.Benefit
 }
 
-func (o *BenefitsUpdateResponse) GetHTTPMeta() components.HTTPMetadata {
-	if o == nil {
+func (b *BenefitsUpdateResponse) GetHTTPMeta() components.HTTPMetadata {
+	if b == nil {
 		return components.HTTPMetadata{}
 	}
-	return o.HTTPMeta
+	return b.HTTPMeta
 }
 
-func (o *BenefitsUpdateResponse) GetBenefit() *components.Benefit {
-	if o == nil {
+func (b *BenefitsUpdateResponse) GetBenefit() *components.Benefit {
+	if b == nil {
 		return nil
 	}
-	return o.Benefit
+	return b.Benefit
 }

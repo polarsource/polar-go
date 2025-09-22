@@ -363,74 +363,74 @@ func (s *SubscriptionsListRequest) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SubscriptionsListRequest) GetOrganizationID() *OrganizationIDFilter {
-	if o == nil {
+func (s *SubscriptionsListRequest) GetOrganizationID() *OrganizationIDFilter {
+	if s == nil {
 		return nil
 	}
-	return o.OrganizationID
+	return s.OrganizationID
 }
 
-func (o *SubscriptionsListRequest) GetProductID() *ProductIDFilter {
-	if o == nil {
+func (s *SubscriptionsListRequest) GetProductID() *ProductIDFilter {
+	if s == nil {
 		return nil
 	}
-	return o.ProductID
+	return s.ProductID
 }
 
-func (o *SubscriptionsListRequest) GetCustomerID() *CustomerIDFilter {
-	if o == nil {
+func (s *SubscriptionsListRequest) GetCustomerID() *CustomerIDFilter {
+	if s == nil {
 		return nil
 	}
-	return o.CustomerID
+	return s.CustomerID
 }
 
-func (o *SubscriptionsListRequest) GetExternalCustomerID() *ExternalCustomerIDFilter {
-	if o == nil {
+func (s *SubscriptionsListRequest) GetExternalCustomerID() *ExternalCustomerIDFilter {
+	if s == nil {
 		return nil
 	}
-	return o.ExternalCustomerID
+	return s.ExternalCustomerID
 }
 
-func (o *SubscriptionsListRequest) GetDiscountID() *DiscountIDFilter {
-	if o == nil {
+func (s *SubscriptionsListRequest) GetDiscountID() *DiscountIDFilter {
+	if s == nil {
 		return nil
 	}
-	return o.DiscountID
+	return s.DiscountID
 }
 
-func (o *SubscriptionsListRequest) GetActive() *bool {
-	if o == nil {
+func (s *SubscriptionsListRequest) GetActive() *bool {
+	if s == nil {
 		return nil
 	}
-	return o.Active
+	return s.Active
 }
 
-func (o *SubscriptionsListRequest) GetPage() *int64 {
-	if o == nil {
+func (s *SubscriptionsListRequest) GetPage() *int64 {
+	if s == nil {
 		return nil
 	}
-	return o.Page
+	return s.Page
 }
 
-func (o *SubscriptionsListRequest) GetLimit() *int64 {
-	if o == nil {
+func (s *SubscriptionsListRequest) GetLimit() *int64 {
+	if s == nil {
 		return nil
 	}
-	return o.Limit
+	return s.Limit
 }
 
-func (o *SubscriptionsListRequest) GetSorting() []components.SubscriptionSortProperty {
-	if o == nil {
+func (s *SubscriptionsListRequest) GetSorting() []components.SubscriptionSortProperty {
+	if s == nil {
 		return nil
 	}
-	return o.Sorting
+	return s.Sorting
 }
 
-func (o *SubscriptionsListRequest) GetMetadata() map[string]components.MetadataQuery {
-	if o == nil {
+func (s *SubscriptionsListRequest) GetMetadata() map[string]components.MetadataQuery {
+	if s == nil {
 		return nil
 	}
-	return o.Metadata
+	return s.Metadata
 }
 
 type SubscriptionsListResponse struct {
@@ -441,16 +441,16 @@ type SubscriptionsListResponse struct {
 	Next func() (*SubscriptionsListResponse, error)
 }
 
-func (o *SubscriptionsListResponse) GetHTTPMeta() components.HTTPMetadata {
-	if o == nil {
+func (s *SubscriptionsListResponse) GetHTTPMeta() components.HTTPMetadata {
+	if s == nil {
 		return components.HTTPMetadata{}
 	}
-	return o.HTTPMeta
+	return s.HTTPMeta
 }
 
-func (o *SubscriptionsListResponse) GetListResourceSubscription() *components.ListResourceSubscription {
-	if o == nil {
+func (s *SubscriptionsListResponse) GetListResourceSubscription() *components.ListResourceSubscription {
+	if s == nil {
 		return nil
 	}
-	return o.ListResourceSubscription
+	return s.ListResourceSubscription
 }

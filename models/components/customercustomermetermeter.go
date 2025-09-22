@@ -29,30 +29,30 @@ func (c *CustomerCustomerMeterMeter) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *CustomerCustomerMeterMeter) GetCreatedAt() time.Time {
-	if o == nil {
+func (c *CustomerCustomerMeterMeter) GetCreatedAt() time.Time {
+	if c == nil {
 		return time.Time{}
 	}
-	return o.CreatedAt
+	return c.CreatedAt
 }
 
-func (o *CustomerCustomerMeterMeter) GetModifiedAt() *time.Time {
-	if o == nil {
+func (c *CustomerCustomerMeterMeter) GetModifiedAt() *time.Time {
+	if c == nil {
 		return nil
 	}
-	return o.ModifiedAt
+	return c.ModifiedAt
 }
 
-func (o *CustomerCustomerMeterMeter) GetID() string {
-	if o == nil {
+func (c *CustomerCustomerMeterMeter) GetID() string {
+	if c == nil {
 		return ""
 	}
-	return o.ID
+	return c.ID
 }
 
-func (o *CustomerCustomerMeterMeter) GetName() string {
-	if o == nil {
+func (c *CustomerCustomerMeterMeter) GetName() string {
+	if c == nil {
 		return ""
 	}
-	return o.Name
+	return c.Name
 }

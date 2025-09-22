@@ -23,9 +23,9 @@ func (b *BenefitDiscordSubscriberProperties) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *BenefitDiscordSubscriberProperties) GetGuildID() string {
-	if o == nil {
+func (b *BenefitDiscordSubscriberProperties) GetGuildID() string {
+	if b == nil {
 		return ""
 	}
-	return o.GuildID
+	return b.GuildID
 }

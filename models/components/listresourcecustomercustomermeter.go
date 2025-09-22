@@ -7,16 +7,16 @@ type ListResourceCustomerCustomerMeter struct {
 	Pagination Pagination              `json:"pagination"`
 }
 
-func (o *ListResourceCustomerCustomerMeter) GetItems() []CustomerCustomerMeter {
-	if o == nil {
+func (l *ListResourceCustomerCustomerMeter) GetItems() []CustomerCustomerMeter {
+	if l == nil {
 		return []CustomerCustomerMeter{}
 	}
-	return o.Items
+	return l.Items
 }
 
-func (o *ListResourceCustomerCustomerMeter) GetPagination() Pagination {
-	if o == nil {
+func (l *ListResourceCustomerCustomerMeter) GetPagination() Pagination {
+	if l == nil {
 		return Pagination{}
 	}
-	return o.Pagination
+	return l.Pagination
 }

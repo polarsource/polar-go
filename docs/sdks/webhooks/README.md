@@ -43,7 +43,7 @@ func main() {
 
     res, err := s.Webhooks.ListWebhookEndpoints(ctx, polargo.Pointer(operations.CreateQueryParamOrganizationIDStr(
         "1dbfc517-0bbf-4301-9ba8-555ca42b9737",
-    )), polargo.Int64(1), polargo.Int64(10))
+    )), polargo.Pointer[int64](1), polargo.Pointer[int64](10))
     if err != nil {
         log.Fatal(err)
     }
@@ -119,7 +119,7 @@ func main() {
         Events: []components.WebhookEventType{
             components.WebhookEventTypeSubscriptionUncanceled,
         },
-        OrganizationID: polargo.String("1dbfc517-0bbf-4301-9ba8-555ca42b9737"),
+        OrganizationID: polargo.Pointer("1dbfc517-0bbf-4301-9ba8-555ca42b9737"),
     })
     if err != nil {
         log.Fatal(err)
@@ -233,7 +233,7 @@ func main() {
     )
 
     res, err := s.Webhooks.UpdateWebhookEndpoint(ctx, "<value>", components.WebhookEndpointUpdate{
-        URL: polargo.String("https://webhook.site/cb791d80-f26e-4f8c-be88-6e56054192b0"),
+        URL: polargo.Pointer("https://webhook.site/cb791d80-f26e-4f8c-be88-6e56054192b0"),
     })
     if err != nil {
         log.Fatal(err)
@@ -395,6 +395,7 @@ import(
 	"context"
 	"os"
 	polargo "github.com/polarsource/polar-go"
+	"github.com/polarsource/polar-go/models/operations"
 	"log"
 )
 
@@ -405,7 +406,7 @@ func main() {
         polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )
 
-    res, err := s.Webhooks.ListWebhookDeliveries(ctx, nil, polargo.Int64(1), polargo.Int64(10))
+    res, err := s.Webhooks.ListWebhookDeliveries(ctx, operations.WebhooksListWebhookDeliveriesRequest{})
     if err != nil {
         log.Fatal(err)
     }
@@ -429,13 +430,11 @@ func main() {
 
 ### Parameters
 
-| Parameter                                                       | Type                                                            | Required                                                        | Description                                                     |
-| --------------------------------------------------------------- | --------------------------------------------------------------- | --------------------------------------------------------------- | --------------------------------------------------------------- |
-| `ctx`                                                           | [context.Context](https://pkg.go.dev/context#Context)           | :heavy_check_mark:                                              | The context to use for the request.                             |
-| `endpointID`                                                    | [*operations.EndpointID](../../models/operations/endpointid.md) | :heavy_minus_sign:                                              | Filter by webhook endpoint ID.                                  |
-| `page`                                                          | **int64*                                                        | :heavy_minus_sign:                                              | Page number, defaults to 1.                                     |
-| `limit`                                                         | **int64*                                                        | :heavy_minus_sign:                                              | Size of a page, defaults to 10. Maximum is 100.                 |
-| `opts`                                                          | [][operations.Option](../../models/operations/option.md)        | :heavy_minus_sign:                                              | The options for this request.                                   |
+| Parameter                                                                                                          | Type                                                                                                               | Required                                                                                                           | Description                                                                                                        |
+| ------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------ |
+| `ctx`                                                                                                              | [context.Context](https://pkg.go.dev/context#Context)                                                              | :heavy_check_mark:                                                                                                 | The context to use for the request.                                                                                |
+| `request`                                                                                                          | [operations.WebhooksListWebhookDeliveriesRequest](../../models/operations/webhookslistwebhookdeliveriesrequest.md) | :heavy_check_mark:                                                                                                 | The request object to use for the request.                                                                         |
+| `opts`                                                                                                             | [][operations.Option](../../models/operations/option.md)                                                           | :heavy_minus_sign:                                                                                                 | The options for this request.                                                                                      |
 
 ### Response
 

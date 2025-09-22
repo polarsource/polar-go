@@ -26,44 +26,44 @@ func (c *CustomFieldTextProperties) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *CustomFieldTextProperties) GetFormLabel() *string {
-	if o == nil {
+func (c *CustomFieldTextProperties) GetFormLabel() *string {
+	if c == nil {
 		return nil
 	}
-	return o.FormLabel
+	return c.FormLabel
 }
 
-func (o *CustomFieldTextProperties) GetFormHelpText() *string {
-	if o == nil {
+func (c *CustomFieldTextProperties) GetFormHelpText() *string {
+	if c == nil {
 		return nil
 	}
-	return o.FormHelpText
+	return c.FormHelpText
 }
 
-func (o *CustomFieldTextProperties) GetFormPlaceholder() *string {
-	if o == nil {
+func (c *CustomFieldTextProperties) GetFormPlaceholder() *string {
+	if c == nil {
 		return nil
 	}
-	return o.FormPlaceholder
+	return c.FormPlaceholder
 }
 
-func (o *CustomFieldTextProperties) GetTextarea() *bool {
-	if o == nil {
+func (c *CustomFieldTextProperties) GetTextarea() *bool {
+	if c == nil {
 		return nil
 	}
-	return o.Textarea
+	return c.Textarea
 }
 
-func (o *CustomFieldTextProperties) GetMinLength() *int64 {
-	if o == nil {
+func (c *CustomFieldTextProperties) GetMinLength() *int64 {
+	if c == nil {
 		return nil
 	}
-	return o.MinLength
+	return c.MinLength
 }
 
-func (o *CustomFieldTextProperties) GetMaxLength() *int64 {
-	if o == nil {
+func (c *CustomFieldTextProperties) GetMaxLength() *int64 {
+	if c == nil {
 		return nil
 	}
-	return o.MaxLength
+	return c.MaxLength
 }

@@ -7,16 +7,16 @@ type ListResourceCustomerPaymentMethod struct {
 	Pagination Pagination              `json:"pagination"`
 }
 
-func (o *ListResourceCustomerPaymentMethod) GetItems() []CustomerPaymentMethod {
-	if o == nil {
+func (l *ListResourceCustomerPaymentMethod) GetItems() []CustomerPaymentMethod {
+	if l == nil {
 		return []CustomerPaymentMethod{}
 	}
-	return o.Items
+	return l.Items
 }
 
-func (o *ListResourceCustomerPaymentMethod) GetPagination() Pagination {
-	if o == nil {
+func (l *ListResourceCustomerPaymentMethod) GetPagination() Pagination {
+	if l == nil {
 		return Pagination{}
 	}
-	return o.Pagination
+	return l.Pagination
 }

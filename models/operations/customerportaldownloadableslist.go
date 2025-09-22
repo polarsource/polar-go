@@ -13,11 +13,11 @@ type CustomerPortalDownloadablesListSecurity struct {
 	CustomerSession string `security:"scheme,type=http,subtype=bearer,name=Authorization,env=polar_customer_session"`
 }
 
-func (o *CustomerPortalDownloadablesListSecurity) GetCustomerSession() string {
-	if o == nil {
+func (c *CustomerPortalDownloadablesListSecurity) GetCustomerSession() string {
+	if c == nil {
 		return ""
 	}
-	return o.CustomerSession
+	return c.CustomerSession
 }
 
 type CustomerPortalDownloadablesListQueryParamOrganizationIDFilterType string
@@ -170,32 +170,32 @@ func (c *CustomerPortalDownloadablesListRequest) UnmarshalJSON(data []byte) erro
 	return nil
 }
 
-func (o *CustomerPortalDownloadablesListRequest) GetOrganizationID() *CustomerPortalDownloadablesListQueryParamOrganizationIDFilter {
-	if o == nil {
+func (c *CustomerPortalDownloadablesListRequest) GetOrganizationID() *CustomerPortalDownloadablesListQueryParamOrganizationIDFilter {
+	if c == nil {
 		return nil
 	}
-	return o.OrganizationID
+	return c.OrganizationID
 }
 
-func (o *CustomerPortalDownloadablesListRequest) GetBenefitID() *CustomerPortalDownloadablesListQueryParamBenefitIDFilter {
-	if o == nil {
+func (c *CustomerPortalDownloadablesListRequest) GetBenefitID() *CustomerPortalDownloadablesListQueryParamBenefitIDFilter {
+	if c == nil {
 		return nil
 	}
-	return o.BenefitID
+	return c.BenefitID
 }
 
-func (o *CustomerPortalDownloadablesListRequest) GetPage() *int64 {
-	if o == nil {
+func (c *CustomerPortalDownloadablesListRequest) GetPage() *int64 {
+	if c == nil {
 		return nil
 	}
-	return o.Page
+	return c.Page
 }
 
-func (o *CustomerPortalDownloadablesListRequest) GetLimit() *int64 {
-	if o == nil {
+func (c *CustomerPortalDownloadablesListRequest) GetLimit() *int64 {
+	if c == nil {
 		return nil
 	}
-	return o.Limit
+	return c.Limit
 }
 
 type CustomerPortalDownloadablesListResponse struct {
@@ -206,16 +206,16 @@ type CustomerPortalDownloadablesListResponse struct {
 	Next func() (*CustomerPortalDownloadablesListResponse, error)
 }
 
-func (o *CustomerPortalDownloadablesListResponse) GetHTTPMeta() components.HTTPMetadata {
-	if o == nil {
+func (c *CustomerPortalDownloadablesListResponse) GetHTTPMeta() components.HTTPMetadata {
+	if c == nil {
 		return components.HTTPMetadata{}
 	}
-	return o.HTTPMeta
+	return c.HTTPMeta
 }
 
-func (o *CustomerPortalDownloadablesListResponse) GetListResourceDownloadableRead() *components.ListResourceDownloadableRead {
-	if o == nil {
+func (c *CustomerPortalDownloadablesListResponse) GetListResourceDownloadableRead() *components.ListResourceDownloadableRead {
+	if c == nil {
 		return nil
 	}
-	return o.ListResourceDownloadableRead
+	return c.ListResourceDownloadableRead
 }

@@ -25,16 +25,16 @@ func (b *BenefitGitHubRepositorySubscriberProperties) UnmarshalJSON(data []byte)
 	return nil
 }
 
-func (o *BenefitGitHubRepositorySubscriberProperties) GetRepositoryOwner() string {
-	if o == nil {
+func (b *BenefitGitHubRepositorySubscriberProperties) GetRepositoryOwner() string {
+	if b == nil {
 		return ""
 	}
-	return o.RepositoryOwner
+	return b.RepositoryOwner
 }
 
-func (o *BenefitGitHubRepositorySubscriberProperties) GetRepositoryName() string {
-	if o == nil {
+func (b *BenefitGitHubRepositorySubscriberProperties) GetRepositoryName() string {
+	if b == nil {
 		return ""
 	}
-	return o.RepositoryName
+	return b.RepositoryName
 }

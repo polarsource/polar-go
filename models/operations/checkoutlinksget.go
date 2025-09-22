@@ -11,11 +11,11 @@ type CheckoutLinksGetRequest struct {
 	ID string `pathParam:"style=simple,explode=false,name=id"`
 }
 
-func (o *CheckoutLinksGetRequest) GetID() string {
-	if o == nil {
+func (c *CheckoutLinksGetRequest) GetID() string {
+	if c == nil {
 		return ""
 	}
-	return o.ID
+	return c.ID
 }
 
 type CheckoutLinksGetResponse struct {
@@ -24,16 +24,16 @@ type CheckoutLinksGetResponse struct {
 	CheckoutLink *components.CheckoutLink
 }
 
-func (o *CheckoutLinksGetResponse) GetHTTPMeta() components.HTTPMetadata {
-	if o == nil {
+func (c *CheckoutLinksGetResponse) GetHTTPMeta() components.HTTPMetadata {
+	if c == nil {
 		return components.HTTPMetadata{}
 	}
-	return o.HTTPMeta
+	return c.HTTPMeta
 }
 
-func (o *CheckoutLinksGetResponse) GetCheckoutLink() *components.CheckoutLink {
-	if o == nil {
+func (c *CheckoutLinksGetResponse) GetCheckoutLink() *components.CheckoutLink {
+	if c == nil {
 		return nil
 	}
-	return o.CheckoutLink
+	return c.CheckoutLink
 }

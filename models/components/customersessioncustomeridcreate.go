@@ -23,9 +23,9 @@ func (c *CustomerSessionCustomerIDCreate) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *CustomerSessionCustomerIDCreate) GetCustomerID() string {
-	if o == nil {
+func (c *CustomerSessionCustomerIDCreate) GetCustomerID() string {
+	if c == nil {
 		return ""
 	}
-	return o.CustomerID
+	return c.CustomerID
 }

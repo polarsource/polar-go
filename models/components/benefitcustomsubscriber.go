@@ -149,76 +149,76 @@ func (b *BenefitCustomSubscriber) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *BenefitCustomSubscriber) GetID() string {
-	if o == nil {
+func (b *BenefitCustomSubscriber) GetID() string {
+	if b == nil {
 		return ""
 	}
-	return o.ID
+	return b.ID
 }
 
-func (o *BenefitCustomSubscriber) GetCreatedAt() time.Time {
-	if o == nil {
+func (b *BenefitCustomSubscriber) GetCreatedAt() time.Time {
+	if b == nil {
 		return time.Time{}
 	}
-	return o.CreatedAt
+	return b.CreatedAt
 }
 
-func (o *BenefitCustomSubscriber) GetModifiedAt() *time.Time {
-	if o == nil {
+func (b *BenefitCustomSubscriber) GetModifiedAt() *time.Time {
+	if b == nil {
 		return nil
 	}
-	return o.ModifiedAt
+	return b.ModifiedAt
 }
 
-func (o *BenefitCustomSubscriber) GetType() string {
+func (b *BenefitCustomSubscriber) GetType() string {
 	return "custom"
 }
 
-func (o *BenefitCustomSubscriber) GetDescription() string {
-	if o == nil {
+func (b *BenefitCustomSubscriber) GetDescription() string {
+	if b == nil {
 		return ""
 	}
-	return o.Description
+	return b.Description
 }
 
-func (o *BenefitCustomSubscriber) GetSelectable() bool {
-	if o == nil {
+func (b *BenefitCustomSubscriber) GetSelectable() bool {
+	if b == nil {
 		return false
 	}
-	return o.Selectable
+	return b.Selectable
 }
 
-func (o *BenefitCustomSubscriber) GetDeletable() bool {
-	if o == nil {
+func (b *BenefitCustomSubscriber) GetDeletable() bool {
+	if b == nil {
 		return false
 	}
-	return o.Deletable
+	return b.Deletable
 }
 
-func (o *BenefitCustomSubscriber) GetOrganizationID() string {
-	if o == nil {
+func (b *BenefitCustomSubscriber) GetOrganizationID() string {
+	if b == nil {
 		return ""
 	}
-	return o.OrganizationID
+	return b.OrganizationID
 }
 
-func (o *BenefitCustomSubscriber) GetMetadata() map[string]BenefitCustomSubscriberMetadata {
-	if o == nil {
+func (b *BenefitCustomSubscriber) GetMetadata() map[string]BenefitCustomSubscriberMetadata {
+	if b == nil {
 		return map[string]BenefitCustomSubscriberMetadata{}
 	}
-	return o.Metadata
+	return b.Metadata
 }
 
-func (o *BenefitCustomSubscriber) GetOrganization() Organization {
-	if o == nil {
+func (b *BenefitCustomSubscriber) GetOrganization() Organization {
+	if b == nil {
 		return Organization{}
 	}
-	return o.Organization
+	return b.Organization
 }
 
-func (o *BenefitCustomSubscriber) GetProperties() BenefitCustomSubscriberProperties {
-	if o == nil {
+func (b *BenefitCustomSubscriber) GetProperties() BenefitCustomSubscriberProperties {
+	if b == nil {
 		return BenefitCustomSubscriberProperties{}
 	}
-	return o.Properties
+	return b.Properties
 }

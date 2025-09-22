@@ -7,16 +7,16 @@ type FilePatch struct {
 	Version *string `json:"version,omitempty"`
 }
 
-func (o *FilePatch) GetName() *string {
-	if o == nil {
+func (f *FilePatch) GetName() *string {
+	if f == nil {
 		return nil
 	}
-	return o.Name
+	return f.Name
 }
 
-func (o *FilePatch) GetVersion() *string {
-	if o == nil {
+func (f *FilePatch) GetVersion() *string {
+	if f == nil {
 		return nil
 	}
-	return o.Version
+	return f.Version
 }

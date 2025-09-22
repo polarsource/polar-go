@@ -12,16 +12,16 @@ type MetricsLimitsResponse struct {
 	MetricsLimits *components.MetricsLimits
 }
 
-func (o *MetricsLimitsResponse) GetHTTPMeta() components.HTTPMetadata {
-	if o == nil {
+func (m *MetricsLimitsResponse) GetHTTPMeta() components.HTTPMetadata {
+	if m == nil {
 		return components.HTTPMetadata{}
 	}
-	return o.HTTPMeta
+	return m.HTTPMeta
 }
 
-func (o *MetricsLimitsResponse) GetMetricsLimits() *components.MetricsLimits {
-	if o == nil {
+func (m *MetricsLimitsResponse) GetMetricsLimits() *components.MetricsLimits {
+	if m == nil {
 		return nil
 	}
-	return o.MetricsLimits
+	return m.MetricsLimits
 }

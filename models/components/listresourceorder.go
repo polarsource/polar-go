@@ -7,16 +7,16 @@ type ListResourceOrder struct {
 	Pagination Pagination `json:"pagination"`
 }
 
-func (o *ListResourceOrder) GetItems() []Order {
-	if o == nil {
+func (l *ListResourceOrder) GetItems() []Order {
+	if l == nil {
 		return []Order{}
 	}
-	return o.Items
+	return l.Items
 }
 
-func (o *ListResourceOrder) GetPagination() Pagination {
-	if o == nil {
+func (l *ListResourceOrder) GetPagination() Pagination {
+	if l == nil {
 		return Pagination{}
 	}
-	return o.Pagination
+	return l.Pagination
 }

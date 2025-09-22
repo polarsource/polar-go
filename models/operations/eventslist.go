@@ -370,95 +370,95 @@ func (e *EventsListRequest) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *EventsListRequest) GetFilter() *string {
-	if o == nil {
+func (e *EventsListRequest) GetFilter() *string {
+	if e == nil {
 		return nil
 	}
-	return o.Filter
+	return e.Filter
 }
 
-func (o *EventsListRequest) GetStartTimestamp() *time.Time {
-	if o == nil {
+func (e *EventsListRequest) GetStartTimestamp() *time.Time {
+	if e == nil {
 		return nil
 	}
-	return o.StartTimestamp
+	return e.StartTimestamp
 }
 
-func (o *EventsListRequest) GetEndTimestamp() *time.Time {
-	if o == nil {
+func (e *EventsListRequest) GetEndTimestamp() *time.Time {
+	if e == nil {
 		return nil
 	}
-	return o.EndTimestamp
+	return e.EndTimestamp
 }
 
-func (o *EventsListRequest) GetOrganizationID() *EventsListQueryParamOrganizationIDFilter {
-	if o == nil {
+func (e *EventsListRequest) GetOrganizationID() *EventsListQueryParamOrganizationIDFilter {
+	if e == nil {
 		return nil
 	}
-	return o.OrganizationID
+	return e.OrganizationID
 }
 
-func (o *EventsListRequest) GetCustomerID() *EventsListQueryParamCustomerIDFilter {
-	if o == nil {
+func (e *EventsListRequest) GetCustomerID() *EventsListQueryParamCustomerIDFilter {
+	if e == nil {
 		return nil
 	}
-	return o.CustomerID
+	return e.CustomerID
 }
 
-func (o *EventsListRequest) GetExternalCustomerID() *QueryParamExternalCustomerIDFilter {
-	if o == nil {
+func (e *EventsListRequest) GetExternalCustomerID() *QueryParamExternalCustomerIDFilter {
+	if e == nil {
 		return nil
 	}
-	return o.ExternalCustomerID
+	return e.ExternalCustomerID
 }
 
-func (o *EventsListRequest) GetMeterID() *string {
-	if o == nil {
+func (e *EventsListRequest) GetMeterID() *string {
+	if e == nil {
 		return nil
 	}
-	return o.MeterID
+	return e.MeterID
 }
 
-func (o *EventsListRequest) GetName() *NameFilter {
-	if o == nil {
+func (e *EventsListRequest) GetName() *NameFilter {
+	if e == nil {
 		return nil
 	}
-	return o.Name
+	return e.Name
 }
 
-func (o *EventsListRequest) GetSource() *SourceFilter {
-	if o == nil {
+func (e *EventsListRequest) GetSource() *SourceFilter {
+	if e == nil {
 		return nil
 	}
-	return o.Source
+	return e.Source
 }
 
-func (o *EventsListRequest) GetPage() *int64 {
-	if o == nil {
+func (e *EventsListRequest) GetPage() *int64 {
+	if e == nil {
 		return nil
 	}
-	return o.Page
+	return e.Page
 }
 
-func (o *EventsListRequest) GetLimit() *int64 {
-	if o == nil {
+func (e *EventsListRequest) GetLimit() *int64 {
+	if e == nil {
 		return nil
 	}
-	return o.Limit
+	return e.Limit
 }
 
-func (o *EventsListRequest) GetSorting() []components.EventSortProperty {
-	if o == nil {
+func (e *EventsListRequest) GetSorting() []components.EventSortProperty {
+	if e == nil {
 		return nil
 	}
-	return o.Sorting
+	return e.Sorting
 }
 
-func (o *EventsListRequest) GetMetadata() map[string]components.MetadataQuery {
-	if o == nil {
+func (e *EventsListRequest) GetMetadata() map[string]components.MetadataQuery {
+	if e == nil {
 		return nil
 	}
-	return o.Metadata
+	return e.Metadata
 }
 
 type EventsListResponse struct {
@@ -469,16 +469,16 @@ type EventsListResponse struct {
 	Next func() (*EventsListResponse, error)
 }
 
-func (o *EventsListResponse) GetHTTPMeta() components.HTTPMetadata {
-	if o == nil {
+func (e *EventsListResponse) GetHTTPMeta() components.HTTPMetadata {
+	if e == nil {
 		return components.HTTPMetadata{}
 	}
-	return o.HTTPMeta
+	return e.HTTPMeta
 }
 
-func (o *EventsListResponse) GetListResourceEvent() *components.ListResourceEvent {
-	if o == nil {
+func (e *EventsListResponse) GetListResourceEvent() *components.ListResourceEvent {
+	if e == nil {
 		return nil
 	}
-	return o.ListResourceEvent
+	return e.ListResourceEvent
 }

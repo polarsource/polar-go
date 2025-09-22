@@ -10,11 +10,11 @@ type CustomerPortalOrdersUpdateSecurity struct {
 	CustomerSession string `security:"scheme,type=http,subtype=bearer,name=Authorization,env=polar_customer_session"`
 }
 
-func (o *CustomerPortalOrdersUpdateSecurity) GetCustomerSession() string {
-	if o == nil {
+func (c *CustomerPortalOrdersUpdateSecurity) GetCustomerSession() string {
+	if c == nil {
 		return ""
 	}
-	return o.CustomerSession
+	return c.CustomerSession
 }
 
 type CustomerPortalOrdersUpdateRequest struct {
@@ -23,18 +23,18 @@ type CustomerPortalOrdersUpdateRequest struct {
 	CustomerOrderUpdate components.CustomerOrderUpdate `request:"mediaType=application/json"`
 }
 
-func (o *CustomerPortalOrdersUpdateRequest) GetID() string {
-	if o == nil {
+func (c *CustomerPortalOrdersUpdateRequest) GetID() string {
+	if c == nil {
 		return ""
 	}
-	return o.ID
+	return c.ID
 }
 
-func (o *CustomerPortalOrdersUpdateRequest) GetCustomerOrderUpdate() components.CustomerOrderUpdate {
-	if o == nil {
+func (c *CustomerPortalOrdersUpdateRequest) GetCustomerOrderUpdate() components.CustomerOrderUpdate {
+	if c == nil {
 		return components.CustomerOrderUpdate{}
 	}
-	return o.CustomerOrderUpdate
+	return c.CustomerOrderUpdate
 }
 
 type CustomerPortalOrdersUpdateResponse struct {
@@ -43,16 +43,16 @@ type CustomerPortalOrdersUpdateResponse struct {
 	CustomerOrder *components.CustomerOrder
 }
 
-func (o *CustomerPortalOrdersUpdateResponse) GetHTTPMeta() components.HTTPMetadata {
-	if o == nil {
+func (c *CustomerPortalOrdersUpdateResponse) GetHTTPMeta() components.HTTPMetadata {
+	if c == nil {
 		return components.HTTPMetadata{}
 	}
-	return o.HTTPMeta
+	return c.HTTPMeta
 }
 
-func (o *CustomerPortalOrdersUpdateResponse) GetCustomerOrder() *components.CustomerOrder {
-	if o == nil {
+func (c *CustomerPortalOrdersUpdateResponse) GetCustomerOrder() *components.CustomerOrder {
+	if c == nil {
 		return nil
 	}
-	return o.CustomerOrder
+	return c.CustomerOrder
 }

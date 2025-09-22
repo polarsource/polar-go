@@ -22,9 +22,9 @@ func (b *BenefitCustomProperties) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *BenefitCustomProperties) GetNote() *string {
-	if o == nil {
+func (b *BenefitCustomProperties) GetNote() *string {
+	if b == nil {
 		return nil
 	}
-	return o.Note
+	return b.Note
 }

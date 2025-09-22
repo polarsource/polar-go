@@ -150,41 +150,41 @@ func (c *CustomFieldCreateCheckbox) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *CustomFieldCreateCheckbox) GetMetadata() map[string]CustomFieldCreateCheckboxMetadata {
-	if o == nil {
+func (c *CustomFieldCreateCheckbox) GetMetadata() map[string]CustomFieldCreateCheckboxMetadata {
+	if c == nil {
 		return nil
 	}
-	return o.Metadata
+	return c.Metadata
 }
 
-func (o *CustomFieldCreateCheckbox) GetType() string {
+func (c *CustomFieldCreateCheckbox) GetType() string {
 	return "checkbox"
 }
 
-func (o *CustomFieldCreateCheckbox) GetSlug() string {
-	if o == nil {
+func (c *CustomFieldCreateCheckbox) GetSlug() string {
+	if c == nil {
 		return ""
 	}
-	return o.Slug
+	return c.Slug
 }
 
-func (o *CustomFieldCreateCheckbox) GetName() string {
-	if o == nil {
+func (c *CustomFieldCreateCheckbox) GetName() string {
+	if c == nil {
 		return ""
 	}
-	return o.Name
+	return c.Name
 }
 
-func (o *CustomFieldCreateCheckbox) GetOrganizationID() *string {
-	if o == nil {
+func (c *CustomFieldCreateCheckbox) GetOrganizationID() *string {
+	if c == nil {
 		return nil
 	}
-	return o.OrganizationID
+	return c.OrganizationID
 }
 
-func (o *CustomFieldCreateCheckbox) GetProperties() CustomFieldCheckboxProperties {
-	if o == nil {
+func (c *CustomFieldCreateCheckbox) GetProperties() CustomFieldCheckboxProperties {
+	if c == nil {
 		return CustomFieldCheckboxProperties{}
 	}
-	return o.Properties
+	return c.Properties
 }

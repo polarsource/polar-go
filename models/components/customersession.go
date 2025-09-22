@@ -34,58 +34,58 @@ func (c *CustomerSession) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *CustomerSession) GetCreatedAt() time.Time {
-	if o == nil {
+func (c *CustomerSession) GetCreatedAt() time.Time {
+	if c == nil {
 		return time.Time{}
 	}
-	return o.CreatedAt
+	return c.CreatedAt
 }
 
-func (o *CustomerSession) GetModifiedAt() *time.Time {
-	if o == nil {
+func (c *CustomerSession) GetModifiedAt() *time.Time {
+	if c == nil {
 		return nil
 	}
-	return o.ModifiedAt
+	return c.ModifiedAt
 }
 
-func (o *CustomerSession) GetID() string {
-	if o == nil {
+func (c *CustomerSession) GetID() string {
+	if c == nil {
 		return ""
 	}
-	return o.ID
+	return c.ID
 }
 
-func (o *CustomerSession) GetToken() string {
-	if o == nil {
+func (c *CustomerSession) GetToken() string {
+	if c == nil {
 		return ""
 	}
-	return o.Token
+	return c.Token
 }
 
-func (o *CustomerSession) GetExpiresAt() time.Time {
-	if o == nil {
+func (c *CustomerSession) GetExpiresAt() time.Time {
+	if c == nil {
 		return time.Time{}
 	}
-	return o.ExpiresAt
+	return c.ExpiresAt
 }
 
-func (o *CustomerSession) GetCustomerPortalURL() string {
-	if o == nil {
+func (c *CustomerSession) GetCustomerPortalURL() string {
+	if c == nil {
 		return ""
 	}
-	return o.CustomerPortalURL
+	return c.CustomerPortalURL
 }
 
-func (o *CustomerSession) GetCustomerID() string {
-	if o == nil {
+func (c *CustomerSession) GetCustomerID() string {
+	if c == nil {
 		return ""
 	}
-	return o.CustomerID
+	return c.CustomerID
 }
 
-func (o *CustomerSession) GetCustomer() Customer {
-	if o == nil {
+func (c *CustomerSession) GetCustomer() Customer {
+	if c == nil {
 		return Customer{}
 	}
-	return o.Customer
+	return c.Customer
 }

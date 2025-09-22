@@ -21,9 +21,9 @@ func (b *BenefitDownloadablesSubscriberProperties) UnmarshalJSON(data []byte) er
 	return nil
 }
 
-func (o *BenefitDownloadablesSubscriberProperties) GetActiveFiles() []string {
-	if o == nil {
+func (b *BenefitDownloadablesSubscriberProperties) GetActiveFiles() []string {
+	if b == nil {
 		return []string{}
 	}
-	return o.ActiveFiles
+	return b.ActiveFiles
 }

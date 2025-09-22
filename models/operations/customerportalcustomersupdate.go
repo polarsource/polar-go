@@ -10,11 +10,11 @@ type CustomerPortalCustomersUpdateSecurity struct {
 	CustomerSession string `security:"scheme,type=http,subtype=bearer,name=Authorization,env=polar_customer_session"`
 }
 
-func (o *CustomerPortalCustomersUpdateSecurity) GetCustomerSession() string {
-	if o == nil {
+func (c *CustomerPortalCustomersUpdateSecurity) GetCustomerSession() string {
+	if c == nil {
 		return ""
 	}
-	return o.CustomerSession
+	return c.CustomerSession
 }
 
 type CustomerPortalCustomersUpdateResponse struct {
@@ -23,16 +23,16 @@ type CustomerPortalCustomersUpdateResponse struct {
 	CustomerPortalCustomer *components.CustomerPortalCustomer
 }
 
-func (o *CustomerPortalCustomersUpdateResponse) GetHTTPMeta() components.HTTPMetadata {
-	if o == nil {
+func (c *CustomerPortalCustomersUpdateResponse) GetHTTPMeta() components.HTTPMetadata {
+	if c == nil {
 		return components.HTTPMetadata{}
 	}
-	return o.HTTPMeta
+	return c.HTTPMeta
 }
 
-func (o *CustomerPortalCustomersUpdateResponse) GetCustomerPortalCustomer() *components.CustomerPortalCustomer {
-	if o == nil {
+func (c *CustomerPortalCustomersUpdateResponse) GetCustomerPortalCustomer() *components.CustomerPortalCustomer {
+	if c == nil {
 		return nil
 	}
-	return o.CustomerPortalCustomer
+	return c.CustomerPortalCustomer
 }

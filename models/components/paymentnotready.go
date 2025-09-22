@@ -22,13 +22,13 @@ func (p *PaymentNotReady) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *PaymentNotReady) GetError() string {
+func (p *PaymentNotReady) GetError() string {
 	return "PaymentNotReady"
 }
 
-func (o *PaymentNotReady) GetDetail() string {
-	if o == nil {
+func (p *PaymentNotReady) GetDetail() string {
+	if p == nil {
 		return ""
 	}
-	return o.Detail
+	return p.Detail
 }

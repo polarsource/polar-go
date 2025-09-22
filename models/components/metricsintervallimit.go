@@ -8,9 +8,9 @@ type MetricsIntervalLimit struct {
 	MaxDays int64 `json:"max_days"`
 }
 
-func (o *MetricsIntervalLimit) GetMaxDays() int64 {
-	if o == nil {
+func (m *MetricsIntervalLimit) GetMaxDays() int64 {
+	if m == nil {
 		return 0
 	}
-	return o.MaxDays
+	return m.MaxDays
 }

@@ -311,79 +311,79 @@ type MeterUpdate struct {
 	IsArchived *bool `json:"is_archived,omitempty"`
 }
 
-func (o *MeterUpdate) GetMetadata() map[string]MeterUpdateMetadata {
-	if o == nil {
+func (m *MeterUpdate) GetMetadata() map[string]MeterUpdateMetadata {
+	if m == nil {
 		return nil
 	}
-	return o.Metadata
+	return m.Metadata
 }
 
-func (o *MeterUpdate) GetName() *string {
-	if o == nil {
+func (m *MeterUpdate) GetName() *string {
+	if m == nil {
 		return nil
 	}
-	return o.Name
+	return m.Name
 }
 
-func (o *MeterUpdate) GetFilter() *Filter {
-	if o == nil {
+func (m *MeterUpdate) GetFilter() *Filter {
+	if m == nil {
 		return nil
 	}
-	return o.Filter
+	return m.Filter
 }
 
-func (o *MeterUpdate) GetAggregation() *Aggregation {
-	if o == nil {
+func (m *MeterUpdate) GetAggregation() *Aggregation {
+	if m == nil {
 		return nil
 	}
-	return o.Aggregation
+	return m.Aggregation
 }
 
-func (o *MeterUpdate) GetAggregationAvg() *PropertyAggregation {
-	if v := o.GetAggregation(); v != nil {
+func (m *MeterUpdate) GetAggregationAvg() *PropertyAggregation {
+	if v := m.GetAggregation(); v != nil {
 		return v.PropertyAggregation
 	}
 	return nil
 }
 
-func (o *MeterUpdate) GetAggregationCount() *CountAggregation {
-	if v := o.GetAggregation(); v != nil {
+func (m *MeterUpdate) GetAggregationCount() *CountAggregation {
+	if v := m.GetAggregation(); v != nil {
 		return v.CountAggregation
 	}
 	return nil
 }
 
-func (o *MeterUpdate) GetAggregationMax() *PropertyAggregation {
-	if v := o.GetAggregation(); v != nil {
+func (m *MeterUpdate) GetAggregationMax() *PropertyAggregation {
+	if v := m.GetAggregation(); v != nil {
 		return v.PropertyAggregation
 	}
 	return nil
 }
 
-func (o *MeterUpdate) GetAggregationMin() *PropertyAggregation {
-	if v := o.GetAggregation(); v != nil {
+func (m *MeterUpdate) GetAggregationMin() *PropertyAggregation {
+	if v := m.GetAggregation(); v != nil {
 		return v.PropertyAggregation
 	}
 	return nil
 }
 
-func (o *MeterUpdate) GetAggregationSum() *PropertyAggregation {
-	if v := o.GetAggregation(); v != nil {
+func (m *MeterUpdate) GetAggregationSum() *PropertyAggregation {
+	if v := m.GetAggregation(); v != nil {
 		return v.PropertyAggregation
 	}
 	return nil
 }
 
-func (o *MeterUpdate) GetAggregationUnique() *UniqueAggregation {
-	if v := o.GetAggregation(); v != nil {
+func (m *MeterUpdate) GetAggregationUnique() *UniqueAggregation {
+	if v := m.GetAggregation(); v != nil {
 		return v.UniqueAggregation
 	}
 	return nil
 }
 
-func (o *MeterUpdate) GetIsArchived() *bool {
-	if o == nil {
+func (m *MeterUpdate) GetIsArchived() *bool {
+	if m == nil {
 		return nil
 	}
-	return o.IsArchived
+	return m.IsArchived
 }

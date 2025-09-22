@@ -38,100 +38,100 @@ func (c *CustomerBenefitGrantGitHubRepository) UnmarshalJSON(data []byte) error 
 	return nil
 }
 
-func (o *CustomerBenefitGrantGitHubRepository) GetCreatedAt() time.Time {
-	if o == nil {
+func (c *CustomerBenefitGrantGitHubRepository) GetCreatedAt() time.Time {
+	if c == nil {
 		return time.Time{}
 	}
-	return o.CreatedAt
+	return c.CreatedAt
 }
 
-func (o *CustomerBenefitGrantGitHubRepository) GetModifiedAt() *time.Time {
-	if o == nil {
+func (c *CustomerBenefitGrantGitHubRepository) GetModifiedAt() *time.Time {
+	if c == nil {
 		return nil
 	}
-	return o.ModifiedAt
+	return c.ModifiedAt
 }
 
-func (o *CustomerBenefitGrantGitHubRepository) GetID() string {
-	if o == nil {
+func (c *CustomerBenefitGrantGitHubRepository) GetID() string {
+	if c == nil {
 		return ""
 	}
-	return o.ID
+	return c.ID
 }
 
-func (o *CustomerBenefitGrantGitHubRepository) GetGrantedAt() *time.Time {
-	if o == nil {
+func (c *CustomerBenefitGrantGitHubRepository) GetGrantedAt() *time.Time {
+	if c == nil {
 		return nil
 	}
-	return o.GrantedAt
+	return c.GrantedAt
 }
 
-func (o *CustomerBenefitGrantGitHubRepository) GetRevokedAt() *time.Time {
-	if o == nil {
+func (c *CustomerBenefitGrantGitHubRepository) GetRevokedAt() *time.Time {
+	if c == nil {
 		return nil
 	}
-	return o.RevokedAt
+	return c.RevokedAt
 }
 
-func (o *CustomerBenefitGrantGitHubRepository) GetCustomerID() string {
-	if o == nil {
+func (c *CustomerBenefitGrantGitHubRepository) GetCustomerID() string {
+	if c == nil {
 		return ""
 	}
-	return o.CustomerID
+	return c.CustomerID
 }
 
-func (o *CustomerBenefitGrantGitHubRepository) GetBenefitID() string {
-	if o == nil {
+func (c *CustomerBenefitGrantGitHubRepository) GetBenefitID() string {
+	if c == nil {
 		return ""
 	}
-	return o.BenefitID
+	return c.BenefitID
 }
 
-func (o *CustomerBenefitGrantGitHubRepository) GetSubscriptionID() *string {
-	if o == nil {
+func (c *CustomerBenefitGrantGitHubRepository) GetSubscriptionID() *string {
+	if c == nil {
 		return nil
 	}
-	return o.SubscriptionID
+	return c.SubscriptionID
 }
 
-func (o *CustomerBenefitGrantGitHubRepository) GetOrderID() *string {
-	if o == nil {
+func (c *CustomerBenefitGrantGitHubRepository) GetOrderID() *string {
+	if c == nil {
 		return nil
 	}
-	return o.OrderID
+	return c.OrderID
 }
 
-func (o *CustomerBenefitGrantGitHubRepository) GetIsGranted() bool {
-	if o == nil {
+func (c *CustomerBenefitGrantGitHubRepository) GetIsGranted() bool {
+	if c == nil {
 		return false
 	}
-	return o.IsGranted
+	return c.IsGranted
 }
 
-func (o *CustomerBenefitGrantGitHubRepository) GetIsRevoked() bool {
-	if o == nil {
+func (c *CustomerBenefitGrantGitHubRepository) GetIsRevoked() bool {
+	if c == nil {
 		return false
 	}
-	return o.IsRevoked
+	return c.IsRevoked
 }
 
-func (o *CustomerBenefitGrantGitHubRepository) GetCustomer() CustomerPortalCustomer {
-	if o == nil {
+func (c *CustomerBenefitGrantGitHubRepository) GetCustomer() CustomerPortalCustomer {
+	if c == nil {
 		return CustomerPortalCustomer{}
 	}
-	return o.Customer
+	return c.Customer
 }
 
-func (o *CustomerBenefitGrantGitHubRepository) GetBenefit() BenefitGitHubRepositorySubscriber {
-	if o == nil {
+func (c *CustomerBenefitGrantGitHubRepository) GetBenefit() BenefitGitHubRepositorySubscriber {
+	if c == nil {
 		return BenefitGitHubRepositorySubscriber{}
 	}
-	return o.Benefit
+	return c.Benefit
 }
 
-func (o *CustomerBenefitGrantGitHubRepository) GetProperties() BenefitGrantGitHubRepositoryProperties {
-	if o == nil {
+func (c *CustomerBenefitGrantGitHubRepository) GetProperties() BenefitGrantGitHubRepositoryProperties {
+	if c == nil {
 		return BenefitGrantGitHubRepositoryProperties{}
 	}
-	return o.Properties
+	return c.Properties
 }

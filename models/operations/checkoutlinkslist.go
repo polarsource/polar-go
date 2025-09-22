@@ -161,39 +161,39 @@ func (c *CheckoutLinksListRequest) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *CheckoutLinksListRequest) GetOrganizationID() *CheckoutLinksListQueryParamOrganizationIDFilter {
-	if o == nil {
+func (c *CheckoutLinksListRequest) GetOrganizationID() *CheckoutLinksListQueryParamOrganizationIDFilter {
+	if c == nil {
 		return nil
 	}
-	return o.OrganizationID
+	return c.OrganizationID
 }
 
-func (o *CheckoutLinksListRequest) GetProductID() *CheckoutLinksListQueryParamProductIDFilter {
-	if o == nil {
+func (c *CheckoutLinksListRequest) GetProductID() *CheckoutLinksListQueryParamProductIDFilter {
+	if c == nil {
 		return nil
 	}
-	return o.ProductID
+	return c.ProductID
 }
 
-func (o *CheckoutLinksListRequest) GetPage() *int64 {
-	if o == nil {
+func (c *CheckoutLinksListRequest) GetPage() *int64 {
+	if c == nil {
 		return nil
 	}
-	return o.Page
+	return c.Page
 }
 
-func (o *CheckoutLinksListRequest) GetLimit() *int64 {
-	if o == nil {
+func (c *CheckoutLinksListRequest) GetLimit() *int64 {
+	if c == nil {
 		return nil
 	}
-	return o.Limit
+	return c.Limit
 }
 
-func (o *CheckoutLinksListRequest) GetSorting() []components.CheckoutLinkSortProperty {
-	if o == nil {
+func (c *CheckoutLinksListRequest) GetSorting() []components.CheckoutLinkSortProperty {
+	if c == nil {
 		return nil
 	}
-	return o.Sorting
+	return c.Sorting
 }
 
 type CheckoutLinksListResponse struct {
@@ -204,16 +204,16 @@ type CheckoutLinksListResponse struct {
 	Next func() (*CheckoutLinksListResponse, error)
 }
 
-func (o *CheckoutLinksListResponse) GetHTTPMeta() components.HTTPMetadata {
-	if o == nil {
+func (c *CheckoutLinksListResponse) GetHTTPMeta() components.HTTPMetadata {
+	if c == nil {
 		return components.HTTPMetadata{}
 	}
-	return o.HTTPMeta
+	return c.HTTPMeta
 }
 
-func (o *CheckoutLinksListResponse) GetListResourceCheckoutLink() *components.ListResourceCheckoutLink {
-	if o == nil {
+func (c *CheckoutLinksListResponse) GetListResourceCheckoutLink() *components.ListResourceCheckoutLink {
+	if c == nil {
 		return nil
 	}
-	return o.ListResourceCheckoutLink
+	return c.ListResourceCheckoutLink
 }

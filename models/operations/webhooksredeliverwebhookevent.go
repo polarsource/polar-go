@@ -11,11 +11,11 @@ type WebhooksRedeliverWebhookEventRequest struct {
 	ID string `pathParam:"style=simple,explode=false,name=id"`
 }
 
-func (o *WebhooksRedeliverWebhookEventRequest) GetID() string {
-	if o == nil {
+func (w *WebhooksRedeliverWebhookEventRequest) GetID() string {
+	if w == nil {
 		return ""
 	}
-	return o.ID
+	return w.ID
 }
 
 type WebhooksRedeliverWebhookEventResponse struct {
@@ -24,16 +24,16 @@ type WebhooksRedeliverWebhookEventResponse struct {
 	Any any
 }
 
-func (o *WebhooksRedeliverWebhookEventResponse) GetHTTPMeta() components.HTTPMetadata {
-	if o == nil {
+func (w *WebhooksRedeliverWebhookEventResponse) GetHTTPMeta() components.HTTPMetadata {
+	if w == nil {
 		return components.HTTPMetadata{}
 	}
-	return o.HTTPMeta
+	return w.HTTPMeta
 }
 
-func (o *WebhooksRedeliverWebhookEventResponse) GetAny() any {
-	if o == nil {
+func (w *WebhooksRedeliverWebhookEventResponse) GetAny() any {
+	if w == nil {
 		return nil
 	}
-	return o.Any
+	return w.Any
 }

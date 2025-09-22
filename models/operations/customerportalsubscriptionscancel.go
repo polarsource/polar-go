@@ -10,11 +10,11 @@ type CustomerPortalSubscriptionsCancelSecurity struct {
 	CustomerSession string `security:"scheme,type=http,subtype=bearer,name=Authorization,env=polar_customer_session"`
 }
 
-func (o *CustomerPortalSubscriptionsCancelSecurity) GetCustomerSession() string {
-	if o == nil {
+func (c *CustomerPortalSubscriptionsCancelSecurity) GetCustomerSession() string {
+	if c == nil {
 		return ""
 	}
-	return o.CustomerSession
+	return c.CustomerSession
 }
 
 type CustomerPortalSubscriptionsCancelRequest struct {
@@ -22,11 +22,11 @@ type CustomerPortalSubscriptionsCancelRequest struct {
 	ID string `pathParam:"style=simple,explode=false,name=id"`
 }
 
-func (o *CustomerPortalSubscriptionsCancelRequest) GetID() string {
-	if o == nil {
+func (c *CustomerPortalSubscriptionsCancelRequest) GetID() string {
+	if c == nil {
 		return ""
 	}
-	return o.ID
+	return c.ID
 }
 
 type CustomerPortalSubscriptionsCancelResponse struct {
@@ -35,16 +35,16 @@ type CustomerPortalSubscriptionsCancelResponse struct {
 	CustomerSubscription *components.CustomerSubscription
 }
 
-func (o *CustomerPortalSubscriptionsCancelResponse) GetHTTPMeta() components.HTTPMetadata {
-	if o == nil {
+func (c *CustomerPortalSubscriptionsCancelResponse) GetHTTPMeta() components.HTTPMetadata {
+	if c == nil {
 		return components.HTTPMetadata{}
 	}
-	return o.HTTPMeta
+	return c.HTTPMeta
 }
 
-func (o *CustomerPortalSubscriptionsCancelResponse) GetCustomerSubscription() *components.CustomerSubscription {
-	if o == nil {
+func (c *CustomerPortalSubscriptionsCancelResponse) GetCustomerSubscription() *components.CustomerSubscription {
+	if c == nil {
 		return nil
 	}
-	return o.CustomerSubscription
+	return c.CustomerSubscription
 }

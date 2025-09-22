@@ -77,23 +77,23 @@ type ValidationError struct {
 	Type string `json:"type"`
 }
 
-func (o *ValidationError) GetLoc() []Loc {
-	if o == nil {
+func (v *ValidationError) GetLoc() []Loc {
+	if v == nil {
 		return []Loc{}
 	}
-	return o.Loc
+	return v.Loc
 }
 
-func (o *ValidationError) GetMsg() string {
-	if o == nil {
+func (v *ValidationError) GetMsg() string {
+	if v == nil {
 		return ""
 	}
-	return o.Msg
+	return v.Msg
 }
 
-func (o *ValidationError) GetType() string {
-	if o == nil {
+func (v *ValidationError) GetType() string {
+	if v == nil {
 		return ""
 	}
-	return o.Type
+	return v.Type
 }

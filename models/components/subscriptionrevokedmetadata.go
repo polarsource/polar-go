@@ -21,9 +21,9 @@ func (s *SubscriptionRevokedMetadata) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SubscriptionRevokedMetadata) GetSubscriptionID() string {
-	if o == nil {
+func (s *SubscriptionRevokedMetadata) GetSubscriptionID() string {
+	if s == nil {
 		return ""
 	}
-	return o.SubscriptionID
+	return s.SubscriptionID
 }

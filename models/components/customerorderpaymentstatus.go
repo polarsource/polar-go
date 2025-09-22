@@ -10,16 +10,16 @@ type CustomerOrderPaymentStatus struct {
 	Error *string `json:"error,omitempty"`
 }
 
-func (o *CustomerOrderPaymentStatus) GetStatus() string {
-	if o == nil {
+func (c *CustomerOrderPaymentStatus) GetStatus() string {
+	if c == nil {
 		return ""
 	}
-	return o.Status
+	return c.Status
 }
 
-func (o *CustomerOrderPaymentStatus) GetError() *string {
-	if o == nil {
+func (c *CustomerOrderPaymentStatus) GetError() *string {
+	if c == nil {
 		return nil
 	}
-	return o.Error
+	return c.Error
 }

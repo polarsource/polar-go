@@ -148,34 +148,34 @@ func (b *BenefitDiscordCreate) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *BenefitDiscordCreate) GetMetadata() map[string]BenefitDiscordCreateMetadata {
-	if o == nil {
+func (b *BenefitDiscordCreate) GetMetadata() map[string]BenefitDiscordCreateMetadata {
+	if b == nil {
 		return nil
 	}
-	return o.Metadata
+	return b.Metadata
 }
 
-func (o *BenefitDiscordCreate) GetType() string {
+func (b *BenefitDiscordCreate) GetType() string {
 	return "discord"
 }
 
-func (o *BenefitDiscordCreate) GetDescription() string {
-	if o == nil {
+func (b *BenefitDiscordCreate) GetDescription() string {
+	if b == nil {
 		return ""
 	}
-	return o.Description
+	return b.Description
 }
 
-func (o *BenefitDiscordCreate) GetOrganizationID() *string {
-	if o == nil {
+func (b *BenefitDiscordCreate) GetOrganizationID() *string {
+	if b == nil {
 		return nil
 	}
-	return o.OrganizationID
+	return b.OrganizationID
 }
 
-func (o *BenefitDiscordCreate) GetProperties() BenefitDiscordCreateProperties {
-	if o == nil {
+func (b *BenefitDiscordCreate) GetProperties() BenefitDiscordCreateProperties {
+	if b == nil {
 		return BenefitDiscordCreateProperties{}
 	}
-	return o.Properties
+	return b.Properties
 }

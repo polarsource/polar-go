@@ -11,18 +11,18 @@ type ProductsUpdateRequest struct {
 	ProductUpdate components.ProductUpdate `request:"mediaType=application/json"`
 }
 
-func (o *ProductsUpdateRequest) GetID() string {
-	if o == nil {
+func (p *ProductsUpdateRequest) GetID() string {
+	if p == nil {
 		return ""
 	}
-	return o.ID
+	return p.ID
 }
 
-func (o *ProductsUpdateRequest) GetProductUpdate() components.ProductUpdate {
-	if o == nil {
+func (p *ProductsUpdateRequest) GetProductUpdate() components.ProductUpdate {
+	if p == nil {
 		return components.ProductUpdate{}
 	}
-	return o.ProductUpdate
+	return p.ProductUpdate
 }
 
 type ProductsUpdateResponse struct {
@@ -31,16 +31,16 @@ type ProductsUpdateResponse struct {
 	Product *components.Product
 }
 
-func (o *ProductsUpdateResponse) GetHTTPMeta() components.HTTPMetadata {
-	if o == nil {
+func (p *ProductsUpdateResponse) GetHTTPMeta() components.HTTPMetadata {
+	if p == nil {
 		return components.HTTPMetadata{}
 	}
-	return o.HTTPMeta
+	return p.HTTPMeta
 }
 
-func (o *ProductsUpdateResponse) GetProduct() *components.Product {
-	if o == nil {
+func (p *ProductsUpdateResponse) GetProduct() *components.Product {
+	if p == nil {
 		return nil
 	}
-	return o.Product
+	return p.Product
 }

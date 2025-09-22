@@ -150,41 +150,41 @@ func (c *CustomFieldCreateText) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *CustomFieldCreateText) GetMetadata() map[string]CustomFieldCreateTextMetadata {
-	if o == nil {
+func (c *CustomFieldCreateText) GetMetadata() map[string]CustomFieldCreateTextMetadata {
+	if c == nil {
 		return nil
 	}
-	return o.Metadata
+	return c.Metadata
 }
 
-func (o *CustomFieldCreateText) GetType() string {
+func (c *CustomFieldCreateText) GetType() string {
 	return "text"
 }
 
-func (o *CustomFieldCreateText) GetSlug() string {
-	if o == nil {
+func (c *CustomFieldCreateText) GetSlug() string {
+	if c == nil {
 		return ""
 	}
-	return o.Slug
+	return c.Slug
 }
 
-func (o *CustomFieldCreateText) GetName() string {
-	if o == nil {
+func (c *CustomFieldCreateText) GetName() string {
+	if c == nil {
 		return ""
 	}
-	return o.Name
+	return c.Name
 }
 
-func (o *CustomFieldCreateText) GetOrganizationID() *string {
-	if o == nil {
+func (c *CustomFieldCreateText) GetOrganizationID() *string {
+	if c == nil {
 		return nil
 	}
-	return o.OrganizationID
+	return c.OrganizationID
 }
 
-func (o *CustomFieldCreateText) GetProperties() CustomFieldTextProperties {
-	if o == nil {
+func (c *CustomFieldCreateText) GetProperties() CustomFieldTextProperties {
+	if c == nil {
 		return CustomFieldTextProperties{}
 	}
-	return o.Properties
+	return c.Properties
 }

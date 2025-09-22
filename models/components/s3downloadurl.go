@@ -24,23 +24,23 @@ func (s *S3DownloadURL) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *S3DownloadURL) GetURL() string {
-	if o == nil {
+func (s *S3DownloadURL) GetURL() string {
+	if s == nil {
 		return ""
 	}
-	return o.URL
+	return s.URL
 }
 
-func (o *S3DownloadURL) GetHeaders() map[string]string {
-	if o == nil {
+func (s *S3DownloadURL) GetHeaders() map[string]string {
+	if s == nil {
 		return nil
 	}
-	return o.Headers
+	return s.Headers
 }
 
-func (o *S3DownloadURL) GetExpiresAt() time.Time {
-	if o == nil {
+func (s *S3DownloadURL) GetExpiresAt() time.Time {
+	if s == nil {
 		return time.Time{}
 	}
-	return o.ExpiresAt
+	return s.ExpiresAt
 }

@@ -12,38 +12,38 @@ type CustomFieldsUpdateRequest struct {
 	CustomFieldUpdate components.CustomFieldUpdate `request:"mediaType=application/json"`
 }
 
-func (o *CustomFieldsUpdateRequest) GetID() string {
-	if o == nil {
+func (c *CustomFieldsUpdateRequest) GetID() string {
+	if c == nil {
 		return ""
 	}
-	return o.ID
+	return c.ID
 }
 
-func (o *CustomFieldsUpdateRequest) GetCustomFieldUpdate() components.CustomFieldUpdate {
-	if o == nil {
+func (c *CustomFieldsUpdateRequest) GetCustomFieldUpdate() components.CustomFieldUpdate {
+	if c == nil {
 		return components.CustomFieldUpdate{}
 	}
-	return o.CustomFieldUpdate
+	return c.CustomFieldUpdate
 }
 
-func (o *CustomFieldsUpdateRequest) GetCustomFieldUpdateCheckbox() *components.CustomFieldUpdateCheckbox {
-	return o.GetCustomFieldUpdate().CustomFieldUpdateCheckbox
+func (c *CustomFieldsUpdateRequest) GetCustomFieldUpdateCheckbox() *components.CustomFieldUpdateCheckbox {
+	return c.GetCustomFieldUpdate().CustomFieldUpdateCheckbox
 }
 
-func (o *CustomFieldsUpdateRequest) GetCustomFieldUpdateDate() *components.CustomFieldUpdateDate {
-	return o.GetCustomFieldUpdate().CustomFieldUpdateDate
+func (c *CustomFieldsUpdateRequest) GetCustomFieldUpdateDate() *components.CustomFieldUpdateDate {
+	return c.GetCustomFieldUpdate().CustomFieldUpdateDate
 }
 
-func (o *CustomFieldsUpdateRequest) GetCustomFieldUpdateNumber() *components.CustomFieldUpdateNumber {
-	return o.GetCustomFieldUpdate().CustomFieldUpdateNumber
+func (c *CustomFieldsUpdateRequest) GetCustomFieldUpdateNumber() *components.CustomFieldUpdateNumber {
+	return c.GetCustomFieldUpdate().CustomFieldUpdateNumber
 }
 
-func (o *CustomFieldsUpdateRequest) GetCustomFieldUpdateSelect() *components.CustomFieldUpdateSelect {
-	return o.GetCustomFieldUpdate().CustomFieldUpdateSelect
+func (c *CustomFieldsUpdateRequest) GetCustomFieldUpdateSelect() *components.CustomFieldUpdateSelect {
+	return c.GetCustomFieldUpdate().CustomFieldUpdateSelect
 }
 
-func (o *CustomFieldsUpdateRequest) GetCustomFieldUpdateText() *components.CustomFieldUpdateText {
-	return o.GetCustomFieldUpdate().CustomFieldUpdateText
+func (c *CustomFieldsUpdateRequest) GetCustomFieldUpdateText() *components.CustomFieldUpdateText {
+	return c.GetCustomFieldUpdate().CustomFieldUpdateText
 }
 
 type CustomFieldsUpdateResponse struct {
@@ -52,50 +52,50 @@ type CustomFieldsUpdateResponse struct {
 	CustomField *components.CustomField
 }
 
-func (o *CustomFieldsUpdateResponse) GetHTTPMeta() components.HTTPMetadata {
-	if o == nil {
+func (c *CustomFieldsUpdateResponse) GetHTTPMeta() components.HTTPMetadata {
+	if c == nil {
 		return components.HTTPMetadata{}
 	}
-	return o.HTTPMeta
+	return c.HTTPMeta
 }
 
-func (o *CustomFieldsUpdateResponse) GetCustomField() *components.CustomField {
-	if o == nil {
+func (c *CustomFieldsUpdateResponse) GetCustomField() *components.CustomField {
+	if c == nil {
 		return nil
 	}
-	return o.CustomField
+	return c.CustomField
 }
 
-func (o *CustomFieldsUpdateResponse) GetCustomFieldCheckbox() *components.CustomFieldCheckbox {
-	if v := o.GetCustomField(); v != nil {
+func (c *CustomFieldsUpdateResponse) GetCustomFieldCheckbox() *components.CustomFieldCheckbox {
+	if v := c.GetCustomField(); v != nil {
 		return v.CustomFieldCheckbox
 	}
 	return nil
 }
 
-func (o *CustomFieldsUpdateResponse) GetCustomFieldDate() *components.CustomFieldDate {
-	if v := o.GetCustomField(); v != nil {
+func (c *CustomFieldsUpdateResponse) GetCustomFieldDate() *components.CustomFieldDate {
+	if v := c.GetCustomField(); v != nil {
 		return v.CustomFieldDate
 	}
 	return nil
 }
 
-func (o *CustomFieldsUpdateResponse) GetCustomFieldNumber() *components.CustomFieldNumber {
-	if v := o.GetCustomField(); v != nil {
+func (c *CustomFieldsUpdateResponse) GetCustomFieldNumber() *components.CustomFieldNumber {
+	if v := c.GetCustomField(); v != nil {
 		return v.CustomFieldNumber
 	}
 	return nil
 }
 
-func (o *CustomFieldsUpdateResponse) GetCustomFieldSelect() *components.CustomFieldSelect {
-	if v := o.GetCustomField(); v != nil {
+func (c *CustomFieldsUpdateResponse) GetCustomFieldSelect() *components.CustomFieldSelect {
+	if v := c.GetCustomField(); v != nil {
 		return v.CustomFieldSelect
 	}
 	return nil
 }
 
-func (o *CustomFieldsUpdateResponse) GetCustomFieldText() *components.CustomFieldText {
-	if v := o.GetCustomField(); v != nil {
+func (c *CustomFieldsUpdateResponse) GetCustomFieldText() *components.CustomFieldText {
+	if v := c.GetCustomField(); v != nil {
 		return v.CustomFieldText
 	}
 	return nil

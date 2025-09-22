@@ -219,93 +219,93 @@ func (c *CheckoutLinkProduct) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *CheckoutLinkProduct) GetMetadata() map[string]CheckoutLinkProductMetadata {
-	if o == nil {
+func (c *CheckoutLinkProduct) GetMetadata() map[string]CheckoutLinkProductMetadata {
+	if c == nil {
 		return map[string]CheckoutLinkProductMetadata{}
 	}
-	return o.Metadata
+	return c.Metadata
 }
 
-func (o *CheckoutLinkProduct) GetCreatedAt() time.Time {
-	if o == nil {
+func (c *CheckoutLinkProduct) GetCreatedAt() time.Time {
+	if c == nil {
 		return time.Time{}
 	}
-	return o.CreatedAt
+	return c.CreatedAt
 }
 
-func (o *CheckoutLinkProduct) GetModifiedAt() *time.Time {
-	if o == nil {
+func (c *CheckoutLinkProduct) GetModifiedAt() *time.Time {
+	if c == nil {
 		return nil
 	}
-	return o.ModifiedAt
+	return c.ModifiedAt
 }
 
-func (o *CheckoutLinkProduct) GetID() string {
-	if o == nil {
+func (c *CheckoutLinkProduct) GetID() string {
+	if c == nil {
 		return ""
 	}
-	return o.ID
+	return c.ID
 }
 
-func (o *CheckoutLinkProduct) GetName() string {
-	if o == nil {
+func (c *CheckoutLinkProduct) GetName() string {
+	if c == nil {
 		return ""
 	}
-	return o.Name
+	return c.Name
 }
 
-func (o *CheckoutLinkProduct) GetDescription() *string {
-	if o == nil {
+func (c *CheckoutLinkProduct) GetDescription() *string {
+	if c == nil {
 		return nil
 	}
-	return o.Description
+	return c.Description
 }
 
-func (o *CheckoutLinkProduct) GetRecurringInterval() *SubscriptionRecurringInterval {
-	if o == nil {
+func (c *CheckoutLinkProduct) GetRecurringInterval() *SubscriptionRecurringInterval {
+	if c == nil {
 		return nil
 	}
-	return o.RecurringInterval
+	return c.RecurringInterval
 }
 
-func (o *CheckoutLinkProduct) GetIsRecurring() bool {
-	if o == nil {
+func (c *CheckoutLinkProduct) GetIsRecurring() bool {
+	if c == nil {
 		return false
 	}
-	return o.IsRecurring
+	return c.IsRecurring
 }
 
-func (o *CheckoutLinkProduct) GetIsArchived() bool {
-	if o == nil {
+func (c *CheckoutLinkProduct) GetIsArchived() bool {
+	if c == nil {
 		return false
 	}
-	return o.IsArchived
+	return c.IsArchived
 }
 
-func (o *CheckoutLinkProduct) GetOrganizationID() string {
-	if o == nil {
+func (c *CheckoutLinkProduct) GetOrganizationID() string {
+	if c == nil {
 		return ""
 	}
-	return o.OrganizationID
+	return c.OrganizationID
 }
 
-func (o *CheckoutLinkProduct) GetPrices() []CheckoutLinkProductPrices {
-	if o == nil {
+func (c *CheckoutLinkProduct) GetPrices() []CheckoutLinkProductPrices {
+	if c == nil {
 		return []CheckoutLinkProductPrices{}
 	}
-	return o.Prices
+	return c.Prices
 }
 
-func (o *CheckoutLinkProduct) GetBenefits() []BenefitPublic {
-	if o == nil {
+func (c *CheckoutLinkProduct) GetBenefits() []BenefitPublic {
+	if c == nil {
 		return []BenefitPublic{}
 	}
-	return o.Benefits
+	return c.Benefits
 }
 
-func (o *CheckoutLinkProduct) GetMedias() []ProductMediaFileRead {
-	if o == nil {
+func (c *CheckoutLinkProduct) GetMedias() []ProductMediaFileRead {
+	if c == nil {
 		return []ProductMediaFileRead{}
 	}
-	return o.Medias
+	return c.Medias
 }

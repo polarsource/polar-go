@@ -287,6 +287,11 @@ func marshalValue(v interface{}, tag reflect.StructTag) (json.RawMessage, error)
 			return []byte("null"), nil
 		}
 
+		// Check if the map implements json.Marshaler (like optionalnullable.OptionalNullable[T])
+		if marshaler, ok := val.Interface().(json.Marshaler); ok {
+			return marshaler.MarshalJSON()
+		}
+
 		out := map[string]json.RawMessage{}
 
 		for _, key := range val.MapKeys() {

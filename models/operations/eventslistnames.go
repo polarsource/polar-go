@@ -295,60 +295,60 @@ func (e *EventsListNamesRequest) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *EventsListNamesRequest) GetOrganizationID() *EventsListNamesQueryParamOrganizationIDFilter {
-	if o == nil {
+func (e *EventsListNamesRequest) GetOrganizationID() *EventsListNamesQueryParamOrganizationIDFilter {
+	if e == nil {
 		return nil
 	}
-	return o.OrganizationID
+	return e.OrganizationID
 }
 
-func (o *EventsListNamesRequest) GetCustomerID() *EventsListNamesQueryParamCustomerIDFilter {
-	if o == nil {
+func (e *EventsListNamesRequest) GetCustomerID() *EventsListNamesQueryParamCustomerIDFilter {
+	if e == nil {
 		return nil
 	}
-	return o.CustomerID
+	return e.CustomerID
 }
 
-func (o *EventsListNamesRequest) GetExternalCustomerID() *EventsListNamesQueryParamExternalCustomerIDFilter {
-	if o == nil {
+func (e *EventsListNamesRequest) GetExternalCustomerID() *EventsListNamesQueryParamExternalCustomerIDFilter {
+	if e == nil {
 		return nil
 	}
-	return o.ExternalCustomerID
+	return e.ExternalCustomerID
 }
 
-func (o *EventsListNamesRequest) GetSource() *QueryParamSourceFilter {
-	if o == nil {
+func (e *EventsListNamesRequest) GetSource() *QueryParamSourceFilter {
+	if e == nil {
 		return nil
 	}
-	return o.Source
+	return e.Source
 }
 
-func (o *EventsListNamesRequest) GetQuery() *string {
-	if o == nil {
+func (e *EventsListNamesRequest) GetQuery() *string {
+	if e == nil {
 		return nil
 	}
-	return o.Query
+	return e.Query
 }
 
-func (o *EventsListNamesRequest) GetPage() *int64 {
-	if o == nil {
+func (e *EventsListNamesRequest) GetPage() *int64 {
+	if e == nil {
 		return nil
 	}
-	return o.Page
+	return e.Page
 }
 
-func (o *EventsListNamesRequest) GetLimit() *int64 {
-	if o == nil {
+func (e *EventsListNamesRequest) GetLimit() *int64 {
+	if e == nil {
 		return nil
 	}
-	return o.Limit
+	return e.Limit
 }
 
-func (o *EventsListNamesRequest) GetSorting() []components.EventNamesSortProperty {
-	if o == nil {
+func (e *EventsListNamesRequest) GetSorting() []components.EventNamesSortProperty {
+	if e == nil {
 		return nil
 	}
-	return o.Sorting
+	return e.Sorting
 }
 
 type EventsListNamesResponse struct {
@@ -359,16 +359,16 @@ type EventsListNamesResponse struct {
 	Next func() (*EventsListNamesResponse, error)
 }
 
-func (o *EventsListNamesResponse) GetHTTPMeta() components.HTTPMetadata {
-	if o == nil {
+func (e *EventsListNamesResponse) GetHTTPMeta() components.HTTPMetadata {
+	if e == nil {
 		return components.HTTPMetadata{}
 	}
-	return o.HTTPMeta
+	return e.HTTPMeta
 }
 
-func (o *EventsListNamesResponse) GetListResourceEventName() *components.ListResourceEventName {
-	if o == nil {
+func (e *EventsListNamesResponse) GetListResourceEventName() *components.ListResourceEventName {
+	if e == nil {
 		return nil
 	}
-	return o.ListResourceEventName
+	return e.ListResourceEventName
 }

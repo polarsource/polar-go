@@ -36,58 +36,58 @@ func (b *BenefitPublic) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *BenefitPublic) GetID() string {
-	if o == nil {
+func (b *BenefitPublic) GetID() string {
+	if b == nil {
 		return ""
 	}
-	return o.ID
+	return b.ID
 }
 
-func (o *BenefitPublic) GetCreatedAt() time.Time {
-	if o == nil {
+func (b *BenefitPublic) GetCreatedAt() time.Time {
+	if b == nil {
 		return time.Time{}
 	}
-	return o.CreatedAt
+	return b.CreatedAt
 }
 
-func (o *BenefitPublic) GetModifiedAt() *time.Time {
-	if o == nil {
+func (b *BenefitPublic) GetModifiedAt() *time.Time {
+	if b == nil {
 		return nil
 	}
-	return o.ModifiedAt
+	return b.ModifiedAt
 }
 
-func (o *BenefitPublic) GetType() BenefitType {
-	if o == nil {
+func (b *BenefitPublic) GetType() BenefitType {
+	if b == nil {
 		return BenefitType("")
 	}
-	return o.Type
+	return b.Type
 }
 
-func (o *BenefitPublic) GetDescription() string {
-	if o == nil {
+func (b *BenefitPublic) GetDescription() string {
+	if b == nil {
 		return ""
 	}
-	return o.Description
+	return b.Description
 }
 
-func (o *BenefitPublic) GetSelectable() bool {
-	if o == nil {
+func (b *BenefitPublic) GetSelectable() bool {
+	if b == nil {
 		return false
 	}
-	return o.Selectable
+	return b.Selectable
 }
 
-func (o *BenefitPublic) GetDeletable() bool {
-	if o == nil {
+func (b *BenefitPublic) GetDeletable() bool {
+	if b == nil {
 		return false
 	}
-	return o.Deletable
+	return b.Deletable
 }
 
-func (o *BenefitPublic) GetOrganizationID() string {
-	if o == nil {
+func (b *BenefitPublic) GetOrganizationID() string {
+	if b == nil {
 		return ""
 	}
-	return o.OrganizationID
+	return b.OrganizationID
 }

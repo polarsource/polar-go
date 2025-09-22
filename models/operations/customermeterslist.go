@@ -293,53 +293,53 @@ func (c *CustomerMetersListRequest) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *CustomerMetersListRequest) GetOrganizationID() *CustomerMetersListQueryParamOrganizationIDFilter {
-	if o == nil {
+func (c *CustomerMetersListRequest) GetOrganizationID() *CustomerMetersListQueryParamOrganizationIDFilter {
+	if c == nil {
 		return nil
 	}
-	return o.OrganizationID
+	return c.OrganizationID
 }
 
-func (o *CustomerMetersListRequest) GetCustomerID() *CustomerMetersListQueryParamCustomerIDFilter {
-	if o == nil {
+func (c *CustomerMetersListRequest) GetCustomerID() *CustomerMetersListQueryParamCustomerIDFilter {
+	if c == nil {
 		return nil
 	}
-	return o.CustomerID
+	return c.CustomerID
 }
 
-func (o *CustomerMetersListRequest) GetExternalCustomerID() *CustomerMetersListQueryParamExternalCustomerIDFilter {
-	if o == nil {
+func (c *CustomerMetersListRequest) GetExternalCustomerID() *CustomerMetersListQueryParamExternalCustomerIDFilter {
+	if c == nil {
 		return nil
 	}
-	return o.ExternalCustomerID
+	return c.ExternalCustomerID
 }
 
-func (o *CustomerMetersListRequest) GetMeterID() *QueryParamMeterIDFilter {
-	if o == nil {
+func (c *CustomerMetersListRequest) GetMeterID() *QueryParamMeterIDFilter {
+	if c == nil {
 		return nil
 	}
-	return o.MeterID
+	return c.MeterID
 }
 
-func (o *CustomerMetersListRequest) GetPage() *int64 {
-	if o == nil {
+func (c *CustomerMetersListRequest) GetPage() *int64 {
+	if c == nil {
 		return nil
 	}
-	return o.Page
+	return c.Page
 }
 
-func (o *CustomerMetersListRequest) GetLimit() *int64 {
-	if o == nil {
+func (c *CustomerMetersListRequest) GetLimit() *int64 {
+	if c == nil {
 		return nil
 	}
-	return o.Limit
+	return c.Limit
 }
 
-func (o *CustomerMetersListRequest) GetSorting() []components.CustomerMeterSortProperty {
-	if o == nil {
+func (c *CustomerMetersListRequest) GetSorting() []components.CustomerMeterSortProperty {
+	if c == nil {
 		return nil
 	}
-	return o.Sorting
+	return c.Sorting
 }
 
 type CustomerMetersListResponse struct {
@@ -350,16 +350,16 @@ type CustomerMetersListResponse struct {
 	Next func() (*CustomerMetersListResponse, error)
 }
 
-func (o *CustomerMetersListResponse) GetHTTPMeta() components.HTTPMetadata {
-	if o == nil {
+func (c *CustomerMetersListResponse) GetHTTPMeta() components.HTTPMetadata {
+	if c == nil {
 		return components.HTTPMetadata{}
 	}
-	return o.HTTPMeta
+	return c.HTTPMeta
 }
 
-func (o *CustomerMetersListResponse) GetListResourceCustomerMeter() *components.ListResourceCustomerMeter {
-	if o == nil {
+func (c *CustomerMetersListResponse) GetListResourceCustomerMeter() *components.ListResourceCustomerMeter {
+	if c == nil {
 		return nil
 	}
-	return o.ListResourceCustomerMeter
+	return c.ListResourceCustomerMeter
 }

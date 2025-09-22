@@ -16,18 +16,18 @@ type FilesUpdateRequest struct {
 	FilePatch components.FilePatch `request:"mediaType=application/json"`
 }
 
-func (o *FilesUpdateRequest) GetID() string {
-	if o == nil {
+func (f *FilesUpdateRequest) GetID() string {
+	if f == nil {
 		return ""
 	}
-	return o.ID
+	return f.ID
 }
 
-func (o *FilesUpdateRequest) GetFilePatch() components.FilePatch {
-	if o == nil {
+func (f *FilesUpdateRequest) GetFilePatch() components.FilePatch {
+	if f == nil {
 		return components.FilePatch{}
 	}
-	return o.FilePatch
+	return f.FilePatch
 }
 
 type FilesUpdateResponseFilesUpdateType string
@@ -140,36 +140,36 @@ type FilesUpdateResponse struct {
 	ResponseFilesUpdate *FilesUpdateResponseFilesUpdate
 }
 
-func (o *FilesUpdateResponse) GetHTTPMeta() components.HTTPMetadata {
-	if o == nil {
+func (f *FilesUpdateResponse) GetHTTPMeta() components.HTTPMetadata {
+	if f == nil {
 		return components.HTTPMetadata{}
 	}
-	return o.HTTPMeta
+	return f.HTTPMeta
 }
 
-func (o *FilesUpdateResponse) GetResponseFilesUpdate() *FilesUpdateResponseFilesUpdate {
-	if o == nil {
+func (f *FilesUpdateResponse) GetResponseFilesUpdate() *FilesUpdateResponseFilesUpdate {
+	if f == nil {
 		return nil
 	}
-	return o.ResponseFilesUpdate
+	return f.ResponseFilesUpdate
 }
 
-func (o *FilesUpdateResponse) GetResponseFilesUpdateDownloadable() *components.DownloadableFileRead {
-	if v := o.GetResponseFilesUpdate(); v != nil {
+func (f *FilesUpdateResponse) GetResponseFilesUpdateDownloadable() *components.DownloadableFileRead {
+	if v := f.GetResponseFilesUpdate(); v != nil {
 		return v.DownloadableFileRead
 	}
 	return nil
 }
 
-func (o *FilesUpdateResponse) GetResponseFilesUpdateProductMedia() *components.ProductMediaFileRead {
-	if v := o.GetResponseFilesUpdate(); v != nil {
+func (f *FilesUpdateResponse) GetResponseFilesUpdateProductMedia() *components.ProductMediaFileRead {
+	if v := f.GetResponseFilesUpdate(); v != nil {
 		return v.ProductMediaFileRead
 	}
 	return nil
 }
 
-func (o *FilesUpdateResponse) GetResponseFilesUpdateOrganizationAvatar() *components.OrganizationAvatarFileRead {
-	if v := o.GetResponseFilesUpdate(); v != nil {
+func (f *FilesUpdateResponse) GetResponseFilesUpdateOrganizationAvatar() *components.OrganizationAvatarFileRead {
+	if v := f.GetResponseFilesUpdate(); v != nil {
 		return v.OrganizationAvatarFileRead
 	}
 	return nil

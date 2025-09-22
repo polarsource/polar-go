@@ -12,16 +12,16 @@ type LicenseKeysValidateResponse struct {
 	ValidatedLicenseKey *components.ValidatedLicenseKey
 }
 
-func (o *LicenseKeysValidateResponse) GetHTTPMeta() components.HTTPMetadata {
-	if o == nil {
+func (l *LicenseKeysValidateResponse) GetHTTPMeta() components.HTTPMetadata {
+	if l == nil {
 		return components.HTTPMetadata{}
 	}
-	return o.HTTPMeta
+	return l.HTTPMeta
 }
 
-func (o *LicenseKeysValidateResponse) GetValidatedLicenseKey() *components.ValidatedLicenseKey {
-	if o == nil {
+func (l *LicenseKeysValidateResponse) GetValidatedLicenseKey() *components.ValidatedLicenseKey {
+	if l == nil {
 		return nil
 	}
-	return o.ValidatedLicenseKey
+	return l.ValidatedLicenseKey
 }

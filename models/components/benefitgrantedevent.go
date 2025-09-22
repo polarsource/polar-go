@@ -39,59 +39,59 @@ func (b *BenefitGrantedEvent) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *BenefitGrantedEvent) GetID() string {
-	if o == nil {
+func (b *BenefitGrantedEvent) GetID() string {
+	if b == nil {
 		return ""
 	}
-	return o.ID
+	return b.ID
 }
 
-func (o *BenefitGrantedEvent) GetTimestamp() time.Time {
-	if o == nil {
+func (b *BenefitGrantedEvent) GetTimestamp() time.Time {
+	if b == nil {
 		return time.Time{}
 	}
-	return o.Timestamp
+	return b.Timestamp
 }
 
-func (o *BenefitGrantedEvent) GetOrganizationID() string {
-	if o == nil {
+func (b *BenefitGrantedEvent) GetOrganizationID() string {
+	if b == nil {
 		return ""
 	}
-	return o.OrganizationID
+	return b.OrganizationID
 }
 
-func (o *BenefitGrantedEvent) GetCustomerID() *string {
-	if o == nil {
+func (b *BenefitGrantedEvent) GetCustomerID() *string {
+	if b == nil {
 		return nil
 	}
-	return o.CustomerID
+	return b.CustomerID
 }
 
-func (o *BenefitGrantedEvent) GetCustomer() *Customer {
-	if o == nil {
+func (b *BenefitGrantedEvent) GetCustomer() *Customer {
+	if b == nil {
 		return nil
 	}
-	return o.Customer
+	return b.Customer
 }
 
-func (o *BenefitGrantedEvent) GetExternalCustomerID() *string {
-	if o == nil {
+func (b *BenefitGrantedEvent) GetExternalCustomerID() *string {
+	if b == nil {
 		return nil
 	}
-	return o.ExternalCustomerID
+	return b.ExternalCustomerID
 }
 
-func (o *BenefitGrantedEvent) GetSource() string {
+func (b *BenefitGrantedEvent) GetSource() string {
 	return "system"
 }
 
-func (o *BenefitGrantedEvent) GetName() string {
+func (b *BenefitGrantedEvent) GetName() string {
 	return "benefit.granted"
 }
 
-func (o *BenefitGrantedEvent) GetMetadata() BenefitGrantMetadata {
-	if o == nil {
+func (b *BenefitGrantedEvent) GetMetadata() BenefitGrantMetadata {
+	if b == nil {
 		return BenefitGrantMetadata{}
 	}
-	return o.Metadata
+	return b.Metadata
 }

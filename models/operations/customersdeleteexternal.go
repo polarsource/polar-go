@@ -11,20 +11,20 @@ type CustomersDeleteExternalRequest struct {
 	ExternalID string `pathParam:"style=simple,explode=false,name=external_id"`
 }
 
-func (o *CustomersDeleteExternalRequest) GetExternalID() string {
-	if o == nil {
+func (c *CustomersDeleteExternalRequest) GetExternalID() string {
+	if c == nil {
 		return ""
 	}
-	return o.ExternalID
+	return c.ExternalID
 }
 
 type CustomersDeleteExternalResponse struct {
 	HTTPMeta components.HTTPMetadata `json:"-"`
 }
 
-func (o *CustomersDeleteExternalResponse) GetHTTPMeta() components.HTTPMetadata {
-	if o == nil {
+func (c *CustomersDeleteExternalResponse) GetHTTPMeta() components.HTTPMetadata {
+	if c == nil {
 		return components.HTTPMetadata{}
 	}
-	return o.HTTPMeta
+	return c.HTTPMeta
 }

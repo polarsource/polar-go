@@ -12,6 +12,7 @@ import (
 
 	"github.com/ericlagergren/decimal"
 
+	"github.com/polarsource/polar-go/optionalnullable"
 	"github.com/polarsource/polar-go/types"
 )
 
@@ -75,6 +76,16 @@ func populateForm(paramName string, explode bool, objType reflect.Type, objValue
 			}
 		}
 	case reflect.Map:
+		// check if optionalnullable.OptionalNullable[T]
+		if nullableValue, ok := optionalnullable.AsOptionalNullable(objValue); ok {
+			// Handle optionalnullable.OptionalNullable[T] using GetUntyped method
+			if value, isSet := nullableValue.GetUntyped(); isSet && value != nil {
+				formValues.Add(paramName, valToString(value))
+			}
+			// If not set or explicitly null, skip adding to form
+			return formValues
+		}
+
 		items := []string{}
 
 		iter := objValue.MapRange()

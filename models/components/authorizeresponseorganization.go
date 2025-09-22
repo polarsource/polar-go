@@ -25,34 +25,34 @@ func (a *AuthorizeResponseOrganization) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *AuthorizeResponseOrganization) GetClient() OAuth2ClientPublic {
-	if o == nil {
+func (a *AuthorizeResponseOrganization) GetClient() OAuth2ClientPublic {
+	if a == nil {
 		return OAuth2ClientPublic{}
 	}
-	return o.Client
+	return a.Client
 }
 
-func (o *AuthorizeResponseOrganization) GetSubType() string {
+func (a *AuthorizeResponseOrganization) GetSubType() string {
 	return "organization"
 }
 
-func (o *AuthorizeResponseOrganization) GetSub() *AuthorizeOrganization {
-	if o == nil {
+func (a *AuthorizeResponseOrganization) GetSub() *AuthorizeOrganization {
+	if a == nil {
 		return nil
 	}
-	return o.Sub
+	return a.Sub
 }
 
-func (o *AuthorizeResponseOrganization) GetScopes() []Scope {
-	if o == nil {
+func (a *AuthorizeResponseOrganization) GetScopes() []Scope {
+	if a == nil {
 		return []Scope{}
 	}
-	return o.Scopes
+	return a.Scopes
 }
 
-func (o *AuthorizeResponseOrganization) GetOrganizations() []AuthorizeOrganization {
-	if o == nil {
+func (a *AuthorizeResponseOrganization) GetOrganizations() []AuthorizeOrganization {
+	if a == nil {
 		return []AuthorizeOrganization{}
 	}
-	return o.Organizations
+	return a.Organizations
 }

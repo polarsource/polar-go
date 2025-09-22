@@ -195,50 +195,50 @@ type CustomerUpdate struct {
 	Email *string `json:"email,omitempty"`
 	// The name of the customer.
 	Name           *string                `json:"name,omitempty"`
-	BillingAddress *Address               `json:"billing_address,omitempty"`
+	BillingAddress *AddressInput          `json:"billing_address,omitempty"`
 	TaxID          []*CustomerUpdateTaxID `json:"tax_id,omitempty"`
 	// The ID of the customer in your system. This must be unique within the organization. Once set, it can't be updated.
 	ExternalID *string `json:"external_id,omitempty"`
 }
 
-func (o *CustomerUpdate) GetMetadata() map[string]CustomerUpdateMetadata {
-	if o == nil {
+func (c *CustomerUpdate) GetMetadata() map[string]CustomerUpdateMetadata {
+	if c == nil {
 		return nil
 	}
-	return o.Metadata
+	return c.Metadata
 }
 
-func (o *CustomerUpdate) GetEmail() *string {
-	if o == nil {
+func (c *CustomerUpdate) GetEmail() *string {
+	if c == nil {
 		return nil
 	}
-	return o.Email
+	return c.Email
 }
 
-func (o *CustomerUpdate) GetName() *string {
-	if o == nil {
+func (c *CustomerUpdate) GetName() *string {
+	if c == nil {
 		return nil
 	}
-	return o.Name
+	return c.Name
 }
 
-func (o *CustomerUpdate) GetBillingAddress() *Address {
-	if o == nil {
+func (c *CustomerUpdate) GetBillingAddress() *AddressInput {
+	if c == nil {
 		return nil
 	}
-	return o.BillingAddress
+	return c.BillingAddress
 }
 
-func (o *CustomerUpdate) GetTaxID() []*CustomerUpdateTaxID {
-	if o == nil {
+func (c *CustomerUpdate) GetTaxID() []*CustomerUpdateTaxID {
+	if c == nil {
 		return nil
 	}
-	return o.TaxID
+	return c.TaxID
 }
 
-func (o *CustomerUpdate) GetExternalID() *string {
-	if o == nil {
+func (c *CustomerUpdate) GetExternalID() *string {
+	if c == nil {
 		return nil
 	}
-	return o.ExternalID
+	return c.ExternalID
 }

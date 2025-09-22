@@ -13,11 +13,11 @@ type CustomerPortalLicenseKeysListSecurity struct {
 	CustomerSession string `security:"scheme,type=http,subtype=bearer,name=Authorization,env=polar_customer_session"`
 }
 
-func (o *CustomerPortalLicenseKeysListSecurity) GetCustomerSession() string {
-	if o == nil {
+func (c *CustomerPortalLicenseKeysListSecurity) GetCustomerSession() string {
+	if c == nil {
 		return ""
 	}
-	return o.CustomerSession
+	return c.CustomerSession
 }
 
 type CustomerPortalLicenseKeysListQueryParamOrganizationIDFilterType string
@@ -106,32 +106,32 @@ func (c *CustomerPortalLicenseKeysListRequest) UnmarshalJSON(data []byte) error 
 	return nil
 }
 
-func (o *CustomerPortalLicenseKeysListRequest) GetOrganizationID() *CustomerPortalLicenseKeysListQueryParamOrganizationIDFilter {
-	if o == nil {
+func (c *CustomerPortalLicenseKeysListRequest) GetOrganizationID() *CustomerPortalLicenseKeysListQueryParamOrganizationIDFilter {
+	if c == nil {
 		return nil
 	}
-	return o.OrganizationID
+	return c.OrganizationID
 }
 
-func (o *CustomerPortalLicenseKeysListRequest) GetBenefitID() *string {
-	if o == nil {
+func (c *CustomerPortalLicenseKeysListRequest) GetBenefitID() *string {
+	if c == nil {
 		return nil
 	}
-	return o.BenefitID
+	return c.BenefitID
 }
 
-func (o *CustomerPortalLicenseKeysListRequest) GetPage() *int64 {
-	if o == nil {
+func (c *CustomerPortalLicenseKeysListRequest) GetPage() *int64 {
+	if c == nil {
 		return nil
 	}
-	return o.Page
+	return c.Page
 }
 
-func (o *CustomerPortalLicenseKeysListRequest) GetLimit() *int64 {
-	if o == nil {
+func (c *CustomerPortalLicenseKeysListRequest) GetLimit() *int64 {
+	if c == nil {
 		return nil
 	}
-	return o.Limit
+	return c.Limit
 }
 
 type CustomerPortalLicenseKeysListResponse struct {
@@ -142,16 +142,16 @@ type CustomerPortalLicenseKeysListResponse struct {
 	Next func() (*CustomerPortalLicenseKeysListResponse, error)
 }
 
-func (o *CustomerPortalLicenseKeysListResponse) GetHTTPMeta() components.HTTPMetadata {
-	if o == nil {
+func (c *CustomerPortalLicenseKeysListResponse) GetHTTPMeta() components.HTTPMetadata {
+	if c == nil {
 		return components.HTTPMetadata{}
 	}
-	return o.HTTPMeta
+	return c.HTTPMeta
 }
 
-func (o *CustomerPortalLicenseKeysListResponse) GetListResourceLicenseKeyRead() *components.ListResourceLicenseKeyRead {
-	if o == nil {
+func (c *CustomerPortalLicenseKeysListResponse) GetListResourceLicenseKeyRead() *components.ListResourceLicenseKeyRead {
+	if c == nil {
 		return nil
 	}
-	return o.ListResourceLicenseKeyRead
+	return c.ListResourceLicenseKeyRead
 }

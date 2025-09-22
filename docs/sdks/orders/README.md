@@ -167,9 +167,9 @@ func main() {
     )
 
     res, err := s.Orders.Update(ctx, "<value>", components.OrderUpdate{
-        BillingName: polargo.String("<value>"),
-        BillingAddress: &components.Address{
-            Country: "US",
+        BillingName: polargo.Pointer("<value>"),
+        BillingAddress: &components.AddressInput{
+            Country: components.CountryAlpha2InputUs,
         },
     })
     if err != nil {

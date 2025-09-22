@@ -29,20 +29,20 @@ func (w *WebhookSubscriptionCreatedPayload) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *WebhookSubscriptionCreatedPayload) GetType() string {
+func (w *WebhookSubscriptionCreatedPayload) GetType() string {
 	return "subscription.created"
 }
 
-func (o *WebhookSubscriptionCreatedPayload) GetTimestamp() time.Time {
-	if o == nil {
+func (w *WebhookSubscriptionCreatedPayload) GetTimestamp() time.Time {
+	if w == nil {
 		return time.Time{}
 	}
-	return o.Timestamp
+	return w.Timestamp
 }
 
-func (o *WebhookSubscriptionCreatedPayload) GetData() Subscription {
-	if o == nil {
+func (w *WebhookSubscriptionCreatedPayload) GetData() Subscription {
+	if w == nil {
 		return Subscription{}
 	}
-	return o.Data
+	return w.Data
 }

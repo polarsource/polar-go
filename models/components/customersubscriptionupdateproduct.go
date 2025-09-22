@@ -22,9 +22,9 @@ func (c *CustomerSubscriptionUpdateProduct) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *CustomerSubscriptionUpdateProduct) GetProductID() string {
-	if o == nil {
+func (c *CustomerSubscriptionUpdateProduct) GetProductID() string {
+	if c == nil {
 		return ""
 	}
-	return o.ProductID
+	return c.ProductID
 }

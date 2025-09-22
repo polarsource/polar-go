@@ -24,30 +24,30 @@ func (u *UserInfoUser) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *UserInfoUser) GetSub() string {
-	if o == nil {
+func (u *UserInfoUser) GetSub() string {
+	if u == nil {
 		return ""
 	}
-	return o.Sub
+	return u.Sub
 }
 
-func (o *UserInfoUser) GetName() *string {
-	if o == nil {
+func (u *UserInfoUser) GetName() *string {
+	if u == nil {
 		return nil
 	}
-	return o.Name
+	return u.Name
 }
 
-func (o *UserInfoUser) GetEmail() *string {
-	if o == nil {
+func (u *UserInfoUser) GetEmail() *string {
+	if u == nil {
 		return nil
 	}
-	return o.Email
+	return u.Email
 }
 
-func (o *UserInfoUser) GetEmailVerified() *bool {
-	if o == nil {
+func (u *UserInfoUser) GetEmailVerified() *bool {
+	if u == nil {
 		return nil
 	}
-	return o.EmailVerified
+	return u.EmailVerified
 }

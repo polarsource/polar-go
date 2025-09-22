@@ -1579,13 +1579,7 @@ func (s *Webhooks) ResetWebhookEndpointSecret(ctx context.Context, id string, op
 // Deliveries are all the attempts to deliver a webhook event to an endpoint.
 //
 // **Scopes**: `webhooks:read` `webhooks:write`
-func (s *Webhooks) ListWebhookDeliveries(ctx context.Context, endpointID *operations.EndpointID, page *int64, limit *int64, opts ...operations.Option) (*operations.WebhooksListWebhookDeliveriesResponse, error) {
-	request := operations.WebhooksListWebhookDeliveriesRequest{
-		EndpointID: endpointID,
-		Page:       page,
-		Limit:      limit,
-	}
-
+func (s *Webhooks) ListWebhookDeliveries(ctx context.Context, request operations.WebhooksListWebhookDeliveriesRequest, opts ...operations.Option) (*operations.WebhooksListWebhookDeliveriesResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -1757,8 +1751,8 @@ func (s *Webhooks) ListWebhookDeliveries(ctx context.Context, endpointID *operat
 			return nil, err
 		}
 		var p int64 = 1
-		if page != nil {
-			p = *page
+		if request.Page != nil {
+			p = *request.Page
 		}
 		nP := int64(p + 1)
 		nPs, err := ajson.Eval(b, "$.pagination.max_page")
@@ -1793,8 +1787,8 @@ func (s *Webhooks) ListWebhookDeliveries(ctx context.Context, endpointID *operat
 		}
 
 		l := 0
-		if limit != nil {
-			l = int(*limit)
+		if request.Limit != nil {
+			l = int(*request.Limit)
 		}
 		if len(arr) < l {
 			return nil, nil
@@ -1802,9 +1796,13 @@ func (s *Webhooks) ListWebhookDeliveries(ctx context.Context, endpointID *operat
 
 		return s.ListWebhookDeliveries(
 			ctx,
-			endpointID,
-			&nP,
-			limit,
+			operations.WebhooksListWebhookDeliveriesRequest{
+				EndpointID:     request.EndpointID,
+				StartTimestamp: request.StartTimestamp,
+				EndTimestamp:   request.EndTimestamp,
+				Page:           &nP,
+				Limit:          request.Limit,
+			},
 			opts...,
 		)
 	}

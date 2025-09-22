@@ -159,32 +159,32 @@ func (l *LicenseKeysListRequest) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *LicenseKeysListRequest) GetOrganizationID() *LicenseKeysListQueryParamOrganizationIDFilter {
-	if o == nil {
+func (l *LicenseKeysListRequest) GetOrganizationID() *LicenseKeysListQueryParamOrganizationIDFilter {
+	if l == nil {
 		return nil
 	}
-	return o.OrganizationID
+	return l.OrganizationID
 }
 
-func (o *LicenseKeysListRequest) GetBenefitID() *QueryParamBenefitIDFilter {
-	if o == nil {
+func (l *LicenseKeysListRequest) GetBenefitID() *QueryParamBenefitIDFilter {
+	if l == nil {
 		return nil
 	}
-	return o.BenefitID
+	return l.BenefitID
 }
 
-func (o *LicenseKeysListRequest) GetPage() *int64 {
-	if o == nil {
+func (l *LicenseKeysListRequest) GetPage() *int64 {
+	if l == nil {
 		return nil
 	}
-	return o.Page
+	return l.Page
 }
 
-func (o *LicenseKeysListRequest) GetLimit() *int64 {
-	if o == nil {
+func (l *LicenseKeysListRequest) GetLimit() *int64 {
+	if l == nil {
 		return nil
 	}
-	return o.Limit
+	return l.Limit
 }
 
 type LicenseKeysListResponse struct {
@@ -195,16 +195,16 @@ type LicenseKeysListResponse struct {
 	Next func() (*LicenseKeysListResponse, error)
 }
 
-func (o *LicenseKeysListResponse) GetHTTPMeta() components.HTTPMetadata {
-	if o == nil {
+func (l *LicenseKeysListResponse) GetHTTPMeta() components.HTTPMetadata {
+	if l == nil {
 		return components.HTTPMetadata{}
 	}
-	return o.HTTPMeta
+	return l.HTTPMeta
 }
 
-func (o *LicenseKeysListResponse) GetListResourceLicenseKeyRead() *components.ListResourceLicenseKeyRead {
-	if o == nil {
+func (l *LicenseKeysListResponse) GetListResourceLicenseKeyRead() *components.ListResourceLicenseKeyRead {
+	if l == nil {
 		return nil
 	}
-	return o.ListResourceLicenseKeyRead
+	return l.ListResourceLicenseKeyRead
 }

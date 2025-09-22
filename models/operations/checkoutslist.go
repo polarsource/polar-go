@@ -295,60 +295,60 @@ func (c *CheckoutsListRequest) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *CheckoutsListRequest) GetOrganizationID() *CheckoutsListQueryParamOrganizationIDFilter {
-	if o == nil {
+func (c *CheckoutsListRequest) GetOrganizationID() *CheckoutsListQueryParamOrganizationIDFilter {
+	if c == nil {
 		return nil
 	}
-	return o.OrganizationID
+	return c.OrganizationID
 }
 
-func (o *CheckoutsListRequest) GetProductID() *CheckoutsListQueryParamProductIDFilter {
-	if o == nil {
+func (c *CheckoutsListRequest) GetProductID() *CheckoutsListQueryParamProductIDFilter {
+	if c == nil {
 		return nil
 	}
-	return o.ProductID
+	return c.ProductID
 }
 
-func (o *CheckoutsListRequest) GetCustomerID() *CheckoutsListQueryParamCustomerIDFilter {
-	if o == nil {
+func (c *CheckoutsListRequest) GetCustomerID() *CheckoutsListQueryParamCustomerIDFilter {
+	if c == nil {
 		return nil
 	}
-	return o.CustomerID
+	return c.CustomerID
 }
 
-func (o *CheckoutsListRequest) GetStatus() *StatusFilter {
-	if o == nil {
+func (c *CheckoutsListRequest) GetStatus() *StatusFilter {
+	if c == nil {
 		return nil
 	}
-	return o.Status
+	return c.Status
 }
 
-func (o *CheckoutsListRequest) GetQuery() *string {
-	if o == nil {
+func (c *CheckoutsListRequest) GetQuery() *string {
+	if c == nil {
 		return nil
 	}
-	return o.Query
+	return c.Query
 }
 
-func (o *CheckoutsListRequest) GetPage() *int64 {
-	if o == nil {
+func (c *CheckoutsListRequest) GetPage() *int64 {
+	if c == nil {
 		return nil
 	}
-	return o.Page
+	return c.Page
 }
 
-func (o *CheckoutsListRequest) GetLimit() *int64 {
-	if o == nil {
+func (c *CheckoutsListRequest) GetLimit() *int64 {
+	if c == nil {
 		return nil
 	}
-	return o.Limit
+	return c.Limit
 }
 
-func (o *CheckoutsListRequest) GetSorting() []components.CheckoutSortProperty {
-	if o == nil {
+func (c *CheckoutsListRequest) GetSorting() []components.CheckoutSortProperty {
+	if c == nil {
 		return nil
 	}
-	return o.Sorting
+	return c.Sorting
 }
 
 type CheckoutsListResponse struct {
@@ -359,16 +359,16 @@ type CheckoutsListResponse struct {
 	Next func() (*CheckoutsListResponse, error)
 }
 
-func (o *CheckoutsListResponse) GetHTTPMeta() components.HTTPMetadata {
-	if o == nil {
+func (c *CheckoutsListResponse) GetHTTPMeta() components.HTTPMetadata {
+	if c == nil {
 		return components.HTTPMetadata{}
 	}
-	return o.HTTPMeta
+	return c.HTTPMeta
 }
 
-func (o *CheckoutsListResponse) GetListResourceCheckout() *components.ListResourceCheckout {
-	if o == nil {
+func (c *CheckoutsListResponse) GetListResourceCheckout() *components.ListResourceCheckout {
+	if c == nil {
 		return nil
 	}
-	return o.ListResourceCheckout
+	return c.ListResourceCheckout
 }

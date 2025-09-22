@@ -7,16 +7,16 @@ type ListResourceBenefitGrant struct {
 	Pagination Pagination     `json:"pagination"`
 }
 
-func (o *ListResourceBenefitGrant) GetItems() []BenefitGrant {
-	if o == nil {
+func (l *ListResourceBenefitGrant) GetItems() []BenefitGrant {
+	if l == nil {
 		return []BenefitGrant{}
 	}
-	return o.Items
+	return l.Items
 }
 
-func (o *ListResourceBenefitGrant) GetPagination() Pagination {
-	if o == nil {
+func (l *ListResourceBenefitGrant) GetPagination() Pagination {
+	if l == nil {
 		return Pagination{}
 	}
-	return o.Pagination
+	return l.Pagination
 }

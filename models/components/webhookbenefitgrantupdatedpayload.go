@@ -27,20 +27,20 @@ func (w *WebhookBenefitGrantUpdatedPayload) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *WebhookBenefitGrantUpdatedPayload) GetType() string {
+func (w *WebhookBenefitGrantUpdatedPayload) GetType() string {
 	return "benefit_grant.updated"
 }
 
-func (o *WebhookBenefitGrantUpdatedPayload) GetTimestamp() time.Time {
-	if o == nil {
+func (w *WebhookBenefitGrantUpdatedPayload) GetTimestamp() time.Time {
+	if w == nil {
 		return time.Time{}
 	}
-	return o.Timestamp
+	return w.Timestamp
 }
 
-func (o *WebhookBenefitGrantUpdatedPayload) GetData() BenefitGrantWebhook {
-	if o == nil {
+func (w *WebhookBenefitGrantUpdatedPayload) GetData() BenefitGrantWebhook {
+	if w == nil {
 		return BenefitGrantWebhook{}
 	}
-	return o.Data
+	return w.Data
 }

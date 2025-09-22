@@ -159,32 +159,32 @@ func (f *FilesListRequest) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *FilesListRequest) GetOrganizationID() *FilesListQueryParamOrganizationIDFilter {
-	if o == nil {
+func (f *FilesListRequest) GetOrganizationID() *FilesListQueryParamOrganizationIDFilter {
+	if f == nil {
 		return nil
 	}
-	return o.OrganizationID
+	return f.OrganizationID
 }
 
-func (o *FilesListRequest) GetIds() *FileIDFilter {
-	if o == nil {
+func (f *FilesListRequest) GetIds() *FileIDFilter {
+	if f == nil {
 		return nil
 	}
-	return o.Ids
+	return f.Ids
 }
 
-func (o *FilesListRequest) GetPage() *int64 {
-	if o == nil {
+func (f *FilesListRequest) GetPage() *int64 {
+	if f == nil {
 		return nil
 	}
-	return o.Page
+	return f.Page
 }
 
-func (o *FilesListRequest) GetLimit() *int64 {
-	if o == nil {
+func (f *FilesListRequest) GetLimit() *int64 {
+	if f == nil {
 		return nil
 	}
-	return o.Limit
+	return f.Limit
 }
 
 type FilesListResponse struct {
@@ -195,16 +195,16 @@ type FilesListResponse struct {
 	Next func() (*FilesListResponse, error)
 }
 
-func (o *FilesListResponse) GetHTTPMeta() components.HTTPMetadata {
-	if o == nil {
+func (f *FilesListResponse) GetHTTPMeta() components.HTTPMetadata {
+	if f == nil {
 		return components.HTTPMetadata{}
 	}
-	return o.HTTPMeta
+	return f.HTTPMeta
 }
 
-func (o *FilesListResponse) GetListResourceFileRead() *components.ListResourceFileRead {
-	if o == nil {
+func (f *FilesListResponse) GetListResourceFileRead() *components.ListResourceFileRead {
+	if f == nil {
 		return nil
 	}
-	return o.ListResourceFileRead
+	return f.ListResourceFileRead
 }

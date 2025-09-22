@@ -22,16 +22,16 @@ func (b *BenefitLicenseKeyActivationProperties) UnmarshalJSON(data []byte) error
 	return nil
 }
 
-func (o *BenefitLicenseKeyActivationProperties) GetLimit() int64 {
-	if o == nil {
+func (b *BenefitLicenseKeyActivationProperties) GetLimit() int64 {
+	if b == nil {
 		return 0
 	}
-	return o.Limit
+	return b.Limit
 }
 
-func (o *BenefitLicenseKeyActivationProperties) GetEnableCustomerAdmin() bool {
-	if o == nil {
+func (b *BenefitLicenseKeyActivationProperties) GetEnableCustomerAdmin() bool {
+	if b == nil {
 		return false
 	}
-	return o.EnableCustomerAdmin
+	return b.EnableCustomerAdmin
 }

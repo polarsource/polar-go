@@ -151,69 +151,69 @@ func (b *BenefitDiscord) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *BenefitDiscord) GetID() string {
-	if o == nil {
+func (b *BenefitDiscord) GetID() string {
+	if b == nil {
 		return ""
 	}
-	return o.ID
+	return b.ID
 }
 
-func (o *BenefitDiscord) GetCreatedAt() time.Time {
-	if o == nil {
+func (b *BenefitDiscord) GetCreatedAt() time.Time {
+	if b == nil {
 		return time.Time{}
 	}
-	return o.CreatedAt
+	return b.CreatedAt
 }
 
-func (o *BenefitDiscord) GetModifiedAt() *time.Time {
-	if o == nil {
+func (b *BenefitDiscord) GetModifiedAt() *time.Time {
+	if b == nil {
 		return nil
 	}
-	return o.ModifiedAt
+	return b.ModifiedAt
 }
 
-func (o *BenefitDiscord) GetType() string {
+func (b *BenefitDiscord) GetType() string {
 	return "discord"
 }
 
-func (o *BenefitDiscord) GetDescription() string {
-	if o == nil {
+func (b *BenefitDiscord) GetDescription() string {
+	if b == nil {
 		return ""
 	}
-	return o.Description
+	return b.Description
 }
 
-func (o *BenefitDiscord) GetSelectable() bool {
-	if o == nil {
+func (b *BenefitDiscord) GetSelectable() bool {
+	if b == nil {
 		return false
 	}
-	return o.Selectable
+	return b.Selectable
 }
 
-func (o *BenefitDiscord) GetDeletable() bool {
-	if o == nil {
+func (b *BenefitDiscord) GetDeletable() bool {
+	if b == nil {
 		return false
 	}
-	return o.Deletable
+	return b.Deletable
 }
 
-func (o *BenefitDiscord) GetOrganizationID() string {
-	if o == nil {
+func (b *BenefitDiscord) GetOrganizationID() string {
+	if b == nil {
 		return ""
 	}
-	return o.OrganizationID
+	return b.OrganizationID
 }
 
-func (o *BenefitDiscord) GetMetadata() map[string]BenefitDiscordMetadata {
-	if o == nil {
+func (b *BenefitDiscord) GetMetadata() map[string]BenefitDiscordMetadata {
+	if b == nil {
 		return map[string]BenefitDiscordMetadata{}
 	}
-	return o.Metadata
+	return b.Metadata
 }
 
-func (o *BenefitDiscord) GetProperties() BenefitDiscordProperties {
-	if o == nil {
+func (b *BenefitDiscord) GetProperties() BenefitDiscordProperties {
+	if b == nil {
 		return BenefitDiscordProperties{}
 	}
-	return o.Properties
+	return b.Properties
 }

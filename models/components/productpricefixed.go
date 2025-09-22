@@ -40,69 +40,69 @@ func (p *ProductPriceFixed) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *ProductPriceFixed) GetCreatedAt() time.Time {
-	if o == nil {
+func (p *ProductPriceFixed) GetCreatedAt() time.Time {
+	if p == nil {
 		return time.Time{}
 	}
-	return o.CreatedAt
+	return p.CreatedAt
 }
 
-func (o *ProductPriceFixed) GetModifiedAt() *time.Time {
-	if o == nil {
+func (p *ProductPriceFixed) GetModifiedAt() *time.Time {
+	if p == nil {
 		return nil
 	}
-	return o.ModifiedAt
+	return p.ModifiedAt
 }
 
-func (o *ProductPriceFixed) GetID() string {
-	if o == nil {
+func (p *ProductPriceFixed) GetID() string {
+	if p == nil {
 		return ""
 	}
-	return o.ID
+	return p.ID
 }
 
-func (o *ProductPriceFixed) GetAmountType() string {
+func (p *ProductPriceFixed) GetAmountType() string {
 	return "fixed"
 }
 
-func (o *ProductPriceFixed) GetIsArchived() bool {
-	if o == nil {
+func (p *ProductPriceFixed) GetIsArchived() bool {
+	if p == nil {
 		return false
 	}
-	return o.IsArchived
+	return p.IsArchived
 }
 
-func (o *ProductPriceFixed) GetProductID() string {
-	if o == nil {
+func (p *ProductPriceFixed) GetProductID() string {
+	if p == nil {
 		return ""
 	}
-	return o.ProductID
+	return p.ProductID
 }
 
-func (o *ProductPriceFixed) GetType() ProductPriceType {
-	if o == nil {
+func (p *ProductPriceFixed) GetType() ProductPriceType {
+	if p == nil {
 		return ProductPriceType("")
 	}
-	return o.Type
+	return p.Type
 }
 
-func (o *ProductPriceFixed) GetRecurringInterval() *SubscriptionRecurringInterval {
-	if o == nil {
+func (p *ProductPriceFixed) GetRecurringInterval() *SubscriptionRecurringInterval {
+	if p == nil {
 		return nil
 	}
-	return o.RecurringInterval
+	return p.RecurringInterval
 }
 
-func (o *ProductPriceFixed) GetPriceCurrency() string {
-	if o == nil {
+func (p *ProductPriceFixed) GetPriceCurrency() string {
+	if p == nil {
 		return ""
 	}
-	return o.PriceCurrency
+	return p.PriceCurrency
 }
 
-func (o *ProductPriceFixed) GetPriceAmount() int64 {
-	if o == nil {
+func (p *ProductPriceFixed) GetPriceAmount() int64 {
+	if p == nil {
 		return 0
 	}
-	return o.PriceAmount
+	return p.PriceAmount
 }

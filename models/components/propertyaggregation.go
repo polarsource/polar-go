@@ -56,16 +56,16 @@ func (p *PropertyAggregation) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *PropertyAggregation) GetFunc() Func {
-	if o == nil {
+func (p *PropertyAggregation) GetFunc() Func {
+	if p == nil {
 		return Func("")
 	}
-	return o.Func
+	return p.Func
 }
 
-func (o *PropertyAggregation) GetProperty() string {
-	if o == nil {
+func (p *PropertyAggregation) GetProperty() string {
+	if p == nil {
 		return ""
 	}
-	return o.Property
+	return p.Property
 }

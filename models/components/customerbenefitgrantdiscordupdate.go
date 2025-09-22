@@ -22,13 +22,13 @@ func (c *CustomerBenefitGrantDiscordUpdate) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *CustomerBenefitGrantDiscordUpdate) GetBenefitType() string {
+func (c *CustomerBenefitGrantDiscordUpdate) GetBenefitType() string {
 	return "discord"
 }
 
-func (o *CustomerBenefitGrantDiscordUpdate) GetProperties() CustomerBenefitGrantDiscordPropertiesUpdate {
-	if o == nil {
+func (c *CustomerBenefitGrantDiscordUpdate) GetProperties() CustomerBenefitGrantDiscordPropertiesUpdate {
+	if c == nil {
 		return CustomerBenefitGrantDiscordPropertiesUpdate{}
 	}
-	return o.Properties
+	return c.Properties
 }

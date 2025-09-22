@@ -113,8 +113,8 @@ func main() {
     )
 
     res, err := s.Checkouts.Create(ctx, components.CheckoutCreate{
-        CustomerBillingAddress: &components.Address{
-            Country: "US",
+        CustomerBillingAddress: &components.AddressInput{
+            Country: components.CountryAlpha2InputUs,
         },
         Products: []string{
             "<value 1>",
@@ -234,8 +234,8 @@ func main() {
     )
 
     res, err := s.Checkouts.Update(ctx, "<value>", components.CheckoutUpdate{
-        CustomerBillingAddress: &components.Address{
-            Country: "US",
+        CustomerBillingAddress: &components.AddressInput{
+            Country: components.CountryAlpha2InputUs,
         },
     })
     if err != nil {
@@ -344,8 +344,8 @@ func main() {
     s := polargo.New()
 
     res, err := s.Checkouts.ClientUpdate(ctx, "<value>", components.CheckoutUpdatePublic{
-        CustomerBillingAddress: &components.Address{
-            Country: "US",
+        CustomerBillingAddress: &components.AddressInput{
+            Country: components.CountryAlpha2InputUs,
         },
     })
     if err != nil {
@@ -408,8 +408,8 @@ func main() {
     )
 
     res, err := s.Checkouts.ClientConfirm(ctx, "<value>", components.CheckoutConfirmStripe{
-        CustomerBillingAddress: &components.Address{
-            Country: "US",
+        CustomerBillingAddress: &components.AddressInput{
+            Country: components.CountryAlpha2InputUs,
         },
     })
     if err != nil {

@@ -8,23 +8,23 @@ type CustomerPaymentMethodCreate struct {
 	ReturnURL           string `json:"return_url"`
 }
 
-func (o *CustomerPaymentMethodCreate) GetConfirmationTokenID() string {
-	if o == nil {
+func (c *CustomerPaymentMethodCreate) GetConfirmationTokenID() string {
+	if c == nil {
 		return ""
 	}
-	return o.ConfirmationTokenID
+	return c.ConfirmationTokenID
 }
 
-func (o *CustomerPaymentMethodCreate) GetSetDefault() bool {
-	if o == nil {
+func (c *CustomerPaymentMethodCreate) GetSetDefault() bool {
+	if c == nil {
 		return false
 	}
-	return o.SetDefault
+	return c.SetDefault
 }
 
-func (o *CustomerPaymentMethodCreate) GetReturnURL() string {
-	if o == nil {
+func (c *CustomerPaymentMethodCreate) GetReturnURL() string {
+	if c == nil {
 		return ""
 	}
-	return o.ReturnURL
+	return c.ReturnURL
 }

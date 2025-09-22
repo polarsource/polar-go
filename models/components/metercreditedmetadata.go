@@ -23,23 +23,23 @@ func (m *MeterCreditedMetadata) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *MeterCreditedMetadata) GetMeterID() string {
-	if o == nil {
+func (m *MeterCreditedMetadata) GetMeterID() string {
+	if m == nil {
 		return ""
 	}
-	return o.MeterID
+	return m.MeterID
 }
 
-func (o *MeterCreditedMetadata) GetUnits() int64 {
-	if o == nil {
+func (m *MeterCreditedMetadata) GetUnits() int64 {
+	if m == nil {
 		return 0
 	}
-	return o.Units
+	return m.Units
 }
 
-func (o *MeterCreditedMetadata) GetRollover() bool {
-	if o == nil {
+func (m *MeterCreditedMetadata) GetRollover() bool {
+	if m == nil {
 		return false
 	}
-	return o.Rollover
+	return m.Rollover
 }

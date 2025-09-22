@@ -21,9 +21,9 @@ func (b *BenefitGrantDownloadablesProperties) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *BenefitGrantDownloadablesProperties) GetFiles() []string {
-	if o == nil {
+func (b *BenefitGrantDownloadablesProperties) GetFiles() []string {
+	if b == nil {
 		return nil
 	}
-	return o.Files
+	return b.Files
 }

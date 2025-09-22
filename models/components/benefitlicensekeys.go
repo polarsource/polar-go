@@ -147,69 +147,69 @@ func (b *BenefitLicenseKeys) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *BenefitLicenseKeys) GetID() string {
-	if o == nil {
+func (b *BenefitLicenseKeys) GetID() string {
+	if b == nil {
 		return ""
 	}
-	return o.ID
+	return b.ID
 }
 
-func (o *BenefitLicenseKeys) GetCreatedAt() time.Time {
-	if o == nil {
+func (b *BenefitLicenseKeys) GetCreatedAt() time.Time {
+	if b == nil {
 		return time.Time{}
 	}
-	return o.CreatedAt
+	return b.CreatedAt
 }
 
-func (o *BenefitLicenseKeys) GetModifiedAt() *time.Time {
-	if o == nil {
+func (b *BenefitLicenseKeys) GetModifiedAt() *time.Time {
+	if b == nil {
 		return nil
 	}
-	return o.ModifiedAt
+	return b.ModifiedAt
 }
 
-func (o *BenefitLicenseKeys) GetType() string {
+func (b *BenefitLicenseKeys) GetType() string {
 	return "license_keys"
 }
 
-func (o *BenefitLicenseKeys) GetDescription() string {
-	if o == nil {
+func (b *BenefitLicenseKeys) GetDescription() string {
+	if b == nil {
 		return ""
 	}
-	return o.Description
+	return b.Description
 }
 
-func (o *BenefitLicenseKeys) GetSelectable() bool {
-	if o == nil {
+func (b *BenefitLicenseKeys) GetSelectable() bool {
+	if b == nil {
 		return false
 	}
-	return o.Selectable
+	return b.Selectable
 }
 
-func (o *BenefitLicenseKeys) GetDeletable() bool {
-	if o == nil {
+func (b *BenefitLicenseKeys) GetDeletable() bool {
+	if b == nil {
 		return false
 	}
-	return o.Deletable
+	return b.Deletable
 }
 
-func (o *BenefitLicenseKeys) GetOrganizationID() string {
-	if o == nil {
+func (b *BenefitLicenseKeys) GetOrganizationID() string {
+	if b == nil {
 		return ""
 	}
-	return o.OrganizationID
+	return b.OrganizationID
 }
 
-func (o *BenefitLicenseKeys) GetMetadata() map[string]BenefitLicenseKeysMetadata {
-	if o == nil {
+func (b *BenefitLicenseKeys) GetMetadata() map[string]BenefitLicenseKeysMetadata {
+	if b == nil {
 		return map[string]BenefitLicenseKeysMetadata{}
 	}
-	return o.Metadata
+	return b.Metadata
 }
 
-func (o *BenefitLicenseKeys) GetProperties() BenefitLicenseKeysProperties {
-	if o == nil {
+func (b *BenefitLicenseKeys) GetProperties() BenefitLicenseKeysProperties {
+	if b == nil {
 		return BenefitLicenseKeysProperties{}
 	}
-	return o.Properties
+	return b.Properties
 }

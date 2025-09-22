@@ -46,72 +46,72 @@ type IntrospectTokenResponse struct {
 	Iat       int64     `json:"iat"`
 }
 
-func (o *IntrospectTokenResponse) GetActive() bool {
-	if o == nil {
+func (i *IntrospectTokenResponse) GetActive() bool {
+	if i == nil {
 		return false
 	}
-	return o.Active
+	return i.Active
 }
 
-func (o *IntrospectTokenResponse) GetClientID() string {
-	if o == nil {
+func (i *IntrospectTokenResponse) GetClientID() string {
+	if i == nil {
 		return ""
 	}
-	return o.ClientID
+	return i.ClientID
 }
 
-func (o *IntrospectTokenResponse) GetTokenType() TokenType {
-	if o == nil {
+func (i *IntrospectTokenResponse) GetTokenType() TokenType {
+	if i == nil {
 		return TokenType("")
 	}
-	return o.TokenType
+	return i.TokenType
 }
 
-func (o *IntrospectTokenResponse) GetScope() string {
-	if o == nil {
+func (i *IntrospectTokenResponse) GetScope() string {
+	if i == nil {
 		return ""
 	}
-	return o.Scope
+	return i.Scope
 }
 
-func (o *IntrospectTokenResponse) GetSubType() SubType {
-	if o == nil {
+func (i *IntrospectTokenResponse) GetSubType() SubType {
+	if i == nil {
 		return SubType("")
 	}
-	return o.SubType
+	return i.SubType
 }
 
-func (o *IntrospectTokenResponse) GetSub() string {
-	if o == nil {
+func (i *IntrospectTokenResponse) GetSub() string {
+	if i == nil {
 		return ""
 	}
-	return o.Sub
+	return i.Sub
 }
 
-func (o *IntrospectTokenResponse) GetAud() string {
-	if o == nil {
+func (i *IntrospectTokenResponse) GetAud() string {
+	if i == nil {
 		return ""
 	}
-	return o.Aud
+	return i.Aud
 }
 
-func (o *IntrospectTokenResponse) GetIss() string {
-	if o == nil {
+func (i *IntrospectTokenResponse) GetIss() string {
+	if i == nil {
 		return ""
 	}
-	return o.Iss
+	return i.Iss
 }
 
-func (o *IntrospectTokenResponse) GetExp() int64 {
-	if o == nil {
+func (i *IntrospectTokenResponse) GetExp() int64 {
+	if i == nil {
 		return 0
 	}
-	return o.Exp
+	return i.Exp
 }
 
-func (o *IntrospectTokenResponse) GetIat() int64 {
-	if o == nil {
+func (i *IntrospectTokenResponse) GetIat() int64 {
+	if i == nil {
 		return 0
 	}
-	return o.Iat
+	return i.Iat
 }

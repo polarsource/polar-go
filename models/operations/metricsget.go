@@ -296,60 +296,60 @@ func (m *MetricsGetRequest) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *MetricsGetRequest) GetStartDate() types.Date {
-	if o == nil {
+func (m *MetricsGetRequest) GetStartDate() types.Date {
+	if m == nil {
 		return types.Date{}
 	}
-	return o.StartDate
+	return m.StartDate
 }
 
-func (o *MetricsGetRequest) GetEndDate() types.Date {
-	if o == nil {
+func (m *MetricsGetRequest) GetEndDate() types.Date {
+	if m == nil {
 		return types.Date{}
 	}
-	return o.EndDate
+	return m.EndDate
 }
 
-func (o *MetricsGetRequest) GetTimezone() *string {
-	if o == nil {
+func (m *MetricsGetRequest) GetTimezone() *string {
+	if m == nil {
 		return nil
 	}
-	return o.Timezone
+	return m.Timezone
 }
 
-func (o *MetricsGetRequest) GetInterval() components.TimeInterval {
-	if o == nil {
+func (m *MetricsGetRequest) GetInterval() components.TimeInterval {
+	if m == nil {
 		return components.TimeInterval("")
 	}
-	return o.Interval
+	return m.Interval
 }
 
-func (o *MetricsGetRequest) GetOrganizationID() *MetricsGetQueryParamOrganizationIDFilter {
-	if o == nil {
+func (m *MetricsGetRequest) GetOrganizationID() *MetricsGetQueryParamOrganizationIDFilter {
+	if m == nil {
 		return nil
 	}
-	return o.OrganizationID
+	return m.OrganizationID
 }
 
-func (o *MetricsGetRequest) GetProductID() *MetricsGetQueryParamProductIDFilter {
-	if o == nil {
+func (m *MetricsGetRequest) GetProductID() *MetricsGetQueryParamProductIDFilter {
+	if m == nil {
 		return nil
 	}
-	return o.ProductID
+	return m.ProductID
 }
 
-func (o *MetricsGetRequest) GetBillingType() *QueryParamProductBillingTypeFilter {
-	if o == nil {
+func (m *MetricsGetRequest) GetBillingType() *QueryParamProductBillingTypeFilter {
+	if m == nil {
 		return nil
 	}
-	return o.BillingType
+	return m.BillingType
 }
 
-func (o *MetricsGetRequest) GetCustomerID() *MetricsGetQueryParamCustomerIDFilter {
-	if o == nil {
+func (m *MetricsGetRequest) GetCustomerID() *MetricsGetQueryParamCustomerIDFilter {
+	if m == nil {
 		return nil
 	}
-	return o.CustomerID
+	return m.CustomerID
 }
 
 type MetricsGetResponse struct {
@@ -358,16 +358,16 @@ type MetricsGetResponse struct {
 	MetricsResponse *components.MetricsResponse
 }
 
-func (o *MetricsGetResponse) GetHTTPMeta() components.HTTPMetadata {
-	if o == nil {
+func (m *MetricsGetResponse) GetHTTPMeta() components.HTTPMetadata {
+	if m == nil {
 		return components.HTTPMetadata{}
 	}
-	return o.HTTPMeta
+	return m.HTTPMeta
 }
 
-func (o *MetricsGetResponse) GetMetricsResponse() *components.MetricsResponse {
-	if o == nil {
+func (m *MetricsGetResponse) GetMetricsResponse() *components.MetricsResponse {
+	if m == nil {
 		return nil
 	}
-	return o.MetricsResponse
+	return m.MetricsResponse
 }

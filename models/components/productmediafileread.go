@@ -40,118 +40,118 @@ func (p *ProductMediaFileRead) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *ProductMediaFileRead) GetID() string {
-	if o == nil {
+func (p *ProductMediaFileRead) GetID() string {
+	if p == nil {
 		return ""
 	}
-	return o.ID
+	return p.ID
 }
 
-func (o *ProductMediaFileRead) GetOrganizationID() string {
-	if o == nil {
+func (p *ProductMediaFileRead) GetOrganizationID() string {
+	if p == nil {
 		return ""
 	}
-	return o.OrganizationID
+	return p.OrganizationID
 }
 
-func (o *ProductMediaFileRead) GetName() string {
-	if o == nil {
+func (p *ProductMediaFileRead) GetName() string {
+	if p == nil {
 		return ""
 	}
-	return o.Name
+	return p.Name
 }
 
-func (o *ProductMediaFileRead) GetPath() string {
-	if o == nil {
+func (p *ProductMediaFileRead) GetPath() string {
+	if p == nil {
 		return ""
 	}
-	return o.Path
+	return p.Path
 }
 
-func (o *ProductMediaFileRead) GetMimeType() string {
-	if o == nil {
+func (p *ProductMediaFileRead) GetMimeType() string {
+	if p == nil {
 		return ""
 	}
-	return o.MimeType
+	return p.MimeType
 }
 
-func (o *ProductMediaFileRead) GetSize() int64 {
-	if o == nil {
+func (p *ProductMediaFileRead) GetSize() int64 {
+	if p == nil {
 		return 0
 	}
-	return o.Size
+	return p.Size
 }
 
-func (o *ProductMediaFileRead) GetStorageVersion() *string {
-	if o == nil {
+func (p *ProductMediaFileRead) GetStorageVersion() *string {
+	if p == nil {
 		return nil
 	}
-	return o.StorageVersion
+	return p.StorageVersion
 }
 
-func (o *ProductMediaFileRead) GetChecksumEtag() *string {
-	if o == nil {
+func (p *ProductMediaFileRead) GetChecksumEtag() *string {
+	if p == nil {
 		return nil
 	}
-	return o.ChecksumEtag
+	return p.ChecksumEtag
 }
 
-func (o *ProductMediaFileRead) GetChecksumSha256Base64() *string {
-	if o == nil {
+func (p *ProductMediaFileRead) GetChecksumSha256Base64() *string {
+	if p == nil {
 		return nil
 	}
-	return o.ChecksumSha256Base64
+	return p.ChecksumSha256Base64
 }
 
-func (o *ProductMediaFileRead) GetChecksumSha256Hex() *string {
-	if o == nil {
+func (p *ProductMediaFileRead) GetChecksumSha256Hex() *string {
+	if p == nil {
 		return nil
 	}
-	return o.ChecksumSha256Hex
+	return p.ChecksumSha256Hex
 }
 
-func (o *ProductMediaFileRead) GetLastModifiedAt() *time.Time {
-	if o == nil {
+func (p *ProductMediaFileRead) GetLastModifiedAt() *time.Time {
+	if p == nil {
 		return nil
 	}
-	return o.LastModifiedAt
+	return p.LastModifiedAt
 }
 
-func (o *ProductMediaFileRead) GetVersion() *string {
-	if o == nil {
+func (p *ProductMediaFileRead) GetVersion() *string {
+	if p == nil {
 		return nil
 	}
-	return o.Version
+	return p.Version
 }
 
-func (o *ProductMediaFileRead) GetService() string {
+func (p *ProductMediaFileRead) GetService() string {
 	return "product_media"
 }
 
-func (o *ProductMediaFileRead) GetIsUploaded() bool {
-	if o == nil {
+func (p *ProductMediaFileRead) GetIsUploaded() bool {
+	if p == nil {
 		return false
 	}
-	return o.IsUploaded
+	return p.IsUploaded
 }
 
-func (o *ProductMediaFileRead) GetCreatedAt() time.Time {
-	if o == nil {
+func (p *ProductMediaFileRead) GetCreatedAt() time.Time {
+	if p == nil {
 		return time.Time{}
 	}
-	return o.CreatedAt
+	return p.CreatedAt
 }
 
-func (o *ProductMediaFileRead) GetSizeReadable() string {
-	if o == nil {
+func (p *ProductMediaFileRead) GetSizeReadable() string {
+	if p == nil {
 		return ""
 	}
-	return o.SizeReadable
+	return p.SizeReadable
 }
 
-func (o *ProductMediaFileRead) GetPublicURL() string {
-	if o == nil {
+func (p *ProductMediaFileRead) GetPublicURL() string {
+	if p == nil {
 		return ""
 	}
-	return o.PublicURL
+	return p.PublicURL
 }

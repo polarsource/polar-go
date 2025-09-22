@@ -148,76 +148,76 @@ func (b *BenefitLicenseKeysSubscriber) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *BenefitLicenseKeysSubscriber) GetID() string {
-	if o == nil {
+func (b *BenefitLicenseKeysSubscriber) GetID() string {
+	if b == nil {
 		return ""
 	}
-	return o.ID
+	return b.ID
 }
 
-func (o *BenefitLicenseKeysSubscriber) GetCreatedAt() time.Time {
-	if o == nil {
+func (b *BenefitLicenseKeysSubscriber) GetCreatedAt() time.Time {
+	if b == nil {
 		return time.Time{}
 	}
-	return o.CreatedAt
+	return b.CreatedAt
 }
 
-func (o *BenefitLicenseKeysSubscriber) GetModifiedAt() *time.Time {
-	if o == nil {
+func (b *BenefitLicenseKeysSubscriber) GetModifiedAt() *time.Time {
+	if b == nil {
 		return nil
 	}
-	return o.ModifiedAt
+	return b.ModifiedAt
 }
 
-func (o *BenefitLicenseKeysSubscriber) GetType() string {
+func (b *BenefitLicenseKeysSubscriber) GetType() string {
 	return "license_keys"
 }
 
-func (o *BenefitLicenseKeysSubscriber) GetDescription() string {
-	if o == nil {
+func (b *BenefitLicenseKeysSubscriber) GetDescription() string {
+	if b == nil {
 		return ""
 	}
-	return o.Description
+	return b.Description
 }
 
-func (o *BenefitLicenseKeysSubscriber) GetSelectable() bool {
-	if o == nil {
+func (b *BenefitLicenseKeysSubscriber) GetSelectable() bool {
+	if b == nil {
 		return false
 	}
-	return o.Selectable
+	return b.Selectable
 }
 
-func (o *BenefitLicenseKeysSubscriber) GetDeletable() bool {
-	if o == nil {
+func (b *BenefitLicenseKeysSubscriber) GetDeletable() bool {
+	if b == nil {
 		return false
 	}
-	return o.Deletable
+	return b.Deletable
 }
 
-func (o *BenefitLicenseKeysSubscriber) GetOrganizationID() string {
-	if o == nil {
+func (b *BenefitLicenseKeysSubscriber) GetOrganizationID() string {
+	if b == nil {
 		return ""
 	}
-	return o.OrganizationID
+	return b.OrganizationID
 }
 
-func (o *BenefitLicenseKeysSubscriber) GetMetadata() map[string]BenefitLicenseKeysSubscriberMetadata {
-	if o == nil {
+func (b *BenefitLicenseKeysSubscriber) GetMetadata() map[string]BenefitLicenseKeysSubscriberMetadata {
+	if b == nil {
 		return map[string]BenefitLicenseKeysSubscriberMetadata{}
 	}
-	return o.Metadata
+	return b.Metadata
 }
 
-func (o *BenefitLicenseKeysSubscriber) GetOrganization() Organization {
-	if o == nil {
+func (b *BenefitLicenseKeysSubscriber) GetOrganization() Organization {
+	if b == nil {
 		return Organization{}
 	}
-	return o.Organization
+	return b.Organization
 }
 
-func (o *BenefitLicenseKeysSubscriber) GetProperties() BenefitLicenseKeysSubscriberProperties {
-	if o == nil {
+func (b *BenefitLicenseKeysSubscriber) GetProperties() BenefitLicenseKeysSubscriberProperties {
+	if b == nil {
 		return BenefitLicenseKeysSubscriberProperties{}
 	}
-	return o.Properties
+	return b.Properties
 }

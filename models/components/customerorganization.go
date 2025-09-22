@@ -8,16 +8,16 @@ type CustomerOrganization struct {
 	Products     []CustomerProduct `json:"products"`
 }
 
-func (o *CustomerOrganization) GetOrganization() Organization {
-	if o == nil {
+func (c *CustomerOrganization) GetOrganization() Organization {
+	if c == nil {
 		return Organization{}
 	}
-	return o.Organization
+	return c.Organization
 }
 
-func (o *CustomerOrganization) GetProducts() []CustomerProduct {
-	if o == nil {
+func (c *CustomerOrganization) GetProducts() []CustomerProduct {
+	if c == nil {
 		return []CustomerProduct{}
 	}
-	return o.Products
+	return c.Products
 }

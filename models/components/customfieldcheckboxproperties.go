@@ -23,23 +23,23 @@ func (c *CustomFieldCheckboxProperties) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *CustomFieldCheckboxProperties) GetFormLabel() *string {
-	if o == nil {
+func (c *CustomFieldCheckboxProperties) GetFormLabel() *string {
+	if c == nil {
 		return nil
 	}
-	return o.FormLabel
+	return c.FormLabel
 }
 
-func (o *CustomFieldCheckboxProperties) GetFormHelpText() *string {
-	if o == nil {
+func (c *CustomFieldCheckboxProperties) GetFormHelpText() *string {
+	if c == nil {
 		return nil
 	}
-	return o.FormHelpText
+	return c.FormHelpText
 }
 
-func (o *CustomFieldCheckboxProperties) GetFormPlaceholder() *string {
-	if o == nil {
+func (c *CustomFieldCheckboxProperties) GetFormPlaceholder() *string {
+	if c == nil {
 		return nil
 	}
-	return o.FormPlaceholder
+	return c.FormPlaceholder
 }

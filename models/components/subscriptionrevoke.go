@@ -50,20 +50,20 @@ func (s *SubscriptionRevoke) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *SubscriptionRevoke) GetCustomerCancellationReason() *CustomerCancellationReason {
-	if o == nil {
+func (s *SubscriptionRevoke) GetCustomerCancellationReason() *CustomerCancellationReason {
+	if s == nil {
 		return nil
 	}
-	return o.CustomerCancellationReason
+	return s.CustomerCancellationReason
 }
 
-func (o *SubscriptionRevoke) GetCustomerCancellationComment() *string {
-	if o == nil {
+func (s *SubscriptionRevoke) GetCustomerCancellationComment() *string {
+	if s == nil {
 		return nil
 	}
-	return o.CustomerCancellationComment
+	return s.CustomerCancellationComment
 }
 
-func (o *SubscriptionRevoke) GetRevoke() bool {
+func (s *SubscriptionRevoke) GetRevoke() bool {
 	return true
 }
