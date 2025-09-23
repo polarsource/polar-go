@@ -481,12 +481,12 @@ func (u CustomerMetadata) MarshalJSON() ([]byte, error) {
 
 // Checkout session data retrieved using an access token.
 type Checkout struct {
+	// The ID of the object.
+	ID string `json:"id"`
 	// Creation timestamp of the object.
 	CreatedAt time.Time `json:"created_at"`
 	// Last modification timestamp of the object.
 	ModifiedAt *time.Time `json:"modified_at"`
-	// The ID of the object.
-	ID string `json:"id"`
 	// Key-value object storing custom field values.
 	CustomFieldData  map[string]*CheckoutCustomFieldData `json:"custom_field_data,omitempty"`
 	PaymentProcessor PaymentProcessor                    `json:"payment_processor"`
@@ -513,6 +513,12 @@ type Checkout struct {
 	TotalAmount int64 `json:"total_amount"`
 	// Currency code of the checkout session.
 	Currency string `json:"currency"`
+	// Interval unit of the trial period, if any. This value is either set from the checkout, if `trial_interval` is set, or from the selected product.
+	ActiveTrialInterval *TrialInterval `json:"active_trial_interval"`
+	// Number of interval units of the trial period, if any. This value is either set from the checkout, if `trial_interval_count` is set, or from the selected product.
+	ActiveTrialIntervalCount *int64 `json:"active_trial_interval_count"`
+	// End date and time of the trial period, if any.
+	TrialEnd *time.Time `json:"trial_end"`
 	// ID of the product to checkout.
 	ProductID string `json:"product_id"`
 	// ID of the product price to checkout.
@@ -546,7 +552,11 @@ type Checkout struct {
 	CustomerTaxID            *string                      `json:"customer_tax_id"`
 	PaymentProcessorMetadata map[string]string            `json:"payment_processor_metadata"`
 	BillingAddressFields     CheckoutBillingAddressFields `json:"billing_address_fields"`
-	Metadata                 map[string]CheckoutMetadata  `json:"metadata"`
+	// The interval unit for the trial period.
+	TrialInterval *TrialInterval `json:"trial_interval"`
+	// The number of interval units for the trial period.
+	TrialIntervalCount *int64                      `json:"trial_interval_count"`
+	Metadata           map[string]CheckoutMetadata `json:"metadata"`
 	// ID of the customer in your system. If a matching customer exists on Polar, the resulting order will be linked to this customer. Otherwise, a new customer will be created with this external ID set.
 	ExternalCustomerID *string `json:"external_customer_id"`
 	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
@@ -568,10 +578,17 @@ func (c Checkout) MarshalJSON() ([]byte, error) {
 }
 
 func (c *Checkout) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &c, "", false, []string{"created_at", "modified_at", "id", "payment_processor", "status", "client_secret", "url", "expires_at", "success_url", "embed_origin", "amount", "discount_amount", "net_amount", "tax_amount", "total_amount", "currency", "product_id", "product_price_id", "discount_id", "allow_discount_codes", "require_billing_address", "is_discount_applicable", "is_free_product_price", "is_payment_required", "is_payment_setup_required", "is_payment_form_required", "customer_id", "is_business_customer", "customer_name", "customer_email", "customer_ip_address", "customer_billing_name", "customer_billing_address", "customer_tax_id", "payment_processor_metadata", "billing_address_fields", "metadata", "external_customer_id", "customer_external_id", "products", "product", "product_price", "discount", "subscription_id", "attached_custom_fields", "customer_metadata"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &c, "", false, []string{"id", "created_at", "modified_at", "payment_processor", "status", "client_secret", "url", "expires_at", "success_url", "embed_origin", "amount", "discount_amount", "net_amount", "tax_amount", "total_amount", "currency", "active_trial_interval", "active_trial_interval_count", "trial_end", "product_id", "product_price_id", "discount_id", "allow_discount_codes", "require_billing_address", "is_discount_applicable", "is_free_product_price", "is_payment_required", "is_payment_setup_required", "is_payment_form_required", "customer_id", "is_business_customer", "customer_name", "customer_email", "customer_ip_address", "customer_billing_name", "customer_billing_address", "customer_tax_id", "payment_processor_metadata", "billing_address_fields", "trial_interval", "trial_interval_count", "metadata", "external_customer_id", "customer_external_id", "products", "product", "product_price", "discount", "subscription_id", "attached_custom_fields", "customer_metadata"}); err != nil {
 		return err
 	}
 	return nil
+}
+
+func (c *Checkout) GetID() string {
+	if c == nil {
+		return ""
+	}
+	return c.ID
 }
 
 func (c *Checkout) GetCreatedAt() time.Time {
@@ -586,13 +603,6 @@ func (c *Checkout) GetModifiedAt() *time.Time {
 		return nil
 	}
 	return c.ModifiedAt
-}
-
-func (c *Checkout) GetID() string {
-	if c == nil {
-		return ""
-	}
-	return c.ID
 }
 
 func (c *Checkout) GetCustomFieldData() map[string]*CheckoutCustomFieldData {
@@ -691,6 +701,27 @@ func (c *Checkout) GetCurrency() string {
 		return ""
 	}
 	return c.Currency
+}
+
+func (c *Checkout) GetActiveTrialInterval() *TrialInterval {
+	if c == nil {
+		return nil
+	}
+	return c.ActiveTrialInterval
+}
+
+func (c *Checkout) GetActiveTrialIntervalCount() *int64 {
+	if c == nil {
+		return nil
+	}
+	return c.ActiveTrialIntervalCount
+}
+
+func (c *Checkout) GetTrialEnd() *time.Time {
+	if c == nil {
+		return nil
+	}
+	return c.TrialEnd
 }
 
 func (c *Checkout) GetProductID() string {
@@ -831,6 +862,20 @@ func (c *Checkout) GetBillingAddressFields() CheckoutBillingAddressFields {
 		return CheckoutBillingAddressFields{}
 	}
 	return c.BillingAddressFields
+}
+
+func (c *Checkout) GetTrialInterval() *TrialInterval {
+	if c == nil {
+		return nil
+	}
+	return c.TrialInterval
+}
+
+func (c *Checkout) GetTrialIntervalCount() *int64 {
+	if c == nil {
+		return nil
+	}
+	return c.TrialIntervalCount
 }
 
 func (c *Checkout) GetMetadata() map[string]CheckoutMetadata {

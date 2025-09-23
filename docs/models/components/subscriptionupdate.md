@@ -15,6 +15,12 @@ subscriptionUpdate := components.CreateSubscriptionUpdateSubscriptionUpdateProdu
 subscriptionUpdate := components.CreateSubscriptionUpdateSubscriptionUpdateDiscount(components.SubscriptionUpdateDiscount{/* values here */})
 ```
 
+### SubscriptionUpdateTrial
+
+```go
+subscriptionUpdate := components.CreateSubscriptionUpdateSubscriptionUpdateTrial(components.SubscriptionUpdateTrial{/* values here */})
+```
+
 ### SubscriptionCancel
 
 ```go

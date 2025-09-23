@@ -119,12 +119,16 @@ func (u DiscountProductMetadata) MarshalJSON() ([]byte, error) {
 // DiscountProduct - A product that a discount can be applied to.
 type DiscountProduct struct {
 	Metadata map[string]DiscountProductMetadata `json:"metadata"`
+	// The ID of the object.
+	ID string `json:"id"`
 	// Creation timestamp of the object.
 	CreatedAt time.Time `json:"created_at"`
 	// Last modification timestamp of the object.
 	ModifiedAt *time.Time `json:"modified_at"`
-	// The ID of the product.
-	ID string `json:"id"`
+	// The interval unit for the trial period.
+	TrialInterval *TrialInterval `json:"trial_interval"`
+	// The number of interval units for the trial period.
+	TrialIntervalCount *int64 `json:"trial_interval_count"`
 	// The name of the product.
 	Name string `json:"name"`
 	// The description of the product.
@@ -144,7 +148,7 @@ func (d DiscountProduct) MarshalJSON() ([]byte, error) {
 }
 
 func (d *DiscountProduct) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &d, "", false, []string{"metadata", "created_at", "modified_at", "id", "name", "description", "recurring_interval", "is_recurring", "is_archived", "organization_id"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &d, "", false, []string{"metadata", "id", "created_at", "modified_at", "trial_interval", "trial_interval_count", "name", "description", "recurring_interval", "is_recurring", "is_archived", "organization_id"}); err != nil {
 		return err
 	}
 	return nil
@@ -155,6 +159,13 @@ func (d *DiscountProduct) GetMetadata() map[string]DiscountProductMetadata {
 		return map[string]DiscountProductMetadata{}
 	}
 	return d.Metadata
+}
+
+func (d *DiscountProduct) GetID() string {
+	if d == nil {
+		return ""
+	}
+	return d.ID
 }
 
 func (d *DiscountProduct) GetCreatedAt() time.Time {
@@ -171,11 +182,18 @@ func (d *DiscountProduct) GetModifiedAt() *time.Time {
 	return d.ModifiedAt
 }
 
-func (d *DiscountProduct) GetID() string {
+func (d *DiscountProduct) GetTrialInterval() *TrialInterval {
 	if d == nil {
-		return ""
+		return nil
 	}
-	return d.ID
+	return d.TrialInterval
+}
+
+func (d *DiscountProduct) GetTrialIntervalCount() *int64 {
+	if d == nil {
+		return nil
+	}
+	return d.TrialIntervalCount
 }
 
 func (d *DiscountProduct) GetName() string {

@@ -410,6 +410,10 @@ type Subscription struct {
 	CurrentPeriodStart time.Time `json:"current_period_start"`
 	// The end timestamp of the current billing period.
 	CurrentPeriodEnd *time.Time `json:"current_period_end"`
+	// The start timestamp of the trial period, if any.
+	TrialStart *time.Time `json:"trial_start"`
+	// The end timestamp of the trial period, if any.
+	TrialEnd *time.Time `json:"trial_end"`
 	// Whether the subscription will be canceled at the end of the current period.
 	CancelAtPeriodEnd bool `json:"cancel_at_period_end"`
 	// The timestamp when the subscription was canceled. The subscription might still be active if `cancel_at_period_end` is `true`.
@@ -447,7 +451,7 @@ func (s Subscription) MarshalJSON() ([]byte, error) {
 }
 
 func (s *Subscription) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &s, "", false, []string{"created_at", "modified_at", "id", "amount", "currency", "recurring_interval", "status", "current_period_start", "current_period_end", "cancel_at_period_end", "canceled_at", "started_at", "ends_at", "ended_at", "customer_id", "product_id", "discount_id", "checkout_id", "customer_cancellation_reason", "customer_cancellation_comment", "metadata", "customer", "product", "discount", "prices", "meters"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &s, "", false, []string{"created_at", "modified_at", "id", "amount", "currency", "recurring_interval", "status", "current_period_start", "current_period_end", "trial_start", "trial_end", "cancel_at_period_end", "canceled_at", "started_at", "ends_at", "ended_at", "customer_id", "product_id", "discount_id", "checkout_id", "customer_cancellation_reason", "customer_cancellation_comment", "metadata", "customer", "product", "discount", "prices", "meters"}); err != nil {
 		return err
 	}
 	return nil
@@ -514,6 +518,20 @@ func (s *Subscription) GetCurrentPeriodEnd() *time.Time {
 		return nil
 	}
 	return s.CurrentPeriodEnd
+}
+
+func (s *Subscription) GetTrialStart() *time.Time {
+	if s == nil {
+		return nil
+	}
+	return s.TrialStart
+}
+
+func (s *Subscription) GetTrialEnd() *time.Time {
+	if s == nil {
+		return nil
+	}
+	return s.TrialEnd
 }
 
 func (s *Subscription) GetCancelAtPeriodEnd() bool {

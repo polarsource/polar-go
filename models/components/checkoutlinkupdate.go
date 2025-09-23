@@ -117,6 +117,10 @@ func (u CheckoutLinkUpdateMetadata) MarshalJSON() ([]byte, error) {
 
 // CheckoutLinkUpdate - Schema to update an existing checkout link.
 type CheckoutLinkUpdate struct {
+	// The interval unit for the trial period.
+	TrialInterval *TrialInterval `json:"trial_interval,omitempty"`
+	// The number of interval units for the trial period.
+	TrialIntervalCount *int64 `json:"trial_interval_count,omitempty"`
 	// Key-value object allowing you to store additional information.
 	//
 	// The key must be a string with a maximum length of **40 characters**.
@@ -140,6 +144,20 @@ type CheckoutLinkUpdate struct {
 	DiscountID *string `json:"discount_id,omitempty"`
 	// URL where the customer will be redirected after a successful payment.You can add the `checkout_id={CHECKOUT_ID}` query parameter to retrieve the checkout session id.
 	SuccessURL *string `json:"success_url,omitempty"`
+}
+
+func (c *CheckoutLinkUpdate) GetTrialInterval() *TrialInterval {
+	if c == nil {
+		return nil
+	}
+	return c.TrialInterval
+}
+
+func (c *CheckoutLinkUpdate) GetTrialIntervalCount() *int64 {
+	if c == nil {
+		return nil
+	}
+	return c.TrialIntervalCount
 }
 
 func (c *CheckoutLinkUpdate) GetMetadata() map[string]CheckoutLinkUpdateMetadata {

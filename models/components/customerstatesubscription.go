@@ -3,6 +3,7 @@
 package components
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
@@ -223,6 +224,32 @@ func (u CustomerStateSubscriptionMetadata) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type CustomerStateSubscriptionMetadata: all fields are null")
 }
 
+type CustomerStateSubscriptionStatus string
+
+const (
+	CustomerStateSubscriptionStatusActive   CustomerStateSubscriptionStatus = "active"
+	CustomerStateSubscriptionStatusTrialing CustomerStateSubscriptionStatus = "trialing"
+)
+
+func (e CustomerStateSubscriptionStatus) ToPointer() *CustomerStateSubscriptionStatus {
+	return &e
+}
+func (e *CustomerStateSubscriptionStatus) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "active":
+		fallthrough
+	case "trialing":
+		*e = CustomerStateSubscriptionStatus(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for CustomerStateSubscriptionStatus: %v", v)
+	}
+}
+
 // CustomerStateSubscription - An active customer subscription.
 type CustomerStateSubscription struct {
 	// The ID of the subscription.
@@ -234,7 +261,7 @@ type CustomerStateSubscription struct {
 	// Key-value object storing custom field values.
 	CustomFieldData map[string]*CustomerStateSubscriptionCustomFieldData `json:"custom_field_data,omitempty"`
 	Metadata        map[string]CustomerStateSubscriptionMetadata         `json:"metadata"`
-	status          string                                               `const:"active" json:"status"`
+	Status          CustomerStateSubscriptionStatus                      `json:"status"`
 	// The amount of the subscription.
 	Amount int64 `json:"amount"`
 	// The currency of the subscription.
@@ -244,6 +271,10 @@ type CustomerStateSubscription struct {
 	CurrentPeriodStart time.Time `json:"current_period_start"`
 	// The end timestamp of the current billing period.
 	CurrentPeriodEnd *time.Time `json:"current_period_end"`
+	// The start timestamp of the trial period, if any.
+	TrialStart *time.Time `json:"trial_start"`
+	// The end timestamp of the trial period, if any.
+	TrialEnd *time.Time `json:"trial_end"`
 	// Whether the subscription will be canceled at the end of the current period.
 	CancelAtPeriodEnd bool `json:"cancel_at_period_end"`
 	// The timestamp when the subscription was canceled. The subscription might still be active if `cancel_at_period_end` is `true`.
@@ -265,7 +296,7 @@ func (c CustomerStateSubscription) MarshalJSON() ([]byte, error) {
 }
 
 func (c *CustomerStateSubscription) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &c, "", false, []string{"id", "created_at", "modified_at", "metadata", "status", "amount", "currency", "recurring_interval", "current_period_start", "current_period_end", "cancel_at_period_end", "canceled_at", "started_at", "ends_at", "product_id", "discount_id", "meters"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &c, "", false, []string{"id", "created_at", "modified_at", "metadata", "status", "amount", "currency", "recurring_interval", "current_period_start", "current_period_end", "trial_start", "trial_end", "cancel_at_period_end", "canceled_at", "started_at", "ends_at", "product_id", "discount_id", "meters"}); err != nil {
 		return err
 	}
 	return nil
@@ -306,8 +337,11 @@ func (c *CustomerStateSubscription) GetMetadata() map[string]CustomerStateSubscr
 	return c.Metadata
 }
 
-func (c *CustomerStateSubscription) GetStatus() string {
-	return "active"
+func (c *CustomerStateSubscription) GetStatus() CustomerStateSubscriptionStatus {
+	if c == nil {
+		return CustomerStateSubscriptionStatus("")
+	}
+	return c.Status
 }
 
 func (c *CustomerStateSubscription) GetAmount() int64 {
@@ -343,6 +377,20 @@ func (c *CustomerStateSubscription) GetCurrentPeriodEnd() *time.Time {
 		return nil
 	}
 	return c.CurrentPeriodEnd
+}
+
+func (c *CustomerStateSubscription) GetTrialStart() *time.Time {
+	if c == nil {
+		return nil
+	}
+	return c.TrialStart
+}
+
+func (c *CustomerStateSubscription) GetTrialEnd() *time.Time {
+	if c == nil {
+		return nil
+	}
+	return c.TrialEnd
 }
 
 func (c *CustomerStateSubscription) GetCancelAtPeriodEnd() bool {

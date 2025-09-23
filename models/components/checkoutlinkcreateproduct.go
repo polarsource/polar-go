@@ -131,6 +131,10 @@ type CheckoutLinkCreateProduct struct {
 	//
 	// You can store up to **50 key-value pairs**.
 	Metadata map[string]CheckoutLinkCreateProductMetadata `json:"metadata,omitempty"`
+	// The interval unit for the trial period.
+	TrialInterval *TrialInterval `json:"trial_interval,omitempty"`
+	// The number of interval units for the trial period.
+	TrialIntervalCount *int64 `json:"trial_interval_count,omitempty"`
 	// Payment processor to use. Currently only Stripe is supported.
 	paymentProcessor string `const:"stripe" json:"payment_processor"`
 	// Optional label to distinguish links internally
@@ -162,6 +166,20 @@ func (c *CheckoutLinkCreateProduct) GetMetadata() map[string]CheckoutLinkCreateP
 		return nil
 	}
 	return c.Metadata
+}
+
+func (c *CheckoutLinkCreateProduct) GetTrialInterval() *TrialInterval {
+	if c == nil {
+		return nil
+	}
+	return c.TrialInterval
+}
+
+func (c *CheckoutLinkCreateProduct) GetTrialIntervalCount() *int64 {
+	if c == nil {
+		return nil
+	}
+	return c.TrialIntervalCount
 }
 
 func (c *CheckoutLinkCreateProduct) GetPaymentProcessor() string {

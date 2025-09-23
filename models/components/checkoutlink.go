@@ -225,14 +225,18 @@ func (u CheckoutLinkDiscount) MarshalJSON() ([]byte, error) {
 
 // CheckoutLink - Checkout link data.
 type CheckoutLink struct {
+	// The ID of the object.
+	ID string `json:"id"`
 	// Creation timestamp of the object.
 	CreatedAt time.Time `json:"created_at"`
 	// Last modification timestamp of the object.
 	ModifiedAt *time.Time `json:"modified_at"`
-	// The ID of the object.
-	ID               string                          `json:"id"`
-	Metadata         map[string]CheckoutLinkMetadata `json:"metadata"`
-	PaymentProcessor PaymentProcessor                `json:"payment_processor"`
+	// The interval unit for the trial period.
+	TrialInterval *TrialInterval `json:"trial_interval"`
+	// The number of interval units for the trial period.
+	TrialIntervalCount *int64                          `json:"trial_interval_count"`
+	Metadata           map[string]CheckoutLinkMetadata `json:"metadata"`
+	PaymentProcessor   PaymentProcessor                `json:"payment_processor"`
 	// Client secret used to access the checkout link.
 	ClientSecret string `json:"client_secret"`
 	// URL where the customer will be redirected after a successful payment.
@@ -257,10 +261,17 @@ func (c CheckoutLink) MarshalJSON() ([]byte, error) {
 }
 
 func (c *CheckoutLink) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &c, "", false, []string{"created_at", "modified_at", "id", "metadata", "payment_processor", "client_secret", "success_url", "label", "allow_discount_codes", "require_billing_address", "discount_id", "organization_id", "products", "discount", "url"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &c, "", false, []string{"id", "created_at", "modified_at", "trial_interval", "trial_interval_count", "metadata", "payment_processor", "client_secret", "success_url", "label", "allow_discount_codes", "require_billing_address", "discount_id", "organization_id", "products", "discount", "url"}); err != nil {
 		return err
 	}
 	return nil
+}
+
+func (c *CheckoutLink) GetID() string {
+	if c == nil {
+		return ""
+	}
+	return c.ID
 }
 
 func (c *CheckoutLink) GetCreatedAt() time.Time {
@@ -277,11 +288,18 @@ func (c *CheckoutLink) GetModifiedAt() *time.Time {
 	return c.ModifiedAt
 }
 
-func (c *CheckoutLink) GetID() string {
+func (c *CheckoutLink) GetTrialInterval() *TrialInterval {
 	if c == nil {
-		return ""
+		return nil
 	}
-	return c.ID
+	return c.TrialInterval
+}
+
+func (c *CheckoutLink) GetTrialIntervalCount() *int64 {
+	if c == nil {
+		return nil
+	}
+	return c.TrialIntervalCount
 }
 
 func (c *CheckoutLink) GetMetadata() map[string]CheckoutLinkMetadata {

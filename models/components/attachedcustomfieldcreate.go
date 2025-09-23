@@ -2,12 +2,27 @@
 
 package components
 
+import (
+	"github.com/polarsource/polar-go/internal/utils"
+)
+
 // AttachedCustomFieldCreate - Schema to attach a custom field to a resource.
 type AttachedCustomFieldCreate struct {
 	// ID of the custom field to attach.
 	CustomFieldID string `json:"custom_field_id"`
 	// Whether the value is required for this custom field.
 	Required bool `json:"required"`
+}
+
+func (a AttachedCustomFieldCreate) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(a, "", false)
+}
+
+func (a *AttachedCustomFieldCreate) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &a, "", false, []string{"custom_field_id", "required"}); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (a *AttachedCustomFieldCreate) GetCustomFieldID() string {

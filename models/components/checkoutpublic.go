@@ -289,12 +289,12 @@ func (u CheckoutPublicDiscount) MarshalJSON() ([]byte, error) {
 
 // CheckoutPublic - Checkout session data retrieved using the client secret.
 type CheckoutPublic struct {
+	// The ID of the object.
+	ID string `json:"id"`
 	// Creation timestamp of the object.
 	CreatedAt time.Time `json:"created_at"`
 	// Last modification timestamp of the object.
 	ModifiedAt *time.Time `json:"modified_at"`
-	// The ID of the object.
-	ID string `json:"id"`
 	// Key-value object storing custom field values.
 	CustomFieldData  map[string]*CheckoutPublicCustomFieldData `json:"custom_field_data,omitempty"`
 	PaymentProcessor PaymentProcessor                          `json:"payment_processor"`
@@ -321,6 +321,12 @@ type CheckoutPublic struct {
 	TotalAmount int64 `json:"total_amount"`
 	// Currency code of the checkout session.
 	Currency string `json:"currency"`
+	// Interval unit of the trial period, if any. This value is either set from the checkout, if `trial_interval` is set, or from the selected product.
+	ActiveTrialInterval *TrialInterval `json:"active_trial_interval"`
+	// Number of interval units of the trial period, if any. This value is either set from the checkout, if `trial_interval_count` is set, or from the selected product.
+	ActiveTrialIntervalCount *int64 `json:"active_trial_interval_count"`
+	// End date and time of the trial period, if any.
+	TrialEnd *time.Time `json:"trial_end"`
 	// ID of the product to checkout.
 	ProductID string `json:"product_id"`
 	// ID of the product price to checkout.
@@ -370,10 +376,17 @@ func (c CheckoutPublic) MarshalJSON() ([]byte, error) {
 }
 
 func (c *CheckoutPublic) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &c, "", false, []string{"created_at", "modified_at", "id", "payment_processor", "status", "client_secret", "url", "expires_at", "success_url", "embed_origin", "amount", "discount_amount", "net_amount", "tax_amount", "total_amount", "currency", "product_id", "product_price_id", "discount_id", "allow_discount_codes", "require_billing_address", "is_discount_applicable", "is_free_product_price", "is_payment_required", "is_payment_setup_required", "is_payment_form_required", "customer_id", "is_business_customer", "customer_name", "customer_email", "customer_ip_address", "customer_billing_name", "customer_billing_address", "customer_tax_id", "payment_processor_metadata", "billing_address_fields", "products", "product", "product_price", "discount", "organization", "attached_custom_fields"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &c, "", false, []string{"id", "created_at", "modified_at", "payment_processor", "status", "client_secret", "url", "expires_at", "success_url", "embed_origin", "amount", "discount_amount", "net_amount", "tax_amount", "total_amount", "currency", "active_trial_interval", "active_trial_interval_count", "trial_end", "product_id", "product_price_id", "discount_id", "allow_discount_codes", "require_billing_address", "is_discount_applicable", "is_free_product_price", "is_payment_required", "is_payment_setup_required", "is_payment_form_required", "customer_id", "is_business_customer", "customer_name", "customer_email", "customer_ip_address", "customer_billing_name", "customer_billing_address", "customer_tax_id", "payment_processor_metadata", "billing_address_fields", "products", "product", "product_price", "discount", "organization", "attached_custom_fields"}); err != nil {
 		return err
 	}
 	return nil
+}
+
+func (c *CheckoutPublic) GetID() string {
+	if c == nil {
+		return ""
+	}
+	return c.ID
 }
 
 func (c *CheckoutPublic) GetCreatedAt() time.Time {
@@ -388,13 +401,6 @@ func (c *CheckoutPublic) GetModifiedAt() *time.Time {
 		return nil
 	}
 	return c.ModifiedAt
-}
-
-func (c *CheckoutPublic) GetID() string {
-	if c == nil {
-		return ""
-	}
-	return c.ID
 }
 
 func (c *CheckoutPublic) GetCustomFieldData() map[string]*CheckoutPublicCustomFieldData {
@@ -493,6 +499,27 @@ func (c *CheckoutPublic) GetCurrency() string {
 		return ""
 	}
 	return c.Currency
+}
+
+func (c *CheckoutPublic) GetActiveTrialInterval() *TrialInterval {
+	if c == nil {
+		return nil
+	}
+	return c.ActiveTrialInterval
+}
+
+func (c *CheckoutPublic) GetActiveTrialIntervalCount() *int64 {
+	if c == nil {
+		return nil
+	}
+	return c.ActiveTrialIntervalCount
+}
+
+func (c *CheckoutPublic) GetTrialEnd() *time.Time {
+	if c == nil {
+		return nil
+	}
+	return c.TrialEnd
 }
 
 func (c *CheckoutPublic) GetProductID() string {

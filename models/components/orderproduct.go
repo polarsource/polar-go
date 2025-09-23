@@ -118,12 +118,16 @@ func (u OrderProductMetadata) MarshalJSON() ([]byte, error) {
 
 type OrderProduct struct {
 	Metadata map[string]OrderProductMetadata `json:"metadata"`
+	// The ID of the object.
+	ID string `json:"id"`
 	// Creation timestamp of the object.
 	CreatedAt time.Time `json:"created_at"`
 	// Last modification timestamp of the object.
 	ModifiedAt *time.Time `json:"modified_at"`
-	// The ID of the product.
-	ID string `json:"id"`
+	// The interval unit for the trial period.
+	TrialInterval *TrialInterval `json:"trial_interval"`
+	// The number of interval units for the trial period.
+	TrialIntervalCount *int64 `json:"trial_interval_count"`
 	// The name of the product.
 	Name string `json:"name"`
 	// The description of the product.
@@ -143,7 +147,7 @@ func (o OrderProduct) MarshalJSON() ([]byte, error) {
 }
 
 func (o *OrderProduct) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &o, "", false, []string{"metadata", "created_at", "modified_at", "id", "name", "description", "recurring_interval", "is_recurring", "is_archived", "organization_id"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &o, "", false, []string{"metadata", "id", "created_at", "modified_at", "trial_interval", "trial_interval_count", "name", "description", "recurring_interval", "is_recurring", "is_archived", "organization_id"}); err != nil {
 		return err
 	}
 	return nil
@@ -154,6 +158,13 @@ func (o *OrderProduct) GetMetadata() map[string]OrderProductMetadata {
 		return map[string]OrderProductMetadata{}
 	}
 	return o.Metadata
+}
+
+func (o *OrderProduct) GetID() string {
+	if o == nil {
+		return ""
+	}
+	return o.ID
 }
 
 func (o *OrderProduct) GetCreatedAt() time.Time {
@@ -170,11 +181,18 @@ func (o *OrderProduct) GetModifiedAt() *time.Time {
 	return o.ModifiedAt
 }
 
-func (o *OrderProduct) GetID() string {
+func (o *OrderProduct) GetTrialInterval() *TrialInterval {
 	if o == nil {
-		return ""
+		return nil
 	}
-	return o.ID
+	return o.TrialInterval
+}
+
+func (o *OrderProduct) GetTrialIntervalCount() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.TrialIntervalCount
 }
 
 func (o *OrderProduct) GetName() string {

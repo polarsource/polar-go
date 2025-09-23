@@ -336,6 +336,10 @@ func (u CheckoutCreateCustomerMetadata) MarshalJSON() ([]byte, error) {
 // Metadata set on the checkout will be copied
 // to the resulting order and/or subscription.
 type CheckoutCreate struct {
+	// The interval unit for the trial period.
+	TrialInterval *TrialInterval `json:"trial_interval,omitempty"`
+	// The number of interval units for the trial period.
+	TrialIntervalCount *int64 `json:"trial_interval_count,omitempty"`
 	// Key-value object allowing you to store additional information.
 	//
 	// The key must be a string with a maximum length of **40 characters**.
@@ -400,6 +404,20 @@ func (c *CheckoutCreate) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
+}
+
+func (c *CheckoutCreate) GetTrialInterval() *TrialInterval {
+	if c == nil {
+		return nil
+	}
+	return c.TrialInterval
+}
+
+func (c *CheckoutCreate) GetTrialIntervalCount() *int64 {
+	if c == nil {
+		return nil
+	}
+	return c.TrialIntervalCount
 }
 
 func (c *CheckoutCreate) GetMetadata() map[string]CheckoutCreateMetadata {

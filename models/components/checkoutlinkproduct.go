@@ -182,12 +182,16 @@ func (u CheckoutLinkProductPrices) MarshalJSON() ([]byte, error) {
 // CheckoutLinkProduct - Product data for a checkout link.
 type CheckoutLinkProduct struct {
 	Metadata map[string]CheckoutLinkProductMetadata `json:"metadata"`
+	// The ID of the object.
+	ID string `json:"id"`
 	// Creation timestamp of the object.
 	CreatedAt time.Time `json:"created_at"`
 	// Last modification timestamp of the object.
 	ModifiedAt *time.Time `json:"modified_at"`
-	// The ID of the product.
-	ID string `json:"id"`
+	// The interval unit for the trial period.
+	TrialInterval *TrialInterval `json:"trial_interval"`
+	// The number of interval units for the trial period.
+	TrialIntervalCount *int64 `json:"trial_interval_count"`
 	// The name of the product.
 	Name string `json:"name"`
 	// The description of the product.
@@ -213,7 +217,7 @@ func (c CheckoutLinkProduct) MarshalJSON() ([]byte, error) {
 }
 
 func (c *CheckoutLinkProduct) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &c, "", false, []string{"metadata", "created_at", "modified_at", "id", "name", "description", "recurring_interval", "is_recurring", "is_archived", "organization_id", "prices", "benefits", "medias"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &c, "", false, []string{"metadata", "id", "created_at", "modified_at", "trial_interval", "trial_interval_count", "name", "description", "recurring_interval", "is_recurring", "is_archived", "organization_id", "prices", "benefits", "medias"}); err != nil {
 		return err
 	}
 	return nil
@@ -224,6 +228,13 @@ func (c *CheckoutLinkProduct) GetMetadata() map[string]CheckoutLinkProductMetada
 		return map[string]CheckoutLinkProductMetadata{}
 	}
 	return c.Metadata
+}
+
+func (c *CheckoutLinkProduct) GetID() string {
+	if c == nil {
+		return ""
+	}
+	return c.ID
 }
 
 func (c *CheckoutLinkProduct) GetCreatedAt() time.Time {
@@ -240,11 +251,18 @@ func (c *CheckoutLinkProduct) GetModifiedAt() *time.Time {
 	return c.ModifiedAt
 }
 
-func (c *CheckoutLinkProduct) GetID() string {
+func (c *CheckoutLinkProduct) GetTrialInterval() *TrialInterval {
 	if c == nil {
-		return ""
+		return nil
 	}
-	return c.ID
+	return c.TrialInterval
+}
+
+func (c *CheckoutLinkProduct) GetTrialIntervalCount() *int64 {
+	if c == nil {
+		return nil
+	}
+	return c.TrialIntervalCount
 }
 
 func (c *CheckoutLinkProduct) GetName() string {

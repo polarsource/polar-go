@@ -74,12 +74,16 @@ func (u CustomerProductPrices) MarshalJSON() ([]byte, error) {
 
 // CustomerProduct - Schema of a product for customer portal.
 type CustomerProduct struct {
+	// The ID of the object.
+	ID string `json:"id"`
 	// Creation timestamp of the object.
 	CreatedAt time.Time `json:"created_at"`
 	// Last modification timestamp of the object.
 	ModifiedAt *time.Time `json:"modified_at"`
-	// The ID of the product.
-	ID string `json:"id"`
+	// The interval unit for the trial period.
+	TrialInterval *TrialInterval `json:"trial_interval"`
+	// The number of interval units for the trial period.
+	TrialIntervalCount *int64 `json:"trial_interval_count"`
 	// The name of the product.
 	Name string `json:"name"`
 	// The description of the product.
@@ -105,10 +109,17 @@ func (c CustomerProduct) MarshalJSON() ([]byte, error) {
 }
 
 func (c *CustomerProduct) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &c, "", false, []string{"created_at", "modified_at", "id", "name", "description", "recurring_interval", "is_recurring", "is_archived", "organization_id", "prices", "benefits", "medias"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &c, "", false, []string{"id", "created_at", "modified_at", "trial_interval", "trial_interval_count", "name", "description", "recurring_interval", "is_recurring", "is_archived", "organization_id", "prices", "benefits", "medias"}); err != nil {
 		return err
 	}
 	return nil
+}
+
+func (c *CustomerProduct) GetID() string {
+	if c == nil {
+		return ""
+	}
+	return c.ID
 }
 
 func (c *CustomerProduct) GetCreatedAt() time.Time {
@@ -125,11 +136,18 @@ func (c *CustomerProduct) GetModifiedAt() *time.Time {
 	return c.ModifiedAt
 }
 
-func (c *CustomerProduct) GetID() string {
+func (c *CustomerProduct) GetTrialInterval() *TrialInterval {
 	if c == nil {
-		return ""
+		return nil
 	}
-	return c.ID
+	return c.TrialInterval
+}
+
+func (c *CustomerProduct) GetTrialIntervalCount() *int64 {
+	if c == nil {
+		return nil
+	}
+	return c.TrialIntervalCount
 }
 
 func (c *CustomerProduct) GetName() string {

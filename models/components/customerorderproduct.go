@@ -73,12 +73,16 @@ func (u CustomerOrderProductPrices) MarshalJSON() ([]byte, error) {
 }
 
 type CustomerOrderProduct struct {
+	// The ID of the object.
+	ID string `json:"id"`
 	// Creation timestamp of the object.
 	CreatedAt time.Time `json:"created_at"`
 	// Last modification timestamp of the object.
 	ModifiedAt *time.Time `json:"modified_at"`
-	// The ID of the product.
-	ID string `json:"id"`
+	// The interval unit for the trial period.
+	TrialInterval *TrialInterval `json:"trial_interval"`
+	// The number of interval units for the trial period.
+	TrialIntervalCount *int64 `json:"trial_interval_count"`
 	// The name of the product.
 	Name string `json:"name"`
 	// The description of the product.
@@ -105,10 +109,17 @@ func (c CustomerOrderProduct) MarshalJSON() ([]byte, error) {
 }
 
 func (c *CustomerOrderProduct) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &c, "", false, []string{"created_at", "modified_at", "id", "name", "description", "recurring_interval", "is_recurring", "is_archived", "organization_id", "prices", "benefits", "medias", "organization"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &c, "", false, []string{"id", "created_at", "modified_at", "trial_interval", "trial_interval_count", "name", "description", "recurring_interval", "is_recurring", "is_archived", "organization_id", "prices", "benefits", "medias", "organization"}); err != nil {
 		return err
 	}
 	return nil
+}
+
+func (c *CustomerOrderProduct) GetID() string {
+	if c == nil {
+		return ""
+	}
+	return c.ID
 }
 
 func (c *CustomerOrderProduct) GetCreatedAt() time.Time {
@@ -125,11 +136,18 @@ func (c *CustomerOrderProduct) GetModifiedAt() *time.Time {
 	return c.ModifiedAt
 }
 
-func (c *CustomerOrderProduct) GetID() string {
+func (c *CustomerOrderProduct) GetTrialInterval() *TrialInterval {
 	if c == nil {
-		return ""
+		return nil
 	}
-	return c.ID
+	return c.TrialInterval
+}
+
+func (c *CustomerOrderProduct) GetTrialIntervalCount() *int64 {
+	if c == nil {
+		return nil
+	}
+	return c.TrialIntervalCount
 }
 
 func (c *CustomerOrderProduct) GetName() string {

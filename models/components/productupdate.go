@@ -258,7 +258,11 @@ type ProductUpdate struct {
 	//
 	// You can store up to **50 key-value pairs**.
 	Metadata map[string]ProductUpdateMetadata `json:"metadata,omitempty"`
-	Name     *string                          `json:"name,omitempty"`
+	// The interval unit for the trial period.
+	TrialInterval *TrialInterval `json:"trial_interval,omitempty"`
+	// The number of interval units for the trial period.
+	TrialIntervalCount *int64  `json:"trial_interval_count,omitempty"`
+	Name               *string `json:"name,omitempty"`
 	// The description of the product.
 	Description *string `json:"description,omitempty"`
 	// The recurring interval of the product. If `None`, the product is a one-time purchase. **Can only be set on legacy recurring products. Once set, it can't be changed.**
@@ -277,6 +281,20 @@ func (p *ProductUpdate) GetMetadata() map[string]ProductUpdateMetadata {
 		return nil
 	}
 	return p.Metadata
+}
+
+func (p *ProductUpdate) GetTrialInterval() *TrialInterval {
+	if p == nil {
+		return nil
+	}
+	return p.TrialInterval
+}
+
+func (p *ProductUpdate) GetTrialIntervalCount() *int64 {
+	if p == nil {
+		return nil
+	}
+	return p.TrialIntervalCount
 }
 
 func (p *ProductUpdate) GetName() *string {

@@ -347,6 +347,10 @@ type CheckoutUpdate struct {
 	CustomerBillingName    *string       `json:"customer_billing_name,omitempty"`
 	CustomerBillingAddress *AddressInput `json:"customer_billing_address,omitempty"`
 	CustomerTaxID          *string       `json:"customer_tax_id,omitempty"`
+	// The interval unit for the trial period.
+	TrialInterval *TrialInterval `json:"trial_interval,omitempty"`
+	// The number of interval units for the trial period.
+	TrialIntervalCount *int64 `json:"trial_interval_count,omitempty"`
 	// Key-value object allowing you to store additional information.
 	//
 	// The key must be a string with a maximum length of **40 characters**.
@@ -452,6 +456,20 @@ func (c *CheckoutUpdate) GetCustomerTaxID() *string {
 		return nil
 	}
 	return c.CustomerTaxID
+}
+
+func (c *CheckoutUpdate) GetTrialInterval() *TrialInterval {
+	if c == nil {
+		return nil
+	}
+	return c.TrialInterval
+}
+
+func (c *CheckoutUpdate) GetTrialIntervalCount() *int64 {
+	if c == nil {
+		return nil
+	}
+	return c.TrialIntervalCount
 }
 
 func (c *CheckoutUpdate) GetMetadata() map[string]CheckoutUpdateMetadata {

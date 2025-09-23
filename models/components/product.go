@@ -181,12 +181,16 @@ func (u Prices) MarshalJSON() ([]byte, error) {
 
 // Product - A product.
 type Product struct {
+	// The ID of the object.
+	ID string `json:"id"`
 	// Creation timestamp of the object.
 	CreatedAt time.Time `json:"created_at"`
 	// Last modification timestamp of the object.
 	ModifiedAt *time.Time `json:"modified_at"`
-	// The ID of the product.
-	ID string `json:"id"`
+	// The interval unit for the trial period.
+	TrialInterval *TrialInterval `json:"trial_interval"`
+	// The number of interval units for the trial period.
+	TrialIntervalCount *int64 `json:"trial_interval_count"`
 	// The name of the product.
 	Name string `json:"name"`
 	// The description of the product.
@@ -215,10 +219,17 @@ func (p Product) MarshalJSON() ([]byte, error) {
 }
 
 func (p *Product) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &p, "", false, []string{"created_at", "modified_at", "id", "name", "description", "recurring_interval", "is_recurring", "is_archived", "organization_id", "metadata", "prices", "benefits", "medias", "attached_custom_fields"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &p, "", false, []string{"id", "created_at", "modified_at", "trial_interval", "trial_interval_count", "name", "description", "recurring_interval", "is_recurring", "is_archived", "organization_id", "metadata", "prices", "benefits", "medias", "attached_custom_fields"}); err != nil {
 		return err
 	}
 	return nil
+}
+
+func (p *Product) GetID() string {
+	if p == nil {
+		return ""
+	}
+	return p.ID
 }
 
 func (p *Product) GetCreatedAt() time.Time {
@@ -235,11 +246,18 @@ func (p *Product) GetModifiedAt() *time.Time {
 	return p.ModifiedAt
 }
 
-func (p *Product) GetID() string {
+func (p *Product) GetTrialInterval() *TrialInterval {
 	if p == nil {
-		return ""
+		return nil
 	}
-	return p.ID
+	return p.TrialInterval
+}
+
+func (p *Product) GetTrialIntervalCount() *int64 {
+	if p == nil {
+		return nil
+	}
+	return p.TrialIntervalCount
 }
 
 func (p *Product) GetName() string {

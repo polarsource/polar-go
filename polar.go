@@ -159,9 +159,9 @@ func WithTimeout(timeout time.Duration) SDKOption {
 // New creates a new instance of the SDK with the provided options
 func New(opts ...SDKOption) *Polar {
 	sdk := &Polar{
-		SDKVersion: "0.9.0",
+		SDKVersion: "0.9.1",
 		sdkConfiguration: config.SDKConfiguration{
-			UserAgent:  "speakeasy-sdk/go 0.9.0 2.709.0 0.1.0 github.com/polarsource/polar-go",
+			UserAgent:  "speakeasy-sdk/go 0.9.1 2.709.0 0.1.0 github.com/polarsource/polar-go",
 			ServerList: ServerList,
 		},
 		hooks: hooks.New(),

@@ -110,21 +110,23 @@ func main() {
         polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )
 
-    res, err := s.Products.Create(ctx, components.ProductCreate{
-        Name: "<value>",
-        RecurringInterval: components.SubscriptionRecurringIntervalYear.ToPointer(),
-        Prices: []components.ProductCreatePrices{
-            components.CreateProductCreatePricesProductPriceFixedCreate(
-                components.ProductPriceFixedCreate{
-                    PriceAmount: 677078,
-                },
-            ),
-            components.CreateProductCreatePricesProductPriceCustomCreate(
-                components.ProductPriceCustomCreate{},
-            ),
+    res, err := s.Products.Create(ctx, components.CreateProductCreateProductCreateOneTime(
+        components.ProductCreateOneTime{
+            Name: "<value>",
+            Prices: []components.ProductCreateOneTimePrices{
+                components.CreateProductCreateOneTimePricesProductPriceFixedCreate(
+                    components.ProductPriceFixedCreate{
+                        PriceAmount: 677078,
+                    },
+                ),
+                components.CreateProductCreateOneTimePricesProductPriceCustomCreate(
+                    components.ProductPriceCustomCreate{},
+                ),
+            },
+            OrganizationID: polargo.Pointer("1dbfc517-0bbf-4301-9ba8-555ca42b9737"),
+            RecurringInterval: "year",
         },
-        OrganizationID: polargo.Pointer("1dbfc517-0bbf-4301-9ba8-555ca42b9737"),
-    })
+    ))
     if err != nil {
         log.Fatal(err)
     }
