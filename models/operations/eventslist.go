@@ -19,8 +19,8 @@ const (
 
 // EventsListQueryParamOrganizationIDFilter - Filter by organization ID.
 type EventsListQueryParamOrganizationIDFilter struct {
-	Str        *string  `queryParam:"inline" name:"OrganizationID_Filter"`
-	ArrayOfStr []string `queryParam:"inline" name:"OrganizationID_Filter"`
+	Str        *string  `queryParam:"inline,name=OrganizationID_Filter"`
+	ArrayOfStr []string `queryParam:"inline,name=OrganizationID_Filter"`
 
 	Type EventsListQueryParamOrganizationIDFilterType
 }
@@ -83,8 +83,8 @@ const (
 
 // EventsListQueryParamCustomerIDFilter - Filter by customer ID.
 type EventsListQueryParamCustomerIDFilter struct {
-	Str        *string  `queryParam:"inline" name:"CustomerID_Filter"`
-	ArrayOfStr []string `queryParam:"inline" name:"CustomerID_Filter"`
+	Str        *string  `queryParam:"inline,name=CustomerID_Filter"`
+	ArrayOfStr []string `queryParam:"inline,name=CustomerID_Filter"`
 
 	Type EventsListQueryParamCustomerIDFilterType
 }
@@ -147,8 +147,8 @@ const (
 
 // QueryParamExternalCustomerIDFilter - Filter by external customer ID.
 type QueryParamExternalCustomerIDFilter struct {
-	Str        *string  `queryParam:"inline" name:"ExternalCustomerID_Filter"`
-	ArrayOfStr []string `queryParam:"inline" name:"ExternalCustomerID_Filter"`
+	Str        *string  `queryParam:"inline,name=ExternalCustomerID_Filter"`
+	ArrayOfStr []string `queryParam:"inline,name=ExternalCustomerID_Filter"`
 
 	Type QueryParamExternalCustomerIDFilterType
 }
@@ -211,8 +211,8 @@ const (
 
 // NameFilter - Filter by event name.
 type NameFilter struct {
-	Str        *string  `queryParam:"inline" name:"Name_Filter"`
-	ArrayOfStr []string `queryParam:"inline" name:"Name_Filter"`
+	Str        *string  `queryParam:"inline,name=Name_Filter"`
+	ArrayOfStr []string `queryParam:"inline,name=Name_Filter"`
 
 	Type NameFilterType
 }
@@ -275,8 +275,8 @@ const (
 
 // SourceFilter - Filter by event source.
 type SourceFilter struct {
-	EventSource        *components.EventSource  `queryParam:"inline" name:"Source_Filter"`
-	ArrayOfEventSource []components.EventSource `queryParam:"inline" name:"Source_Filter"`
+	EventSource        *components.EventSource  `queryParam:"inline,name=Source_Filter"`
+	ArrayOfEventSource []components.EventSource `queryParam:"inline,name=Source_Filter"`
 
 	Type SourceFilterType
 }

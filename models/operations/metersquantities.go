@@ -19,8 +19,8 @@ const (
 
 // MetersQuantitiesQueryParamCustomerIDFilter - Filter by customer ID.
 type MetersQuantitiesQueryParamCustomerIDFilter struct {
-	Str        *string  `queryParam:"inline" name:"CustomerID_Filter"`
-	ArrayOfStr []string `queryParam:"inline" name:"CustomerID_Filter"`
+	Str        *string  `queryParam:"inline,name=CustomerID_Filter"`
+	ArrayOfStr []string `queryParam:"inline,name=CustomerID_Filter"`
 
 	Type MetersQuantitiesQueryParamCustomerIDFilterType
 }
@@ -83,8 +83,8 @@ const (
 
 // MetersQuantitiesQueryParamExternalCustomerIDFilter - Filter by external customer ID.
 type MetersQuantitiesQueryParamExternalCustomerIDFilter struct {
-	Str        *string  `queryParam:"inline" name:"ExternalCustomerID_Filter"`
-	ArrayOfStr []string `queryParam:"inline" name:"ExternalCustomerID_Filter"`
+	Str        *string  `queryParam:"inline,name=ExternalCustomerID_Filter"`
+	ArrayOfStr []string `queryParam:"inline,name=ExternalCustomerID_Filter"`
 
 	Type MetersQuantitiesQueryParamExternalCustomerIDFilterType
 }
@@ -151,6 +151,8 @@ type MetersQuantitiesRequest struct {
 	CustomerID *MetersQuantitiesQueryParamCustomerIDFilter `queryParam:"style=form,explode=true,name=customer_id"`
 	// Filter by external customer ID.
 	ExternalCustomerID *MetersQuantitiesQueryParamExternalCustomerIDFilter `queryParam:"style=form,explode=true,name=external_customer_id"`
+	// If set, will first compute the quantities per customer before aggregating them using the given function. If not set, the quantities will be aggregated across all events.
+	CustomerAggregationFunction *components.AggregationFunction `queryParam:"style=form,explode=true,name=customer_aggregation_function"`
 	// Filter by metadata key-value pairs. It uses the `deepObject` style, e.g. `?metadata[key]=value`.
 	Metadata map[string]components.MetadataQuery `queryParam:"style=deepObject,explode=true,name=metadata"`
 }
@@ -206,6 +208,13 @@ func (m *MetersQuantitiesRequest) GetExternalCustomerID() *MetersQuantitiesQuery
 		return nil
 	}
 	return m.ExternalCustomerID
+}
+
+func (m *MetersQuantitiesRequest) GetCustomerAggregationFunction() *components.AggregationFunction {
+	if m == nil {
+		return nil
+	}
+	return m.CustomerAggregationFunction
 }
 
 func (m *MetersQuantitiesRequest) GetMetadata() map[string]components.MetadataQuery {

@@ -19,10 +19,10 @@ const (
 )
 
 type BenefitMetadata struct {
-	Str     *string  `queryParam:"inline" name:"benefit_metadata"`
-	Integer *int64   `queryParam:"inline" name:"benefit_metadata"`
-	Number  *float64 `queryParam:"inline" name:"benefit_metadata"`
-	Boolean *bool    `queryParam:"inline" name:"benefit_metadata"`
+	Str     *string  `queryParam:"inline,name=benefit_metadata"`
+	Integer *int64   `queryParam:"inline,name=benefit_metadata"`
+	Number  *float64 `queryParam:"inline,name=benefit_metadata"`
+	Boolean *bool    `queryParam:"inline,name=benefit_metadata"`
 
 	Type BenefitMetadataType
 }
@@ -127,11 +127,11 @@ const (
 )
 
 type CustomerStateBenefitGrantProperties struct {
-	BenefitGrantDiscordProperties          *BenefitGrantDiscordProperties          `queryParam:"inline" name:"Properties"`
-	BenefitGrantGitHubRepositoryProperties *BenefitGrantGitHubRepositoryProperties `queryParam:"inline" name:"Properties"`
-	BenefitGrantDownloadablesProperties    *BenefitGrantDownloadablesProperties    `queryParam:"inline" name:"Properties"`
-	BenefitGrantLicenseKeysProperties      *BenefitGrantLicenseKeysProperties      `queryParam:"inline" name:"Properties"`
-	BenefitGrantCustomProperties           *BenefitGrantCustomProperties           `queryParam:"inline" name:"Properties"`
+	BenefitGrantDiscordProperties          *BenefitGrantDiscordProperties          `queryParam:"inline,name=Properties"`
+	BenefitGrantGitHubRepositoryProperties *BenefitGrantGitHubRepositoryProperties `queryParam:"inline,name=Properties"`
+	BenefitGrantDownloadablesProperties    *BenefitGrantDownloadablesProperties    `queryParam:"inline,name=Properties"`
+	BenefitGrantLicenseKeysProperties      *BenefitGrantLicenseKeysProperties      `queryParam:"inline,name=Properties"`
+	BenefitGrantCustomProperties           *BenefitGrantCustomProperties           `queryParam:"inline,name=Properties"`
 
 	Type CustomerStateBenefitGrantPropertiesType
 }

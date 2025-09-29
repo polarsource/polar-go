@@ -29,8 +29,8 @@ const (
 
 // CustomerPortalSubscriptionsListQueryParamOrganizationIDFilter - Filter by organization ID.
 type CustomerPortalSubscriptionsListQueryParamOrganizationIDFilter struct {
-	Str        *string  `queryParam:"inline" name:"OrganizationID_Filter"`
-	ArrayOfStr []string `queryParam:"inline" name:"OrganizationID_Filter"`
+	Str        *string  `queryParam:"inline,name=OrganizationID_Filter"`
+	ArrayOfStr []string `queryParam:"inline,name=OrganizationID_Filter"`
 
 	Type CustomerPortalSubscriptionsListQueryParamOrganizationIDFilterType
 }
@@ -93,8 +93,8 @@ const (
 
 // CustomerPortalSubscriptionsListQueryParamProductIDFilter - Filter by product ID.
 type CustomerPortalSubscriptionsListQueryParamProductIDFilter struct {
-	Str        *string  `queryParam:"inline" name:"ProductID_Filter"`
-	ArrayOfStr []string `queryParam:"inline" name:"ProductID_Filter"`
+	Str        *string  `queryParam:"inline,name=ProductID_Filter"`
+	ArrayOfStr []string `queryParam:"inline,name=ProductID_Filter"`
 
 	Type CustomerPortalSubscriptionsListQueryParamProductIDFilterType
 }

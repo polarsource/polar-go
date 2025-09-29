@@ -19,10 +19,10 @@ const (
 )
 
 type CheckoutCreateMetadata struct {
-	Str     *string  `queryParam:"inline" name:"metadata"`
-	Integer *int64   `queryParam:"inline" name:"metadata"`
-	Number  *float64 `queryParam:"inline" name:"metadata"`
-	Boolean *bool    `queryParam:"inline" name:"metadata"`
+	Str     *string  `queryParam:"inline,name=metadata"`
+	Integer *int64   `queryParam:"inline,name=metadata"`
+	Number  *float64 `queryParam:"inline,name=metadata"`
+	Boolean *bool    `queryParam:"inline,name=metadata"`
 
 	Type CheckoutCreateMetadataType
 }
@@ -126,10 +126,10 @@ const (
 )
 
 type CheckoutCreateCustomFieldData struct {
-	Str      *string    `queryParam:"inline" name:"custom_field_data"`
-	Integer  *int64     `queryParam:"inline" name:"custom_field_data"`
-	Boolean  *bool      `queryParam:"inline" name:"custom_field_data"`
-	DateTime *time.Time `queryParam:"inline" name:"custom_field_data"`
+	Str      *string    `queryParam:"inline,name=custom_field_data"`
+	Integer  *int64     `queryParam:"inline,name=custom_field_data"`
+	Boolean  *bool      `queryParam:"inline,name=custom_field_data"`
+	DateTime *time.Time `queryParam:"inline,name=custom_field_data"`
 
 	Type CheckoutCreateCustomFieldDataType
 }
@@ -233,10 +233,10 @@ const (
 )
 
 type CheckoutCreateCustomerMetadata struct {
-	Str     *string  `queryParam:"inline" name:"customer_metadata"`
-	Integer *int64   `queryParam:"inline" name:"customer_metadata"`
-	Number  *float64 `queryParam:"inline" name:"customer_metadata"`
-	Boolean *bool    `queryParam:"inline" name:"customer_metadata"`
+	Str     *string  `queryParam:"inline,name=customer_metadata"`
+	Integer *int64   `queryParam:"inline,name=customer_metadata"`
+	Number  *float64 `queryParam:"inline,name=customer_metadata"`
+	Boolean *bool    `queryParam:"inline,name=customer_metadata"`
 
 	Type CheckoutCreateCustomerMetadataType
 }

@@ -18,8 +18,8 @@ const (
 
 // RefundIDFilter - Filter by refund ID.
 type RefundIDFilter struct {
-	Str        *string  `queryParam:"inline" name:"RefundID_Filter"`
-	ArrayOfStr []string `queryParam:"inline" name:"RefundID_Filter"`
+	Str        *string  `queryParam:"inline,name=RefundID_Filter"`
+	ArrayOfStr []string `queryParam:"inline,name=RefundID_Filter"`
 
 	Type RefundIDFilterType
 }
@@ -82,8 +82,8 @@ const (
 
 // RefundsListQueryParamOrganizationIDFilter - Filter by organization ID.
 type RefundsListQueryParamOrganizationIDFilter struct {
-	Str        *string  `queryParam:"inline" name:"OrganizationID_Filter"`
-	ArrayOfStr []string `queryParam:"inline" name:"OrganizationID_Filter"`
+	Str        *string  `queryParam:"inline,name=OrganizationID_Filter"`
+	ArrayOfStr []string `queryParam:"inline,name=OrganizationID_Filter"`
 
 	Type RefundsListQueryParamOrganizationIDFilterType
 }
@@ -146,8 +146,8 @@ const (
 
 // OrderIDFilter - Filter by order ID.
 type OrderIDFilter struct {
-	Str        *string  `queryParam:"inline" name:"OrderID_Filter"`
-	ArrayOfStr []string `queryParam:"inline" name:"OrderID_Filter"`
+	Str        *string  `queryParam:"inline,name=OrderID_Filter"`
+	ArrayOfStr []string `queryParam:"inline,name=OrderID_Filter"`
 
 	Type OrderIDFilterType
 }
@@ -210,8 +210,8 @@ const (
 
 // SubscriptionIDFilter - Filter by subscription ID.
 type SubscriptionIDFilter struct {
-	Str        *string  `queryParam:"inline" name:"SubscriptionID_Filter"`
-	ArrayOfStr []string `queryParam:"inline" name:"SubscriptionID_Filter"`
+	Str        *string  `queryParam:"inline,name=SubscriptionID_Filter"`
+	ArrayOfStr []string `queryParam:"inline,name=SubscriptionID_Filter"`
 
 	Type SubscriptionIDFilterType
 }
@@ -274,8 +274,8 @@ const (
 
 // RefundsListQueryParamCustomerIDFilter - Filter by customer ID.
 type RefundsListQueryParamCustomerIDFilter struct {
-	Str        *string  `queryParam:"inline" name:"CustomerID_Filter"`
-	ArrayOfStr []string `queryParam:"inline" name:"CustomerID_Filter"`
+	Str        *string  `queryParam:"inline,name=CustomerID_Filter"`
+	ArrayOfStr []string `queryParam:"inline,name=CustomerID_Filter"`
 
 	Type RefundsListQueryParamCustomerIDFilterType
 }

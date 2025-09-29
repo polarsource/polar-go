@@ -40,9 +40,9 @@ const (
 
 // FilesUpdateResponseFilesUpdate - File updated.
 type FilesUpdateResponseFilesUpdate struct {
-	DownloadableFileRead       *components.DownloadableFileRead       `queryParam:"inline" name:"Response_Files_Update"`
-	ProductMediaFileRead       *components.ProductMediaFileRead       `queryParam:"inline" name:"Response_Files_Update"`
-	OrganizationAvatarFileRead *components.OrganizationAvatarFileRead `queryParam:"inline" name:"Response_Files_Update"`
+	DownloadableFileRead       *components.DownloadableFileRead       `queryParam:"inline,name=Response_Files_Update"`
+	ProductMediaFileRead       *components.ProductMediaFileRead       `queryParam:"inline,name=Response_Files_Update"`
+	OrganizationAvatarFileRead *components.OrganizationAvatarFileRead `queryParam:"inline,name=Response_Files_Update"`
 
 	Type FilesUpdateResponseFilesUpdateType
 }

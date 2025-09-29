@@ -16,8 +16,8 @@ const (
 )
 
 type CustomerSubscriptionUpdate struct {
-	CustomerSubscriptionUpdateProduct *CustomerSubscriptionUpdateProduct `queryParam:"inline" name:"CustomerSubscriptionUpdate"`
-	CustomerSubscriptionCancel        *CustomerSubscriptionCancel        `queryParam:"inline" name:"CustomerSubscriptionUpdate"`
+	CustomerSubscriptionUpdateProduct *CustomerSubscriptionUpdateProduct `queryParam:"inline,name=CustomerSubscriptionUpdate"`
+	CustomerSubscriptionCancel        *CustomerSubscriptionCancel        `queryParam:"inline,name=CustomerSubscriptionUpdate"`
 
 	Type CustomerSubscriptionUpdateType
 }

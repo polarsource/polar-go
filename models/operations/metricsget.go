@@ -19,8 +19,8 @@ const (
 
 // MetricsGetQueryParamOrganizationIDFilter - Filter by organization ID.
 type MetricsGetQueryParamOrganizationIDFilter struct {
-	Str        *string  `queryParam:"inline" name:"OrganizationID_Filter"`
-	ArrayOfStr []string `queryParam:"inline" name:"OrganizationID_Filter"`
+	Str        *string  `queryParam:"inline,name=OrganizationID_Filter"`
+	ArrayOfStr []string `queryParam:"inline,name=OrganizationID_Filter"`
 
 	Type MetricsGetQueryParamOrganizationIDFilterType
 }
@@ -83,8 +83,8 @@ const (
 
 // MetricsGetQueryParamProductIDFilter - Filter by product ID.
 type MetricsGetQueryParamProductIDFilter struct {
-	Str        *string  `queryParam:"inline" name:"ProductID_Filter"`
-	ArrayOfStr []string `queryParam:"inline" name:"ProductID_Filter"`
+	Str        *string  `queryParam:"inline,name=ProductID_Filter"`
+	ArrayOfStr []string `queryParam:"inline,name=ProductID_Filter"`
 
 	Type MetricsGetQueryParamProductIDFilterType
 }
@@ -147,8 +147,8 @@ const (
 
 // QueryParamProductBillingTypeFilter - Filter by billing type. `recurring` will filter data corresponding to subscriptions creations or renewals. `one_time` will filter data corresponding to one-time purchases.
 type QueryParamProductBillingTypeFilter struct {
-	ProductBillingType        *components.ProductBillingType  `queryParam:"inline" name:"ProductBillingType_Filter"`
-	ArrayOfProductBillingType []components.ProductBillingType `queryParam:"inline" name:"ProductBillingType_Filter"`
+	ProductBillingType        *components.ProductBillingType  `queryParam:"inline,name=ProductBillingType_Filter"`
+	ArrayOfProductBillingType []components.ProductBillingType `queryParam:"inline,name=ProductBillingType_Filter"`
 
 	Type QueryParamProductBillingTypeFilterType
 }
@@ -211,8 +211,8 @@ const (
 
 // MetricsGetQueryParamCustomerIDFilter - Filter by customer ID.
 type MetricsGetQueryParamCustomerIDFilter struct {
-	Str        *string  `queryParam:"inline" name:"CustomerID_Filter"`
-	ArrayOfStr []string `queryParam:"inline" name:"CustomerID_Filter"`
+	Str        *string  `queryParam:"inline,name=CustomerID_Filter"`
+	ArrayOfStr []string `queryParam:"inline,name=CustomerID_Filter"`
 
 	Type MetricsGetQueryParamCustomerIDFilterType
 }

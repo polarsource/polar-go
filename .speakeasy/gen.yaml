@@ -25,7 +25,7 @@ generation:
     generateNewTests: false
     skipResponseBodyAssertions: false
 go:
-  version: 0.9.1
+  version: 0.9.2
   additionalDependencies: {}
   allowUnknownFieldsInWeakUnions: true
   baseErrorName: PolarError

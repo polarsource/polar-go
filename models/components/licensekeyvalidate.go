@@ -18,10 +18,10 @@ const (
 )
 
 type Conditions struct {
-	Str     *string  `queryParam:"inline" name:"conditions"`
-	Integer *int64   `queryParam:"inline" name:"conditions"`
-	Number  *float64 `queryParam:"inline" name:"conditions"`
-	Boolean *bool    `queryParam:"inline" name:"conditions"`
+	Str     *string  `queryParam:"inline,name=conditions"`
+	Integer *int64   `queryParam:"inline,name=conditions"`
+	Number  *float64 `queryParam:"inline,name=conditions"`
+	Boolean *bool    `queryParam:"inline,name=conditions"`
 
 	Type ConditionsType
 }

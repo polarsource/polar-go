@@ -9,6 +9,7 @@
 * [Update](#update) - Update Customer
 * [ListPaymentMethods](#listpaymentmethods) - List Customer Payment Methods
 * [AddPaymentMethod](#addpaymentmethod) - Add Customer Payment Method
+* [ConfirmPaymentMethod](#confirmpaymentmethod) - Confirm Customer Payment Method
 * [DeletePaymentMethod](#deletepaymentmethod) - Delete Customer Payment Method
 
 ## Get
@@ -234,7 +235,7 @@ func main() {
     if err != nil {
         log.Fatal(err)
     }
-    if res.CustomerPaymentMethod != nil {
+    if res.CustomerPaymentMethodCreateResponse != nil {
         // handle response
     }
 }
@@ -257,6 +258,68 @@ func main() {
 
 | Error Type                    | Status Code                   | Content Type                  |
 | ----------------------------- | ----------------------------- | ----------------------------- |
+| apierrors.HTTPValidationError | 422                           | application/json              |
+| apierrors.APIError            | 4XX, 5XX                      | \*/\*                         |
+
+## ConfirmPaymentMethod
+
+Confirm a payment method for the authenticated customer.
+
+**Scopes**: `customer_portal:read` `customer_portal:write`
+
+### Example Usage
+
+<!-- UsageSnippet language="go" operationID="customer_portal:customers:confirm_payment_method" method="post" path="/v1/customer-portal/customers/me/payment-methods/confirm" -->
+```go
+package main
+
+import(
+	"context"
+	polargo "github.com/polarsource/polar-go"
+	"github.com/polarsource/polar-go/models/components"
+	"os"
+	"github.com/polarsource/polar-go/models/operations"
+	"log"
+)
+
+func main() {
+    ctx := context.Background()
+
+    s := polargo.New()
+
+    res, err := s.CustomerPortal.Customers.ConfirmPaymentMethod(ctx, components.CustomerPaymentMethodConfirm{
+        SetupIntentID: "<id>",
+        SetDefault: true,
+    }, operations.CustomerPortalCustomersConfirmPaymentMethodSecurity{
+        CustomerSession: os.Getenv("POLAR_CUSTOMER_SESSION"),
+    })
+    if err != nil {
+        log.Fatal(err)
+    }
+    if res.CustomerPaymentMethodCreateResponse != nil {
+        // handle response
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                                                                                                        | Type                                                                                                                                             | Required                                                                                                                                         | Description                                                                                                                                      |
+| ------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `ctx`                                                                                                                                            | [context.Context](https://pkg.go.dev/context#Context)                                                                                            | :heavy_check_mark:                                                                                                                               | The context to use for the request.                                                                                                              |
+| `request`                                                                                                                                        | [components.CustomerPaymentMethodConfirm](../../models/components/customerpaymentmethodconfirm.md)                                               | :heavy_check_mark:                                                                                                                               | The request object to use for the request.                                                                                                       |
+| `security`                                                                                                                                       | [operations.CustomerPortalCustomersConfirmPaymentMethodSecurity](../../models/operations/customerportalcustomersconfirmpaymentmethodsecurity.md) | :heavy_check_mark:                                                                                                                               | The security requirements to use for the request.                                                                                                |
+| `opts`                                                                                                                                           | [][operations.Option](../../models/operations/option.md)                                                                                         | :heavy_minus_sign:                                                                                                                               | The options for this request.                                                                                                                    |
+
+### Response
+
+**[*operations.CustomerPortalCustomersConfirmPaymentMethodResponse](../../models/operations/customerportalcustomersconfirmpaymentmethodresponse.md), error**
+
+### Errors
+
+| Error Type                    | Status Code                   | Content Type                  |
+| ----------------------------- | ----------------------------- | ----------------------------- |
+| apierrors.CustomerNotReady    | 400                           | application/json              |
 | apierrors.HTTPValidationError | 422                           | application/json              |
 | apierrors.APIError            | 4XX, 5XX                      | \*/\*                         |
 

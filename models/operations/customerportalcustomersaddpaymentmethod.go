@@ -19,8 +19,8 @@ func (c *CustomerPortalCustomersAddPaymentMethodSecurity) GetCustomerSession() s
 
 type CustomerPortalCustomersAddPaymentMethodResponse struct {
 	HTTPMeta components.HTTPMetadata `json:"-"`
-	// Payment method created.
-	CustomerPaymentMethod *components.CustomerPaymentMethod
+	// Payment method created or setup initiated.
+	CustomerPaymentMethodCreateResponse *components.CustomerPaymentMethodCreateResponse
 }
 
 func (c *CustomerPortalCustomersAddPaymentMethodResponse) GetHTTPMeta() components.HTTPMetadata {
@@ -30,9 +30,23 @@ func (c *CustomerPortalCustomersAddPaymentMethodResponse) GetHTTPMeta() componen
 	return c.HTTPMeta
 }
 
-func (c *CustomerPortalCustomersAddPaymentMethodResponse) GetCustomerPaymentMethod() *components.CustomerPaymentMethod {
+func (c *CustomerPortalCustomersAddPaymentMethodResponse) GetCustomerPaymentMethodCreateResponse() *components.CustomerPaymentMethodCreateResponse {
 	if c == nil {
 		return nil
 	}
-	return c.CustomerPaymentMethod
+	return c.CustomerPaymentMethodCreateResponse
+}
+
+func (c *CustomerPortalCustomersAddPaymentMethodResponse) GetCustomerPaymentMethodCreateResponseRequiresAction() *components.CustomerPaymentMethodCreateRequiresActionResponse {
+	if v := c.GetCustomerPaymentMethodCreateResponse(); v != nil {
+		return v.CustomerPaymentMethodCreateRequiresActionResponse
+	}
+	return nil
+}
+
+func (c *CustomerPortalCustomersAddPaymentMethodResponse) GetCustomerPaymentMethodCreateResponseSucceeded() *components.CustomerPaymentMethodCreateSucceededResponse {
+	if v := c.GetCustomerPaymentMethodCreateResponse(); v != nil {
+		return v.CustomerPaymentMethodCreateSucceededResponse
+	}
+	return nil
 }

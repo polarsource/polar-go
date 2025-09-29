@@ -19,10 +19,10 @@ const (
 )
 
 type CheckoutLinkMetadata struct {
-	Str     *string  `queryParam:"inline" name:"metadata"`
-	Integer *int64   `queryParam:"inline" name:"metadata"`
-	Number  *float64 `queryParam:"inline" name:"metadata"`
-	Boolean *bool    `queryParam:"inline" name:"metadata"`
+	Str     *string  `queryParam:"inline,name=metadata"`
+	Integer *int64   `queryParam:"inline,name=metadata"`
+	Number  *float64 `queryParam:"inline,name=metadata"`
+	Boolean *bool    `queryParam:"inline,name=metadata"`
 
 	Type CheckoutLinkMetadataType
 }
@@ -126,10 +126,10 @@ const (
 )
 
 type CheckoutLinkDiscount struct {
-	DiscountFixedOnceForeverDurationBase      *DiscountFixedOnceForeverDurationBase      `queryParam:"inline" name:"CheckoutLinkDiscount"`
-	DiscountFixedRepeatDurationBase           *DiscountFixedRepeatDurationBase           `queryParam:"inline" name:"CheckoutLinkDiscount"`
-	DiscountPercentageOnceForeverDurationBase *DiscountPercentageOnceForeverDurationBase `queryParam:"inline" name:"CheckoutLinkDiscount"`
-	DiscountPercentageRepeatDurationBase      *DiscountPercentageRepeatDurationBase      `queryParam:"inline" name:"CheckoutLinkDiscount"`
+	DiscountFixedOnceForeverDurationBase      *DiscountFixedOnceForeverDurationBase      `queryParam:"inline,name=CheckoutLinkDiscount"`
+	DiscountFixedRepeatDurationBase           *DiscountFixedRepeatDurationBase           `queryParam:"inline,name=CheckoutLinkDiscount"`
+	DiscountPercentageOnceForeverDurationBase *DiscountPercentageOnceForeverDurationBase `queryParam:"inline,name=CheckoutLinkDiscount"`
+	DiscountPercentageRepeatDurationBase      *DiscountPercentageRepeatDurationBase      `queryParam:"inline,name=CheckoutLinkDiscount"`
 
 	Type CheckoutLinkDiscountType
 }

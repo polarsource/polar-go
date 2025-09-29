@@ -17,8 +17,8 @@ const (
 )
 
 type CustomerProductPrices struct {
-	LegacyRecurringProductPrice *LegacyRecurringProductPrice `queryParam:"inline" name:"prices"`
-	ProductPrice                *ProductPrice                `queryParam:"inline" name:"prices"`
+	LegacyRecurringProductPrice *LegacyRecurringProductPrice `queryParam:"inline,name=prices"`
+	ProductPrice                *ProductPrice                `queryParam:"inline,name=prices"`
 
 	Type CustomerProductPricesType
 }

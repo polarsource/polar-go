@@ -18,8 +18,8 @@ const (
 
 // PaymentsListQueryParamOrganizationIDFilter - Filter by organization ID.
 type PaymentsListQueryParamOrganizationIDFilter struct {
-	Str        *string  `queryParam:"inline" name:"OrganizationID_Filter"`
-	ArrayOfStr []string `queryParam:"inline" name:"OrganizationID_Filter"`
+	Str        *string  `queryParam:"inline,name=OrganizationID_Filter"`
+	ArrayOfStr []string `queryParam:"inline,name=OrganizationID_Filter"`
 
 	Type PaymentsListQueryParamOrganizationIDFilterType
 }
@@ -82,8 +82,8 @@ const (
 
 // PaymentsListQueryParamCheckoutIDFilter - Filter by checkout ID.
 type PaymentsListQueryParamCheckoutIDFilter struct {
-	Str        *string  `queryParam:"inline" name:"CheckoutID_Filter"`
-	ArrayOfStr []string `queryParam:"inline" name:"CheckoutID_Filter"`
+	Str        *string  `queryParam:"inline,name=CheckoutID_Filter"`
+	ArrayOfStr []string `queryParam:"inline,name=CheckoutID_Filter"`
 
 	Type PaymentsListQueryParamCheckoutIDFilterType
 }
@@ -146,8 +146,8 @@ const (
 
 // PaymentsListQueryParamOrderIDFilter - Filter by order ID.
 type PaymentsListQueryParamOrderIDFilter struct {
-	Str        *string  `queryParam:"inline" name:"OrderID_Filter"`
-	ArrayOfStr []string `queryParam:"inline" name:"OrderID_Filter"`
+	Str        *string  `queryParam:"inline,name=OrderID_Filter"`
+	ArrayOfStr []string `queryParam:"inline,name=OrderID_Filter"`
 
 	Type PaymentsListQueryParamOrderIDFilterType
 }
@@ -210,8 +210,8 @@ const (
 
 // QueryParamStatusFilter - Filter by payment status.
 type QueryParamStatusFilter struct {
-	PaymentStatus        *components.PaymentStatus  `queryParam:"inline" name:"Status_Filter"`
-	ArrayOfPaymentStatus []components.PaymentStatus `queryParam:"inline" name:"Status_Filter"`
+	PaymentStatus        *components.PaymentStatus  `queryParam:"inline,name=Status_Filter"`
+	ArrayOfPaymentStatus []components.PaymentStatus `queryParam:"inline,name=Status_Filter"`
 
 	Type QueryParamStatusFilterType
 }
@@ -274,8 +274,8 @@ const (
 
 // MethodFilter - Filter by payment method.
 type MethodFilter struct {
-	Str        *string  `queryParam:"inline" name:"Method_Filter"`
-	ArrayOfStr []string `queryParam:"inline" name:"Method_Filter"`
+	Str        *string  `queryParam:"inline,name=Method_Filter"`
+	ArrayOfStr []string `queryParam:"inline,name=Method_Filter"`
 
 	Type MethodFilterType
 }
@@ -338,8 +338,8 @@ const (
 
 // CustomerEmailFilter - Filter by customer email.
 type CustomerEmailFilter struct {
-	Str        *string  `queryParam:"inline" name:"CustomerEmail_Filter"`
-	ArrayOfStr []string `queryParam:"inline" name:"CustomerEmail_Filter"`
+	Str        *string  `queryParam:"inline,name=CustomerEmail_Filter"`
+	ArrayOfStr []string `queryParam:"inline,name=CustomerEmail_Filter"`
 
 	Type CustomerEmailFilterType
 }

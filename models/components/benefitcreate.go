@@ -21,12 +21,12 @@ const (
 )
 
 type BenefitCreate struct {
-	BenefitCustomCreate           *BenefitCustomCreate           `queryParam:"inline" name:"BenefitCreate"`
-	BenefitDiscordCreate          *BenefitDiscordCreate          `queryParam:"inline" name:"BenefitCreate"`
-	BenefitGitHubRepositoryCreate *BenefitGitHubRepositoryCreate `queryParam:"inline" name:"BenefitCreate"`
-	BenefitDownloadablesCreate    *BenefitDownloadablesCreate    `queryParam:"inline" name:"BenefitCreate"`
-	BenefitLicenseKeysCreate      *BenefitLicenseKeysCreate      `queryParam:"inline" name:"BenefitCreate"`
-	BenefitMeterCreditCreate      *BenefitMeterCreditCreate      `queryParam:"inline" name:"BenefitCreate"`
+	BenefitCustomCreate           *BenefitCustomCreate           `queryParam:"inline,name=BenefitCreate"`
+	BenefitDiscordCreate          *BenefitDiscordCreate          `queryParam:"inline,name=BenefitCreate"`
+	BenefitGitHubRepositoryCreate *BenefitGitHubRepositoryCreate `queryParam:"inline,name=BenefitCreate"`
+	BenefitDownloadablesCreate    *BenefitDownloadablesCreate    `queryParam:"inline,name=BenefitCreate"`
+	BenefitLicenseKeysCreate      *BenefitLicenseKeysCreate      `queryParam:"inline,name=BenefitCreate"`
+	BenefitMeterCreditCreate      *BenefitMeterCreditCreate      `queryParam:"inline,name=BenefitCreate"`
 
 	Type BenefitCreateType
 }

@@ -17,8 +17,8 @@ const (
 )
 
 type CustomerPortalCustomerTaxID struct {
-	Str         *string      `queryParam:"inline" name:"tax_id"`
-	TaxIDFormat *TaxIDFormat `queryParam:"inline" name:"tax_id"`
+	Str         *string      `queryParam:"inline,name=tax_id"`
+	TaxIDFormat *TaxIDFormat `queryParam:"inline,name=tax_id"`
 
 	Type CustomerPortalCustomerTaxIDType
 }

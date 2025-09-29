@@ -29,8 +29,8 @@ const (
 
 // CustomerPortalOrdersListQueryParamOrganizationIDFilter - Filter by organization ID.
 type CustomerPortalOrdersListQueryParamOrganizationIDFilter struct {
-	Str        *string  `queryParam:"inline" name:"OrganizationID_Filter"`
-	ArrayOfStr []string `queryParam:"inline" name:"OrganizationID_Filter"`
+	Str        *string  `queryParam:"inline,name=OrganizationID_Filter"`
+	ArrayOfStr []string `queryParam:"inline,name=OrganizationID_Filter"`
 
 	Type CustomerPortalOrdersListQueryParamOrganizationIDFilterType
 }
@@ -93,8 +93,8 @@ const (
 
 // CustomerPortalOrdersListQueryParamProductIDFilter - Filter by product ID.
 type CustomerPortalOrdersListQueryParamProductIDFilter struct {
-	Str        *string  `queryParam:"inline" name:"ProductID_Filter"`
-	ArrayOfStr []string `queryParam:"inline" name:"ProductID_Filter"`
+	Str        *string  `queryParam:"inline,name=ProductID_Filter"`
+	ArrayOfStr []string `queryParam:"inline,name=ProductID_Filter"`
 
 	Type CustomerPortalOrdersListQueryParamProductIDFilterType
 }
@@ -157,8 +157,8 @@ const (
 
 // CustomerPortalOrdersListQueryParamProductBillingTypeFilter - Filter by product billing type. `recurring` will filter data corresponding to subscriptions creations or renewals. `one_time` will filter data corresponding to one-time purchases.
 type CustomerPortalOrdersListQueryParamProductBillingTypeFilter struct {
-	ProductBillingType        *components.ProductBillingType  `queryParam:"inline" name:"ProductBillingType_Filter"`
-	ArrayOfProductBillingType []components.ProductBillingType `queryParam:"inline" name:"ProductBillingType_Filter"`
+	ProductBillingType        *components.ProductBillingType  `queryParam:"inline,name=ProductBillingType_Filter"`
+	ArrayOfProductBillingType []components.ProductBillingType `queryParam:"inline,name=ProductBillingType_Filter"`
 
 	Type CustomerPortalOrdersListQueryParamProductBillingTypeFilterType
 }
@@ -221,8 +221,8 @@ const (
 
 // CustomerPortalOrdersListQueryParamSubscriptionIDFilter - Filter by subscription ID.
 type CustomerPortalOrdersListQueryParamSubscriptionIDFilter struct {
-	Str        *string  `queryParam:"inline" name:"SubscriptionID_Filter"`
-	ArrayOfStr []string `queryParam:"inline" name:"SubscriptionID_Filter"`
+	Str        *string  `queryParam:"inline,name=SubscriptionID_Filter"`
+	ArrayOfStr []string `queryParam:"inline,name=SubscriptionID_Filter"`
 
 	Type CustomerPortalOrdersListQueryParamSubscriptionIDFilterType
 }

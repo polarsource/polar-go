@@ -20,11 +20,11 @@ const (
 )
 
 type Properties struct {
-	BenefitGrantDiscordProperties          *BenefitGrantDiscordProperties          `queryParam:"inline" name:"Properties"`
-	BenefitGrantGitHubRepositoryProperties *BenefitGrantGitHubRepositoryProperties `queryParam:"inline" name:"Properties"`
-	BenefitGrantDownloadablesProperties    *BenefitGrantDownloadablesProperties    `queryParam:"inline" name:"Properties"`
-	BenefitGrantLicenseKeysProperties      *BenefitGrantLicenseKeysProperties      `queryParam:"inline" name:"Properties"`
-	BenefitGrantCustomProperties           *BenefitGrantCustomProperties           `queryParam:"inline" name:"Properties"`
+	BenefitGrantDiscordProperties          *BenefitGrantDiscordProperties          `queryParam:"inline,name=Properties"`
+	BenefitGrantGitHubRepositoryProperties *BenefitGrantGitHubRepositoryProperties `queryParam:"inline,name=Properties"`
+	BenefitGrantDownloadablesProperties    *BenefitGrantDownloadablesProperties    `queryParam:"inline,name=Properties"`
+	BenefitGrantLicenseKeysProperties      *BenefitGrantLicenseKeysProperties      `queryParam:"inline,name=Properties"`
+	BenefitGrantCustomProperties           *BenefitGrantCustomProperties           `queryParam:"inline,name=Properties"`
 
 	Type PropertiesType
 }

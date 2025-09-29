@@ -16,8 +16,8 @@ const (
 )
 
 type Clauses struct {
-	FilterClause *FilterClause `queryParam:"inline" name:"clauses"`
-	Filter       *Filter       `queryParam:"inline" name:"clauses"`
+	FilterClause *FilterClause `queryParam:"inline,name=clauses"`
+	Filter       *Filter       `queryParam:"inline,name=clauses"`
 
 	Type ClausesType
 }

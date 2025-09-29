@@ -18,8 +18,8 @@ const (
 
 // OrganizationIDFilter - Filter by organization ID.
 type OrganizationIDFilter struct {
-	Str        *string  `queryParam:"inline" name:"OrganizationID_Filter"`
-	ArrayOfStr []string `queryParam:"inline" name:"OrganizationID_Filter"`
+	Str        *string  `queryParam:"inline,name=OrganizationID_Filter"`
+	ArrayOfStr []string `queryParam:"inline,name=OrganizationID_Filter"`
 
 	Type OrganizationIDFilterType
 }
@@ -82,8 +82,8 @@ const (
 
 // ProductIDFilter - Filter by product ID.
 type ProductIDFilter struct {
-	Str        *string  `queryParam:"inline" name:"ProductID_Filter"`
-	ArrayOfStr []string `queryParam:"inline" name:"ProductID_Filter"`
+	Str        *string  `queryParam:"inline,name=ProductID_Filter"`
+	ArrayOfStr []string `queryParam:"inline,name=ProductID_Filter"`
 
 	Type ProductIDFilterType
 }
@@ -146,8 +146,8 @@ const (
 
 // CustomerIDFilter - Filter by customer ID.
 type CustomerIDFilter struct {
-	Str        *string  `queryParam:"inline" name:"CustomerID_Filter"`
-	ArrayOfStr []string `queryParam:"inline" name:"CustomerID_Filter"`
+	Str        *string  `queryParam:"inline,name=CustomerID_Filter"`
+	ArrayOfStr []string `queryParam:"inline,name=CustomerID_Filter"`
 
 	Type CustomerIDFilterType
 }
@@ -210,8 +210,8 @@ const (
 
 // ExternalCustomerIDFilter - Filter by customer external ID.
 type ExternalCustomerIDFilter struct {
-	Str        *string  `queryParam:"inline" name:"ExternalCustomerID_Filter"`
-	ArrayOfStr []string `queryParam:"inline" name:"ExternalCustomerID_Filter"`
+	Str        *string  `queryParam:"inline,name=ExternalCustomerID_Filter"`
+	ArrayOfStr []string `queryParam:"inline,name=ExternalCustomerID_Filter"`
 
 	Type ExternalCustomerIDFilterType
 }
@@ -274,8 +274,8 @@ const (
 
 // DiscountIDFilter - Filter by discount ID.
 type DiscountIDFilter struct {
-	Str        *string  `queryParam:"inline" name:"DiscountID_Filter"`
-	ArrayOfStr []string `queryParam:"inline" name:"DiscountID_Filter"`
+	Str        *string  `queryParam:"inline,name=DiscountID_Filter"`
+	ArrayOfStr []string `queryParam:"inline,name=DiscountID_Filter"`
 
 	Type DiscountIDFilterType
 }

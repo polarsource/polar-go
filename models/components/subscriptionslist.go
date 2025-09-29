@@ -20,12 +20,12 @@ const (
 )
 
 type MetadataQuery struct {
-	Str            *string  `queryParam:"inline" name:"MetadataQuery"`
-	Integer        *int64   `queryParam:"inline" name:"MetadataQuery"`
-	Boolean        *bool    `queryParam:"inline" name:"MetadataQuery"`
-	ArrayOfStr     []string `queryParam:"inline" name:"MetadataQuery"`
-	ArrayOfInteger []int64  `queryParam:"inline" name:"MetadataQuery"`
-	ArrayOfBoolean []bool   `queryParam:"inline" name:"MetadataQuery"`
+	Str            *string  `queryParam:"inline,name=MetadataQuery"`
+	Integer        *int64   `queryParam:"inline,name=MetadataQuery"`
+	Boolean        *bool    `queryParam:"inline,name=MetadataQuery"`
+	ArrayOfStr     []string `queryParam:"inline,name=MetadataQuery"`
+	ArrayOfInteger []int64  `queryParam:"inline,name=MetadataQuery"`
+	ArrayOfBoolean []bool   `queryParam:"inline,name=MetadataQuery"`
 
 	Type MetadataQueryType
 }

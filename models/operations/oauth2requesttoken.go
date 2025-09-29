@@ -17,8 +17,8 @@ const (
 )
 
 type Oauth2RequestTokenRequestBody struct {
-	AuthorizationCodeTokenRequest *components.AuthorizationCodeTokenRequest `queryParam:"inline" name:"requestBody"`
-	RefreshTokenRequest           *components.RefreshTokenRequest           `queryParam:"inline" name:"requestBody"`
+	AuthorizationCodeTokenRequest *components.AuthorizationCodeTokenRequest `queryParam:"inline,name=requestBody"`
+	RefreshTokenRequest           *components.RefreshTokenRequest           `queryParam:"inline,name=requestBody"`
 
 	Type Oauth2RequestTokenRequestBodyType
 }

@@ -29,8 +29,8 @@ const (
 
 // QueryParamBenefitTypeFilter - Filter by benefit type.
 type QueryParamBenefitTypeFilter struct {
-	BenefitType        *components.BenefitType  `queryParam:"inline" name:"BenefitType_Filter"`
-	ArrayOfBenefitType []components.BenefitType `queryParam:"inline" name:"BenefitType_Filter"`
+	BenefitType        *components.BenefitType  `queryParam:"inline,name=BenefitType_Filter"`
+	ArrayOfBenefitType []components.BenefitType `queryParam:"inline,name=BenefitType_Filter"`
 
 	Type QueryParamBenefitTypeFilterType
 }
@@ -93,8 +93,8 @@ const (
 
 // CustomerPortalBenefitGrantsListQueryParamBenefitIDFilter - Filter by benefit ID.
 type CustomerPortalBenefitGrantsListQueryParamBenefitIDFilter struct {
-	Str        *string  `queryParam:"inline" name:"BenefitID_Filter"`
-	ArrayOfStr []string `queryParam:"inline" name:"BenefitID_Filter"`
+	Str        *string  `queryParam:"inline,name=BenefitID_Filter"`
+	ArrayOfStr []string `queryParam:"inline,name=BenefitID_Filter"`
 
 	Type CustomerPortalBenefitGrantsListQueryParamBenefitIDFilterType
 }
@@ -157,8 +157,8 @@ const (
 
 // CustomerPortalBenefitGrantsListQueryParamOrganizationIDFilter - Filter by organization ID.
 type CustomerPortalBenefitGrantsListQueryParamOrganizationIDFilter struct {
-	Str        *string  `queryParam:"inline" name:"OrganizationID_Filter"`
-	ArrayOfStr []string `queryParam:"inline" name:"OrganizationID_Filter"`
+	Str        *string  `queryParam:"inline,name=OrganizationID_Filter"`
+	ArrayOfStr []string `queryParam:"inline,name=OrganizationID_Filter"`
 
 	Type CustomerPortalBenefitGrantsListQueryParamOrganizationIDFilterType
 }
@@ -221,8 +221,8 @@ const (
 
 // QueryParamCheckoutIDFilter - Filter by checkout ID.
 type QueryParamCheckoutIDFilter struct {
-	Str        *string  `queryParam:"inline" name:"CheckoutID_Filter"`
-	ArrayOfStr []string `queryParam:"inline" name:"CheckoutID_Filter"`
+	Str        *string  `queryParam:"inline,name=CheckoutID_Filter"`
+	ArrayOfStr []string `queryParam:"inline,name=CheckoutID_Filter"`
 
 	Type QueryParamCheckoutIDFilterType
 }
@@ -285,8 +285,8 @@ const (
 
 // QueryParamOrderIDFilter - Filter by order ID.
 type QueryParamOrderIDFilter struct {
-	Str        *string  `queryParam:"inline" name:"OrderID_Filter"`
-	ArrayOfStr []string `queryParam:"inline" name:"OrderID_Filter"`
+	Str        *string  `queryParam:"inline,name=OrderID_Filter"`
+	ArrayOfStr []string `queryParam:"inline,name=OrderID_Filter"`
 
 	Type QueryParamOrderIDFilterType
 }
@@ -349,8 +349,8 @@ const (
 
 // QueryParamSubscriptionIDFilter - Filter by subscription ID.
 type QueryParamSubscriptionIDFilter struct {
-	Str        *string  `queryParam:"inline" name:"SubscriptionID_Filter"`
-	ArrayOfStr []string `queryParam:"inline" name:"SubscriptionID_Filter"`
+	Str        *string  `queryParam:"inline,name=SubscriptionID_Filter"`
+	ArrayOfStr []string `queryParam:"inline,name=SubscriptionID_Filter"`
 
 	Type QueryParamSubscriptionIDFilterType
 }

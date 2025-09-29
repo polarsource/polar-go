@@ -19,8 +19,8 @@ const (
 
 // EndpointID - Filter by webhook endpoint ID.
 type EndpointID struct {
-	Str        *string  `queryParam:"inline" name:"Endpoint_Id"`
-	ArrayOfStr []string `queryParam:"inline" name:"Endpoint_Id"`
+	Str        *string  `queryParam:"inline,name=Endpoint_Id"`
+	ArrayOfStr []string `queryParam:"inline,name=Endpoint_Id"`
 
 	Type EndpointIDType
 }

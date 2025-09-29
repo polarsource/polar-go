@@ -18,8 +18,8 @@ const (
 
 // CheckoutLinksListQueryParamOrganizationIDFilter - Filter by organization ID.
 type CheckoutLinksListQueryParamOrganizationIDFilter struct {
-	Str        *string  `queryParam:"inline" name:"OrganizationID_Filter"`
-	ArrayOfStr []string `queryParam:"inline" name:"OrganizationID_Filter"`
+	Str        *string  `queryParam:"inline,name=OrganizationID_Filter"`
+	ArrayOfStr []string `queryParam:"inline,name=OrganizationID_Filter"`
 
 	Type CheckoutLinksListQueryParamOrganizationIDFilterType
 }
@@ -82,8 +82,8 @@ const (
 
 // CheckoutLinksListQueryParamProductIDFilter - Filter by product ID.
 type CheckoutLinksListQueryParamProductIDFilter struct {
-	Str        *string  `queryParam:"inline" name:"ProductID_Filter"`
-	ArrayOfStr []string `queryParam:"inline" name:"ProductID_Filter"`
+	Str        *string  `queryParam:"inline,name=ProductID_Filter"`
+	ArrayOfStr []string `queryParam:"inline,name=ProductID_Filter"`
 
 	Type CheckoutLinksListQueryParamProductIDFilterType
 }

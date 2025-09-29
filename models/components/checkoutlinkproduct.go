@@ -19,10 +19,10 @@ const (
 )
 
 type CheckoutLinkProductMetadata struct {
-	Str     *string  `queryParam:"inline" name:"metadata"`
-	Integer *int64   `queryParam:"inline" name:"metadata"`
-	Number  *float64 `queryParam:"inline" name:"metadata"`
-	Boolean *bool    `queryParam:"inline" name:"metadata"`
+	Str     *string  `queryParam:"inline,name=metadata"`
+	Integer *int64   `queryParam:"inline,name=metadata"`
+	Number  *float64 `queryParam:"inline,name=metadata"`
+	Boolean *bool    `queryParam:"inline,name=metadata"`
 
 	Type CheckoutLinkProductMetadataType
 }
@@ -124,8 +124,8 @@ const (
 )
 
 type CheckoutLinkProductPrices struct {
-	LegacyRecurringProductPrice *LegacyRecurringProductPrice `queryParam:"inline" name:"prices"`
-	ProductPrice                *ProductPrice                `queryParam:"inline" name:"prices"`
+	LegacyRecurringProductPrice *LegacyRecurringProductPrice `queryParam:"inline,name=prices"`
+	ProductPrice                *ProductPrice                `queryParam:"inline,name=prices"`
 
 	Type CheckoutLinkProductPricesType
 }

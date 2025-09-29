@@ -24,15 +24,15 @@ const (
 )
 
 type SystemEvent struct {
-	MeterCreditEvent                *MeterCreditEvent                `queryParam:"inline" name:"SystemEvent"`
-	MeterResetEvent                 *MeterResetEvent                 `queryParam:"inline" name:"SystemEvent"`
-	BenefitGrantedEvent             *BenefitGrantedEvent             `queryParam:"inline" name:"SystemEvent"`
-	BenefitCycledEvent              *BenefitCycledEvent              `queryParam:"inline" name:"SystemEvent"`
-	BenefitUpdatedEvent             *BenefitUpdatedEvent             `queryParam:"inline" name:"SystemEvent"`
-	BenefitRevokedEvent             *BenefitRevokedEvent             `queryParam:"inline" name:"SystemEvent"`
-	SubscriptionCycledEvent         *SubscriptionCycledEvent         `queryParam:"inline" name:"SystemEvent"`
-	SubscriptionRevokedEvent        *SubscriptionRevokedEvent        `queryParam:"inline" name:"SystemEvent"`
-	SubscriptionProductUpdatedEvent *SubscriptionProductUpdatedEvent `queryParam:"inline" name:"SystemEvent"`
+	MeterCreditEvent                *MeterCreditEvent                `queryParam:"inline,name=SystemEvent"`
+	MeterResetEvent                 *MeterResetEvent                 `queryParam:"inline,name=SystemEvent"`
+	BenefitGrantedEvent             *BenefitGrantedEvent             `queryParam:"inline,name=SystemEvent"`
+	BenefitCycledEvent              *BenefitCycledEvent              `queryParam:"inline,name=SystemEvent"`
+	BenefitUpdatedEvent             *BenefitUpdatedEvent             `queryParam:"inline,name=SystemEvent"`
+	BenefitRevokedEvent             *BenefitRevokedEvent             `queryParam:"inline,name=SystemEvent"`
+	SubscriptionCycledEvent         *SubscriptionCycledEvent         `queryParam:"inline,name=SystemEvent"`
+	SubscriptionRevokedEvent        *SubscriptionRevokedEvent        `queryParam:"inline,name=SystemEvent"`
+	SubscriptionProductUpdatedEvent *SubscriptionProductUpdatedEvent `queryParam:"inline,name=SystemEvent"`
 
 	Type SystemEventType
 }

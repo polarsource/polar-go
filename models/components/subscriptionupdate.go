@@ -19,11 +19,11 @@ const (
 )
 
 type SubscriptionUpdate struct {
-	SubscriptionUpdateProduct  *SubscriptionUpdateProduct  `queryParam:"inline" name:"SubscriptionUpdate"`
-	SubscriptionUpdateDiscount *SubscriptionUpdateDiscount `queryParam:"inline" name:"SubscriptionUpdate"`
-	SubscriptionUpdateTrial    *SubscriptionUpdateTrial    `queryParam:"inline" name:"SubscriptionUpdate"`
-	SubscriptionCancel         *SubscriptionCancel         `queryParam:"inline" name:"SubscriptionUpdate"`
-	SubscriptionRevoke         *SubscriptionRevoke         `queryParam:"inline" name:"SubscriptionUpdate"`
+	SubscriptionUpdateProduct  *SubscriptionUpdateProduct  `queryParam:"inline,name=SubscriptionUpdate"`
+	SubscriptionUpdateDiscount *SubscriptionUpdateDiscount `queryParam:"inline,name=SubscriptionUpdate"`
+	SubscriptionUpdateTrial    *SubscriptionUpdateTrial    `queryParam:"inline,name=SubscriptionUpdate"`
+	SubscriptionCancel         *SubscriptionCancel         `queryParam:"inline,name=SubscriptionUpdate"`
+	SubscriptionRevoke         *SubscriptionRevoke         `queryParam:"inline,name=SubscriptionUpdate"`
 
 	Type SubscriptionUpdateType
 }

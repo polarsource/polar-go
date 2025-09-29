@@ -19,10 +19,10 @@ const (
 )
 
 type CheckoutPublicCustomFieldData struct {
-	Str      *string    `queryParam:"inline" name:"custom_field_data"`
-	Integer  *int64     `queryParam:"inline" name:"custom_field_data"`
-	Boolean  *bool      `queryParam:"inline" name:"custom_field_data"`
-	DateTime *time.Time `queryParam:"inline" name:"custom_field_data"`
+	Str      *string    `queryParam:"inline,name=custom_field_data"`
+	Integer  *int64     `queryParam:"inline,name=custom_field_data"`
+	Boolean  *bool      `queryParam:"inline,name=custom_field_data"`
+	DateTime *time.Time `queryParam:"inline,name=custom_field_data"`
 
 	Type CheckoutPublicCustomFieldDataType
 }
@@ -125,8 +125,8 @@ const (
 
 // CheckoutPublicProductPrice - Price of the selected product.
 type CheckoutPublicProductPrice struct {
-	LegacyRecurringProductPrice *LegacyRecurringProductPrice `queryParam:"inline" name:"Product_Price"`
-	ProductPrice                *ProductPrice                `queryParam:"inline" name:"Product_Price"`
+	LegacyRecurringProductPrice *LegacyRecurringProductPrice `queryParam:"inline,name=Product_Price"`
+	ProductPrice                *ProductPrice                `queryParam:"inline,name=Product_Price"`
 
 	Type CheckoutPublicProductPriceType
 }
@@ -190,10 +190,10 @@ const (
 )
 
 type CheckoutPublicDiscount struct {
-	CheckoutDiscountFixedOnceForeverDuration      *CheckoutDiscountFixedOnceForeverDuration      `queryParam:"inline" name:"discount"`
-	CheckoutDiscountFixedRepeatDuration           *CheckoutDiscountFixedRepeatDuration           `queryParam:"inline" name:"discount"`
-	CheckoutDiscountPercentageOnceForeverDuration *CheckoutDiscountPercentageOnceForeverDuration `queryParam:"inline" name:"discount"`
-	CheckoutDiscountPercentageRepeatDuration      *CheckoutDiscountPercentageRepeatDuration      `queryParam:"inline" name:"discount"`
+	CheckoutDiscountFixedOnceForeverDuration      *CheckoutDiscountFixedOnceForeverDuration      `queryParam:"inline,name=discount"`
+	CheckoutDiscountFixedRepeatDuration           *CheckoutDiscountFixedRepeatDuration           `queryParam:"inline,name=discount"`
+	CheckoutDiscountPercentageOnceForeverDuration *CheckoutDiscountPercentageOnceForeverDuration `queryParam:"inline,name=discount"`
+	CheckoutDiscountPercentageRepeatDuration      *CheckoutDiscountPercentageRepeatDuration      `queryParam:"inline,name=discount"`
 
 	Type CheckoutPublicDiscountType
 }

@@ -1,0 +1,9 @@
+# CustomerPortalCustomersConfirmPaymentMethodResponse
+
+
+## Fields
+
+| Field                                                                                                             | Type                                                                                                              | Required                                                                                                          | Description                                                                                                       |
+| ----------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| `HTTPMeta`                                                                                                        | [components.HTTPMetadata](../../models/components/httpmetadata.md)                                                | :heavy_check_mark:                                                                                                | N/A                                                                                                               |
+| `CustomerPaymentMethodCreateResponse`                                                                             | [*components.CustomerPaymentMethodCreateResponse](../../models/components/customerpaymentmethodcreateresponse.md) | :heavy_minus_sign:                                                                                                | Payment method created or setup initiated.                                                                        |

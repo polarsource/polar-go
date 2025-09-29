@@ -20,11 +20,11 @@ const (
 )
 
 type CustomField struct {
-	CustomFieldText     *CustomFieldText     `queryParam:"inline" name:"CustomField"`
-	CustomFieldNumber   *CustomFieldNumber   `queryParam:"inline" name:"CustomField"`
-	CustomFieldDate     *CustomFieldDate     `queryParam:"inline" name:"CustomField"`
-	CustomFieldCheckbox *CustomFieldCheckbox `queryParam:"inline" name:"CustomField"`
-	CustomFieldSelect   *CustomFieldSelect   `queryParam:"inline" name:"CustomField"`
+	CustomFieldText     *CustomFieldText     `queryParam:"inline,name=CustomField"`
+	CustomFieldNumber   *CustomFieldNumber   `queryParam:"inline,name=CustomField"`
+	CustomFieldDate     *CustomFieldDate     `queryParam:"inline,name=CustomField"`
+	CustomFieldCheckbox *CustomFieldCheckbox `queryParam:"inline,name=CustomField"`
+	CustomFieldSelect   *CustomFieldSelect   `queryParam:"inline,name=CustomField"`
 
 	Type CustomFieldUnionType
 }

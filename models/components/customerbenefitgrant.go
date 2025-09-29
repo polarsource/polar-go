@@ -20,12 +20,12 @@ const (
 )
 
 type CustomerBenefitGrant struct {
-	CustomerBenefitGrantDiscord          *CustomerBenefitGrantDiscord          `queryParam:"inline" name:"CustomerBenefitGrant"`
-	CustomerBenefitGrantGitHubRepository *CustomerBenefitGrantGitHubRepository `queryParam:"inline" name:"CustomerBenefitGrant"`
-	CustomerBenefitGrantDownloadables    *CustomerBenefitGrantDownloadables    `queryParam:"inline" name:"CustomerBenefitGrant"`
-	CustomerBenefitGrantLicenseKeys      *CustomerBenefitGrantLicenseKeys      `queryParam:"inline" name:"CustomerBenefitGrant"`
-	CustomerBenefitGrantCustom           *CustomerBenefitGrantCustom           `queryParam:"inline" name:"CustomerBenefitGrant"`
-	CustomerBenefitGrantMeterCredit      *CustomerBenefitGrantMeterCredit      `queryParam:"inline" name:"CustomerBenefitGrant"`
+	CustomerBenefitGrantDiscord          *CustomerBenefitGrantDiscord          `queryParam:"inline,name=CustomerBenefitGrant"`
+	CustomerBenefitGrantGitHubRepository *CustomerBenefitGrantGitHubRepository `queryParam:"inline,name=CustomerBenefitGrant"`
+	CustomerBenefitGrantDownloadables    *CustomerBenefitGrantDownloadables    `queryParam:"inline,name=CustomerBenefitGrant"`
+	CustomerBenefitGrantLicenseKeys      *CustomerBenefitGrantLicenseKeys      `queryParam:"inline,name=CustomerBenefitGrant"`
+	CustomerBenefitGrantCustom           *CustomerBenefitGrantCustom           `queryParam:"inline,name=CustomerBenefitGrant"`
+	CustomerBenefitGrantMeterCredit      *CustomerBenefitGrantMeterCredit      `queryParam:"inline,name=CustomerBenefitGrant"`
 
 	Type CustomerBenefitGrantType
 }

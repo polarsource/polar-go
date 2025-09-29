@@ -20,11 +20,11 @@ const (
 )
 
 type CustomFieldUpdate struct {
-	CustomFieldUpdateText     *CustomFieldUpdateText     `queryParam:"inline" name:"CustomFieldUpdate"`
-	CustomFieldUpdateNumber   *CustomFieldUpdateNumber   `queryParam:"inline" name:"CustomFieldUpdate"`
-	CustomFieldUpdateDate     *CustomFieldUpdateDate     `queryParam:"inline" name:"CustomFieldUpdate"`
-	CustomFieldUpdateCheckbox *CustomFieldUpdateCheckbox `queryParam:"inline" name:"CustomFieldUpdate"`
-	CustomFieldUpdateSelect   *CustomFieldUpdateSelect   `queryParam:"inline" name:"CustomFieldUpdate"`
+	CustomFieldUpdateText     *CustomFieldUpdateText     `queryParam:"inline,name=CustomFieldUpdate"`
+	CustomFieldUpdateNumber   *CustomFieldUpdateNumber   `queryParam:"inline,name=CustomFieldUpdate"`
+	CustomFieldUpdateDate     *CustomFieldUpdateDate     `queryParam:"inline,name=CustomFieldUpdate"`
+	CustomFieldUpdateCheckbox *CustomFieldUpdateCheckbox `queryParam:"inline,name=CustomFieldUpdate"`
+	CustomFieldUpdateSelect   *CustomFieldUpdateSelect   `queryParam:"inline,name=CustomFieldUpdate"`
 
 	Type CustomFieldUpdateType
 }

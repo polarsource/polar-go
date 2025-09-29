@@ -19,10 +19,10 @@ const (
 )
 
 type Metadata struct {
-	Str     *string  `queryParam:"inline" name:"metadata"`
-	Integer *int64   `queryParam:"inline" name:"metadata"`
-	Number  *float64 `queryParam:"inline" name:"metadata"`
-	Boolean *bool    `queryParam:"inline" name:"metadata"`
+	Str     *string  `queryParam:"inline,name=metadata"`
+	Integer *int64   `queryParam:"inline,name=metadata"`
+	Number  *float64 `queryParam:"inline,name=metadata"`
+	Boolean *bool    `queryParam:"inline,name=metadata"`
 
 	Type MetadataType
 }
@@ -126,10 +126,10 @@ const (
 )
 
 type CustomFieldData struct {
-	Str      *string    `queryParam:"inline" name:"custom_field_data"`
-	Integer  *int64     `queryParam:"inline" name:"custom_field_data"`
-	Boolean  *bool      `queryParam:"inline" name:"custom_field_data"`
-	DateTime *time.Time `queryParam:"inline" name:"custom_field_data"`
+	Str      *string    `queryParam:"inline,name=custom_field_data"`
+	Integer  *int64     `queryParam:"inline,name=custom_field_data"`
+	Boolean  *bool      `queryParam:"inline,name=custom_field_data"`
+	DateTime *time.Time `queryParam:"inline,name=custom_field_data"`
 
 	Type CustomFieldDataType
 }
@@ -233,10 +233,10 @@ const (
 )
 
 type SubscriptionDiscount struct {
-	DiscountFixedOnceForeverDurationBase      *DiscountFixedOnceForeverDurationBase      `queryParam:"inline" name:"SubscriptionDiscount"`
-	DiscountFixedRepeatDurationBase           *DiscountFixedRepeatDurationBase           `queryParam:"inline" name:"SubscriptionDiscount"`
-	DiscountPercentageOnceForeverDurationBase *DiscountPercentageOnceForeverDurationBase `queryParam:"inline" name:"SubscriptionDiscount"`
-	DiscountPercentageRepeatDurationBase      *DiscountPercentageRepeatDurationBase      `queryParam:"inline" name:"SubscriptionDiscount"`
+	DiscountFixedOnceForeverDurationBase      *DiscountFixedOnceForeverDurationBase      `queryParam:"inline,name=SubscriptionDiscount"`
+	DiscountFixedRepeatDurationBase           *DiscountFixedRepeatDurationBase           `queryParam:"inline,name=SubscriptionDiscount"`
+	DiscountPercentageOnceForeverDurationBase *DiscountPercentageOnceForeverDurationBase `queryParam:"inline,name=SubscriptionDiscount"`
+	DiscountPercentageRepeatDurationBase      *DiscountPercentageRepeatDurationBase      `queryParam:"inline,name=SubscriptionDiscount"`
 
 	Type SubscriptionDiscountType
 }
@@ -338,8 +338,8 @@ const (
 )
 
 type SubscriptionPrices struct {
-	LegacyRecurringProductPrice *LegacyRecurringProductPrice `queryParam:"inline" name:"prices"`
-	ProductPrice                *ProductPrice                `queryParam:"inline" name:"prices"`
+	LegacyRecurringProductPrice *LegacyRecurringProductPrice `queryParam:"inline,name=prices"`
+	ProductPrice                *ProductPrice                `queryParam:"inline,name=prices"`
 
 	Type SubscriptionPricesType
 }

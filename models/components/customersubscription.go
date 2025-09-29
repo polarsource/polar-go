@@ -17,8 +17,8 @@ const (
 )
 
 type CustomerSubscriptionPrices struct {
-	LegacyRecurringProductPrice *LegacyRecurringProductPrice `queryParam:"inline" name:"prices"`
-	ProductPrice                *ProductPrice                `queryParam:"inline" name:"prices"`
+	LegacyRecurringProductPrice *LegacyRecurringProductPrice `queryParam:"inline,name=prices"`
+	ProductPrice                *ProductPrice                `queryParam:"inline,name=prices"`
 
 	Type CustomerSubscriptionPricesType
 }
@@ -117,6 +117,8 @@ type CustomerSubscription struct {
 	Prices []CustomerSubscriptionPrices `json:"prices"`
 	// List of meters associated with the subscription.
 	Meters []CustomerSubscriptionMeter `json:"meters"`
+	// Whether the subscription is managed by Polar.
+	IsPolarManaged bool `json:"is_polar_managed"`
 }
 
 func (c CustomerSubscription) MarshalJSON() ([]byte, error) {
@@ -124,7 +126,7 @@ func (c CustomerSubscription) MarshalJSON() ([]byte, error) {
 }
 
 func (c *CustomerSubscription) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &c, "", false, []string{"created_at", "modified_at", "id", "amount", "currency", "recurring_interval", "status", "current_period_start", "current_period_end", "trial_start", "trial_end", "cancel_at_period_end", "canceled_at", "started_at", "ends_at", "ended_at", "customer_id", "product_id", "discount_id", "checkout_id", "customer_cancellation_reason", "customer_cancellation_comment", "product", "prices", "meters"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &c, "", false, []string{"created_at", "modified_at", "id", "amount", "currency", "recurring_interval", "status", "current_period_start", "current_period_end", "trial_start", "trial_end", "cancel_at_period_end", "canceled_at", "started_at", "ends_at", "ended_at", "customer_id", "product_id", "discount_id", "checkout_id", "customer_cancellation_reason", "customer_cancellation_comment", "product", "prices", "meters", "is_polar_managed"}); err != nil {
 		return err
 	}
 	return nil
@@ -303,4 +305,11 @@ func (c *CustomerSubscription) GetMeters() []CustomerSubscriptionMeter {
 		return []CustomerSubscriptionMeter{}
 	}
 	return c.Meters
+}
+
+func (c *CustomerSubscription) GetIsPolarManaged() bool {
+	if c == nil {
+		return false
+	}
+	return c.IsPolarManaged
 }

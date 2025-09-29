@@ -18,8 +18,8 @@ const (
 
 // OrganizationID - Filter by organization ID.
 type OrganizationID struct {
-	Str        *string  `queryParam:"inline" name:"Organization_Id"`
-	ArrayOfStr []string `queryParam:"inline" name:"Organization_Id"`
+	Str        *string  `queryParam:"inline,name=Organization_Id"`
+	ArrayOfStr []string `queryParam:"inline,name=Organization_Id"`
 
 	Type OrganizationIDType
 }

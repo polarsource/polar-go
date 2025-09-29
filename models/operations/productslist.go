@@ -18,8 +18,8 @@ const (
 
 // QueryParamProductIDFilter - Filter by product ID.
 type QueryParamProductIDFilter struct {
-	Str        *string  `queryParam:"inline" name:"ProductID_Filter"`
-	ArrayOfStr []string `queryParam:"inline" name:"ProductID_Filter"`
+	Str        *string  `queryParam:"inline,name=ProductID_Filter"`
+	ArrayOfStr []string `queryParam:"inline,name=ProductID_Filter"`
 
 	Type QueryParamProductIDFilterType
 }
@@ -82,8 +82,8 @@ const (
 
 // ProductsListQueryParamOrganizationIDFilter - Filter by organization ID.
 type ProductsListQueryParamOrganizationIDFilter struct {
-	Str        *string  `queryParam:"inline" name:"OrganizationID_Filter"`
-	ArrayOfStr []string `queryParam:"inline" name:"OrganizationID_Filter"`
+	Str        *string  `queryParam:"inline,name=OrganizationID_Filter"`
+	ArrayOfStr []string `queryParam:"inline,name=OrganizationID_Filter"`
 
 	Type ProductsListQueryParamOrganizationIDFilterType
 }
@@ -146,8 +146,8 @@ const (
 
 // BenefitIDFilter - Filter products granting specific benefit.
 type BenefitIDFilter struct {
-	Str        *string  `queryParam:"inline" name:"BenefitID_Filter"`
-	ArrayOfStr []string `queryParam:"inline" name:"BenefitID_Filter"`
+	Str        *string  `queryParam:"inline,name=BenefitID_Filter"`
+	ArrayOfStr []string `queryParam:"inline,name=BenefitID_Filter"`
 
 	Type BenefitIDFilterType
 }

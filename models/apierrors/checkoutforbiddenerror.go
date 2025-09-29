@@ -19,9 +19,9 @@ const (
 )
 
 type CheckoutForbiddenError struct {
-	AlreadyActiveSubscriptionError *components.AlreadyActiveSubscriptionError `queryParam:"inline" name:"CheckoutForbiddenError"`
-	NotOpenCheckout                *components.NotOpenCheckout                `queryParam:"inline" name:"CheckoutForbiddenError"`
-	PaymentNotReady                *components.PaymentNotReady                `queryParam:"inline" name:"CheckoutForbiddenError"`
+	AlreadyActiveSubscriptionError *components.AlreadyActiveSubscriptionError `queryParam:"inline,name=CheckoutForbiddenError"`
+	NotOpenCheckout                *components.NotOpenCheckout                `queryParam:"inline,name=CheckoutForbiddenError"`
+	PaymentNotReady                *components.PaymentNotReady                `queryParam:"inline,name=CheckoutForbiddenError"`
 
 	Type CheckoutForbiddenErrorType
 }

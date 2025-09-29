@@ -16,6 +16,7 @@
 * [DeleteExternal](#deleteexternal) - Delete Customer by External ID
 * [GetState](#getstate) - Get Customer State
 * [GetStateExternal](#getstateexternal) - Get Customer State by External ID
+* [GetBalance](#getbalance) - Get Customer Balance
 
 ## List
 
@@ -717,6 +718,62 @@ func main() {
 ### Response
 
 **[*operations.CustomersGetStateExternalResponse](../../models/operations/customersgetstateexternalresponse.md), error**
+
+### Errors
+
+| Error Type                    | Status Code                   | Content Type                  |
+| ----------------------------- | ----------------------------- | ----------------------------- |
+| apierrors.ResourceNotFound    | 404                           | application/json              |
+| apierrors.HTTPValidationError | 422                           | application/json              |
+| apierrors.APIError            | 4XX, 5XX                      | \*/\*                         |
+
+## GetBalance
+
+Get customer balance information.
+
+**Scopes**: `customers:read` `customers:write`
+
+### Example Usage
+
+<!-- UsageSnippet language="go" operationID="customers:get_balance" method="get" path="/v1/customers/{id}/balance" -->
+```go
+package main
+
+import(
+	"context"
+	"os"
+	polargo "github.com/polarsource/polar-go"
+	"log"
+)
+
+func main() {
+    ctx := context.Background()
+
+    s := polargo.New(
+        polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
+    )
+
+    res, err := s.Customers.GetBalance(ctx, "<value>")
+    if err != nil {
+        log.Fatal(err)
+    }
+    if res.CustomerBalance != nil {
+        // handle response
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                | Type                                                     | Required                                                 | Description                                              |
+| -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- |
+| `ctx`                                                    | [context.Context](https://pkg.go.dev/context#Context)    | :heavy_check_mark:                                       | The context to use for the request.                      |
+| `id`                                                     | *string*                                                 | :heavy_check_mark:                                       | The customer ID.                                         |
+| `opts`                                                   | [][operations.Option](../../models/operations/option.md) | :heavy_minus_sign:                                       | The options for this request.                            |
+
+### Response
+
+**[*operations.CustomersGetBalanceResponse](../../models/operations/customersgetbalanceresponse.md), error**
 
 ### Errors
 

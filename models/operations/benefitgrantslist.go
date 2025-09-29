@@ -18,8 +18,8 @@ const (
 
 // BenefitGrantsListQueryParamOrganizationIDFilter - Filter by organization ID.
 type BenefitGrantsListQueryParamOrganizationIDFilter struct {
-	Str        *string  `queryParam:"inline" name:"OrganizationID_Filter"`
-	ArrayOfStr []string `queryParam:"inline" name:"OrganizationID_Filter"`
+	Str        *string  `queryParam:"inline,name=OrganizationID_Filter"`
+	ArrayOfStr []string `queryParam:"inline,name=OrganizationID_Filter"`
 
 	Type BenefitGrantsListQueryParamOrganizationIDFilterType
 }
@@ -82,8 +82,8 @@ const (
 
 // BenefitGrantsListQueryParamCustomerIDFilter - Filter by customer ID.
 type BenefitGrantsListQueryParamCustomerIDFilter struct {
-	Str        *string  `queryParam:"inline" name:"CustomerID_Filter"`
-	ArrayOfStr []string `queryParam:"inline" name:"CustomerID_Filter"`
+	Str        *string  `queryParam:"inline,name=CustomerID_Filter"`
+	ArrayOfStr []string `queryParam:"inline,name=CustomerID_Filter"`
 
 	Type BenefitGrantsListQueryParamCustomerIDFilterType
 }

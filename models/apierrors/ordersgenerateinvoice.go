@@ -19,8 +19,8 @@ const (
 
 // OrdersGenerateInvoiceResponse422OrdersGenerateInvoice - Order is not paid or is missing billing name or address.
 type OrdersGenerateInvoiceResponse422OrdersGenerateInvoice struct {
-	MissingInvoiceBillingDetails *components.MissingInvoiceBillingDetails `queryParam:"inline" name:"Response_422_Orders_Generate_Invoice"`
-	NotPaidOrder                 *components.NotPaidOrder                 `queryParam:"inline" name:"Response_422_Orders_Generate_Invoice"`
+	MissingInvoiceBillingDetails *components.MissingInvoiceBillingDetails `queryParam:"inline,name=Response_422_Orders_Generate_Invoice"`
+	NotPaidOrder                 *components.NotPaidOrder                 `queryParam:"inline,name=Response_422_Orders_Generate_Invoice"`
 
 	Type OrdersGenerateInvoiceResponse422OrdersGenerateInvoiceType
 

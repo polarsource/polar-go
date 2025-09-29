@@ -18,8 +18,8 @@ const (
 
 // CustomersExportQueryParamOrganizationID - Filter by organization ID.
 type CustomersExportQueryParamOrganizationID struct {
-	Str        *string  `queryParam:"inline" name:"Organization_Id"`
-	ArrayOfStr []string `queryParam:"inline" name:"Organization_Id"`
+	Str        *string  `queryParam:"inline,name=Organization_Id"`
+	ArrayOfStr []string `queryParam:"inline,name=Organization_Id"`
 
 	Type CustomersExportQueryParamOrganizationIDType
 }

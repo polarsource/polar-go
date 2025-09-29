@@ -18,8 +18,8 @@ const (
 
 // Oauth2UserinfoResponseOauth2Userinfo - Successful Response
 type Oauth2UserinfoResponseOauth2Userinfo struct {
-	UserInfoUser         *components.UserInfoUser         `queryParam:"inline" name:"Response_Oauth2_Userinfo"`
-	UserInfoOrganization *components.UserInfoOrganization `queryParam:"inline" name:"Response_Oauth2_Userinfo"`
+	UserInfoUser         *components.UserInfoUser         `queryParam:"inline,name=Response_Oauth2_Userinfo"`
+	UserInfoOrganization *components.UserInfoOrganization `queryParam:"inline,name=Response_Oauth2_Userinfo"`
 
 	Type Oauth2UserinfoResponseOauth2UserinfoType
 }

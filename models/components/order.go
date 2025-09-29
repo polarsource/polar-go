@@ -19,10 +19,10 @@ const (
 )
 
 type OrderMetadata struct {
-	Str     *string  `queryParam:"inline" name:"metadata"`
-	Integer *int64   `queryParam:"inline" name:"metadata"`
-	Number  *float64 `queryParam:"inline" name:"metadata"`
-	Boolean *bool    `queryParam:"inline" name:"metadata"`
+	Str     *string  `queryParam:"inline,name=metadata"`
+	Integer *int64   `queryParam:"inline,name=metadata"`
+	Number  *float64 `queryParam:"inline,name=metadata"`
+	Boolean *bool    `queryParam:"inline,name=metadata"`
 
 	Type OrderMetadataType
 }
@@ -126,10 +126,10 @@ const (
 )
 
 type OrderCustomFieldData struct {
-	Str      *string    `queryParam:"inline" name:"custom_field_data"`
-	Integer  *int64     `queryParam:"inline" name:"custom_field_data"`
-	Boolean  *bool      `queryParam:"inline" name:"custom_field_data"`
-	DateTime *time.Time `queryParam:"inline" name:"custom_field_data"`
+	Str      *string    `queryParam:"inline,name=custom_field_data"`
+	Integer  *int64     `queryParam:"inline,name=custom_field_data"`
+	Boolean  *bool      `queryParam:"inline,name=custom_field_data"`
+	DateTime *time.Time `queryParam:"inline,name=custom_field_data"`
 
 	Type OrderCustomFieldDataType
 }
@@ -233,10 +233,10 @@ const (
 )
 
 type OrderDiscount struct {
-	DiscountFixedOnceForeverDurationBase      *DiscountFixedOnceForeverDurationBase      `queryParam:"inline" name:"OrderDiscount"`
-	DiscountFixedRepeatDurationBase           *DiscountFixedRepeatDurationBase           `queryParam:"inline" name:"OrderDiscount"`
-	DiscountPercentageOnceForeverDurationBase *DiscountPercentageOnceForeverDurationBase `queryParam:"inline" name:"OrderDiscount"`
-	DiscountPercentageRepeatDurationBase      *DiscountPercentageRepeatDurationBase      `queryParam:"inline" name:"OrderDiscount"`
+	DiscountFixedOnceForeverDurationBase      *DiscountFixedOnceForeverDurationBase      `queryParam:"inline,name=OrderDiscount"`
+	DiscountFixedRepeatDurationBase           *DiscountFixedRepeatDurationBase           `queryParam:"inline,name=OrderDiscount"`
+	DiscountPercentageOnceForeverDurationBase *DiscountPercentageOnceForeverDurationBase `queryParam:"inline,name=OrderDiscount"`
+	DiscountPercentageRepeatDurationBase      *DiscountPercentageRepeatDurationBase      `queryParam:"inline,name=OrderDiscount"`
 
 	Type OrderDiscountType
 }
@@ -361,6 +361,8 @@ type Order struct {
 	// The name of the customer that should appear on the invoice.
 	BillingName    *string  `json:"billing_name"`
 	BillingAddress *Address `json:"billing_address"`
+	// The invoice number associated with this order.
+	InvoiceNumber string `json:"invoice_number"`
 	// Whether an invoice has been generated for this order.
 	IsInvoiceGenerated bool                     `json:"is_invoice_generated"`
 	CustomerID         string                   `json:"customer_id"`
@@ -386,7 +388,7 @@ func (o Order) MarshalJSON() ([]byte, error) {
 }
 
 func (o *Order) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &o, "", false, []string{"id", "created_at", "modified_at", "status", "paid", "subtotal_amount", "discount_amount", "net_amount", "tax_amount", "total_amount", "from_balance_amount", "refunded_amount", "refunded_tax_amount", "currency", "billing_reason", "billing_name", "billing_address", "is_invoice_generated", "customer_id", "product_id", "discount_id", "subscription_id", "checkout_id", "metadata", "customer", "user_id", "product", "discount", "subscription", "items"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &o, "", false, []string{"id", "created_at", "modified_at", "status", "paid", "subtotal_amount", "discount_amount", "net_amount", "tax_amount", "total_amount", "from_balance_amount", "refunded_amount", "refunded_tax_amount", "currency", "billing_reason", "billing_name", "billing_address", "invoice_number", "is_invoice_generated", "customer_id", "product_id", "discount_id", "subscription_id", "checkout_id", "metadata", "customer", "user_id", "product", "discount", "subscription", "items"}); err != nil {
 		return err
 	}
 	return nil
@@ -509,6 +511,13 @@ func (o *Order) GetBillingAddress() *Address {
 		return nil
 	}
 	return o.BillingAddress
+}
+
+func (o *Order) GetInvoiceNumber() string {
+	if o == nil {
+		return ""
+	}
+	return o.InvoiceNumber
 }
 
 func (o *Order) GetIsInvoiceGenerated() bool {

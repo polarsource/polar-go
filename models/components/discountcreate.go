@@ -18,10 +18,10 @@ const (
 )
 
 type DiscountCreate struct {
-	DiscountFixedOnceForeverDurationCreate      *DiscountFixedOnceForeverDurationCreate      `queryParam:"inline" name:"DiscountCreate"`
-	DiscountFixedRepeatDurationCreate           *DiscountFixedRepeatDurationCreate           `queryParam:"inline" name:"DiscountCreate"`
-	DiscountPercentageOnceForeverDurationCreate *DiscountPercentageOnceForeverDurationCreate `queryParam:"inline" name:"DiscountCreate"`
-	DiscountPercentageRepeatDurationCreate      *DiscountPercentageRepeatDurationCreate      `queryParam:"inline" name:"DiscountCreate"`
+	DiscountFixedOnceForeverDurationCreate      *DiscountFixedOnceForeverDurationCreate      `queryParam:"inline,name=DiscountCreate"`
+	DiscountFixedRepeatDurationCreate           *DiscountFixedRepeatDurationCreate           `queryParam:"inline,name=DiscountCreate"`
+	DiscountPercentageOnceForeverDurationCreate *DiscountPercentageOnceForeverDurationCreate `queryParam:"inline,name=DiscountCreate"`
+	DiscountPercentageRepeatDurationCreate      *DiscountPercentageRepeatDurationCreate      `queryParam:"inline,name=DiscountCreate"`
 
 	Type DiscountCreateType
 }

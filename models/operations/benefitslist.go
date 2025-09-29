@@ -18,8 +18,8 @@ const (
 
 // QueryParamOrganizationIDFilter - Filter by organization ID.
 type QueryParamOrganizationIDFilter struct {
-	Str        *string  `queryParam:"inline" name:"OrganizationID_Filter"`
-	ArrayOfStr []string `queryParam:"inline" name:"OrganizationID_Filter"`
+	Str        *string  `queryParam:"inline,name=OrganizationID_Filter"`
+	ArrayOfStr []string `queryParam:"inline,name=OrganizationID_Filter"`
 
 	Type QueryParamOrganizationIDFilterType
 }
@@ -82,8 +82,8 @@ const (
 
 // BenefitTypeFilter - Filter by benefit type.
 type BenefitTypeFilter struct {
-	BenefitType        *components.BenefitType  `queryParam:"inline" name:"BenefitType_Filter"`
-	ArrayOfBenefitType []components.BenefitType `queryParam:"inline" name:"BenefitType_Filter"`
+	BenefitType        *components.BenefitType  `queryParam:"inline,name=BenefitType_Filter"`
+	ArrayOfBenefitType []components.BenefitType `queryParam:"inline,name=BenefitType_Filter"`
 
 	Type BenefitTypeFilterType
 }

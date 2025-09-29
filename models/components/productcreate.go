@@ -16,8 +16,8 @@ const (
 )
 
 type ProductCreate struct {
-	ProductCreateRecurring *ProductCreateRecurring `queryParam:"inline" name:"ProductCreate"`
-	ProductCreateOneTime   *ProductCreateOneTime   `queryParam:"inline" name:"ProductCreate"`
+	ProductCreateRecurring *ProductCreateRecurring `queryParam:"inline,name=ProductCreate"`
+	ProductCreateOneTime   *ProductCreateOneTime   `queryParam:"inline,name=ProductCreate"`
 
 	Type ProductCreateType
 }

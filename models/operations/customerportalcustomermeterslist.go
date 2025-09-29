@@ -29,8 +29,8 @@ const (
 
 // MeterIDFilter - Filter by meter ID.
 type MeterIDFilter struct {
-	Str        *string  `queryParam:"inline" name:"MeterID_Filter"`
-	ArrayOfStr []string `queryParam:"inline" name:"MeterID_Filter"`
+	Str        *string  `queryParam:"inline,name=MeterID_Filter"`
+	ArrayOfStr []string `queryParam:"inline,name=MeterID_Filter"`
 
 	Type MeterIDFilterType
 }

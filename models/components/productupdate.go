@@ -18,10 +18,10 @@ const (
 )
 
 type ProductUpdateMetadata struct {
-	Str     *string  `queryParam:"inline" name:"metadata"`
-	Integer *int64   `queryParam:"inline" name:"metadata"`
-	Number  *float64 `queryParam:"inline" name:"metadata"`
-	Boolean *bool    `queryParam:"inline" name:"metadata"`
+	Str     *string  `queryParam:"inline,name=metadata"`
+	Integer *int64   `queryParam:"inline,name=metadata"`
+	Number  *float64 `queryParam:"inline,name=metadata"`
+	Boolean *bool    `queryParam:"inline,name=metadata"`
 
 	Type ProductUpdateMetadataType
 }
@@ -126,11 +126,11 @@ const (
 )
 
 type ProductUpdatePrices struct {
-	ExistingProductPrice          *ExistingProductPrice          `queryParam:"inline" name:"prices"`
-	ProductPriceFixedCreate       *ProductPriceFixedCreate       `queryParam:"inline" name:"prices"`
-	ProductPriceCustomCreate      *ProductPriceCustomCreate      `queryParam:"inline" name:"prices"`
-	ProductPriceFreeCreate        *ProductPriceFreeCreate        `queryParam:"inline" name:"prices"`
-	ProductPriceMeteredUnitCreate *ProductPriceMeteredUnitCreate `queryParam:"inline" name:"prices"`
+	ExistingProductPrice          *ExistingProductPrice          `queryParam:"inline,name=prices"`
+	ProductPriceFixedCreate       *ProductPriceFixedCreate       `queryParam:"inline,name=prices"`
+	ProductPriceCustomCreate      *ProductPriceCustomCreate      `queryParam:"inline,name=prices"`
+	ProductPriceFreeCreate        *ProductPriceFreeCreate        `queryParam:"inline,name=prices"`
+	ProductPriceMeteredUnitCreate *ProductPriceMeteredUnitCreate `queryParam:"inline,name=prices"`
 
 	Type ProductUpdatePricesType
 }

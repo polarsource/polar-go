@@ -29,8 +29,8 @@ const (
 
 // CustomerPortalDownloadablesListQueryParamOrganizationIDFilter - Filter by organization ID.
 type CustomerPortalDownloadablesListQueryParamOrganizationIDFilter struct {
-	Str        *string  `queryParam:"inline" name:"OrganizationID_Filter"`
-	ArrayOfStr []string `queryParam:"inline" name:"OrganizationID_Filter"`
+	Str        *string  `queryParam:"inline,name=OrganizationID_Filter"`
+	ArrayOfStr []string `queryParam:"inline,name=OrganizationID_Filter"`
 
 	Type CustomerPortalDownloadablesListQueryParamOrganizationIDFilterType
 }
@@ -93,8 +93,8 @@ const (
 
 // CustomerPortalDownloadablesListQueryParamBenefitIDFilter - Filter by benefit ID.
 type CustomerPortalDownloadablesListQueryParamBenefitIDFilter struct {
-	Str        *string  `queryParam:"inline" name:"BenefitID_Filter"`
-	ArrayOfStr []string `queryParam:"inline" name:"BenefitID_Filter"`
+	Str        *string  `queryParam:"inline,name=BenefitID_Filter"`
+	ArrayOfStr []string `queryParam:"inline,name=BenefitID_Filter"`
 
 	Type CustomerPortalDownloadablesListQueryParamBenefitIDFilterType
 }

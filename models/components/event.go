@@ -16,8 +16,8 @@ const (
 )
 
 type Event struct {
-	SystemEvent *SystemEvent `queryParam:"inline" name:"Event"`
-	UserEvent   *UserEvent   `queryParam:"inline" name:"Event"`
+	SystemEvent *SystemEvent `queryParam:"inline,name=Event"`
+	UserEvent   *UserEvent   `queryParam:"inline,name=Event"`
 
 	Type EventType
 }

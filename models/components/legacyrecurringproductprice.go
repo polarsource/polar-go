@@ -18,9 +18,9 @@ const (
 )
 
 type LegacyRecurringProductPrice struct {
-	LegacyRecurringProductPriceFixed  *LegacyRecurringProductPriceFixed  `queryParam:"inline" name:"LegacyRecurringProductPrice"`
-	LegacyRecurringProductPriceCustom *LegacyRecurringProductPriceCustom `queryParam:"inline" name:"LegacyRecurringProductPrice"`
-	LegacyRecurringProductPriceFree   *LegacyRecurringProductPriceFree   `queryParam:"inline" name:"LegacyRecurringProductPrice"`
+	LegacyRecurringProductPriceFixed  *LegacyRecurringProductPriceFixed  `queryParam:"inline,name=LegacyRecurringProductPrice"`
+	LegacyRecurringProductPriceCustom *LegacyRecurringProductPriceCustom `queryParam:"inline,name=LegacyRecurringProductPrice"`
+	LegacyRecurringProductPriceFree   *LegacyRecurringProductPriceFree   `queryParam:"inline,name=LegacyRecurringProductPrice"`
 
 	Type LegacyRecurringProductPriceType
 }

@@ -12,8 +12,6 @@ import (
 	"reflect"
 	"time"
 
-	"github.com/ericlagergren/decimal"
-
 	"github.com/polarsource/polar-go/optionalnullable"
 	"github.com/polarsource/polar-go/types"
 )
@@ -246,7 +244,7 @@ func populateDeepObjectParamsStruct(qsValues url.Values, priorScope string, stru
 			populateDeepObjectParamsMap(qsValues, scope, fieldValue)
 		case reflect.Struct:
 			switch fieldValue.Type() {
-			case reflect.TypeOf(big.Int{}), reflect.TypeOf(decimal.Big{}), reflect.TypeOf(time.Time{}), reflect.TypeOf(types.Date{}):
+			case reflect.TypeOf(big.Int{}), reflect.TypeOf(time.Time{}), reflect.TypeOf(types.Date{}):
 				qsValues.Add(scope, valToString(fieldValue.Interface()))
 
 				continue

@@ -18,8 +18,8 @@ const (
 
 // OrdersListQueryParamOrganizationIDFilter - Filter by organization ID.
 type OrdersListQueryParamOrganizationIDFilter struct {
-	Str        *string  `queryParam:"inline" name:"OrganizationID_Filter"`
-	ArrayOfStr []string `queryParam:"inline" name:"OrganizationID_Filter"`
+	Str        *string  `queryParam:"inline,name=OrganizationID_Filter"`
+	ArrayOfStr []string `queryParam:"inline,name=OrganizationID_Filter"`
 
 	Type OrdersListQueryParamOrganizationIDFilterType
 }
@@ -82,8 +82,8 @@ const (
 
 // OrdersListQueryParamProductIDFilter - Filter by product ID.
 type OrdersListQueryParamProductIDFilter struct {
-	Str        *string  `queryParam:"inline" name:"ProductID_Filter"`
-	ArrayOfStr []string `queryParam:"inline" name:"ProductID_Filter"`
+	Str        *string  `queryParam:"inline,name=ProductID_Filter"`
+	ArrayOfStr []string `queryParam:"inline,name=ProductID_Filter"`
 
 	Type OrdersListQueryParamProductIDFilterType
 }
@@ -146,8 +146,8 @@ const (
 
 // ProductBillingTypeFilter - Filter by product billing type. `recurring` will filter data corresponding to subscriptions creations or renewals. `one_time` will filter data corresponding to one-time purchases.
 type ProductBillingTypeFilter struct {
-	ProductBillingType        *components.ProductBillingType  `queryParam:"inline" name:"ProductBillingType_Filter"`
-	ArrayOfProductBillingType []components.ProductBillingType `queryParam:"inline" name:"ProductBillingType_Filter"`
+	ProductBillingType        *components.ProductBillingType  `queryParam:"inline,name=ProductBillingType_Filter"`
+	ArrayOfProductBillingType []components.ProductBillingType `queryParam:"inline,name=ProductBillingType_Filter"`
 
 	Type ProductBillingTypeFilterType
 }
@@ -210,8 +210,8 @@ const (
 
 // QueryParamDiscountIDFilter - Filter by discount ID.
 type QueryParamDiscountIDFilter struct {
-	Str        *string  `queryParam:"inline" name:"DiscountID_Filter"`
-	ArrayOfStr []string `queryParam:"inline" name:"DiscountID_Filter"`
+	Str        *string  `queryParam:"inline,name=DiscountID_Filter"`
+	ArrayOfStr []string `queryParam:"inline,name=DiscountID_Filter"`
 
 	Type QueryParamDiscountIDFilterType
 }
@@ -274,8 +274,8 @@ const (
 
 // OrdersListQueryParamCustomerIDFilter - Filter by customer ID.
 type OrdersListQueryParamCustomerIDFilter struct {
-	Str        *string  `queryParam:"inline" name:"CustomerID_Filter"`
-	ArrayOfStr []string `queryParam:"inline" name:"CustomerID_Filter"`
+	Str        *string  `queryParam:"inline,name=CustomerID_Filter"`
+	ArrayOfStr []string `queryParam:"inline,name=CustomerID_Filter"`
 
 	Type OrdersListQueryParamCustomerIDFilterType
 }
@@ -338,8 +338,8 @@ const (
 
 // CheckoutIDFilter - Filter by checkout ID.
 type CheckoutIDFilter struct {
-	Str        *string  `queryParam:"inline" name:"CheckoutID_Filter"`
-	ArrayOfStr []string `queryParam:"inline" name:"CheckoutID_Filter"`
+	Str        *string  `queryParam:"inline,name=CheckoutID_Filter"`
+	ArrayOfStr []string `queryParam:"inline,name=CheckoutID_Filter"`
 
 	Type CheckoutIDFilterType
 }

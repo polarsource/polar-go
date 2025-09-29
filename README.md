@@ -255,6 +255,7 @@ func main() {
 * [Update](docs/sdks/polarcustomers/README.md#update) - Update Customer
 * [ListPaymentMethods](docs/sdks/polarcustomers/README.md#listpaymentmethods) - List Customer Payment Methods
 * [AddPaymentMethod](docs/sdks/polarcustomers/README.md#addpaymentmethod) - Add Customer Payment Method
+* [ConfirmPaymentMethod](docs/sdks/polarcustomers/README.md#confirmpaymentmethod) - Confirm Customer Payment Method
 * [DeletePaymentMethod](docs/sdks/polarcustomers/README.md#deletepaymentmethod) - Delete Customer Payment Method
 
 #### [CustomerPortal.Downloadables](docs/sdks/downloadables/README.md)
@@ -303,6 +304,7 @@ func main() {
 * [DeleteExternal](docs/sdks/customers/README.md#deleteexternal) - Delete Customer by External ID
 * [GetState](docs/sdks/customers/README.md#getstate) - Get Customer State
 * [GetStateExternal](docs/sdks/customers/README.md#getstateexternal) - Get Customer State by External ID
+* [GetBalance](docs/sdks/customers/README.md#getbalance) - Get Customer Balance
 
 ### [CustomerSessions](docs/sdks/customersessions/README.md)
 

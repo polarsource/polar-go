@@ -18,8 +18,8 @@ const (
 
 // CustomFieldsListQueryParamOrganizationIDFilter - Filter by organization ID.
 type CustomFieldsListQueryParamOrganizationIDFilter struct {
-	Str        *string  `queryParam:"inline" name:"OrganizationID_Filter"`
-	ArrayOfStr []string `queryParam:"inline" name:"OrganizationID_Filter"`
+	Str        *string  `queryParam:"inline,name=OrganizationID_Filter"`
+	ArrayOfStr []string `queryParam:"inline,name=OrganizationID_Filter"`
 
 	Type CustomFieldsListQueryParamOrganizationIDFilterType
 }
@@ -82,8 +82,8 @@ const (
 
 // CustomFieldTypeFilter - Filter by custom field type.
 type CustomFieldTypeFilter struct {
-	CustomFieldType        *components.CustomFieldType  `queryParam:"inline" name:"CustomFieldType_Filter"`
-	ArrayOfCustomFieldType []components.CustomFieldType `queryParam:"inline" name:"CustomFieldType_Filter"`
+	CustomFieldType        *components.CustomFieldType  `queryParam:"inline,name=CustomFieldType_Filter"`
+	ArrayOfCustomFieldType []components.CustomFieldType `queryParam:"inline,name=CustomFieldType_Filter"`
 
 	Type CustomFieldTypeFilterType
 }

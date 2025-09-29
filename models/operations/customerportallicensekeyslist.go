@@ -29,8 +29,8 @@ const (
 
 // CustomerPortalLicenseKeysListQueryParamOrganizationIDFilter - Filter by organization ID.
 type CustomerPortalLicenseKeysListQueryParamOrganizationIDFilter struct {
-	Str        *string  `queryParam:"inline" name:"OrganizationID_Filter"`
-	ArrayOfStr []string `queryParam:"inline" name:"OrganizationID_Filter"`
+	Str        *string  `queryParam:"inline,name=OrganizationID_Filter"`
+	ArrayOfStr []string `queryParam:"inline,name=OrganizationID_Filter"`
 
 	Type CustomerPortalLicenseKeysListQueryParamOrganizationIDFilterType
 }

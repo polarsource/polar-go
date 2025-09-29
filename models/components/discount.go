@@ -18,10 +18,10 @@ const (
 )
 
 type Discount struct {
-	DiscountFixedOnceForeverDuration      *DiscountFixedOnceForeverDuration      `queryParam:"inline" name:"Discount"`
-	DiscountFixedRepeatDuration           *DiscountFixedRepeatDuration           `queryParam:"inline" name:"Discount"`
-	DiscountPercentageOnceForeverDuration *DiscountPercentageOnceForeverDuration `queryParam:"inline" name:"Discount"`
-	DiscountPercentageRepeatDuration      *DiscountPercentageRepeatDuration      `queryParam:"inline" name:"Discount"`
+	DiscountFixedOnceForeverDuration      *DiscountFixedOnceForeverDuration      `queryParam:"inline,name=Discount"`
+	DiscountFixedRepeatDuration           *DiscountFixedRepeatDuration           `queryParam:"inline,name=Discount"`
+	DiscountPercentageOnceForeverDuration *DiscountPercentageOnceForeverDuration `queryParam:"inline,name=Discount"`
+	DiscountPercentageRepeatDuration      *DiscountPercentageRepeatDuration      `queryParam:"inline,name=Discount"`
 
 	Type DiscountUnionType
 }

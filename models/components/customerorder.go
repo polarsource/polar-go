@@ -38,6 +38,8 @@ type CustomerOrder struct {
 	// The name of the customer that should appear on the invoice.
 	BillingName    *string  `json:"billing_name"`
 	BillingAddress *Address `json:"billing_address"`
+	// The invoice number associated with this order.
+	InvoiceNumber string `json:"invoice_number"`
 	// Whether an invoice has been generated for this order.
 	IsInvoiceGenerated bool    `json:"is_invoice_generated"`
 	CustomerID         string  `json:"customer_id"`
@@ -60,7 +62,7 @@ func (c CustomerOrder) MarshalJSON() ([]byte, error) {
 }
 
 func (c *CustomerOrder) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &c, "", false, []string{"id", "created_at", "modified_at", "status", "paid", "subtotal_amount", "discount_amount", "net_amount", "tax_amount", "total_amount", "from_balance_amount", "refunded_amount", "refunded_tax_amount", "currency", "billing_reason", "billing_name", "billing_address", "is_invoice_generated", "customer_id", "product_id", "discount_id", "subscription_id", "checkout_id", "user_id", "product", "subscription", "items"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &c, "", false, []string{"id", "created_at", "modified_at", "status", "paid", "subtotal_amount", "discount_amount", "net_amount", "tax_amount", "total_amount", "from_balance_amount", "refunded_amount", "refunded_tax_amount", "currency", "billing_reason", "billing_name", "billing_address", "invoice_number", "is_invoice_generated", "customer_id", "product_id", "discount_id", "subscription_id", "checkout_id", "user_id", "product", "subscription", "items"}); err != nil {
 		return err
 	}
 	return nil
@@ -183,6 +185,13 @@ func (c *CustomerOrder) GetBillingAddress() *Address {
 		return nil
 	}
 	return c.BillingAddress
+}
+
+func (c *CustomerOrder) GetInvoiceNumber() string {
+	if c == nil {
+		return ""
+	}
+	return c.InvoiceNumber
 }
 
 func (c *CustomerOrder) GetIsInvoiceGenerated() bool {

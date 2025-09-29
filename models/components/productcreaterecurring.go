@@ -18,10 +18,10 @@ const (
 )
 
 type ProductCreateRecurringMetadata struct {
-	Str     *string  `queryParam:"inline" name:"metadata"`
-	Integer *int64   `queryParam:"inline" name:"metadata"`
-	Number  *float64 `queryParam:"inline" name:"metadata"`
-	Boolean *bool    `queryParam:"inline" name:"metadata"`
+	Str     *string  `queryParam:"inline,name=metadata"`
+	Integer *int64   `queryParam:"inline,name=metadata"`
+	Number  *float64 `queryParam:"inline,name=metadata"`
+	Boolean *bool    `queryParam:"inline,name=metadata"`
 
 	Type ProductCreateRecurringMetadataType
 }
@@ -125,10 +125,10 @@ const (
 )
 
 type ProductCreateRecurringPrices struct {
-	ProductPriceFixedCreate       *ProductPriceFixedCreate       `queryParam:"inline" name:"prices"`
-	ProductPriceCustomCreate      *ProductPriceCustomCreate      `queryParam:"inline" name:"prices"`
-	ProductPriceFreeCreate        *ProductPriceFreeCreate        `queryParam:"inline" name:"prices"`
-	ProductPriceMeteredUnitCreate *ProductPriceMeteredUnitCreate `queryParam:"inline" name:"prices"`
+	ProductPriceFixedCreate       *ProductPriceFixedCreate       `queryParam:"inline,name=prices"`
+	ProductPriceCustomCreate      *ProductPriceCustomCreate      `queryParam:"inline,name=prices"`
+	ProductPriceFreeCreate        *ProductPriceFreeCreate        `queryParam:"inline,name=prices"`
+	ProductPriceMeteredUnitCreate *ProductPriceMeteredUnitCreate `queryParam:"inline,name=prices"`
 
 	Type ProductCreateRecurringPricesType
 }

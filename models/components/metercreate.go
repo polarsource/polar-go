@@ -19,10 +19,10 @@ const (
 )
 
 type MeterCreateMetadata struct {
-	Str     *string  `queryParam:"inline" name:"metadata"`
-	Integer *int64   `queryParam:"inline" name:"metadata"`
-	Number  *float64 `queryParam:"inline" name:"metadata"`
-	Boolean *bool    `queryParam:"inline" name:"metadata"`
+	Str     *string  `queryParam:"inline,name=metadata"`
+	Integer *int64   `queryParam:"inline,name=metadata"`
+	Number  *float64 `queryParam:"inline,name=metadata"`
+	Boolean *bool    `queryParam:"inline,name=metadata"`
 
 	Type MeterCreateMetadataType
 }
@@ -129,9 +129,9 @@ const (
 
 // MeterCreateAggregation - The aggregation to apply on the filtered events to calculate the meter.
 type MeterCreateAggregation struct {
-	CountAggregation    *CountAggregation    `queryParam:"inline" name:"Aggregation"`
-	PropertyAggregation *PropertyAggregation `queryParam:"inline" name:"Aggregation"`
-	UniqueAggregation   *UniqueAggregation   `queryParam:"inline" name:"Aggregation"`
+	CountAggregation    *CountAggregation    `queryParam:"inline,name=Aggregation"`
+	PropertyAggregation *PropertyAggregation `queryParam:"inline,name=Aggregation"`
+	UniqueAggregation   *UniqueAggregation   `queryParam:"inline,name=Aggregation"`
 
 	Type MeterCreateAggregationType
 }

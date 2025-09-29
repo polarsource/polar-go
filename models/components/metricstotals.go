@@ -16,8 +16,8 @@ const (
 )
 
 type MetricsTotalsOrders struct {
-	Integer *int64   `queryParam:"inline" name:"Orders"`
-	Number  *float64 `queryParam:"inline" name:"Orders"`
+	Integer *int64   `queryParam:"inline,name=Orders"`
+	Number  *float64 `queryParam:"inline,name=Orders"`
 
 	Type MetricsTotalsOrdersType
 }
@@ -79,8 +79,8 @@ const (
 )
 
 type MetricsTotalsRevenue struct {
-	Integer *int64   `queryParam:"inline" name:"Revenue"`
-	Number  *float64 `queryParam:"inline" name:"Revenue"`
+	Integer *int64   `queryParam:"inline,name=Revenue"`
+	Number  *float64 `queryParam:"inline,name=Revenue"`
 
 	Type MetricsTotalsRevenueType
 }
@@ -142,8 +142,8 @@ const (
 )
 
 type MetricsTotalsNetRevenue struct {
-	Integer *int64   `queryParam:"inline" name:"Net_Revenue"`
-	Number  *float64 `queryParam:"inline" name:"Net_Revenue"`
+	Integer *int64   `queryParam:"inline,name=Net_Revenue"`
+	Number  *float64 `queryParam:"inline,name=Net_Revenue"`
 
 	Type MetricsTotalsNetRevenueType
 }
@@ -205,8 +205,8 @@ const (
 )
 
 type MetricsTotalsCumulativeRevenue struct {
-	Integer *int64   `queryParam:"inline" name:"Cumulative_Revenue"`
-	Number  *float64 `queryParam:"inline" name:"Cumulative_Revenue"`
+	Integer *int64   `queryParam:"inline,name=Cumulative_Revenue"`
+	Number  *float64 `queryParam:"inline,name=Cumulative_Revenue"`
 
 	Type MetricsTotalsCumulativeRevenueType
 }
@@ -268,8 +268,8 @@ const (
 )
 
 type MetricsTotalsNetCumulativeRevenue struct {
-	Integer *int64   `queryParam:"inline" name:"Net_Cumulative_Revenue"`
-	Number  *float64 `queryParam:"inline" name:"Net_Cumulative_Revenue"`
+	Integer *int64   `queryParam:"inline,name=Net_Cumulative_Revenue"`
+	Number  *float64 `queryParam:"inline,name=Net_Cumulative_Revenue"`
 
 	Type MetricsTotalsNetCumulativeRevenueType
 }
@@ -331,8 +331,8 @@ const (
 )
 
 type MetricsTotalsAverageOrderValue struct {
-	Integer *int64   `queryParam:"inline" name:"Average_Order_Value"`
-	Number  *float64 `queryParam:"inline" name:"Average_Order_Value"`
+	Integer *int64   `queryParam:"inline,name=Average_Order_Value"`
+	Number  *float64 `queryParam:"inline,name=Average_Order_Value"`
 
 	Type MetricsTotalsAverageOrderValueType
 }
@@ -394,8 +394,8 @@ const (
 )
 
 type MetricsTotalsNetAverageOrderValue struct {
-	Integer *int64   `queryParam:"inline" name:"Net_Average_Order_Value"`
-	Number  *float64 `queryParam:"inline" name:"Net_Average_Order_Value"`
+	Integer *int64   `queryParam:"inline,name=Net_Average_Order_Value"`
+	Number  *float64 `queryParam:"inline,name=Net_Average_Order_Value"`
 
 	Type MetricsTotalsNetAverageOrderValueType
 }
@@ -457,8 +457,8 @@ const (
 )
 
 type MetricsTotalsOneTimeProducts struct {
-	Integer *int64   `queryParam:"inline" name:"One_Time_Products"`
-	Number  *float64 `queryParam:"inline" name:"One_Time_Products"`
+	Integer *int64   `queryParam:"inline,name=One_Time_Products"`
+	Number  *float64 `queryParam:"inline,name=One_Time_Products"`
 
 	Type MetricsTotalsOneTimeProductsType
 }
@@ -520,8 +520,8 @@ const (
 )
 
 type MetricsTotalsOneTimeProductsRevenue struct {
-	Integer *int64   `queryParam:"inline" name:"One_Time_Products_Revenue"`
-	Number  *float64 `queryParam:"inline" name:"One_Time_Products_Revenue"`
+	Integer *int64   `queryParam:"inline,name=One_Time_Products_Revenue"`
+	Number  *float64 `queryParam:"inline,name=One_Time_Products_Revenue"`
 
 	Type MetricsTotalsOneTimeProductsRevenueType
 }
@@ -583,8 +583,8 @@ const (
 )
 
 type MetricsTotalsOneTimeProductsNetRevenue struct {
-	Integer *int64   `queryParam:"inline" name:"One_Time_Products_Net_Revenue"`
-	Number  *float64 `queryParam:"inline" name:"One_Time_Products_Net_Revenue"`
+	Integer *int64   `queryParam:"inline,name=One_Time_Products_Net_Revenue"`
+	Number  *float64 `queryParam:"inline,name=One_Time_Products_Net_Revenue"`
 
 	Type MetricsTotalsOneTimeProductsNetRevenueType
 }
@@ -646,8 +646,8 @@ const (
 )
 
 type MetricsTotalsNewSubscriptions struct {
-	Integer *int64   `queryParam:"inline" name:"New_Subscriptions"`
-	Number  *float64 `queryParam:"inline" name:"New_Subscriptions"`
+	Integer *int64   `queryParam:"inline,name=New_Subscriptions"`
+	Number  *float64 `queryParam:"inline,name=New_Subscriptions"`
 
 	Type MetricsTotalsNewSubscriptionsType
 }
@@ -709,8 +709,8 @@ const (
 )
 
 type MetricsTotalsNewSubscriptionsRevenue struct {
-	Integer *int64   `queryParam:"inline" name:"New_Subscriptions_Revenue"`
-	Number  *float64 `queryParam:"inline" name:"New_Subscriptions_Revenue"`
+	Integer *int64   `queryParam:"inline,name=New_Subscriptions_Revenue"`
+	Number  *float64 `queryParam:"inline,name=New_Subscriptions_Revenue"`
 
 	Type MetricsTotalsNewSubscriptionsRevenueType
 }
@@ -772,8 +772,8 @@ const (
 )
 
 type MetricsTotalsNewSubscriptionsNetRevenue struct {
-	Integer *int64   `queryParam:"inline" name:"New_Subscriptions_Net_Revenue"`
-	Number  *float64 `queryParam:"inline" name:"New_Subscriptions_Net_Revenue"`
+	Integer *int64   `queryParam:"inline,name=New_Subscriptions_Net_Revenue"`
+	Number  *float64 `queryParam:"inline,name=New_Subscriptions_Net_Revenue"`
 
 	Type MetricsTotalsNewSubscriptionsNetRevenueType
 }
@@ -835,8 +835,8 @@ const (
 )
 
 type MetricsTotalsRenewedSubscriptions struct {
-	Integer *int64   `queryParam:"inline" name:"Renewed_Subscriptions"`
-	Number  *float64 `queryParam:"inline" name:"Renewed_Subscriptions"`
+	Integer *int64   `queryParam:"inline,name=Renewed_Subscriptions"`
+	Number  *float64 `queryParam:"inline,name=Renewed_Subscriptions"`
 
 	Type MetricsTotalsRenewedSubscriptionsType
 }
@@ -898,8 +898,8 @@ const (
 )
 
 type MetricsTotalsRenewedSubscriptionsRevenue struct {
-	Integer *int64   `queryParam:"inline" name:"Renewed_Subscriptions_Revenue"`
-	Number  *float64 `queryParam:"inline" name:"Renewed_Subscriptions_Revenue"`
+	Integer *int64   `queryParam:"inline,name=Renewed_Subscriptions_Revenue"`
+	Number  *float64 `queryParam:"inline,name=Renewed_Subscriptions_Revenue"`
 
 	Type MetricsTotalsRenewedSubscriptionsRevenueType
 }
@@ -961,8 +961,8 @@ const (
 )
 
 type MetricsTotalsRenewedSubscriptionsNetRevenue struct {
-	Integer *int64   `queryParam:"inline" name:"Renewed_Subscriptions_Net_Revenue"`
-	Number  *float64 `queryParam:"inline" name:"Renewed_Subscriptions_Net_Revenue"`
+	Integer *int64   `queryParam:"inline,name=Renewed_Subscriptions_Net_Revenue"`
+	Number  *float64 `queryParam:"inline,name=Renewed_Subscriptions_Net_Revenue"`
 
 	Type MetricsTotalsRenewedSubscriptionsNetRevenueType
 }
@@ -1024,8 +1024,8 @@ const (
 )
 
 type MetricsTotalsActiveSubscriptions struct {
-	Integer *int64   `queryParam:"inline" name:"Active_Subscriptions"`
-	Number  *float64 `queryParam:"inline" name:"Active_Subscriptions"`
+	Integer *int64   `queryParam:"inline,name=Active_Subscriptions"`
+	Number  *float64 `queryParam:"inline,name=Active_Subscriptions"`
 
 	Type MetricsTotalsActiveSubscriptionsType
 }
@@ -1087,8 +1087,8 @@ const (
 )
 
 type MetricsTotalsMonthlyRecurringRevenue struct {
-	Integer *int64   `queryParam:"inline" name:"Monthly_Recurring_Revenue"`
-	Number  *float64 `queryParam:"inline" name:"Monthly_Recurring_Revenue"`
+	Integer *int64   `queryParam:"inline,name=Monthly_Recurring_Revenue"`
+	Number  *float64 `queryParam:"inline,name=Monthly_Recurring_Revenue"`
 
 	Type MetricsTotalsMonthlyRecurringRevenueType
 }
@@ -1150,8 +1150,8 @@ const (
 )
 
 type MetricsTotalsCommittedMonthlyRecurringRevenue struct {
-	Integer *int64   `queryParam:"inline" name:"Committed_Monthly_Recurring_Revenue"`
-	Number  *float64 `queryParam:"inline" name:"Committed_Monthly_Recurring_Revenue"`
+	Integer *int64   `queryParam:"inline,name=Committed_Monthly_Recurring_Revenue"`
+	Number  *float64 `queryParam:"inline,name=Committed_Monthly_Recurring_Revenue"`
 
 	Type MetricsTotalsCommittedMonthlyRecurringRevenueType
 }
@@ -1213,8 +1213,8 @@ const (
 )
 
 type MetricsTotalsCheckouts struct {
-	Integer *int64   `queryParam:"inline" name:"Checkouts"`
-	Number  *float64 `queryParam:"inline" name:"Checkouts"`
+	Integer *int64   `queryParam:"inline,name=Checkouts"`
+	Number  *float64 `queryParam:"inline,name=Checkouts"`
 
 	Type MetricsTotalsCheckoutsType
 }
@@ -1276,8 +1276,8 @@ const (
 )
 
 type MetricsTotalsSucceededCheckouts struct {
-	Integer *int64   `queryParam:"inline" name:"Succeeded_Checkouts"`
-	Number  *float64 `queryParam:"inline" name:"Succeeded_Checkouts"`
+	Integer *int64   `queryParam:"inline,name=Succeeded_Checkouts"`
+	Number  *float64 `queryParam:"inline,name=Succeeded_Checkouts"`
 
 	Type MetricsTotalsSucceededCheckoutsType
 }
@@ -1339,8 +1339,8 @@ const (
 )
 
 type MetricsTotalsCheckoutsConversion struct {
-	Integer *int64   `queryParam:"inline" name:"Checkouts_Conversion"`
-	Number  *float64 `queryParam:"inline" name:"Checkouts_Conversion"`
+	Integer *int64   `queryParam:"inline,name=Checkouts_Conversion"`
+	Number  *float64 `queryParam:"inline,name=Checkouts_Conversion"`
 
 	Type MetricsTotalsCheckoutsConversionType
 }
@@ -1402,8 +1402,8 @@ const (
 )
 
 type MetricsTotalsCanceledSubscriptions struct {
-	Integer *int64   `queryParam:"inline" name:"Canceled_Subscriptions"`
-	Number  *float64 `queryParam:"inline" name:"Canceled_Subscriptions"`
+	Integer *int64   `queryParam:"inline,name=Canceled_Subscriptions"`
+	Number  *float64 `queryParam:"inline,name=Canceled_Subscriptions"`
 
 	Type MetricsTotalsCanceledSubscriptionsType
 }
@@ -1465,8 +1465,8 @@ const (
 )
 
 type MetricsTotalsCanceledSubscriptionsCustomerService struct {
-	Integer *int64   `queryParam:"inline" name:"Canceled_Subscriptions_Customer_Service"`
-	Number  *float64 `queryParam:"inline" name:"Canceled_Subscriptions_Customer_Service"`
+	Integer *int64   `queryParam:"inline,name=Canceled_Subscriptions_Customer_Service"`
+	Number  *float64 `queryParam:"inline,name=Canceled_Subscriptions_Customer_Service"`
 
 	Type MetricsTotalsCanceledSubscriptionsCustomerServiceType
 }
@@ -1528,8 +1528,8 @@ const (
 )
 
 type MetricsTotalsCanceledSubscriptionsLowQuality struct {
-	Integer *int64   `queryParam:"inline" name:"Canceled_Subscriptions_Low_Quality"`
-	Number  *float64 `queryParam:"inline" name:"Canceled_Subscriptions_Low_Quality"`
+	Integer *int64   `queryParam:"inline,name=Canceled_Subscriptions_Low_Quality"`
+	Number  *float64 `queryParam:"inline,name=Canceled_Subscriptions_Low_Quality"`
 
 	Type MetricsTotalsCanceledSubscriptionsLowQualityType
 }
@@ -1591,8 +1591,8 @@ const (
 )
 
 type MetricsTotalsCanceledSubscriptionsMissingFeatures struct {
-	Integer *int64   `queryParam:"inline" name:"Canceled_Subscriptions_Missing_Features"`
-	Number  *float64 `queryParam:"inline" name:"Canceled_Subscriptions_Missing_Features"`
+	Integer *int64   `queryParam:"inline,name=Canceled_Subscriptions_Missing_Features"`
+	Number  *float64 `queryParam:"inline,name=Canceled_Subscriptions_Missing_Features"`
 
 	Type MetricsTotalsCanceledSubscriptionsMissingFeaturesType
 }
@@ -1654,8 +1654,8 @@ const (
 )
 
 type MetricsTotalsCanceledSubscriptionsSwitchedService struct {
-	Integer *int64   `queryParam:"inline" name:"Canceled_Subscriptions_Switched_Service"`
-	Number  *float64 `queryParam:"inline" name:"Canceled_Subscriptions_Switched_Service"`
+	Integer *int64   `queryParam:"inline,name=Canceled_Subscriptions_Switched_Service"`
+	Number  *float64 `queryParam:"inline,name=Canceled_Subscriptions_Switched_Service"`
 
 	Type MetricsTotalsCanceledSubscriptionsSwitchedServiceType
 }
@@ -1717,8 +1717,8 @@ const (
 )
 
 type MetricsTotalsCanceledSubscriptionsTooComplex struct {
-	Integer *int64   `queryParam:"inline" name:"Canceled_Subscriptions_Too_Complex"`
-	Number  *float64 `queryParam:"inline" name:"Canceled_Subscriptions_Too_Complex"`
+	Integer *int64   `queryParam:"inline,name=Canceled_Subscriptions_Too_Complex"`
+	Number  *float64 `queryParam:"inline,name=Canceled_Subscriptions_Too_Complex"`
 
 	Type MetricsTotalsCanceledSubscriptionsTooComplexType
 }
@@ -1780,8 +1780,8 @@ const (
 )
 
 type MetricsTotalsCanceledSubscriptionsTooExpensive struct {
-	Integer *int64   `queryParam:"inline" name:"Canceled_Subscriptions_Too_Expensive"`
-	Number  *float64 `queryParam:"inline" name:"Canceled_Subscriptions_Too_Expensive"`
+	Integer *int64   `queryParam:"inline,name=Canceled_Subscriptions_Too_Expensive"`
+	Number  *float64 `queryParam:"inline,name=Canceled_Subscriptions_Too_Expensive"`
 
 	Type MetricsTotalsCanceledSubscriptionsTooExpensiveType
 }
@@ -1843,8 +1843,8 @@ const (
 )
 
 type MetricsTotalsCanceledSubscriptionsUnused struct {
-	Integer *int64   `queryParam:"inline" name:"Canceled_Subscriptions_Unused"`
-	Number  *float64 `queryParam:"inline" name:"Canceled_Subscriptions_Unused"`
+	Integer *int64   `queryParam:"inline,name=Canceled_Subscriptions_Unused"`
+	Number  *float64 `queryParam:"inline,name=Canceled_Subscriptions_Unused"`
 
 	Type MetricsTotalsCanceledSubscriptionsUnusedType
 }
@@ -1906,8 +1906,8 @@ const (
 )
 
 type MetricsTotalsCanceledSubscriptionsOther struct {
-	Integer *int64   `queryParam:"inline" name:"Canceled_Subscriptions_Other"`
-	Number  *float64 `queryParam:"inline" name:"Canceled_Subscriptions_Other"`
+	Integer *int64   `queryParam:"inline,name=Canceled_Subscriptions_Other"`
+	Number  *float64 `queryParam:"inline,name=Canceled_Subscriptions_Other"`
 
 	Type MetricsTotalsCanceledSubscriptionsOtherType
 }

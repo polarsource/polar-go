@@ -16,8 +16,8 @@ const (
 )
 
 type Events struct {
-	EventCreateCustomer         *EventCreateCustomer         `queryParam:"inline" name:"events"`
-	EventCreateExternalCustomer *EventCreateExternalCustomer `queryParam:"inline" name:"events"`
+	EventCreateCustomer         *EventCreateCustomer         `queryParam:"inline,name=events"`
+	EventCreateExternalCustomer *EventCreateExternalCustomer `queryParam:"inline,name=events"`
 
 	Type EventsType
 }

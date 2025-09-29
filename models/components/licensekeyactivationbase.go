@@ -19,10 +19,10 @@ const (
 )
 
 type Meta struct {
-	Str     *string  `queryParam:"inline" name:"meta"`
-	Integer *int64   `queryParam:"inline" name:"meta"`
-	Number  *float64 `queryParam:"inline" name:"meta"`
-	Boolean *bool    `queryParam:"inline" name:"meta"`
+	Str     *string  `queryParam:"inline,name=meta"`
+	Integer *int64   `queryParam:"inline,name=meta"`
+	Number  *float64 `queryParam:"inline,name=meta"`
+	Boolean *bool    `queryParam:"inline,name=meta"`
 
 	Type MetaType
 }

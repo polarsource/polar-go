@@ -19,10 +19,10 @@ const (
 )
 
 type CheckoutConfirmStripeCustomFieldData struct {
-	Str      *string    `queryParam:"inline" name:"custom_field_data"`
-	Integer  *int64     `queryParam:"inline" name:"custom_field_data"`
-	Boolean  *bool      `queryParam:"inline" name:"custom_field_data"`
-	DateTime *time.Time `queryParam:"inline" name:"custom_field_data"`
+	Str      *string    `queryParam:"inline,name=custom_field_data"`
+	Integer  *int64     `queryParam:"inline,name=custom_field_data"`
+	Boolean  *bool      `queryParam:"inline,name=custom_field_data"`
+	DateTime *time.Time `queryParam:"inline,name=custom_field_data"`
 
 	Type CheckoutConfirmStripeCustomFieldDataType
 }

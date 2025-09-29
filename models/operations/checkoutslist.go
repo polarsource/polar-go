@@ -18,8 +18,8 @@ const (
 
 // CheckoutsListQueryParamOrganizationIDFilter - Filter by organization ID.
 type CheckoutsListQueryParamOrganizationIDFilter struct {
-	Str        *string  `queryParam:"inline" name:"OrganizationID_Filter"`
-	ArrayOfStr []string `queryParam:"inline" name:"OrganizationID_Filter"`
+	Str        *string  `queryParam:"inline,name=OrganizationID_Filter"`
+	ArrayOfStr []string `queryParam:"inline,name=OrganizationID_Filter"`
 
 	Type CheckoutsListQueryParamOrganizationIDFilterType
 }
@@ -82,8 +82,8 @@ const (
 
 // CheckoutsListQueryParamProductIDFilter - Filter by product ID.
 type CheckoutsListQueryParamProductIDFilter struct {
-	Str        *string  `queryParam:"inline" name:"ProductID_Filter"`
-	ArrayOfStr []string `queryParam:"inline" name:"ProductID_Filter"`
+	Str        *string  `queryParam:"inline,name=ProductID_Filter"`
+	ArrayOfStr []string `queryParam:"inline,name=ProductID_Filter"`
 
 	Type CheckoutsListQueryParamProductIDFilterType
 }
@@ -146,8 +146,8 @@ const (
 
 // CheckoutsListQueryParamCustomerIDFilter - Filter by customer ID.
 type CheckoutsListQueryParamCustomerIDFilter struct {
-	Str        *string  `queryParam:"inline" name:"CustomerID_Filter"`
-	ArrayOfStr []string `queryParam:"inline" name:"CustomerID_Filter"`
+	Str        *string  `queryParam:"inline,name=CustomerID_Filter"`
+	ArrayOfStr []string `queryParam:"inline,name=CustomerID_Filter"`
 
 	Type CheckoutsListQueryParamCustomerIDFilterType
 }
@@ -210,8 +210,8 @@ const (
 
 // StatusFilter - Filter by checkout session status.
 type StatusFilter struct {
-	CheckoutStatus        *components.CheckoutStatus  `queryParam:"inline" name:"Status_Filter"`
-	ArrayOfCheckoutStatus []components.CheckoutStatus `queryParam:"inline" name:"Status_Filter"`
+	CheckoutStatus        *components.CheckoutStatus  `queryParam:"inline,name=Status_Filter"`
+	ArrayOfCheckoutStatus []components.CheckoutStatus `queryParam:"inline,name=Status_Filter"`
 
 	Type StatusFilterType
 }

@@ -18,8 +18,8 @@ const (
 
 // QueryParamCustomerIDFilter - Filter by customer.
 type QueryParamCustomerIDFilter struct {
-	Str        *string  `queryParam:"inline" name:"CustomerID_Filter"`
-	ArrayOfStr []string `queryParam:"inline" name:"CustomerID_Filter"`
+	Str        *string  `queryParam:"inline,name=CustomerID_Filter"`
+	ArrayOfStr []string `queryParam:"inline,name=CustomerID_Filter"`
 
 	Type QueryParamCustomerIDFilterType
 }

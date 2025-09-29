@@ -17,8 +17,8 @@ const (
 
 // UnitAmount - The price per unit in cents. Supports up to 12 decimal places.
 type UnitAmount struct {
-	Number *float64 `queryParam:"inline" name:"Unit_Amount"`
-	Str    *string  `queryParam:"inline" name:"Unit_Amount"`
+	Number *float64 `queryParam:"inline,name=Unit_Amount"`
+	Str    *string  `queryParam:"inline,name=Unit_Amount"`
 
 	Type UnitAmountType
 }

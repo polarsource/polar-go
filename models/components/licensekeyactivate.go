@@ -18,10 +18,10 @@ const (
 )
 
 type LicenseKeyActivateConditions struct {
-	Str     *string  `queryParam:"inline" name:"conditions"`
-	Integer *int64   `queryParam:"inline" name:"conditions"`
-	Number  *float64 `queryParam:"inline" name:"conditions"`
-	Boolean *bool    `queryParam:"inline" name:"conditions"`
+	Str     *string  `queryParam:"inline,name=conditions"`
+	Integer *int64   `queryParam:"inline,name=conditions"`
+	Number  *float64 `queryParam:"inline,name=conditions"`
+	Boolean *bool    `queryParam:"inline,name=conditions"`
 
 	Type LicenseKeyActivateConditionsType
 }
@@ -125,10 +125,10 @@ const (
 )
 
 type LicenseKeyActivateMeta struct {
-	Str     *string  `queryParam:"inline" name:"meta"`
-	Integer *int64   `queryParam:"inline" name:"meta"`
-	Number  *float64 `queryParam:"inline" name:"meta"`
-	Boolean *bool    `queryParam:"inline" name:"meta"`
+	Str     *string  `queryParam:"inline,name=meta"`
+	Integer *int64   `queryParam:"inline,name=meta"`
+	Number  *float64 `queryParam:"inline,name=meta"`
+	Boolean *bool    `queryParam:"inline,name=meta"`
 
 	Type LicenseKeyActivateMetaType
 }
