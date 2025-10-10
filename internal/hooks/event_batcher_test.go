@@ -7,6 +7,7 @@ import (
 	"io"
 	"net/http"
 	"net/http/httptest"
+	"os"
 	"sync"
 	"sync/atomic"
 	"testing"
@@ -332,4 +333,77 @@ func TestEventBatcher_NonIngestOperations(t *testing.T) {
 	modifiedReq, err := batcher.BeforeRequest(hookCtx, req)
 	assert.NoError(t, err)
 	assert.Equal(t, req, modifiedReq, "Request should not be modified for non-ingest operations")
+}
+
+func TestEventBatcher_DisabledByDefault(t *testing.T) {
+	originalGlobalBatcher := globalEventBatcher
+	defer func() {
+		globalEventBatcher = originalGlobalBatcher
+	}()
+
+	globalEventBatcher = nil
+
+	err := FlushEvents()
+	assert.NoError(t, err, "FlushEvents should be a safe no-op when batching is disabled")
+
+	assert.Nil(t, globalEventBatcher, "globalEventBatcher should remain nil when batching is disabled")
+}
+
+func TestEventBatcher_EnvironmentVariableCheck(t *testing.T) {
+	tests := []struct {
+		name         string
+		envValue     string
+		shouldEnable bool
+	}{
+		{
+			name:         "Batching enabled with true",
+			envValue:     "true",
+			shouldEnable: true,
+		},
+		{
+			name:         "Batching disabled with empty",
+			envValue:     "",
+			shouldEnable: false,
+		},
+		{
+			name:         "Batching disabled with false",
+			envValue:     "false",
+			shouldEnable: false,
+		},
+		{
+			name:         "Batching disabled with random value",
+			envValue:     "yes",
+			shouldEnable: false,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			originalBatcher := globalEventBatcher
+			defer func() {
+				globalEventBatcher = originalBatcher
+				os.Unsetenv("POLAR_ENABLE_EVENT_BATCHING")
+			}()
+
+			if tt.envValue != "" {
+				os.Setenv("POLAR_ENABLE_EVENT_BATCHING", tt.envValue)
+			} else {
+				os.Unsetenv("POLAR_ENABLE_EVENT_BATCHING")
+			}
+
+			hooks := New()
+			initHooks(hooks)
+
+			if tt.shouldEnable {
+				assert.NotNil(t, globalEventBatcher, "globalEventBatcher should be initialized when env var is 'true'")
+			} else {
+				assert.Nil(t, globalEventBatcher, "globalEventBatcher should be nil when env var is not 'true'")
+			}
+
+			err := FlushEvents()
+			assert.NoError(t, err, "FlushEvents should always be safe to call")
+
+			globalEventBatcher = nil
+		})
+	}
 }

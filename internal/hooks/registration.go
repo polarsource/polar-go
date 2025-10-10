@@ -1,11 +1,14 @@
 package hooks
 
-func initHooks(h *Hooks) {
-	eventBatcher := NewEventBatcher()
-	h.registerBeforeRequestHook(eventBatcher)
-	h.registerAfterSuccessHook(eventBatcher)
+import "os"
 
-	globalEventBatcher = eventBatcher
+func initHooks(h *Hooks) {
+	if os.Getenv("POLAR_ENABLE_EVENT_BATCHING") == "true" {
+		eventBatcher := NewEventBatcher()
+		h.registerBeforeRequestHook(eventBatcher)
+		h.registerAfterSuccessHook(eventBatcher)
+		globalEventBatcher = eventBatcher
+	}
 }
 
 var globalEventBatcher *EventBatcher
