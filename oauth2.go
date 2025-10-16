@@ -18,6 +18,8 @@ import (
 )
 
 type Oauth2 struct {
+	Clients *Clients
+
 	rootSDK          *Polar
 	sdkConfiguration config.SDKConfiguration
 	hooks            *hooks.Hooks
@@ -28,6 +30,7 @@ func newOauth2(rootSDK *Polar, sdkConfig config.SDKConfiguration, hooks *hooks.H
 		rootSDK:          rootSDK,
 		sdkConfiguration: sdkConfig,
 		hooks:            hooks,
+		Clients:          newClients(rootSDK, sdkConfig, hooks),
 	}
 }
 

@@ -114,12 +114,12 @@ func main() {
         components.ProductCreateOneTime{
             Name: "<value>",
             Prices: []components.ProductCreateOneTimePrices{
-                components.CreateProductCreateOneTimePricesProductPriceFixedCreate(
+                components.CreateProductCreateOneTimePricesFixed(
                     components.ProductPriceFixedCreate{
                         PriceAmount: 677078,
                     },
                 ),
-                components.CreateProductCreateOneTimePricesProductPriceCustomCreate(
+                components.CreateProductCreateOneTimePricesCustom(
                     components.ProductPriceCustomCreate{},
                 ),
             },

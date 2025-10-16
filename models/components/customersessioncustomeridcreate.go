@@ -8,6 +8,8 @@ import (
 
 // CustomerSessionCustomerIDCreate - Schema for creating a customer session using a customer ID.
 type CustomerSessionCustomerIDCreate struct {
+	// When set, a back button will be shown in the customer portal to return to this URL.
+	ReturnURL *string `json:"return_url,omitempty"`
 	// ID of the customer to create a session for.
 	CustomerID string `json:"customer_id"`
 }
@@ -21,6 +23,13 @@ func (c *CustomerSessionCustomerIDCreate) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
+}
+
+func (c *CustomerSessionCustomerIDCreate) GetReturnURL() *string {
+	if c == nil {
+		return nil
+	}
+	return c.ReturnURL
 }
 
 func (c *CustomerSessionCustomerIDCreate) GetCustomerID() string {

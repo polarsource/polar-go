@@ -1,0 +1,18 @@
+# CustomerSeat
+
+
+## Fields
+
+| Field                                                          | Type                                                           | Required                                                       | Description                                                    |
+| -------------------------------------------------------------- | -------------------------------------------------------------- | -------------------------------------------------------------- | -------------------------------------------------------------- |
+| `CreatedAt`                                                    | [time.Time](https://pkg.go.dev/time#Time)                      | :heavy_check_mark:                                             | Creation timestamp of the object.                              |
+| `ModifiedAt`                                                   | [time.Time](https://pkg.go.dev/time#Time)                      | :heavy_check_mark:                                             | Last modification timestamp of the object.                     |
+| `ID`                                                           | *string*                                                       | :heavy_check_mark:                                             | The seat ID                                                    |
+| `SubscriptionID`                                               | *string*                                                       | :heavy_check_mark:                                             | The subscription ID                                            |
+| `Status`                                                       | [components.SeatStatus](../../models/components/seatstatus.md) | :heavy_check_mark:                                             | N/A                                                            |
+| `CustomerID`                                                   | **string*                                                      | :heavy_minus_sign:                                             | The assigned customer ID                                       |
+| `CustomerEmail`                                                | **string*                                                      | :heavy_minus_sign:                                             | The assigned customer email                                    |
+| `InvitationTokenExpiresAt`                                     | [*time.Time](https://pkg.go.dev/time#Time)                     | :heavy_minus_sign:                                             | When the invitation token expires                              |
+| `ClaimedAt`                                                    | [*time.Time](https://pkg.go.dev/time#Time)                     | :heavy_minus_sign:                                             | When the seat was claimed                                      |
+| `RevokedAt`                                                    | [*time.Time](https://pkg.go.dev/time#Time)                     | :heavy_minus_sign:                                             | When the seat was revoked                                      |
+| `SeatMetadata`                                                 | map[string]*any*                                               | :heavy_minus_sign:                                             | Additional metadata for the seat                               |

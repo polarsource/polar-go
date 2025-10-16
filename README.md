@@ -255,6 +255,10 @@ func main() {
 * [ConfirmPaymentMethod](docs/sdks/polarcustomers/README.md#confirmpaymentmethod) - Confirm Customer Payment Method
 * [DeletePaymentMethod](docs/sdks/polarcustomers/README.md#deletepaymentmethod) - Delete Customer Payment Method
 
+#### [CustomerPortal.CustomerSession](docs/sdks/customersession/README.md)
+
+* [Introspect](docs/sdks/customersession/README.md#introspect) - Introspect Customer Session
+
 #### [CustomerPortal.Downloadables](docs/sdks/downloadables/README.md)
 
 * [List](docs/sdks/downloadables/README.md#list) - List Downloadables
@@ -280,6 +284,14 @@ func main() {
 #### [CustomerPortal.Organizations](docs/sdks/polarorganizations/README.md)
 
 * [Get](docs/sdks/polarorganizations/README.md#get) - Get Organization
+
+#### [CustomerPortal.Seats](docs/sdks/seats/README.md)
+
+* [ListSeats](docs/sdks/seats/README.md#listseats) - List Seats
+* [AssignSeat](docs/sdks/seats/README.md#assignseat) - Assign Seat
+* [RevokeSeat](docs/sdks/seats/README.md#revokeseat) - Revoke Seat
+* [ResendInvitation](docs/sdks/seats/README.md#resendinvitation) - Resend Invitation
+* [ListClaimedSubscriptions](docs/sdks/seats/README.md#listclaimedsubscriptions) - List Claimed Subscriptions
 
 #### [CustomerPortal.Subscriptions](docs/sdks/polarsubscriptions/README.md)
 
@@ -368,6 +380,13 @@ func main() {
 * [Revoke](docs/sdks/oauth2/README.md#revoke) - Revoke Token
 * [Introspect](docs/sdks/oauth2/README.md#introspect) - Introspect Token
 * [Userinfo](docs/sdks/oauth2/README.md#userinfo) - Get User Info
+
+#### [Oauth2.Clients](docs/sdks/clients/README.md)
+
+* [Create](docs/sdks/clients/README.md#create) - Create Client
+* [Get](docs/sdks/clients/README.md#get) - Get Client
+* [Update](docs/sdks/clients/README.md#update) - Update Client
+* [Delete](docs/sdks/clients/README.md#delete) - Delete Client
 
 ### [Orders](docs/sdks/orders/README.md)
 

@@ -3,6 +3,7 @@
 package components
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
@@ -118,11 +119,11 @@ func (u ProductCreateOneTimeMetadata) MarshalJSON() ([]byte, error) {
 type ProductCreateOneTimePricesType string
 
 const (
-	ProductCreateOneTimePricesTypeProductPriceFixedCreate       ProductCreateOneTimePricesType = "ProductPriceFixedCreate"
-	ProductCreateOneTimePricesTypeProductPriceCustomCreate      ProductCreateOneTimePricesType = "ProductPriceCustomCreate"
-	ProductCreateOneTimePricesTypeProductPriceFreeCreate        ProductCreateOneTimePricesType = "ProductPriceFreeCreate"
-	ProductCreateOneTimePricesTypeProductPriceSeatBasedCreate   ProductCreateOneTimePricesType = "ProductPriceSeatBasedCreate"
-	ProductCreateOneTimePricesTypeProductPriceMeteredUnitCreate ProductCreateOneTimePricesType = "ProductPriceMeteredUnitCreate"
+	ProductCreateOneTimePricesTypeCustom      ProductCreateOneTimePricesType = "custom"
+	ProductCreateOneTimePricesTypeFixed       ProductCreateOneTimePricesType = "fixed"
+	ProductCreateOneTimePricesTypeFree        ProductCreateOneTimePricesType = "free"
+	ProductCreateOneTimePricesTypeMeteredUnit ProductCreateOneTimePricesType = "metered_unit"
+	ProductCreateOneTimePricesTypeSeatBased   ProductCreateOneTimePricesType = "seat_based"
 )
 
 type ProductCreateOneTimePrices struct {
@@ -135,85 +136,107 @@ type ProductCreateOneTimePrices struct {
 	Type ProductCreateOneTimePricesType
 }
 
-func CreateProductCreateOneTimePricesProductPriceFixedCreate(productPriceFixedCreate ProductPriceFixedCreate) ProductCreateOneTimePrices {
-	typ := ProductCreateOneTimePricesTypeProductPriceFixedCreate
+func CreateProductCreateOneTimePricesCustom(custom ProductPriceCustomCreate) ProductCreateOneTimePrices {
+	typ := ProductCreateOneTimePricesTypeCustom
 
 	return ProductCreateOneTimePrices{
-		ProductPriceFixedCreate: &productPriceFixedCreate,
-		Type:                    typ,
-	}
-}
-
-func CreateProductCreateOneTimePricesProductPriceCustomCreate(productPriceCustomCreate ProductPriceCustomCreate) ProductCreateOneTimePrices {
-	typ := ProductCreateOneTimePricesTypeProductPriceCustomCreate
-
-	return ProductCreateOneTimePrices{
-		ProductPriceCustomCreate: &productPriceCustomCreate,
+		ProductPriceCustomCreate: &custom,
 		Type:                     typ,
 	}
 }
 
-func CreateProductCreateOneTimePricesProductPriceFreeCreate(productPriceFreeCreate ProductPriceFreeCreate) ProductCreateOneTimePrices {
-	typ := ProductCreateOneTimePricesTypeProductPriceFreeCreate
+func CreateProductCreateOneTimePricesFixed(fixed ProductPriceFixedCreate) ProductCreateOneTimePrices {
+	typ := ProductCreateOneTimePricesTypeFixed
 
 	return ProductCreateOneTimePrices{
-		ProductPriceFreeCreate: &productPriceFreeCreate,
+		ProductPriceFixedCreate: &fixed,
+		Type:                    typ,
+	}
+}
+
+func CreateProductCreateOneTimePricesFree(free ProductPriceFreeCreate) ProductCreateOneTimePrices {
+	typ := ProductCreateOneTimePricesTypeFree
+
+	return ProductCreateOneTimePrices{
+		ProductPriceFreeCreate: &free,
 		Type:                   typ,
 	}
 }
 
-func CreateProductCreateOneTimePricesProductPriceSeatBasedCreate(productPriceSeatBasedCreate ProductPriceSeatBasedCreate) ProductCreateOneTimePrices {
-	typ := ProductCreateOneTimePricesTypeProductPriceSeatBasedCreate
+func CreateProductCreateOneTimePricesMeteredUnit(meteredUnit ProductPriceMeteredUnitCreate) ProductCreateOneTimePrices {
+	typ := ProductCreateOneTimePricesTypeMeteredUnit
 
 	return ProductCreateOneTimePrices{
-		ProductPriceSeatBasedCreate: &productPriceSeatBasedCreate,
-		Type:                        typ,
+		ProductPriceMeteredUnitCreate: &meteredUnit,
+		Type:                          typ,
 	}
 }
 
-func CreateProductCreateOneTimePricesProductPriceMeteredUnitCreate(productPriceMeteredUnitCreate ProductPriceMeteredUnitCreate) ProductCreateOneTimePrices {
-	typ := ProductCreateOneTimePricesTypeProductPriceMeteredUnitCreate
+func CreateProductCreateOneTimePricesSeatBased(seatBased ProductPriceSeatBasedCreate) ProductCreateOneTimePrices {
+	typ := ProductCreateOneTimePricesTypeSeatBased
 
 	return ProductCreateOneTimePrices{
-		ProductPriceMeteredUnitCreate: &productPriceMeteredUnitCreate,
-		Type:                          typ,
+		ProductPriceSeatBasedCreate: &seatBased,
+		Type:                        typ,
 	}
 }
 
 func (u *ProductCreateOneTimePrices) UnmarshalJSON(data []byte) error {
 
-	var productPriceMeteredUnitCreate ProductPriceMeteredUnitCreate = ProductPriceMeteredUnitCreate{}
-	if err := utils.UnmarshalJSON(data, &productPriceMeteredUnitCreate, "", true, nil); err == nil {
-		u.ProductPriceMeteredUnitCreate = &productPriceMeteredUnitCreate
-		u.Type = ProductCreateOneTimePricesTypeProductPriceMeteredUnitCreate
-		return nil
+	type discriminator struct {
+		AmountType string `json:"amount_type"`
 	}
 
-	var productPriceFixedCreate ProductPriceFixedCreate = ProductPriceFixedCreate{}
-	if err := utils.UnmarshalJSON(data, &productPriceFixedCreate, "", true, nil); err == nil {
-		u.ProductPriceFixedCreate = &productPriceFixedCreate
-		u.Type = ProductCreateOneTimePricesTypeProductPriceFixedCreate
-		return nil
+	dis := new(discriminator)
+	if err := json.Unmarshal(data, &dis); err != nil {
+		return fmt.Errorf("could not unmarshal discriminator: %w", err)
 	}
 
-	var productPriceSeatBasedCreate ProductPriceSeatBasedCreate = ProductPriceSeatBasedCreate{}
-	if err := utils.UnmarshalJSON(data, &productPriceSeatBasedCreate, "", true, nil); err == nil {
-		u.ProductPriceSeatBasedCreate = &productPriceSeatBasedCreate
-		u.Type = ProductCreateOneTimePricesTypeProductPriceSeatBasedCreate
-		return nil
-	}
+	switch dis.AmountType {
+	case "custom":
+		productPriceCustomCreate := new(ProductPriceCustomCreate)
+		if err := utils.UnmarshalJSON(data, &productPriceCustomCreate, "", true, nil); err != nil {
+			return fmt.Errorf("could not unmarshal `%s` into expected (AmountType == custom) type ProductPriceCustomCreate within ProductCreateOneTimePrices: %w", string(data), err)
+		}
 
-	var productPriceCustomCreate ProductPriceCustomCreate = ProductPriceCustomCreate{}
-	if err := utils.UnmarshalJSON(data, &productPriceCustomCreate, "", true, nil); err == nil {
-		u.ProductPriceCustomCreate = &productPriceCustomCreate
-		u.Type = ProductCreateOneTimePricesTypeProductPriceCustomCreate
+		u.ProductPriceCustomCreate = productPriceCustomCreate
+		u.Type = ProductCreateOneTimePricesTypeCustom
 		return nil
-	}
+	case "fixed":
+		productPriceFixedCreate := new(ProductPriceFixedCreate)
+		if err := utils.UnmarshalJSON(data, &productPriceFixedCreate, "", true, nil); err != nil {
+			return fmt.Errorf("could not unmarshal `%s` into expected (AmountType == fixed) type ProductPriceFixedCreate within ProductCreateOneTimePrices: %w", string(data), err)
+		}
 
-	var productPriceFreeCreate ProductPriceFreeCreate = ProductPriceFreeCreate{}
-	if err := utils.UnmarshalJSON(data, &productPriceFreeCreate, "", true, nil); err == nil {
-		u.ProductPriceFreeCreate = &productPriceFreeCreate
-		u.Type = ProductCreateOneTimePricesTypeProductPriceFreeCreate
+		u.ProductPriceFixedCreate = productPriceFixedCreate
+		u.Type = ProductCreateOneTimePricesTypeFixed
+		return nil
+	case "free":
+		productPriceFreeCreate := new(ProductPriceFreeCreate)
+		if err := utils.UnmarshalJSON(data, &productPriceFreeCreate, "", true, nil); err != nil {
+			return fmt.Errorf("could not unmarshal `%s` into expected (AmountType == free) type ProductPriceFreeCreate within ProductCreateOneTimePrices: %w", string(data), err)
+		}
+
+		u.ProductPriceFreeCreate = productPriceFreeCreate
+		u.Type = ProductCreateOneTimePricesTypeFree
+		return nil
+	case "metered_unit":
+		productPriceMeteredUnitCreate := new(ProductPriceMeteredUnitCreate)
+		if err := utils.UnmarshalJSON(data, &productPriceMeteredUnitCreate, "", true, nil); err != nil {
+			return fmt.Errorf("could not unmarshal `%s` into expected (AmountType == metered_unit) type ProductPriceMeteredUnitCreate within ProductCreateOneTimePrices: %w", string(data), err)
+		}
+
+		u.ProductPriceMeteredUnitCreate = productPriceMeteredUnitCreate
+		u.Type = ProductCreateOneTimePricesTypeMeteredUnit
+		return nil
+	case "seat_based":
+		productPriceSeatBasedCreate := new(ProductPriceSeatBasedCreate)
+		if err := utils.UnmarshalJSON(data, &productPriceSeatBasedCreate, "", true, nil); err != nil {
+			return fmt.Errorf("could not unmarshal `%s` into expected (AmountType == seat_based) type ProductPriceSeatBasedCreate within ProductCreateOneTimePrices: %w", string(data), err)
+		}
+
+		u.ProductPriceSeatBasedCreate = productPriceSeatBasedCreate
+		u.Type = ProductCreateOneTimePricesTypeSeatBased
 		return nil
 	}
 

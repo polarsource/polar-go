@@ -6,13 +6,13 @@ import (
 	"github.com/polarsource/polar-go/internal/utils"
 )
 
-// ProductPriceSeatBasedCreate - Schema to create a seat-based price.
+// ProductPriceSeatBasedCreate - Schema to create a seat-based price with volume-based tiers.
 type ProductPriceSeatBasedCreate struct {
 	amountType string `const:"seat_based" json:"amount_type"`
 	// The currency. Currently, only `usd` is supported.
 	PriceCurrency *string `default:"usd" json:"price_currency"`
-	// The price per seat in cents.
-	PricePerSeat int64 `json:"price_per_seat"`
+	// List of pricing tiers for seat-based pricing.
+	SeatTiers ProductPriceSeatTiers `json:"seat_tiers"`
 }
 
 func (p ProductPriceSeatBasedCreate) MarshalJSON() ([]byte, error) {
@@ -20,7 +20,7 @@ func (p ProductPriceSeatBasedCreate) MarshalJSON() ([]byte, error) {
 }
 
 func (p *ProductPriceSeatBasedCreate) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &p, "", false, []string{"amount_type", "price_per_seat"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &p, "", false, []string{"amount_type", "seat_tiers"}); err != nil {
 		return err
 	}
 	return nil
@@ -37,9 +37,9 @@ func (p *ProductPriceSeatBasedCreate) GetPriceCurrency() *string {
 	return p.PriceCurrency
 }
 
-func (p *ProductPriceSeatBasedCreate) GetPricePerSeat() int64 {
+func (p *ProductPriceSeatBasedCreate) GetSeatTiers() ProductPriceSeatTiers {
 	if p == nil {
-		return 0
+		return ProductPriceSeatTiers{}
 	}
-	return p.PricePerSeat
+	return p.SeatTiers
 }

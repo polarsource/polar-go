@@ -15,3 +15,9 @@ oauth2RequestTokenRequestBody := operations.CreateOauth2RequestTokenRequestBodyA
 oauth2RequestTokenRequestBody := operations.CreateOauth2RequestTokenRequestBodyRefreshTokenRequest(components.RefreshTokenRequest{/* values here */})
 ```
 
+### WebTokenRequest
+
+```go
+oauth2RequestTokenRequestBody := operations.CreateOauth2RequestTokenRequestBodyWebTokenRequest(components.WebTokenRequest{/* values here */})
+```
+

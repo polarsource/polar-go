@@ -14,11 +14,13 @@ type Oauth2RequestTokenRequestBodyType string
 const (
 	Oauth2RequestTokenRequestBodyTypeAuthorizationCodeTokenRequest Oauth2RequestTokenRequestBodyType = "AuthorizationCodeTokenRequest"
 	Oauth2RequestTokenRequestBodyTypeRefreshTokenRequest           Oauth2RequestTokenRequestBodyType = "RefreshTokenRequest"
+	Oauth2RequestTokenRequestBodyTypeWebTokenRequest               Oauth2RequestTokenRequestBodyType = "WebTokenRequest"
 )
 
 type Oauth2RequestTokenRequestBody struct {
 	AuthorizationCodeTokenRequest *components.AuthorizationCodeTokenRequest `queryParam:"inline,name=requestBody"`
 	RefreshTokenRequest           *components.RefreshTokenRequest           `queryParam:"inline,name=requestBody"`
+	WebTokenRequest               *components.WebTokenRequest               `queryParam:"inline,name=requestBody"`
 
 	Type Oauth2RequestTokenRequestBodyType
 }
@@ -41,6 +43,15 @@ func CreateOauth2RequestTokenRequestBodyRefreshTokenRequest(refreshTokenRequest 
 	}
 }
 
+func CreateOauth2RequestTokenRequestBodyWebTokenRequest(webTokenRequest components.WebTokenRequest) Oauth2RequestTokenRequestBody {
+	typ := Oauth2RequestTokenRequestBodyTypeWebTokenRequest
+
+	return Oauth2RequestTokenRequestBody{
+		WebTokenRequest: &webTokenRequest,
+		Type:            typ,
+	}
+}
+
 func (u *Oauth2RequestTokenRequestBody) UnmarshalJSON(data []byte) error {
 
 	var authorizationCodeTokenRequest components.AuthorizationCodeTokenRequest = components.AuthorizationCodeTokenRequest{}
@@ -57,6 +68,13 @@ func (u *Oauth2RequestTokenRequestBody) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
+	var webTokenRequest components.WebTokenRequest = components.WebTokenRequest{}
+	if err := utils.UnmarshalJSON(data, &webTokenRequest, "", true, nil); err == nil {
+		u.WebTokenRequest = &webTokenRequest
+		u.Type = Oauth2RequestTokenRequestBodyTypeWebTokenRequest
+		return nil
+	}
+
 	return fmt.Errorf("could not unmarshal `%s` into any supported union types for Oauth2RequestTokenRequestBody", string(data))
 }
 
@@ -67,6 +85,10 @@ func (u Oauth2RequestTokenRequestBody) MarshalJSON() ([]byte, error) {
 
 	if u.RefreshTokenRequest != nil {
 		return utils.MarshalJSON(u.RefreshTokenRequest, "", true)
+	}
+
+	if u.WebTokenRequest != nil {
+		return utils.MarshalJSON(u.WebTokenRequest, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type Oauth2RequestTokenRequestBody: all fields are null")

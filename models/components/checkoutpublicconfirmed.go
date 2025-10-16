@@ -310,12 +310,16 @@ type CheckoutPublicConfirmed struct {
 	ExpiresAt time.Time `json:"expires_at"`
 	// URL where the customer will be redirected after a successful payment.
 	SuccessURL string `json:"success_url"`
+	// When set, a back button will be shown in the checkout to return to this URL.
+	ReturnURL *string `json:"return_url"`
 	// When checkout is embedded, represents the Origin of the page embedding the checkout. Used as a security measure to send messages only to the embedding page.
 	EmbedOrigin *string `json:"embed_origin"`
 	// Amount in cents, before discounts and taxes.
 	Amount int64 `json:"amount"`
 	// Number of seats for seat-based pricing.
 	Seats *int64 `json:"seats,omitempty"`
+	// Price per seat in cents for the current seat count, based on the applicable tier. Only relevant for seat-based pricing.
+	PricePerSeat *int64 `json:"price_per_seat,omitempty"`
 	// Discount amount in cents.
 	DiscountAmount int64 `json:"discount_amount"`
 	// Amount in cents, after discounts but before taxes.
@@ -455,6 +459,13 @@ func (c *CheckoutPublicConfirmed) GetSuccessURL() string {
 	return c.SuccessURL
 }
 
+func (c *CheckoutPublicConfirmed) GetReturnURL() *string {
+	if c == nil {
+		return nil
+	}
+	return c.ReturnURL
+}
+
 func (c *CheckoutPublicConfirmed) GetEmbedOrigin() *string {
 	if c == nil {
 		return nil
@@ -474,6 +485,13 @@ func (c *CheckoutPublicConfirmed) GetSeats() *int64 {
 		return nil
 	}
 	return c.Seats
+}
+
+func (c *CheckoutPublicConfirmed) GetPricePerSeat() *int64 {
+	if c == nil {
+		return nil
+	}
+	return c.PricePerSeat
 }
 
 func (c *CheckoutPublicConfirmed) GetDiscountAmount() int64 {

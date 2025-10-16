@@ -25,8 +25,8 @@ type ProductPriceSeatBased struct {
 	RecurringInterval *SubscriptionRecurringInterval `json:"recurring_interval"`
 	// The currency.
 	PriceCurrency string `json:"price_currency"`
-	// The price per seat in cents.
-	PricePerSeat int64 `json:"price_per_seat"`
+	// List of pricing tiers for seat-based pricing.
+	SeatTiers ProductPriceSeatTiers `json:"seat_tiers"`
 }
 
 func (p ProductPriceSeatBased) MarshalJSON() ([]byte, error) {
@@ -34,7 +34,7 @@ func (p ProductPriceSeatBased) MarshalJSON() ([]byte, error) {
 }
 
 func (p *ProductPriceSeatBased) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &p, "", false, []string{"created_at", "id", "amount_type", "is_archived", "product_id", "type", "price_currency", "price_per_seat"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &p, "", false, []string{"created_at", "id", "amount_type", "is_archived", "product_id", "type", "price_currency", "seat_tiers"}); err != nil {
 		return err
 	}
 	return nil
@@ -100,9 +100,9 @@ func (p *ProductPriceSeatBased) GetPriceCurrency() string {
 	return p.PriceCurrency
 }
 
-func (p *ProductPriceSeatBased) GetPricePerSeat() int64 {
+func (p *ProductPriceSeatBased) GetSeatTiers() ProductPriceSeatTiers {
 	if p == nil {
-		return 0
+		return ProductPriceSeatTiers{}
 	}
-	return p.PricePerSeat
+	return p.SeatTiers
 }

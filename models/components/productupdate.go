@@ -3,6 +3,7 @@
 package components
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
@@ -115,134 +116,134 @@ func (u ProductUpdateMetadata) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type ProductUpdateMetadata: all fields are null")
 }
 
-type ProductUpdatePricesType string
+type TwoType string
 
 const (
-	ProductUpdatePricesTypeExistingProductPrice          ProductUpdatePricesType = "ExistingProductPrice"
-	ProductUpdatePricesTypeProductPriceFixedCreate       ProductUpdatePricesType = "ProductPriceFixedCreate"
-	ProductUpdatePricesTypeProductPriceCustomCreate      ProductUpdatePricesType = "ProductPriceCustomCreate"
-	ProductUpdatePricesTypeProductPriceFreeCreate        ProductUpdatePricesType = "ProductPriceFreeCreate"
-	ProductUpdatePricesTypeProductPriceSeatBasedCreate   ProductUpdatePricesType = "ProductPriceSeatBasedCreate"
-	ProductUpdatePricesTypeProductPriceMeteredUnitCreate ProductUpdatePricesType = "ProductPriceMeteredUnitCreate"
+	TwoTypeCustom      TwoType = "custom"
+	TwoTypeFixed       TwoType = "fixed"
+	TwoTypeFree        TwoType = "free"
+	TwoTypeMeteredUnit TwoType = "metered_unit"
+	TwoTypeSeatBased   TwoType = "seat_based"
 )
 
-type ProductUpdatePrices struct {
-	ExistingProductPrice          *ExistingProductPrice          `queryParam:"inline,name=prices"`
-	ProductPriceFixedCreate       *ProductPriceFixedCreate       `queryParam:"inline,name=prices"`
-	ProductPriceCustomCreate      *ProductPriceCustomCreate      `queryParam:"inline,name=prices"`
-	ProductPriceFreeCreate        *ProductPriceFreeCreate        `queryParam:"inline,name=prices"`
-	ProductPriceSeatBasedCreate   *ProductPriceSeatBasedCreate   `queryParam:"inline,name=prices"`
-	ProductPriceMeteredUnitCreate *ProductPriceMeteredUnitCreate `queryParam:"inline,name=prices"`
+type Two struct {
+	ProductPriceFixedCreate       *ProductPriceFixedCreate       `queryParam:"inline,name=two"`
+	ProductPriceCustomCreate      *ProductPriceCustomCreate      `queryParam:"inline,name=two"`
+	ProductPriceFreeCreate        *ProductPriceFreeCreate        `queryParam:"inline,name=two"`
+	ProductPriceSeatBasedCreate   *ProductPriceSeatBasedCreate   `queryParam:"inline,name=two"`
+	ProductPriceMeteredUnitCreate *ProductPriceMeteredUnitCreate `queryParam:"inline,name=two"`
 
-	Type ProductUpdatePricesType
+	Type TwoType
 }
 
-func CreateProductUpdatePricesExistingProductPrice(existingProductPrice ExistingProductPrice) ProductUpdatePrices {
-	typ := ProductUpdatePricesTypeExistingProductPrice
+func CreateTwoCustom(custom ProductPriceCustomCreate) Two {
+	typ := TwoTypeCustom
 
-	return ProductUpdatePrices{
-		ExistingProductPrice: &existingProductPrice,
-		Type:                 typ,
-	}
-}
-
-func CreateProductUpdatePricesProductPriceFixedCreate(productPriceFixedCreate ProductPriceFixedCreate) ProductUpdatePrices {
-	typ := ProductUpdatePricesTypeProductPriceFixedCreate
-
-	return ProductUpdatePrices{
-		ProductPriceFixedCreate: &productPriceFixedCreate,
-		Type:                    typ,
-	}
-}
-
-func CreateProductUpdatePricesProductPriceCustomCreate(productPriceCustomCreate ProductPriceCustomCreate) ProductUpdatePrices {
-	typ := ProductUpdatePricesTypeProductPriceCustomCreate
-
-	return ProductUpdatePrices{
-		ProductPriceCustomCreate: &productPriceCustomCreate,
+	return Two{
+		ProductPriceCustomCreate: &custom,
 		Type:                     typ,
 	}
 }
 
-func CreateProductUpdatePricesProductPriceFreeCreate(productPriceFreeCreate ProductPriceFreeCreate) ProductUpdatePrices {
-	typ := ProductUpdatePricesTypeProductPriceFreeCreate
+func CreateTwoFixed(fixed ProductPriceFixedCreate) Two {
+	typ := TwoTypeFixed
 
-	return ProductUpdatePrices{
-		ProductPriceFreeCreate: &productPriceFreeCreate,
+	return Two{
+		ProductPriceFixedCreate: &fixed,
+		Type:                    typ,
+	}
+}
+
+func CreateTwoFree(free ProductPriceFreeCreate) Two {
+	typ := TwoTypeFree
+
+	return Two{
+		ProductPriceFreeCreate: &free,
 		Type:                   typ,
 	}
 }
 
-func CreateProductUpdatePricesProductPriceSeatBasedCreate(productPriceSeatBasedCreate ProductPriceSeatBasedCreate) ProductUpdatePrices {
-	typ := ProductUpdatePricesTypeProductPriceSeatBasedCreate
+func CreateTwoMeteredUnit(meteredUnit ProductPriceMeteredUnitCreate) Two {
+	typ := TwoTypeMeteredUnit
 
-	return ProductUpdatePrices{
-		ProductPriceSeatBasedCreate: &productPriceSeatBasedCreate,
-		Type:                        typ,
-	}
-}
-
-func CreateProductUpdatePricesProductPriceMeteredUnitCreate(productPriceMeteredUnitCreate ProductPriceMeteredUnitCreate) ProductUpdatePrices {
-	typ := ProductUpdatePricesTypeProductPriceMeteredUnitCreate
-
-	return ProductUpdatePrices{
-		ProductPriceMeteredUnitCreate: &productPriceMeteredUnitCreate,
+	return Two{
+		ProductPriceMeteredUnitCreate: &meteredUnit,
 		Type:                          typ,
 	}
 }
 
-func (u *ProductUpdatePrices) UnmarshalJSON(data []byte) error {
+func CreateTwoSeatBased(seatBased ProductPriceSeatBasedCreate) Two {
+	typ := TwoTypeSeatBased
 
-	var productPriceMeteredUnitCreate ProductPriceMeteredUnitCreate = ProductPriceMeteredUnitCreate{}
-	if err := utils.UnmarshalJSON(data, &productPriceMeteredUnitCreate, "", true, nil); err == nil {
-		u.ProductPriceMeteredUnitCreate = &productPriceMeteredUnitCreate
-		u.Type = ProductUpdatePricesTypeProductPriceMeteredUnitCreate
-		return nil
+	return Two{
+		ProductPriceSeatBasedCreate: &seatBased,
+		Type:                        typ,
 	}
-
-	var productPriceFixedCreate ProductPriceFixedCreate = ProductPriceFixedCreate{}
-	if err := utils.UnmarshalJSON(data, &productPriceFixedCreate, "", true, nil); err == nil {
-		u.ProductPriceFixedCreate = &productPriceFixedCreate
-		u.Type = ProductUpdatePricesTypeProductPriceFixedCreate
-		return nil
-	}
-
-	var productPriceSeatBasedCreate ProductPriceSeatBasedCreate = ProductPriceSeatBasedCreate{}
-	if err := utils.UnmarshalJSON(data, &productPriceSeatBasedCreate, "", true, nil); err == nil {
-		u.ProductPriceSeatBasedCreate = &productPriceSeatBasedCreate
-		u.Type = ProductUpdatePricesTypeProductPriceSeatBasedCreate
-		return nil
-	}
-
-	var existingProductPrice ExistingProductPrice = ExistingProductPrice{}
-	if err := utils.UnmarshalJSON(data, &existingProductPrice, "", true, nil); err == nil {
-		u.ExistingProductPrice = &existingProductPrice
-		u.Type = ProductUpdatePricesTypeExistingProductPrice
-		return nil
-	}
-
-	var productPriceCustomCreate ProductPriceCustomCreate = ProductPriceCustomCreate{}
-	if err := utils.UnmarshalJSON(data, &productPriceCustomCreate, "", true, nil); err == nil {
-		u.ProductPriceCustomCreate = &productPriceCustomCreate
-		u.Type = ProductUpdatePricesTypeProductPriceCustomCreate
-		return nil
-	}
-
-	var productPriceFreeCreate ProductPriceFreeCreate = ProductPriceFreeCreate{}
-	if err := utils.UnmarshalJSON(data, &productPriceFreeCreate, "", true, nil); err == nil {
-		u.ProductPriceFreeCreate = &productPriceFreeCreate
-		u.Type = ProductUpdatePricesTypeProductPriceFreeCreate
-		return nil
-	}
-
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for ProductUpdatePrices", string(data))
 }
 
-func (u ProductUpdatePrices) MarshalJSON() ([]byte, error) {
-	if u.ExistingProductPrice != nil {
-		return utils.MarshalJSON(u.ExistingProductPrice, "", true)
+func (u *Two) UnmarshalJSON(data []byte) error {
+
+	type discriminator struct {
+		AmountType string `json:"amount_type"`
 	}
 
+	dis := new(discriminator)
+	if err := json.Unmarshal(data, &dis); err != nil {
+		return fmt.Errorf("could not unmarshal discriminator: %w", err)
+	}
+
+	switch dis.AmountType {
+	case "custom":
+		productPriceCustomCreate := new(ProductPriceCustomCreate)
+		if err := utils.UnmarshalJSON(data, &productPriceCustomCreate, "", true, nil); err != nil {
+			return fmt.Errorf("could not unmarshal `%s` into expected (AmountType == custom) type ProductPriceCustomCreate within Two: %w", string(data), err)
+		}
+
+		u.ProductPriceCustomCreate = productPriceCustomCreate
+		u.Type = TwoTypeCustom
+		return nil
+	case "fixed":
+		productPriceFixedCreate := new(ProductPriceFixedCreate)
+		if err := utils.UnmarshalJSON(data, &productPriceFixedCreate, "", true, nil); err != nil {
+			return fmt.Errorf("could not unmarshal `%s` into expected (AmountType == fixed) type ProductPriceFixedCreate within Two: %w", string(data), err)
+		}
+
+		u.ProductPriceFixedCreate = productPriceFixedCreate
+		u.Type = TwoTypeFixed
+		return nil
+	case "free":
+		productPriceFreeCreate := new(ProductPriceFreeCreate)
+		if err := utils.UnmarshalJSON(data, &productPriceFreeCreate, "", true, nil); err != nil {
+			return fmt.Errorf("could not unmarshal `%s` into expected (AmountType == free) type ProductPriceFreeCreate within Two: %w", string(data), err)
+		}
+
+		u.ProductPriceFreeCreate = productPriceFreeCreate
+		u.Type = TwoTypeFree
+		return nil
+	case "metered_unit":
+		productPriceMeteredUnitCreate := new(ProductPriceMeteredUnitCreate)
+		if err := utils.UnmarshalJSON(data, &productPriceMeteredUnitCreate, "", true, nil); err != nil {
+			return fmt.Errorf("could not unmarshal `%s` into expected (AmountType == metered_unit) type ProductPriceMeteredUnitCreate within Two: %w", string(data), err)
+		}
+
+		u.ProductPriceMeteredUnitCreate = productPriceMeteredUnitCreate
+		u.Type = TwoTypeMeteredUnit
+		return nil
+	case "seat_based":
+		productPriceSeatBasedCreate := new(ProductPriceSeatBasedCreate)
+		if err := utils.UnmarshalJSON(data, &productPriceSeatBasedCreate, "", true, nil); err != nil {
+			return fmt.Errorf("could not unmarshal `%s` into expected (AmountType == seat_based) type ProductPriceSeatBasedCreate within Two: %w", string(data), err)
+		}
+
+		u.ProductPriceSeatBasedCreate = productPriceSeatBasedCreate
+		u.Type = TwoTypeSeatBased
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for Two", string(data))
+}
+
+func (u Two) MarshalJSON() ([]byte, error) {
 	if u.ProductPriceFixedCreate != nil {
 		return utils.MarshalJSON(u.ProductPriceFixedCreate, "", true)
 	}
@@ -261,6 +262,69 @@ func (u ProductUpdatePrices) MarshalJSON() ([]byte, error) {
 
 	if u.ProductPriceMeteredUnitCreate != nil {
 		return utils.MarshalJSON(u.ProductPriceMeteredUnitCreate, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type Two: all fields are null")
+}
+
+type ProductUpdatePricesType string
+
+const (
+	ProductUpdatePricesTypeExistingProductPrice ProductUpdatePricesType = "ExistingProductPrice"
+	ProductUpdatePricesTypeTwo                  ProductUpdatePricesType = "2"
+)
+
+type ProductUpdatePrices struct {
+	ExistingProductPrice *ExistingProductPrice `queryParam:"inline,name=prices"`
+	Two                  *Two                  `queryParam:"inline,name=prices"`
+
+	Type ProductUpdatePricesType
+}
+
+func CreateProductUpdatePricesExistingProductPrice(existingProductPrice ExistingProductPrice) ProductUpdatePrices {
+	typ := ProductUpdatePricesTypeExistingProductPrice
+
+	return ProductUpdatePrices{
+		ExistingProductPrice: &existingProductPrice,
+		Type:                 typ,
+	}
+}
+
+func CreateProductUpdatePricesTwo(two Two) ProductUpdatePrices {
+	typ := ProductUpdatePricesTypeTwo
+
+	return ProductUpdatePrices{
+		Two:  &two,
+		Type: typ,
+	}
+}
+
+func (u *ProductUpdatePrices) UnmarshalJSON(data []byte) error {
+
+	var existingProductPrice ExistingProductPrice = ExistingProductPrice{}
+	if err := utils.UnmarshalJSON(data, &existingProductPrice, "", true, nil); err == nil {
+		u.ExistingProductPrice = &existingProductPrice
+		u.Type = ProductUpdatePricesTypeExistingProductPrice
+		return nil
+	}
+
+	var two Two = Two{}
+	if err := utils.UnmarshalJSON(data, &two, "", true, nil); err == nil {
+		u.Two = &two
+		u.Type = ProductUpdatePricesTypeTwo
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for ProductUpdatePrices", string(data))
+}
+
+func (u ProductUpdatePrices) MarshalJSON() ([]byte, error) {
+	if u.ExistingProductPrice != nil {
+		return utils.MarshalJSON(u.ExistingProductPrice, "", true)
+	}
+
+	if u.Two != nil {
+		return utils.MarshalJSON(u.Two, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type ProductUpdatePrices: all fields are null")

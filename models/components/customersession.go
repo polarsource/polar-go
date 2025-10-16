@@ -17,6 +17,7 @@ type CustomerSession struct {
 	ID                string    `json:"id"`
 	Token             string    `json:"token"`
 	ExpiresAt         time.Time `json:"expires_at"`
+	ReturnURL         *string   `json:"return_url"`
 	CustomerPortalURL string    `json:"customer_portal_url"`
 	CustomerID        string    `json:"customer_id"`
 	// A customer in an organization.
@@ -67,6 +68,13 @@ func (c *CustomerSession) GetExpiresAt() time.Time {
 		return time.Time{}
 	}
 	return c.ExpiresAt
+}
+
+func (c *CustomerSession) GetReturnURL() *string {
+	if c == nil {
+		return nil
+	}
+	return c.ReturnURL
 }
 
 func (c *CustomerSession) GetCustomerPortalURL() string {

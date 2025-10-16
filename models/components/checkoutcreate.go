@@ -391,6 +391,8 @@ type CheckoutCreate struct {
 	SubscriptionID *string `json:"subscription_id,omitempty"`
 	// URL where the customer will be redirected after a successful payment.You can add the `checkout_id={CHECKOUT_ID}` query parameter to retrieve the checkout session id.
 	SuccessURL *string `json:"success_url,omitempty"`
+	// When set, a back button will be shown in the checkout to return to this URL.
+	ReturnURL *string `json:"return_url,omitempty"`
 	// If you plan to embed the checkout session, set this to the Origin of the embedding page. It'll allow the Polar iframe to communicate with the parent page.
 	EmbedOrigin *string `json:"embed_origin,omitempty"`
 	// List of product IDs available to select at that checkout. The first one will be selected by default.
@@ -553,6 +555,13 @@ func (c *CheckoutCreate) GetSuccessURL() *string {
 		return nil
 	}
 	return c.SuccessURL
+}
+
+func (c *CheckoutCreate) GetReturnURL() *string {
+	if c == nil {
+		return nil
+	}
+	return c.ReturnURL
 }
 
 func (c *CheckoutCreate) GetEmbedOrigin() *string {

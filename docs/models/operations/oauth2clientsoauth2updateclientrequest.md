@@ -1,0 +1,9 @@
+# Oauth2ClientsOauth2UpdateClientRequest
+
+
+## Fields
+
+| Field                                                                                                    | Type                                                                                                     | Required                                                                                                 | Description                                                                                              |
+| -------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
+| `ClientID`                                                                                               | *string*                                                                                                 | :heavy_check_mark:                                                                                       | N/A                                                                                                      |
+| `OAuth2ClientConfigurationUpdate`                                                                        | [components.OAuth2ClientConfigurationUpdate](../../models/components/oauth2clientconfigurationupdate.md) | :heavy_check_mark:                                                                                       | N/A                                                                                                      |

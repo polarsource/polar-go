@@ -129,19 +129,23 @@ type DiscountUpdate struct {
 	// * A boolean
 	//
 	// You can store up to **50 key-value pairs**.
-	Metadata         map[string]DiscountUpdateMetadata `json:"metadata,omitempty"`
-	Name             *string                           `json:"name,omitempty"`
-	Code             *string                           `json:"code,omitempty"`
-	StartsAt         *time.Time                        `json:"starts_at,omitempty"`
-	EndsAt           *time.Time                        `json:"ends_at,omitempty"`
-	MaxRedemptions   *int64                            `json:"max_redemptions,omitempty"`
-	Duration         *DiscountDuration                 `json:"duration,omitempty"`
-	DurationInMonths *int64                            `json:"duration_in_months,omitempty"`
-	Type             *DiscountType                     `json:"type,omitempty"`
-	Amount           *int64                            `json:"amount,omitempty"`
-	Currency         *string                           `default:"usd" json:"currency"`
-	BasisPoints      *int64                            `json:"basis_points,omitempty"`
-	Products         []string                          `json:"products,omitempty"`
+	Metadata map[string]DiscountUpdateMetadata `json:"metadata,omitempty"`
+	Name     *string                           `json:"name,omitempty"`
+	// Code customers can use to apply the discount during checkout. Must be between 3 and 256 characters long and contain only alphanumeric characters.If not provided, the discount can only be applied via the API.
+	Code *string `json:"code,omitempty"`
+	// Optional timestamp after which the discount is redeemable.
+	StartsAt *time.Time `json:"starts_at,omitempty"`
+	// Optional timestamp after which the discount is no longer redeemable.
+	EndsAt *time.Time `json:"ends_at,omitempty"`
+	// Optional maximum number of times the discount can be redeemed.
+	MaxRedemptions   *int64            `json:"max_redemptions,omitempty"`
+	Duration         *DiscountDuration `json:"duration,omitempty"`
+	DurationInMonths *int64            `json:"duration_in_months,omitempty"`
+	Type             *DiscountType     `json:"type,omitempty"`
+	Amount           *int64            `json:"amount,omitempty"`
+	Currency         *string           `json:"currency,omitempty"`
+	BasisPoints      *int64            `json:"basis_points,omitempty"`
+	Products         []string          `json:"products,omitempty"`
 }
 
 func (d DiscountUpdate) MarshalJSON() ([]byte, error) {

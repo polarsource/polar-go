@@ -386,6 +386,8 @@ type CheckoutUpdate struct {
 	CustomerMetadata map[string]CheckoutUpdateCustomerMetadata `json:"customer_metadata,omitempty"`
 	// URL where the customer will be redirected after a successful payment.You can add the `checkout_id={CHECKOUT_ID}` query parameter to retrieve the checkout session id.
 	SuccessURL *string `json:"success_url,omitempty"`
+	// When set, a back button will be shown in the checkout to return to this URL.
+	ReturnURL *string `json:"return_url,omitempty"`
 	// If you plan to embed the checkout session, set this to the Origin of the embedding page. It'll allow the Polar iframe to communicate with the parent page.
 	EmbedOrigin *string `json:"embed_origin,omitempty"`
 }
@@ -528,6 +530,13 @@ func (c *CheckoutUpdate) GetSuccessURL() *string {
 		return nil
 	}
 	return c.SuccessURL
+}
+
+func (c *CheckoutUpdate) GetReturnURL() *string {
+	if c == nil {
+		return nil
+	}
+	return c.ReturnURL
 }
 
 func (c *CheckoutUpdate) GetEmbedOrigin() *string {

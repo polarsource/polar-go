@@ -3,33 +3,33 @@
 
 ## Supported Types
 
-### ProductPriceFixedCreate
-
-```go
-productCreateRecurringPrices := components.CreateProductCreateRecurringPricesProductPriceFixedCreate(components.ProductPriceFixedCreate{/* values here */})
-```
-
 ### ProductPriceCustomCreate
 
 ```go
-productCreateRecurringPrices := components.CreateProductCreateRecurringPricesProductPriceCustomCreate(components.ProductPriceCustomCreate{/* values here */})
+productCreateRecurringPrices := components.CreateProductCreateRecurringPricesCustom(components.ProductPriceCustomCreate{/* values here */})
+```
+
+### ProductPriceFixedCreate
+
+```go
+productCreateRecurringPrices := components.CreateProductCreateRecurringPricesFixed(components.ProductPriceFixedCreate{/* values here */})
 ```
 
 ### ProductPriceFreeCreate
 
 ```go
-productCreateRecurringPrices := components.CreateProductCreateRecurringPricesProductPriceFreeCreate(components.ProductPriceFreeCreate{/* values here */})
-```
-
-### ProductPriceSeatBasedCreate
-
-```go
-productCreateRecurringPrices := components.CreateProductCreateRecurringPricesProductPriceSeatBasedCreate(components.ProductPriceSeatBasedCreate{/* values here */})
+productCreateRecurringPrices := components.CreateProductCreateRecurringPricesFree(components.ProductPriceFreeCreate{/* values here */})
 ```
 
 ### ProductPriceMeteredUnitCreate
 
 ```go
-productCreateRecurringPrices := components.CreateProductCreateRecurringPricesProductPriceMeteredUnitCreate(components.ProductPriceMeteredUnitCreate{/* values here */})
+productCreateRecurringPrices := components.CreateProductCreateRecurringPricesMeteredUnit(components.ProductPriceMeteredUnitCreate{/* values here */})
+```
+
+### ProductPriceSeatBasedCreate
+
+```go
+productCreateRecurringPrices := components.CreateProductCreateRecurringPricesSeatBased(components.ProductPriceSeatBasedCreate{/* values here */})
 ```
 

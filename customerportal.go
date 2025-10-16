@@ -8,14 +8,16 @@ import (
 )
 
 type CustomerPortal struct {
-	BenefitGrants  *PolarBenefitGrants
-	Customers      *PolarCustomers
-	CustomerMeters *PolarCustomerMeters
-	Downloadables  *Downloadables
-	LicenseKeys    *PolarLicenseKeys
-	Orders         *PolarOrders
-	Organizations  *PolarOrganizations
-	Subscriptions  *PolarSubscriptions
+	BenefitGrants   *PolarBenefitGrants
+	Customers       *PolarCustomers
+	CustomerMeters  *PolarCustomerMeters
+	Seats           *Seats
+	CustomerSession *CustomerSession
+	Downloadables   *Downloadables
+	LicenseKeys     *PolarLicenseKeys
+	Orders          *PolarOrders
+	Organizations   *PolarOrganizations
+	Subscriptions   *PolarSubscriptions
 
 	rootSDK          *Polar
 	sdkConfiguration config.SDKConfiguration
@@ -30,6 +32,8 @@ func newCustomerPortal(rootSDK *Polar, sdkConfig config.SDKConfiguration, hooks 
 		BenefitGrants:    newPolarBenefitGrants(rootSDK, sdkConfig, hooks),
 		Customers:        newPolarCustomers(rootSDK, sdkConfig, hooks),
 		CustomerMeters:   newPolarCustomerMeters(rootSDK, sdkConfig, hooks),
+		Seats:            newSeats(rootSDK, sdkConfig, hooks),
+		CustomerSession:  newCustomerSession(rootSDK, sdkConfig, hooks),
 		Downloadables:    newDownloadables(rootSDK, sdkConfig, hooks),
 		LicenseKeys:      newPolarLicenseKeys(rootSDK, sdkConfig, hooks),
 		Orders:           newPolarOrders(rootSDK, sdkConfig, hooks),
