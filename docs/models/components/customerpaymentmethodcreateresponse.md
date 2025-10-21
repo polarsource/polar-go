@@ -9,9 +9,9 @@
 customerPaymentMethodCreateResponse := components.CreateCustomerPaymentMethodCreateResponseRequiresAction(components.CustomerPaymentMethodCreateRequiresActionResponse{/* values here */})
 ```
 
-### CustomerPaymentMethodCreateSucceededResponse
+### CustomerPaymentMethodCreateSucceededResponseOutput
 
 ```go
-customerPaymentMethodCreateResponse := components.CreateCustomerPaymentMethodCreateResponseSucceeded(components.CustomerPaymentMethodCreateSucceededResponse{/* values here */})
+customerPaymentMethodCreateResponse := components.CreateCustomerPaymentMethodCreateResponseSucceeded(components.CustomerPaymentMethodCreateSucceededResponseOutput{/* values here */})
 ```
 

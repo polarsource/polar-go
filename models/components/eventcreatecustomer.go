@@ -3,138 +3,18 @@
 package components
 
 import (
-	"errors"
-	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
 	"time"
 )
 
-type EventCreateCustomerMetadataType string
-
-const (
-	EventCreateCustomerMetadataTypeStr     EventCreateCustomerMetadataType = "str"
-	EventCreateCustomerMetadataTypeInteger EventCreateCustomerMetadataType = "integer"
-	EventCreateCustomerMetadataTypeNumber  EventCreateCustomerMetadataType = "number"
-	EventCreateCustomerMetadataTypeBoolean EventCreateCustomerMetadataType = "boolean"
-)
-
-type EventCreateCustomerMetadata struct {
-	Str     *string  `queryParam:"inline,name=metadata"`
-	Integer *int64   `queryParam:"inline,name=metadata"`
-	Number  *float64 `queryParam:"inline,name=metadata"`
-	Boolean *bool    `queryParam:"inline,name=metadata"`
-
-	Type EventCreateCustomerMetadataType
-}
-
-func CreateEventCreateCustomerMetadataStr(str string) EventCreateCustomerMetadata {
-	typ := EventCreateCustomerMetadataTypeStr
-
-	return EventCreateCustomerMetadata{
-		Str:  &str,
-		Type: typ,
-	}
-}
-
-func CreateEventCreateCustomerMetadataInteger(integer int64) EventCreateCustomerMetadata {
-	typ := EventCreateCustomerMetadataTypeInteger
-
-	return EventCreateCustomerMetadata{
-		Integer: &integer,
-		Type:    typ,
-	}
-}
-
-func CreateEventCreateCustomerMetadataNumber(number float64) EventCreateCustomerMetadata {
-	typ := EventCreateCustomerMetadataTypeNumber
-
-	return EventCreateCustomerMetadata{
-		Number: &number,
-		Type:   typ,
-	}
-}
-
-func CreateEventCreateCustomerMetadataBoolean(boolean bool) EventCreateCustomerMetadata {
-	typ := EventCreateCustomerMetadataTypeBoolean
-
-	return EventCreateCustomerMetadata{
-		Boolean: &boolean,
-		Type:    typ,
-	}
-}
-
-func (u *EventCreateCustomerMetadata) UnmarshalJSON(data []byte) error {
-
-	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, nil); err == nil {
-		u.Str = &str
-		u.Type = EventCreateCustomerMetadataTypeStr
-		return nil
-	}
-
-	var integer int64 = int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
-		u.Integer = &integer
-		u.Type = EventCreateCustomerMetadataTypeInteger
-		return nil
-	}
-
-	var number float64 = float64(0)
-	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
-		u.Number = &number
-		u.Type = EventCreateCustomerMetadataTypeNumber
-		return nil
-	}
-
-	var boolean bool = false
-	if err := utils.UnmarshalJSON(data, &boolean, "", true, nil); err == nil {
-		u.Boolean = &boolean
-		u.Type = EventCreateCustomerMetadataTypeBoolean
-		return nil
-	}
-
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for EventCreateCustomerMetadata", string(data))
-}
-
-func (u EventCreateCustomerMetadata) MarshalJSON() ([]byte, error) {
-	if u.Str != nil {
-		return utils.MarshalJSON(u.Str, "", true)
-	}
-
-	if u.Integer != nil {
-		return utils.MarshalJSON(u.Integer, "", true)
-	}
-
-	if u.Number != nil {
-		return utils.MarshalJSON(u.Number, "", true)
-	}
-
-	if u.Boolean != nil {
-		return utils.MarshalJSON(u.Boolean, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type EventCreateCustomerMetadata: all fields are null")
-}
-
 type EventCreateCustomer struct {
-	// Key-value object allowing you to store additional information.
-	//
-	// The key must be a string with a maximum length of **40 characters**.
-	// The value must be either:
-	//
-	// * A string with a maximum length of **500 characters**
-	// * An integer
-	// * A floating-point number
-	// * A boolean
-	//
-	// You can store up to **50 key-value pairs**.
-	Metadata map[string]EventCreateCustomerMetadata `json:"metadata,omitempty"`
 	// The timestamp of the event.
 	Timestamp *time.Time `json:"timestamp,omitempty"`
 	// The name of the event.
 	Name string `json:"name"`
 	// The ID of the organization owning the event. **Required unless you use an organization token.**
-	OrganizationID *string `json:"organization_id,omitempty"`
+	OrganizationID *string                       `json:"organization_id,omitempty"`
+	Metadata       map[string]EventMetadataInput `json:"metadata,omitempty"`
 	// ID of the customer in your Polar organization associated with the event.
 	CustomerID string `json:"customer_id"`
 }
@@ -148,13 +28,6 @@ func (e *EventCreateCustomer) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
-}
-
-func (e *EventCreateCustomer) GetMetadata() map[string]EventCreateCustomerMetadata {
-	if e == nil {
-		return nil
-	}
-	return e.Metadata
 }
 
 func (e *EventCreateCustomer) GetTimestamp() *time.Time {
@@ -176,6 +49,13 @@ func (e *EventCreateCustomer) GetOrganizationID() *string {
 		return nil
 	}
 	return e.OrganizationID
+}
+
+func (e *EventCreateCustomer) GetMetadata() map[string]EventMetadataInput {
+	if e == nil {
+		return nil
+	}
+	return e.Metadata
 }
 
 func (e *EventCreateCustomer) GetCustomerID() string {

@@ -12,48 +12,48 @@ import (
 type CustomerOrderProductPricesType string
 
 const (
-	CustomerOrderProductPricesTypeLegacyRecurringProductPrice CustomerOrderProductPricesType = "LegacyRecurringProductPrice"
-	CustomerOrderProductPricesTypeProductPrice                CustomerOrderProductPricesType = "ProductPrice"
+	CustomerOrderProductPricesTypeLegacyRecurringProductPriceOutput CustomerOrderProductPricesType = "LegacyRecurringProductPrice-Output"
+	CustomerOrderProductPricesTypeProductPriceOutput                CustomerOrderProductPricesType = "ProductPrice-Output"
 )
 
 type CustomerOrderProductPrices struct {
-	LegacyRecurringProductPrice *LegacyRecurringProductPrice `queryParam:"inline,name=prices"`
-	ProductPrice                *ProductPrice                `queryParam:"inline,name=prices"`
+	LegacyRecurringProductPriceOutput *LegacyRecurringProductPriceOutput `queryParam:"inline,name=prices"`
+	ProductPriceOutput                *ProductPriceOutput                `queryParam:"inline,name=prices"`
 
 	Type CustomerOrderProductPricesType
 }
 
-func CreateCustomerOrderProductPricesLegacyRecurringProductPrice(legacyRecurringProductPrice LegacyRecurringProductPrice) CustomerOrderProductPrices {
-	typ := CustomerOrderProductPricesTypeLegacyRecurringProductPrice
+func CreateCustomerOrderProductPricesLegacyRecurringProductPriceOutput(legacyRecurringProductPriceOutput LegacyRecurringProductPriceOutput) CustomerOrderProductPrices {
+	typ := CustomerOrderProductPricesTypeLegacyRecurringProductPriceOutput
 
 	return CustomerOrderProductPrices{
-		LegacyRecurringProductPrice: &legacyRecurringProductPrice,
-		Type:                        typ,
+		LegacyRecurringProductPriceOutput: &legacyRecurringProductPriceOutput,
+		Type:                              typ,
 	}
 }
 
-func CreateCustomerOrderProductPricesProductPrice(productPrice ProductPrice) CustomerOrderProductPrices {
-	typ := CustomerOrderProductPricesTypeProductPrice
+func CreateCustomerOrderProductPricesProductPriceOutput(productPriceOutput ProductPriceOutput) CustomerOrderProductPrices {
+	typ := CustomerOrderProductPricesTypeProductPriceOutput
 
 	return CustomerOrderProductPrices{
-		ProductPrice: &productPrice,
-		Type:         typ,
+		ProductPriceOutput: &productPriceOutput,
+		Type:               typ,
 	}
 }
 
 func (u *CustomerOrderProductPrices) UnmarshalJSON(data []byte) error {
 
-	var legacyRecurringProductPrice LegacyRecurringProductPrice = LegacyRecurringProductPrice{}
-	if err := utils.UnmarshalJSON(data, &legacyRecurringProductPrice, "", true, nil); err == nil {
-		u.LegacyRecurringProductPrice = &legacyRecurringProductPrice
-		u.Type = CustomerOrderProductPricesTypeLegacyRecurringProductPrice
+	var legacyRecurringProductPriceOutput LegacyRecurringProductPriceOutput = LegacyRecurringProductPriceOutput{}
+	if err := utils.UnmarshalJSON(data, &legacyRecurringProductPriceOutput, "", true, nil); err == nil {
+		u.LegacyRecurringProductPriceOutput = &legacyRecurringProductPriceOutput
+		u.Type = CustomerOrderProductPricesTypeLegacyRecurringProductPriceOutput
 		return nil
 	}
 
-	var productPrice ProductPrice = ProductPrice{}
-	if err := utils.UnmarshalJSON(data, &productPrice, "", true, nil); err == nil {
-		u.ProductPrice = &productPrice
-		u.Type = CustomerOrderProductPricesTypeProductPrice
+	var productPriceOutput ProductPriceOutput = ProductPriceOutput{}
+	if err := utils.UnmarshalJSON(data, &productPriceOutput, "", true, nil); err == nil {
+		u.ProductPriceOutput = &productPriceOutput
+		u.Type = CustomerOrderProductPricesTypeProductPriceOutput
 		return nil
 	}
 
@@ -61,12 +61,12 @@ func (u *CustomerOrderProductPrices) UnmarshalJSON(data []byte) error {
 }
 
 func (u CustomerOrderProductPrices) MarshalJSON() ([]byte, error) {
-	if u.LegacyRecurringProductPrice != nil {
-		return utils.MarshalJSON(u.LegacyRecurringProductPrice, "", true)
+	if u.LegacyRecurringProductPriceOutput != nil {
+		return utils.MarshalJSON(u.LegacyRecurringProductPriceOutput, "", true)
 	}
 
-	if u.ProductPrice != nil {
-		return utils.MarshalJSON(u.ProductPrice, "", true)
+	if u.ProductPriceOutput != nil {
+		return utils.MarshalJSON(u.ProductPriceOutput, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type CustomerOrderProductPrices: all fields are null")

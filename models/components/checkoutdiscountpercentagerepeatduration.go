@@ -12,7 +12,8 @@ type CheckoutDiscountPercentageRepeatDuration struct {
 	Duration         DiscountDuration `json:"duration"`
 	DurationInMonths int64            `json:"duration_in_months"`
 	Type             DiscountType     `json:"type"`
-	BasisPoints      int64            `json:"basis_points"`
+	// Discount percentage in basis points. A basis point is 1/100th of a percent. For example, 1000 basis points equals a 10% discount.
+	BasisPoints int64 `json:"basis_points"`
 	// The ID of the object.
 	ID   string  `json:"id"`
 	Name string  `json:"name"`

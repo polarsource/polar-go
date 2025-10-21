@@ -199,11 +199,11 @@ func main() {
 
 ### Errors
 
-| Error Type                    | Status Code                   | Content Type                  |
-| ----------------------------- | ----------------------------- | ----------------------------- |
-| apierrors.ResourceNotFound    | 404                           | application/json              |
-| apierrors.HTTPValidationError | 422                           | application/json              |
-| apierrors.APIError            | 4XX, 5XX                      | \*/\*                         |
+| Error Type                                | Status Code                               | Content Type                              |
+| ----------------------------------------- | ----------------------------------------- | ----------------------------------------- |
+| apierrors.PolarExceptionsResourceNotFound | 404                                       | application/json                          |
+| apierrors.HTTPValidationError             | 422                                       | application/json                          |
+| apierrors.APIError                        | 4XX, 5XX                                  | \*/\*                                     |
 
 ## UpdateWebhookEndpoint
 
@@ -259,11 +259,11 @@ func main() {
 
 ### Errors
 
-| Error Type                    | Status Code                   | Content Type                  |
-| ----------------------------- | ----------------------------- | ----------------------------- |
-| apierrors.ResourceNotFound    | 404                           | application/json              |
-| apierrors.HTTPValidationError | 422                           | application/json              |
-| apierrors.APIError            | 4XX, 5XX                      | \*/\*                         |
+| Error Type                                | Status Code                               | Content Type                              |
+| ----------------------------------------- | ----------------------------------------- | ----------------------------------------- |
+| apierrors.PolarExceptionsResourceNotFound | 404                                       | application/json                          |
+| apierrors.HTTPValidationError             | 422                                       | application/json                          |
+| apierrors.APIError                        | 4XX, 5XX                                  | \*/\*                                     |
 
 ## DeleteWebhookEndpoint
 
@@ -315,11 +315,11 @@ func main() {
 
 ### Errors
 
-| Error Type                    | Status Code                   | Content Type                  |
-| ----------------------------- | ----------------------------- | ----------------------------- |
-| apierrors.ResourceNotFound    | 404                           | application/json              |
-| apierrors.HTTPValidationError | 422                           | application/json              |
-| apierrors.APIError            | 4XX, 5XX                      | \*/\*                         |
+| Error Type                                | Status Code                               | Content Type                              |
+| ----------------------------------------- | ----------------------------------------- | ----------------------------------------- |
+| apierrors.PolarExceptionsResourceNotFound | 404                                       | application/json                          |
+| apierrors.HTTPValidationError             | 422                                       | application/json                          |
+| apierrors.APIError                        | 4XX, 5XX                                  | \*/\*                                     |
 
 ## ResetWebhookEndpointSecret
 
@@ -371,11 +371,11 @@ func main() {
 
 ### Errors
 
-| Error Type                    | Status Code                   | Content Type                  |
-| ----------------------------- | ----------------------------- | ----------------------------- |
-| apierrors.ResourceNotFound    | 404                           | application/json              |
-| apierrors.HTTPValidationError | 422                           | application/json              |
-| apierrors.APIError            | 4XX, 5XX                      | \*/\*                         |
+| Error Type                                | Status Code                               | Content Type                              |
+| ----------------------------------------- | ----------------------------------------- | ----------------------------------------- |
+| apierrors.PolarExceptionsResourceNotFound | 404                                       | application/json                          |
+| apierrors.HTTPValidationError             | 422                                       | application/json                          |
+| apierrors.APIError                        | 4XX, 5XX                                  | \*/\*                                     |
 
 ## ListWebhookDeliveries
 
@@ -497,8 +497,8 @@ func main() {
 
 ### Errors
 
-| Error Type                    | Status Code                   | Content Type                  |
-| ----------------------------- | ----------------------------- | ----------------------------- |
-| apierrors.ResourceNotFound    | 404                           | application/json              |
-| apierrors.HTTPValidationError | 422                           | application/json              |
-| apierrors.APIError            | 4XX, 5XX                      | \*/\*                         |
+| Error Type                                | Status Code                               | Content Type                              |
+| ----------------------------------------- | ----------------------------------------- | ----------------------------------------- |
+| apierrors.PolarExceptionsResourceNotFound | 404                                       | application/json                          |
+| apierrors.HTTPValidationError             | 422                                       | application/json                          |
+| apierrors.APIError                        | 4XX, 5XX                                  | \*/\*                                     |

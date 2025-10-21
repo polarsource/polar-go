@@ -220,7 +220,7 @@ func (s *PolarOrganizations) Get(ctx context.Context, slug string, opts ...opera
 				return nil, err
 			}
 
-			var out apierrors.ResourceNotFound
+			var out apierrors.PolarExceptionsResourceNotFound
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}

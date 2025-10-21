@@ -44,9 +44,9 @@ func (c *CustomerPortalCustomersAddPaymentMethodResponse) GetCustomerPaymentMeth
 	return nil
 }
 
-func (c *CustomerPortalCustomersAddPaymentMethodResponse) GetCustomerPaymentMethodCreateResponseSucceeded() *components.CustomerPaymentMethodCreateSucceededResponse {
+func (c *CustomerPortalCustomersAddPaymentMethodResponse) GetCustomerPaymentMethodCreateResponseSucceeded() *components.CustomerPaymentMethodCreateSucceededResponseOutput {
 	if v := c.GetCustomerPaymentMethodCreateResponse(); v != nil {
-		return v.CustomerPaymentMethodCreateSucceededResponse
+		return v.CustomerPaymentMethodCreateSucceededResponseOutput
 	}
 	return nil
 }

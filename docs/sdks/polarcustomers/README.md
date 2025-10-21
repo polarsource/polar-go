@@ -378,6 +378,6 @@ func main() {
 | Error Type                                       | Status Code                                      | Content Type                                     |
 | ------------------------------------------------ | ------------------------------------------------ | ------------------------------------------------ |
 | apierrors.PaymentMethodInUseByActiveSubscription | 400                                              | application/json                                 |
-| apierrors.ResourceNotFound                       | 404                                              | application/json                                 |
+| apierrors.PolarExceptionsResourceNotFound        | 404                                              | application/json                                 |
 | apierrors.HTTPValidationError                    | 422                                              | application/json                                 |
 | apierrors.APIError                               | 4XX, 5XX                                         | \*/\*                                            |

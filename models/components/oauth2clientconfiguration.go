@@ -74,6 +74,7 @@ type OAuth2ClientConfiguration struct {
 	LogoURI                 *string                  `json:"logo_uri,omitempty"`
 	TosURI                  *string                  `json:"tos_uri,omitempty"`
 	PolicyURI               *string                  `json:"policy_uri,omitempty"`
+	DefaultSubType          *SubType                 `json:"default_sub_type,omitempty"`
 }
 
 func (o OAuth2ClientConfiguration) MarshalJSON() ([]byte, error) {
@@ -155,4 +156,11 @@ func (o *OAuth2ClientConfiguration) GetPolicyURI() *string {
 		return nil
 	}
 	return o.PolicyURI
+}
+
+func (o *OAuth2ClientConfiguration) GetDefaultSubType() *SubType {
+	if o == nil {
+		return nil
+	}
+	return o.DefaultSubType
 }

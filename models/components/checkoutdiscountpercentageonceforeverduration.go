@@ -8,9 +8,10 @@ import (
 
 // CheckoutDiscountPercentageOnceForeverDuration - Schema for a percentage discount that is applied once or forever.
 type CheckoutDiscountPercentageOnceForeverDuration struct {
-	Duration    DiscountDuration `json:"duration"`
-	Type        DiscountType     `json:"type"`
-	BasisPoints int64            `json:"basis_points"`
+	Duration DiscountDuration `json:"duration"`
+	Type     DiscountType     `json:"type"`
+	// Discount percentage in basis points. A basis point is 1/100th of a percent. For example, 1000 basis points equals a 10% discount.
+	BasisPoints int64 `json:"basis_points"`
 	// The ID of the object.
 	ID   string  `json:"id"`
 	Name string  `json:"name"`

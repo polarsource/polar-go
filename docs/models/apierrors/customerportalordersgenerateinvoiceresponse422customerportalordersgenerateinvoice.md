@@ -5,15 +5,15 @@ Order is not paid or is missing billing name or address.
 
 ## Supported Types
 
-### MissingInvoiceBillingDetails
+### PolarExceptionsMissingInvoiceBillingDetails
 
 ```go
-customerPortalOrdersGenerateInvoiceResponse422CustomerPortalOrdersGenerateInvoice := apierrors.CreateCustomerPortalOrdersGenerateInvoiceResponse422CustomerPortalOrdersGenerateInvoiceMissingInvoiceBillingDetails(components.MissingInvoiceBillingDetails{/* values here */})
+customerPortalOrdersGenerateInvoiceResponse422CustomerPortalOrdersGenerateInvoice := apierrors.CreateCustomerPortalOrdersGenerateInvoiceResponse422CustomerPortalOrdersGenerateInvoicePolarExceptionsMissingInvoiceBillingDetails(components.PolarExceptionsMissingInvoiceBillingDetails{/* values here */})
 ```
 
-### NotPaidOrder
+### PolarExceptionsNotPaidOrder
 
 ```go
-customerPortalOrdersGenerateInvoiceResponse422CustomerPortalOrdersGenerateInvoice := apierrors.CreateCustomerPortalOrdersGenerateInvoiceResponse422CustomerPortalOrdersGenerateInvoiceNotPaidOrder(components.NotPaidOrder{/* values here */})
+customerPortalOrdersGenerateInvoiceResponse422CustomerPortalOrdersGenerateInvoice := apierrors.CreateCustomerPortalOrdersGenerateInvoiceResponse422CustomerPortalOrdersGenerateInvoicePolarExceptionsNotPaidOrder(components.PolarExceptionsNotPaidOrder{/* values here */})
 ```
 

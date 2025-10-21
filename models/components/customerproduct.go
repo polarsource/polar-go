@@ -12,48 +12,48 @@ import (
 type CustomerProductPricesType string
 
 const (
-	CustomerProductPricesTypeLegacyRecurringProductPrice CustomerProductPricesType = "LegacyRecurringProductPrice"
-	CustomerProductPricesTypeProductPrice                CustomerProductPricesType = "ProductPrice"
+	CustomerProductPricesTypeLegacyRecurringProductPriceOutput CustomerProductPricesType = "LegacyRecurringProductPrice-Output"
+	CustomerProductPricesTypeProductPriceOutput                CustomerProductPricesType = "ProductPrice-Output"
 )
 
 type CustomerProductPrices struct {
-	LegacyRecurringProductPrice *LegacyRecurringProductPrice `queryParam:"inline,name=prices"`
-	ProductPrice                *ProductPrice                `queryParam:"inline,name=prices"`
+	LegacyRecurringProductPriceOutput *LegacyRecurringProductPriceOutput `queryParam:"inline,name=prices"`
+	ProductPriceOutput                *ProductPriceOutput                `queryParam:"inline,name=prices"`
 
 	Type CustomerProductPricesType
 }
 
-func CreateCustomerProductPricesLegacyRecurringProductPrice(legacyRecurringProductPrice LegacyRecurringProductPrice) CustomerProductPrices {
-	typ := CustomerProductPricesTypeLegacyRecurringProductPrice
+func CreateCustomerProductPricesLegacyRecurringProductPriceOutput(legacyRecurringProductPriceOutput LegacyRecurringProductPriceOutput) CustomerProductPrices {
+	typ := CustomerProductPricesTypeLegacyRecurringProductPriceOutput
 
 	return CustomerProductPrices{
-		LegacyRecurringProductPrice: &legacyRecurringProductPrice,
-		Type:                        typ,
+		LegacyRecurringProductPriceOutput: &legacyRecurringProductPriceOutput,
+		Type:                              typ,
 	}
 }
 
-func CreateCustomerProductPricesProductPrice(productPrice ProductPrice) CustomerProductPrices {
-	typ := CustomerProductPricesTypeProductPrice
+func CreateCustomerProductPricesProductPriceOutput(productPriceOutput ProductPriceOutput) CustomerProductPrices {
+	typ := CustomerProductPricesTypeProductPriceOutput
 
 	return CustomerProductPrices{
-		ProductPrice: &productPrice,
-		Type:         typ,
+		ProductPriceOutput: &productPriceOutput,
+		Type:               typ,
 	}
 }
 
 func (u *CustomerProductPrices) UnmarshalJSON(data []byte) error {
 
-	var legacyRecurringProductPrice LegacyRecurringProductPrice = LegacyRecurringProductPrice{}
-	if err := utils.UnmarshalJSON(data, &legacyRecurringProductPrice, "", true, nil); err == nil {
-		u.LegacyRecurringProductPrice = &legacyRecurringProductPrice
-		u.Type = CustomerProductPricesTypeLegacyRecurringProductPrice
+	var legacyRecurringProductPriceOutput LegacyRecurringProductPriceOutput = LegacyRecurringProductPriceOutput{}
+	if err := utils.UnmarshalJSON(data, &legacyRecurringProductPriceOutput, "", true, nil); err == nil {
+		u.LegacyRecurringProductPriceOutput = &legacyRecurringProductPriceOutput
+		u.Type = CustomerProductPricesTypeLegacyRecurringProductPriceOutput
 		return nil
 	}
 
-	var productPrice ProductPrice = ProductPrice{}
-	if err := utils.UnmarshalJSON(data, &productPrice, "", true, nil); err == nil {
-		u.ProductPrice = &productPrice
-		u.Type = CustomerProductPricesTypeProductPrice
+	var productPriceOutput ProductPriceOutput = ProductPriceOutput{}
+	if err := utils.UnmarshalJSON(data, &productPriceOutput, "", true, nil); err == nil {
+		u.ProductPriceOutput = &productPriceOutput
+		u.Type = CustomerProductPricesTypeProductPriceOutput
 		return nil
 	}
 
@@ -61,12 +61,12 @@ func (u *CustomerProductPrices) UnmarshalJSON(data []byte) error {
 }
 
 func (u CustomerProductPrices) MarshalJSON() ([]byte, error) {
-	if u.LegacyRecurringProductPrice != nil {
-		return utils.MarshalJSON(u.LegacyRecurringProductPrice, "", true)
+	if u.LegacyRecurringProductPriceOutput != nil {
+		return utils.MarshalJSON(u.LegacyRecurringProductPriceOutput, "", true)
 	}
 
-	if u.ProductPrice != nil {
-		return utils.MarshalJSON(u.ProductPrice, "", true)
+	if u.ProductPriceOutput != nil {
+		return utils.MarshalJSON(u.ProductPriceOutput, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type CustomerProductPrices: all fields are null")

@@ -375,7 +375,9 @@ type Order struct {
 	Metadata           map[string]OrderMetadata `json:"metadata"`
 	// Key-value object storing custom field values.
 	CustomFieldData map[string]*OrderCustomFieldData `json:"custom_field_data,omitempty"`
-	Customer        OrderCustomer                    `json:"customer"`
+	// Platform fee amount in cents.
+	PlatformFeeAmount int64         `json:"platform_fee_amount"`
+	Customer          OrderCustomer `json:"customer"`
 	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
 	UserID       string             `json:"user_id"`
 	Product      OrderProduct       `json:"product"`
@@ -390,7 +392,7 @@ func (o Order) MarshalJSON() ([]byte, error) {
 }
 
 func (o *Order) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &o, "", false, []string{"id", "created_at", "status", "paid", "subtotal_amount", "discount_amount", "net_amount", "tax_amount", "total_amount", "applied_balance_amount", "due_amount", "refunded_amount", "refunded_tax_amount", "currency", "billing_reason", "invoice_number", "is_invoice_generated", "customer_id", "product_id", "metadata", "customer", "user_id", "product", "items"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &o, "", false, []string{"id", "created_at", "status", "paid", "subtotal_amount", "discount_amount", "net_amount", "tax_amount", "total_amount", "applied_balance_amount", "due_amount", "refunded_amount", "refunded_tax_amount", "currency", "billing_reason", "invoice_number", "is_invoice_generated", "customer_id", "product_id", "metadata", "platform_fee_amount", "customer", "user_id", "product", "items"}); err != nil {
 		return err
 	}
 	return nil
@@ -583,6 +585,13 @@ func (o *Order) GetCustomFieldData() map[string]*OrderCustomFieldData {
 		return nil
 	}
 	return o.CustomFieldData
+}
+
+func (o *Order) GetPlatformFeeAmount() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.PlatformFeeAmount
 }
 
 func (o *Order) GetCustomer() OrderCustomer {

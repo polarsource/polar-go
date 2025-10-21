@@ -13,10 +13,11 @@ type OrganizationCreate struct {
 	// Link to social profiles.
 	Socials []OrganizationSocialLink `json:"socials,omitempty"`
 	// Additional, private, business details Polar needs about active organizations for compliance (KYC).
-	Details              *OrganizationDetails              `json:"details,omitempty"`
-	FeatureSettings      *OrganizationFeatureSettings      `json:"feature_settings,omitempty"`
-	SubscriptionSettings *OrganizationSubscriptionSettings `json:"subscription_settings,omitempty"`
-	NotificationSettings *OrganizationNotificationSettings `json:"notification_settings,omitempty"`
+	Details               *OrganizationDetails               `json:"details,omitempty"`
+	FeatureSettings       *OrganizationFeatureSettings       `json:"feature_settings,omitempty"`
+	SubscriptionSettings  *OrganizationSubscriptionSettings  `json:"subscription_settings,omitempty"`
+	NotificationSettings  *OrganizationNotificationSettings  `json:"notification_settings,omitempty"`
+	CustomerEmailSettings *OrganizationCustomerEmailSettings `json:"customer_email_settings,omitempty"`
 }
 
 func (o *OrganizationCreate) GetName() string {
@@ -87,4 +88,11 @@ func (o *OrganizationCreate) GetNotificationSettings() *OrganizationNotification
 		return nil
 	}
 	return o.NotificationSettings
+}
+
+func (o *OrganizationCreate) GetCustomerEmailSettings() *OrganizationCustomerEmailSettings {
+	if o == nil {
+		return nil
+	}
+	return o.CustomerEmailSettings
 }

@@ -20,12 +20,14 @@ generation:
     oAuth2ClientCredentialsEnabled: true
     oAuth2PasswordEnabled: true
     hoistGlobalSecurity: true
+  schemas:
+    allOfMergeStrategy: shallowMerge
   tests:
     generateTests: true
     generateNewTests: false
     skipResponseBodyAssertions: false
 go:
-  version: 0.10.1
+  version: 0.11.0
   additionalDependencies: {}
   allowUnknownFieldsInWeakUnions: true
   baseErrorName: PolarError

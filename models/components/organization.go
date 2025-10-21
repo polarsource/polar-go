@@ -30,9 +30,10 @@ type Organization struct {
 	// When the business details were submitted.
 	DetailsSubmittedAt *time.Time `json:"details_submitted_at"`
 	// Organization feature settings
-	FeatureSettings      *OrganizationFeatureSettings     `json:"feature_settings"`
-	SubscriptionSettings OrganizationSubscriptionSettings `json:"subscription_settings"`
-	NotificationSettings OrganizationNotificationSettings `json:"notification_settings"`
+	FeatureSettings       *OrganizationFeatureSettings      `json:"feature_settings"`
+	SubscriptionSettings  OrganizationSubscriptionSettings  `json:"subscription_settings"`
+	NotificationSettings  OrganizationNotificationSettings  `json:"notification_settings"`
+	CustomerEmailSettings OrganizationCustomerEmailSettings `json:"customer_email_settings"`
 }
 
 func (o Organization) MarshalJSON() ([]byte, error) {
@@ -40,7 +41,7 @@ func (o Organization) MarshalJSON() ([]byte, error) {
 }
 
 func (o *Organization) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &o, "", false, []string{"created_at", "id", "name", "slug", "socials", "status", "subscription_settings", "notification_settings"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &o, "", false, []string{"created_at", "id", "name", "slug", "socials", "status", "subscription_settings", "notification_settings", "customer_email_settings"}); err != nil {
 		return err
 	}
 	return nil
@@ -142,4 +143,11 @@ func (o *Organization) GetNotificationSettings() OrganizationNotificationSetting
 		return OrganizationNotificationSettings{}
 	}
 	return o.NotificationSettings
+}
+
+func (o *Organization) GetCustomerEmailSettings() OrganizationCustomerEmailSettings {
+	if o == nil {
+		return OrganizationCustomerEmailSettings{}
+	}
+	return o.CustomerEmailSettings
 }

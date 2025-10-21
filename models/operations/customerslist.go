@@ -78,7 +78,7 @@ type CustomersListRequest struct {
 	OrganizationID *CustomersListQueryParamOrganizationIDFilter `queryParam:"style=form,explode=true,name=organization_id"`
 	// Filter by exact email.
 	Email *string `queryParam:"style=form,explode=true,name=email"`
-	// Filter by name or email.
+	// Filter by name, email, or external ID.
 	Query *string `queryParam:"style=form,explode=true,name=query"`
 	// Page number, defaults to 1.
 	Page *int64 `default:"1" queryParam:"style=form,explode=true,name=page"`

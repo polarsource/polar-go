@@ -13,14 +13,14 @@ import (
 type CustomerPortalOrdersGenerateInvoiceResponse422CustomerPortalOrdersGenerateInvoiceType string
 
 const (
-	CustomerPortalOrdersGenerateInvoiceResponse422CustomerPortalOrdersGenerateInvoiceTypeMissingInvoiceBillingDetails CustomerPortalOrdersGenerateInvoiceResponse422CustomerPortalOrdersGenerateInvoiceType = "MissingInvoiceBillingDetails"
-	CustomerPortalOrdersGenerateInvoiceResponse422CustomerPortalOrdersGenerateInvoiceTypeNotPaidOrder                 CustomerPortalOrdersGenerateInvoiceResponse422CustomerPortalOrdersGenerateInvoiceType = "NotPaidOrder"
+	CustomerPortalOrdersGenerateInvoiceResponse422CustomerPortalOrdersGenerateInvoiceTypePolarExceptionsMissingInvoiceBillingDetails CustomerPortalOrdersGenerateInvoiceResponse422CustomerPortalOrdersGenerateInvoiceType = "polar__exceptions__MissingInvoiceBillingDetails"
+	CustomerPortalOrdersGenerateInvoiceResponse422CustomerPortalOrdersGenerateInvoiceTypePolarExceptionsNotPaidOrder                 CustomerPortalOrdersGenerateInvoiceResponse422CustomerPortalOrdersGenerateInvoiceType = "polar__exceptions__NotPaidOrder"
 )
 
 // CustomerPortalOrdersGenerateInvoiceResponse422CustomerPortalOrdersGenerateInvoice - Order is not paid or is missing billing name or address.
 type CustomerPortalOrdersGenerateInvoiceResponse422CustomerPortalOrdersGenerateInvoice struct {
-	MissingInvoiceBillingDetails *components.MissingInvoiceBillingDetails `queryParam:"inline,name=Response_422_Customer_Portal_Orders_Generate_Invoice"`
-	NotPaidOrder                 *components.NotPaidOrder                 `queryParam:"inline,name=Response_422_Customer_Portal_Orders_Generate_Invoice"`
+	PolarExceptionsMissingInvoiceBillingDetails *components.PolarExceptionsMissingInvoiceBillingDetails `queryParam:"inline,name=Response_422_Customer_Portal_Orders_Generate_Invoice"`
+	PolarExceptionsNotPaidOrder                 *components.PolarExceptionsNotPaidOrder                 `queryParam:"inline,name=Response_422_Customer_Portal_Orders_Generate_Invoice"`
 
 	Type CustomerPortalOrdersGenerateInvoiceResponse422CustomerPortalOrdersGenerateInvoiceType
 
@@ -29,37 +29,37 @@ type CustomerPortalOrdersGenerateInvoiceResponse422CustomerPortalOrdersGenerateI
 
 var _ error = &CustomerPortalOrdersGenerateInvoiceResponse422CustomerPortalOrdersGenerateInvoice{}
 
-func CreateCustomerPortalOrdersGenerateInvoiceResponse422CustomerPortalOrdersGenerateInvoiceMissingInvoiceBillingDetails(missingInvoiceBillingDetails components.MissingInvoiceBillingDetails) CustomerPortalOrdersGenerateInvoiceResponse422CustomerPortalOrdersGenerateInvoice {
-	typ := CustomerPortalOrdersGenerateInvoiceResponse422CustomerPortalOrdersGenerateInvoiceTypeMissingInvoiceBillingDetails
+func CreateCustomerPortalOrdersGenerateInvoiceResponse422CustomerPortalOrdersGenerateInvoicePolarExceptionsMissingInvoiceBillingDetails(polarExceptionsMissingInvoiceBillingDetails components.PolarExceptionsMissingInvoiceBillingDetails) CustomerPortalOrdersGenerateInvoiceResponse422CustomerPortalOrdersGenerateInvoice {
+	typ := CustomerPortalOrdersGenerateInvoiceResponse422CustomerPortalOrdersGenerateInvoiceTypePolarExceptionsMissingInvoiceBillingDetails
 
 	return CustomerPortalOrdersGenerateInvoiceResponse422CustomerPortalOrdersGenerateInvoice{
-		MissingInvoiceBillingDetails: &missingInvoiceBillingDetails,
-		Type:                         typ,
+		PolarExceptionsMissingInvoiceBillingDetails: &polarExceptionsMissingInvoiceBillingDetails,
+		Type: typ,
 	}
 }
 
-func CreateCustomerPortalOrdersGenerateInvoiceResponse422CustomerPortalOrdersGenerateInvoiceNotPaidOrder(notPaidOrder components.NotPaidOrder) CustomerPortalOrdersGenerateInvoiceResponse422CustomerPortalOrdersGenerateInvoice {
-	typ := CustomerPortalOrdersGenerateInvoiceResponse422CustomerPortalOrdersGenerateInvoiceTypeNotPaidOrder
+func CreateCustomerPortalOrdersGenerateInvoiceResponse422CustomerPortalOrdersGenerateInvoicePolarExceptionsNotPaidOrder(polarExceptionsNotPaidOrder components.PolarExceptionsNotPaidOrder) CustomerPortalOrdersGenerateInvoiceResponse422CustomerPortalOrdersGenerateInvoice {
+	typ := CustomerPortalOrdersGenerateInvoiceResponse422CustomerPortalOrdersGenerateInvoiceTypePolarExceptionsNotPaidOrder
 
 	return CustomerPortalOrdersGenerateInvoiceResponse422CustomerPortalOrdersGenerateInvoice{
-		NotPaidOrder: &notPaidOrder,
-		Type:         typ,
+		PolarExceptionsNotPaidOrder: &polarExceptionsNotPaidOrder,
+		Type:                        typ,
 	}
 }
 
 func (u *CustomerPortalOrdersGenerateInvoiceResponse422CustomerPortalOrdersGenerateInvoice) UnmarshalJSON(data []byte) error {
 
-	var missingInvoiceBillingDetails components.MissingInvoiceBillingDetails = components.MissingInvoiceBillingDetails{}
-	if err := utils.UnmarshalJSON(data, &missingInvoiceBillingDetails, "", true, nil); err == nil {
-		u.MissingInvoiceBillingDetails = &missingInvoiceBillingDetails
-		u.Type = CustomerPortalOrdersGenerateInvoiceResponse422CustomerPortalOrdersGenerateInvoiceTypeMissingInvoiceBillingDetails
+	var polarExceptionsMissingInvoiceBillingDetails components.PolarExceptionsMissingInvoiceBillingDetails = components.PolarExceptionsMissingInvoiceBillingDetails{}
+	if err := utils.UnmarshalJSON(data, &polarExceptionsMissingInvoiceBillingDetails, "", true, nil); err == nil {
+		u.PolarExceptionsMissingInvoiceBillingDetails = &polarExceptionsMissingInvoiceBillingDetails
+		u.Type = CustomerPortalOrdersGenerateInvoiceResponse422CustomerPortalOrdersGenerateInvoiceTypePolarExceptionsMissingInvoiceBillingDetails
 		return nil
 	}
 
-	var notPaidOrder components.NotPaidOrder = components.NotPaidOrder{}
-	if err := utils.UnmarshalJSON(data, &notPaidOrder, "", true, nil); err == nil {
-		u.NotPaidOrder = &notPaidOrder
-		u.Type = CustomerPortalOrdersGenerateInvoiceResponse422CustomerPortalOrdersGenerateInvoiceTypeNotPaidOrder
+	var polarExceptionsNotPaidOrder components.PolarExceptionsNotPaidOrder = components.PolarExceptionsNotPaidOrder{}
+	if err := utils.UnmarshalJSON(data, &polarExceptionsNotPaidOrder, "", true, nil); err == nil {
+		u.PolarExceptionsNotPaidOrder = &polarExceptionsNotPaidOrder
+		u.Type = CustomerPortalOrdersGenerateInvoiceResponse422CustomerPortalOrdersGenerateInvoiceTypePolarExceptionsNotPaidOrder
 		return nil
 	}
 
@@ -67,12 +67,12 @@ func (u *CustomerPortalOrdersGenerateInvoiceResponse422CustomerPortalOrdersGener
 }
 
 func (u CustomerPortalOrdersGenerateInvoiceResponse422CustomerPortalOrdersGenerateInvoice) MarshalJSON() ([]byte, error) {
-	if u.MissingInvoiceBillingDetails != nil {
-		return utils.MarshalJSON(u.MissingInvoiceBillingDetails, "", true)
+	if u.PolarExceptionsMissingInvoiceBillingDetails != nil {
+		return utils.MarshalJSON(u.PolarExceptionsMissingInvoiceBillingDetails, "", true)
 	}
 
-	if u.NotPaidOrder != nil {
-		return utils.MarshalJSON(u.NotPaidOrder, "", true)
+	if u.PolarExceptionsNotPaidOrder != nil {
+		return utils.MarshalJSON(u.PolarExceptionsNotPaidOrder, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type CustomerPortalOrdersGenerateInvoiceResponse422CustomerPortalOrdersGenerateInvoice: all fields are null")
@@ -80,11 +80,11 @@ func (u CustomerPortalOrdersGenerateInvoiceResponse422CustomerPortalOrdersGenera
 
 func (u CustomerPortalOrdersGenerateInvoiceResponse422CustomerPortalOrdersGenerateInvoice) Error() string {
 	switch u.Type {
-	case CustomerPortalOrdersGenerateInvoiceResponse422CustomerPortalOrdersGenerateInvoiceTypeMissingInvoiceBillingDetails:
-		data, _ := json.Marshal(u.MissingInvoiceBillingDetails)
+	case CustomerPortalOrdersGenerateInvoiceResponse422CustomerPortalOrdersGenerateInvoiceTypePolarExceptionsMissingInvoiceBillingDetails:
+		data, _ := json.Marshal(u.PolarExceptionsMissingInvoiceBillingDetails)
 		return string(data)
-	case CustomerPortalOrdersGenerateInvoiceResponse422CustomerPortalOrdersGenerateInvoiceTypeNotPaidOrder:
-		data, _ := json.Marshal(u.NotPaidOrder)
+	case CustomerPortalOrdersGenerateInvoiceResponse422CustomerPortalOrdersGenerateInvoiceTypePolarExceptionsNotPaidOrder:
+		data, _ := json.Marshal(u.PolarExceptionsNotPaidOrder)
 		return string(data)
 	default:
 		return "unknown error"

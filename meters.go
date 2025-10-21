@@ -765,7 +765,7 @@ func (s *Meters) Get(ctx context.Context, id string, opts ...operations.Option) 
 				return nil, err
 			}
 
-			var out apierrors.ResourceNotFound
+			var out apierrors.PolarExceptionsResourceNotFound
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
@@ -1027,7 +1027,7 @@ func (s *Meters) Update(ctx context.Context, id string, meterUpdate components.M
 				return nil, err
 			}
 
-			var out apierrors.ResourceNotFound
+			var out apierrors.PolarExceptionsResourceNotFound
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
@@ -1281,7 +1281,7 @@ func (s *Meters) Quantities(ctx context.Context, request operations.MetersQuanti
 				return nil, err
 			}
 
-			var out apierrors.ResourceNotFound
+			var out apierrors.PolarExceptionsResourceNotFound
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}

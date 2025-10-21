@@ -120,7 +120,8 @@ type DiscountPercentageRepeatDurationBase struct {
 	Duration         DiscountDuration `json:"duration"`
 	DurationInMonths int64            `json:"duration_in_months"`
 	Type             DiscountType     `json:"type"`
-	BasisPoints      int64            `json:"basis_points"`
+	// Discount percentage in basis points. A basis point is 1/100th of a percent. For example, 1000 basis points equals a 10% discount.
+	BasisPoints int64 `json:"basis_points"`
 	// Creation timestamp of the object.
 	CreatedAt time.Time `json:"created_at"`
 	// Last modification timestamp of the object.

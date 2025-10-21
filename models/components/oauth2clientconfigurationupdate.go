@@ -74,6 +74,7 @@ type OAuth2ClientConfigurationUpdate struct {
 	LogoURI                 *string                                                 `json:"logo_uri,omitempty"`
 	TosURI                  *string                                                 `json:"tos_uri,omitempty"`
 	PolicyURI               *string                                                 `json:"policy_uri,omitempty"`
+	DefaultSubType          *SubType                                                `json:"default_sub_type,omitempty"`
 	ClientID                string                                                  `json:"client_id"`
 }
 
@@ -156,6 +157,13 @@ func (o *OAuth2ClientConfigurationUpdate) GetPolicyURI() *string {
 		return nil
 	}
 	return o.PolicyURI
+}
+
+func (o *OAuth2ClientConfigurationUpdate) GetDefaultSubType() *SubType {
+	if o == nil {
+		return nil
+	}
+	return o.DefaultSubType
 }
 
 func (o *OAuth2ClientConfigurationUpdate) GetClientID() string {

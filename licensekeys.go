@@ -319,7 +319,7 @@ func (s *LicenseKeys) List(ctx context.Context, organizationID *operations.Licen
 				return nil, err
 			}
 
-			var out apierrors.ResourceNotFound
+			var out apierrors.PolarExceptionsResourceNotFound
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
@@ -594,7 +594,7 @@ func (s *LicenseKeys) Get(ctx context.Context, id string, opts ...operations.Opt
 				return nil, err
 			}
 
-			var out apierrors.ResourceNotFound
+			var out apierrors.PolarExceptionsResourceNotFound
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
@@ -877,7 +877,7 @@ func (s *LicenseKeys) Update(ctx context.Context, id string, licenseKeyUpdate co
 				return nil, err
 			}
 
-			var out apierrors.ResourceNotFound
+			var out apierrors.PolarExceptionsResourceNotFound
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
@@ -1153,7 +1153,7 @@ func (s *LicenseKeys) GetActivation(ctx context.Context, id string, activationID
 				return nil, err
 			}
 
-			var out apierrors.ResourceNotFound
+			var out apierrors.PolarExceptionsResourceNotFound
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
@@ -1410,7 +1410,7 @@ func (s *LicenseKeys) Validate(ctx context.Context, request components.LicenseKe
 				return nil, err
 			}
 
-			var out apierrors.ResourceNotFound
+			var out apierrors.PolarExceptionsResourceNotFound
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
@@ -1667,7 +1667,7 @@ func (s *LicenseKeys) Activate(ctx context.Context, request components.LicenseKe
 				return nil, err
 			}
 
-			var out apierrors.NotPermitted
+			var out apierrors.PolarExceptionsNotPermitted
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
@@ -1688,7 +1688,7 @@ func (s *LicenseKeys) Activate(ctx context.Context, request components.LicenseKe
 				return nil, err
 			}
 
-			var out apierrors.ResourceNotFound
+			var out apierrors.PolarExceptionsResourceNotFound
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
@@ -1925,7 +1925,7 @@ func (s *LicenseKeys) Deactivate(ctx context.Context, request components.License
 				return nil, err
 			}
 
-			var out apierrors.ResourceNotFound
+			var out apierrors.PolarExceptionsResourceNotFound
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}

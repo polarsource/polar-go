@@ -767,7 +767,7 @@ func (s *Organizations) Get(ctx context.Context, id string, opts ...operations.O
 				return nil, err
 			}
 
-			var out apierrors.ResourceNotFound
+			var out apierrors.PolarExceptionsResourceNotFound
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
@@ -1029,7 +1029,7 @@ func (s *Organizations) Update(ctx context.Context, id string, organizationUpdat
 				return nil, err
 			}
 
-			var out apierrors.NotPermitted
+			var out apierrors.PolarExceptionsNotPermitted
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
@@ -1050,7 +1050,7 @@ func (s *Organizations) Update(ctx context.Context, id string, organizationUpdat
 				return nil, err
 			}
 
-			var out apierrors.ResourceNotFound
+			var out apierrors.PolarExceptionsResourceNotFound
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}

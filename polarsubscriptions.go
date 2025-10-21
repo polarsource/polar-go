@@ -530,7 +530,7 @@ func (s *PolarSubscriptions) Get(ctx context.Context, security operations.Custom
 				return nil, err
 			}
 
-			var out apierrors.ResourceNotFound
+			var out apierrors.PolarExceptionsResourceNotFound
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
@@ -792,7 +792,7 @@ func (s *PolarSubscriptions) Update(ctx context.Context, security operations.Cus
 				return nil, err
 			}
 
-			var out apierrors.AlreadyCanceledSubscription
+			var out apierrors.PolarExceptionsAlreadyCanceledSubscription
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
@@ -813,7 +813,7 @@ func (s *PolarSubscriptions) Update(ctx context.Context, security operations.Cus
 				return nil, err
 			}
 
-			var out apierrors.ResourceNotFound
+			var out apierrors.PolarExceptionsResourceNotFound
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
@@ -1067,7 +1067,7 @@ func (s *PolarSubscriptions) Cancel(ctx context.Context, security operations.Cus
 				return nil, err
 			}
 
-			var out apierrors.AlreadyCanceledSubscription
+			var out apierrors.PolarExceptionsAlreadyCanceledSubscription
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
@@ -1088,7 +1088,7 @@ func (s *PolarSubscriptions) Cancel(ctx context.Context, security operations.Cus
 				return nil, err
 			}
 
-			var out apierrors.ResourceNotFound
+			var out apierrors.PolarExceptionsResourceNotFound
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}

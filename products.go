@@ -768,7 +768,7 @@ func (s *Products) Get(ctx context.Context, id string, opts ...operations.Option
 				return nil, err
 			}
 
-			var out apierrors.ResourceNotFound
+			var out apierrors.PolarExceptionsResourceNotFound
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
@@ -1030,7 +1030,7 @@ func (s *Products) Update(ctx context.Context, id string, productUpdate componen
 				return nil, err
 			}
 
-			var out apierrors.NotPermitted
+			var out apierrors.PolarExceptionsNotPermitted
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
@@ -1051,7 +1051,7 @@ func (s *Products) Update(ctx context.Context, id string, productUpdate componen
 				return nil, err
 			}
 
-			var out apierrors.ResourceNotFound
+			var out apierrors.PolarExceptionsResourceNotFound
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
@@ -1313,7 +1313,7 @@ func (s *Products) UpdateBenefits(ctx context.Context, id string, productBenefit
 				return nil, err
 			}
 
-			var out apierrors.NotPermitted
+			var out apierrors.PolarExceptionsNotPermitted
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
@@ -1334,7 +1334,7 @@ func (s *Products) UpdateBenefits(ctx context.Context, id string, productBenefit
 				return nil, err
 			}
 
-			var out apierrors.ResourceNotFound
+			var out apierrors.PolarExceptionsResourceNotFound
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}

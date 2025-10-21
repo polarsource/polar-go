@@ -3,122 +3,12 @@
 package components
 
 import (
-	"errors"
-	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
 	"time"
 )
 
-type UserEventMetadataType string
-
-const (
-	UserEventMetadataTypeStr     UserEventMetadataType = "str"
-	UserEventMetadataTypeInteger UserEventMetadataType = "integer"
-	UserEventMetadataTypeNumber  UserEventMetadataType = "number"
-	UserEventMetadataTypeBoolean UserEventMetadataType = "boolean"
-)
-
-type UserEventMetadata struct {
-	Str     *string  `queryParam:"inline,name=metadata"`
-	Integer *int64   `queryParam:"inline,name=metadata"`
-	Number  *float64 `queryParam:"inline,name=metadata"`
-	Boolean *bool    `queryParam:"inline,name=metadata"`
-
-	Type UserEventMetadataType
-}
-
-func CreateUserEventMetadataStr(str string) UserEventMetadata {
-	typ := UserEventMetadataTypeStr
-
-	return UserEventMetadata{
-		Str:  &str,
-		Type: typ,
-	}
-}
-
-func CreateUserEventMetadataInteger(integer int64) UserEventMetadata {
-	typ := UserEventMetadataTypeInteger
-
-	return UserEventMetadata{
-		Integer: &integer,
-		Type:    typ,
-	}
-}
-
-func CreateUserEventMetadataNumber(number float64) UserEventMetadata {
-	typ := UserEventMetadataTypeNumber
-
-	return UserEventMetadata{
-		Number: &number,
-		Type:   typ,
-	}
-}
-
-func CreateUserEventMetadataBoolean(boolean bool) UserEventMetadata {
-	typ := UserEventMetadataTypeBoolean
-
-	return UserEventMetadata{
-		Boolean: &boolean,
-		Type:    typ,
-	}
-}
-
-func (u *UserEventMetadata) UnmarshalJSON(data []byte) error {
-
-	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, nil); err == nil {
-		u.Str = &str
-		u.Type = UserEventMetadataTypeStr
-		return nil
-	}
-
-	var integer int64 = int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
-		u.Integer = &integer
-		u.Type = UserEventMetadataTypeInteger
-		return nil
-	}
-
-	var number float64 = float64(0)
-	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
-		u.Number = &number
-		u.Type = UserEventMetadataTypeNumber
-		return nil
-	}
-
-	var boolean bool = false
-	if err := utils.UnmarshalJSON(data, &boolean, "", true, nil); err == nil {
-		u.Boolean = &boolean
-		u.Type = UserEventMetadataTypeBoolean
-		return nil
-	}
-
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for UserEventMetadata", string(data))
-}
-
-func (u UserEventMetadata) MarshalJSON() ([]byte, error) {
-	if u.Str != nil {
-		return utils.MarshalJSON(u.Str, "", true)
-	}
-
-	if u.Integer != nil {
-		return utils.MarshalJSON(u.Integer, "", true)
-	}
-
-	if u.Number != nil {
-		return utils.MarshalJSON(u.Number, "", true)
-	}
-
-	if u.Boolean != nil {
-		return utils.MarshalJSON(u.Boolean, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type UserEventMetadata: all fields are null")
-}
-
 // UserEvent - An event you created through the ingestion API.
 type UserEvent struct {
-	Metadata map[string]UserEventMetadata `json:"metadata"`
 	// The ID of the object.
 	ID string `json:"id"`
 	// The timestamp of the event.
@@ -134,7 +24,8 @@ type UserEvent struct {
 	// The name of the event.
 	Name string `json:"name"`
 	// The source of the event. `system` events are created by Polar. `user` events are the one you create through our ingestion API.
-	source string `const:"user" json:"source"`
+	source   string                         `const:"user" json:"source"`
+	Metadata map[string]EventMetadataOutput `json:"metadata"`
 }
 
 func (u UserEvent) MarshalJSON() ([]byte, error) {
@@ -142,17 +33,10 @@ func (u UserEvent) MarshalJSON() ([]byte, error) {
 }
 
 func (u *UserEvent) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &u, "", false, []string{"metadata", "id", "timestamp", "organization_id", "name", "source"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &u, "", false, []string{"id", "timestamp", "organization_id", "name", "source", "metadata"}); err != nil {
 		return err
 	}
 	return nil
-}
-
-func (u *UserEvent) GetMetadata() map[string]UserEventMetadata {
-	if u == nil {
-		return map[string]UserEventMetadata{}
-	}
-	return u.Metadata
 }
 
 func (u *UserEvent) GetID() string {
@@ -206,4 +90,11 @@ func (u *UserEvent) GetName() string {
 
 func (u *UserEvent) GetSource() string {
 	return "user"
+}
+
+func (u *UserEvent) GetMetadata() map[string]EventMetadataOutput {
+	if u == nil {
+		return map[string]EventMetadataOutput{}
+	}
+	return u.Metadata
 }

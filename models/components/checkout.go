@@ -223,68 +223,68 @@ func (u CheckoutMetadata) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type CheckoutMetadata: all fields are null")
 }
 
-type CheckoutProductPriceType string
+type ProductPriceUnionType string
 
 const (
-	CheckoutProductPriceTypeLegacyRecurringProductPrice CheckoutProductPriceType = "LegacyRecurringProductPrice"
-	CheckoutProductPriceTypeProductPrice                CheckoutProductPriceType = "ProductPrice"
+	ProductPriceUnionTypeLegacyRecurringProductPriceOutput ProductPriceUnionType = "LegacyRecurringProductPrice-Output"
+	ProductPriceUnionTypeProductPriceOutput                ProductPriceUnionType = "ProductPrice-Output"
 )
 
-// CheckoutProductPrice - Price of the selected product.
-type CheckoutProductPrice struct {
-	LegacyRecurringProductPrice *LegacyRecurringProductPrice `queryParam:"inline,name=Product_Price"`
-	ProductPrice                *ProductPrice                `queryParam:"inline,name=Product_Price"`
+// ProductPrice - Price of the selected product.
+type ProductPrice struct {
+	LegacyRecurringProductPriceOutput *LegacyRecurringProductPriceOutput `queryParam:"inline,name=Product_Price"`
+	ProductPriceOutput                *ProductPriceOutput                `queryParam:"inline,name=Product_Price"`
 
-	Type CheckoutProductPriceType
+	Type ProductPriceUnionType
 }
 
-func CreateCheckoutProductPriceLegacyRecurringProductPrice(legacyRecurringProductPrice LegacyRecurringProductPrice) CheckoutProductPrice {
-	typ := CheckoutProductPriceTypeLegacyRecurringProductPrice
+func CreateProductPriceLegacyRecurringProductPriceOutput(legacyRecurringProductPriceOutput LegacyRecurringProductPriceOutput) ProductPrice {
+	typ := ProductPriceUnionTypeLegacyRecurringProductPriceOutput
 
-	return CheckoutProductPrice{
-		LegacyRecurringProductPrice: &legacyRecurringProductPrice,
-		Type:                        typ,
+	return ProductPrice{
+		LegacyRecurringProductPriceOutput: &legacyRecurringProductPriceOutput,
+		Type:                              typ,
 	}
 }
 
-func CreateCheckoutProductPriceProductPrice(productPrice ProductPrice) CheckoutProductPrice {
-	typ := CheckoutProductPriceTypeProductPrice
+func CreateProductPriceProductPriceOutput(productPriceOutput ProductPriceOutput) ProductPrice {
+	typ := ProductPriceUnionTypeProductPriceOutput
 
-	return CheckoutProductPrice{
-		ProductPrice: &productPrice,
-		Type:         typ,
+	return ProductPrice{
+		ProductPriceOutput: &productPriceOutput,
+		Type:               typ,
 	}
 }
 
-func (u *CheckoutProductPrice) UnmarshalJSON(data []byte) error {
+func (u *ProductPrice) UnmarshalJSON(data []byte) error {
 
-	var legacyRecurringProductPrice LegacyRecurringProductPrice = LegacyRecurringProductPrice{}
-	if err := utils.UnmarshalJSON(data, &legacyRecurringProductPrice, "", true, nil); err == nil {
-		u.LegacyRecurringProductPrice = &legacyRecurringProductPrice
-		u.Type = CheckoutProductPriceTypeLegacyRecurringProductPrice
+	var legacyRecurringProductPriceOutput LegacyRecurringProductPriceOutput = LegacyRecurringProductPriceOutput{}
+	if err := utils.UnmarshalJSON(data, &legacyRecurringProductPriceOutput, "", true, nil); err == nil {
+		u.LegacyRecurringProductPriceOutput = &legacyRecurringProductPriceOutput
+		u.Type = ProductPriceUnionTypeLegacyRecurringProductPriceOutput
 		return nil
 	}
 
-	var productPrice ProductPrice = ProductPrice{}
-	if err := utils.UnmarshalJSON(data, &productPrice, "", true, nil); err == nil {
-		u.ProductPrice = &productPrice
-		u.Type = CheckoutProductPriceTypeProductPrice
+	var productPriceOutput ProductPriceOutput = ProductPriceOutput{}
+	if err := utils.UnmarshalJSON(data, &productPriceOutput, "", true, nil); err == nil {
+		u.ProductPriceOutput = &productPriceOutput
+		u.Type = ProductPriceUnionTypeProductPriceOutput
 		return nil
 	}
 
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for CheckoutProductPrice", string(data))
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for ProductPrice", string(data))
 }
 
-func (u CheckoutProductPrice) MarshalJSON() ([]byte, error) {
-	if u.LegacyRecurringProductPrice != nil {
-		return utils.MarshalJSON(u.LegacyRecurringProductPrice, "", true)
+func (u ProductPrice) MarshalJSON() ([]byte, error) {
+	if u.LegacyRecurringProductPriceOutput != nil {
+		return utils.MarshalJSON(u.LegacyRecurringProductPriceOutput, "", true)
 	}
 
-	if u.ProductPrice != nil {
-		return utils.MarshalJSON(u.ProductPrice, "", true)
+	if u.ProductPriceOutput != nil {
+		return utils.MarshalJSON(u.ProductPriceOutput, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type CheckoutProductPrice: all fields are null")
+	return nil, errors.New("could not marshal union type ProductPrice: all fields are null")
 }
 
 type CheckoutDiscountType string
@@ -572,10 +572,10 @@ type Checkout struct {
 	// Product data for a checkout session.
 	Product CheckoutProduct `json:"product"`
 	// Price of the selected product.
-	ProductPrice         CheckoutProductPrice        `json:"product_price"`
+	ProductPrice         ProductPrice                `json:"product_price"`
 	Discount             *CheckoutDiscount           `json:"discount"`
 	SubscriptionID       *string                     `json:"subscription_id"`
-	AttachedCustomFields []AttachedCustomField       `json:"attached_custom_fields"`
+	AttachedCustomFields []AttachedCustomFieldOutput `json:"attached_custom_fields"`
 	CustomerMetadata     map[string]CustomerMetadata `json:"customer_metadata"`
 }
 
@@ -940,9 +940,9 @@ func (c *Checkout) GetProduct() CheckoutProduct {
 	return c.Product
 }
 
-func (c *Checkout) GetProductPrice() CheckoutProductPrice {
+func (c *Checkout) GetProductPrice() ProductPrice {
 	if c == nil {
-		return CheckoutProductPrice{}
+		return ProductPrice{}
 	}
 	return c.ProductPrice
 }
@@ -961,9 +961,9 @@ func (c *Checkout) GetSubscriptionID() *string {
 	return c.SubscriptionID
 }
 
-func (c *Checkout) GetAttachedCustomFields() []AttachedCustomField {
+func (c *Checkout) GetAttachedCustomFields() []AttachedCustomFieldOutput {
 	if c == nil {
-		return []AttachedCustomField{}
+		return []AttachedCustomFieldOutput{}
 	}
 	return c.AttachedCustomFields
 }

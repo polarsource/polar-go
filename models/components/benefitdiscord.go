@@ -137,7 +137,7 @@ type BenefitDiscord struct {
 	OrganizationID string                            `json:"organization_id"`
 	Metadata       map[string]BenefitDiscordMetadata `json:"metadata"`
 	// Properties for a benefit of type `discord`.
-	Properties BenefitDiscordProperties `json:"properties"`
+	Properties BenefitDiscordPropertiesOutput `json:"properties"`
 }
 
 func (b BenefitDiscord) MarshalJSON() ([]byte, error) {
@@ -211,9 +211,9 @@ func (b *BenefitDiscord) GetMetadata() map[string]BenefitDiscordMetadata {
 	return b.Metadata
 }
 
-func (b *BenefitDiscord) GetProperties() BenefitDiscordProperties {
+func (b *BenefitDiscord) GetProperties() BenefitDiscordPropertiesOutput {
 	if b == nil {
-		return BenefitDiscordProperties{}
+		return BenefitDiscordPropertiesOutput{}
 	}
 	return b.Properties
 }
