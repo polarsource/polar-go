@@ -766,7 +766,7 @@ func (s *Checkouts) Get(ctx context.Context, id string, opts ...operations.Optio
 				return nil, err
 			}
 
-			var out apierrors.PolarExceptionsResourceNotFound
+			var out apierrors.ResourceNotFound
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
@@ -1049,7 +1049,7 @@ func (s *Checkouts) Update(ctx context.Context, id string, checkoutUpdate compon
 				return nil, err
 			}
 
-			var out apierrors.PolarExceptionsResourceNotFound
+			var out apierrors.ResourceNotFound
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
@@ -1297,7 +1297,7 @@ func (s *Checkouts) ClientGet(ctx context.Context, clientSecret string, opts ...
 				return nil, err
 			}
 
-			var out apierrors.PolarExceptionsResourceNotFound
+			var out apierrors.ResourceNotFound
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
@@ -1595,7 +1595,7 @@ func (s *Checkouts) ClientUpdate(ctx context.Context, clientSecret string, check
 				return nil, err
 			}
 
-			var out apierrors.PolarExceptionsResourceNotFound
+			var out apierrors.ResourceNotFound
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
@@ -1920,7 +1920,7 @@ func (s *Checkouts) ClientConfirm(ctx context.Context, clientSecret string, chec
 				return nil, err
 			}
 
-			var out apierrors.PolarExceptionsResourceNotFound
+			var out apierrors.ResourceNotFound
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}

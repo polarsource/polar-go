@@ -532,7 +532,7 @@ func (s *PolarBenefitGrants) Get(ctx context.Context, security operations.Custom
 				return nil, err
 			}
 
-			var out apierrors.PolarExceptionsResourceNotFound
+			var out apierrors.ResourceNotFound
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
@@ -794,7 +794,7 @@ func (s *PolarBenefitGrants) Update(ctx context.Context, security operations.Cus
 				return nil, err
 			}
 
-			var out apierrors.PolarExceptionsNotPermitted
+			var out apierrors.NotPermitted
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
@@ -815,7 +815,7 @@ func (s *PolarBenefitGrants) Update(ctx context.Context, security operations.Cus
 				return nil, err
 			}
 
-			var out apierrors.PolarExceptionsResourceNotFound
+			var out apierrors.ResourceNotFound
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}

@@ -17,8 +17,8 @@ const (
 )
 
 type CustomerPaymentMethodCreateResponse struct {
-	CustomerPaymentMethodCreateSucceededResponseOutput *CustomerPaymentMethodCreateSucceededResponseOutput `queryParam:"inline,name=CustomerPaymentMethodCreateResponse"`
-	CustomerPaymentMethodCreateRequiresActionResponse  *CustomerPaymentMethodCreateRequiresActionResponse  `queryParam:"inline,name=CustomerPaymentMethodCreateResponse"`
+	CustomerPaymentMethodCreateSucceededResponse      *CustomerPaymentMethodCreateSucceededResponse      `queryParam:"inline,name=CustomerPaymentMethodCreateResponse"`
+	CustomerPaymentMethodCreateRequiresActionResponse *CustomerPaymentMethodCreateRequiresActionResponse `queryParam:"inline,name=CustomerPaymentMethodCreateResponse"`
 
 	Type CustomerPaymentMethodCreateResponseType
 }
@@ -32,11 +32,11 @@ func CreateCustomerPaymentMethodCreateResponseRequiresAction(requiresAction Cust
 	}
 }
 
-func CreateCustomerPaymentMethodCreateResponseSucceeded(succeeded CustomerPaymentMethodCreateSucceededResponseOutput) CustomerPaymentMethodCreateResponse {
+func CreateCustomerPaymentMethodCreateResponseSucceeded(succeeded CustomerPaymentMethodCreateSucceededResponse) CustomerPaymentMethodCreateResponse {
 	typ := CustomerPaymentMethodCreateResponseTypeSucceeded
 
 	return CustomerPaymentMethodCreateResponse{
-		CustomerPaymentMethodCreateSucceededResponseOutput: &succeeded,
+		CustomerPaymentMethodCreateSucceededResponse: &succeeded,
 		Type: typ,
 	}
 }
@@ -63,12 +63,12 @@ func (u *CustomerPaymentMethodCreateResponse) UnmarshalJSON(data []byte) error {
 		u.Type = CustomerPaymentMethodCreateResponseTypeRequiresAction
 		return nil
 	case "succeeded":
-		customerPaymentMethodCreateSucceededResponseOutput := new(CustomerPaymentMethodCreateSucceededResponseOutput)
-		if err := utils.UnmarshalJSON(data, &customerPaymentMethodCreateSucceededResponseOutput, "", true, nil); err != nil {
-			return fmt.Errorf("could not unmarshal `%s` into expected (Status == succeeded) type CustomerPaymentMethodCreateSucceededResponseOutput within CustomerPaymentMethodCreateResponse: %w", string(data), err)
+		customerPaymentMethodCreateSucceededResponse := new(CustomerPaymentMethodCreateSucceededResponse)
+		if err := utils.UnmarshalJSON(data, &customerPaymentMethodCreateSucceededResponse, "", true, nil); err != nil {
+			return fmt.Errorf("could not unmarshal `%s` into expected (Status == succeeded) type CustomerPaymentMethodCreateSucceededResponse within CustomerPaymentMethodCreateResponse: %w", string(data), err)
 		}
 
-		u.CustomerPaymentMethodCreateSucceededResponseOutput = customerPaymentMethodCreateSucceededResponseOutput
+		u.CustomerPaymentMethodCreateSucceededResponse = customerPaymentMethodCreateSucceededResponse
 		u.Type = CustomerPaymentMethodCreateResponseTypeSucceeded
 		return nil
 	}
@@ -77,8 +77,8 @@ func (u *CustomerPaymentMethodCreateResponse) UnmarshalJSON(data []byte) error {
 }
 
 func (u CustomerPaymentMethodCreateResponse) MarshalJSON() ([]byte, error) {
-	if u.CustomerPaymentMethodCreateSucceededResponseOutput != nil {
-		return utils.MarshalJSON(u.CustomerPaymentMethodCreateSucceededResponseOutput, "", true)
+	if u.CustomerPaymentMethodCreateSucceededResponse != nil {
+		return utils.MarshalJSON(u.CustomerPaymentMethodCreateSucceededResponse, "", true)
 	}
 
 	if u.CustomerPaymentMethodCreateRequiresActionResponse != nil {

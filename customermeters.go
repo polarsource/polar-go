@@ -529,7 +529,7 @@ func (s *CustomerMeters) Get(ctx context.Context, id string, opts ...operations.
 				return nil, err
 			}
 
-			var out apierrors.PolarExceptionsResourceNotFound
+			var out apierrors.ResourceNotFound
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}

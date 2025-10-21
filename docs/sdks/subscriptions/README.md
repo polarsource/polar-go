@@ -191,11 +191,11 @@ func main() {
 
 ### Errors
 
-| Error Type                                | Status Code                               | Content Type                              |
-| ----------------------------------------- | ----------------------------------------- | ----------------------------------------- |
-| apierrors.PolarExceptionsResourceNotFound | 404                                       | application/json                          |
-| apierrors.HTTPValidationError             | 422                                       | application/json                          |
-| apierrors.APIError                        | 4XX, 5XX                                  | \*/\*                                     |
+| Error Type                    | Status Code                   | Content Type                  |
+| ----------------------------- | ----------------------------- | ----------------------------- |
+| apierrors.ResourceNotFound    | 404                           | application/json              |
+| apierrors.HTTPValidationError | 422                           | application/json              |
+| apierrors.APIError            | 4XX, 5XX                      | \*/\*                         |
 
 ## Update
 
@@ -253,13 +253,13 @@ func main() {
 
 ### Errors
 
-| Error Type                                           | Status Code                                          | Content Type                                         |
-| ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- |
-| apierrors.PolarExceptionsAlreadyCanceledSubscription | 403                                                  | application/json                                     |
-| apierrors.PolarExceptionsResourceNotFound            | 404                                                  | application/json                                     |
-| apierrors.PolarExceptionsSubscriptionLocked          | 409                                                  | application/json                                     |
-| apierrors.HTTPValidationError                        | 422                                                  | application/json                                     |
-| apierrors.APIError                                   | 4XX, 5XX                                             | \*/\*                                                |
+| Error Type                            | Status Code                           | Content Type                          |
+| ------------------------------------- | ------------------------------------- | ------------------------------------- |
+| apierrors.AlreadyCanceledSubscription | 403                                   | application/json                      |
+| apierrors.ResourceNotFound            | 404                                   | application/json                      |
+| apierrors.SubscriptionLocked          | 409                                   | application/json                      |
+| apierrors.HTTPValidationError         | 422                                   | application/json                      |
+| apierrors.APIError                    | 4XX, 5XX                              | \*/\*                                 |
 
 ## Revoke
 
@@ -311,10 +311,10 @@ func main() {
 
 ### Errors
 
-| Error Type                                           | Status Code                                          | Content Type                                         |
-| ---------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- |
-| apierrors.PolarExceptionsAlreadyCanceledSubscription | 403                                                  | application/json                                     |
-| apierrors.PolarExceptionsResourceNotFound            | 404                                                  | application/json                                     |
-| apierrors.PolarExceptionsSubscriptionLocked          | 409                                                  | application/json                                     |
-| apierrors.HTTPValidationError                        | 422                                                  | application/json                                     |
-| apierrors.APIError                                   | 4XX, 5XX                                             | \*/\*                                                |
+| Error Type                            | Status Code                           | Content Type                          |
+| ------------------------------------- | ------------------------------------- | ------------------------------------- |
+| apierrors.AlreadyCanceledSubscription | 403                                   | application/json                      |
+| apierrors.ResourceNotFound            | 404                                   | application/json                      |
+| apierrors.SubscriptionLocked          | 409                                   | application/json                      |
+| apierrors.HTTPValidationError         | 422                                   | application/json                      |
+| apierrors.APIError                    | 4XX, 5XX                              | \*/\*                                 |

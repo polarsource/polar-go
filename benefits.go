@@ -765,7 +765,7 @@ func (s *Benefits) Get(ctx context.Context, id string, opts ...operations.Option
 				return nil, err
 			}
 
-			var out apierrors.PolarExceptionsResourceNotFound
+			var out apierrors.ResourceNotFound
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
@@ -1027,7 +1027,7 @@ func (s *Benefits) Update(ctx context.Context, id string, requestBody operations
 				return nil, err
 			}
 
-			var out apierrors.PolarExceptionsResourceNotFound
+			var out apierrors.ResourceNotFound
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
@@ -1265,7 +1265,7 @@ func (s *Benefits) Delete(ctx context.Context, id string, opts ...operations.Opt
 				return nil, err
 			}
 
-			var out apierrors.PolarExceptionsNotPermitted
+			var out apierrors.NotPermitted
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
@@ -1286,7 +1286,7 @@ func (s *Benefits) Delete(ctx context.Context, id string, opts ...operations.Opt
 				return nil, err
 			}
 
-			var out apierrors.PolarExceptionsResourceNotFound
+			var out apierrors.ResourceNotFound
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
@@ -1608,7 +1608,7 @@ func (s *Benefits) Grants(ctx context.Context, request operations.BenefitsGrants
 				return nil, err
 			}
 
-			var out apierrors.PolarExceptionsResourceNotFound
+			var out apierrors.ResourceNotFound
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}

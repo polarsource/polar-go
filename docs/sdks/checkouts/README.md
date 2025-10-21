@@ -200,11 +200,11 @@ func main() {
 
 ### Errors
 
-| Error Type                                | Status Code                               | Content Type                              |
-| ----------------------------------------- | ----------------------------------------- | ----------------------------------------- |
-| apierrors.PolarExceptionsResourceNotFound | 404                                       | application/json                          |
-| apierrors.HTTPValidationError             | 422                                       | application/json                          |
-| apierrors.APIError                        | 4XX, 5XX                                  | \*/\*                                     |
+| Error Type                    | Status Code                   | Content Type                  |
+| ----------------------------- | ----------------------------- | ----------------------------- |
+| apierrors.ResourceNotFound    | 404                           | application/json              |
+| apierrors.HTTPValidationError | 422                           | application/json              |
+| apierrors.APIError            | 4XX, 5XX                      | \*/\*                         |
 
 ## Update
 
@@ -262,12 +262,12 @@ func main() {
 
 ### Errors
 
-| Error Type                                | Status Code                               | Content Type                              |
-| ----------------------------------------- | ----------------------------------------- | ----------------------------------------- |
-| apierrors.CheckoutForbiddenError          | 403                                       | application/json                          |
-| apierrors.PolarExceptionsResourceNotFound | 404                                       | application/json                          |
-| apierrors.HTTPValidationError             | 422                                       | application/json                          |
-| apierrors.APIError                        | 4XX, 5XX                                  | \*/\*                                     |
+| Error Type                       | Status Code                      | Content Type                     |
+| -------------------------------- | -------------------------------- | -------------------------------- |
+| apierrors.CheckoutForbiddenError | 403                              | application/json                 |
+| apierrors.ResourceNotFound       | 404                              | application/json                 |
+| apierrors.HTTPValidationError    | 422                              | application/json                 |
+| apierrors.APIError               | 4XX, 5XX                         | \*/\*                            |
 
 ## ClientGet
 
@@ -314,12 +314,12 @@ func main() {
 
 ### Errors
 
-| Error Type                                | Status Code                               | Content Type                              |
-| ----------------------------------------- | ----------------------------------------- | ----------------------------------------- |
-| apierrors.PolarExceptionsResourceNotFound | 404                                       | application/json                          |
-| apierrors.ExpiredCheckoutError            | 410                                       | application/json                          |
-| apierrors.HTTPValidationError             | 422                                       | application/json                          |
-| apierrors.APIError                        | 4XX, 5XX                                  | \*/\*                                     |
+| Error Type                     | Status Code                    | Content Type                   |
+| ------------------------------ | ------------------------------ | ------------------------------ |
+| apierrors.ResourceNotFound     | 404                            | application/json               |
+| apierrors.ExpiredCheckoutError | 410                            | application/json               |
+| apierrors.HTTPValidationError  | 422                            | application/json               |
+| apierrors.APIError             | 4XX, 5XX                       | \*/\*                          |
 
 ## ClientUpdate
 
@@ -372,13 +372,13 @@ func main() {
 
 ### Errors
 
-| Error Type                                | Status Code                               | Content Type                              |
-| ----------------------------------------- | ----------------------------------------- | ----------------------------------------- |
-| apierrors.CheckoutForbiddenError          | 403                                       | application/json                          |
-| apierrors.PolarExceptionsResourceNotFound | 404                                       | application/json                          |
-| apierrors.ExpiredCheckoutError            | 410                                       | application/json                          |
-| apierrors.HTTPValidationError             | 422                                       | application/json                          |
-| apierrors.APIError                        | 4XX, 5XX                                  | \*/\*                                     |
+| Error Type                       | Status Code                      | Content Type                     |
+| -------------------------------- | -------------------------------- | -------------------------------- |
+| apierrors.CheckoutForbiddenError | 403                              | application/json                 |
+| apierrors.ResourceNotFound       | 404                              | application/json                 |
+| apierrors.ExpiredCheckoutError   | 410                              | application/json                 |
+| apierrors.HTTPValidationError    | 422                              | application/json                 |
+| apierrors.APIError               | 4XX, 5XX                         | \*/\*                            |
 
 ## ClientConfirm
 
@@ -436,11 +436,11 @@ func main() {
 
 ### Errors
 
-| Error Type                                | Status Code                               | Content Type                              |
-| ----------------------------------------- | ----------------------------------------- | ----------------------------------------- |
-| apierrors.PaymentError                    | 400                                       | application/json                          |
-| apierrors.CheckoutForbiddenError          | 403                                       | application/json                          |
-| apierrors.PolarExceptionsResourceNotFound | 404                                       | application/json                          |
-| apierrors.ExpiredCheckoutError            | 410                                       | application/json                          |
-| apierrors.HTTPValidationError             | 422                                       | application/json                          |
-| apierrors.APIError                        | 4XX, 5XX                                  | \*/\*                                     |
+| Error Type                       | Status Code                      | Content Type                     |
+| -------------------------------- | -------------------------------- | -------------------------------- |
+| apierrors.PaymentError           | 400                              | application/json                 |
+| apierrors.CheckoutForbiddenError | 403                              | application/json                 |
+| apierrors.ResourceNotFound       | 404                              | application/json                 |
+| apierrors.ExpiredCheckoutError   | 410                              | application/json                 |
+| apierrors.HTTPValidationError    | 422                              | application/json                 |
+| apierrors.APIError               | 4XX, 5XX                         | \*/\*                            |

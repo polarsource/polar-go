@@ -763,7 +763,7 @@ func (s *Discounts) Get(ctx context.Context, id string, opts ...operations.Optio
 				return nil, err
 			}
 
-			var out apierrors.PolarExceptionsResourceNotFound
+			var out apierrors.ResourceNotFound
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
@@ -1025,7 +1025,7 @@ func (s *Discounts) Update(ctx context.Context, id string, discountUpdate compon
 				return nil, err
 			}
 
-			var out apierrors.PolarExceptionsResourceNotFound
+			var out apierrors.ResourceNotFound
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
@@ -1259,7 +1259,7 @@ func (s *Discounts) Delete(ctx context.Context, id string, opts ...operations.Op
 				return nil, err
 			}
 
-			var out apierrors.PolarExceptionsResourceNotFound
+			var out apierrors.ResourceNotFound
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}

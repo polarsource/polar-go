@@ -5,15 +5,15 @@ Price of the selected product.
 
 ## Supported Types
 
-### LegacyRecurringProductPriceOutput
+### LegacyRecurringProductPrice
 
 ```go
-checkoutPublicConfirmedProductPrice := components.CreateCheckoutPublicConfirmedProductPriceLegacyRecurringProductPriceOutput(components.LegacyRecurringProductPriceOutput{/* values here */})
+checkoutPublicConfirmedProductPrice := components.CreateCheckoutPublicConfirmedProductPriceLegacyRecurringProductPrice(components.LegacyRecurringProductPrice{/* values here */})
 ```
 
-### ProductPriceOutput
+### ProductPrice
 
 ```go
-checkoutPublicConfirmedProductPrice := components.CreateCheckoutPublicConfirmedProductPriceProductPriceOutput(components.ProductPriceOutput{/* values here */})
+checkoutPublicConfirmedProductPrice := components.CreateCheckoutPublicConfirmedProductPriceProductPrice(components.ProductPrice{/* values here */})
 ```
 

@@ -119,48 +119,48 @@ func (u CheckoutLinkProductMetadata) MarshalJSON() ([]byte, error) {
 type CheckoutLinkProductPricesType string
 
 const (
-	CheckoutLinkProductPricesTypeLegacyRecurringProductPriceOutput CheckoutLinkProductPricesType = "LegacyRecurringProductPrice-Output"
-	CheckoutLinkProductPricesTypeProductPriceOutput                CheckoutLinkProductPricesType = "ProductPrice-Output"
+	CheckoutLinkProductPricesTypeLegacyRecurringProductPrice CheckoutLinkProductPricesType = "LegacyRecurringProductPrice"
+	CheckoutLinkProductPricesTypeProductPrice                CheckoutLinkProductPricesType = "ProductPrice"
 )
 
 type CheckoutLinkProductPrices struct {
-	LegacyRecurringProductPriceOutput *LegacyRecurringProductPriceOutput `queryParam:"inline,name=prices"`
-	ProductPriceOutput                *ProductPriceOutput                `queryParam:"inline,name=prices"`
+	LegacyRecurringProductPrice *LegacyRecurringProductPrice `queryParam:"inline,name=prices"`
+	ProductPrice                *ProductPrice                `queryParam:"inline,name=prices"`
 
 	Type CheckoutLinkProductPricesType
 }
 
-func CreateCheckoutLinkProductPricesLegacyRecurringProductPriceOutput(legacyRecurringProductPriceOutput LegacyRecurringProductPriceOutput) CheckoutLinkProductPrices {
-	typ := CheckoutLinkProductPricesTypeLegacyRecurringProductPriceOutput
+func CreateCheckoutLinkProductPricesLegacyRecurringProductPrice(legacyRecurringProductPrice LegacyRecurringProductPrice) CheckoutLinkProductPrices {
+	typ := CheckoutLinkProductPricesTypeLegacyRecurringProductPrice
 
 	return CheckoutLinkProductPrices{
-		LegacyRecurringProductPriceOutput: &legacyRecurringProductPriceOutput,
-		Type:                              typ,
+		LegacyRecurringProductPrice: &legacyRecurringProductPrice,
+		Type:                        typ,
 	}
 }
 
-func CreateCheckoutLinkProductPricesProductPriceOutput(productPriceOutput ProductPriceOutput) CheckoutLinkProductPrices {
-	typ := CheckoutLinkProductPricesTypeProductPriceOutput
+func CreateCheckoutLinkProductPricesProductPrice(productPrice ProductPrice) CheckoutLinkProductPrices {
+	typ := CheckoutLinkProductPricesTypeProductPrice
 
 	return CheckoutLinkProductPrices{
-		ProductPriceOutput: &productPriceOutput,
-		Type:               typ,
+		ProductPrice: &productPrice,
+		Type:         typ,
 	}
 }
 
 func (u *CheckoutLinkProductPrices) UnmarshalJSON(data []byte) error {
 
-	var legacyRecurringProductPriceOutput LegacyRecurringProductPriceOutput = LegacyRecurringProductPriceOutput{}
-	if err := utils.UnmarshalJSON(data, &legacyRecurringProductPriceOutput, "", true, nil); err == nil {
-		u.LegacyRecurringProductPriceOutput = &legacyRecurringProductPriceOutput
-		u.Type = CheckoutLinkProductPricesTypeLegacyRecurringProductPriceOutput
+	var legacyRecurringProductPrice LegacyRecurringProductPrice = LegacyRecurringProductPrice{}
+	if err := utils.UnmarshalJSON(data, &legacyRecurringProductPrice, "", true, nil); err == nil {
+		u.LegacyRecurringProductPrice = &legacyRecurringProductPrice
+		u.Type = CheckoutLinkProductPricesTypeLegacyRecurringProductPrice
 		return nil
 	}
 
-	var productPriceOutput ProductPriceOutput = ProductPriceOutput{}
-	if err := utils.UnmarshalJSON(data, &productPriceOutput, "", true, nil); err == nil {
-		u.ProductPriceOutput = &productPriceOutput
-		u.Type = CheckoutLinkProductPricesTypeProductPriceOutput
+	var productPrice ProductPrice = ProductPrice{}
+	if err := utils.UnmarshalJSON(data, &productPrice, "", true, nil); err == nil {
+		u.ProductPrice = &productPrice
+		u.Type = CheckoutLinkProductPricesTypeProductPrice
 		return nil
 	}
 
@@ -168,12 +168,12 @@ func (u *CheckoutLinkProductPrices) UnmarshalJSON(data []byte) error {
 }
 
 func (u CheckoutLinkProductPrices) MarshalJSON() ([]byte, error) {
-	if u.LegacyRecurringProductPriceOutput != nil {
-		return utils.MarshalJSON(u.LegacyRecurringProductPriceOutput, "", true)
+	if u.LegacyRecurringProductPrice != nil {
+		return utils.MarshalJSON(u.LegacyRecurringProductPrice, "", true)
 	}
 
-	if u.ProductPriceOutput != nil {
-		return utils.MarshalJSON(u.ProductPriceOutput, "", true)
+	if u.ProductPrice != nil {
+		return utils.MarshalJSON(u.ProductPrice, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type CheckoutLinkProductPrices: all fields are null")

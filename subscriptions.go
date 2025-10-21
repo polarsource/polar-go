@@ -769,7 +769,7 @@ func (s *Subscriptions) Get(ctx context.Context, id string, opts ...operations.O
 				return nil, err
 			}
 
-			var out apierrors.PolarExceptionsResourceNotFound
+			var out apierrors.ResourceNotFound
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
@@ -1031,7 +1031,7 @@ func (s *Subscriptions) Update(ctx context.Context, id string, subscriptionUpdat
 				return nil, err
 			}
 
-			var out apierrors.PolarExceptionsAlreadyCanceledSubscription
+			var out apierrors.AlreadyCanceledSubscription
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
@@ -1052,7 +1052,7 @@ func (s *Subscriptions) Update(ctx context.Context, id string, subscriptionUpdat
 				return nil, err
 			}
 
-			var out apierrors.PolarExceptionsResourceNotFound
+			var out apierrors.ResourceNotFound
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
@@ -1073,7 +1073,7 @@ func (s *Subscriptions) Update(ctx context.Context, id string, subscriptionUpdat
 				return nil, err
 			}
 
-			var out apierrors.PolarExceptionsSubscriptionLocked
+			var out apierrors.SubscriptionLocked
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
@@ -1327,7 +1327,7 @@ func (s *Subscriptions) Revoke(ctx context.Context, id string, opts ...operation
 				return nil, err
 			}
 
-			var out apierrors.PolarExceptionsAlreadyCanceledSubscription
+			var out apierrors.AlreadyCanceledSubscription
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
@@ -1348,7 +1348,7 @@ func (s *Subscriptions) Revoke(ctx context.Context, id string, opts ...operation
 				return nil, err
 			}
 
-			var out apierrors.PolarExceptionsResourceNotFound
+			var out apierrors.ResourceNotFound
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
@@ -1369,7 +1369,7 @@ func (s *Subscriptions) Revoke(ctx context.Context, id string, opts ...operation
 				return nil, err
 			}
 
-			var out apierrors.PolarExceptionsSubscriptionLocked
+			var out apierrors.SubscriptionLocked
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}

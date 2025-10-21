@@ -318,7 +318,7 @@ func (s *PolarLicenseKeys) List(ctx context.Context, security operations.Custome
 				return nil, err
 			}
 
-			var out apierrors.PolarExceptionsResourceNotFound
+			var out apierrors.ResourceNotFound
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
@@ -572,7 +572,7 @@ func (s *PolarLicenseKeys) Get(ctx context.Context, security operations.Customer
 				return nil, err
 			}
 
-			var out apierrors.PolarExceptionsResourceNotFound
+			var out apierrors.ResourceNotFound
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
@@ -828,7 +828,7 @@ func (s *PolarLicenseKeys) Validate(ctx context.Context, request components.Lice
 				return nil, err
 			}
 
-			var out apierrors.PolarExceptionsResourceNotFound
+			var out apierrors.ResourceNotFound
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
@@ -1084,7 +1084,7 @@ func (s *PolarLicenseKeys) Activate(ctx context.Context, request components.Lice
 				return nil, err
 			}
 
-			var out apierrors.PolarExceptionsNotPermitted
+			var out apierrors.NotPermitted
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
@@ -1105,7 +1105,7 @@ func (s *PolarLicenseKeys) Activate(ctx context.Context, request components.Lice
 				return nil, err
 			}
 
-			var out apierrors.PolarExceptionsResourceNotFound
+			var out apierrors.ResourceNotFound
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
@@ -1341,7 +1341,7 @@ func (s *PolarLicenseKeys) Deactivate(ctx context.Context, request components.Li
 				return nil, err
 			}
 
-			var out apierrors.PolarExceptionsResourceNotFound
+			var out apierrors.ResourceNotFound
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}

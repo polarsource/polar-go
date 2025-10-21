@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: e7f2de70-a9ae-48d3-92f6-da15e6733a27
 management:
-  docChecksum: de7ecdd703b773b4918fdbdffc8a7291
+  docChecksum: d98f0afb6456414d1ff72ca3b167e5fd
   docVersion: 0.1.0
   speakeasyVersion: 1.637.3
   generationVersion: 2.727.9
-  releaseVersion: 0.11.0
-  configChecksum: 701d57b1394d96034bc2f0990314c0b1
+  releaseVersion: 0.11.1
+  configChecksum: 9d5502f7ede1d1cb7c0857c955e8596f
   repoURL: https://github.com/polarsource/polar-go.git
   installationURL: https://github.com/polarsource/polar-go
 features:
@@ -42,30 +42,30 @@ generatedFiles:
   - .devcontainer/devcontainer.json
   - .devcontainer/setup.sh
   - .gitattributes
+  - /models/apierrors/alreadycanceledsubscription.go
   - /models/apierrors/checkoutforbiddenerror.go
   - /models/apierrors/customernotready.go
   - /models/apierrors/customerportalordersgenerateinvoice.go
   - /models/apierrors/expiredcheckouterror.go
   - /models/apierrors/httpvalidationerror.go
+  - /models/apierrors/invoicealreadyexists.go
+  - /models/apierrors/notpermitted.go
   - /models/apierrors/ordernoteligibleforretry.go
   - /models/apierrors/ordersgenerateinvoice.go
   - /models/apierrors/paymentalreadyinprogress.go
   - /models/apierrors/paymenterror.go
   - /models/apierrors/paymentmethodinusebyactivesubscription.go
-  - /models/apierrors/polarexceptionsalreadycanceledsubscription.go
-  - /models/apierrors/polarexceptionsinvoicealreadyexists.go
-  - /models/apierrors/polarexceptionsnotpermitted.go
-  - /models/apierrors/polarexceptionsresourcenotfound.go
-  - /models/apierrors/polarexceptionssubscriptionlocked.go
   - /models/apierrors/refundamounttoohigh.go
   - /models/apierrors/refundedalready.go
+  - /models/apierrors/resourcenotfound.go
+  - /models/apierrors/subscriptionlocked.go
   - /models/apierrors/unauthorized.go
   - /models/components/address.go
   - /models/components/addressinput.go
   - /models/components/aggregationfunction.go
   - /models/components/alreadyactivesubscriptionerror.go
+  - /models/components/attachedcustomfield.go
   - /models/components/attachedcustomfieldcreate.go
-  - /models/components/attachedcustomfieldoutput.go
   - /models/components/authorizationcodetokenrequest.go
   - /models/components/authorizeorganization.go
   - /models/components/authorizeresponseorganization.go
@@ -84,7 +84,7 @@ generatedFiles:
   - /models/components/benefitdiscord.go
   - /models/components/benefitdiscordcreate.go
   - /models/components/benefitdiscordcreateproperties.go
-  - /models/components/benefitdiscordpropertiesoutput.go
+  - /models/components/benefitdiscordproperties.go
   - /models/components/benefitdiscordsubscriber.go
   - /models/components/benefitdiscordsubscriberproperties.go
   - /models/components/benefitdiscordupdate.go
@@ -211,7 +211,7 @@ generatedFiles:
   - /models/components/customerpaymentmethodcreate.go
   - /models/components/customerpaymentmethodcreaterequiresactionresponse.go
   - /models/components/customerpaymentmethodcreateresponse.go
-  - /models/components/customerpaymentmethodcreatesucceededresponseoutput.go
+  - /models/components/customerpaymentmethodcreatesucceededresponse.go
   - /models/components/customerportalcustomer.go
   - /models/components/customerportalcustomerupdate.go
   - /models/components/customerportaloauthaccount.go
@@ -310,10 +310,10 @@ generatedFiles:
   - /models/components/httpmetadata.go
   - /models/components/introspecttokenrequest.go
   - /models/components/introspecttokenresponse.go
-  - /models/components/legacyrecurringproductpricecustomoutput.go
-  - /models/components/legacyrecurringproductpricefixedoutput.go
-  - /models/components/legacyrecurringproductpricefreeoutput.go
-  - /models/components/legacyrecurringproductpriceoutput.go
+  - /models/components/legacyrecurringproductprice.go
+  - /models/components/legacyrecurringproductpricecustom.go
+  - /models/components/legacyrecurringproductpricefixed.go
+  - /models/components/legacyrecurringproductpricefree.go
   - /models/components/licensekeyactivate.go
   - /models/components/licensekeyactivationbase.go
   - /models/components/licensekeyactivationread.go
@@ -363,14 +363,16 @@ generatedFiles:
   - /models/components/meterupdate.go
   - /models/components/metric.go
   - /models/components/metricperiod.go
+  - /models/components/metrics.go
   - /models/components/metricsintervallimit.go
   - /models/components/metricsintervalslimits.go
   - /models/components/metricslimits.go
-  - /models/components/metricsoutput.go
   - /models/components/metricsresponse.go
   - /models/components/metricstotals.go
   - /models/components/metrictype.go
+  - /models/components/missinginvoicebillingdetails.go
   - /models/components/notopencheckout.go
+  - /models/components/notpaidorder.go
   - /models/components/oauth2clientconfiguration.go
   - /models/components/oauth2clientconfigurationupdate.go
   - /models/components/oauth2clientpublic.go
@@ -406,8 +408,6 @@ generatedFiles:
   - /models/components/paymentprocessor.go
   - /models/components/paymentsortproperty.go
   - /models/components/paymentstatus.go
-  - /models/components/polarexceptionsmissinginvoicebillingdetails.go
-  - /models/components/polarexceptionsnotpaidorder.go
   - /models/components/product.go
   - /models/components/productbenefitsupdate.go
   - /models/components/productbillingtype.go
@@ -416,18 +416,18 @@ generatedFiles:
   - /models/components/productcreaterecurring.go
   - /models/components/productmediafilecreate.go
   - /models/components/productmediafileread.go
+  - /models/components/productprice.go
+  - /models/components/productpricecustom.go
   - /models/components/productpricecustomcreate.go
-  - /models/components/productpricecustomoutput.go
+  - /models/components/productpricefixed.go
   - /models/components/productpricefixedcreate.go
-  - /models/components/productpricefixedoutput.go
+  - /models/components/productpricefree.go
   - /models/components/productpricefreecreate.go
-  - /models/components/productpricefreeoutput.go
   - /models/components/productpricemeter.go
+  - /models/components/productpricemeteredunit.go
   - /models/components/productpricemeteredunitcreate.go
-  - /models/components/productpricemeteredunitoutput.go
-  - /models/components/productpriceoutput.go
+  - /models/components/productpriceseatbased.go
   - /models/components/productpriceseatbasedcreate.go
-  - /models/components/productpriceseatbasedoutput.go
   - /models/components/productpriceseattier.go
   - /models/components/productpriceseattiers.go
   - /models/components/productpricetype.go
@@ -703,23 +703,23 @@ generatedFiles:
   - customersessions.go
   - customfields.go
   - discounts.go
+  - docs/models/apierrors/alreadycanceledsubscription.md
   - docs/models/apierrors/checkoutforbiddenerror.md
   - docs/models/apierrors/customernotready.md
   - docs/models/apierrors/customerportalordersgenerateinvoiceresponse422customerportalordersgenerateinvoice.md
   - docs/models/apierrors/expiredcheckouterror.md
   - docs/models/apierrors/httpvalidationerror.md
+  - docs/models/apierrors/invoicealreadyexists.md
+  - docs/models/apierrors/notpermitted.md
   - docs/models/apierrors/ordernoteligibleforretry.md
   - docs/models/apierrors/ordersgenerateinvoiceresponse422ordersgenerateinvoice.md
   - docs/models/apierrors/paymentalreadyinprogress.md
   - docs/models/apierrors/paymenterror.md
   - docs/models/apierrors/paymentmethodinusebyactivesubscription.md
-  - docs/models/apierrors/polarexceptionsalreadycanceledsubscription.md
-  - docs/models/apierrors/polarexceptionsinvoicealreadyexists.md
-  - docs/models/apierrors/polarexceptionsnotpermitted.md
-  - docs/models/apierrors/polarexceptionsresourcenotfound.md
-  - docs/models/apierrors/polarexceptionssubscriptionlocked.md
   - docs/models/apierrors/refundamounttoohigh.md
   - docs/models/apierrors/refundedalready.md
+  - docs/models/apierrors/resourcenotfound.md
+  - docs/models/apierrors/subscriptionlocked.md
   - docs/models/apierrors/unauthorized.md
   - docs/models/components/activesubscriptions.md
   - docs/models/components/address.md
@@ -727,8 +727,8 @@ generatedFiles:
   - docs/models/components/aggregation.md
   - docs/models/components/aggregationfunction.md
   - docs/models/components/alreadyactivesubscriptionerror.md
+  - docs/models/components/attachedcustomfield.md
   - docs/models/components/attachedcustomfieldcreate.md
-  - docs/models/components/attachedcustomfieldoutput.md
   - docs/models/components/authorizationcodetokenrequest.md
   - docs/models/components/authorizeorganization.md
   - docs/models/components/authorizeresponseorganization.md
@@ -754,7 +754,7 @@ generatedFiles:
   - docs/models/components/benefitdiscordcreatemetadata.md
   - docs/models/components/benefitdiscordcreateproperties.md
   - docs/models/components/benefitdiscordmetadata.md
-  - docs/models/components/benefitdiscordpropertiesoutput.md
+  - docs/models/components/benefitdiscordproperties.md
   - docs/models/components/benefitdiscordsubscriber.md
   - docs/models/components/benefitdiscordsubscribermetadata.md
   - docs/models/components/benefitdiscordsubscriberproperties.md
@@ -877,6 +877,7 @@ generatedFiles:
   - docs/models/components/checkoutlinkupdatemetadata.md
   - docs/models/components/checkoutmetadata.md
   - docs/models/components/checkoutproduct.md
+  - docs/models/components/checkoutproductprice.md
   - docs/models/components/checkoutproductprices.md
   - docs/models/components/checkoutpublic.md
   - docs/models/components/checkoutpublicconfirmed.md
@@ -950,7 +951,7 @@ generatedFiles:
   - docs/models/components/customerpaymentmethodcreate.md
   - docs/models/components/customerpaymentmethodcreaterequiresactionresponse.md
   - docs/models/components/customerpaymentmethodcreateresponse.md
-  - docs/models/components/customerpaymentmethodcreatesucceededresponseoutput.md
+  - docs/models/components/customerpaymentmethodcreatesucceededresponse.md
   - docs/models/components/customerportalcustomer.md
   - docs/models/components/customerportalcustomertaxid.md
   - docs/models/components/customerportalcustomerupdate.md
@@ -1099,10 +1100,10 @@ generatedFiles:
   - docs/models/components/introspecttokenrequest.md
   - docs/models/components/introspecttokenrequesttokentypehint.md
   - docs/models/components/introspecttokenresponse.md
-  - docs/models/components/legacyrecurringproductpricecustomoutput.md
-  - docs/models/components/legacyrecurringproductpricefixedoutput.md
-  - docs/models/components/legacyrecurringproductpricefreeoutput.md
-  - docs/models/components/legacyrecurringproductpriceoutput.md
+  - docs/models/components/legacyrecurringproductprice.md
+  - docs/models/components/legacyrecurringproductpricecustom.md
+  - docs/models/components/legacyrecurringproductpricefixed.md
+  - docs/models/components/legacyrecurringproductpricefree.md
   - docs/models/components/licensekeyactivate.md
   - docs/models/components/licensekeyactivateconditions.md
   - docs/models/components/licensekeyactivatemeta.md
@@ -1166,10 +1167,10 @@ generatedFiles:
   - docs/models/components/meterupdatemetadata.md
   - docs/models/components/metric.md
   - docs/models/components/metricperiod.md
+  - docs/models/components/metrics.md
   - docs/models/components/metricsintervallimit.md
   - docs/models/components/metricsintervalslimits.md
   - docs/models/components/metricslimits.md
-  - docs/models/components/metricsoutput.md
   - docs/models/components/metricsresponse.md
   - docs/models/components/metricstotals.md
   - docs/models/components/metricstotalsactivesubscriptions.md
@@ -1204,6 +1205,7 @@ generatedFiles:
   - docs/models/components/metricstotalsrevenue.md
   - docs/models/components/metricstotalssucceededcheckouts.md
   - docs/models/components/metrictype.md
+  - docs/models/components/missinginvoicebillingdetails.md
   - docs/models/components/monthlyrecurringrevenue.md
   - docs/models/components/netaverageordervalue.md
   - docs/models/components/netcumulativerevenue.md
@@ -1212,6 +1214,7 @@ generatedFiles:
   - docs/models/components/newsubscriptionsnetrevenue.md
   - docs/models/components/newsubscriptionsrevenue.md
   - docs/models/components/notopencheckout.md
+  - docs/models/components/notpaidorder.md
   - docs/models/components/oauth2clientconfiguration.md
   - docs/models/components/oauth2clientconfigurationupdate.md
   - docs/models/components/oauth2clientconfigurationupdategranttypes.md
@@ -1261,8 +1264,6 @@ generatedFiles:
   - docs/models/components/paymentsortproperty.md
   - docs/models/components/paymentstatus.md
   - docs/models/components/permission.md
-  - docs/models/components/polarexceptionsmissinginvoicebillingdetails.md
-  - docs/models/components/polarexceptionsnotpaidorder.md
   - docs/models/components/prices.md
   - docs/models/components/product.md
   - docs/models/components/productbenefitsupdate.md
@@ -1278,18 +1279,17 @@ generatedFiles:
   - docs/models/components/productmediafileread.md
   - docs/models/components/productmetadata.md
   - docs/models/components/productprice.md
+  - docs/models/components/productpricecustom.md
   - docs/models/components/productpricecustomcreate.md
-  - docs/models/components/productpricecustomoutput.md
+  - docs/models/components/productpricefixed.md
   - docs/models/components/productpricefixedcreate.md
-  - docs/models/components/productpricefixedoutput.md
+  - docs/models/components/productpricefree.md
   - docs/models/components/productpricefreecreate.md
-  - docs/models/components/productpricefreeoutput.md
   - docs/models/components/productpricemeter.md
+  - docs/models/components/productpricemeteredunit.md
   - docs/models/components/productpricemeteredunitcreate.md
-  - docs/models/components/productpricemeteredunitoutput.md
-  - docs/models/components/productpriceoutput.md
+  - docs/models/components/productpriceseatbased.md
   - docs/models/components/productpriceseatbasedcreate.md
-  - docs/models/components/productpriceseatbasedoutput.md
   - docs/models/components/productpriceseattier.md
   - docs/models/components/productpriceseattiers.md
   - docs/models/components/productpricetype.md
@@ -3847,4 +3847,4 @@ examples:
           application/json: {"expires_at": "2024-05-11T10:26:41.943Z", "return_url": "https://affectionate-ectoderm.com/"}
 examplesVersion: 1.0.2
 generatedTests: {}
-releaseNotes: "## Go SDK Changes Detected:\n* `Polar.EndpointcheckoutCreatedPost()`: \n  *  `request.Request.Data` **Changed** **Breaking** :warning:\n* `Polar.EndpointcheckoutUpdatedPost()`: \n  *  `request.Request.Data` **Changed** **Breaking** :warning:\n* `Polar.EndpointorderCreatedPost()`: \n  *  `request.Request.Data.PlatformFeeAmount` **Added** **Breaking** :warning:\n* `Polar.EndpointorderUpdatedPost()`: \n  *  `request.Request.Data.PlatformFeeAmount` **Added** **Breaking** :warning:\n* `Polar.EndpointorderPaidPost()`: \n  *  `request.Request.Data.PlatformFeeAmount` **Added** **Breaking** :warning:\n* `Polar.EndpointorderRefundedPost()`: \n  *  `request.Request.Data.PlatformFeeAmount` **Added** **Breaking** :warning:\n* `Polar.EndpointsubscriptionCreatedPost()`: \n  *  `request.Request.Data` **Changed** **Breaking** :warning:\n* `Polar.EndpointsubscriptionUpdatedPost()`: \n  *  `request.Request.Data` **Changed** **Breaking** :warning:\n* `Polar.EndpointsubscriptionActivePost()`: \n  *  `request.Request.Data` **Changed** **Breaking** :warning:\n* `Polar.EndpointsubscriptionCanceledPost()`: \n  *  `request.Request.Data` **Changed** **Breaking** :warning:\n* `Polar.EndpointsubscriptionUncanceledPost()`: \n  *  `request.Request.Data` **Changed** **Breaking** :warning:\n* `Polar.EndpointsubscriptionRevokedPost()`: \n  *  `request.Request.Data` **Changed** **Breaking** :warning:\n* `Polar.EndpointproductCreatedPost()`: \n  *  `request.Request.Data.Prices.[]` **Changed** **Breaking** :warning:\n* `Polar.EndpointproductUpdatedPost()`: \n  *  `request.Request.Data.Prices.[]` **Changed** **Breaking** :warning:\n* `Polar.EndpointorganizationUpdatedPost()`: \n  *  `request.Request.Data.CustomerEmailSettings` **Added** **Breaking** :warning:\n* `Polar.Organizations.List()`:  `response.Items.[].CustomerEmailSettings` **Added**\n* `Polar.Organizations.Create()`: \n  *  `request.Request.CustomerEmailSettings` **Added**\n  *  `response.CustomerEmailSettings` **Added**\n* `Polar.Organizations.Get()`:  `response.CustomerEmailSettings` **Added**\n* `Polar.Organizations.Update()`: \n  *  `request.OrganizationUpdate.CustomerEmailSettings` **Added**\n  *  `response.CustomerEmailSettings` **Added**\n* `Polar.Subscriptions.List()`:  `response.Items.[]` **Changed**\n* `Polar.Subscriptions.Get()`:  `response` **Changed**\n* `Polar.Subscriptions.Revoke()`:  `response` **Changed**\n* `Polar.Subscriptions.Update()`:  `response` **Changed**\n* `Polar.Oauth2.Clients.Create()`: \n  *  `request.Request.DefaultSubType` **Added**\n* `Polar.Oauth2.Clients.Update()`: \n  *  `request.OAuth2ClientConfigurationUpdate.DefaultSubType` **Added**\n* `Polar.Products.List()`:  `response.Items.[].Prices.[]` **Changed**\n* `Polar.Products.Create()`:  `response.Prices.[]` **Changed**\n* `Polar.Products.Get()`:  `response.Prices.[]` **Changed**\n* `Polar.Products.Update()`:  `response.Prices.[]` **Changed**\n* `Polar.Products.UpdateBenefits()`:  `response.Prices.[]` **Changed**\n* `Polar.Orders.List()`:  `response.Items.[].PlatformFeeAmount` **Added**\n* `Polar.Orders.Get()`:  `response.PlatformFeeAmount` **Added**\n* `Polar.Orders.Update()`:  `response.PlatformFeeAmount` **Added**\n* `Polar.Orders.GenerateInvoice()`:  `error` **Changed**\n* `Polar.Checkouts.List()`:  `response.Items.[]` **Changed**\n* `Polar.Checkouts.Create()`:  `response` **Changed**\n* `Polar.Checkouts.Get()`:  `response` **Changed**\n* `Polar.Checkouts.Update()`:  `response` **Changed**\n* `Polar.Checkouts.ClientGet()`:  `response` **Changed**\n* `Polar.Checkouts.ClientUpdate()`:  `response` **Changed**\n* `Polar.Checkouts.ClientConfirm()`:  `response` **Changed**\n* `Polar.Checkout-Links.List()`:  `response.Items.[].Products.[].Prices.[]` **Changed**\n* `Polar.Checkout-Links.Create()`:  `response.Products.[].Prices.[]` **Changed**\n* `Polar.Checkout-Links.Get()`:  `response.Products.[].Prices.[]` **Changed**\n* `Polar.Checkout-Links.Update()`:  `response.Products.[].Prices.[]` **Changed**\n* `Polar.CustomerPortal.Benefit-Grants.List()`:  `response.Items.[].[customerBenefitGrantDiscord].Benefit.Organization.CustomerEmailSettings` **Added**\n* `Polar.CustomerPortal.Benefit-Grants.Get()`:  `response.[customerBenefitGrantDownloadables].Benefit.Organization.CustomerEmailSettings` **Added**\n* `Polar.CustomerPortal.Benefit-Grants.Update()`:  `response.[customerBenefitGrantLicenseKeys].Benefit.Organization.CustomerEmailSettings` **Added**\n* `Polar.CustomerPortal.Seats.ListClaimedSubscriptions()`:  `response.[]` **Changed**\n* `Polar.CustomerPortal.Orders.List()`:  `response.Items.[].Product` **Changed**\n* `Polar.CustomerPortal.Orders.Get()`:  `response.Product` **Changed**\n* `Polar.CustomerPortal.Orders.Update()`:  `response.Product` **Changed**\n* `Polar.CustomerPortal.Orders.GenerateInvoice()`:  `error` **Changed**\n* `Polar.CustomerPortal.Organizations.Get()`:  `response` **Changed**\n* `Polar.CustomerPortal.Subscriptions.List()`:  `response.Items.[]` **Changed**\n* `Polar.CustomerPortal.Subscriptions.Get()`:  `response` **Changed**\n* `Polar.CustomerPortal.Subscriptions.Cancel()`:  `response` **Changed**\n* `Polar.CustomerPortal.Subscriptions.Update()`:  `response` **Changed**\n"
+releaseNotes: "## Go SDK Changes Detected:\n* `Polar.EndpointcheckoutCreatedPost()`: \n  *  `request.Request.Data` **Changed** **Breaking** :warning:\n* `Polar.EndpointcheckoutUpdatedPost()`: \n  *  `request.Request.Data` **Changed** **Breaking** :warning:\n* `Polar.EndpointsubscriptionCreatedPost()`: \n  *  `request.Request.Data` **Changed** **Breaking** :warning:\n* `Polar.EndpointsubscriptionUpdatedPost()`: \n  *  `request.Request.Data` **Changed** **Breaking** :warning:\n* `Polar.EndpointsubscriptionActivePost()`: \n  *  `request.Request.Data` **Changed** **Breaking** :warning:\n* `Polar.EndpointsubscriptionCanceledPost()`: \n  *  `request.Request.Data` **Changed** **Breaking** :warning:\n* `Polar.EndpointsubscriptionUncanceledPost()`: \n  *  `request.Request.Data` **Changed** **Breaking** :warning:\n* `Polar.EndpointsubscriptionRevokedPost()`: \n  *  `request.Request.Data` **Changed** **Breaking** :warning:\n* `Polar.EndpointproductCreatedPost()`: \n  *  `request.Request.Data.Prices.[]` **Changed** **Breaking** :warning:\n* `Polar.EndpointproductUpdatedPost()`: \n  *  `request.Request.Data.Prices.[]` **Changed** **Breaking** :warning:\n* `Polar.Subscriptions.List()`:  `response.Items.[]` **Changed**\n* `Polar.Subscriptions.Get()`:  `response` **Changed**\n* `Polar.Subscriptions.Revoke()`:  `response` **Changed**\n* `Polar.Subscriptions.Update()`:  `response` **Changed**\n* `Polar.Products.List()`:  `response.Items.[].Prices.[]` **Changed**\n* `Polar.Products.Create()`:  `response.Prices.[]` **Changed**\n* `Polar.Products.Get()`:  `response.Prices.[]` **Changed**\n* `Polar.Products.Update()`:  `response.Prices.[]` **Changed**\n* `Polar.Products.UpdateBenefits()`:  `response.Prices.[]` **Changed**\n* `Polar.Orders.GenerateInvoice()`:  `error` **Changed**\n* `Polar.Checkouts.List()`:  `response.Items.[]` **Changed**\n* `Polar.Checkouts.Create()`:  `response` **Changed**\n* `Polar.Checkouts.Get()`:  `response` **Changed**\n* `Polar.Checkouts.Update()`:  `response` **Changed**\n* `Polar.Checkouts.ClientGet()`:  `response` **Changed**\n* `Polar.Checkouts.ClientUpdate()`:  `response` **Changed**\n* `Polar.Checkouts.ClientConfirm()`:  `response` **Changed**\n* `Polar.Checkout-Links.List()`:  `response.Items.[].Products.[].Prices.[]` **Changed**\n* `Polar.Checkout-Links.Create()`:  `response.Products.[].Prices.[]` **Changed**\n* `Polar.Checkout-Links.Get()`:  `response.Products.[].Prices.[]` **Changed**\n* `Polar.Checkout-Links.Update()`:  `response.Products.[].Prices.[]` **Changed**\n* `Polar.CustomerPortal.Seats.ListClaimedSubscriptions()`:  `response.[]` **Changed**\n* `Polar.CustomerPortal.Orders.List()`:  `response.Items.[].Product.Prices.[]` **Changed**\n* `Polar.CustomerPortal.Orders.Get()`:  `response.Product.Prices.[]` **Changed**\n* `Polar.CustomerPortal.Orders.Update()`:  `response.Product.Prices.[]` **Changed**\n* `Polar.CustomerPortal.Orders.GenerateInvoice()`:  `error` **Changed**\n* `Polar.CustomerPortal.Organizations.Get()`:  `response.Products.[].Prices.[]` **Changed**\n* `Polar.CustomerPortal.Subscriptions.List()`:  `response.Items.[]` **Changed**\n* `Polar.CustomerPortal.Subscriptions.Get()`:  `response` **Changed**\n* `Polar.CustomerPortal.Subscriptions.Cancel()`:  `response` **Changed**\n* `Polar.CustomerPortal.Subscriptions.Update()`:  `response` **Changed**\n"

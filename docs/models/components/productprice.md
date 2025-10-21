@@ -1,19 +1,35 @@
 # ProductPrice
 
-Price of the selected product.
-
 
 ## Supported Types
 
-### LegacyRecurringProductPriceOutput
+### ProductPriceCustom
 
 ```go
-productPrice := components.CreateProductPriceLegacyRecurringProductPriceOutput(components.LegacyRecurringProductPriceOutput{/* values here */})
+productPrice := components.CreateProductPriceCustom(components.ProductPriceCustom{/* values here */})
 ```
 
-### ProductPriceOutput
+### ProductPriceFixed
 
 ```go
-productPrice := components.CreateProductPriceProductPriceOutput(components.ProductPriceOutput{/* values here */})
+productPrice := components.CreateProductPriceFixed(components.ProductPriceFixed{/* values here */})
+```
+
+### ProductPriceFree
+
+```go
+productPrice := components.CreateProductPriceFree(components.ProductPriceFree{/* values here */})
+```
+
+### ProductPriceMeteredUnit
+
+```go
+productPrice := components.CreateProductPriceMeteredUnit(components.ProductPriceMeteredUnit{/* values here */})
+```
+
+### ProductPriceSeatBased
+
+```go
+productPrice := components.CreateProductPriceSeatBased(components.ProductPriceSeatBased{/* values here */})
 ```
 

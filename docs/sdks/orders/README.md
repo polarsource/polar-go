@@ -133,11 +133,11 @@ func main() {
 
 ### Errors
 
-| Error Type                                | Status Code                               | Content Type                              |
-| ----------------------------------------- | ----------------------------------------- | ----------------------------------------- |
-| apierrors.PolarExceptionsResourceNotFound | 404                                       | application/json                          |
-| apierrors.HTTPValidationError             | 422                                       | application/json                          |
-| apierrors.APIError                        | 4XX, 5XX                                  | \*/\*                                     |
+| Error Type                    | Status Code                   | Content Type                  |
+| ----------------------------- | ----------------------------- | ----------------------------- |
+| apierrors.ResourceNotFound    | 404                           | application/json              |
+| apierrors.HTTPValidationError | 422                           | application/json              |
+| apierrors.APIError            | 4XX, 5XX                      | \*/\*                         |
 
 ## Update
 
@@ -196,11 +196,11 @@ func main() {
 
 ### Errors
 
-| Error Type                                | Status Code                               | Content Type                              |
-| ----------------------------------------- | ----------------------------------------- | ----------------------------------------- |
-| apierrors.PolarExceptionsResourceNotFound | 404                                       | application/json                          |
-| apierrors.HTTPValidationError             | 422                                       | application/json                          |
-| apierrors.APIError                        | 4XX, 5XX                                  | \*/\*                                     |
+| Error Type                    | Status Code                   | Content Type                  |
+| ----------------------------- | ----------------------------- | ----------------------------- |
+| apierrors.ResourceNotFound    | 404                           | application/json              |
+| apierrors.HTTPValidationError | 422                           | application/json              |
+| apierrors.APIError            | 4XX, 5XX                      | \*/\*                         |
 
 ## GenerateInvoice
 
@@ -254,7 +254,7 @@ func main() {
 
 | Error Type                                                      | Status Code                                                     | Content Type                                                    |
 | --------------------------------------------------------------- | --------------------------------------------------------------- | --------------------------------------------------------------- |
-| apierrors.PolarExceptionsInvoiceAlreadyExists                   | 409                                                             | application/json                                                |
+| apierrors.InvoiceAlreadyExists                                  | 409                                                             | application/json                                                |
 | apierrors.OrdersGenerateInvoiceResponse422OrdersGenerateInvoice | 422                                                             | application/json                                                |
 | apierrors.APIError                                              | 4XX, 5XX                                                        | \*/\*                                                           |
 
@@ -308,8 +308,8 @@ func main() {
 
 ### Errors
 
-| Error Type                                | Status Code                               | Content Type                              |
-| ----------------------------------------- | ----------------------------------------- | ----------------------------------------- |
-| apierrors.PolarExceptionsResourceNotFound | 404                                       | application/json                          |
-| apierrors.HTTPValidationError             | 422                                       | application/json                          |
-| apierrors.APIError                        | 4XX, 5XX                                  | \*/\*                                     |
+| Error Type                    | Status Code                   | Content Type                  |
+| ----------------------------- | ----------------------------- | ----------------------------- |
+| apierrors.ResourceNotFound    | 404                           | application/json              |
+| apierrors.HTTPValidationError | 422                           | application/json              |
+| apierrors.APIError            | 4XX, 5XX                      | \*/\*                         |

@@ -119,48 +119,48 @@ func (u ProductMetadata) MarshalJSON() ([]byte, error) {
 type PricesType string
 
 const (
-	PricesTypeLegacyRecurringProductPriceOutput PricesType = "LegacyRecurringProductPrice-Output"
-	PricesTypeProductPriceOutput                PricesType = "ProductPrice-Output"
+	PricesTypeLegacyRecurringProductPrice PricesType = "LegacyRecurringProductPrice"
+	PricesTypeProductPrice                PricesType = "ProductPrice"
 )
 
 type Prices struct {
-	LegacyRecurringProductPriceOutput *LegacyRecurringProductPriceOutput `queryParam:"inline,name=prices"`
-	ProductPriceOutput                *ProductPriceOutput                `queryParam:"inline,name=prices"`
+	LegacyRecurringProductPrice *LegacyRecurringProductPrice `queryParam:"inline,name=prices"`
+	ProductPrice                *ProductPrice                `queryParam:"inline,name=prices"`
 
 	Type PricesType
 }
 
-func CreatePricesLegacyRecurringProductPriceOutput(legacyRecurringProductPriceOutput LegacyRecurringProductPriceOutput) Prices {
-	typ := PricesTypeLegacyRecurringProductPriceOutput
+func CreatePricesLegacyRecurringProductPrice(legacyRecurringProductPrice LegacyRecurringProductPrice) Prices {
+	typ := PricesTypeLegacyRecurringProductPrice
 
 	return Prices{
-		LegacyRecurringProductPriceOutput: &legacyRecurringProductPriceOutput,
-		Type:                              typ,
+		LegacyRecurringProductPrice: &legacyRecurringProductPrice,
+		Type:                        typ,
 	}
 }
 
-func CreatePricesProductPriceOutput(productPriceOutput ProductPriceOutput) Prices {
-	typ := PricesTypeProductPriceOutput
+func CreatePricesProductPrice(productPrice ProductPrice) Prices {
+	typ := PricesTypeProductPrice
 
 	return Prices{
-		ProductPriceOutput: &productPriceOutput,
-		Type:               typ,
+		ProductPrice: &productPrice,
+		Type:         typ,
 	}
 }
 
 func (u *Prices) UnmarshalJSON(data []byte) error {
 
-	var legacyRecurringProductPriceOutput LegacyRecurringProductPriceOutput = LegacyRecurringProductPriceOutput{}
-	if err := utils.UnmarshalJSON(data, &legacyRecurringProductPriceOutput, "", true, nil); err == nil {
-		u.LegacyRecurringProductPriceOutput = &legacyRecurringProductPriceOutput
-		u.Type = PricesTypeLegacyRecurringProductPriceOutput
+	var legacyRecurringProductPrice LegacyRecurringProductPrice = LegacyRecurringProductPrice{}
+	if err := utils.UnmarshalJSON(data, &legacyRecurringProductPrice, "", true, nil); err == nil {
+		u.LegacyRecurringProductPrice = &legacyRecurringProductPrice
+		u.Type = PricesTypeLegacyRecurringProductPrice
 		return nil
 	}
 
-	var productPriceOutput ProductPriceOutput = ProductPriceOutput{}
-	if err := utils.UnmarshalJSON(data, &productPriceOutput, "", true, nil); err == nil {
-		u.ProductPriceOutput = &productPriceOutput
-		u.Type = PricesTypeProductPriceOutput
+	var productPrice ProductPrice = ProductPrice{}
+	if err := utils.UnmarshalJSON(data, &productPrice, "", true, nil); err == nil {
+		u.ProductPrice = &productPrice
+		u.Type = PricesTypeProductPrice
 		return nil
 	}
 
@@ -168,12 +168,12 @@ func (u *Prices) UnmarshalJSON(data []byte) error {
 }
 
 func (u Prices) MarshalJSON() ([]byte, error) {
-	if u.LegacyRecurringProductPriceOutput != nil {
-		return utils.MarshalJSON(u.LegacyRecurringProductPriceOutput, "", true)
+	if u.LegacyRecurringProductPrice != nil {
+		return utils.MarshalJSON(u.LegacyRecurringProductPrice, "", true)
 	}
 
-	if u.ProductPriceOutput != nil {
-		return utils.MarshalJSON(u.ProductPriceOutput, "", true)
+	if u.ProductPrice != nil {
+		return utils.MarshalJSON(u.ProductPrice, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type Prices: all fields are null")
@@ -211,7 +211,7 @@ type Product struct {
 	// List of medias associated to the product.
 	Medias []ProductMediaFileRead `json:"medias"`
 	// List of custom fields attached to the product.
-	AttachedCustomFields []AttachedCustomFieldOutput `json:"attached_custom_fields"`
+	AttachedCustomFields []AttachedCustomField `json:"attached_custom_fields"`
 }
 
 func (p Product) MarshalJSON() ([]byte, error) {
@@ -330,9 +330,9 @@ func (p *Product) GetMedias() []ProductMediaFileRead {
 	return p.Medias
 }
 
-func (p *Product) GetAttachedCustomFields() []AttachedCustomFieldOutput {
+func (p *Product) GetAttachedCustomFields() []AttachedCustomField {
 	if p == nil {
-		return []AttachedCustomFieldOutput{}
+		return []AttachedCustomField{}
 	}
 	return p.AttachedCustomFields
 }

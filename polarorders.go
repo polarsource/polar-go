@@ -531,7 +531,7 @@ func (s *PolarOrders) Get(ctx context.Context, security operations.CustomerPorta
 				return nil, err
 			}
 
-			var out apierrors.PolarExceptionsResourceNotFound
+			var out apierrors.ResourceNotFound
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
@@ -793,7 +793,7 @@ func (s *PolarOrders) Update(ctx context.Context, security operations.CustomerPo
 				return nil, err
 			}
 
-			var out apierrors.PolarExceptionsResourceNotFound
+			var out apierrors.ResourceNotFound
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
@@ -1047,7 +1047,7 @@ func (s *PolarOrders) GenerateInvoice(ctx context.Context, security operations.C
 				return nil, err
 			}
 
-			var out apierrors.PolarExceptionsInvoiceAlreadyExists
+			var out apierrors.InvoiceAlreadyExists
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
@@ -1301,7 +1301,7 @@ func (s *PolarOrders) Invoice(ctx context.Context, security operations.CustomerP
 				return nil, err
 			}
 
-			var out apierrors.PolarExceptionsResourceNotFound
+			var out apierrors.ResourceNotFound
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
@@ -1555,7 +1555,7 @@ func (s *PolarOrders) GetPaymentStatus(ctx context.Context, security operations.
 				return nil, err
 			}
 
-			var out apierrors.PolarExceptionsResourceNotFound
+			var out apierrors.ResourceNotFound
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
@@ -1817,7 +1817,7 @@ func (s *PolarOrders) ConfirmRetryPayment(ctx context.Context, security operatio
 				return nil, err
 			}
 
-			var out apierrors.PolarExceptionsResourceNotFound
+			var out apierrors.ResourceNotFound
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}

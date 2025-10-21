@@ -3,15 +3,15 @@
 
 ## Supported Types
 
-### LegacyRecurringProductPriceOutput
+### LegacyRecurringProductPrice
 
 ```go
-prices := components.CreatePricesLegacyRecurringProductPriceOutput(components.LegacyRecurringProductPriceOutput{/* values here */})
+prices := components.CreatePricesLegacyRecurringProductPrice(components.LegacyRecurringProductPrice{/* values here */})
 ```
 
-### ProductPriceOutput
+### ProductPrice
 
 ```go
-prices := components.CreatePricesProductPriceOutput(components.ProductPriceOutput{/* values here */})
+prices := components.CreatePricesProductPrice(components.ProductPrice{/* values here */})
 ```
 

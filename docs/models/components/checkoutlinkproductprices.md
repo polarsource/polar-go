@@ -3,15 +3,15 @@
 
 ## Supported Types
 
-### LegacyRecurringProductPriceOutput
+### LegacyRecurringProductPrice
 
 ```go
-checkoutLinkProductPrices := components.CreateCheckoutLinkProductPricesLegacyRecurringProductPriceOutput(components.LegacyRecurringProductPriceOutput{/* values here */})
+checkoutLinkProductPrices := components.CreateCheckoutLinkProductPricesLegacyRecurringProductPrice(components.LegacyRecurringProductPrice{/* values here */})
 ```
 
-### ProductPriceOutput
+### ProductPrice
 
 ```go
-checkoutLinkProductPrices := components.CreateCheckoutLinkProductPricesProductPriceOutput(components.ProductPriceOutput{/* values here */})
+checkoutLinkProductPrices := components.CreateCheckoutLinkProductPricesProductPrice(components.ProductPrice{/* values here */})
 ```
 

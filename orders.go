@@ -532,7 +532,7 @@ func (s *Orders) Get(ctx context.Context, id string, opts ...operations.Option) 
 				return nil, err
 			}
 
-			var out apierrors.PolarExceptionsResourceNotFound
+			var out apierrors.ResourceNotFound
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
@@ -794,7 +794,7 @@ func (s *Orders) Update(ctx context.Context, id string, orderUpdate components.O
 				return nil, err
 			}
 
-			var out apierrors.PolarExceptionsResourceNotFound
+			var out apierrors.ResourceNotFound
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
@@ -1048,7 +1048,7 @@ func (s *Orders) GenerateInvoice(ctx context.Context, id string, opts ...operati
 				return nil, err
 			}
 
-			var out apierrors.PolarExceptionsInvoiceAlreadyExists
+			var out apierrors.InvoiceAlreadyExists
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
@@ -1302,7 +1302,7 @@ func (s *Orders) Invoice(ctx context.Context, id string, opts ...operations.Opti
 				return nil, err
 			}
 
-			var out apierrors.PolarExceptionsResourceNotFound
+			var out apierrors.ResourceNotFound
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
