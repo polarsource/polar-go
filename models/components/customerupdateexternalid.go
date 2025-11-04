@@ -192,8 +192,7 @@ type CustomerUpdateExternalID struct {
 	// You can store up to **50 key-value pairs**.
 	Metadata map[string]CustomerUpdateExternalIDMetadata `json:"metadata,omitempty"`
 	// The email address of the customer. This must be unique within the organization.
-	Email *string `json:"email,omitempty"`
-	// The name of the customer.
+	Email          *string                          `json:"email,omitempty"`
 	Name           *string                          `json:"name,omitempty"`
 	BillingAddress *AddressInput                    `json:"billing_address,omitempty"`
 	TaxID          []*CustomerUpdateExternalIDTaxID `json:"tax_id,omitempty"`

@@ -27,3 +27,15 @@ eventMetadataInput := components.CreateEventMetadataInputNumber(float64{/* value
 eventMetadataInput := components.CreateEventMetadataInputBoolean(bool{/* values here */})
 ```
 
+### CostMetadataInput
+
+```go
+eventMetadataInput := components.CreateEventMetadataInputCostMetadataInput(components.CostMetadataInput{/* values here */})
+```
+
+### LLMMetadata
+
+```go
+eventMetadataInput := components.CreateEventMetadataInputLLMMetadata(components.LLMMetadata{/* values here */})
+```
+

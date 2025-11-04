@@ -39,21 +39,30 @@ func MarshalJSON(v interface{}, tag reflect.StructTag, topLevel bool) ([]byte, e
 			fieldName := field.Name
 
 			omitEmpty := false
+			omitZero := false
 			jsonTag := field.Tag.Get("json")
 			if jsonTag != "" {
 				for _, tag := range strings.Split(jsonTag, ",") {
 					if tag == "omitempty" {
 						omitEmpty = true
+					} else if tag == "omitzero" {
+						omitZero = true
 					} else {
 						fieldName = tag
 					}
 				}
 			}
 
-			if isNil(field.Type, fieldVal) && field.Tag.Get("const") == "" {
-				if omitEmpty {
+			if (omitEmpty || omitZero) && field.Tag.Get("const") == "" {
+				// Both omitempty and omitzero skip zero values (including nil)
+				if isNil(field.Type, fieldVal) {
 					continue
 				}
+
+				if omitZero && fieldVal.IsZero() {
+					continue
+				}
+
 			}
 
 			if !field.IsExported() && field.Tag.Get("const") == "" {
@@ -154,7 +163,7 @@ func UnmarshalJSON(b []byte, v interface{}, tag reflect.StructTag, topLevel bool
 			jsonTag := field.Tag.Get("json")
 			if jsonTag != "" {
 				for _, tag := range strings.Split(jsonTag, ",") {
-					if tag != "omitempty" {
+					if tag != "omitempty" && tag != "omitzero" {
 						fieldName = tag
 					}
 				}
@@ -635,4 +644,216 @@ func isModelType(typ reflect.Type) bool {
 	}
 
 	return false
+}
+
+// CalculateJSONSize returns the byte size of the JSON representation of a value.
+// This is used to determine which union type variant has the most data.
+func CalculateJSONSize(v interface{}) int {
+	data, err := json.Marshal(v)
+	if err != nil {
+		return 0
+	}
+	return len(data)
+}
+
+// UnionCandidate represents a candidate type during union deserialization
+type UnionCandidate struct {
+	FieldCount int
+	Size       int
+	Type       any // The union type enum value
+	Value      any // The unmarshaled value
+}
+
+// CountFields recursively counts the number of valid (non-nil, non-zero) fields set in a value.
+// This is used as the primary discriminator for union types, with JSON size as a tiebreaker.
+func CountFields(v interface{}) int {
+	if v == nil {
+		return 0
+	}
+
+	typ := reflect.TypeOf(v)
+	val := reflect.ValueOf(v)
+
+	// Dereference pointers
+	for typ.Kind() == reflect.Ptr {
+		if val.IsNil() {
+			return 0
+		}
+		typ = typ.Elem()
+		val = val.Elem()
+	}
+
+	return countFieldsRecursive(typ, val)
+}
+
+// PickBestCandidate selects the best union type candidate using a multi-stage filtering approach:
+// 1. If multiple candidates, filter by field count (keep only those with max field count)
+// 2. If still multiple, filter by JSON size (keep only those with max size)
+// 3. Return the first remaining candidate
+func PickBestCandidate(candidates []UnionCandidate) *UnionCandidate {
+	if len(candidates) == 0 {
+		return nil
+	}
+
+	if len(candidates) == 1 {
+		return &candidates[0]
+	}
+
+	// Filter by field count if we have multiple candidates
+	if len(candidates) > 1 {
+		maxFieldCount := -1
+		for i := range candidates {
+			candidates[i].FieldCount = CountFields(candidates[i].Value)
+			if candidates[i].FieldCount > maxFieldCount {
+				maxFieldCount = candidates[i].FieldCount
+			}
+		}
+
+		// Keep only candidates with maximum field count
+		filtered := make([]UnionCandidate, 0, len(candidates))
+		for _, c := range candidates {
+			if c.FieldCount == maxFieldCount {
+				filtered = append(filtered, c)
+			}
+		}
+		candidates = filtered
+	}
+
+	if len(candidates) == 1 {
+		return &candidates[0]
+	}
+
+	// Filter by JSON size if we still have multiple candidates
+	if len(candidates) > 1 {
+		maxSize := -1
+		for i := range candidates {
+			candidates[i].Size = CalculateJSONSize(candidates[i].Value)
+			if candidates[i].Size > maxSize {
+				maxSize = candidates[i].Size
+			}
+		}
+
+		// Keep only candidates with maximum size
+		filtered := make([]UnionCandidate, 0, len(candidates))
+		for _, c := range candidates {
+			if c.Size == maxSize {
+				filtered = append(filtered, c)
+			}
+		}
+		candidates = filtered
+	}
+
+	// Pick the first remaining candidate
+	return &candidates[0]
+}
+
+func countFieldsRecursive(typ reflect.Type, val reflect.Value) int {
+	count := 0
+
+	switch typ.Kind() {
+	case reflect.Struct:
+		// Handle special types
+		switch typ {
+		case reflect.TypeOf(time.Time{}):
+			if !val.Interface().(time.Time).IsZero() {
+				return 1
+			}
+			return 0
+		case reflect.TypeOf(big.Int{}):
+			b := val.Interface().(big.Int)
+			if b.Sign() != 0 {
+				return 1
+			}
+			return 0
+		case reflect.TypeOf(types.Date{}):
+			// Date is always counted if it exists
+			return 1
+		}
+
+		// For regular structs, count non-zero fields
+		for i := 0; i < typ.NumField(); i++ {
+			field := typ.Field(i)
+			fieldVal := val.Field(i)
+
+			// Skip unexported fields and const fields
+			if !field.IsExported() || field.Tag.Get("const") != "" {
+				continue
+			}
+
+			// Skip fields tagged with json:"-"
+			jsonTag := field.Tag.Get("json")
+			if jsonTag == "-" {
+				continue
+			}
+
+			fieldTyp := field.Type
+			// Dereference pointer types for the field
+			for fieldTyp.Kind() == reflect.Ptr {
+				if fieldVal.IsNil() {
+					break
+				}
+				fieldTyp = fieldTyp.Elem()
+				fieldVal = fieldVal.Elem()
+			}
+
+			if !isNil(field.Type, val.Field(i)) {
+				count += countFieldsRecursive(fieldTyp, fieldVal)
+			}
+		}
+
+	case reflect.Slice, reflect.Array:
+		if val.IsNil() || val.Len() == 0 {
+			return 0
+		}
+		// Count each array/slice element
+		for i := 0; i < val.Len(); i++ {
+			itemVal := val.Index(i)
+			itemTyp := itemVal.Type()
+
+			// Dereference pointer types
+			for itemTyp.Kind() == reflect.Ptr {
+				if itemVal.IsNil() {
+					break
+				}
+				itemTyp = itemTyp.Elem()
+				itemVal = itemVal.Elem()
+			}
+
+			if !isNil(itemTyp, itemVal) {
+				count += countFieldsRecursive(itemTyp, itemVal)
+			}
+		}
+
+	case reflect.String:
+		if val.String() != "" {
+			count = 1
+		}
+
+	case reflect.Bool:
+		// Bools always count as a field (even if false)
+		count = 1
+
+	case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64:
+		if val.Int() != 0 {
+			count = 1
+		}
+
+	case reflect.Uint, reflect.Uint8, reflect.Uint16, reflect.Uint32, reflect.Uint64:
+		if val.Uint() != 0 {
+			count = 1
+		}
+
+	case reflect.Float32, reflect.Float64:
+		if val.Float() != 0 {
+			count = 1
+		}
+
+	default:
+		// For any other type, if it's not zero, count it as 1
+		if !val.IsZero() {
+			count = 1
+		}
+	}
+
+	return count
 }

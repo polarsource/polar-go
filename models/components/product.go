@@ -195,8 +195,10 @@ type Product struct {
 	Name string `json:"name"`
 	// The description of the product.
 	Description *string `json:"description"`
-	// The recurring interval of the product. If `None`, the product is a one-time purchase.Note that the `day` and `week` values are for internal Polar staff use only.
+	// The recurring interval of the product. If `None`, the product is a one-time purchase.
 	RecurringInterval *SubscriptionRecurringInterval `json:"recurring_interval"`
+	// Number of interval units of the subscription. If this is set to 1 the charge will happen every interval (e.g. every month), if set to 2 it will be every other month, and so on. None for one-time products.
+	RecurringIntervalCount *int64 `json:"recurring_interval_count"`
 	// Whether the product is a subscription.
 	IsRecurring bool `json:"is_recurring"`
 	// Whether the product is archived and no longer available.
@@ -279,6 +281,13 @@ func (p *Product) GetRecurringInterval() *SubscriptionRecurringInterval {
 		return nil
 	}
 	return p.RecurringInterval
+}
+
+func (p *Product) GetRecurringIntervalCount() *int64 {
+	if p == nil {
+		return nil
+	}
+	return p.RecurringIntervalCount
 }
 
 func (p *Product) GetIsRecurring() bool {

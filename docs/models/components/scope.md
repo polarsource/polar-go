@@ -39,8 +39,12 @@
 | `ScopeSubscriptionsWrite`          | subscriptions:write                |
 | `ScopeCustomersRead`               | customers:read                     |
 | `ScopeCustomersWrite`              | customers:write                    |
+| `ScopeWalletsRead`                 | wallets:read                       |
+| `ScopeWalletsWrite`                | wallets:write                      |
 | `ScopeCustomerMetersRead`          | customer_meters:read               |
 | `ScopeCustomerSessionsWrite`       | customer_sessions:write            |
+| `ScopeCustomerSeatsRead`           | customer_seats:read                |
+| `ScopeCustomerSeatsWrite`          | customer_seats:write               |
 | `ScopeOrdersRead`                  | orders:read                        |
 | `ScopeOrdersWrite`                 | orders:write                       |
 | `ScopeRefundsRead`                 | refunds:read                       |

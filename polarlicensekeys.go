@@ -34,12 +34,11 @@ func newPolarLicenseKeys(rootSDK *Polar, sdkConfig config.SDKConfiguration, hook
 
 // List License Keys
 // **Scopes**: `customer_portal:read` `customer_portal:write`
-func (s *PolarLicenseKeys) List(ctx context.Context, security operations.CustomerPortalLicenseKeysListSecurity, organizationID *operations.CustomerPortalLicenseKeysListQueryParamOrganizationIDFilter, benefitID *string, page *int64, limit *int64, opts ...operations.Option) (*operations.CustomerPortalLicenseKeysListResponse, error) {
+func (s *PolarLicenseKeys) List(ctx context.Context, security operations.CustomerPortalLicenseKeysListSecurity, benefitID *string, page *int64, limit *int64, opts ...operations.Option) (*operations.CustomerPortalLicenseKeysListResponse, error) {
 	request := operations.CustomerPortalLicenseKeysListRequest{
-		OrganizationID: organizationID,
-		BenefitID:      benefitID,
-		Page:           page,
-		Limit:          limit,
+		BenefitID: benefitID,
+		Page:      page,
+		Limit:     limit,
 	}
 
 	o := operations.Options{}
@@ -259,7 +258,6 @@ func (s *PolarLicenseKeys) List(ctx context.Context, security operations.Custome
 		return s.List(
 			ctx,
 			security,
-			organizationID,
 			benefitID,
 			&nP,
 			limit,

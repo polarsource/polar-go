@@ -11,6 +11,10 @@ type OrganizationFeatureSettings struct {
 	IssueFundingEnabled *bool `default:"false" json:"issue_funding_enabled"`
 	// If this organization has seat-based pricing enabled
 	SeatBasedPricingEnabled *bool `default:"false" json:"seat_based_pricing_enabled"`
+	// If this organization has RevOps enabled
+	RevopsEnabled *bool `default:"false" json:"revops_enabled"`
+	// If this organization has Wallets enabled
+	WalletsEnabled *bool `default:"false" json:"wallets_enabled"`
 }
 
 func (o OrganizationFeatureSettings) MarshalJSON() ([]byte, error) {
@@ -36,4 +40,18 @@ func (o *OrganizationFeatureSettings) GetSeatBasedPricingEnabled() *bool {
 		return nil
 	}
 	return o.SeatBasedPricingEnabled
+}
+
+func (o *OrganizationFeatureSettings) GetRevopsEnabled() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.RevopsEnabled
+}
+
+func (o *OrganizationFeatureSettings) GetWalletsEnabled() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.WalletsEnabled
 }

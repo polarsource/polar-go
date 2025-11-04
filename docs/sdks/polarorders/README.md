@@ -38,11 +38,7 @@ func main() {
 
     s := polargo.New()
 
-    res, err := s.CustomerPortal.Orders.List(ctx, operations.CustomerPortalOrdersListRequest{
-        OrganizationID: polargo.Pointer(operations.CreateCustomerPortalOrdersListQueryParamOrganizationIDFilterStr(
-            "1dbfc517-0bbf-4301-9ba8-555ca42b9737",
-        )),
-    }, operations.CustomerPortalOrdersListSecurity{
+    res, err := s.CustomerPortal.Orders.List(ctx, operations.CustomerPortalOrdersListRequest{}, operations.CustomerPortalOrdersListSecurity{
         CustomerSession: os.Getenv("POLAR_CUSTOMER_SESSION"),
     })
     if err != nil {
@@ -263,7 +259,6 @@ func main() {
 
 | Error Type                                                                                  | Status Code                                                                                 | Content Type                                                                                |
 | ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- |
-| apierrors.InvoiceAlreadyExists                                                              | 409                                                                                         | application/json                                                                            |
 | apierrors.CustomerPortalOrdersGenerateInvoiceResponse422CustomerPortalOrdersGenerateInvoice | 422                                                                                         | application/json                                                                            |
 | apierrors.APIError                                                                          | 4XX, 5XX                                                                                    | \*/\*                                                                                       |
 

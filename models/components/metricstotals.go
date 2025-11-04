@@ -323,6 +323,132 @@ func (u MetricsTotalsNetCumulativeRevenue) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type MetricsTotalsNetCumulativeRevenue: all fields are null")
 }
 
+type MetricsTotalsCostsType string
+
+const (
+	MetricsTotalsCostsTypeInteger MetricsTotalsCostsType = "integer"
+	MetricsTotalsCostsTypeNumber  MetricsTotalsCostsType = "number"
+)
+
+type MetricsTotalsCosts struct {
+	Integer *int64   `queryParam:"inline,name=Costs"`
+	Number  *float64 `queryParam:"inline,name=Costs"`
+
+	Type MetricsTotalsCostsType
+}
+
+func CreateMetricsTotalsCostsInteger(integer int64) MetricsTotalsCosts {
+	typ := MetricsTotalsCostsTypeInteger
+
+	return MetricsTotalsCosts{
+		Integer: &integer,
+		Type:    typ,
+	}
+}
+
+func CreateMetricsTotalsCostsNumber(number float64) MetricsTotalsCosts {
+	typ := MetricsTotalsCostsTypeNumber
+
+	return MetricsTotalsCosts{
+		Number: &number,
+		Type:   typ,
+	}
+}
+
+func (u *MetricsTotalsCosts) UnmarshalJSON(data []byte) error {
+
+	var integer int64 = int64(0)
+	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
+		u.Integer = &integer
+		u.Type = MetricsTotalsCostsTypeInteger
+		return nil
+	}
+
+	var number float64 = float64(0)
+	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
+		u.Number = &number
+		u.Type = MetricsTotalsCostsTypeNumber
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for MetricsTotalsCosts", string(data))
+}
+
+func (u MetricsTotalsCosts) MarshalJSON() ([]byte, error) {
+	if u.Integer != nil {
+		return utils.MarshalJSON(u.Integer, "", true)
+	}
+
+	if u.Number != nil {
+		return utils.MarshalJSON(u.Number, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type MetricsTotalsCosts: all fields are null")
+}
+
+type MetricsTotalsCumulativeCostsType string
+
+const (
+	MetricsTotalsCumulativeCostsTypeInteger MetricsTotalsCumulativeCostsType = "integer"
+	MetricsTotalsCumulativeCostsTypeNumber  MetricsTotalsCumulativeCostsType = "number"
+)
+
+type MetricsTotalsCumulativeCosts struct {
+	Integer *int64   `queryParam:"inline,name=Cumulative_Costs"`
+	Number  *float64 `queryParam:"inline,name=Cumulative_Costs"`
+
+	Type MetricsTotalsCumulativeCostsType
+}
+
+func CreateMetricsTotalsCumulativeCostsInteger(integer int64) MetricsTotalsCumulativeCosts {
+	typ := MetricsTotalsCumulativeCostsTypeInteger
+
+	return MetricsTotalsCumulativeCosts{
+		Integer: &integer,
+		Type:    typ,
+	}
+}
+
+func CreateMetricsTotalsCumulativeCostsNumber(number float64) MetricsTotalsCumulativeCosts {
+	typ := MetricsTotalsCumulativeCostsTypeNumber
+
+	return MetricsTotalsCumulativeCosts{
+		Number: &number,
+		Type:   typ,
+	}
+}
+
+func (u *MetricsTotalsCumulativeCosts) UnmarshalJSON(data []byte) error {
+
+	var integer int64 = int64(0)
+	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
+		u.Integer = &integer
+		u.Type = MetricsTotalsCumulativeCostsTypeInteger
+		return nil
+	}
+
+	var number float64 = float64(0)
+	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
+		u.Number = &number
+		u.Type = MetricsTotalsCumulativeCostsTypeNumber
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for MetricsTotalsCumulativeCosts", string(data))
+}
+
+func (u MetricsTotalsCumulativeCosts) MarshalJSON() ([]byte, error) {
+	if u.Integer != nil {
+		return utils.MarshalJSON(u.Integer, "", true)
+	}
+
+	if u.Number != nil {
+		return utils.MarshalJSON(u.Number, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type MetricsTotalsCumulativeCosts: all fields are null")
+}
+
 type MetricsTotalsAverageOrderValueType string
 
 const (
@@ -447,6 +573,195 @@ func (u MetricsTotalsNetAverageOrderValue) MarshalJSON() ([]byte, error) {
 	}
 
 	return nil, errors.New("could not marshal union type MetricsTotalsNetAverageOrderValue: all fields are null")
+}
+
+type MetricsTotalsAverageRevenuePerUserType string
+
+const (
+	MetricsTotalsAverageRevenuePerUserTypeInteger MetricsTotalsAverageRevenuePerUserType = "integer"
+	MetricsTotalsAverageRevenuePerUserTypeNumber  MetricsTotalsAverageRevenuePerUserType = "number"
+)
+
+type MetricsTotalsAverageRevenuePerUser struct {
+	Integer *int64   `queryParam:"inline,name=Average_Revenue_Per_User"`
+	Number  *float64 `queryParam:"inline,name=Average_Revenue_Per_User"`
+
+	Type MetricsTotalsAverageRevenuePerUserType
+}
+
+func CreateMetricsTotalsAverageRevenuePerUserInteger(integer int64) MetricsTotalsAverageRevenuePerUser {
+	typ := MetricsTotalsAverageRevenuePerUserTypeInteger
+
+	return MetricsTotalsAverageRevenuePerUser{
+		Integer: &integer,
+		Type:    typ,
+	}
+}
+
+func CreateMetricsTotalsAverageRevenuePerUserNumber(number float64) MetricsTotalsAverageRevenuePerUser {
+	typ := MetricsTotalsAverageRevenuePerUserTypeNumber
+
+	return MetricsTotalsAverageRevenuePerUser{
+		Number: &number,
+		Type:   typ,
+	}
+}
+
+func (u *MetricsTotalsAverageRevenuePerUser) UnmarshalJSON(data []byte) error {
+
+	var integer int64 = int64(0)
+	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
+		u.Integer = &integer
+		u.Type = MetricsTotalsAverageRevenuePerUserTypeInteger
+		return nil
+	}
+
+	var number float64 = float64(0)
+	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
+		u.Number = &number
+		u.Type = MetricsTotalsAverageRevenuePerUserTypeNumber
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for MetricsTotalsAverageRevenuePerUser", string(data))
+}
+
+func (u MetricsTotalsAverageRevenuePerUser) MarshalJSON() ([]byte, error) {
+	if u.Integer != nil {
+		return utils.MarshalJSON(u.Integer, "", true)
+	}
+
+	if u.Number != nil {
+		return utils.MarshalJSON(u.Number, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type MetricsTotalsAverageRevenuePerUser: all fields are null")
+}
+
+type MetricsTotalsCostPerUserType string
+
+const (
+	MetricsTotalsCostPerUserTypeInteger MetricsTotalsCostPerUserType = "integer"
+	MetricsTotalsCostPerUserTypeNumber  MetricsTotalsCostPerUserType = "number"
+)
+
+type MetricsTotalsCostPerUser struct {
+	Integer *int64   `queryParam:"inline,name=Cost_Per_User"`
+	Number  *float64 `queryParam:"inline,name=Cost_Per_User"`
+
+	Type MetricsTotalsCostPerUserType
+}
+
+func CreateMetricsTotalsCostPerUserInteger(integer int64) MetricsTotalsCostPerUser {
+	typ := MetricsTotalsCostPerUserTypeInteger
+
+	return MetricsTotalsCostPerUser{
+		Integer: &integer,
+		Type:    typ,
+	}
+}
+
+func CreateMetricsTotalsCostPerUserNumber(number float64) MetricsTotalsCostPerUser {
+	typ := MetricsTotalsCostPerUserTypeNumber
+
+	return MetricsTotalsCostPerUser{
+		Number: &number,
+		Type:   typ,
+	}
+}
+
+func (u *MetricsTotalsCostPerUser) UnmarshalJSON(data []byte) error {
+
+	var integer int64 = int64(0)
+	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
+		u.Integer = &integer
+		u.Type = MetricsTotalsCostPerUserTypeInteger
+		return nil
+	}
+
+	var number float64 = float64(0)
+	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
+		u.Number = &number
+		u.Type = MetricsTotalsCostPerUserTypeNumber
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for MetricsTotalsCostPerUser", string(data))
+}
+
+func (u MetricsTotalsCostPerUser) MarshalJSON() ([]byte, error) {
+	if u.Integer != nil {
+		return utils.MarshalJSON(u.Integer, "", true)
+	}
+
+	if u.Number != nil {
+		return utils.MarshalJSON(u.Number, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type MetricsTotalsCostPerUser: all fields are null")
+}
+
+type MetricsTotalsActiveUserByEventType string
+
+const (
+	MetricsTotalsActiveUserByEventTypeInteger MetricsTotalsActiveUserByEventType = "integer"
+	MetricsTotalsActiveUserByEventTypeNumber  MetricsTotalsActiveUserByEventType = "number"
+)
+
+type MetricsTotalsActiveUserByEvent struct {
+	Integer *int64   `queryParam:"inline,name=Active_User_By_Event"`
+	Number  *float64 `queryParam:"inline,name=Active_User_By_Event"`
+
+	Type MetricsTotalsActiveUserByEventType
+}
+
+func CreateMetricsTotalsActiveUserByEventInteger(integer int64) MetricsTotalsActiveUserByEvent {
+	typ := MetricsTotalsActiveUserByEventTypeInteger
+
+	return MetricsTotalsActiveUserByEvent{
+		Integer: &integer,
+		Type:    typ,
+	}
+}
+
+func CreateMetricsTotalsActiveUserByEventNumber(number float64) MetricsTotalsActiveUserByEvent {
+	typ := MetricsTotalsActiveUserByEventTypeNumber
+
+	return MetricsTotalsActiveUserByEvent{
+		Number: &number,
+		Type:   typ,
+	}
+}
+
+func (u *MetricsTotalsActiveUserByEvent) UnmarshalJSON(data []byte) error {
+
+	var integer int64 = int64(0)
+	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
+		u.Integer = &integer
+		u.Type = MetricsTotalsActiveUserByEventTypeInteger
+		return nil
+	}
+
+	var number float64 = float64(0)
+	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
+		u.Number = &number
+		u.Type = MetricsTotalsActiveUserByEventTypeNumber
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for MetricsTotalsActiveUserByEvent", string(data))
+}
+
+func (u MetricsTotalsActiveUserByEvent) MarshalJSON() ([]byte, error) {
+	if u.Integer != nil {
+		return utils.MarshalJSON(u.Integer, "", true)
+	}
+
+	if u.Number != nil {
+		return utils.MarshalJSON(u.Number, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type MetricsTotalsActiveUserByEvent: all fields are null")
 }
 
 type MetricsTotalsOneTimeProductsType string
@@ -1961,14 +2276,271 @@ func (u MetricsTotalsCanceledSubscriptionsOther) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type MetricsTotalsCanceledSubscriptionsOther: all fields are null")
 }
 
+type MetricsTotalsChurnRateType string
+
+const (
+	MetricsTotalsChurnRateTypeInteger MetricsTotalsChurnRateType = "integer"
+	MetricsTotalsChurnRateTypeNumber  MetricsTotalsChurnRateType = "number"
+)
+
+type MetricsTotalsChurnRate struct {
+	Integer *int64   `queryParam:"inline,name=Churn_Rate"`
+	Number  *float64 `queryParam:"inline,name=Churn_Rate"`
+
+	Type MetricsTotalsChurnRateType
+}
+
+func CreateMetricsTotalsChurnRateInteger(integer int64) MetricsTotalsChurnRate {
+	typ := MetricsTotalsChurnRateTypeInteger
+
+	return MetricsTotalsChurnRate{
+		Integer: &integer,
+		Type:    typ,
+	}
+}
+
+func CreateMetricsTotalsChurnRateNumber(number float64) MetricsTotalsChurnRate {
+	typ := MetricsTotalsChurnRateTypeNumber
+
+	return MetricsTotalsChurnRate{
+		Number: &number,
+		Type:   typ,
+	}
+}
+
+func (u *MetricsTotalsChurnRate) UnmarshalJSON(data []byte) error {
+
+	var integer int64 = int64(0)
+	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
+		u.Integer = &integer
+		u.Type = MetricsTotalsChurnRateTypeInteger
+		return nil
+	}
+
+	var number float64 = float64(0)
+	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
+		u.Number = &number
+		u.Type = MetricsTotalsChurnRateTypeNumber
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for MetricsTotalsChurnRate", string(data))
+}
+
+func (u MetricsTotalsChurnRate) MarshalJSON() ([]byte, error) {
+	if u.Integer != nil {
+		return utils.MarshalJSON(u.Integer, "", true)
+	}
+
+	if u.Number != nil {
+		return utils.MarshalJSON(u.Number, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type MetricsTotalsChurnRate: all fields are null")
+}
+
+type MetricsTotalsGrossMarginType string
+
+const (
+	MetricsTotalsGrossMarginTypeInteger MetricsTotalsGrossMarginType = "integer"
+	MetricsTotalsGrossMarginTypeNumber  MetricsTotalsGrossMarginType = "number"
+)
+
+type MetricsTotalsGrossMargin struct {
+	Integer *int64   `queryParam:"inline,name=Gross_Margin"`
+	Number  *float64 `queryParam:"inline,name=Gross_Margin"`
+
+	Type MetricsTotalsGrossMarginType
+}
+
+func CreateMetricsTotalsGrossMarginInteger(integer int64) MetricsTotalsGrossMargin {
+	typ := MetricsTotalsGrossMarginTypeInteger
+
+	return MetricsTotalsGrossMargin{
+		Integer: &integer,
+		Type:    typ,
+	}
+}
+
+func CreateMetricsTotalsGrossMarginNumber(number float64) MetricsTotalsGrossMargin {
+	typ := MetricsTotalsGrossMarginTypeNumber
+
+	return MetricsTotalsGrossMargin{
+		Number: &number,
+		Type:   typ,
+	}
+}
+
+func (u *MetricsTotalsGrossMargin) UnmarshalJSON(data []byte) error {
+
+	var integer int64 = int64(0)
+	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
+		u.Integer = &integer
+		u.Type = MetricsTotalsGrossMarginTypeInteger
+		return nil
+	}
+
+	var number float64 = float64(0)
+	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
+		u.Number = &number
+		u.Type = MetricsTotalsGrossMarginTypeNumber
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for MetricsTotalsGrossMargin", string(data))
+}
+
+func (u MetricsTotalsGrossMargin) MarshalJSON() ([]byte, error) {
+	if u.Integer != nil {
+		return utils.MarshalJSON(u.Integer, "", true)
+	}
+
+	if u.Number != nil {
+		return utils.MarshalJSON(u.Number, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type MetricsTotalsGrossMargin: all fields are null")
+}
+
+type MetricsTotalsGrossMarginPercentageType string
+
+const (
+	MetricsTotalsGrossMarginPercentageTypeInteger MetricsTotalsGrossMarginPercentageType = "integer"
+	MetricsTotalsGrossMarginPercentageTypeNumber  MetricsTotalsGrossMarginPercentageType = "number"
+)
+
+type MetricsTotalsGrossMarginPercentage struct {
+	Integer *int64   `queryParam:"inline,name=Gross_Margin_Percentage"`
+	Number  *float64 `queryParam:"inline,name=Gross_Margin_Percentage"`
+
+	Type MetricsTotalsGrossMarginPercentageType
+}
+
+func CreateMetricsTotalsGrossMarginPercentageInteger(integer int64) MetricsTotalsGrossMarginPercentage {
+	typ := MetricsTotalsGrossMarginPercentageTypeInteger
+
+	return MetricsTotalsGrossMarginPercentage{
+		Integer: &integer,
+		Type:    typ,
+	}
+}
+
+func CreateMetricsTotalsGrossMarginPercentageNumber(number float64) MetricsTotalsGrossMarginPercentage {
+	typ := MetricsTotalsGrossMarginPercentageTypeNumber
+
+	return MetricsTotalsGrossMarginPercentage{
+		Number: &number,
+		Type:   typ,
+	}
+}
+
+func (u *MetricsTotalsGrossMarginPercentage) UnmarshalJSON(data []byte) error {
+
+	var integer int64 = int64(0)
+	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
+		u.Integer = &integer
+		u.Type = MetricsTotalsGrossMarginPercentageTypeInteger
+		return nil
+	}
+
+	var number float64 = float64(0)
+	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
+		u.Number = &number
+		u.Type = MetricsTotalsGrossMarginPercentageTypeNumber
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for MetricsTotalsGrossMarginPercentage", string(data))
+}
+
+func (u MetricsTotalsGrossMarginPercentage) MarshalJSON() ([]byte, error) {
+	if u.Integer != nil {
+		return utils.MarshalJSON(u.Integer, "", true)
+	}
+
+	if u.Number != nil {
+		return utils.MarshalJSON(u.Number, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type MetricsTotalsGrossMarginPercentage: all fields are null")
+}
+
+type MetricsTotalsCashflowType string
+
+const (
+	MetricsTotalsCashflowTypeInteger MetricsTotalsCashflowType = "integer"
+	MetricsTotalsCashflowTypeNumber  MetricsTotalsCashflowType = "number"
+)
+
+type MetricsTotalsCashflow struct {
+	Integer *int64   `queryParam:"inline,name=Cashflow"`
+	Number  *float64 `queryParam:"inline,name=Cashflow"`
+
+	Type MetricsTotalsCashflowType
+}
+
+func CreateMetricsTotalsCashflowInteger(integer int64) MetricsTotalsCashflow {
+	typ := MetricsTotalsCashflowTypeInteger
+
+	return MetricsTotalsCashflow{
+		Integer: &integer,
+		Type:    typ,
+	}
+}
+
+func CreateMetricsTotalsCashflowNumber(number float64) MetricsTotalsCashflow {
+	typ := MetricsTotalsCashflowTypeNumber
+
+	return MetricsTotalsCashflow{
+		Number: &number,
+		Type:   typ,
+	}
+}
+
+func (u *MetricsTotalsCashflow) UnmarshalJSON(data []byte) error {
+
+	var integer int64 = int64(0)
+	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
+		u.Integer = &integer
+		u.Type = MetricsTotalsCashflowTypeInteger
+		return nil
+	}
+
+	var number float64 = float64(0)
+	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
+		u.Number = &number
+		u.Type = MetricsTotalsCashflowTypeNumber
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for MetricsTotalsCashflow", string(data))
+}
+
+func (u MetricsTotalsCashflow) MarshalJSON() ([]byte, error) {
+	if u.Integer != nil {
+		return utils.MarshalJSON(u.Integer, "", true)
+	}
+
+	if u.Number != nil {
+		return utils.MarshalJSON(u.Number, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type MetricsTotalsCashflow: all fields are null")
+}
+
 type MetricsTotals struct {
 	Orders                               MetricsTotalsOrders                               `json:"orders"`
 	Revenue                              MetricsTotalsRevenue                              `json:"revenue"`
 	NetRevenue                           MetricsTotalsNetRevenue                           `json:"net_revenue"`
 	CumulativeRevenue                    MetricsTotalsCumulativeRevenue                    `json:"cumulative_revenue"`
 	NetCumulativeRevenue                 MetricsTotalsNetCumulativeRevenue                 `json:"net_cumulative_revenue"`
+	Costs                                MetricsTotalsCosts                                `json:"costs"`
+	CumulativeCosts                      MetricsTotalsCumulativeCosts                      `json:"cumulative_costs"`
 	AverageOrderValue                    MetricsTotalsAverageOrderValue                    `json:"average_order_value"`
 	NetAverageOrderValue                 MetricsTotalsNetAverageOrderValue                 `json:"net_average_order_value"`
+	AverageRevenuePerUser                MetricsTotalsAverageRevenuePerUser                `json:"average_revenue_per_user"`
+	CostPerUser                          MetricsTotalsCostPerUser                          `json:"cost_per_user"`
+	ActiveUserByEvent                    MetricsTotalsActiveUserByEvent                    `json:"active_user_by_event"`
 	OneTimeProducts                      MetricsTotalsOneTimeProducts                      `json:"one_time_products"`
 	OneTimeProductsRevenue               MetricsTotalsOneTimeProductsRevenue               `json:"one_time_products_revenue"`
 	OneTimeProductsNetRevenue            MetricsTotalsOneTimeProductsNetRevenue            `json:"one_time_products_net_revenue"`
@@ -1993,6 +2565,10 @@ type MetricsTotals struct {
 	CanceledSubscriptionsTooExpensive    MetricsTotalsCanceledSubscriptionsTooExpensive    `json:"canceled_subscriptions_too_expensive"`
 	CanceledSubscriptionsUnused          MetricsTotalsCanceledSubscriptionsUnused          `json:"canceled_subscriptions_unused"`
 	CanceledSubscriptionsOther           MetricsTotalsCanceledSubscriptionsOther           `json:"canceled_subscriptions_other"`
+	ChurnRate                            MetricsTotalsChurnRate                            `json:"churn_rate"`
+	GrossMargin                          MetricsTotalsGrossMargin                          `json:"gross_margin"`
+	GrossMarginPercentage                MetricsTotalsGrossMarginPercentage                `json:"gross_margin_percentage"`
+	Cashflow                             MetricsTotalsCashflow                             `json:"cashflow"`
 }
 
 func (m *MetricsTotals) GetOrders() MetricsTotalsOrders {
@@ -2030,6 +2606,20 @@ func (m *MetricsTotals) GetNetCumulativeRevenue() MetricsTotalsNetCumulativeReve
 	return m.NetCumulativeRevenue
 }
 
+func (m *MetricsTotals) GetCosts() MetricsTotalsCosts {
+	if m == nil {
+		return MetricsTotalsCosts{}
+	}
+	return m.Costs
+}
+
+func (m *MetricsTotals) GetCumulativeCosts() MetricsTotalsCumulativeCosts {
+	if m == nil {
+		return MetricsTotalsCumulativeCosts{}
+	}
+	return m.CumulativeCosts
+}
+
 func (m *MetricsTotals) GetAverageOrderValue() MetricsTotalsAverageOrderValue {
 	if m == nil {
 		return MetricsTotalsAverageOrderValue{}
@@ -2042,6 +2632,27 @@ func (m *MetricsTotals) GetNetAverageOrderValue() MetricsTotalsNetAverageOrderVa
 		return MetricsTotalsNetAverageOrderValue{}
 	}
 	return m.NetAverageOrderValue
+}
+
+func (m *MetricsTotals) GetAverageRevenuePerUser() MetricsTotalsAverageRevenuePerUser {
+	if m == nil {
+		return MetricsTotalsAverageRevenuePerUser{}
+	}
+	return m.AverageRevenuePerUser
+}
+
+func (m *MetricsTotals) GetCostPerUser() MetricsTotalsCostPerUser {
+	if m == nil {
+		return MetricsTotalsCostPerUser{}
+	}
+	return m.CostPerUser
+}
+
+func (m *MetricsTotals) GetActiveUserByEvent() MetricsTotalsActiveUserByEvent {
+	if m == nil {
+		return MetricsTotalsActiveUserByEvent{}
+	}
+	return m.ActiveUserByEvent
 }
 
 func (m *MetricsTotals) GetOneTimeProducts() MetricsTotalsOneTimeProducts {
@@ -2210,4 +2821,32 @@ func (m *MetricsTotals) GetCanceledSubscriptionsOther() MetricsTotalsCanceledSub
 		return MetricsTotalsCanceledSubscriptionsOther{}
 	}
 	return m.CanceledSubscriptionsOther
+}
+
+func (m *MetricsTotals) GetChurnRate() MetricsTotalsChurnRate {
+	if m == nil {
+		return MetricsTotalsChurnRate{}
+	}
+	return m.ChurnRate
+}
+
+func (m *MetricsTotals) GetGrossMargin() MetricsTotalsGrossMargin {
+	if m == nil {
+		return MetricsTotalsGrossMargin{}
+	}
+	return m.GrossMargin
+}
+
+func (m *MetricsTotals) GetGrossMarginPercentage() MetricsTotalsGrossMarginPercentage {
+	if m == nil {
+		return MetricsTotalsGrossMarginPercentage{}
+	}
+	return m.GrossMarginPercentage
+}
+
+func (m *MetricsTotals) GetCashflow() MetricsTotalsCashflow {
+	if m == nil {
+		return MetricsTotalsCashflow{}
+	}
+	return m.Cashflow
 }

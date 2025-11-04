@@ -7,9 +7,10 @@ import (
 )
 
 type OrganizationSubscriptionSettings struct {
-	AllowMultipleSubscriptions bool                          `json:"allow_multiple_subscriptions"`
-	AllowCustomerUpdates       bool                          `json:"allow_customer_updates"`
-	ProrationBehavior          SubscriptionProrationBehavior `json:"proration_behavior"`
+	AllowMultipleSubscriptions   bool                          `json:"allow_multiple_subscriptions"`
+	AllowCustomerUpdates         bool                          `json:"allow_customer_updates"`
+	ProrationBehavior            SubscriptionProrationBehavior `json:"proration_behavior"`
+	BenefitRevocationGracePeriod int64                         `json:"benefit_revocation_grace_period"`
 }
 
 func (o OrganizationSubscriptionSettings) MarshalJSON() ([]byte, error) {
@@ -17,7 +18,7 @@ func (o OrganizationSubscriptionSettings) MarshalJSON() ([]byte, error) {
 }
 
 func (o *OrganizationSubscriptionSettings) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &o, "", false, []string{"allow_multiple_subscriptions", "allow_customer_updates", "proration_behavior"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &o, "", false, []string{"allow_multiple_subscriptions", "allow_customer_updates", "proration_behavior", "benefit_revocation_grace_period"}); err != nil {
 		return err
 	}
 	return nil
@@ -42,4 +43,11 @@ func (o *OrganizationSubscriptionSettings) GetProrationBehavior() SubscriptionPr
 		return SubscriptionProrationBehavior("")
 	}
 	return o.ProrationBehavior
+}
+
+func (o *OrganizationSubscriptionSettings) GetBenefitRevocationGracePeriod() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.BenefitRevocationGracePeriod
 }

@@ -24,6 +24,8 @@ type WebhookEndpoint struct {
 	OrganizationID string `json:"organization_id"`
 	// The events that will trigger the webhook.
 	Events []WebhookEventType `json:"events"`
+	// Whether the webhook endpoint is enabled and will receive events.
+	Enabled bool `json:"enabled"`
 }
 
 func (w WebhookEndpoint) MarshalJSON() ([]byte, error) {
@@ -31,7 +33,7 @@ func (w WebhookEndpoint) MarshalJSON() ([]byte, error) {
 }
 
 func (w *WebhookEndpoint) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &w, "", false, []string{"created_at", "id", "url", "format", "secret", "organization_id", "events"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &w, "", false, []string{"created_at", "id", "url", "format", "secret", "organization_id", "events", "enabled"}); err != nil {
 		return err
 	}
 	return nil
@@ -91,4 +93,11 @@ func (w *WebhookEndpoint) GetEvents() []WebhookEventType {
 		return []WebhookEventType{}
 	}
 	return w.Events
+}
+
+func (w *WebhookEndpoint) GetEnabled() bool {
+	if w == nil {
+		return false
+	}
+	return w.Enabled
 }

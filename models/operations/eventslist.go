@@ -349,6 +349,10 @@ type EventsListRequest struct {
 	Name *NameFilter `queryParam:"style=form,explode=true,name=name"`
 	// Filter by event source.
 	Source *SourceFilter `queryParam:"style=form,explode=true,name=source"`
+	// Query to filter events.
+	Query *string `queryParam:"style=form,explode=true,name=query"`
+	// Filter events by parent event ID. When not specified, returns root events only.
+	ParentID *string `queryParam:"style=form,explode=true,name=parent_id"`
 	// Page number, defaults to 1.
 	Page *int64 `default:"1" queryParam:"style=form,explode=true,name=page"`
 	// Size of a page, defaults to 10. Maximum is 100.
@@ -431,6 +435,20 @@ func (e *EventsListRequest) GetSource() *SourceFilter {
 		return nil
 	}
 	return e.Source
+}
+
+func (e *EventsListRequest) GetQuery() *string {
+	if e == nil {
+		return nil
+	}
+	return e.Query
+}
+
+func (e *EventsListRequest) GetParentID() *string {
+	if e == nil {
+		return nil
+	}
+	return e.ParentID
 }
 
 func (e *EventsListRequest) GetPage() *int64 {

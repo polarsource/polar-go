@@ -84,7 +84,9 @@ type CustomerSubscription struct {
 	// The currency of the subscription.
 	Currency          string                        `json:"currency"`
 	RecurringInterval SubscriptionRecurringInterval `json:"recurring_interval"`
-	Status            SubscriptionStatus            `json:"status"`
+	// Number of interval units of the subscription. If this is set to 1 the charge will happen every interval (e.g. every month), if set to 2 it will be every other month, and so on.
+	RecurringIntervalCount int64              `json:"recurring_interval_count"`
+	Status                 SubscriptionStatus `json:"status"`
 	// The start timestamp of the current billing period.
 	CurrentPeriodStart time.Time `json:"current_period_start"`
 	// The end timestamp of the current billing period.
@@ -108,8 +110,10 @@ type CustomerSubscription struct {
 	// The ID of the subscribed product.
 	ProductID string `json:"product_id"`
 	// The ID of the applied discount, if any.
-	DiscountID                  *string                     `json:"discount_id"`
-	CheckoutID                  *string                     `json:"checkout_id"`
+	DiscountID *string `json:"discount_id"`
+	CheckoutID *string `json:"checkout_id"`
+	// The number of seats for seat-based subscriptions. None for non-seat subscriptions.
+	Seats                       *int64                      `json:"seats,omitempty"`
 	CustomerCancellationReason  *CustomerCancellationReason `json:"customer_cancellation_reason"`
 	CustomerCancellationComment *string                     `json:"customer_cancellation_comment"`
 	Product                     CustomerSubscriptionProduct `json:"product"`
@@ -126,7 +130,7 @@ func (c CustomerSubscription) MarshalJSON() ([]byte, error) {
 }
 
 func (c *CustomerSubscription) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &c, "", false, []string{"created_at", "id", "amount", "currency", "recurring_interval", "status", "current_period_start", "cancel_at_period_end", "customer_id", "product_id", "product", "prices", "meters", "is_polar_managed"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &c, "", false, []string{"created_at", "id", "amount", "currency", "recurring_interval", "recurring_interval_count", "status", "current_period_start", "cancel_at_period_end", "customer_id", "product_id", "product", "prices", "meters", "is_polar_managed"}); err != nil {
 		return err
 	}
 	return nil
@@ -172,6 +176,13 @@ func (c *CustomerSubscription) GetRecurringInterval() SubscriptionRecurringInter
 		return SubscriptionRecurringInterval("")
 	}
 	return c.RecurringInterval
+}
+
+func (c *CustomerSubscription) GetRecurringIntervalCount() int64 {
+	if c == nil {
+		return 0
+	}
+	return c.RecurringIntervalCount
 }
 
 func (c *CustomerSubscription) GetStatus() SubscriptionStatus {
@@ -270,6 +281,13 @@ func (c *CustomerSubscription) GetCheckoutID() *string {
 		return nil
 	}
 	return c.CheckoutID
+}
+
+func (c *CustomerSubscription) GetSeats() *int64 {
+	if c == nil {
+		return nil
+	}
+	return c.Seats
 }
 
 func (c *CustomerSubscription) GetCustomerCancellationReason() *CustomerCancellationReason {

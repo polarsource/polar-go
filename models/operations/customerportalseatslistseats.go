@@ -19,14 +19,23 @@ func (c *CustomerPortalSeatsListSeatsSecurity) GetCustomerSession() string {
 
 type CustomerPortalSeatsListSeatsRequest struct {
 	// Subscription ID
-	SubscriptionID string `queryParam:"style=form,explode=true,name=subscription_id"`
+	SubscriptionID *string `queryParam:"style=form,explode=true,name=subscription_id"`
+	// Order ID
+	OrderID *string `queryParam:"style=form,explode=true,name=order_id"`
 }
 
-func (c *CustomerPortalSeatsListSeatsRequest) GetSubscriptionID() string {
+func (c *CustomerPortalSeatsListSeatsRequest) GetSubscriptionID() *string {
 	if c == nil {
-		return ""
+		return nil
 	}
 	return c.SubscriptionID
+}
+
+func (c *CustomerPortalSeatsListSeatsRequest) GetOrderID() *string {
+	if c == nil {
+		return nil
+	}
+	return c.OrderID
 }
 
 type CustomerPortalSeatsListSeatsResponse struct {

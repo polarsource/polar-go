@@ -353,6 +353,8 @@ type ProductUpdate struct {
 	Description *string `json:"description,omitempty"`
 	// The recurring interval of the product. If `None`, the product is a one-time purchase. **Can only be set on legacy recurring products. Once set, it can't be changed.**
 	RecurringInterval *SubscriptionRecurringInterval `json:"recurring_interval,omitempty"`
+	// Number of interval units of the subscription. If this is set to 1 the charge will happen every interval (e.g. every month), if set to 2 it will be every other month, and so on. Once set, it can't be changed.**
+	RecurringIntervalCount *int64 `json:"recurring_interval_count,omitempty"`
 	// Whether the product is archived. If `true`, the product won't be available for purchase anymore. Existing customers will still have access to their benefits, and subscriptions will continue normally.
 	IsArchived *bool `json:"is_archived,omitempty"`
 	// List of available prices for this product. If you want to keep existing prices, include them in the list as an `ExistingProductPrice` object.
@@ -402,6 +404,13 @@ func (p *ProductUpdate) GetRecurringInterval() *SubscriptionRecurringInterval {
 		return nil
 	}
 	return p.RecurringInterval
+}
+
+func (p *ProductUpdate) GetRecurringIntervalCount() *int64 {
+	if p == nil {
+		return nil
+	}
+	return p.RecurringIntervalCount
 }
 
 func (p *ProductUpdate) GetIsArchived() *bool {

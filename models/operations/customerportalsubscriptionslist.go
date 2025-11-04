@@ -20,70 +20,6 @@ func (c *CustomerPortalSubscriptionsListSecurity) GetCustomerSession() string {
 	return c.CustomerSession
 }
 
-type CustomerPortalSubscriptionsListQueryParamOrganizationIDFilterType string
-
-const (
-	CustomerPortalSubscriptionsListQueryParamOrganizationIDFilterTypeStr        CustomerPortalSubscriptionsListQueryParamOrganizationIDFilterType = "str"
-	CustomerPortalSubscriptionsListQueryParamOrganizationIDFilterTypeArrayOfStr CustomerPortalSubscriptionsListQueryParamOrganizationIDFilterType = "arrayOfStr"
-)
-
-// CustomerPortalSubscriptionsListQueryParamOrganizationIDFilter - Filter by organization ID.
-type CustomerPortalSubscriptionsListQueryParamOrganizationIDFilter struct {
-	Str        *string  `queryParam:"inline,name=OrganizationID_Filter"`
-	ArrayOfStr []string `queryParam:"inline,name=OrganizationID_Filter"`
-
-	Type CustomerPortalSubscriptionsListQueryParamOrganizationIDFilterType
-}
-
-func CreateCustomerPortalSubscriptionsListQueryParamOrganizationIDFilterStr(str string) CustomerPortalSubscriptionsListQueryParamOrganizationIDFilter {
-	typ := CustomerPortalSubscriptionsListQueryParamOrganizationIDFilterTypeStr
-
-	return CustomerPortalSubscriptionsListQueryParamOrganizationIDFilter{
-		Str:  &str,
-		Type: typ,
-	}
-}
-
-func CreateCustomerPortalSubscriptionsListQueryParamOrganizationIDFilterArrayOfStr(arrayOfStr []string) CustomerPortalSubscriptionsListQueryParamOrganizationIDFilter {
-	typ := CustomerPortalSubscriptionsListQueryParamOrganizationIDFilterTypeArrayOfStr
-
-	return CustomerPortalSubscriptionsListQueryParamOrganizationIDFilter{
-		ArrayOfStr: arrayOfStr,
-		Type:       typ,
-	}
-}
-
-func (u *CustomerPortalSubscriptionsListQueryParamOrganizationIDFilter) UnmarshalJSON(data []byte) error {
-
-	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, nil); err == nil {
-		u.Str = &str
-		u.Type = CustomerPortalSubscriptionsListQueryParamOrganizationIDFilterTypeStr
-		return nil
-	}
-
-	var arrayOfStr []string = []string{}
-	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, nil); err == nil {
-		u.ArrayOfStr = arrayOfStr
-		u.Type = CustomerPortalSubscriptionsListQueryParamOrganizationIDFilterTypeArrayOfStr
-		return nil
-	}
-
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for CustomerPortalSubscriptionsListQueryParamOrganizationIDFilter", string(data))
-}
-
-func (u CustomerPortalSubscriptionsListQueryParamOrganizationIDFilter) MarshalJSON() ([]byte, error) {
-	if u.Str != nil {
-		return utils.MarshalJSON(u.Str, "", true)
-	}
-
-	if u.ArrayOfStr != nil {
-		return utils.MarshalJSON(u.ArrayOfStr, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type CustomerPortalSubscriptionsListQueryParamOrganizationIDFilter: all fields are null")
-}
-
 type CustomerPortalSubscriptionsListQueryParamProductIDFilterType string
 
 const (
@@ -149,8 +85,6 @@ func (u CustomerPortalSubscriptionsListQueryParamProductIDFilter) MarshalJSON() 
 }
 
 type CustomerPortalSubscriptionsListRequest struct {
-	// Filter by organization ID.
-	OrganizationID *CustomerPortalSubscriptionsListQueryParamOrganizationIDFilter `queryParam:"style=form,explode=true,name=organization_id"`
 	// Filter by product ID.
 	ProductID *CustomerPortalSubscriptionsListQueryParamProductIDFilter `queryParam:"style=form,explode=true,name=product_id"`
 	// Filter by active or cancelled subscription.
@@ -174,13 +108,6 @@ func (c *CustomerPortalSubscriptionsListRequest) UnmarshalJSON(data []byte) erro
 		return err
 	}
 	return nil
-}
-
-func (c *CustomerPortalSubscriptionsListRequest) GetOrganizationID() *CustomerPortalSubscriptionsListQueryParamOrganizationIDFilter {
-	if c == nil {
-		return nil
-	}
-	return c.OrganizationID
 }
 
 func (c *CustomerPortalSubscriptionsListRequest) GetProductID() *CustomerPortalSubscriptionsListQueryParamProductIDFilter {

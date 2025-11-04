@@ -294,6 +294,8 @@ type ProductCreateOneTime struct {
 	OrganizationID *string `json:"organization_id,omitempty"`
 	// States that the product is a one-time purchase.
 	RecurringInterval any `json:"recurring_interval,omitempty"`
+	// One-time products don't have a recurring interval count.
+	RecurringIntervalCount any `json:"recurring_interval_count,omitempty"`
 }
 
 func (p ProductCreateOneTime) MarshalJSON() ([]byte, error) {
@@ -361,4 +363,11 @@ func (p *ProductCreateOneTime) GetRecurringInterval() any {
 		return nil
 	}
 	return p.RecurringInterval
+}
+
+func (p *ProductCreateOneTime) GetRecurringIntervalCount() any {
+	if p == nil {
+		return nil
+	}
+	return p.RecurringIntervalCount
 }

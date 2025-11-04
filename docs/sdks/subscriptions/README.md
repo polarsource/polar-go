@@ -6,6 +6,7 @@
 ### Available Operations
 
 * [List](#list) - List Subscriptions
+* [Create](#create) - Create Subscription
 * [Export](#export) - Export Subscriptions
 * [Get](#get) - Get Subscription
 * [Update](#update) - Update Subscription
@@ -75,6 +76,73 @@ func main() {
 ### Response
 
 **[*operations.SubscriptionsListResponse](../../models/operations/subscriptionslistresponse.md), error**
+
+### Errors
+
+| Error Type                    | Status Code                   | Content Type                  |
+| ----------------------------- | ----------------------------- | ----------------------------- |
+| apierrors.HTTPValidationError | 422                           | application/json              |
+| apierrors.APIError            | 4XX, 5XX                      | \*/\*                         |
+
+## Create
+
+Create a subscription programmatically.
+
+This endpoint only allows to create subscription on free products.
+For paid products, use the checkout flow.
+
+No initial order will be created and no confirmation email will be sent.
+
+**Scopes**: `subscriptions:write`
+
+### Example Usage
+
+<!-- UsageSnippet language="go" operationID="subscriptions:create" method="post" path="/v1/subscriptions/" -->
+```go
+package main
+
+import(
+	"context"
+	"os"
+	polargo "github.com/polarsource/polar-go"
+	"github.com/polarsource/polar-go/models/components"
+	"github.com/polarsource/polar-go/models/operations"
+	"log"
+)
+
+func main() {
+    ctx := context.Background()
+
+    s := polargo.New(
+        polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
+    )
+
+    res, err := s.Subscriptions.Create(ctx, operations.CreateSubscriptionsCreateSubscriptionCreateSubscriptionCreateCustomer(
+        components.SubscriptionCreateCustomer{
+            ProductID: "d8dd2de1-21b7-4a41-8bc3-ce909c0cfe23",
+            CustomerID: "992fae2a-2a17-4b7a-8d9e-e287cf90131b",
+        },
+    ))
+    if err != nil {
+        log.Fatal(err)
+    }
+    if res.Subscription != nil {
+        // handle response
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                                                                            | Type                                                                                                                 | Required                                                                                                             | Description                                                                                                          |
+| -------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- |
+| `ctx`                                                                                                                | [context.Context](https://pkg.go.dev/context#Context)                                                                | :heavy_check_mark:                                                                                                   | The context to use for the request.                                                                                  |
+| `request`                                                                                                            | [operations.SubscriptionsCreateSubscriptionCreate](../../models/operations/subscriptionscreatesubscriptioncreate.md) | :heavy_check_mark:                                                                                                   | The request object to use for the request.                                                                           |
+| `opts`                                                                                                               | [][operations.Option](../../models/operations/option.md)                                                             | :heavy_minus_sign:                                                                                                   | The options for this request.                                                                                        |
+
+### Response
+
+**[*operations.SubscriptionsCreateResponse](../../models/operations/subscriptionscreateresponse.md), error**
 
 ### Errors
 

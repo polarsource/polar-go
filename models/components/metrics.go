@@ -14,9 +14,19 @@ type Metrics struct {
 	// Information about a metric.
 	NetCumulativeRevenue Metric `json:"net_cumulative_revenue"`
 	// Information about a metric.
+	Costs Metric `json:"costs"`
+	// Information about a metric.
+	CumulativeCosts Metric `json:"cumulative_costs"`
+	// Information about a metric.
 	AverageOrderValue Metric `json:"average_order_value"`
 	// Information about a metric.
 	NetAverageOrderValue Metric `json:"net_average_order_value"`
+	// Information about a metric.
+	AverageRevenuePerUser Metric `json:"average_revenue_per_user"`
+	// Information about a metric.
+	CostPerUser Metric `json:"cost_per_user"`
+	// Information about a metric.
+	ActiveUserByEvent Metric `json:"active_user_by_event"`
 	// Information about a metric.
 	OneTimeProducts Metric `json:"one_time_products"`
 	// Information about a metric.
@@ -65,6 +75,14 @@ type Metrics struct {
 	CanceledSubscriptionsUnused Metric `json:"canceled_subscriptions_unused"`
 	// Information about a metric.
 	CanceledSubscriptionsOther Metric `json:"canceled_subscriptions_other"`
+	// Information about a metric.
+	ChurnRate Metric `json:"churn_rate"`
+	// Information about a metric.
+	GrossMargin Metric `json:"gross_margin"`
+	// Information about a metric.
+	GrossMarginPercentage Metric `json:"gross_margin_percentage"`
+	// Information about a metric.
+	Cashflow Metric `json:"cashflow"`
 }
 
 func (m *Metrics) GetOrders() Metric {
@@ -102,6 +120,20 @@ func (m *Metrics) GetNetCumulativeRevenue() Metric {
 	return m.NetCumulativeRevenue
 }
 
+func (m *Metrics) GetCosts() Metric {
+	if m == nil {
+		return Metric{}
+	}
+	return m.Costs
+}
+
+func (m *Metrics) GetCumulativeCosts() Metric {
+	if m == nil {
+		return Metric{}
+	}
+	return m.CumulativeCosts
+}
+
 func (m *Metrics) GetAverageOrderValue() Metric {
 	if m == nil {
 		return Metric{}
@@ -114,6 +146,27 @@ func (m *Metrics) GetNetAverageOrderValue() Metric {
 		return Metric{}
 	}
 	return m.NetAverageOrderValue
+}
+
+func (m *Metrics) GetAverageRevenuePerUser() Metric {
+	if m == nil {
+		return Metric{}
+	}
+	return m.AverageRevenuePerUser
+}
+
+func (m *Metrics) GetCostPerUser() Metric {
+	if m == nil {
+		return Metric{}
+	}
+	return m.CostPerUser
+}
+
+func (m *Metrics) GetActiveUserByEvent() Metric {
+	if m == nil {
+		return Metric{}
+	}
+	return m.ActiveUserByEvent
 }
 
 func (m *Metrics) GetOneTimeProducts() Metric {
@@ -282,4 +335,32 @@ func (m *Metrics) GetCanceledSubscriptionsOther() Metric {
 		return Metric{}
 	}
 	return m.CanceledSubscriptionsOther
+}
+
+func (m *Metrics) GetChurnRate() Metric {
+	if m == nil {
+		return Metric{}
+	}
+	return m.ChurnRate
+}
+
+func (m *Metrics) GetGrossMargin() Metric {
+	if m == nil {
+		return Metric{}
+	}
+	return m.GrossMargin
+}
+
+func (m *Metrics) GetGrossMarginPercentage() Metric {
+	if m == nil {
+		return Metric{}
+	}
+	return m.GrossMarginPercentage
+}
+
+func (m *Metrics) GetCashflow() Metric {
+	if m == nil {
+		return Metric{}
+	}
+	return m.Cashflow
 }

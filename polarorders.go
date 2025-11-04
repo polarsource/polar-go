@@ -254,7 +254,6 @@ func (s *PolarOrders) List(ctx context.Context, request operations.CustomerPorta
 		return s.List(
 			ctx,
 			operations.CustomerPortalOrdersListRequest{
-				OrganizationID:     request.OrganizationID,
 				ProductID:          request.ProductID,
 				ProductBillingType: request.ProductBillingType,
 				SubscriptionID:     request.SubscriptionID,
@@ -995,7 +994,7 @@ func (s *PolarOrders) GenerateInvoice(ctx context.Context, security operations.C
 
 			_, err = s.hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
 			return nil, err
-		} else if utils.MatchStatusCodes([]string{"409", "422", "4XX", "5XX"}, httpRes.StatusCode) {
+		} else if utils.MatchStatusCodes([]string{"422", "4XX", "5XX"}, httpRes.StatusCode) {
 			_httpRes, err := s.hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
 			if err != nil {
 				return nil, err
@@ -1032,27 +1031,6 @@ func (s *PolarOrders) GenerateInvoice(ctx context.Context, security operations.C
 			}
 
 			res.Any = out
-		default:
-			rawBody, err := utils.ConsumeRawBody(httpRes)
-			if err != nil {
-				return nil, err
-			}
-			return nil, apierrors.NewAPIError(fmt.Sprintf("unknown content-type received: %s", httpRes.Header.Get("Content-Type")), httpRes.StatusCode, string(rawBody), httpRes)
-		}
-	case httpRes.StatusCode == 409:
-		switch {
-		case utils.MatchContentType(httpRes.Header.Get("Content-Type"), `application/json`):
-			rawBody, err := utils.ConsumeRawBody(httpRes)
-			if err != nil {
-				return nil, err
-			}
-
-			var out apierrors.InvoiceAlreadyExists
-			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
-				return nil, err
-			}
-
-			return nil, &out
 		default:
 			rawBody, err := utils.ConsumeRawBody(httpRes)
 			if err != nil {

@@ -14,9 +14,11 @@ type CustomerSeat struct {
 	ModifiedAt *time.Time `json:"modified_at"`
 	// The seat ID
 	ID string `json:"id"`
-	// The subscription ID
-	SubscriptionID string     `json:"subscription_id"`
-	Status         SeatStatus `json:"status"`
+	// The subscription ID (for recurring seats)
+	SubscriptionID *string `json:"subscription_id,omitempty"`
+	// The order ID (for one-time purchase seats)
+	OrderID *string    `json:"order_id,omitempty"`
+	Status  SeatStatus `json:"status"`
 	// The assigned customer ID
 	CustomerID *string `json:"customer_id,omitempty"`
 	// The assigned customer email
@@ -36,7 +38,7 @@ func (c CustomerSeat) MarshalJSON() ([]byte, error) {
 }
 
 func (c *CustomerSeat) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &c, "", false, []string{"created_at", "id", "subscription_id", "status"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &c, "", false, []string{"created_at", "id", "status"}); err != nil {
 		return err
 	}
 	return nil
@@ -63,11 +65,18 @@ func (c *CustomerSeat) GetID() string {
 	return c.ID
 }
 
-func (c *CustomerSeat) GetSubscriptionID() string {
+func (c *CustomerSeat) GetSubscriptionID() *string {
 	if c == nil {
-		return ""
+		return nil
 	}
 	return c.SubscriptionID
+}
+
+func (c *CustomerSeat) GetOrderID() *string {
+	if c == nil {
+		return nil
+	}
+	return c.OrderID
 }
 
 func (c *CustomerSeat) GetStatus() SeatStatus {

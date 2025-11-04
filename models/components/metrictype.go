@@ -10,9 +10,10 @@ import (
 type MetricType string
 
 const (
-	MetricTypeScalar     MetricType = "scalar"
-	MetricTypeCurrency   MetricType = "currency"
-	MetricTypePercentage MetricType = "percentage"
+	MetricTypeScalar          MetricType = "scalar"
+	MetricTypeCurrency        MetricType = "currency"
+	MetricTypeCurrencySubCent MetricType = "currency_sub_cent"
+	MetricTypePercentage      MetricType = "percentage"
 )
 
 func (e MetricType) ToPointer() *MetricType {
@@ -27,6 +28,8 @@ func (e *MetricType) UnmarshalJSON(data []byte) error {
 	case "scalar":
 		fallthrough
 	case "currency":
+		fallthrough
+	case "currency_sub_cent":
 		fallthrough
 	case "percentage":
 		*e = MetricType(v)

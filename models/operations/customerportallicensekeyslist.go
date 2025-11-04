@@ -3,8 +3,6 @@
 package operations
 
 import (
-	"errors"
-	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
 	"github.com/polarsource/polar-go/models/components"
 )
@@ -20,73 +18,7 @@ func (c *CustomerPortalLicenseKeysListSecurity) GetCustomerSession() string {
 	return c.CustomerSession
 }
 
-type CustomerPortalLicenseKeysListQueryParamOrganizationIDFilterType string
-
-const (
-	CustomerPortalLicenseKeysListQueryParamOrganizationIDFilterTypeStr        CustomerPortalLicenseKeysListQueryParamOrganizationIDFilterType = "str"
-	CustomerPortalLicenseKeysListQueryParamOrganizationIDFilterTypeArrayOfStr CustomerPortalLicenseKeysListQueryParamOrganizationIDFilterType = "arrayOfStr"
-)
-
-// CustomerPortalLicenseKeysListQueryParamOrganizationIDFilter - Filter by organization ID.
-type CustomerPortalLicenseKeysListQueryParamOrganizationIDFilter struct {
-	Str        *string  `queryParam:"inline,name=OrganizationID_Filter"`
-	ArrayOfStr []string `queryParam:"inline,name=OrganizationID_Filter"`
-
-	Type CustomerPortalLicenseKeysListQueryParamOrganizationIDFilterType
-}
-
-func CreateCustomerPortalLicenseKeysListQueryParamOrganizationIDFilterStr(str string) CustomerPortalLicenseKeysListQueryParamOrganizationIDFilter {
-	typ := CustomerPortalLicenseKeysListQueryParamOrganizationIDFilterTypeStr
-
-	return CustomerPortalLicenseKeysListQueryParamOrganizationIDFilter{
-		Str:  &str,
-		Type: typ,
-	}
-}
-
-func CreateCustomerPortalLicenseKeysListQueryParamOrganizationIDFilterArrayOfStr(arrayOfStr []string) CustomerPortalLicenseKeysListQueryParamOrganizationIDFilter {
-	typ := CustomerPortalLicenseKeysListQueryParamOrganizationIDFilterTypeArrayOfStr
-
-	return CustomerPortalLicenseKeysListQueryParamOrganizationIDFilter{
-		ArrayOfStr: arrayOfStr,
-		Type:       typ,
-	}
-}
-
-func (u *CustomerPortalLicenseKeysListQueryParamOrganizationIDFilter) UnmarshalJSON(data []byte) error {
-
-	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, nil); err == nil {
-		u.Str = &str
-		u.Type = CustomerPortalLicenseKeysListQueryParamOrganizationIDFilterTypeStr
-		return nil
-	}
-
-	var arrayOfStr []string = []string{}
-	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, nil); err == nil {
-		u.ArrayOfStr = arrayOfStr
-		u.Type = CustomerPortalLicenseKeysListQueryParamOrganizationIDFilterTypeArrayOfStr
-		return nil
-	}
-
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for CustomerPortalLicenseKeysListQueryParamOrganizationIDFilter", string(data))
-}
-
-func (u CustomerPortalLicenseKeysListQueryParamOrganizationIDFilter) MarshalJSON() ([]byte, error) {
-	if u.Str != nil {
-		return utils.MarshalJSON(u.Str, "", true)
-	}
-
-	if u.ArrayOfStr != nil {
-		return utils.MarshalJSON(u.ArrayOfStr, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type CustomerPortalLicenseKeysListQueryParamOrganizationIDFilter: all fields are null")
-}
-
 type CustomerPortalLicenseKeysListRequest struct {
-	// Filter by organization ID.
-	OrganizationID *CustomerPortalLicenseKeysListQueryParamOrganizationIDFilter `queryParam:"style=form,explode=true,name=organization_id"`
 	// Filter by a specific benefit
 	BenefitID *string `queryParam:"style=form,explode=true,name=benefit_id"`
 	// Page number, defaults to 1.
@@ -104,13 +36,6 @@ func (c *CustomerPortalLicenseKeysListRequest) UnmarshalJSON(data []byte) error 
 		return err
 	}
 	return nil
-}
-
-func (c *CustomerPortalLicenseKeysListRequest) GetOrganizationID() *CustomerPortalLicenseKeysListQueryParamOrganizationIDFilter {
-	if c == nil {
-		return nil
-	}
-	return c.OrganizationID
 }
 
 func (c *CustomerPortalLicenseKeysListRequest) GetBenefitID() *string {

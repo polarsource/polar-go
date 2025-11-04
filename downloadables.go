@@ -34,12 +34,11 @@ func newDownloadables(rootSDK *Polar, sdkConfig config.SDKConfiguration, hooks *
 
 // List Downloadables
 // **Scopes**: `customer_portal:read` `customer_portal:write`
-func (s *Downloadables) List(ctx context.Context, security operations.CustomerPortalDownloadablesListSecurity, organizationID *operations.CustomerPortalDownloadablesListQueryParamOrganizationIDFilter, benefitID *operations.CustomerPortalDownloadablesListQueryParamBenefitIDFilter, page *int64, limit *int64, opts ...operations.Option) (*operations.CustomerPortalDownloadablesListResponse, error) {
+func (s *Downloadables) List(ctx context.Context, security operations.CustomerPortalDownloadablesListSecurity, benefitID *operations.CustomerPortalDownloadablesListQueryParamBenefitIDFilter, page *int64, limit *int64, opts ...operations.Option) (*operations.CustomerPortalDownloadablesListResponse, error) {
 	request := operations.CustomerPortalDownloadablesListRequest{
-		OrganizationID: organizationID,
-		BenefitID:      benefitID,
-		Page:           page,
-		Limit:          limit,
+		BenefitID: benefitID,
+		Page:      page,
+		Limit:     limit,
 	}
 
 	o := operations.Options{}
@@ -259,7 +258,6 @@ func (s *Downloadables) List(ctx context.Context, security operations.CustomerPo
 		return s.List(
 			ctx,
 			security,
-			organizationID,
 			benefitID,
 			&nP,
 			limit,

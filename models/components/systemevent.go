@@ -16,8 +16,13 @@ const (
 	SystemEventTypeBenefitGranted             SystemEventType = "benefit.granted"
 	SystemEventTypeBenefitRevoked             SystemEventType = "benefit.revoked"
 	SystemEventTypeBenefitUpdated             SystemEventType = "benefit.updated"
+	SystemEventTypeCustomerCreated            SystemEventType = "customer.created"
+	SystemEventTypeCustomerDeleted            SystemEventType = "customer.deleted"
+	SystemEventTypeCustomerUpdated            SystemEventType = "customer.updated"
 	SystemEventTypeMeterCredited              SystemEventType = "meter.credited"
 	SystemEventTypeMeterReset                 SystemEventType = "meter.reset"
+	SystemEventTypeOrderPaid                  SystemEventType = "order.paid"
+	SystemEventTypeOrderRefunded              SystemEventType = "order.refunded"
 	SystemEventTypeSubscriptionCycled         SystemEventType = "subscription.cycled"
 	SystemEventTypeSubscriptionProductUpdated SystemEventType = "subscription.product_updated"
 	SystemEventTypeSubscriptionRevoked        SystemEventType = "subscription.revoked"
@@ -33,6 +38,11 @@ type SystemEvent struct {
 	SubscriptionCycledEvent         *SubscriptionCycledEvent         `queryParam:"inline,name=SystemEvent"`
 	SubscriptionRevokedEvent        *SubscriptionRevokedEvent        `queryParam:"inline,name=SystemEvent"`
 	SubscriptionProductUpdatedEvent *SubscriptionProductUpdatedEvent `queryParam:"inline,name=SystemEvent"`
+	OrderPaidEvent                  *OrderPaidEvent                  `queryParam:"inline,name=SystemEvent"`
+	OrderRefundedEvent              *OrderRefundedEvent              `queryParam:"inline,name=SystemEvent"`
+	CustomerCreatedEvent            *CustomerCreatedEvent            `queryParam:"inline,name=SystemEvent"`
+	CustomerUpdatedEvent            *CustomerUpdatedEvent            `queryParam:"inline,name=SystemEvent"`
+	CustomerDeletedEvent            *CustomerDeletedEvent            `queryParam:"inline,name=SystemEvent"`
 
 	Type SystemEventType
 }
@@ -73,6 +83,33 @@ func CreateSystemEventBenefitUpdated(benefitUpdated BenefitUpdatedEvent) SystemE
 	}
 }
 
+func CreateSystemEventCustomerCreated(customerCreated CustomerCreatedEvent) SystemEvent {
+	typ := SystemEventTypeCustomerCreated
+
+	return SystemEvent{
+		CustomerCreatedEvent: &customerCreated,
+		Type:                 typ,
+	}
+}
+
+func CreateSystemEventCustomerDeleted(customerDeleted CustomerDeletedEvent) SystemEvent {
+	typ := SystemEventTypeCustomerDeleted
+
+	return SystemEvent{
+		CustomerDeletedEvent: &customerDeleted,
+		Type:                 typ,
+	}
+}
+
+func CreateSystemEventCustomerUpdated(customerUpdated CustomerUpdatedEvent) SystemEvent {
+	typ := SystemEventTypeCustomerUpdated
+
+	return SystemEvent{
+		CustomerUpdatedEvent: &customerUpdated,
+		Type:                 typ,
+	}
+}
+
 func CreateSystemEventMeterCredited(meterCredited MeterCreditEvent) SystemEvent {
 	typ := SystemEventTypeMeterCredited
 
@@ -88,6 +125,24 @@ func CreateSystemEventMeterReset(meterReset MeterResetEvent) SystemEvent {
 	return SystemEvent{
 		MeterResetEvent: &meterReset,
 		Type:            typ,
+	}
+}
+
+func CreateSystemEventOrderPaid(orderPaid OrderPaidEvent) SystemEvent {
+	typ := SystemEventTypeOrderPaid
+
+	return SystemEvent{
+		OrderPaidEvent: &orderPaid,
+		Type:           typ,
+	}
+}
+
+func CreateSystemEventOrderRefunded(orderRefunded OrderRefundedEvent) SystemEvent {
+	typ := SystemEventTypeOrderRefunded
+
+	return SystemEvent{
+		OrderRefundedEvent: &orderRefunded,
+		Type:               typ,
 	}
 }
 
@@ -166,6 +221,33 @@ func (u *SystemEvent) UnmarshalJSON(data []byte) error {
 		u.BenefitUpdatedEvent = benefitUpdatedEvent
 		u.Type = SystemEventTypeBenefitUpdated
 		return nil
+	case "customer.created":
+		customerCreatedEvent := new(CustomerCreatedEvent)
+		if err := utils.UnmarshalJSON(data, &customerCreatedEvent, "", true, nil); err != nil {
+			return fmt.Errorf("could not unmarshal `%s` into expected (Name == customer.created) type CustomerCreatedEvent within SystemEvent: %w", string(data), err)
+		}
+
+		u.CustomerCreatedEvent = customerCreatedEvent
+		u.Type = SystemEventTypeCustomerCreated
+		return nil
+	case "customer.deleted":
+		customerDeletedEvent := new(CustomerDeletedEvent)
+		if err := utils.UnmarshalJSON(data, &customerDeletedEvent, "", true, nil); err != nil {
+			return fmt.Errorf("could not unmarshal `%s` into expected (Name == customer.deleted) type CustomerDeletedEvent within SystemEvent: %w", string(data), err)
+		}
+
+		u.CustomerDeletedEvent = customerDeletedEvent
+		u.Type = SystemEventTypeCustomerDeleted
+		return nil
+	case "customer.updated":
+		customerUpdatedEvent := new(CustomerUpdatedEvent)
+		if err := utils.UnmarshalJSON(data, &customerUpdatedEvent, "", true, nil); err != nil {
+			return fmt.Errorf("could not unmarshal `%s` into expected (Name == customer.updated) type CustomerUpdatedEvent within SystemEvent: %w", string(data), err)
+		}
+
+		u.CustomerUpdatedEvent = customerUpdatedEvent
+		u.Type = SystemEventTypeCustomerUpdated
+		return nil
 	case "meter.credited":
 		meterCreditEvent := new(MeterCreditEvent)
 		if err := utils.UnmarshalJSON(data, &meterCreditEvent, "", true, nil); err != nil {
@@ -183,6 +265,24 @@ func (u *SystemEvent) UnmarshalJSON(data []byte) error {
 
 		u.MeterResetEvent = meterResetEvent
 		u.Type = SystemEventTypeMeterReset
+		return nil
+	case "order.paid":
+		orderPaidEvent := new(OrderPaidEvent)
+		if err := utils.UnmarshalJSON(data, &orderPaidEvent, "", true, nil); err != nil {
+			return fmt.Errorf("could not unmarshal `%s` into expected (Name == order.paid) type OrderPaidEvent within SystemEvent: %w", string(data), err)
+		}
+
+		u.OrderPaidEvent = orderPaidEvent
+		u.Type = SystemEventTypeOrderPaid
+		return nil
+	case "order.refunded":
+		orderRefundedEvent := new(OrderRefundedEvent)
+		if err := utils.UnmarshalJSON(data, &orderRefundedEvent, "", true, nil); err != nil {
+			return fmt.Errorf("could not unmarshal `%s` into expected (Name == order.refunded) type OrderRefundedEvent within SystemEvent: %w", string(data), err)
+		}
+
+		u.OrderRefundedEvent = orderRefundedEvent
+		u.Type = SystemEventTypeOrderRefunded
 		return nil
 	case "subscription.cycled":
 		subscriptionCycledEvent := new(SubscriptionCycledEvent)
@@ -251,6 +351,26 @@ func (u SystemEvent) MarshalJSON() ([]byte, error) {
 
 	if u.SubscriptionProductUpdatedEvent != nil {
 		return utils.MarshalJSON(u.SubscriptionProductUpdatedEvent, "", true)
+	}
+
+	if u.OrderPaidEvent != nil {
+		return utils.MarshalJSON(u.OrderPaidEvent, "", true)
+	}
+
+	if u.OrderRefundedEvent != nil {
+		return utils.MarshalJSON(u.OrderRefundedEvent, "", true)
+	}
+
+	if u.CustomerCreatedEvent != nil {
+		return utils.MarshalJSON(u.CustomerCreatedEvent, "", true)
+	}
+
+	if u.CustomerUpdatedEvent != nil {
+		return utils.MarshalJSON(u.CustomerUpdatedEvent, "", true)
+	}
+
+	if u.CustomerDeletedEvent != nil {
+		return utils.MarshalJSON(u.CustomerDeletedEvent, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type SystemEvent: all fields are null")

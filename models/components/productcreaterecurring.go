@@ -297,6 +297,8 @@ type ProductCreateRecurring struct {
 	// The number of interval units for the trial period.
 	TrialIntervalCount *int64                        `json:"trial_interval_count,omitempty"`
 	RecurringInterval  SubscriptionRecurringInterval `json:"recurring_interval"`
+	// Number of interval units of the subscription. If this is set to 1 the charge will happen every interval (e.g. every month), if set to 2 it will be every other month, and so on.
+	RecurringIntervalCount *int64 `default:"1" json:"recurring_interval_count"`
 }
 
 func (p ProductCreateRecurring) MarshalJSON() ([]byte, error) {
@@ -378,4 +380,11 @@ func (p *ProductCreateRecurring) GetRecurringInterval() SubscriptionRecurringInt
 		return SubscriptionRecurringInterval("")
 	}
 	return p.RecurringInterval
+}
+
+func (p *ProductCreateRecurring) GetRecurringIntervalCount() *int64 {
+	if p == nil {
+		return nil
+	}
+	return p.RecurringIntervalCount
 }

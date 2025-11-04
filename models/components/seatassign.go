@@ -2,11 +2,17 @@
 
 package components
 
+import (
+	"github.com/polarsource/polar-go/internal/utils"
+)
+
 type SeatAssign struct {
-	// Subscription ID. Required if checkout_id is not provided.
+	// Subscription ID. Required if checkout_id and order_id are not provided.
 	SubscriptionID *string `json:"subscription_id,omitempty"`
-	// Checkout ID. Used to look up subscription. Required if subscription_id is not provided.
+	// Checkout ID. Used to look up subscription or order from the checkout page.
 	CheckoutID *string `json:"checkout_id,omitempty"`
+	// Order ID for one-time purchases. Required if subscription_id and checkout_id are not provided.
+	OrderID *string `json:"order_id,omitempty"`
 	// Email of the customer to assign the seat to
 	Email *string `json:"email,omitempty"`
 	// External customer ID for the seat assignment
@@ -15,6 +21,19 @@ type SeatAssign struct {
 	CustomerID *string `json:"customer_id,omitempty"`
 	// Additional metadata for the seat (max 10 keys, 1KB total)
 	Metadata map[string]any `json:"metadata,omitempty"`
+	// If true, the seat will be immediately claimed without sending an invitation email. API-only feature.
+	ImmediateClaim *bool `default:"false" json:"immediate_claim"`
+}
+
+func (s SeatAssign) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(s, "", false)
+}
+
+func (s *SeatAssign) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &s, "", false, nil); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (s *SeatAssign) GetSubscriptionID() *string {
@@ -29,6 +48,13 @@ func (s *SeatAssign) GetCheckoutID() *string {
 		return nil
 	}
 	return s.CheckoutID
+}
+
+func (s *SeatAssign) GetOrderID() *string {
+	if s == nil {
+		return nil
+	}
+	return s.OrderID
 }
 
 func (s *SeatAssign) GetEmail() *string {
@@ -57,4 +83,11 @@ func (s *SeatAssign) GetMetadata() map[string]any {
 		return nil
 	}
 	return s.Metadata
+}
+
+func (s *SeatAssign) GetImmediateClaim() *bool {
+	if s == nil {
+		return nil
+	}
+	return s.ImmediateClaim
 }

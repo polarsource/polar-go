@@ -324,6 +324,132 @@ func (u NetCumulativeRevenue) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type NetCumulativeRevenue: all fields are null")
 }
 
+type CostsType string
+
+const (
+	CostsTypeInteger CostsType = "integer"
+	CostsTypeNumber  CostsType = "number"
+)
+
+type Costs struct {
+	Integer *int64   `queryParam:"inline,name=Costs"`
+	Number  *float64 `queryParam:"inline,name=Costs"`
+
+	Type CostsType
+}
+
+func CreateCostsInteger(integer int64) Costs {
+	typ := CostsTypeInteger
+
+	return Costs{
+		Integer: &integer,
+		Type:    typ,
+	}
+}
+
+func CreateCostsNumber(number float64) Costs {
+	typ := CostsTypeNumber
+
+	return Costs{
+		Number: &number,
+		Type:   typ,
+	}
+}
+
+func (u *Costs) UnmarshalJSON(data []byte) error {
+
+	var integer int64 = int64(0)
+	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
+		u.Integer = &integer
+		u.Type = CostsTypeInteger
+		return nil
+	}
+
+	var number float64 = float64(0)
+	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
+		u.Number = &number
+		u.Type = CostsTypeNumber
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for Costs", string(data))
+}
+
+func (u Costs) MarshalJSON() ([]byte, error) {
+	if u.Integer != nil {
+		return utils.MarshalJSON(u.Integer, "", true)
+	}
+
+	if u.Number != nil {
+		return utils.MarshalJSON(u.Number, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type Costs: all fields are null")
+}
+
+type CumulativeCostsType string
+
+const (
+	CumulativeCostsTypeInteger CumulativeCostsType = "integer"
+	CumulativeCostsTypeNumber  CumulativeCostsType = "number"
+)
+
+type CumulativeCosts struct {
+	Integer *int64   `queryParam:"inline,name=Cumulative_Costs"`
+	Number  *float64 `queryParam:"inline,name=Cumulative_Costs"`
+
+	Type CumulativeCostsType
+}
+
+func CreateCumulativeCostsInteger(integer int64) CumulativeCosts {
+	typ := CumulativeCostsTypeInteger
+
+	return CumulativeCosts{
+		Integer: &integer,
+		Type:    typ,
+	}
+}
+
+func CreateCumulativeCostsNumber(number float64) CumulativeCosts {
+	typ := CumulativeCostsTypeNumber
+
+	return CumulativeCosts{
+		Number: &number,
+		Type:   typ,
+	}
+}
+
+func (u *CumulativeCosts) UnmarshalJSON(data []byte) error {
+
+	var integer int64 = int64(0)
+	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
+		u.Integer = &integer
+		u.Type = CumulativeCostsTypeInteger
+		return nil
+	}
+
+	var number float64 = float64(0)
+	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
+		u.Number = &number
+		u.Type = CumulativeCostsTypeNumber
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for CumulativeCosts", string(data))
+}
+
+func (u CumulativeCosts) MarshalJSON() ([]byte, error) {
+	if u.Integer != nil {
+		return utils.MarshalJSON(u.Integer, "", true)
+	}
+
+	if u.Number != nil {
+		return utils.MarshalJSON(u.Number, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type CumulativeCosts: all fields are null")
+}
+
 type AverageOrderValueType string
 
 const (
@@ -448,6 +574,195 @@ func (u NetAverageOrderValue) MarshalJSON() ([]byte, error) {
 	}
 
 	return nil, errors.New("could not marshal union type NetAverageOrderValue: all fields are null")
+}
+
+type AverageRevenuePerUserType string
+
+const (
+	AverageRevenuePerUserTypeInteger AverageRevenuePerUserType = "integer"
+	AverageRevenuePerUserTypeNumber  AverageRevenuePerUserType = "number"
+)
+
+type AverageRevenuePerUser struct {
+	Integer *int64   `queryParam:"inline,name=Average_Revenue_Per_User"`
+	Number  *float64 `queryParam:"inline,name=Average_Revenue_Per_User"`
+
+	Type AverageRevenuePerUserType
+}
+
+func CreateAverageRevenuePerUserInteger(integer int64) AverageRevenuePerUser {
+	typ := AverageRevenuePerUserTypeInteger
+
+	return AverageRevenuePerUser{
+		Integer: &integer,
+		Type:    typ,
+	}
+}
+
+func CreateAverageRevenuePerUserNumber(number float64) AverageRevenuePerUser {
+	typ := AverageRevenuePerUserTypeNumber
+
+	return AverageRevenuePerUser{
+		Number: &number,
+		Type:   typ,
+	}
+}
+
+func (u *AverageRevenuePerUser) UnmarshalJSON(data []byte) error {
+
+	var integer int64 = int64(0)
+	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
+		u.Integer = &integer
+		u.Type = AverageRevenuePerUserTypeInteger
+		return nil
+	}
+
+	var number float64 = float64(0)
+	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
+		u.Number = &number
+		u.Type = AverageRevenuePerUserTypeNumber
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for AverageRevenuePerUser", string(data))
+}
+
+func (u AverageRevenuePerUser) MarshalJSON() ([]byte, error) {
+	if u.Integer != nil {
+		return utils.MarshalJSON(u.Integer, "", true)
+	}
+
+	if u.Number != nil {
+		return utils.MarshalJSON(u.Number, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type AverageRevenuePerUser: all fields are null")
+}
+
+type CostPerUserType string
+
+const (
+	CostPerUserTypeInteger CostPerUserType = "integer"
+	CostPerUserTypeNumber  CostPerUserType = "number"
+)
+
+type CostPerUser struct {
+	Integer *int64   `queryParam:"inline,name=Cost_Per_User"`
+	Number  *float64 `queryParam:"inline,name=Cost_Per_User"`
+
+	Type CostPerUserType
+}
+
+func CreateCostPerUserInteger(integer int64) CostPerUser {
+	typ := CostPerUserTypeInteger
+
+	return CostPerUser{
+		Integer: &integer,
+		Type:    typ,
+	}
+}
+
+func CreateCostPerUserNumber(number float64) CostPerUser {
+	typ := CostPerUserTypeNumber
+
+	return CostPerUser{
+		Number: &number,
+		Type:   typ,
+	}
+}
+
+func (u *CostPerUser) UnmarshalJSON(data []byte) error {
+
+	var integer int64 = int64(0)
+	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
+		u.Integer = &integer
+		u.Type = CostPerUserTypeInteger
+		return nil
+	}
+
+	var number float64 = float64(0)
+	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
+		u.Number = &number
+		u.Type = CostPerUserTypeNumber
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for CostPerUser", string(data))
+}
+
+func (u CostPerUser) MarshalJSON() ([]byte, error) {
+	if u.Integer != nil {
+		return utils.MarshalJSON(u.Integer, "", true)
+	}
+
+	if u.Number != nil {
+		return utils.MarshalJSON(u.Number, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type CostPerUser: all fields are null")
+}
+
+type ActiveUserByEventType string
+
+const (
+	ActiveUserByEventTypeInteger ActiveUserByEventType = "integer"
+	ActiveUserByEventTypeNumber  ActiveUserByEventType = "number"
+)
+
+type ActiveUserByEvent struct {
+	Integer *int64   `queryParam:"inline,name=Active_User_By_Event"`
+	Number  *float64 `queryParam:"inline,name=Active_User_By_Event"`
+
+	Type ActiveUserByEventType
+}
+
+func CreateActiveUserByEventInteger(integer int64) ActiveUserByEvent {
+	typ := ActiveUserByEventTypeInteger
+
+	return ActiveUserByEvent{
+		Integer: &integer,
+		Type:    typ,
+	}
+}
+
+func CreateActiveUserByEventNumber(number float64) ActiveUserByEvent {
+	typ := ActiveUserByEventTypeNumber
+
+	return ActiveUserByEvent{
+		Number: &number,
+		Type:   typ,
+	}
+}
+
+func (u *ActiveUserByEvent) UnmarshalJSON(data []byte) error {
+
+	var integer int64 = int64(0)
+	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
+		u.Integer = &integer
+		u.Type = ActiveUserByEventTypeInteger
+		return nil
+	}
+
+	var number float64 = float64(0)
+	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
+		u.Number = &number
+		u.Type = ActiveUserByEventTypeNumber
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for ActiveUserByEvent", string(data))
+}
+
+func (u ActiveUserByEvent) MarshalJSON() ([]byte, error) {
+	if u.Integer != nil {
+		return utils.MarshalJSON(u.Integer, "", true)
+	}
+
+	if u.Number != nil {
+		return utils.MarshalJSON(u.Number, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type ActiveUserByEvent: all fields are null")
 }
 
 type OneTimeProductsType string
@@ -1962,6 +2277,258 @@ func (u CanceledSubscriptionsOther) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type CanceledSubscriptionsOther: all fields are null")
 }
 
+type ChurnRateType string
+
+const (
+	ChurnRateTypeInteger ChurnRateType = "integer"
+	ChurnRateTypeNumber  ChurnRateType = "number"
+)
+
+type ChurnRate struct {
+	Integer *int64   `queryParam:"inline,name=Churn_Rate"`
+	Number  *float64 `queryParam:"inline,name=Churn_Rate"`
+
+	Type ChurnRateType
+}
+
+func CreateChurnRateInteger(integer int64) ChurnRate {
+	typ := ChurnRateTypeInteger
+
+	return ChurnRate{
+		Integer: &integer,
+		Type:    typ,
+	}
+}
+
+func CreateChurnRateNumber(number float64) ChurnRate {
+	typ := ChurnRateTypeNumber
+
+	return ChurnRate{
+		Number: &number,
+		Type:   typ,
+	}
+}
+
+func (u *ChurnRate) UnmarshalJSON(data []byte) error {
+
+	var integer int64 = int64(0)
+	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
+		u.Integer = &integer
+		u.Type = ChurnRateTypeInteger
+		return nil
+	}
+
+	var number float64 = float64(0)
+	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
+		u.Number = &number
+		u.Type = ChurnRateTypeNumber
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for ChurnRate", string(data))
+}
+
+func (u ChurnRate) MarshalJSON() ([]byte, error) {
+	if u.Integer != nil {
+		return utils.MarshalJSON(u.Integer, "", true)
+	}
+
+	if u.Number != nil {
+		return utils.MarshalJSON(u.Number, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type ChurnRate: all fields are null")
+}
+
+type GrossMarginType string
+
+const (
+	GrossMarginTypeInteger GrossMarginType = "integer"
+	GrossMarginTypeNumber  GrossMarginType = "number"
+)
+
+type GrossMargin struct {
+	Integer *int64   `queryParam:"inline,name=Gross_Margin"`
+	Number  *float64 `queryParam:"inline,name=Gross_Margin"`
+
+	Type GrossMarginType
+}
+
+func CreateGrossMarginInteger(integer int64) GrossMargin {
+	typ := GrossMarginTypeInteger
+
+	return GrossMargin{
+		Integer: &integer,
+		Type:    typ,
+	}
+}
+
+func CreateGrossMarginNumber(number float64) GrossMargin {
+	typ := GrossMarginTypeNumber
+
+	return GrossMargin{
+		Number: &number,
+		Type:   typ,
+	}
+}
+
+func (u *GrossMargin) UnmarshalJSON(data []byte) error {
+
+	var integer int64 = int64(0)
+	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
+		u.Integer = &integer
+		u.Type = GrossMarginTypeInteger
+		return nil
+	}
+
+	var number float64 = float64(0)
+	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
+		u.Number = &number
+		u.Type = GrossMarginTypeNumber
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for GrossMargin", string(data))
+}
+
+func (u GrossMargin) MarshalJSON() ([]byte, error) {
+	if u.Integer != nil {
+		return utils.MarshalJSON(u.Integer, "", true)
+	}
+
+	if u.Number != nil {
+		return utils.MarshalJSON(u.Number, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type GrossMargin: all fields are null")
+}
+
+type GrossMarginPercentageType string
+
+const (
+	GrossMarginPercentageTypeInteger GrossMarginPercentageType = "integer"
+	GrossMarginPercentageTypeNumber  GrossMarginPercentageType = "number"
+)
+
+type GrossMarginPercentage struct {
+	Integer *int64   `queryParam:"inline,name=Gross_Margin_Percentage"`
+	Number  *float64 `queryParam:"inline,name=Gross_Margin_Percentage"`
+
+	Type GrossMarginPercentageType
+}
+
+func CreateGrossMarginPercentageInteger(integer int64) GrossMarginPercentage {
+	typ := GrossMarginPercentageTypeInteger
+
+	return GrossMarginPercentage{
+		Integer: &integer,
+		Type:    typ,
+	}
+}
+
+func CreateGrossMarginPercentageNumber(number float64) GrossMarginPercentage {
+	typ := GrossMarginPercentageTypeNumber
+
+	return GrossMarginPercentage{
+		Number: &number,
+		Type:   typ,
+	}
+}
+
+func (u *GrossMarginPercentage) UnmarshalJSON(data []byte) error {
+
+	var integer int64 = int64(0)
+	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
+		u.Integer = &integer
+		u.Type = GrossMarginPercentageTypeInteger
+		return nil
+	}
+
+	var number float64 = float64(0)
+	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
+		u.Number = &number
+		u.Type = GrossMarginPercentageTypeNumber
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for GrossMarginPercentage", string(data))
+}
+
+func (u GrossMarginPercentage) MarshalJSON() ([]byte, error) {
+	if u.Integer != nil {
+		return utils.MarshalJSON(u.Integer, "", true)
+	}
+
+	if u.Number != nil {
+		return utils.MarshalJSON(u.Number, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type GrossMarginPercentage: all fields are null")
+}
+
+type CashflowType string
+
+const (
+	CashflowTypeInteger CashflowType = "integer"
+	CashflowTypeNumber  CashflowType = "number"
+)
+
+type Cashflow struct {
+	Integer *int64   `queryParam:"inline,name=Cashflow"`
+	Number  *float64 `queryParam:"inline,name=Cashflow"`
+
+	Type CashflowType
+}
+
+func CreateCashflowInteger(integer int64) Cashflow {
+	typ := CashflowTypeInteger
+
+	return Cashflow{
+		Integer: &integer,
+		Type:    typ,
+	}
+}
+
+func CreateCashflowNumber(number float64) Cashflow {
+	typ := CashflowTypeNumber
+
+	return Cashflow{
+		Number: &number,
+		Type:   typ,
+	}
+}
+
+func (u *Cashflow) UnmarshalJSON(data []byte) error {
+
+	var integer int64 = int64(0)
+	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
+		u.Integer = &integer
+		u.Type = CashflowTypeInteger
+		return nil
+	}
+
+	var number float64 = float64(0)
+	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
+		u.Number = &number
+		u.Type = CashflowTypeNumber
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for Cashflow", string(data))
+}
+
+func (u Cashflow) MarshalJSON() ([]byte, error) {
+	if u.Integer != nil {
+		return utils.MarshalJSON(u.Integer, "", true)
+	}
+
+	if u.Number != nil {
+		return utils.MarshalJSON(u.Number, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type Cashflow: all fields are null")
+}
+
 type MetricPeriod struct {
 	// Timestamp of this period data.
 	Timestamp                            time.Time                            `json:"timestamp"`
@@ -1970,8 +2537,13 @@ type MetricPeriod struct {
 	NetRevenue                           NetRevenue                           `json:"net_revenue"`
 	CumulativeRevenue                    CumulativeRevenue                    `json:"cumulative_revenue"`
 	NetCumulativeRevenue                 NetCumulativeRevenue                 `json:"net_cumulative_revenue"`
+	Costs                                Costs                                `json:"costs"`
+	CumulativeCosts                      CumulativeCosts                      `json:"cumulative_costs"`
 	AverageOrderValue                    AverageOrderValue                    `json:"average_order_value"`
 	NetAverageOrderValue                 NetAverageOrderValue                 `json:"net_average_order_value"`
+	AverageRevenuePerUser                AverageRevenuePerUser                `json:"average_revenue_per_user"`
+	CostPerUser                          CostPerUser                          `json:"cost_per_user"`
+	ActiveUserByEvent                    ActiveUserByEvent                    `json:"active_user_by_event"`
 	OneTimeProducts                      OneTimeProducts                      `json:"one_time_products"`
 	OneTimeProductsRevenue               OneTimeProductsRevenue               `json:"one_time_products_revenue"`
 	OneTimeProductsNetRevenue            OneTimeProductsNetRevenue            `json:"one_time_products_net_revenue"`
@@ -1996,6 +2568,10 @@ type MetricPeriod struct {
 	CanceledSubscriptionsTooExpensive    CanceledSubscriptionsTooExpensive    `json:"canceled_subscriptions_too_expensive"`
 	CanceledSubscriptionsUnused          CanceledSubscriptionsUnused          `json:"canceled_subscriptions_unused"`
 	CanceledSubscriptionsOther           CanceledSubscriptionsOther           `json:"canceled_subscriptions_other"`
+	ChurnRate                            ChurnRate                            `json:"churn_rate"`
+	GrossMargin                          GrossMargin                          `json:"gross_margin"`
+	GrossMarginPercentage                GrossMarginPercentage                `json:"gross_margin_percentage"`
+	Cashflow                             Cashflow                             `json:"cashflow"`
 }
 
 func (m MetricPeriod) MarshalJSON() ([]byte, error) {
@@ -2003,7 +2579,7 @@ func (m MetricPeriod) MarshalJSON() ([]byte, error) {
 }
 
 func (m *MetricPeriod) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &m, "", false, []string{"timestamp", "orders", "revenue", "net_revenue", "cumulative_revenue", "net_cumulative_revenue", "average_order_value", "net_average_order_value", "one_time_products", "one_time_products_revenue", "one_time_products_net_revenue", "new_subscriptions", "new_subscriptions_revenue", "new_subscriptions_net_revenue", "renewed_subscriptions", "renewed_subscriptions_revenue", "renewed_subscriptions_net_revenue", "active_subscriptions", "monthly_recurring_revenue", "committed_monthly_recurring_revenue", "checkouts", "succeeded_checkouts", "checkouts_conversion", "canceled_subscriptions", "canceled_subscriptions_customer_service", "canceled_subscriptions_low_quality", "canceled_subscriptions_missing_features", "canceled_subscriptions_switched_service", "canceled_subscriptions_too_complex", "canceled_subscriptions_too_expensive", "canceled_subscriptions_unused", "canceled_subscriptions_other"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &m, "", false, []string{"timestamp", "orders", "revenue", "net_revenue", "cumulative_revenue", "net_cumulative_revenue", "costs", "cumulative_costs", "average_order_value", "net_average_order_value", "average_revenue_per_user", "cost_per_user", "active_user_by_event", "one_time_products", "one_time_products_revenue", "one_time_products_net_revenue", "new_subscriptions", "new_subscriptions_revenue", "new_subscriptions_net_revenue", "renewed_subscriptions", "renewed_subscriptions_revenue", "renewed_subscriptions_net_revenue", "active_subscriptions", "monthly_recurring_revenue", "committed_monthly_recurring_revenue", "checkouts", "succeeded_checkouts", "checkouts_conversion", "canceled_subscriptions", "canceled_subscriptions_customer_service", "canceled_subscriptions_low_quality", "canceled_subscriptions_missing_features", "canceled_subscriptions_switched_service", "canceled_subscriptions_too_complex", "canceled_subscriptions_too_expensive", "canceled_subscriptions_unused", "canceled_subscriptions_other", "churn_rate", "gross_margin", "gross_margin_percentage", "cashflow"}); err != nil {
 		return err
 	}
 	return nil
@@ -2051,6 +2627,20 @@ func (m *MetricPeriod) GetNetCumulativeRevenue() NetCumulativeRevenue {
 	return m.NetCumulativeRevenue
 }
 
+func (m *MetricPeriod) GetCosts() Costs {
+	if m == nil {
+		return Costs{}
+	}
+	return m.Costs
+}
+
+func (m *MetricPeriod) GetCumulativeCosts() CumulativeCosts {
+	if m == nil {
+		return CumulativeCosts{}
+	}
+	return m.CumulativeCosts
+}
+
 func (m *MetricPeriod) GetAverageOrderValue() AverageOrderValue {
 	if m == nil {
 		return AverageOrderValue{}
@@ -2063,6 +2653,27 @@ func (m *MetricPeriod) GetNetAverageOrderValue() NetAverageOrderValue {
 		return NetAverageOrderValue{}
 	}
 	return m.NetAverageOrderValue
+}
+
+func (m *MetricPeriod) GetAverageRevenuePerUser() AverageRevenuePerUser {
+	if m == nil {
+		return AverageRevenuePerUser{}
+	}
+	return m.AverageRevenuePerUser
+}
+
+func (m *MetricPeriod) GetCostPerUser() CostPerUser {
+	if m == nil {
+		return CostPerUser{}
+	}
+	return m.CostPerUser
+}
+
+func (m *MetricPeriod) GetActiveUserByEvent() ActiveUserByEvent {
+	if m == nil {
+		return ActiveUserByEvent{}
+	}
+	return m.ActiveUserByEvent
 }
 
 func (m *MetricPeriod) GetOneTimeProducts() OneTimeProducts {
@@ -2231,4 +2842,32 @@ func (m *MetricPeriod) GetCanceledSubscriptionsOther() CanceledSubscriptionsOthe
 		return CanceledSubscriptionsOther{}
 	}
 	return m.CanceledSubscriptionsOther
+}
+
+func (m *MetricPeriod) GetChurnRate() ChurnRate {
+	if m == nil {
+		return ChurnRate{}
+	}
+	return m.ChurnRate
+}
+
+func (m *MetricPeriod) GetGrossMargin() GrossMargin {
+	if m == nil {
+		return GrossMargin{}
+	}
+	return m.GrossMargin
+}
+
+func (m *MetricPeriod) GetGrossMarginPercentage() GrossMarginPercentage {
+	if m == nil {
+		return GrossMarginPercentage{}
+	}
+	return m.GrossMarginPercentage
+}
+
+func (m *MetricPeriod) GetCashflow() Cashflow {
+	if m == nil {
+		return Cashflow{}
+	}
+	return m.Cashflow
 }

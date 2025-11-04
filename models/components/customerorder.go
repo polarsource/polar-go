@@ -43,18 +43,22 @@ type CustomerOrder struct {
 	// The invoice number associated with this order.
 	InvoiceNumber string `json:"invoice_number"`
 	// Whether an invoice has been generated for this order.
-	IsInvoiceGenerated bool    `json:"is_invoice_generated"`
-	CustomerID         string  `json:"customer_id"`
-	ProductID          string  `json:"product_id"`
-	DiscountID         *string `json:"discount_id"`
-	SubscriptionID     *string `json:"subscription_id"`
-	CheckoutID         *string `json:"checkout_id"`
+	IsInvoiceGenerated bool `json:"is_invoice_generated"`
+	// Number of seats purchased (for seat-based one-time orders).
+	Seats          *int64  `json:"seats,omitempty"`
+	CustomerID     string  `json:"customer_id"`
+	ProductID      *string `json:"product_id"`
+	DiscountID     *string `json:"discount_id"`
+	SubscriptionID *string `json:"subscription_id"`
+	CheckoutID     *string `json:"checkout_id"`
 	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
 	UserID       string                     `json:"user_id"`
-	Product      CustomerOrderProduct       `json:"product"`
+	Product      *CustomerOrderProduct      `json:"product"`
 	Subscription *CustomerOrderSubscription `json:"subscription"`
 	// Line items composing the order.
 	Items []OrderItemSchema `json:"items"`
+	// A summary description of the order.
+	Description string `json:"description"`
 	// When the next payment retry is scheduled
 	NextPaymentAttemptAt *time.Time `json:"next_payment_attempt_at,omitempty"`
 }
@@ -64,7 +68,7 @@ func (c CustomerOrder) MarshalJSON() ([]byte, error) {
 }
 
 func (c *CustomerOrder) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &c, "", false, []string{"id", "created_at", "status", "paid", "subtotal_amount", "discount_amount", "net_amount", "tax_amount", "total_amount", "applied_balance_amount", "due_amount", "refunded_amount", "refunded_tax_amount", "currency", "billing_reason", "invoice_number", "is_invoice_generated", "customer_id", "product_id", "user_id", "product", "items"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &c, "", false, []string{"id", "created_at", "status", "paid", "subtotal_amount", "discount_amount", "net_amount", "tax_amount", "total_amount", "applied_balance_amount", "due_amount", "refunded_amount", "refunded_tax_amount", "currency", "billing_reason", "invoice_number", "is_invoice_generated", "customer_id", "user_id", "items", "description"}); err != nil {
 		return err
 	}
 	return nil
@@ -210,6 +214,13 @@ func (c *CustomerOrder) GetIsInvoiceGenerated() bool {
 	return c.IsInvoiceGenerated
 }
 
+func (c *CustomerOrder) GetSeats() *int64 {
+	if c == nil {
+		return nil
+	}
+	return c.Seats
+}
+
 func (c *CustomerOrder) GetCustomerID() string {
 	if c == nil {
 		return ""
@@ -217,9 +228,9 @@ func (c *CustomerOrder) GetCustomerID() string {
 	return c.CustomerID
 }
 
-func (c *CustomerOrder) GetProductID() string {
+func (c *CustomerOrder) GetProductID() *string {
 	if c == nil {
-		return ""
+		return nil
 	}
 	return c.ProductID
 }
@@ -252,9 +263,9 @@ func (c *CustomerOrder) GetUserID() string {
 	return c.UserID
 }
 
-func (c *CustomerOrder) GetProduct() CustomerOrderProduct {
+func (c *CustomerOrder) GetProduct() *CustomerOrderProduct {
 	if c == nil {
-		return CustomerOrderProduct{}
+		return nil
 	}
 	return c.Product
 }
@@ -271,6 +282,13 @@ func (c *CustomerOrder) GetItems() []OrderItemSchema {
 		return []OrderItemSchema{}
 	}
 	return c.Items
+}
+
+func (c *CustomerOrder) GetDescription() string {
+	if c == nil {
+		return ""
+	}
+	return c.Description
 }
 
 func (c *CustomerOrder) GetNextPaymentAttemptAt() *time.Time {

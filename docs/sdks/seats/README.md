@@ -36,7 +36,7 @@ func main() {
 
     res, err := s.CustomerPortal.Seats.ListSeats(ctx, operations.CustomerPortalSeatsListSeatsSecurity{
         CustomerSession: os.Getenv("POLAR_CUSTOMER_SESSION"),
-    }, "<id>")
+    }, polargo.Pointer("<id>"), nil)
     if err != nil {
         log.Fatal(err)
     }
@@ -52,7 +52,8 @@ func main() {
 | ------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------ |
 | `ctx`                                                                                                              | [context.Context](https://pkg.go.dev/context#Context)                                                              | :heavy_check_mark:                                                                                                 | The context to use for the request.                                                                                |
 | `security`                                                                                                         | [operations.CustomerPortalSeatsListSeatsSecurity](../../models/operations/customerportalseatslistseatssecurity.md) | :heavy_check_mark:                                                                                                 | The security requirements to use for the request.                                                                  |
-| `subscriptionID`                                                                                                   | *string*                                                                                                           | :heavy_check_mark:                                                                                                 | Subscription ID                                                                                                    |
+| `subscriptionID`                                                                                                   | **string*                                                                                                          | :heavy_minus_sign:                                                                                                 | Subscription ID                                                                                                    |
+| `orderID`                                                                                                          | **string*                                                                                                          | :heavy_minus_sign:                                                                                                 | Order ID                                                                                                           |
 | `opts`                                                                                                             | [][operations.Option](../../models/operations/option.md)                                                           | :heavy_minus_sign:                                                                                                 | The options for this request.                                                                                      |
 
 ### Response

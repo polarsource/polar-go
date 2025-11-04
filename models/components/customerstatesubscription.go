@@ -224,17 +224,17 @@ func (u CustomerStateSubscriptionMetadata) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type CustomerStateSubscriptionMetadata: all fields are null")
 }
 
-type CustomerStateSubscriptionStatus string
+type Status string
 
 const (
-	CustomerStateSubscriptionStatusActive   CustomerStateSubscriptionStatus = "active"
-	CustomerStateSubscriptionStatusTrialing CustomerStateSubscriptionStatus = "trialing"
+	StatusActive   Status = "active"
+	StatusTrialing Status = "trialing"
 )
 
-func (e CustomerStateSubscriptionStatus) ToPointer() *CustomerStateSubscriptionStatus {
+func (e Status) ToPointer() *Status {
 	return &e
 }
-func (e *CustomerStateSubscriptionStatus) UnmarshalJSON(data []byte) error {
+func (e *Status) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -243,10 +243,10 @@ func (e *CustomerStateSubscriptionStatus) UnmarshalJSON(data []byte) error {
 	case "active":
 		fallthrough
 	case "trialing":
-		*e = CustomerStateSubscriptionStatus(v)
+		*e = Status(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for CustomerStateSubscriptionStatus: %v", v)
+		return fmt.Errorf("invalid value for Status: %v", v)
 	}
 }
 
@@ -261,7 +261,7 @@ type CustomerStateSubscription struct {
 	// Key-value object storing custom field values.
 	CustomFieldData map[string]*CustomerStateSubscriptionCustomFieldData `json:"custom_field_data,omitempty"`
 	Metadata        map[string]CustomerStateSubscriptionMetadata         `json:"metadata"`
-	Status          CustomerStateSubscriptionStatus                      `json:"status"`
+	Status          Status                                               `json:"status"`
 	// The amount of the subscription.
 	Amount int64 `json:"amount"`
 	// The currency of the subscription.
@@ -337,9 +337,9 @@ func (c *CustomerStateSubscription) GetMetadata() map[string]CustomerStateSubscr
 	return c.Metadata
 }
 
-func (c *CustomerStateSubscription) GetStatus() CustomerStateSubscriptionStatus {
+func (c *CustomerStateSubscription) GetStatus() Status {
 	if c == nil {
-		return CustomerStateSubscriptionStatus("")
+		return Status("")
 	}
 	return c.Status
 }

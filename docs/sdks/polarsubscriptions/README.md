@@ -35,11 +35,7 @@ func main() {
 
     s := polargo.New()
 
-    res, err := s.CustomerPortal.Subscriptions.List(ctx, operations.CustomerPortalSubscriptionsListRequest{
-        OrganizationID: polargo.Pointer(operations.CreateCustomerPortalSubscriptionsListQueryParamOrganizationIDFilterStr(
-            "1dbfc517-0bbf-4301-9ba8-555ca42b9737",
-        )),
-    }, operations.CustomerPortalSubscriptionsListSecurity{
+    res, err := s.CustomerPortal.Subscriptions.List(ctx, operations.CustomerPortalSubscriptionsListRequest{}, operations.CustomerPortalSubscriptionsListSecurity{
         CustomerSession: os.Getenv("POLAR_CUSTOMER_SESSION"),
     })
     if err != nil {

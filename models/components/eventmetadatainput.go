@@ -11,17 +11,21 @@ import (
 type EventMetadataInputType string
 
 const (
-	EventMetadataInputTypeStr     EventMetadataInputType = "str"
-	EventMetadataInputTypeInteger EventMetadataInputType = "integer"
-	EventMetadataInputTypeNumber  EventMetadataInputType = "number"
-	EventMetadataInputTypeBoolean EventMetadataInputType = "boolean"
+	EventMetadataInputTypeStr               EventMetadataInputType = "str"
+	EventMetadataInputTypeInteger           EventMetadataInputType = "integer"
+	EventMetadataInputTypeNumber            EventMetadataInputType = "number"
+	EventMetadataInputTypeBoolean           EventMetadataInputType = "boolean"
+	EventMetadataInputTypeCostMetadataInput EventMetadataInputType = "CostMetadata-Input"
+	EventMetadataInputTypeLLMMetadata       EventMetadataInputType = "LLMMetadata"
 )
 
 type EventMetadataInput struct {
-	Str     *string  `queryParam:"inline,name=EventMetadataInput"`
-	Integer *int64   `queryParam:"inline,name=EventMetadataInput"`
-	Number  *float64 `queryParam:"inline,name=EventMetadataInput"`
-	Boolean *bool    `queryParam:"inline,name=EventMetadataInput"`
+	Str               *string            `queryParam:"inline,name=EventMetadataInput"`
+	Integer           *int64             `queryParam:"inline,name=EventMetadataInput"`
+	Number            *float64           `queryParam:"inline,name=EventMetadataInput"`
+	Boolean           *bool              `queryParam:"inline,name=EventMetadataInput"`
+	CostMetadataInput *CostMetadataInput `queryParam:"inline,name=EventMetadataInput"`
+	LLMMetadata       *LLMMetadata       `queryParam:"inline,name=EventMetadataInput"`
 
 	Type EventMetadataInputType
 }
@@ -62,7 +66,39 @@ func CreateEventMetadataInputBoolean(boolean bool) EventMetadataInput {
 	}
 }
 
+func CreateEventMetadataInputCostMetadataInput(costMetadataInput CostMetadataInput) EventMetadataInput {
+	typ := EventMetadataInputTypeCostMetadataInput
+
+	return EventMetadataInput{
+		CostMetadataInput: &costMetadataInput,
+		Type:              typ,
+	}
+}
+
+func CreateEventMetadataInputLLMMetadata(llmMetadata LLMMetadata) EventMetadataInput {
+	typ := EventMetadataInputTypeLLMMetadata
+
+	return EventMetadataInput{
+		LLMMetadata: &llmMetadata,
+		Type:        typ,
+	}
+}
+
 func (u *EventMetadataInput) UnmarshalJSON(data []byte) error {
+
+	var llmMetadata LLMMetadata = LLMMetadata{}
+	if err := utils.UnmarshalJSON(data, &llmMetadata, "", true, nil); err == nil {
+		u.LLMMetadata = &llmMetadata
+		u.Type = EventMetadataInputTypeLLMMetadata
+		return nil
+	}
+
+	var costMetadataInput CostMetadataInput = CostMetadataInput{}
+	if err := utils.UnmarshalJSON(data, &costMetadataInput, "", true, nil); err == nil {
+		u.CostMetadataInput = &costMetadataInput
+		u.Type = EventMetadataInputTypeCostMetadataInput
+		return nil
+	}
 
 	var str string = ""
 	if err := utils.UnmarshalJSON(data, &str, "", true, nil); err == nil {
@@ -110,6 +146,14 @@ func (u EventMetadataInput) MarshalJSON() ([]byte, error) {
 
 	if u.Boolean != nil {
 		return utils.MarshalJSON(u.Boolean, "", true)
+	}
+
+	if u.CostMetadataInput != nil {
+		return utils.MarshalJSON(u.CostMetadataInput, "", true)
+	}
+
+	if u.LLMMetadata != nil {
+		return utils.MarshalJSON(u.LLMMetadata, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type EventMetadataInput: all fields are null")

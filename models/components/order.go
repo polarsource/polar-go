@@ -366,13 +366,15 @@ type Order struct {
 	// The invoice number associated with this order.
 	InvoiceNumber string `json:"invoice_number"`
 	// Whether an invoice has been generated for this order.
-	IsInvoiceGenerated bool                     `json:"is_invoice_generated"`
-	CustomerID         string                   `json:"customer_id"`
-	ProductID          string                   `json:"product_id"`
-	DiscountID         *string                  `json:"discount_id"`
-	SubscriptionID     *string                  `json:"subscription_id"`
-	CheckoutID         *string                  `json:"checkout_id"`
-	Metadata           map[string]OrderMetadata `json:"metadata"`
+	IsInvoiceGenerated bool `json:"is_invoice_generated"`
+	// Number of seats purchased (for seat-based one-time orders).
+	Seats          *int64                   `json:"seats,omitempty"`
+	CustomerID     string                   `json:"customer_id"`
+	ProductID      *string                  `json:"product_id"`
+	DiscountID     *string                  `json:"discount_id"`
+	SubscriptionID *string                  `json:"subscription_id"`
+	CheckoutID     *string                  `json:"checkout_id"`
+	Metadata       map[string]OrderMetadata `json:"metadata"`
 	// Key-value object storing custom field values.
 	CustomFieldData map[string]*OrderCustomFieldData `json:"custom_field_data,omitempty"`
 	// Platform fee amount in cents.
@@ -380,11 +382,13 @@ type Order struct {
 	Customer          OrderCustomer `json:"customer"`
 	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
 	UserID       string             `json:"user_id"`
-	Product      OrderProduct       `json:"product"`
+	Product      *OrderProduct      `json:"product"`
 	Discount     *OrderDiscount     `json:"discount"`
 	Subscription *OrderSubscription `json:"subscription"`
 	// Line items composing the order.
 	Items []OrderItemSchema `json:"items"`
+	// A summary description of the order.
+	Description string `json:"description"`
 }
 
 func (o Order) MarshalJSON() ([]byte, error) {
@@ -392,7 +396,7 @@ func (o Order) MarshalJSON() ([]byte, error) {
 }
 
 func (o *Order) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &o, "", false, []string{"id", "created_at", "status", "paid", "subtotal_amount", "discount_amount", "net_amount", "tax_amount", "total_amount", "applied_balance_amount", "due_amount", "refunded_amount", "refunded_tax_amount", "currency", "billing_reason", "invoice_number", "is_invoice_generated", "customer_id", "product_id", "metadata", "platform_fee_amount", "customer", "user_id", "product", "items"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &o, "", false, []string{"id", "created_at", "status", "paid", "subtotal_amount", "discount_amount", "net_amount", "tax_amount", "total_amount", "applied_balance_amount", "due_amount", "refunded_amount", "refunded_tax_amount", "currency", "billing_reason", "invoice_number", "is_invoice_generated", "customer_id", "metadata", "platform_fee_amount", "customer", "user_id", "items", "description"}); err != nil {
 		return err
 	}
 	return nil
@@ -538,6 +542,13 @@ func (o *Order) GetIsInvoiceGenerated() bool {
 	return o.IsInvoiceGenerated
 }
 
+func (o *Order) GetSeats() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Seats
+}
+
 func (o *Order) GetCustomerID() string {
 	if o == nil {
 		return ""
@@ -545,9 +556,9 @@ func (o *Order) GetCustomerID() string {
 	return o.CustomerID
 }
 
-func (o *Order) GetProductID() string {
+func (o *Order) GetProductID() *string {
 	if o == nil {
-		return ""
+		return nil
 	}
 	return o.ProductID
 }
@@ -608,9 +619,9 @@ func (o *Order) GetUserID() string {
 	return o.UserID
 }
 
-func (o *Order) GetProduct() OrderProduct {
+func (o *Order) GetProduct() *OrderProduct {
 	if o == nil {
-		return OrderProduct{}
+		return nil
 	}
 	return o.Product
 }
@@ -634,4 +645,11 @@ func (o *Order) GetItems() []OrderItemSchema {
 		return []OrderItemSchema{}
 	}
 	return o.Items
+}
+
+func (o *Order) GetDescription() string {
+	if o == nil {
+		return ""
+	}
+	return o.Description
 }

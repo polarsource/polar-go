@@ -16,6 +16,9 @@ const (
 	WebhookEventTypeCustomerUpdated        WebhookEventType = "customer.updated"
 	WebhookEventTypeCustomerDeleted        WebhookEventType = "customer.deleted"
 	WebhookEventTypeCustomerStateChanged   WebhookEventType = "customer.state_changed"
+	WebhookEventTypeCustomerSeatAssigned   WebhookEventType = "customer_seat.assigned"
+	WebhookEventTypeCustomerSeatClaimed    WebhookEventType = "customer_seat.claimed"
+	WebhookEventTypeCustomerSeatRevoked    WebhookEventType = "customer_seat.revoked"
 	WebhookEventTypeOrderCreated           WebhookEventType = "order.created"
 	WebhookEventTypeOrderUpdated           WebhookEventType = "order.updated"
 	WebhookEventTypeOrderPaid              WebhookEventType = "order.paid"
@@ -59,6 +62,12 @@ func (e *WebhookEventType) UnmarshalJSON(data []byte) error {
 	case "customer.deleted":
 		fallthrough
 	case "customer.state_changed":
+		fallthrough
+	case "customer_seat.assigned":
+		fallthrough
+	case "customer_seat.claimed":
+		fallthrough
+	case "customer_seat.revoked":
 		fallthrough
 	case "order.created":
 		fallthrough

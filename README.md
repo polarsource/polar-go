@@ -163,11 +163,7 @@ func main() {
 
 	s := polargo.New()
 
-	res, err := s.CustomerPortal.BenefitGrants.List(ctx, operations.CustomerPortalBenefitGrantsListRequest{
-		OrganizationID: polargo.Pointer(operations.CreateCustomerPortalBenefitGrantsListQueryParamOrganizationIDFilterStr(
-			"1dbfc517-0bbf-4301-9ba8-555ca42b9737",
-		)),
-	}, operations.CustomerPortalBenefitGrantsListSecurity{
+	res, err := s.CustomerPortal.BenefitGrants.List(ctx, operations.CustomerPortalBenefitGrantsListRequest{}, operations.CustomerPortalBenefitGrantsListSecurity{
 		CustomerSession: os.Getenv("POLAR_CUSTOMER_SESSION"),
 	})
 	if err != nil {
@@ -300,6 +296,11 @@ func main() {
 * [Update](docs/sdks/polarsubscriptions/README.md#update) - Update Subscription
 * [Cancel](docs/sdks/polarsubscriptions/README.md#cancel) - Cancel Subscription
 
+#### [CustomerPortal.Wallets](docs/sdks/polarwallets/README.md)
+
+* [List](docs/sdks/polarwallets/README.md#list) - List Wallets
+* [Get](docs/sdks/polarwallets/README.md#get) - Get Wallet
+
 ### [Customers](docs/sdks/customers/README.md)
 
 * [List](docs/sdks/customers/README.md#list) - List Customers
@@ -314,6 +315,15 @@ func main() {
 * [GetState](docs/sdks/customers/README.md#getstate) - Get Customer State
 * [GetStateExternal](docs/sdks/customers/README.md#getstateexternal) - Get Customer State by External ID
 * [GetBalance](docs/sdks/customers/README.md#getbalance) - Get Customer Balance
+
+### [CustomerSeats](docs/sdks/customerseats/README.md)
+
+* [AssignSeat](docs/sdks/customerseats/README.md#assignseat) - Assign Seat
+* [ListSeats](docs/sdks/customerseats/README.md#listseats) - List Seats
+* [RevokeSeat](docs/sdks/customerseats/README.md#revokeseat) - Revoke Seat
+* [ResendInvitation](docs/sdks/customerseats/README.md#resendinvitation) - Resend Invitation
+* [GetClaimInfo](docs/sdks/customerseats/README.md#getclaiminfo) - Get Claim Info
+* [ClaimSeat](docs/sdks/customerseats/README.md#claimseat) - Claim Seat
 
 ### [CustomerSessions](docs/sdks/customersessions/README.md)
 
@@ -391,6 +401,7 @@ func main() {
 ### [Orders](docs/sdks/orders/README.md)
 
 * [List](docs/sdks/orders/README.md#list) - List Orders
+* [Export](docs/sdks/orders/README.md#export) - Export Subscriptions
 * [Get](docs/sdks/orders/README.md#get) - Get Order
 * [Update](docs/sdks/orders/README.md#update) - Update Order
 * [GenerateInvoice](docs/sdks/orders/README.md#generateinvoice) - Generate Order Invoice
@@ -424,10 +435,17 @@ func main() {
 ### [Subscriptions](docs/sdks/subscriptions/README.md)
 
 * [List](docs/sdks/subscriptions/README.md#list) - List Subscriptions
+* [Create](docs/sdks/subscriptions/README.md#create) - Create Subscription
 * [Export](docs/sdks/subscriptions/README.md#export) - Export Subscriptions
 * [Get](docs/sdks/subscriptions/README.md#get) - Get Subscription
 * [Update](docs/sdks/subscriptions/README.md#update) - Update Subscription
 * [Revoke](docs/sdks/subscriptions/README.md#revoke) - Revoke Subscription
+
+### [Wallets](docs/sdks/wallets/README.md)
+
+* [List](docs/sdks/wallets/README.md#list) - List Wallets
+* [Get](docs/sdks/wallets/README.md#get) - Get Wallet
+* [TopUp](docs/sdks/wallets/README.md#topup) - Top-Up Wallet
 
 ### [Webhooks](docs/sdks/webhooks/README.md)
 
@@ -687,7 +705,7 @@ func main() {
 	ctx := context.Background()
 
 	s := polargo.New(
-		polargo.WithServer("sandbox"),
+		polargo.WithServer("production"),
 		polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
 	)
 

@@ -34,11 +34,7 @@ func main() {
 
     s := polargo.New()
 
-    res, err := s.CustomerPortal.BenefitGrants.List(ctx, operations.CustomerPortalBenefitGrantsListRequest{
-        OrganizationID: polargo.Pointer(operations.CreateCustomerPortalBenefitGrantsListQueryParamOrganizationIDFilterStr(
-            "1dbfc517-0bbf-4301-9ba8-555ca42b9737",
-        )),
-    }, operations.CustomerPortalBenefitGrantsListSecurity{
+    res, err := s.CustomerPortal.BenefitGrants.List(ctx, operations.CustomerPortalBenefitGrantsListRequest{}, operations.CustomerPortalBenefitGrantsListSecurity{
         CustomerSession: os.Getenv("POLAR_CUSTOMER_SESSION"),
     })
     if err != nil {

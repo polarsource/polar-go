@@ -27,3 +27,15 @@ eventMetadataOutput := components.CreateEventMetadataOutputNumber(float64{/* val
 eventMetadataOutput := components.CreateEventMetadataOutputBoolean(bool{/* values here */})
 ```
 
+### CostMetadataOutput
+
+```go
+eventMetadataOutput := components.CreateEventMetadataOutputCostMetadataOutput(components.CostMetadataOutput{/* values here */})
+```
+
+### LLMMetadata
+
+```go
+eventMetadataOutput := components.CreateEventMetadataOutputLLMMetadata(components.LLMMetadata{/* values here */})
+```
+

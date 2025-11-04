@@ -33,9 +33,10 @@ func newSeats(rootSDK *Polar, sdkConfig config.SDKConfiguration, hooks *hooks.Ho
 
 // ListSeats - List Seats
 // **Scopes**: `customer_portal:read` `customer_portal:write`
-func (s *Seats) ListSeats(ctx context.Context, security operations.CustomerPortalSeatsListSeatsSecurity, subscriptionID string, opts ...operations.Option) (*operations.CustomerPortalSeatsListSeatsResponse, error) {
+func (s *Seats) ListSeats(ctx context.Context, security operations.CustomerPortalSeatsListSeatsSecurity, subscriptionID *string, orderID *string, opts ...operations.Option) (*operations.CustomerPortalSeatsListSeatsResponse, error) {
 	request := operations.CustomerPortalSeatsListSeatsRequest{
 		SubscriptionID: subscriptionID,
+		OrderID:        orderID,
 	}
 
 	o := operations.Options{}

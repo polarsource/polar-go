@@ -5,4 +5,5 @@
 
 | Field              | Type               | Required           | Description        |
 | ------------------ | ------------------ | ------------------ | ------------------ |
-| `SubscriptionID`   | *string*           | :heavy_check_mark: | Subscription ID    |
+| `SubscriptionID`   | **string*          | :heavy_minus_sign: | Subscription ID    |
+| `OrderID`          | **string*          | :heavy_minus_sign: | Order ID           |

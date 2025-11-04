@@ -27,6 +27,24 @@ systemEvent := components.CreateSystemEventBenefitRevoked(components.BenefitRevo
 systemEvent := components.CreateSystemEventBenefitUpdated(components.BenefitUpdatedEvent{/* values here */})
 ```
 
+### CustomerCreatedEvent
+
+```go
+systemEvent := components.CreateSystemEventCustomerCreated(components.CustomerCreatedEvent{/* values here */})
+```
+
+### CustomerDeletedEvent
+
+```go
+systemEvent := components.CreateSystemEventCustomerDeleted(components.CustomerDeletedEvent{/* values here */})
+```
+
+### CustomerUpdatedEvent
+
+```go
+systemEvent := components.CreateSystemEventCustomerUpdated(components.CustomerUpdatedEvent{/* values here */})
+```
+
 ### MeterCreditEvent
 
 ```go
@@ -37,6 +55,18 @@ systemEvent := components.CreateSystemEventMeterCredited(components.MeterCreditE
 
 ```go
 systemEvent := components.CreateSystemEventMeterReset(components.MeterResetEvent{/* values here */})
+```
+
+### OrderPaidEvent
+
+```go
+systemEvent := components.CreateSystemEventOrderPaid(components.OrderPaidEvent{/* values here */})
+```
+
+### OrderRefundedEvent
+
+```go
+systemEvent := components.CreateSystemEventOrderRefunded(components.OrderRefundedEvent{/* values here */})
 ```
 
 ### SubscriptionCycledEvent

@@ -20,70 +20,6 @@ func (c *CustomerPortalOrdersListSecurity) GetCustomerSession() string {
 	return c.CustomerSession
 }
 
-type CustomerPortalOrdersListQueryParamOrganizationIDFilterType string
-
-const (
-	CustomerPortalOrdersListQueryParamOrganizationIDFilterTypeStr        CustomerPortalOrdersListQueryParamOrganizationIDFilterType = "str"
-	CustomerPortalOrdersListQueryParamOrganizationIDFilterTypeArrayOfStr CustomerPortalOrdersListQueryParamOrganizationIDFilterType = "arrayOfStr"
-)
-
-// CustomerPortalOrdersListQueryParamOrganizationIDFilter - Filter by organization ID.
-type CustomerPortalOrdersListQueryParamOrganizationIDFilter struct {
-	Str        *string  `queryParam:"inline,name=OrganizationID_Filter"`
-	ArrayOfStr []string `queryParam:"inline,name=OrganizationID_Filter"`
-
-	Type CustomerPortalOrdersListQueryParamOrganizationIDFilterType
-}
-
-func CreateCustomerPortalOrdersListQueryParamOrganizationIDFilterStr(str string) CustomerPortalOrdersListQueryParamOrganizationIDFilter {
-	typ := CustomerPortalOrdersListQueryParamOrganizationIDFilterTypeStr
-
-	return CustomerPortalOrdersListQueryParamOrganizationIDFilter{
-		Str:  &str,
-		Type: typ,
-	}
-}
-
-func CreateCustomerPortalOrdersListQueryParamOrganizationIDFilterArrayOfStr(arrayOfStr []string) CustomerPortalOrdersListQueryParamOrganizationIDFilter {
-	typ := CustomerPortalOrdersListQueryParamOrganizationIDFilterTypeArrayOfStr
-
-	return CustomerPortalOrdersListQueryParamOrganizationIDFilter{
-		ArrayOfStr: arrayOfStr,
-		Type:       typ,
-	}
-}
-
-func (u *CustomerPortalOrdersListQueryParamOrganizationIDFilter) UnmarshalJSON(data []byte) error {
-
-	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, nil); err == nil {
-		u.Str = &str
-		u.Type = CustomerPortalOrdersListQueryParamOrganizationIDFilterTypeStr
-		return nil
-	}
-
-	var arrayOfStr []string = []string{}
-	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, nil); err == nil {
-		u.ArrayOfStr = arrayOfStr
-		u.Type = CustomerPortalOrdersListQueryParamOrganizationIDFilterTypeArrayOfStr
-		return nil
-	}
-
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for CustomerPortalOrdersListQueryParamOrganizationIDFilter", string(data))
-}
-
-func (u CustomerPortalOrdersListQueryParamOrganizationIDFilter) MarshalJSON() ([]byte, error) {
-	if u.Str != nil {
-		return utils.MarshalJSON(u.Str, "", true)
-	}
-
-	if u.ArrayOfStr != nil {
-		return utils.MarshalJSON(u.ArrayOfStr, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type CustomerPortalOrdersListQueryParamOrganizationIDFilter: all fields are null")
-}
-
 type CustomerPortalOrdersListQueryParamProductIDFilterType string
 
 const (
@@ -277,8 +213,6 @@ func (u CustomerPortalOrdersListQueryParamSubscriptionIDFilter) MarshalJSON() ([
 }
 
 type CustomerPortalOrdersListRequest struct {
-	// Filter by organization ID.
-	OrganizationID *CustomerPortalOrdersListQueryParamOrganizationIDFilter `queryParam:"style=form,explode=true,name=organization_id"`
 	// Filter by product ID.
 	ProductID *CustomerPortalOrdersListQueryParamProductIDFilter `queryParam:"style=form,explode=true,name=product_id"`
 	// Filter by product billing type. `recurring` will filter data corresponding to subscriptions creations or renewals. `one_time` will filter data corresponding to one-time purchases.
@@ -304,13 +238,6 @@ func (c *CustomerPortalOrdersListRequest) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
-}
-
-func (c *CustomerPortalOrdersListRequest) GetOrganizationID() *CustomerPortalOrdersListQueryParamOrganizationIDFilter {
-	if c == nil {
-		return nil
-	}
-	return c.OrganizationID
 }
 
 func (c *CustomerPortalOrdersListRequest) GetProductID() *CustomerPortalOrdersListQueryParamProductIDFilter {

@@ -11,6 +11,9 @@
 | `WebhookEventTypeCustomerUpdated`        | customer.updated                         |
 | `WebhookEventTypeCustomerDeleted`        | customer.deleted                         |
 | `WebhookEventTypeCustomerStateChanged`   | customer.state_changed                   |
+| `WebhookEventTypeCustomerSeatAssigned`   | customer_seat.assigned                   |
+| `WebhookEventTypeCustomerSeatClaimed`    | customer_seat.claimed                    |
+| `WebhookEventTypeCustomerSeatRevoked`    | customer_seat.revoked                    |
 | `WebhookEventTypeOrderCreated`           | order.created                            |
 | `WebhookEventTypeOrderUpdated`           | order.updated                            |
 | `WebhookEventTypeOrderPaid`              | order.paid                               |

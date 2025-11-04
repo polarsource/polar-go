@@ -13,8 +13,12 @@ type EventCreateExternalCustomer struct {
 	// The name of the event.
 	Name string `json:"name"`
 	// The ID of the organization owning the event. **Required unless you use an organization token.**
-	OrganizationID *string                       `json:"organization_id,omitempty"`
-	Metadata       map[string]EventMetadataInput `json:"metadata,omitempty"`
+	OrganizationID *string `json:"organization_id,omitempty"`
+	// Your unique identifier for this event. Useful for deduplication and parent-child relationships.
+	ExternalID *string `json:"external_id,omitempty"`
+	// The ID of the parent event. Can be either a Polar event ID (UUID) or an external event ID.
+	ParentID *string                       `json:"parent_id,omitempty"`
+	Metadata map[string]EventMetadataInput `json:"metadata,omitempty"`
 	// ID of the customer in your system associated with the event.
 	ExternalCustomerID string `json:"external_customer_id"`
 }
@@ -49,6 +53,20 @@ func (e *EventCreateExternalCustomer) GetOrganizationID() *string {
 		return nil
 	}
 	return e.OrganizationID
+}
+
+func (e *EventCreateExternalCustomer) GetExternalID() *string {
+	if e == nil {
+		return nil
+	}
+	return e.ExternalID
+}
+
+func (e *EventCreateExternalCustomer) GetParentID() *string {
+	if e == nil {
+		return nil
+	}
+	return e.ParentID
 }
 
 func (e *EventCreateExternalCustomer) GetMetadata() map[string]EventMetadataInput {

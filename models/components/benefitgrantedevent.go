@@ -21,6 +21,8 @@ type BenefitGrantedEvent struct {
 	Customer *Customer `json:"customer"`
 	// ID of the customer in your system associated with the event.
 	ExternalCustomerID *string `json:"external_customer_id"`
+	// Number of direct child events linked to this event.
+	ChildCount *int64 `default:"0" json:"child_count"`
 	// The source of the event. `system` events are created by Polar. `user` events are the one you create through our ingestion API.
 	source string `const:"system" json:"source"`
 	// The name of the event.
@@ -79,6 +81,13 @@ func (b *BenefitGrantedEvent) GetExternalCustomerID() *string {
 		return nil
 	}
 	return b.ExternalCustomerID
+}
+
+func (b *BenefitGrantedEvent) GetChildCount() *int64 {
+	if b == nil {
+		return nil
+	}
+	return b.ChildCount
 }
 
 func (b *BenefitGrantedEvent) GetSource() string {

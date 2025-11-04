@@ -21,6 +21,8 @@ type UserEvent struct {
 	Customer *Customer `json:"customer"`
 	// ID of the customer in your system associated with the event.
 	ExternalCustomerID *string `json:"external_customer_id"`
+	// Number of direct child events linked to this event.
+	ChildCount *int64 `default:"0" json:"child_count"`
 	// The name of the event.
 	Name string `json:"name"`
 	// The source of the event. `system` events are created by Polar. `user` events are the one you create through our ingestion API.
@@ -79,6 +81,13 @@ func (u *UserEvent) GetExternalCustomerID() *string {
 		return nil
 	}
 	return u.ExternalCustomerID
+}
+
+func (u *UserEvent) GetChildCount() *int64 {
+	if u == nil {
+		return nil
+	}
+	return u.ChildCount
 }
 
 func (u *UserEvent) GetName() string {

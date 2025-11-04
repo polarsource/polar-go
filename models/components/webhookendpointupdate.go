@@ -9,6 +9,8 @@ type WebhookEndpointUpdate struct {
 	Secret *string            `json:"secret,omitempty"`
 	Format *WebhookFormat     `json:"format,omitempty"`
 	Events []WebhookEventType `json:"events,omitempty"`
+	// Whether the webhook endpoint is enabled.
+	Enabled *bool `json:"enabled,omitempty"`
 }
 
 func (w *WebhookEndpointUpdate) GetURL() *string {
@@ -37,4 +39,11 @@ func (w *WebhookEndpointUpdate) GetEvents() []WebhookEventType {
 		return nil
 	}
 	return w.Events
+}
+
+func (w *WebhookEndpointUpdate) GetEnabled() *bool {
+	if w == nil {
+		return nil
+	}
+	return w.Enabled
 }

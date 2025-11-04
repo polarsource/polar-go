@@ -123,10 +123,9 @@ const (
 	CheckoutPublicConfirmedProductPriceTypeProductPrice                CheckoutPublicConfirmedProductPriceType = "ProductPrice"
 )
 
-// CheckoutPublicConfirmedProductPrice - Price of the selected product.
 type CheckoutPublicConfirmedProductPrice struct {
-	LegacyRecurringProductPrice *LegacyRecurringProductPrice `queryParam:"inline,name=Product_Price"`
-	ProductPrice                *ProductPrice                `queryParam:"inline,name=Product_Price"`
+	LegacyRecurringProductPrice *LegacyRecurringProductPrice `queryParam:"inline,name=product_price"`
+	ProductPrice                *ProductPrice                `queryParam:"inline,name=product_price"`
 
 	Type CheckoutPublicConfirmedProductPriceType
 }
@@ -336,10 +335,12 @@ type CheckoutPublicConfirmed struct {
 	ActiveTrialIntervalCount *int64 `json:"active_trial_interval_count"`
 	// End date and time of the trial period, if any.
 	TrialEnd *time.Time `json:"trial_end"`
+	// ID of the organization owning the checkout session.
+	OrganizationID string `json:"organization_id"`
 	// ID of the product to checkout.
-	ProductID string `json:"product_id"`
+	ProductID *string `json:"product_id"`
 	// ID of the product price to checkout.
-	ProductPriceID string `json:"product_price_id"`
+	ProductPriceID *string `json:"product_price_id"`
 	// ID of the discount applied to the checkout.
 	DiscountID *string `json:"discount_id"`
 	// Whether to allow the customer to apply discount codes. If you apply a discount through `discount_id`, it'll still be applied, but the customer won't be able to change it.
@@ -371,14 +372,14 @@ type CheckoutPublicConfirmed struct {
 	BillingAddressFields     CheckoutBillingAddressFields `json:"billing_address_fields"`
 	// List of products available to select.
 	Products []CheckoutProduct `json:"products"`
-	// Product data for a checkout session.
-	Product CheckoutProduct `json:"product"`
+	// Product selected to checkout.
+	Product *CheckoutProduct `json:"product"`
 	// Price of the selected product.
-	ProductPrice         CheckoutPublicConfirmedProductPrice `json:"product_price"`
-	Discount             *CheckoutPublicConfirmedDiscount    `json:"discount"`
-	Organization         Organization                        `json:"organization"`
-	AttachedCustomFields []AttachedCustomField               `json:"attached_custom_fields"`
-	CustomerSessionToken string                              `json:"customer_session_token"`
+	ProductPrice         *CheckoutPublicConfirmedProductPrice `json:"product_price"`
+	Discount             *CheckoutPublicConfirmedDiscount     `json:"discount"`
+	Organization         Organization                         `json:"organization"`
+	AttachedCustomFields []AttachedCustomField                `json:"attached_custom_fields"`
+	CustomerSessionToken string                               `json:"customer_session_token"`
 }
 
 func (c CheckoutPublicConfirmed) MarshalJSON() ([]byte, error) {
@@ -386,7 +387,7 @@ func (c CheckoutPublicConfirmed) MarshalJSON() ([]byte, error) {
 }
 
 func (c *CheckoutPublicConfirmed) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &c, "", false, []string{"id", "created_at", "payment_processor", "status", "client_secret", "url", "expires_at", "success_url", "amount", "discount_amount", "net_amount", "total_amount", "currency", "product_id", "product_price_id", "allow_discount_codes", "require_billing_address", "is_discount_applicable", "is_free_product_price", "is_payment_required", "is_payment_setup_required", "is_payment_form_required", "is_business_customer", "payment_processor_metadata", "billing_address_fields", "products", "product", "product_price", "organization", "attached_custom_fields", "customer_session_token"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &c, "", false, []string{"id", "created_at", "payment_processor", "status", "client_secret", "url", "expires_at", "success_url", "amount", "discount_amount", "net_amount", "total_amount", "currency", "organization_id", "allow_discount_codes", "require_billing_address", "is_discount_applicable", "is_free_product_price", "is_payment_required", "is_payment_setup_required", "is_payment_form_required", "is_business_customer", "payment_processor_metadata", "billing_address_fields", "products", "organization", "customer_session_token"}); err != nil {
 		return err
 	}
 	return nil
@@ -550,16 +551,23 @@ func (c *CheckoutPublicConfirmed) GetTrialEnd() *time.Time {
 	return c.TrialEnd
 }
 
-func (c *CheckoutPublicConfirmed) GetProductID() string {
+func (c *CheckoutPublicConfirmed) GetOrganizationID() string {
 	if c == nil {
 		return ""
+	}
+	return c.OrganizationID
+}
+
+func (c *CheckoutPublicConfirmed) GetProductID() *string {
+	if c == nil {
+		return nil
 	}
 	return c.ProductID
 }
 
-func (c *CheckoutPublicConfirmed) GetProductPriceID() string {
+func (c *CheckoutPublicConfirmed) GetProductPriceID() *string {
 	if c == nil {
-		return ""
+		return nil
 	}
 	return c.ProductPriceID
 }
@@ -697,16 +705,16 @@ func (c *CheckoutPublicConfirmed) GetProducts() []CheckoutProduct {
 	return c.Products
 }
 
-func (c *CheckoutPublicConfirmed) GetProduct() CheckoutProduct {
+func (c *CheckoutPublicConfirmed) GetProduct() *CheckoutProduct {
 	if c == nil {
-		return CheckoutProduct{}
+		return nil
 	}
 	return c.Product
 }
 
-func (c *CheckoutPublicConfirmed) GetProductPrice() CheckoutPublicConfirmedProductPrice {
+func (c *CheckoutPublicConfirmed) GetProductPrice() *CheckoutPublicConfirmedProductPrice {
 	if c == nil {
-		return CheckoutPublicConfirmedProductPrice{}
+		return nil
 	}
 	return c.ProductPrice
 }
@@ -727,7 +735,7 @@ func (c *CheckoutPublicConfirmed) GetOrganization() Organization {
 
 func (c *CheckoutPublicConfirmed) GetAttachedCustomFields() []AttachedCustomField {
 	if c == nil {
-		return []AttachedCustomField{}
+		return nil
 	}
 	return c.AttachedCustomFields
 }

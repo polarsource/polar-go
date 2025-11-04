@@ -21,6 +21,12 @@ subscriptionUpdate := components.CreateSubscriptionUpdateSubscriptionUpdateDisco
 subscriptionUpdate := components.CreateSubscriptionUpdateSubscriptionUpdateTrial(components.SubscriptionUpdateTrial{/* values here */})
 ```
 
+### SubscriptionUpdateSeats
+
+```go
+subscriptionUpdate := components.CreateSubscriptionUpdateSubscriptionUpdateSeats(components.SubscriptionUpdateSeats{/* values here */})
+```
+
 ### SubscriptionCancel
 
 ```go

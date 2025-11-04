@@ -2,9 +2,26 @@
 
 package components
 
+import (
+	"github.com/polarsource/polar-go/internal/utils"
+)
+
 type EventsIngestResponse struct {
 	// Number of events inserted.
 	Inserted int64 `json:"inserted"`
+	// Number of duplicate events skipped.
+	Duplicates *int64 `default:"0" json:"duplicates"`
+}
+
+func (e EventsIngestResponse) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(e, "", false)
+}
+
+func (e *EventsIngestResponse) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &e, "", false, []string{"inserted"}); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (e *EventsIngestResponse) GetInserted() int64 {
@@ -12,4 +29,11 @@ func (e *EventsIngestResponse) GetInserted() int64 {
 		return 0
 	}
 	return e.Inserted
+}
+
+func (e *EventsIngestResponse) GetDuplicates() *int64 {
+	if e == nil {
+		return nil
+	}
+	return e.Duplicates
 }

@@ -2,7 +2,7 @@
 
 package polargo
 
-// Generated from OpenAPI doc version 0.1.0 and generator version 2.727.9
+// Generated from OpenAPI doc version 0.1.0 and generator version 2.737.0
 
 import (
 	"context"
@@ -77,11 +77,13 @@ type Polar struct {
 	Discounts        *Discounts
 	Customers        *Customers
 	CustomerPortal   *CustomerPortal
+	CustomerSeats    *CustomerSeats
 	CustomerSessions *CustomerSessions
 	Events           *Events
 	Meters           *Meters
 	CustomerMeters   *CustomerMeters
 	Payments         *Payments
+	Wallets          *Wallets
 
 	sdkConfiguration config.SDKConfiguration
 	hooks            *hooks.Hooks
@@ -159,9 +161,9 @@ func WithTimeout(timeout time.Duration) SDKOption {
 // New creates a new instance of the SDK with the provided options
 func New(opts ...SDKOption) *Polar {
 	sdk := &Polar{
-		SDKVersion: "0.11.1",
+		SDKVersion: "0.12.0",
 		sdkConfiguration: config.SDKConfiguration{
-			UserAgent:  "speakeasy-sdk/go 0.11.1 2.727.9 0.1.0 github.com/polarsource/polar-go",
+			UserAgent:  "speakeasy-sdk/go 0.12.0 2.737.0 0.1.0 github.com/polarsource/polar-go",
 			ServerList: ServerList,
 		},
 		hooks: hooks.New(),
@@ -207,11 +209,13 @@ func New(opts ...SDKOption) *Polar {
 	sdk.Discounts = newDiscounts(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.Customers = newCustomers(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.CustomerPortal = newCustomerPortal(sdk, sdk.sdkConfiguration, sdk.hooks)
+	sdk.CustomerSeats = newCustomerSeats(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.CustomerSessions = newCustomerSessions(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.Events = newEvents(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.Meters = newMeters(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.CustomerMeters = newCustomerMeters(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.Payments = newPayments(sdk, sdk.sdkConfiguration, sdk.hooks)
+	sdk.Wallets = newWallets(sdk, sdk.sdkConfiguration, sdk.hooks)
 
 	return sdk
 }

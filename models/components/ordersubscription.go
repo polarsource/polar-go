@@ -129,7 +129,9 @@ type OrderSubscription struct {
 	// The currency of the subscription.
 	Currency          string                        `json:"currency"`
 	RecurringInterval SubscriptionRecurringInterval `json:"recurring_interval"`
-	Status            SubscriptionStatus            `json:"status"`
+	// Number of interval units of the subscription. If this is set to 1 the charge will happen every interval (e.g. every month), if set to 2 it will be every other month, and so on.
+	RecurringIntervalCount int64              `json:"recurring_interval_count"`
+	Status                 SubscriptionStatus `json:"status"`
 	// The start timestamp of the current billing period.
 	CurrentPeriodStart time.Time `json:"current_period_start"`
 	// The end timestamp of the current billing period.
@@ -153,8 +155,10 @@ type OrderSubscription struct {
 	// The ID of the subscribed product.
 	ProductID string `json:"product_id"`
 	// The ID of the applied discount, if any.
-	DiscountID                  *string                     `json:"discount_id"`
-	CheckoutID                  *string                     `json:"checkout_id"`
+	DiscountID *string `json:"discount_id"`
+	CheckoutID *string `json:"checkout_id"`
+	// The number of seats for seat-based subscriptions. None for non-seat subscriptions.
+	Seats                       *int64                      `json:"seats,omitempty"`
 	CustomerCancellationReason  *CustomerCancellationReason `json:"customer_cancellation_reason"`
 	CustomerCancellationComment *string                     `json:"customer_cancellation_comment"`
 }
@@ -164,7 +168,7 @@ func (o OrderSubscription) MarshalJSON() ([]byte, error) {
 }
 
 func (o *OrderSubscription) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &o, "", false, []string{"metadata", "created_at", "id", "amount", "currency", "recurring_interval", "status", "current_period_start", "cancel_at_period_end", "customer_id", "product_id"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &o, "", false, []string{"metadata", "created_at", "id", "amount", "currency", "recurring_interval", "recurring_interval_count", "status", "current_period_start", "cancel_at_period_end", "customer_id", "product_id"}); err != nil {
 		return err
 	}
 	return nil
@@ -217,6 +221,13 @@ func (o *OrderSubscription) GetRecurringInterval() SubscriptionRecurringInterval
 		return SubscriptionRecurringInterval("")
 	}
 	return o.RecurringInterval
+}
+
+func (o *OrderSubscription) GetRecurringIntervalCount() int64 {
+	if o == nil {
+		return 0
+	}
+	return o.RecurringIntervalCount
 }
 
 func (o *OrderSubscription) GetStatus() SubscriptionStatus {
@@ -315,6 +326,13 @@ func (o *OrderSubscription) GetCheckoutID() *string {
 		return nil
 	}
 	return o.CheckoutID
+}
+
+func (o *OrderSubscription) GetSeats() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.Seats
 }
 
 func (o *OrderSubscription) GetCustomerCancellationReason() *CustomerCancellationReason {

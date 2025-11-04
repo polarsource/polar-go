@@ -256,7 +256,6 @@ func (s *PolarBenefitGrants) List(ctx context.Context, request operations.Custom
 			operations.CustomerPortalBenefitGrantsListRequest{
 				TypeFilter:     request.TypeFilter,
 				BenefitID:      request.BenefitID,
-				OrganizationID: request.OrganizationID,
 				CheckoutID:     request.CheckoutID,
 				OrderID:        request.OrderID,
 				SubscriptionID: request.SubscriptionID,
