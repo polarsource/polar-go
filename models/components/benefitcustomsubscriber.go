@@ -133,7 +133,7 @@ type BenefitCustomSubscriber struct {
 	// The ID of the organization owning the benefit.
 	OrganizationID string                                     `json:"organization_id"`
 	Metadata       map[string]BenefitCustomSubscriberMetadata `json:"metadata"`
-	Organization   Organization                               `json:"organization"`
+	Organization   BenefitSubscriberOrganization              `json:"organization"`
 	// Properties available to subscribers for a benefit of type `custom`.
 	Properties BenefitCustomSubscriberProperties `json:"properties"`
 }
@@ -209,9 +209,9 @@ func (b *BenefitCustomSubscriber) GetMetadata() map[string]BenefitCustomSubscrib
 	return b.Metadata
 }
 
-func (b *BenefitCustomSubscriber) GetOrganization() Organization {
+func (b *BenefitCustomSubscriber) GetOrganization() BenefitSubscriberOrganization {
 	if b == nil {
-		return Organization{}
+		return BenefitSubscriberOrganization{}
 	}
 	return b.Organization
 }

@@ -3,13 +3,45 @@
 package operations
 
 import (
+	"github.com/polarsource/polar-go/internal/utils"
 	"github.com/polarsource/polar-go/models/components"
 )
+
+type CustomersCreateRequest struct {
+	// Include members in the response. Only populated when set to true.
+	IncludeMembers *bool                     `default:"false" queryParam:"style=form,explode=true,name=include_members"`
+	CustomerCreate components.CustomerCreate `request:"mediaType=application/json"`
+}
+
+func (c CustomersCreateRequest) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(c, "", false)
+}
+
+func (c *CustomersCreateRequest) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &c, "", false, []string{"CustomerCreate"}); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (c *CustomersCreateRequest) GetIncludeMembers() *bool {
+	if c == nil {
+		return nil
+	}
+	return c.IncludeMembers
+}
+
+func (c *CustomersCreateRequest) GetCustomerCreate() components.CustomerCreate {
+	if c == nil {
+		return components.CustomerCreate{}
+	}
+	return c.CustomerCreate
+}
 
 type CustomersCreateResponse struct {
 	HTTPMeta components.HTTPMetadata `json:"-"`
 	// Customer created.
-	Customer *components.Customer
+	CustomerWithMembers *components.CustomerWithMembers
 }
 
 func (c *CustomersCreateResponse) GetHTTPMeta() components.HTTPMetadata {
@@ -19,9 +51,9 @@ func (c *CustomersCreateResponse) GetHTTPMeta() components.HTTPMetadata {
 	return c.HTTPMeta
 }
 
-func (c *CustomersCreateResponse) GetCustomer() *components.Customer {
+func (c *CustomersCreateResponse) GetCustomerWithMembers() *components.CustomerWithMembers {
 	if c == nil {
 		return nil
 	}
-	return c.Customer
+	return c.CustomerWithMembers
 }

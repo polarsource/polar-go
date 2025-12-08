@@ -12,14 +12,17 @@ type Organization struct {
 	CreatedAt time.Time `json:"created_at"`
 	// Last modification timestamp of the object.
 	ModifiedAt *time.Time `json:"modified_at"`
-	// The organization ID.
+	// The ID of the object.
 	ID string `json:"id"`
 	// Organization name shown in checkout, customer portal, emails etc.
 	Name string `json:"name"`
 	// Unique organization slug in checkout, customer portal and credit card statements.
 	Slug string `json:"slug"`
 	// Avatar URL shown in checkout, customer portal, emails etc.
-	AvatarURL *string `json:"avatar_url"`
+	AvatarURL         *string                       `json:"avatar_url"`
+	ProrationBehavior SubscriptionProrationBehavior `json:"proration_behavior"`
+	// Whether customers can update their subscriptions from the customer portal.
+	AllowCustomerUpdates bool `json:"allow_customer_updates"`
 	// Public support email.
 	Email *string `json:"email"`
 	// Official website of the organization.
@@ -41,7 +44,7 @@ func (o Organization) MarshalJSON() ([]byte, error) {
 }
 
 func (o *Organization) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &o, "", false, []string{"created_at", "id", "name", "slug", "socials", "status", "subscription_settings", "notification_settings", "customer_email_settings"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &o, "", false, []string{"created_at", "id", "name", "slug", "proration_behavior", "allow_customer_updates", "socials", "status", "subscription_settings", "notification_settings", "customer_email_settings"}); err != nil {
 		return err
 	}
 	return nil
@@ -87,6 +90,20 @@ func (o *Organization) GetAvatarURL() *string {
 		return nil
 	}
 	return o.AvatarURL
+}
+
+func (o *Organization) GetProrationBehavior() SubscriptionProrationBehavior {
+	if o == nil {
+		return SubscriptionProrationBehavior("")
+	}
+	return o.ProrationBehavior
+}
+
+func (o *Organization) GetAllowCustomerUpdates() bool {
+	if o == nil {
+		return false
+	}
+	return o.AllowCustomerUpdates
 }
 
 func (o *Organization) GetEmail() *string {

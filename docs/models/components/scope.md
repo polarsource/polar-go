@@ -9,6 +9,7 @@
 | `ScopeProfile`                     | profile                            |
 | `ScopeEmail`                       | email                              |
 | `ScopeUserRead`                    | user:read                          |
+| `ScopeUserWrite`                   | user:write                         |
 | `ScopeWebRead`                     | web:read                           |
 | `ScopeWebWrite`                    | web:write                          |
 | `ScopeOrganizationsRead`           | organizations:read                 |
@@ -39,6 +40,8 @@
 | `ScopeSubscriptionsWrite`          | subscriptions:write                |
 | `ScopeCustomersRead`               | customers:read                     |
 | `ScopeCustomersWrite`              | customers:write                    |
+| `ScopeMembersRead`                 | members:read                       |
+| `ScopeMembersWrite`                | members:write                      |
 | `ScopeWalletsRead`                 | wallets:read                       |
 | `ScopeWalletsWrite`                | wallets:write                      |
 | `ScopeCustomerMetersRead`          | customer_meters:read               |

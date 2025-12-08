@@ -14,8 +14,9 @@ type ProductPriceFree struct {
 	// Last modification timestamp of the object.
 	ModifiedAt *time.Time `json:"modified_at"`
 	// The ID of the price.
-	ID         string `json:"id"`
-	amountType string `const:"free" json:"amount_type"`
+	ID         string             `json:"id"`
+	Source     ProductPriceSource `json:"source"`
+	amountType string             `const:"free" json:"amount_type"`
 	// Whether the price is archived and no longer available.
 	IsArchived bool `json:"is_archived"`
 	// The ID of the product owning the price.
@@ -30,7 +31,7 @@ func (p ProductPriceFree) MarshalJSON() ([]byte, error) {
 }
 
 func (p *ProductPriceFree) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &p, "", false, []string{"created_at", "id", "amount_type", "is_archived", "product_id", "type"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &p, "", false, []string{"created_at", "id", "source", "amount_type", "is_archived", "product_id", "type"}); err != nil {
 		return err
 	}
 	return nil
@@ -55,6 +56,13 @@ func (p *ProductPriceFree) GetID() string {
 		return ""
 	}
 	return p.ID
+}
+
+func (p *ProductPriceFree) GetSource() ProductPriceSource {
+	if p == nil {
+		return ProductPriceSource("")
+	}
+	return p.Source
 }
 
 func (p *ProductPriceFree) GetAmountType() string {

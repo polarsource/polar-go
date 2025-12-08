@@ -103,7 +103,7 @@ type CustomerOrderProduct struct {
 	Benefits []BenefitPublic `json:"benefits"`
 	// List of medias associated to the product.
 	Medias       []ProductMediaFileRead `json:"medias"`
-	Organization Organization           `json:"organization"`
+	Organization CustomerOrganization   `json:"organization"`
 }
 
 func (c CustomerOrderProduct) MarshalJSON() ([]byte, error) {
@@ -222,9 +222,9 @@ func (c *CustomerOrderProduct) GetMedias() []ProductMediaFileRead {
 	return c.Medias
 }
 
-func (c *CustomerOrderProduct) GetOrganization() Organization {
+func (c *CustomerOrderProduct) GetOrganization() CustomerOrganization {
 	if c == nil {
-		return Organization{}
+		return CustomerOrganization{}
 	}
 	return c.Organization
 }

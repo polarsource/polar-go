@@ -257,6 +257,7 @@ func (s *Customers) List(ctx context.Context, request operations.CustomersListRe
 				OrganizationID: request.OrganizationID,
 				Email:          request.Email,
 				Query:          request.Query,
+				IncludeMembers: request.IncludeMembers,
 				Page:           &nP,
 				Limit:          request.Limit,
 				Sorting:        request.Sorting,
@@ -275,12 +276,12 @@ func (s *Customers) List(ctx context.Context, request operations.CustomersListRe
 				return nil, err
 			}
 
-			var out components.ListResourceCustomer
+			var out components.ListResourceCustomerWithMembers
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.ListResourceCustomer = &out
+			res.ListResourceCustomerWithMembers = &out
 		default:
 			rawBody, err := utils.ConsumeRawBody(httpRes)
 			if err != nil {
@@ -337,7 +338,12 @@ func (s *Customers) List(ctx context.Context, request operations.CustomersListRe
 // Create a customer.
 //
 // **Scopes**: `customers:write`
-func (s *Customers) Create(ctx context.Context, request components.CustomerCreate, opts ...operations.Option) (*operations.CustomersCreateResponse, error) {
+func (s *Customers) Create(ctx context.Context, customerCreate components.CustomerCreate, includeMembers *bool, opts ...operations.Option) (*operations.CustomersCreateResponse, error) {
+	request := operations.CustomersCreateRequest{
+		IncludeMembers: includeMembers,
+		CustomerCreate: customerCreate,
+	}
+
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -370,7 +376,7 @@ func (s *Customers) Create(ctx context.Context, request components.CustomerCreat
 		OAuth2Scopes:     nil,
 		SecuritySource:   s.sdkConfiguration.Security,
 	}
-	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "Request", "json", `request:"mediaType=application/json"`)
+	bodyReader, reqContentType, err := utils.SerializeRequestBody(ctx, request, false, false, "CustomerCreate", "json", `request:"mediaType=application/json"`)
 	if err != nil {
 		return nil, err
 	}
@@ -394,6 +400,10 @@ func (s *Customers) Create(ctx context.Context, request components.CustomerCreat
 	req.Header.Set("User-Agent", s.sdkConfiguration.UserAgent)
 	if reqContentType != "" {
 		req.Header.Set("Content-Type", reqContentType)
+	}
+
+	if err := utils.PopulateQueryParams(ctx, req, request, nil); err != nil {
+		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
 	if err := utils.PopulateSecurity(ctx, req, s.sdkConfiguration.Security); err != nil {
@@ -511,12 +521,12 @@ func (s *Customers) Create(ctx context.Context, request components.CustomerCreat
 				return nil, err
 			}
 
-			var out components.Customer
+			var out components.CustomerWithMembers
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.Customer = &out
+			res.CustomerWithMembers = &out
 		default:
 			rawBody, err := utils.ConsumeRawBody(httpRes)
 			if err != nil {
@@ -810,9 +820,10 @@ func (s *Customers) Export(ctx context.Context, organizationID *operations.Custo
 // Get a customer by ID.
 //
 // **Scopes**: `customers:read` `customers:write`
-func (s *Customers) Get(ctx context.Context, id string, opts ...operations.Option) (*operations.CustomersGetResponse, error) {
+func (s *Customers) Get(ctx context.Context, id string, includeMembers *bool, opts ...operations.Option) (*operations.CustomersGetResponse, error) {
 	request := operations.CustomersGetRequest{
-		ID: id,
+		ID:             id,
+		IncludeMembers: includeMembers,
 	}
 
 	o := operations.Options{}
@@ -865,6 +876,10 @@ func (s *Customers) Get(ctx context.Context, id string, opts ...operations.Optio
 	}
 	req.Header.Set("Accept", "application/json")
 	req.Header.Set("User-Agent", s.sdkConfiguration.UserAgent)
+
+	if err := utils.PopulateQueryParams(ctx, req, request, nil); err != nil {
+		return nil, fmt.Errorf("error populating query params: %w", err)
+	}
 
 	if err := utils.PopulateSecurity(ctx, req, s.sdkConfiguration.Security); err != nil {
 		return nil, err
@@ -981,12 +996,12 @@ func (s *Customers) Get(ctx context.Context, id string, opts ...operations.Optio
 				return nil, err
 			}
 
-			var out components.Customer
+			var out components.CustomerWithMembers
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.Customer = &out
+			res.CustomerWithMembers = &out
 		default:
 			rawBody, err := utils.ConsumeRawBody(httpRes)
 			if err != nil {
@@ -1064,9 +1079,10 @@ func (s *Customers) Get(ctx context.Context, id string, opts ...operations.Optio
 // Update a customer.
 //
 // **Scopes**: `customers:write`
-func (s *Customers) Update(ctx context.Context, id string, customerUpdate components.CustomerUpdate, opts ...operations.Option) (*operations.CustomersUpdateResponse, error) {
+func (s *Customers) Update(ctx context.Context, id string, customerUpdate components.CustomerUpdate, includeMembers *bool, opts ...operations.Option) (*operations.CustomersUpdateResponse, error) {
 	request := operations.CustomersUpdateRequest{
 		ID:             id,
+		IncludeMembers: includeMembers,
 		CustomerUpdate: customerUpdate,
 	}
 
@@ -1126,6 +1142,10 @@ func (s *Customers) Update(ctx context.Context, id string, customerUpdate compon
 	req.Header.Set("User-Agent", s.sdkConfiguration.UserAgent)
 	if reqContentType != "" {
 		req.Header.Set("Content-Type", reqContentType)
+	}
+
+	if err := utils.PopulateQueryParams(ctx, req, request, nil); err != nil {
+		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
 	if err := utils.PopulateSecurity(ctx, req, s.sdkConfiguration.Security); err != nil {
@@ -1243,12 +1263,12 @@ func (s *Customers) Update(ctx context.Context, id string, customerUpdate compon
 				return nil, err
 			}
 
-			var out components.Customer
+			var out components.CustomerWithMembers
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.Customer = &out
+			res.CustomerWithMembers = &out
 		default:
 			rawBody, err := utils.ConsumeRawBody(httpRes)
 			if err != nil {
@@ -1572,9 +1592,10 @@ func (s *Customers) Delete(ctx context.Context, id string, opts ...operations.Op
 // Get a customer by external ID.
 //
 // **Scopes**: `customers:read` `customers:write`
-func (s *Customers) GetExternal(ctx context.Context, externalID string, opts ...operations.Option) (*operations.CustomersGetExternalResponse, error) {
+func (s *Customers) GetExternal(ctx context.Context, externalID string, includeMembers *bool, opts ...operations.Option) (*operations.CustomersGetExternalResponse, error) {
 	request := operations.CustomersGetExternalRequest{
-		ExternalID: externalID,
+		ExternalID:     externalID,
+		IncludeMembers: includeMembers,
 	}
 
 	o := operations.Options{}
@@ -1627,6 +1648,10 @@ func (s *Customers) GetExternal(ctx context.Context, externalID string, opts ...
 	}
 	req.Header.Set("Accept", "application/json")
 	req.Header.Set("User-Agent", s.sdkConfiguration.UserAgent)
+
+	if err := utils.PopulateQueryParams(ctx, req, request, nil); err != nil {
+		return nil, fmt.Errorf("error populating query params: %w", err)
+	}
 
 	if err := utils.PopulateSecurity(ctx, req, s.sdkConfiguration.Security); err != nil {
 		return nil, err
@@ -1743,12 +1768,12 @@ func (s *Customers) GetExternal(ctx context.Context, externalID string, opts ...
 				return nil, err
 			}
 
-			var out components.Customer
+			var out components.CustomerWithMembers
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.Customer = &out
+			res.CustomerWithMembers = &out
 		default:
 			rawBody, err := utils.ConsumeRawBody(httpRes)
 			if err != nil {
@@ -1826,9 +1851,10 @@ func (s *Customers) GetExternal(ctx context.Context, externalID string, opts ...
 // Update a customer by external ID.
 //
 // **Scopes**: `customers:write`
-func (s *Customers) UpdateExternal(ctx context.Context, externalID string, customerUpdateExternalID components.CustomerUpdateExternalID, opts ...operations.Option) (*operations.CustomersUpdateExternalResponse, error) {
+func (s *Customers) UpdateExternal(ctx context.Context, externalID string, customerUpdateExternalID components.CustomerUpdateExternalID, includeMembers *bool, opts ...operations.Option) (*operations.CustomersUpdateExternalResponse, error) {
 	request := operations.CustomersUpdateExternalRequest{
 		ExternalID:               externalID,
+		IncludeMembers:           includeMembers,
 		CustomerUpdateExternalID: customerUpdateExternalID,
 	}
 
@@ -1888,6 +1914,10 @@ func (s *Customers) UpdateExternal(ctx context.Context, externalID string, custo
 	req.Header.Set("User-Agent", s.sdkConfiguration.UserAgent)
 	if reqContentType != "" {
 		req.Header.Set("Content-Type", reqContentType)
+	}
+
+	if err := utils.PopulateQueryParams(ctx, req, request, nil); err != nil {
+		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
 	if err := utils.PopulateSecurity(ctx, req, s.sdkConfiguration.Security); err != nil {
@@ -2005,12 +2035,12 @@ func (s *Customers) UpdateExternal(ctx context.Context, externalID string, custo
 				return nil, err
 			}
 
-			var out components.Customer
+			var out components.CustomerWithMembers
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.Customer = &out
+			res.CustomerWithMembers = &out
 		default:
 			rawBody, err := utils.ConsumeRawBody(httpRes)
 			if err != nil {
@@ -2767,260 +2797,6 @@ func (s *Customers) GetStateExternal(ctx context.Context, externalID string, opt
 			}
 
 			res.CustomerState = &out
-		default:
-			rawBody, err := utils.ConsumeRawBody(httpRes)
-			if err != nil {
-				return nil, err
-			}
-			return nil, apierrors.NewAPIError(fmt.Sprintf("unknown content-type received: %s", httpRes.Header.Get("Content-Type")), httpRes.StatusCode, string(rawBody), httpRes)
-		}
-	case httpRes.StatusCode == 404:
-		switch {
-		case utils.MatchContentType(httpRes.Header.Get("Content-Type"), `application/json`):
-			rawBody, err := utils.ConsumeRawBody(httpRes)
-			if err != nil {
-				return nil, err
-			}
-
-			var out apierrors.ResourceNotFound
-			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
-				return nil, err
-			}
-
-			return nil, &out
-		default:
-			rawBody, err := utils.ConsumeRawBody(httpRes)
-			if err != nil {
-				return nil, err
-			}
-			return nil, apierrors.NewAPIError(fmt.Sprintf("unknown content-type received: %s", httpRes.Header.Get("Content-Type")), httpRes.StatusCode, string(rawBody), httpRes)
-		}
-	case httpRes.StatusCode == 422:
-		switch {
-		case utils.MatchContentType(httpRes.Header.Get("Content-Type"), `application/json`):
-			rawBody, err := utils.ConsumeRawBody(httpRes)
-			if err != nil {
-				return nil, err
-			}
-
-			var out apierrors.HTTPValidationError
-			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
-				return nil, err
-			}
-
-			return nil, &out
-		default:
-			rawBody, err := utils.ConsumeRawBody(httpRes)
-			if err != nil {
-				return nil, err
-			}
-			return nil, apierrors.NewAPIError(fmt.Sprintf("unknown content-type received: %s", httpRes.Header.Get("Content-Type")), httpRes.StatusCode, string(rawBody), httpRes)
-		}
-	case httpRes.StatusCode >= 400 && httpRes.StatusCode < 500:
-		rawBody, err := utils.ConsumeRawBody(httpRes)
-		if err != nil {
-			return nil, err
-		}
-		return nil, apierrors.NewAPIError("API error occurred", httpRes.StatusCode, string(rawBody), httpRes)
-	case httpRes.StatusCode >= 500 && httpRes.StatusCode < 600:
-		rawBody, err := utils.ConsumeRawBody(httpRes)
-		if err != nil {
-			return nil, err
-		}
-		return nil, apierrors.NewAPIError("API error occurred", httpRes.StatusCode, string(rawBody), httpRes)
-	default:
-		rawBody, err := utils.ConsumeRawBody(httpRes)
-		if err != nil {
-			return nil, err
-		}
-		return nil, apierrors.NewAPIError("unknown status code returned", httpRes.StatusCode, string(rawBody), httpRes)
-	}
-
-	return res, nil
-
-}
-
-// GetBalance - Get Customer Balance
-// Get customer balance information.
-//
-// **Scopes**: `customers:read` `customers:write`
-func (s *Customers) GetBalance(ctx context.Context, id string, opts ...operations.Option) (*operations.CustomersGetBalanceResponse, error) {
-	request := operations.CustomersGetBalanceRequest{
-		ID: id,
-	}
-
-	o := operations.Options{}
-	supportedOptions := []string{
-		operations.SupportedOptionRetries,
-		operations.SupportedOptionTimeout,
-	}
-
-	for _, opt := range opts {
-		if err := opt(&o, supportedOptions...); err != nil {
-			return nil, fmt.Errorf("error applying option: %w", err)
-		}
-	}
-
-	var baseURL string
-	if o.ServerURL == nil {
-		baseURL = utils.ReplaceParameters(s.sdkConfiguration.GetServerDetails())
-	} else {
-		baseURL = *o.ServerURL
-	}
-	opURL, err := utils.GenerateURL(ctx, baseURL, "/v1/customers/{id}/balance", request, nil)
-	if err != nil {
-		return nil, fmt.Errorf("error generating URL: %w", err)
-	}
-
-	hookCtx := hooks.HookContext{
-		SDK:              s.rootSDK,
-		SDKConfiguration: s.sdkConfiguration,
-		BaseURL:          baseURL,
-		Context:          ctx,
-		OperationID:      "customers:get_balance",
-		OAuth2Scopes:     nil,
-		SecuritySource:   s.sdkConfiguration.Security,
-	}
-
-	timeout := o.Timeout
-	if timeout == nil {
-		timeout = s.sdkConfiguration.Timeout
-	}
-
-	if timeout != nil {
-		var cancel context.CancelFunc
-		ctx, cancel = context.WithTimeout(ctx, *timeout)
-		defer cancel()
-	}
-
-	req, err := http.NewRequestWithContext(ctx, "GET", opURL, nil)
-	if err != nil {
-		return nil, fmt.Errorf("error creating request: %w", err)
-	}
-	req.Header.Set("Accept", "application/json")
-	req.Header.Set("User-Agent", s.sdkConfiguration.UserAgent)
-
-	if err := utils.PopulateSecurity(ctx, req, s.sdkConfiguration.Security); err != nil {
-		return nil, err
-	}
-
-	for k, v := range o.SetHeaders {
-		req.Header.Set(k, v)
-	}
-
-	globalRetryConfig := s.sdkConfiguration.RetryConfig
-	retryConfig := o.Retries
-	if retryConfig == nil {
-		if globalRetryConfig != nil {
-			retryConfig = globalRetryConfig
-		}
-	}
-
-	var httpRes *http.Response
-	if retryConfig != nil {
-		httpRes, err = utils.Retry(ctx, utils.Retries{
-			Config: retryConfig,
-			StatusCodes: []string{
-				"429",
-				"500",
-				"502",
-				"503",
-				"504",
-			},
-		}, func() (*http.Response, error) {
-			if req.Body != nil && req.Body != http.NoBody && req.GetBody != nil {
-				copyBody, err := req.GetBody()
-
-				if err != nil {
-					return nil, err
-				}
-
-				req.Body = copyBody
-			}
-
-			req, err = s.hooks.BeforeRequest(hooks.BeforeRequestContext{HookContext: hookCtx}, req)
-			if err != nil {
-				if retry.IsPermanentError(err) || retry.IsTemporaryError(err) {
-					return nil, err
-				}
-
-				return nil, retry.Permanent(err)
-			}
-
-			httpRes, err := s.sdkConfiguration.Client.Do(req)
-			if err != nil || httpRes == nil {
-				if err != nil {
-					err = fmt.Errorf("error sending request: %w", err)
-				} else {
-					err = fmt.Errorf("error sending request: no response")
-				}
-
-				_, err = s.hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
-			}
-			return httpRes, err
-		})
-
-		if err != nil {
-			return nil, err
-		} else {
-			httpRes, err = s.hooks.AfterSuccess(hooks.AfterSuccessContext{HookContext: hookCtx}, httpRes)
-			if err != nil {
-				return nil, err
-			}
-		}
-	} else {
-		req, err = s.hooks.BeforeRequest(hooks.BeforeRequestContext{HookContext: hookCtx}, req)
-		if err != nil {
-			return nil, err
-		}
-
-		httpRes, err = s.sdkConfiguration.Client.Do(req)
-		if err != nil || httpRes == nil {
-			if err != nil {
-				err = fmt.Errorf("error sending request: %w", err)
-			} else {
-				err = fmt.Errorf("error sending request: no response")
-			}
-
-			_, err = s.hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
-			return nil, err
-		} else if utils.MatchStatusCodes([]string{"404", "422", "4XX", "5XX"}, httpRes.StatusCode) {
-			_httpRes, err := s.hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
-			if err != nil {
-				return nil, err
-			} else if _httpRes != nil {
-				httpRes = _httpRes
-			}
-		} else {
-			httpRes, err = s.hooks.AfterSuccess(hooks.AfterSuccessContext{HookContext: hookCtx}, httpRes)
-			if err != nil {
-				return nil, err
-			}
-		}
-	}
-
-	res := &operations.CustomersGetBalanceResponse{
-		HTTPMeta: components.HTTPMetadata{
-			Request:  req,
-			Response: httpRes,
-		},
-	}
-
-	switch {
-	case httpRes.StatusCode == 200:
-		switch {
-		case utils.MatchContentType(httpRes.Header.Get("Content-Type"), `application/json`):
-			rawBody, err := utils.ConsumeRawBody(httpRes)
-			if err != nil {
-				return nil, err
-			}
-
-			var out components.CustomerBalance
-			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
-				return nil, err
-			}
-
-			res.CustomerBalance = &out
 		default:
 			rawBody, err := utils.ConsumeRawBody(httpRes)
 			if err != nil {

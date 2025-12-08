@@ -133,7 +133,7 @@ type BenefitDiscordSubscriber struct {
 	// The ID of the organization owning the benefit.
 	OrganizationID string                                      `json:"organization_id"`
 	Metadata       map[string]BenefitDiscordSubscriberMetadata `json:"metadata"`
-	Organization   Organization                                `json:"organization"`
+	Organization   BenefitSubscriberOrganization               `json:"organization"`
 	// Properties available to subscribers for a benefit of type `discord`.
 	Properties BenefitDiscordSubscriberProperties `json:"properties"`
 }
@@ -209,9 +209,9 @@ func (b *BenefitDiscordSubscriber) GetMetadata() map[string]BenefitDiscordSubscr
 	return b.Metadata
 }
 
-func (b *BenefitDiscordSubscriber) GetOrganization() Organization {
+func (b *BenefitDiscordSubscriber) GetOrganization() BenefitSubscriberOrganization {
 	if b == nil {
-		return Organization{}
+		return BenefitSubscriberOrganization{}
 	}
 	return b.Organization
 }

@@ -200,6 +200,8 @@ type CustomerCreate struct {
 	TaxID          []*CustomerCreateTaxID `json:"tax_id,omitempty"`
 	// The ID of the organization owning the customer. **Required unless you use an organization token.**
 	OrganizationID *string `json:"organization_id,omitempty"`
+	// Optional owner member to create with the customer. If not provided, an owner member will be automatically created using the customer's email and name.
+	Owner *OwnerCreate `json:"owner,omitempty"`
 }
 
 func (c *CustomerCreate) GetMetadata() map[string]CustomerCreateMetadata {
@@ -249,4 +251,11 @@ func (c *CustomerCreate) GetOrganizationID() *string {
 		return nil
 	}
 	return c.OrganizationID
+}
+
+func (c *CustomerCreate) GetOwner() *OwnerCreate {
+	if c == nil {
+		return nil
+	}
+	return c.Owner
 }

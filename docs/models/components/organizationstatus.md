@@ -7,6 +7,7 @@
 | ------------------------------------- | ------------------------------------- |
 | `OrganizationStatusCreated`           | created                               |
 | `OrganizationStatusOnboardingStarted` | onboarding_started                    |
-| `OrganizationStatusUnderReview`       | under_review                          |
+| `OrganizationStatusInitialReview`     | initial_review                        |
+| `OrganizationStatusOngoingReview`     | ongoing_review                        |
 | `OrganizationStatusDenied`            | denied                                |
 | `OrganizationStatusActive`            | active                                |

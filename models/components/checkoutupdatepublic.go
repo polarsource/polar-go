@@ -6,6 +6,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
+	"github.com/polarsource/polar-go/types"
 	"time"
 )
 
@@ -137,6 +138,19 @@ type CheckoutUpdatePublic struct {
 	CustomerTaxID          *string       `json:"customer_tax_id,omitempty"`
 	// Discount code to apply to the checkout.
 	DiscountCode *string `json:"discount_code,omitempty"`
+	// Disable the trial period for the checkout session. It's mainly useful when the trial is blocked because the customer already redeemed one.
+	allowTrial *bool `const:"false" json:"allow_trial,omitempty"`
+}
+
+func (c CheckoutUpdatePublic) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(c, "", false)
+}
+
+func (c *CheckoutUpdatePublic) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &c, "", false, nil); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (c *CheckoutUpdatePublic) GetCustomFieldData() map[string]*CheckoutUpdatePublicCustomFieldData {
@@ -221,4 +235,8 @@ func (c *CheckoutUpdatePublic) GetDiscountCode() *string {
 		return nil
 	}
 	return c.DiscountCode
+}
+
+func (c *CheckoutUpdatePublic) GetAllowTrial() *bool {
+	return types.Pointer(false)
 }

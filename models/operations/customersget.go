@@ -3,12 +3,26 @@
 package operations
 
 import (
+	"github.com/polarsource/polar-go/internal/utils"
 	"github.com/polarsource/polar-go/models/components"
 )
 
 type CustomersGetRequest struct {
 	// The customer ID.
 	ID string `pathParam:"style=simple,explode=false,name=id"`
+	// Include members in the response. Only populated when set to true.
+	IncludeMembers *bool `default:"false" queryParam:"style=form,explode=true,name=include_members"`
+}
+
+func (c CustomersGetRequest) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(c, "", false)
+}
+
+func (c *CustomersGetRequest) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &c, "", false, []string{"id"}); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (c *CustomersGetRequest) GetID() string {
@@ -18,10 +32,17 @@ func (c *CustomersGetRequest) GetID() string {
 	return c.ID
 }
 
+func (c *CustomersGetRequest) GetIncludeMembers() *bool {
+	if c == nil {
+		return nil
+	}
+	return c.IncludeMembers
+}
+
 type CustomersGetResponse struct {
 	HTTPMeta components.HTTPMetadata `json:"-"`
 	// Successful Response
-	Customer *components.Customer
+	CustomerWithMembers *components.CustomerWithMembers
 }
 
 func (c *CustomersGetResponse) GetHTTPMeta() components.HTTPMetadata {
@@ -31,9 +52,9 @@ func (c *CustomersGetResponse) GetHTTPMeta() components.HTTPMetadata {
 	return c.HTTPMeta
 }
 
-func (c *CustomersGetResponse) GetCustomer() *components.Customer {
+func (c *CustomersGetResponse) GetCustomerWithMembers() *components.CustomerWithMembers {
 	if c == nil {
 		return nil
 	}
-	return c.Customer
+	return c.CustomerWithMembers
 }

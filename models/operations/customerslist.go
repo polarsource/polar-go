@@ -80,6 +80,8 @@ type CustomersListRequest struct {
 	Email *string `queryParam:"style=form,explode=true,name=email"`
 	// Filter by name, email, or external ID.
 	Query *string `queryParam:"style=form,explode=true,name=query"`
+	// Include members in the response. Only populated when set to true.
+	IncludeMembers *bool `default:"false" queryParam:"style=form,explode=true,name=include_members"`
 	// Page number, defaults to 1.
 	Page *int64 `default:"1" queryParam:"style=form,explode=true,name=page"`
 	// Size of a page, defaults to 10. Maximum is 100.
@@ -122,6 +124,13 @@ func (c *CustomersListRequest) GetQuery() *string {
 	return c.Query
 }
 
+func (c *CustomersListRequest) GetIncludeMembers() *bool {
+	if c == nil {
+		return nil
+	}
+	return c.IncludeMembers
+}
+
 func (c *CustomersListRequest) GetPage() *int64 {
 	if c == nil {
 		return nil
@@ -153,7 +162,7 @@ func (c *CustomersListRequest) GetMetadata() map[string]components.MetadataQuery
 type CustomersListResponse struct {
 	HTTPMeta components.HTTPMetadata `json:"-"`
 	// Successful Response
-	ListResourceCustomer *components.ListResourceCustomer
+	ListResourceCustomerWithMembers *components.ListResourceCustomerWithMembers
 
 	Next func() (*CustomersListResponse, error)
 }
@@ -165,9 +174,9 @@ func (c *CustomersListResponse) GetHTTPMeta() components.HTTPMetadata {
 	return c.HTTPMeta
 }
 
-func (c *CustomersListResponse) GetListResourceCustomer() *components.ListResourceCustomer {
+func (c *CustomersListResponse) GetListResourceCustomerWithMembers() *components.ListResourceCustomerWithMembers {
 	if c == nil {
 		return nil
 	}
-	return c.ListResourceCustomer
+	return c.ListResourceCustomerWithMembers
 }

@@ -3,13 +3,27 @@
 package operations
 
 import (
+	"github.com/polarsource/polar-go/internal/utils"
 	"github.com/polarsource/polar-go/models/components"
 )
 
 type CustomersUpdateExternalRequest struct {
 	// The customer external ID.
-	ExternalID               string                              `pathParam:"style=simple,explode=false,name=external_id"`
+	ExternalID string `pathParam:"style=simple,explode=false,name=external_id"`
+	// Include members in the response. Only populated when set to true.
+	IncludeMembers           *bool                               `default:"false" queryParam:"style=form,explode=true,name=include_members"`
 	CustomerUpdateExternalID components.CustomerUpdateExternalID `request:"mediaType=application/json"`
+}
+
+func (c CustomersUpdateExternalRequest) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(c, "", false)
+}
+
+func (c *CustomersUpdateExternalRequest) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &c, "", false, []string{"external_id", "CustomerUpdateExternalID"}); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (c *CustomersUpdateExternalRequest) GetExternalID() string {
@@ -17,6 +31,13 @@ func (c *CustomersUpdateExternalRequest) GetExternalID() string {
 		return ""
 	}
 	return c.ExternalID
+}
+
+func (c *CustomersUpdateExternalRequest) GetIncludeMembers() *bool {
+	if c == nil {
+		return nil
+	}
+	return c.IncludeMembers
 }
 
 func (c *CustomersUpdateExternalRequest) GetCustomerUpdateExternalID() components.CustomerUpdateExternalID {
@@ -29,7 +50,7 @@ func (c *CustomersUpdateExternalRequest) GetCustomerUpdateExternalID() component
 type CustomersUpdateExternalResponse struct {
 	HTTPMeta components.HTTPMetadata `json:"-"`
 	// Customer updated.
-	Customer *components.Customer
+	CustomerWithMembers *components.CustomerWithMembers
 }
 
 func (c *CustomersUpdateExternalResponse) GetHTTPMeta() components.HTTPMetadata {
@@ -39,9 +60,9 @@ func (c *CustomersUpdateExternalResponse) GetHTTPMeta() components.HTTPMetadata 
 	return c.HTTPMeta
 }
 
-func (c *CustomersUpdateExternalResponse) GetCustomer() *components.Customer {
+func (c *CustomersUpdateExternalResponse) GetCustomerWithMembers() *components.CustomerWithMembers {
 	if c == nil {
 		return nil
 	}
-	return c.Customer
+	return c.CustomerWithMembers
 }

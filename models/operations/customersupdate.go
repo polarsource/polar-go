@@ -3,13 +3,27 @@
 package operations
 
 import (
+	"github.com/polarsource/polar-go/internal/utils"
 	"github.com/polarsource/polar-go/models/components"
 )
 
 type CustomersUpdateRequest struct {
 	// The customer ID.
-	ID             string                    `pathParam:"style=simple,explode=false,name=id"`
+	ID string `pathParam:"style=simple,explode=false,name=id"`
+	// Include members in the response. Only populated when set to true.
+	IncludeMembers *bool                     `default:"false" queryParam:"style=form,explode=true,name=include_members"`
 	CustomerUpdate components.CustomerUpdate `request:"mediaType=application/json"`
+}
+
+func (c CustomersUpdateRequest) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(c, "", false)
+}
+
+func (c *CustomersUpdateRequest) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &c, "", false, []string{"id", "CustomerUpdate"}); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (c *CustomersUpdateRequest) GetID() string {
@@ -17,6 +31,13 @@ func (c *CustomersUpdateRequest) GetID() string {
 		return ""
 	}
 	return c.ID
+}
+
+func (c *CustomersUpdateRequest) GetIncludeMembers() *bool {
+	if c == nil {
+		return nil
+	}
+	return c.IncludeMembers
 }
 
 func (c *CustomersUpdateRequest) GetCustomerUpdate() components.CustomerUpdate {
@@ -29,7 +50,7 @@ func (c *CustomersUpdateRequest) GetCustomerUpdate() components.CustomerUpdate {
 type CustomersUpdateResponse struct {
 	HTTPMeta components.HTTPMetadata `json:"-"`
 	// Customer updated.
-	Customer *components.Customer
+	CustomerWithMembers *components.CustomerWithMembers
 }
 
 func (c *CustomersUpdateResponse) GetHTTPMeta() components.HTTPMetadata {
@@ -39,9 +60,9 @@ func (c *CustomersUpdateResponse) GetHTTPMeta() components.HTTPMetadata {
 	return c.HTTPMeta
 }
 
-func (c *CustomersUpdateResponse) GetCustomer() *components.Customer {
+func (c *CustomersUpdateResponse) GetCustomerWithMembers() *components.CustomerWithMembers {
 	if c == nil {
 		return nil
 	}
-	return c.Customer
+	return c.CustomerWithMembers
 }

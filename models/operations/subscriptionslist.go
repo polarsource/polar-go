@@ -342,6 +342,8 @@ type SubscriptionsListRequest struct {
 	DiscountID *DiscountIDFilter `queryParam:"style=form,explode=true,name=discount_id"`
 	// Filter by active or inactive subscription.
 	Active *bool `queryParam:"style=form,explode=true,name=active"`
+	// Filter by subscriptions that are set to cancel at period end.
+	CancelAtPeriodEnd *bool `queryParam:"style=form,explode=true,name=cancel_at_period_end"`
 	// Page number, defaults to 1.
 	Page *int64 `default:"1" queryParam:"style=form,explode=true,name=page"`
 	// Size of a page, defaults to 10. Maximum is 100.
@@ -403,6 +405,13 @@ func (s *SubscriptionsListRequest) GetActive() *bool {
 		return nil
 	}
 	return s.Active
+}
+
+func (s *SubscriptionsListRequest) GetCancelAtPeriodEnd() *bool {
+	if s == nil {
+		return nil
+	}
+	return s.CancelAtPeriodEnd
 }
 
 func (s *SubscriptionsListRequest) GetPage() *int64 {

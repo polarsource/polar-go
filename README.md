@@ -296,10 +296,10 @@ func main() {
 * [Update](docs/sdks/polarsubscriptions/README.md#update) - Update Subscription
 * [Cancel](docs/sdks/polarsubscriptions/README.md#cancel) - Cancel Subscription
 
-#### [CustomerPortal.Wallets](docs/sdks/polarwallets/README.md)
+#### [CustomerPortal.Wallets](docs/sdks/wallets/README.md)
 
-* [List](docs/sdks/polarwallets/README.md#list) - List Wallets
-* [Get](docs/sdks/polarwallets/README.md#get) - Get Wallet
+* [List](docs/sdks/wallets/README.md#list) - List Wallets
+* [Get](docs/sdks/wallets/README.md#get) - Get Wallet
 
 ### [Customers](docs/sdks/customers/README.md)
 
@@ -314,7 +314,6 @@ func main() {
 * [DeleteExternal](docs/sdks/customers/README.md#deleteexternal) - Delete Customer by External ID
 * [GetState](docs/sdks/customers/README.md#getstate) - Get Customer State
 * [GetStateExternal](docs/sdks/customers/README.md#getstateexternal) - Get Customer State by External ID
-* [GetBalance](docs/sdks/customers/README.md#getbalance) - Get Customer Balance
 
 ### [CustomerSeats](docs/sdks/customerseats/README.md)
 
@@ -352,6 +351,11 @@ func main() {
 * [Get](docs/sdks/events/README.md#get) - Get Event
 * [Ingest](docs/sdks/events/README.md#ingest) - Ingest Events
 
+### [EventTypes](docs/sdks/eventtypes/README.md)
+
+* [List](docs/sdks/eventtypes/README.md#list) - List Event Types
+* [Update](docs/sdks/eventtypes/README.md#update) - Update Event Type
+
 ### [Files](docs/sdks/files/README.md)
 
 * [List](docs/sdks/files/README.md#list) - List Files
@@ -369,6 +373,10 @@ func main() {
 * [Validate](docs/sdks/licensekeys/README.md#validate) - Validate License Key
 * [Activate](docs/sdks/licensekeys/README.md#activate) - Activate License Key
 * [Deactivate](docs/sdks/licensekeys/README.md#deactivate) - Deactivate License Key
+
+### [Members](docs/sdks/members/README.md)
+
+* [ListMembers](docs/sdks/members/README.md#listmembers) - List Members
 
 ### [Meters](docs/sdks/meters/README.md)
 
@@ -440,12 +448,6 @@ func main() {
 * [Get](docs/sdks/subscriptions/README.md#get) - Get Subscription
 * [Update](docs/sdks/subscriptions/README.md#update) - Update Subscription
 * [Revoke](docs/sdks/subscriptions/README.md#revoke) - Revoke Subscription
-
-### [Wallets](docs/sdks/wallets/README.md)
-
-* [List](docs/sdks/wallets/README.md#list) - List Wallets
-* [Get](docs/sdks/wallets/README.md#get) - Get Wallet
-* [TopUp](docs/sdks/wallets/README.md#topup) - Top-Up Wallet
 
 ### [Webhooks](docs/sdks/webhooks/README.md)
 

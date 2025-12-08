@@ -351,8 +351,10 @@ type EventsListRequest struct {
 	Source *SourceFilter `queryParam:"style=form,explode=true,name=source"`
 	// Query to filter events.
 	Query *string `queryParam:"style=form,explode=true,name=query"`
-	// Filter events by parent event ID. When not specified, returns root events only.
+	// When combined with depth, use this event as the anchor instead of root events.
 	ParentID *string `queryParam:"style=form,explode=true,name=parent_id"`
+	// Fetch descendants up to this depth. When set: 0=root events only, 1=roots+children, etc. Max 5. When not set, returns all events.
+	Depth *int64 `queryParam:"style=form,explode=true,name=depth"`
 	// Page number, defaults to 1.
 	Page *int64 `default:"1" queryParam:"style=form,explode=true,name=page"`
 	// Size of a page, defaults to 10. Maximum is 100.
@@ -449,6 +451,13 @@ func (e *EventsListRequest) GetParentID() *string {
 		return nil
 	}
 	return e.ParentID
+}
+
+func (e *EventsListRequest) GetDepth() *int64 {
+	if e == nil {
+		return nil
+	}
+	return e.Depth
 }
 
 func (e *EventsListRequest) GetPage() *int64 {

@@ -283,6 +283,8 @@ type MetricsGetRequest struct {
 	BillingType *QueryParamProductBillingTypeFilter `queryParam:"style=form,explode=true,name=billing_type"`
 	// Filter by customer ID.
 	CustomerID *MetricsGetQueryParamCustomerIDFilter `queryParam:"style=form,explode=true,name=customer_id"`
+	// List of metric slugs to focus on. When provided, only the queries needed for these metrics will be executed, improving performance. If not provided, all metrics are returned.
+	Metrics []string `queryParam:"style=form,explode=true,name=metrics"`
 }
 
 func (m MetricsGetRequest) MarshalJSON() ([]byte, error) {
@@ -350,6 +352,13 @@ func (m *MetricsGetRequest) GetCustomerID() *MetricsGetQueryParamCustomerIDFilte
 		return nil
 	}
 	return m.CustomerID
+}
+
+func (m *MetricsGetRequest) GetMetrics() []string {
+	if m == nil {
+		return nil
+	}
+	return m.Metrics
 }
 
 type MetricsGetResponse struct {

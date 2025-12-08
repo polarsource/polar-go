@@ -378,8 +378,10 @@ type Order struct {
 	// Key-value object storing custom field values.
 	CustomFieldData map[string]*OrderCustomFieldData `json:"custom_field_data,omitempty"`
 	// Platform fee amount in cents.
-	PlatformFeeAmount int64         `json:"platform_fee_amount"`
-	Customer          OrderCustomer `json:"customer"`
+	PlatformFeeAmount int64 `json:"platform_fee_amount"`
+	// Currency of the platform fee.
+	PlatformFeeCurrency *string       `json:"platform_fee_currency"`
+	Customer            OrderCustomer `json:"customer"`
 	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
 	UserID       string             `json:"user_id"`
 	Product      *OrderProduct      `json:"product"`
@@ -603,6 +605,13 @@ func (o *Order) GetPlatformFeeAmount() int64 {
 		return 0
 	}
 	return o.PlatformFeeAmount
+}
+
+func (o *Order) GetPlatformFeeCurrency() *string {
+	if o == nil {
+		return nil
+	}
+	return o.PlatformFeeCurrency
 }
 
 func (o *Order) GetCustomer() OrderCustomer {

@@ -2,26 +2,12 @@
 
 package components
 
-import (
-	"github.com/polarsource/polar-go/internal/utils"
-)
-
 type OrganizationSubscriptionSettings struct {
 	AllowMultipleSubscriptions   bool                          `json:"allow_multiple_subscriptions"`
 	AllowCustomerUpdates         bool                          `json:"allow_customer_updates"`
 	ProrationBehavior            SubscriptionProrationBehavior `json:"proration_behavior"`
 	BenefitRevocationGracePeriod int64                         `json:"benefit_revocation_grace_period"`
-}
-
-func (o OrganizationSubscriptionSettings) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(o, "", false)
-}
-
-func (o *OrganizationSubscriptionSettings) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &o, "", false, []string{"allow_multiple_subscriptions", "allow_customer_updates", "proration_behavior", "benefit_revocation_grace_period"}); err != nil {
-		return err
-	}
-	return nil
+	PreventTrialAbuse            bool                          `json:"prevent_trial_abuse"`
 }
 
 func (o *OrganizationSubscriptionSettings) GetAllowMultipleSubscriptions() bool {
@@ -50,4 +36,11 @@ func (o *OrganizationSubscriptionSettings) GetBenefitRevocationGracePeriod() int
 		return 0
 	}
 	return o.BenefitRevocationGracePeriod
+}
+
+func (o *OrganizationSubscriptionSettings) GetPreventTrialAbuse() bool {
+	if o == nil {
+		return false
+	}
+	return o.PreventTrialAbuse
 }

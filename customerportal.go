@@ -18,7 +18,7 @@ type CustomerPortal struct {
 	Orders          *PolarOrders
 	Organizations   *PolarOrganizations
 	Subscriptions   *PolarSubscriptions
-	Wallets         *PolarWallets
+	Wallets         *Wallets
 
 	rootSDK          *Polar
 	sdkConfiguration config.SDKConfiguration
@@ -40,6 +40,6 @@ func newCustomerPortal(rootSDK *Polar, sdkConfig config.SDKConfiguration, hooks 
 		Orders:           newPolarOrders(rootSDK, sdkConfig, hooks),
 		Organizations:    newPolarOrganizations(rootSDK, sdkConfig, hooks),
 		Subscriptions:    newPolarSubscriptions(rootSDK, sdkConfig, hooks),
-		Wallets:          newPolarWallets(rootSDK, sdkConfig, hooks),
+		Wallets:          newWallets(rootSDK, sdkConfig, hooks),
 	}
 }

@@ -76,14 +76,15 @@ type Polar struct {
 	CustomFields     *CustomFields
 	Discounts        *Discounts
 	Customers        *Customers
+	Members          *Members
 	CustomerPortal   *CustomerPortal
 	CustomerSeats    *CustomerSeats
 	CustomerSessions *CustomerSessions
 	Events           *Events
+	EventTypes       *EventTypes
 	Meters           *Meters
 	CustomerMeters   *CustomerMeters
 	Payments         *Payments
-	Wallets          *Wallets
 
 	sdkConfiguration config.SDKConfiguration
 	hooks            *hooks.Hooks
@@ -161,9 +162,9 @@ func WithTimeout(timeout time.Duration) SDKOption {
 // New creates a new instance of the SDK with the provided options
 func New(opts ...SDKOption) *Polar {
 	sdk := &Polar{
-		SDKVersion: "0.12.0",
+		SDKVersion: "0.13.1",
 		sdkConfiguration: config.SDKConfiguration{
-			UserAgent:  "speakeasy-sdk/go 0.12.0 2.737.0 0.1.0 github.com/polarsource/polar-go",
+			UserAgent:  "speakeasy-sdk/go 0.13.1 2.737.0 0.1.0 github.com/polarsource/polar-go",
 			ServerList: ServerList,
 		},
 		hooks: hooks.New(),
@@ -208,14 +209,15 @@ func New(opts ...SDKOption) *Polar {
 	sdk.CustomFields = newCustomFields(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.Discounts = newDiscounts(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.Customers = newCustomers(sdk, sdk.sdkConfiguration, sdk.hooks)
+	sdk.Members = newMembers(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.CustomerPortal = newCustomerPortal(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.CustomerSeats = newCustomerSeats(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.CustomerSessions = newCustomerSessions(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.Events = newEvents(sdk, sdk.sdkConfiguration, sdk.hooks)
+	sdk.EventTypes = newEventTypes(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.Meters = newMeters(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.CustomerMeters = newCustomerMeters(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.Payments = newPayments(sdk, sdk.sdkConfiguration, sdk.hooks)
-	sdk.Wallets = newWallets(sdk, sdk.sdkConfiguration, sdk.hooks)
 
 	return sdk
 }

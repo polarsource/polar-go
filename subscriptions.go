@@ -260,6 +260,7 @@ func (s *Subscriptions) List(ctx context.Context, request operations.Subscriptio
 				ExternalCustomerID: request.ExternalCustomerID,
 				DiscountID:         request.DiscountID,
 				Active:             request.Active,
+				CancelAtPeriodEnd:  request.CancelAtPeriodEnd,
 				Page:               &nP,
 				Limit:              request.Limit,
 				Sorting:            request.Sorting,

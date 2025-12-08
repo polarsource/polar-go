@@ -21,3 +21,9 @@ checkoutForbiddenError := apierrors.CreateCheckoutForbiddenErrorNotOpenCheckout(
 checkoutForbiddenError := apierrors.CreateCheckoutForbiddenErrorPaymentNotReady(components.PaymentNotReady{/* values here */})
 ```
 
+### TrialAlreadyRedeemed
+
+```go
+checkoutForbiddenError := apierrors.CreateCheckoutForbiddenErrorTrialAlreadyRedeemed(components.TrialAlreadyRedeemed{/* values here */})
+```
+

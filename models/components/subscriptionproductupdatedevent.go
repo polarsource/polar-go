@@ -23,6 +23,10 @@ type SubscriptionProductUpdatedEvent struct {
 	ExternalCustomerID *string `json:"external_customer_id"`
 	// Number of direct child events linked to this event.
 	ChildCount *int64 `default:"0" json:"child_count"`
+	// The ID of the parent event.
+	ParentID *string `json:"parent_id,omitempty"`
+	// Human readable label of the event type.
+	Label string `json:"label"`
 	// The source of the event. `system` events are created by Polar. `user` events are the one you create through our ingestion API.
 	source string `const:"system" json:"source"`
 	// The name of the event.
@@ -35,7 +39,7 @@ func (s SubscriptionProductUpdatedEvent) MarshalJSON() ([]byte, error) {
 }
 
 func (s *SubscriptionProductUpdatedEvent) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &s, "", false, []string{"id", "timestamp", "organization_id", "source", "name", "metadata"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &s, "", false, []string{"id", "timestamp", "organization_id", "label", "source", "name", "metadata"}); err != nil {
 		return err
 	}
 	return nil
@@ -88,6 +92,20 @@ func (s *SubscriptionProductUpdatedEvent) GetChildCount() *int64 {
 		return nil
 	}
 	return s.ChildCount
+}
+
+func (s *SubscriptionProductUpdatedEvent) GetParentID() *string {
+	if s == nil {
+		return nil
+	}
+	return s.ParentID
+}
+
+func (s *SubscriptionProductUpdatedEvent) GetLabel() string {
+	if s == nil {
+		return ""
+	}
+	return s.Label
 }
 
 func (s *SubscriptionProductUpdatedEvent) GetSource() string {

@@ -26,8 +26,9 @@ generation:
     generateTests: true
     generateNewTests: false
     skipResponseBodyAssertions: false
+  persistentEdits: {}
 go:
-  version: 0.12.0
+  version: 0.13.1
   additionalDependencies: {}
   allowUnknownFieldsInWeakUnions: true
   baseErrorName: PolarError
@@ -44,10 +45,12 @@ go:
       shared: models/components
       webhooks: models/webhooks
   includeEmptyObjects: false
+  inferUnionDiscriminators: false
   inputModelSuffix: input
   maxMethodParams: 4
   methodArguments: require-security-and-request
   modulePath: ""
+  multipartArrayFormat: legacy
   nullableOptionalWrapper: false
   outputModelSuffix: output
   packageName: github.com/polarsource/polar-go
@@ -55,3 +58,4 @@ go:
   responseFormat: envelope-http
   sdkPackageName: ""
   unionDeserializationStrategy: left-to-right
+  unionStrategy: left-to-right

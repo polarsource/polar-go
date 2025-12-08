@@ -286,6 +286,69 @@ func (u CheckoutProductPrice) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type CheckoutProductPrice: all fields are null")
 }
 
+type CheckoutPricesType string
+
+const (
+	CheckoutPricesTypeLegacyRecurringProductPrice CheckoutPricesType = "LegacyRecurringProductPrice"
+	CheckoutPricesTypeProductPrice                CheckoutPricesType = "ProductPrice"
+)
+
+type CheckoutPrices struct {
+	LegacyRecurringProductPrice *LegacyRecurringProductPrice `queryParam:"inline,name=prices"`
+	ProductPrice                *ProductPrice                `queryParam:"inline,name=prices"`
+
+	Type CheckoutPricesType
+}
+
+func CreateCheckoutPricesLegacyRecurringProductPrice(legacyRecurringProductPrice LegacyRecurringProductPrice) CheckoutPrices {
+	typ := CheckoutPricesTypeLegacyRecurringProductPrice
+
+	return CheckoutPrices{
+		LegacyRecurringProductPrice: &legacyRecurringProductPrice,
+		Type:                        typ,
+	}
+}
+
+func CreateCheckoutPricesProductPrice(productPrice ProductPrice) CheckoutPrices {
+	typ := CheckoutPricesTypeProductPrice
+
+	return CheckoutPrices{
+		ProductPrice: &productPrice,
+		Type:         typ,
+	}
+}
+
+func (u *CheckoutPrices) UnmarshalJSON(data []byte) error {
+
+	var legacyRecurringProductPrice LegacyRecurringProductPrice = LegacyRecurringProductPrice{}
+	if err := utils.UnmarshalJSON(data, &legacyRecurringProductPrice, "", true, nil); err == nil {
+		u.LegacyRecurringProductPrice = &legacyRecurringProductPrice
+		u.Type = CheckoutPricesTypeLegacyRecurringProductPrice
+		return nil
+	}
+
+	var productPrice ProductPrice = ProductPrice{}
+	if err := utils.UnmarshalJSON(data, &productPrice, "", true, nil); err == nil {
+		u.ProductPrice = &productPrice
+		u.Type = CheckoutPricesTypeProductPrice
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for CheckoutPrices", string(data))
+}
+
+func (u CheckoutPrices) MarshalJSON() ([]byte, error) {
+	if u.LegacyRecurringProductPrice != nil {
+		return utils.MarshalJSON(u.LegacyRecurringProductPrice, "", true)
+	}
+
+	if u.ProductPrice != nil {
+		return utils.MarshalJSON(u.ProductPrice, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type CheckoutPrices: all fields are null")
+}
+
 type CheckoutDiscountType string
 
 const (
@@ -518,6 +581,8 @@ type Checkout struct {
 	TotalAmount int64 `json:"total_amount"`
 	// Currency code of the checkout session.
 	Currency string `json:"currency"`
+	// Whether to enable the trial period for the checkout session. If `false`, the trial period will be disabled, even if the selected product has a trial configured.
+	AllowTrial *bool `json:"allow_trial"`
 	// Interval unit of the trial period, if any. This value is either set from the checkout, if `trial_interval` is set, or from the selected product.
 	ActiveTrialInterval *TrialInterval `json:"active_trial_interval"`
 	// Number of interval units of the trial period, if any. This value is either set from the checkout, if `trial_interval_count` is set, or from the selected product.
@@ -529,6 +594,8 @@ type Checkout struct {
 	// ID of the product to checkout.
 	ProductID *string `json:"product_id"`
 	// ID of the product price to checkout.
+	//
+	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
 	ProductPriceID *string `json:"product_price_id"`
 	// ID of the discount applied to the checkout.
 	DiscountID *string `json:"discount_id"`
@@ -573,7 +640,11 @@ type Checkout struct {
 	// Product selected to checkout.
 	Product *CheckoutProduct `json:"product"`
 	// Price of the selected product.
-	ProductPrice         *CheckoutProductPrice       `json:"product_price"`
+	//
+	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
+	ProductPrice *CheckoutProductPrice `json:"product_price"`
+	// Mapping of product IDs to their list of prices.
+	Prices               map[string][]CheckoutPrices `json:"prices"`
 	Discount             *CheckoutDiscount           `json:"discount"`
 	SubscriptionID       *string                     `json:"subscription_id"`
 	AttachedCustomFields []AttachedCustomField       `json:"attached_custom_fields"`
@@ -729,6 +800,13 @@ func (c *Checkout) GetCurrency() string {
 		return ""
 	}
 	return c.Currency
+}
+
+func (c *Checkout) GetAllowTrial() *bool {
+	if c == nil {
+		return nil
+	}
+	return c.AllowTrial
 }
 
 func (c *Checkout) GetActiveTrialInterval() *TrialInterval {
@@ -953,6 +1031,13 @@ func (c *Checkout) GetProductPrice() *CheckoutProductPrice {
 		return nil
 	}
 	return c.ProductPrice
+}
+
+func (c *Checkout) GetPrices() map[string][]CheckoutPrices {
+	if c == nil {
+		return nil
+	}
+	return c.Prices
 }
 
 func (c *Checkout) GetDiscount() *CheckoutDiscount {

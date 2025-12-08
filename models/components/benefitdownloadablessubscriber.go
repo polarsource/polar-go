@@ -133,7 +133,7 @@ type BenefitDownloadablesSubscriber struct {
 	// The ID of the organization owning the benefit.
 	OrganizationID string                                            `json:"organization_id"`
 	Metadata       map[string]BenefitDownloadablesSubscriberMetadata `json:"metadata"`
-	Organization   Organization                                      `json:"organization"`
+	Organization   BenefitSubscriberOrganization                     `json:"organization"`
 	Properties     BenefitDownloadablesSubscriberProperties          `json:"properties"`
 }
 
@@ -208,9 +208,9 @@ func (b *BenefitDownloadablesSubscriber) GetMetadata() map[string]BenefitDownloa
 	return b.Metadata
 }
 
-func (b *BenefitDownloadablesSubscriber) GetOrganization() Organization {
+func (b *BenefitDownloadablesSubscriber) GetOrganization() BenefitSubscriberOrganization {
 	if b == nil {
-		return Organization{}
+		return BenefitSubscriberOrganization{}
 	}
 	return b.Organization
 }

@@ -87,3 +87,9 @@ systemEvent := components.CreateSystemEventSubscriptionProductUpdated(components
 systemEvent := components.CreateSystemEventSubscriptionRevoked(components.SubscriptionRevokedEvent{/* values here */})
 ```
 
+### SubscriptionSeatsUpdatedEvent
+
+```go
+systemEvent := components.CreateSystemEventSubscriptionSeatsUpdated(components.SubscriptionSeatsUpdatedEvent{/* values here */})
+```
+

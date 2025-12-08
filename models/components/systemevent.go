@@ -26,6 +26,7 @@ const (
 	SystemEventTypeSubscriptionCycled         SystemEventType = "subscription.cycled"
 	SystemEventTypeSubscriptionProductUpdated SystemEventType = "subscription.product_updated"
 	SystemEventTypeSubscriptionRevoked        SystemEventType = "subscription.revoked"
+	SystemEventTypeSubscriptionSeatsUpdated   SystemEventType = "subscription.seats_updated"
 )
 
 type SystemEvent struct {
@@ -38,6 +39,7 @@ type SystemEvent struct {
 	SubscriptionCycledEvent         *SubscriptionCycledEvent         `queryParam:"inline,name=SystemEvent"`
 	SubscriptionRevokedEvent        *SubscriptionRevokedEvent        `queryParam:"inline,name=SystemEvent"`
 	SubscriptionProductUpdatedEvent *SubscriptionProductUpdatedEvent `queryParam:"inline,name=SystemEvent"`
+	SubscriptionSeatsUpdatedEvent   *SubscriptionSeatsUpdatedEvent   `queryParam:"inline,name=SystemEvent"`
 	OrderPaidEvent                  *OrderPaidEvent                  `queryParam:"inline,name=SystemEvent"`
 	OrderRefundedEvent              *OrderRefundedEvent              `queryParam:"inline,name=SystemEvent"`
 	CustomerCreatedEvent            *CustomerCreatedEvent            `queryParam:"inline,name=SystemEvent"`
@@ -170,6 +172,15 @@ func CreateSystemEventSubscriptionRevoked(subscriptionRevoked SubscriptionRevoke
 	return SystemEvent{
 		SubscriptionRevokedEvent: &subscriptionRevoked,
 		Type:                     typ,
+	}
+}
+
+func CreateSystemEventSubscriptionSeatsUpdated(subscriptionSeatsUpdated SubscriptionSeatsUpdatedEvent) SystemEvent {
+	typ := SystemEventTypeSubscriptionSeatsUpdated
+
+	return SystemEvent{
+		SubscriptionSeatsUpdatedEvent: &subscriptionSeatsUpdated,
+		Type:                          typ,
 	}
 }
 
@@ -311,6 +322,15 @@ func (u *SystemEvent) UnmarshalJSON(data []byte) error {
 		u.SubscriptionRevokedEvent = subscriptionRevokedEvent
 		u.Type = SystemEventTypeSubscriptionRevoked
 		return nil
+	case "subscription.seats_updated":
+		subscriptionSeatsUpdatedEvent := new(SubscriptionSeatsUpdatedEvent)
+		if err := utils.UnmarshalJSON(data, &subscriptionSeatsUpdatedEvent, "", true, nil); err != nil {
+			return fmt.Errorf("could not unmarshal `%s` into expected (Name == subscription.seats_updated) type SubscriptionSeatsUpdatedEvent within SystemEvent: %w", string(data), err)
+		}
+
+		u.SubscriptionSeatsUpdatedEvent = subscriptionSeatsUpdatedEvent
+		u.Type = SystemEventTypeSubscriptionSeatsUpdated
+		return nil
 	}
 
 	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SystemEvent", string(data))
@@ -351,6 +371,10 @@ func (u SystemEvent) MarshalJSON() ([]byte, error) {
 
 	if u.SubscriptionProductUpdatedEvent != nil {
 		return utils.MarshalJSON(u.SubscriptionProductUpdatedEvent, "", true)
+	}
+
+	if u.SubscriptionSeatsUpdatedEvent != nil {
+		return utils.MarshalJSON(u.SubscriptionSeatsUpdatedEvent, "", true)
 	}
 
 	if u.OrderPaidEvent != nil {
