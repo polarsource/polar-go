@@ -3,118 +3,9 @@
 package components
 
 import (
-	"errors"
-	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
 	"time"
 )
-
-type RefundMetadataType string
-
-const (
-	RefundMetadataTypeStr     RefundMetadataType = "str"
-	RefundMetadataTypeInteger RefundMetadataType = "integer"
-	RefundMetadataTypeNumber  RefundMetadataType = "number"
-	RefundMetadataTypeBoolean RefundMetadataType = "boolean"
-)
-
-type RefundMetadata struct {
-	Str     *string  `queryParam:"inline,name=metadata"`
-	Integer *int64   `queryParam:"inline,name=metadata"`
-	Number  *float64 `queryParam:"inline,name=metadata"`
-	Boolean *bool    `queryParam:"inline,name=metadata"`
-
-	Type RefundMetadataType
-}
-
-func CreateRefundMetadataStr(str string) RefundMetadata {
-	typ := RefundMetadataTypeStr
-
-	return RefundMetadata{
-		Str:  &str,
-		Type: typ,
-	}
-}
-
-func CreateRefundMetadataInteger(integer int64) RefundMetadata {
-	typ := RefundMetadataTypeInteger
-
-	return RefundMetadata{
-		Integer: &integer,
-		Type:    typ,
-	}
-}
-
-func CreateRefundMetadataNumber(number float64) RefundMetadata {
-	typ := RefundMetadataTypeNumber
-
-	return RefundMetadata{
-		Number: &number,
-		Type:   typ,
-	}
-}
-
-func CreateRefundMetadataBoolean(boolean bool) RefundMetadata {
-	typ := RefundMetadataTypeBoolean
-
-	return RefundMetadata{
-		Boolean: &boolean,
-		Type:    typ,
-	}
-}
-
-func (u *RefundMetadata) UnmarshalJSON(data []byte) error {
-
-	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, nil); err == nil {
-		u.Str = &str
-		u.Type = RefundMetadataTypeStr
-		return nil
-	}
-
-	var integer int64 = int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
-		u.Integer = &integer
-		u.Type = RefundMetadataTypeInteger
-		return nil
-	}
-
-	var number float64 = float64(0)
-	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
-		u.Number = &number
-		u.Type = RefundMetadataTypeNumber
-		return nil
-	}
-
-	var boolean bool = false
-	if err := utils.UnmarshalJSON(data, &boolean, "", true, nil); err == nil {
-		u.Boolean = &boolean
-		u.Type = RefundMetadataTypeBoolean
-		return nil
-	}
-
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for RefundMetadata", string(data))
-}
-
-func (u RefundMetadata) MarshalJSON() ([]byte, error) {
-	if u.Str != nil {
-		return utils.MarshalJSON(u.Str, "", true)
-	}
-
-	if u.Integer != nil {
-		return utils.MarshalJSON(u.Integer, "", true)
-	}
-
-	if u.Number != nil {
-		return utils.MarshalJSON(u.Number, "", true)
-	}
-
-	if u.Boolean != nil {
-		return utils.MarshalJSON(u.Boolean, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type RefundMetadata: all fields are null")
-}
 
 type Refund struct {
 	// Creation timestamp of the object.
@@ -122,18 +13,19 @@ type Refund struct {
 	// Last modification timestamp of the object.
 	ModifiedAt *time.Time `json:"modified_at"`
 	// The ID of the object.
-	ID             string                    `json:"id"`
-	Metadata       map[string]RefundMetadata `json:"metadata"`
-	Status         RefundStatus              `json:"status"`
-	Reason         RefundReason              `json:"reason"`
-	Amount         int64                     `json:"amount"`
-	TaxAmount      int64                     `json:"tax_amount"`
-	Currency       string                    `json:"currency"`
-	OrganizationID string                    `json:"organization_id"`
-	OrderID        string                    `json:"order_id"`
-	SubscriptionID *string                   `json:"subscription_id"`
-	CustomerID     string                    `json:"customer_id"`
-	RevokeBenefits bool                      `json:"revoke_benefits"`
+	ID             string                        `json:"id"`
+	Metadata       map[string]MetadataOutputType `json:"metadata"`
+	Status         RefundStatus                  `json:"status"`
+	Reason         RefundReason                  `json:"reason"`
+	Amount         int64                         `json:"amount"`
+	TaxAmount      int64                         `json:"tax_amount"`
+	Currency       string                        `json:"currency"`
+	OrganizationID string                        `json:"organization_id"`
+	OrderID        string                        `json:"order_id"`
+	SubscriptionID *string                       `json:"subscription_id"`
+	CustomerID     string                        `json:"customer_id"`
+	RevokeBenefits bool                          `json:"revoke_benefits"`
+	Dispute        *RefundDispute                `json:"dispute"`
 }
 
 func (r Refund) MarshalJSON() ([]byte, error) {
@@ -141,7 +33,7 @@ func (r Refund) MarshalJSON() ([]byte, error) {
 }
 
 func (r *Refund) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &r, "", false, []string{"created_at", "id", "metadata", "status", "reason", "amount", "tax_amount", "currency", "organization_id", "order_id", "customer_id", "revoke_benefits"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &r, "", false, nil); err != nil {
 		return err
 	}
 	return nil
@@ -168,9 +60,9 @@ func (r *Refund) GetID() string {
 	return r.ID
 }
 
-func (r *Refund) GetMetadata() map[string]RefundMetadata {
+func (r *Refund) GetMetadata() map[string]MetadataOutputType {
 	if r == nil {
-		return map[string]RefundMetadata{}
+		return map[string]MetadataOutputType{}
 	}
 	return r.Metadata
 }
@@ -243,4 +135,11 @@ func (r *Refund) GetRevokeBenefits() bool {
 		return false
 	}
 	return r.RevokeBenefits
+}
+
+func (r *Refund) GetDispute() *RefundDispute {
+	if r == nil {
+		return nil
+	}
+	return r.Dispute
 }

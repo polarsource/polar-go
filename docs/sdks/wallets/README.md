@@ -1,5 +1,4 @@
-# Wallets
-(*Wallets*)
+# CustomerPortal.Wallets
 
 ## Overview
 
@@ -7,24 +6,21 @@
 
 * [List](#list) - List Wallets
 * [Get](#get) - Get Wallet
-* [TopUp](#topup) - Top-Up Wallet
 
 ## List
 
-List wallets.
-
-**Scopes**: `wallets:read`
+List wallets of the authenticated customer.
 
 ### Example Usage
 
-<!-- UsageSnippet language="go" operationID="wallets:list" method="get" path="/v1/wallets/" -->
+<!-- UsageSnippet language="go" operationID="customer_portal:wallets:list" method="get" path="/v1/customer-portal/wallets/" -->
 ```go
 package main
 
 import(
 	"context"
-	"os"
 	polargo "github.com/polarsource/polar-go"
+	"os"
 	"github.com/polarsource/polar-go/models/operations"
 	"log"
 )
@@ -32,19 +28,15 @@ import(
 func main() {
     ctx := context.Background()
 
-    s := polargo.New(
-        polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
-    )
+    s := polargo.New()
 
-    res, err := s.Wallets.List(ctx, operations.WalletsListRequest{
-        OrganizationID: polargo.Pointer(operations.CreateWalletsListQueryParamOrganizationIDFilterStr(
-            "1dbfc517-0bbf-4301-9ba8-555ca42b9737",
-        )),
-    })
+    res, err := s.CustomerPortal.Wallets.List(ctx, operations.CustomerPortalWalletsListSecurity{
+        CustomerSession: polargo.Pointer(os.Getenv("POLAR_CUSTOMER_SESSION")),
+    }, polargo.Pointer[int64](1), polargo.Pointer[int64](10), nil)
     if err != nil {
         log.Fatal(err)
     }
-    if res.ListResourceWallet != nil {
+    if res.ListResourceCustomerWallet != nil {
         for {
             // handle items
 
@@ -64,15 +56,18 @@ func main() {
 
 ### Parameters
 
-| Parameter                                                                      | Type                                                                           | Required                                                                       | Description                                                                    |
-| ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ |
-| `ctx`                                                                          | [context.Context](https://pkg.go.dev/context#Context)                          | :heavy_check_mark:                                                             | The context to use for the request.                                            |
-| `request`                                                                      | [operations.WalletsListRequest](../../models/operations/walletslistrequest.md) | :heavy_check_mark:                                                             | The request object to use for the request.                                     |
-| `opts`                                                                         | [][operations.Option](../../models/operations/option.md)                       | :heavy_minus_sign:                                                             | The options for this request.                                                  |
+| Parameter                                                                                                                                                               | Type                                                                                                                                                                    | Required                                                                                                                                                                | Description                                                                                                                                                             |
+| ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `ctx`                                                                                                                                                                   | [context.Context](https://pkg.go.dev/context#Context)                                                                                                                   | :heavy_check_mark:                                                                                                                                                      | The context to use for the request.                                                                                                                                     |
+| `security`                                                                                                                                                              | [operations.CustomerPortalWalletsListSecurity](../../models/operations/customerportalwalletslistsecurity.md)                                                            | :heavy_check_mark:                                                                                                                                                      | The security requirements to use for the request.                                                                                                                       |
+| `page`                                                                                                                                                                  | **int64*                                                                                                                                                                | :heavy_minus_sign:                                                                                                                                                      | Page number, defaults to 1.                                                                                                                                             |
+| `limit`                                                                                                                                                                 | **int64*                                                                                                                                                                | :heavy_minus_sign:                                                                                                                                                      | Size of a page, defaults to 10. Maximum is 100.                                                                                                                         |
+| `sorting`                                                                                                                                                               | [][components.CustomerWalletSortProperty](../../models/components/customerwalletsortproperty.md)                                                                        | :heavy_minus_sign:                                                                                                                                                      | Sorting criterion. Several criteria can be used simultaneously and will be applied in order. Add a minus sign `-` before the criteria name to sort by descending order. |
+| `opts`                                                                                                                                                                  | [][operations.Option](../../models/operations/option.md)                                                                                                                | :heavy_minus_sign:                                                                                                                                                      | The options for this request.                                                                                                                                           |
 
 ### Response
 
-**[*operations.WalletsListResponse](../../models/operations/walletslistresponse.md), error**
+**[*operations.CustomerPortalWalletsListResponse](../../models/operations/customerportalwalletslistresponse.md), error**
 
 ### Errors
 
@@ -83,35 +78,34 @@ func main() {
 
 ## Get
 
-Get a wallet by ID.
-
-**Scopes**: `wallets:read`
+Get a wallet by ID for the authenticated customer.
 
 ### Example Usage
 
-<!-- UsageSnippet language="go" operationID="wallets:get" method="get" path="/v1/wallets/{id}" -->
+<!-- UsageSnippet language="go" operationID="customer_portal:wallets:get" method="get" path="/v1/customer-portal/wallets/{id}" -->
 ```go
 package main
 
 import(
 	"context"
-	"os"
 	polargo "github.com/polarsource/polar-go"
+	"os"
+	"github.com/polarsource/polar-go/models/operations"
 	"log"
 )
 
 func main() {
     ctx := context.Background()
 
-    s := polargo.New(
-        polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
-    )
+    s := polargo.New()
 
-    res, err := s.Wallets.Get(ctx, "<value>")
+    res, err := s.CustomerPortal.Wallets.Get(ctx, operations.CustomerPortalWalletsGetSecurity{
+        CustomerSession: polargo.Pointer(os.Getenv("POLAR_CUSTOMER_SESSION")),
+    }, "<value>")
     if err != nil {
         log.Fatal(err)
     }
-    if res.Wallet != nil {
+    if res.CustomerWallet != nil {
         // handle response
     }
 }
@@ -119,15 +113,16 @@ func main() {
 
 ### Parameters
 
-| Parameter                                                | Type                                                     | Required                                                 | Description                                              |
-| -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- |
-| `ctx`                                                    | [context.Context](https://pkg.go.dev/context#Context)    | :heavy_check_mark:                                       | The context to use for the request.                      |
-| `id`                                                     | *string*                                                 | :heavy_check_mark:                                       | The wallet ID.                                           |
-| `opts`                                                   | [][operations.Option](../../models/operations/option.md) | :heavy_minus_sign:                                       | The options for this request.                            |
+| Parameter                                                                                                  | Type                                                                                                       | Required                                                                                                   | Description                                                                                                |
+| ---------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| `ctx`                                                                                                      | [context.Context](https://pkg.go.dev/context#Context)                                                      | :heavy_check_mark:                                                                                         | The context to use for the request.                                                                        |
+| `security`                                                                                                 | [operations.CustomerPortalWalletsGetSecurity](../../models/operations/customerportalwalletsgetsecurity.md) | :heavy_check_mark:                                                                                         | The security requirements to use for the request.                                                          |
+| `id`                                                                                                       | *string*                                                                                                   | :heavy_check_mark:                                                                                         | The wallet ID.                                                                                             |
+| `opts`                                                                                                     | [][operations.Option](../../models/operations/option.md)                                                   | :heavy_minus_sign:                                                                                         | The options for this request.                                                                              |
 
 ### Response
 
-**[*operations.WalletsGetResponse](../../models/operations/walletsgetresponse.md), error**
+**[*operations.CustomerPortalWalletsGetResponse](../../models/operations/customerportalwalletsgetresponse.md), error**
 
 ### Errors
 
@@ -136,68 +131,3 @@ func main() {
 | apierrors.ResourceNotFound    | 404                           | application/json              |
 | apierrors.HTTPValidationError | 422                           | application/json              |
 | apierrors.APIError            | 4XX, 5XX                      | \*/\*                         |
-
-## TopUp
-
-Top-up a wallet by adding funds to its balance.
-
-The customer should have a valid payment method on file.
-
-**Scopes**: `wallets:write`
-
-### Example Usage
-
-<!-- UsageSnippet language="go" operationID="wallets:top_up" method="post" path="/v1/wallets/{id}/top-up" -->
-```go
-package main
-
-import(
-	"context"
-	"os"
-	polargo "github.com/polarsource/polar-go"
-	"github.com/polarsource/polar-go/models/components"
-	"log"
-)
-
-func main() {
-    ctx := context.Background()
-
-    s := polargo.New(
-        polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
-    )
-
-    res, err := s.Wallets.TopUp(ctx, "<value>", components.WalletTopUpCreate{
-        Amount: 2000,
-        Currency: "Venezuelan bolívar",
-    })
-    if err != nil {
-        log.Fatal(err)
-    }
-    if res.Wallet != nil {
-        // handle response
-    }
-}
-```
-
-### Parameters
-
-| Parameter                                                                    | Type                                                                         | Required                                                                     | Description                                                                  |
-| ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
-| `ctx`                                                                        | [context.Context](https://pkg.go.dev/context#Context)                        | :heavy_check_mark:                                                           | The context to use for the request.                                          |
-| `id`                                                                         | *string*                                                                     | :heavy_check_mark:                                                           | The wallet ID.                                                               |
-| `walletTopUpCreate`                                                          | [components.WalletTopUpCreate](../../models/components/wallettopupcreate.md) | :heavy_check_mark:                                                           | N/A                                                                          |
-| `opts`                                                                       | [][operations.Option](../../models/operations/option.md)                     | :heavy_minus_sign:                                                           | The options for this request.                                                |
-
-### Response
-
-**[*operations.WalletsTopUpResponse](../../models/operations/walletstopupresponse.md), error**
-
-### Errors
-
-| Error Type                          | Status Code                         | Content Type                        |
-| ----------------------------------- | ----------------------------------- | ----------------------------------- |
-| apierrors.PaymentIntentFailedError  | 400                                 | application/json                    |
-| apierrors.MissingPaymentMethodError | 402                                 | application/json                    |
-| apierrors.ResourceNotFound          | 404                                 | application/json                    |
-| apierrors.HTTPValidationError       | 422                                 | application/json                    |
-| apierrors.APIError                  | 4XX, 5XX                            | \*/\*                               |

@@ -1,5 +1,4 @@
-# Downloadables
-(*CustomerPortal.Downloadables*)
+# CustomerPortal.Downloadables
 
 ## Overview
 
@@ -31,7 +30,7 @@ func main() {
     s := polargo.New()
 
     res, err := s.CustomerPortal.Downloadables.List(ctx, operations.CustomerPortalDownloadablesListSecurity{
-        CustomerSession: os.Getenv("POLAR_CUSTOMER_SESSION"),
+        CustomerSession: polargo.Pointer(os.Getenv("POLAR_CUSTOMER_SESSION")),
     }, nil, polargo.Pointer[int64](1), polargo.Pointer[int64](10))
     if err != nil {
         log.Fatal(err)

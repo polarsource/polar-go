@@ -1,5 +1,4 @@
 # Orders
-(*Orders*)
 
 ## Overview
 
@@ -224,7 +223,6 @@ func main() {
     )
 
     res, err := s.Orders.Update(ctx, "<value>", components.OrderUpdate{
-        BillingName: polargo.Pointer("<value>"),
         BillingAddress: &components.AddressInput{
             Country: components.CountryAlpha2InputUs,
         },

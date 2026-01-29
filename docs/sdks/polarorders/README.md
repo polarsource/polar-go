@@ -1,5 +1,4 @@
-# PolarOrders
-(*CustomerPortal.Orders*)
+# CustomerPortal.Orders
 
 ## Overview
 
@@ -16,8 +15,6 @@
 ## List
 
 List orders of the authenticated customer.
-
-**Scopes**: `customer_portal:read` `customer_portal:write`
 
 ### Example Usage
 
@@ -39,7 +36,7 @@ func main() {
     s := polargo.New()
 
     res, err := s.CustomerPortal.Orders.List(ctx, operations.CustomerPortalOrdersListRequest{}, operations.CustomerPortalOrdersListSecurity{
-        CustomerSession: os.Getenv("POLAR_CUSTOMER_SESSION"),
+        CustomerSession: polargo.Pointer(os.Getenv("POLAR_CUSTOMER_SESSION")),
     })
     if err != nil {
         log.Fatal(err)
@@ -86,8 +83,6 @@ func main() {
 
 Get an order by ID for the authenticated customer.
 
-**Scopes**: `customer_portal:read` `customer_portal:write`
-
 ### Example Usage
 
 <!-- UsageSnippet language="go" operationID="customer_portal:orders:get" method="get" path="/v1/customer-portal/orders/{id}" -->
@@ -108,7 +103,7 @@ func main() {
     s := polargo.New()
 
     res, err := s.CustomerPortal.Orders.Get(ctx, operations.CustomerPortalOrdersGetSecurity{
-        CustomerSession: os.Getenv("POLAR_CUSTOMER_SESSION"),
+        CustomerSession: polargo.Pointer(os.Getenv("POLAR_CUSTOMER_SESSION")),
     }, "<value>")
     if err != nil {
         log.Fatal(err)
@@ -144,8 +139,6 @@ func main() {
 
 Update an order for the authenticated customer.
 
-**Scopes**: `customer_portal:write`
-
 ### Example Usage
 
 <!-- UsageSnippet language="go" operationID="customer_portal:orders:update" method="patch" path="/v1/customer-portal/orders/{id}" -->
@@ -167,9 +160,8 @@ func main() {
     s := polargo.New()
 
     res, err := s.CustomerPortal.Orders.Update(ctx, operations.CustomerPortalOrdersUpdateSecurity{
-        CustomerSession: os.Getenv("POLAR_CUSTOMER_SESSION"),
+        CustomerSession: polargo.Pointer(os.Getenv("POLAR_CUSTOMER_SESSION")),
     }, "<value>", components.CustomerOrderUpdate{
-        BillingName: polargo.Pointer("<value>"),
         BillingAddress: &components.AddressInput{
             Country: components.CountryAlpha2InputUs,
         },
@@ -209,8 +201,6 @@ func main() {
 
 Trigger generation of an order's invoice.
 
-**Scopes**: `customer_portal:read` `customer_portal:write`
-
 ### Example Usage
 
 <!-- UsageSnippet language="go" operationID="customer_portal:orders:generate_invoice" method="post" path="/v1/customer-portal/orders/{id}/invoice" -->
@@ -231,7 +221,7 @@ func main() {
     s := polargo.New()
 
     res, err := s.CustomerPortal.Orders.GenerateInvoice(ctx, operations.CustomerPortalOrdersGenerateInvoiceSecurity{
-        CustomerSession: os.Getenv("POLAR_CUSTOMER_SESSION"),
+        CustomerSession: polargo.Pointer(os.Getenv("POLAR_CUSTOMER_SESSION")),
     }, "<value>")
     if err != nil {
         log.Fatal(err)
@@ -266,8 +256,6 @@ func main() {
 
 Get an order's invoice data.
 
-**Scopes**: `customer_portal:read` `customer_portal:write`
-
 ### Example Usage
 
 <!-- UsageSnippet language="go" operationID="customer_portal:orders:invoice" method="get" path="/v1/customer-portal/orders/{id}/invoice" -->
@@ -288,7 +276,7 @@ func main() {
     s := polargo.New()
 
     res, err := s.CustomerPortal.Orders.Invoice(ctx, operations.CustomerPortalOrdersInvoiceSecurity{
-        CustomerSession: os.Getenv("POLAR_CUSTOMER_SESSION"),
+        CustomerSession: polargo.Pointer(os.Getenv("POLAR_CUSTOMER_SESSION")),
     }, "<value>")
     if err != nil {
         log.Fatal(err)
@@ -324,8 +312,6 @@ func main() {
 
 Get the current payment status for an order.
 
-**Scopes**: `customer_portal:read` `customer_portal:write`
-
 ### Example Usage
 
 <!-- UsageSnippet language="go" operationID="customer_portal:orders:get_payment_status" method="get" path="/v1/customer-portal/orders/{id}/payment-status" -->
@@ -346,7 +332,7 @@ func main() {
     s := polargo.New()
 
     res, err := s.CustomerPortal.Orders.GetPaymentStatus(ctx, operations.CustomerPortalOrdersGetPaymentStatusSecurity{
-        CustomerSession: os.Getenv("POLAR_CUSTOMER_SESSION"),
+        CustomerSession: polargo.Pointer(os.Getenv("POLAR_CUSTOMER_SESSION")),
     }, "<value>")
     if err != nil {
         log.Fatal(err)
@@ -382,8 +368,6 @@ func main() {
 
 Confirm a retry payment using a Stripe confirmation token.
 
-**Scopes**: `customer_portal:write`
-
 ### Example Usage
 
 <!-- UsageSnippet language="go" operationID="customer_portal:orders:confirm_retry_payment" method="post" path="/v1/customer-portal/orders/{id}/confirm-payment" -->
@@ -405,7 +389,7 @@ func main() {
     s := polargo.New()
 
     res, err := s.CustomerPortal.Orders.ConfirmRetryPayment(ctx, operations.CustomerPortalOrdersConfirmRetryPaymentSecurity{
-        CustomerSession: os.Getenv("POLAR_CUSTOMER_SESSION"),
+        CustomerSession: polargo.Pointer(os.Getenv("POLAR_CUSTOMER_SESSION")),
     }, "<value>", components.CustomerOrderConfirmPayment{})
     if err != nil {
         log.Fatal(err)

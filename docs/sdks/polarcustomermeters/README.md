@@ -1,5 +1,4 @@
-# PolarCustomerMeters
-(*CustomerPortal.CustomerMeters*)
+# CustomerPortal.CustomerMeters
 
 ## Overview
 
@@ -34,7 +33,7 @@ func main() {
     s := polargo.New()
 
     res, err := s.CustomerPortal.CustomerMeters.List(ctx, operations.CustomerPortalCustomerMetersListRequest{}, operations.CustomerPortalCustomerMetersListSecurity{
-        CustomerSession: os.Getenv("POLAR_CUSTOMER_SESSION"),
+        CustomerSession: polargo.Pointer(os.Getenv("POLAR_CUSTOMER_SESSION")),
     })
     if err != nil {
         log.Fatal(err)
@@ -103,7 +102,7 @@ func main() {
     s := polargo.New()
 
     res, err := s.CustomerPortal.CustomerMeters.Get(ctx, operations.CustomerPortalCustomerMetersGetSecurity{
-        CustomerSession: os.Getenv("POLAR_CUSTOMER_SESSION"),
+        CustomerSession: polargo.Pointer(os.Getenv("POLAR_CUSTOMER_SESSION")),
     }, "<value>")
     if err != nil {
         log.Fatal(err)

@@ -90,7 +90,7 @@ func (s *Seats) ListSeats(ctx context.Context, security operations.CustomerPorta
 	req.Header.Set("Accept", "application/json")
 	req.Header.Set("User-Agent", s.sdkConfiguration.UserAgent)
 
-	if err := utils.PopulateQueryParams(ctx, req, request, nil); err != nil {
+	if err := utils.PopulateQueryParams(ctx, req, request, nil, nil); err != nil {
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
@@ -274,7 +274,6 @@ func (s *Seats) ListSeats(ctx context.Context, security operations.CustomerPorta
 }
 
 // AssignSeat - Assign Seat
-// **Scopes**: `customer_portal:write`
 func (s *Seats) AssignSeat(ctx context.Context, request components.SeatAssign, security operations.CustomerPortalSeatsAssignSeatSecurity, opts ...operations.Option) (*operations.CustomerPortalSeatsAssignSeatResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{
@@ -516,7 +515,6 @@ func (s *Seats) AssignSeat(ctx context.Context, request components.SeatAssign, s
 }
 
 // RevokeSeat - Revoke Seat
-// **Scopes**: `customer_portal:write`
 func (s *Seats) RevokeSeat(ctx context.Context, security operations.CustomerPortalSeatsRevokeSeatSecurity, seatID string, opts ...operations.Option) (*operations.CustomerPortalSeatsRevokeSeatResponse, error) {
 	request := operations.CustomerPortalSeatsRevokeSeatRequest{
 		SeatID: seatID,
@@ -753,7 +751,6 @@ func (s *Seats) RevokeSeat(ctx context.Context, security operations.CustomerPort
 }
 
 // ResendInvitation - Resend Invitation
-// **Scopes**: `customer_portal:write`
 func (s *Seats) ResendInvitation(ctx context.Context, security operations.CustomerPortalSeatsResendInvitationSecurity, seatID string, opts ...operations.Option) (*operations.CustomerPortalSeatsResendInvitationResponse, error) {
 	request := operations.CustomerPortalSeatsResendInvitationRequest{
 		SeatID: seatID,

@@ -1,5 +1,4 @@
-# PolarOrganizations
-(*CustomerPortal.Organizations*)
+# CustomerPortal.Organizations
 
 ## Overview
 
@@ -32,7 +31,7 @@ func main() {
     if err != nil {
         log.Fatal(err)
     }
-    if res.CustomerOrganization != nil {
+    if res.CustomerOrganizationData != nil {
         // handle response
     }
 }

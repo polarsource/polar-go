@@ -1,5 +1,4 @@
 # Files
-(*Files*)
 
 ## Overview
 

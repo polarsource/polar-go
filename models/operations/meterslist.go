@@ -18,8 +18,8 @@ const (
 
 // MetersListQueryParamOrganizationIDFilter - Filter by organization ID.
 type MetersListQueryParamOrganizationIDFilter struct {
-	Str        *string  `queryParam:"inline,name=OrganizationID_Filter"`
-	ArrayOfStr []string `queryParam:"inline,name=OrganizationID_Filter"`
+	Str        *string  `queryParam:"inline" union:"member"`
+	ArrayOfStr []string `queryParam:"inline" union:"member"`
 
 	Type MetersListQueryParamOrganizationIDFilterType
 }

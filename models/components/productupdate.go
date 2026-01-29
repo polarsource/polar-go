@@ -19,10 +19,10 @@ const (
 )
 
 type ProductUpdateMetadata struct {
-	Str     *string  `queryParam:"inline,name=metadata"`
-	Integer *int64   `queryParam:"inline,name=metadata"`
-	Number  *float64 `queryParam:"inline,name=metadata"`
-	Boolean *bool    `queryParam:"inline,name=metadata"`
+	Str     *string  `queryParam:"inline" union:"member"`
+	Integer *int64   `queryParam:"inline" union:"member"`
+	Number  *float64 `queryParam:"inline" union:"member"`
+	Boolean *bool    `queryParam:"inline" union:"member"`
 
 	Type ProductUpdateMetadataType
 }
@@ -127,11 +127,11 @@ const (
 )
 
 type Two struct {
-	ProductPriceFixedCreate       *ProductPriceFixedCreate       `queryParam:"inline,name=two"`
-	ProductPriceCustomCreate      *ProductPriceCustomCreate      `queryParam:"inline,name=two"`
-	ProductPriceFreeCreate        *ProductPriceFreeCreate        `queryParam:"inline,name=two"`
-	ProductPriceSeatBasedCreate   *ProductPriceSeatBasedCreate   `queryParam:"inline,name=two"`
-	ProductPriceMeteredUnitCreate *ProductPriceMeteredUnitCreate `queryParam:"inline,name=two"`
+	ProductPriceFixedCreate       *ProductPriceFixedCreate       `queryParam:"inline" union:"member"`
+	ProductPriceCustomCreate      *ProductPriceCustomCreate      `queryParam:"inline" union:"member"`
+	ProductPriceFreeCreate        *ProductPriceFreeCreate        `queryParam:"inline" union:"member"`
+	ProductPriceSeatBasedCreate   *ProductPriceSeatBasedCreate   `queryParam:"inline" union:"member"`
+	ProductPriceMeteredUnitCreate *ProductPriceMeteredUnitCreate `queryParam:"inline" union:"member"`
 
 	Type TwoType
 }
@@ -275,8 +275,8 @@ const (
 )
 
 type ProductUpdatePrices struct {
-	ExistingProductPrice *ExistingProductPrice `queryParam:"inline,name=prices"`
-	Two                  *Two                  `queryParam:"inline,name=prices"`
+	ExistingProductPrice *ExistingProductPrice `queryParam:"inline" union:"member"`
+	Two                  *Two                  `queryParam:"inline" union:"member"`
 
 	Type ProductUpdatePricesType
 }

@@ -10,4 +10,5 @@
 | `RefundReasonCustomerRequest`       | customer_request                    |
 | `RefundReasonServiceDisruption`     | service_disruption                  |
 | `RefundReasonSatisfactionGuarantee` | satisfaction_guarantee              |
+| `RefundReasonDisputePrevention`     | dispute_prevention                  |
 | `RefundReasonOther`                 | other                               |

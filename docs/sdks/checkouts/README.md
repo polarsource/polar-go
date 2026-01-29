@@ -1,5 +1,4 @@
 # Checkouts
-(*Checkouts*)
 
 ## Overview
 

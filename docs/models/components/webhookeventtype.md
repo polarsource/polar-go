@@ -24,6 +24,7 @@
 | `WebhookEventTypeSubscriptionCanceled`   | subscription.canceled                    |
 | `WebhookEventTypeSubscriptionUncanceled` | subscription.uncanceled                  |
 | `WebhookEventTypeSubscriptionRevoked`    | subscription.revoked                     |
+| `WebhookEventTypeSubscriptionPastDue`    | subscription.past_due                    |
 | `WebhookEventTypeRefundCreated`          | refund.created                           |
 | `WebhookEventTypeRefundUpdated`          | refund.updated                           |
 | `WebhookEventTypeProductCreated`         | product.created                          |

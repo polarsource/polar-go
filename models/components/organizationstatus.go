@@ -12,7 +12,8 @@ type OrganizationStatus string
 const (
 	OrganizationStatusCreated           OrganizationStatus = "created"
 	OrganizationStatusOnboardingStarted OrganizationStatus = "onboarding_started"
-	OrganizationStatusUnderReview       OrganizationStatus = "under_review"
+	OrganizationStatusInitialReview     OrganizationStatus = "initial_review"
+	OrganizationStatusOngoingReview     OrganizationStatus = "ongoing_review"
 	OrganizationStatusDenied            OrganizationStatus = "denied"
 	OrganizationStatusActive            OrganizationStatus = "active"
 )
@@ -30,7 +31,9 @@ func (e *OrganizationStatus) UnmarshalJSON(data []byte) error {
 		fallthrough
 	case "onboarding_started":
 		fallthrough
-	case "under_review":
+	case "initial_review":
+		fallthrough
+	case "ongoing_review":
 		fallthrough
 	case "denied":
 		fallthrough

@@ -25,6 +25,8 @@ type WebhookEvent struct {
 	LastHTTPCode *int64 `json:"last_http_code,omitempty"`
 	// Whether this event was successfully delivered. `null` if no delivery has been attempted.
 	Succeeded *bool `json:"succeeded,omitempty"`
+	// Whether this event was skipped because the webhook endpoint was disabled.
+	Skipped bool `json:"skipped"`
 	// The payload of the webhook event.
 	Payload *string          `json:"payload"`
 	Type    WebhookEventType `json:"type"`
@@ -37,7 +39,7 @@ func (w WebhookEvent) MarshalJSON() ([]byte, error) {
 }
 
 func (w *WebhookEvent) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &w, "", false, []string{"created_at", "id", "type", "is_archived"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &w, "", false, nil); err != nil {
 		return err
 	}
 	return nil
@@ -76,6 +78,13 @@ func (w *WebhookEvent) GetSucceeded() *bool {
 		return nil
 	}
 	return w.Succeeded
+}
+
+func (w *WebhookEvent) GetSkipped() bool {
+	if w == nil {
+		return false
+	}
+	return w.Skipped
 }
 
 func (w *WebhookEvent) GetPayload() *string {

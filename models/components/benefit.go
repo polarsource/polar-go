@@ -20,12 +20,12 @@ const (
 )
 
 type Benefit struct {
-	BenefitCustom           *BenefitCustom           `queryParam:"inline,name=Benefit"`
-	BenefitDiscord          *BenefitDiscord          `queryParam:"inline,name=Benefit"`
-	BenefitGitHubRepository *BenefitGitHubRepository `queryParam:"inline,name=Benefit"`
-	BenefitDownloadables    *BenefitDownloadables    `queryParam:"inline,name=Benefit"`
-	BenefitLicenseKeys      *BenefitLicenseKeys      `queryParam:"inline,name=Benefit"`
-	BenefitMeterCredit      *BenefitMeterCredit      `queryParam:"inline,name=Benefit"`
+	BenefitCustom           *BenefitCustom           `queryParam:"inline" union:"member"`
+	BenefitDiscord          *BenefitDiscord          `queryParam:"inline" union:"member"`
+	BenefitGitHubRepository *BenefitGitHubRepository `queryParam:"inline" union:"member"`
+	BenefitDownloadables    *BenefitDownloadables    `queryParam:"inline" union:"member"`
+	BenefitLicenseKeys      *BenefitLicenseKeys      `queryParam:"inline" union:"member"`
+	BenefitMeterCredit      *BenefitMeterCredit      `queryParam:"inline" union:"member"`
 
 	Type BenefitUnionType
 }

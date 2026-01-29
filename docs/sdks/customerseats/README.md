@@ -1,5 +1,4 @@
 # CustomerSeats
-(*CustomerSeats*)
 
 ## Overview
 

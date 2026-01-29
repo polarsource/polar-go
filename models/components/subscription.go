@@ -9,113 +9,6 @@ import (
 	"time"
 )
 
-type MetadataType string
-
-const (
-	MetadataTypeStr     MetadataType = "str"
-	MetadataTypeInteger MetadataType = "integer"
-	MetadataTypeNumber  MetadataType = "number"
-	MetadataTypeBoolean MetadataType = "boolean"
-)
-
-type Metadata struct {
-	Str     *string  `queryParam:"inline,name=metadata"`
-	Integer *int64   `queryParam:"inline,name=metadata"`
-	Number  *float64 `queryParam:"inline,name=metadata"`
-	Boolean *bool    `queryParam:"inline,name=metadata"`
-
-	Type MetadataType
-}
-
-func CreateMetadataStr(str string) Metadata {
-	typ := MetadataTypeStr
-
-	return Metadata{
-		Str:  &str,
-		Type: typ,
-	}
-}
-
-func CreateMetadataInteger(integer int64) Metadata {
-	typ := MetadataTypeInteger
-
-	return Metadata{
-		Integer: &integer,
-		Type:    typ,
-	}
-}
-
-func CreateMetadataNumber(number float64) Metadata {
-	typ := MetadataTypeNumber
-
-	return Metadata{
-		Number: &number,
-		Type:   typ,
-	}
-}
-
-func CreateMetadataBoolean(boolean bool) Metadata {
-	typ := MetadataTypeBoolean
-
-	return Metadata{
-		Boolean: &boolean,
-		Type:    typ,
-	}
-}
-
-func (u *Metadata) UnmarshalJSON(data []byte) error {
-
-	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, nil); err == nil {
-		u.Str = &str
-		u.Type = MetadataTypeStr
-		return nil
-	}
-
-	var integer int64 = int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
-		u.Integer = &integer
-		u.Type = MetadataTypeInteger
-		return nil
-	}
-
-	var number float64 = float64(0)
-	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
-		u.Number = &number
-		u.Type = MetadataTypeNumber
-		return nil
-	}
-
-	var boolean bool = false
-	if err := utils.UnmarshalJSON(data, &boolean, "", true, nil); err == nil {
-		u.Boolean = &boolean
-		u.Type = MetadataTypeBoolean
-		return nil
-	}
-
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for Metadata", string(data))
-}
-
-func (u Metadata) MarshalJSON() ([]byte, error) {
-	if u.Str != nil {
-		return utils.MarshalJSON(u.Str, "", true)
-	}
-
-	if u.Integer != nil {
-		return utils.MarshalJSON(u.Integer, "", true)
-	}
-
-	if u.Number != nil {
-		return utils.MarshalJSON(u.Number, "", true)
-	}
-
-	if u.Boolean != nil {
-		return utils.MarshalJSON(u.Boolean, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type Metadata: all fields are null")
-}
-
 type CustomFieldDataType string
 
 const (
@@ -126,10 +19,10 @@ const (
 )
 
 type CustomFieldData struct {
-	Str      *string    `queryParam:"inline,name=custom_field_data"`
-	Integer  *int64     `queryParam:"inline,name=custom_field_data"`
-	Boolean  *bool      `queryParam:"inline,name=custom_field_data"`
-	DateTime *time.Time `queryParam:"inline,name=custom_field_data"`
+	Str      *string    `queryParam:"inline" union:"member"`
+	Integer  *int64     `queryParam:"inline" union:"member"`
+	Boolean  *bool      `queryParam:"inline" union:"member"`
+	DateTime *time.Time `queryParam:"inline" union:"member"`
 
 	Type CustomFieldDataType
 }
@@ -233,10 +126,10 @@ const (
 )
 
 type SubscriptionDiscount struct {
-	DiscountFixedOnceForeverDurationBase      *DiscountFixedOnceForeverDurationBase      `queryParam:"inline,name=SubscriptionDiscount"`
-	DiscountFixedRepeatDurationBase           *DiscountFixedRepeatDurationBase           `queryParam:"inline,name=SubscriptionDiscount"`
-	DiscountPercentageOnceForeverDurationBase *DiscountPercentageOnceForeverDurationBase `queryParam:"inline,name=SubscriptionDiscount"`
-	DiscountPercentageRepeatDurationBase      *DiscountPercentageRepeatDurationBase      `queryParam:"inline,name=SubscriptionDiscount"`
+	DiscountFixedOnceForeverDurationBase      *DiscountFixedOnceForeverDurationBase      `queryParam:"inline" union:"member"`
+	DiscountFixedRepeatDurationBase           *DiscountFixedRepeatDurationBase           `queryParam:"inline" union:"member"`
+	DiscountPercentageOnceForeverDurationBase *DiscountPercentageOnceForeverDurationBase `queryParam:"inline" union:"member"`
+	DiscountPercentageRepeatDurationBase      *DiscountPercentageRepeatDurationBase      `queryParam:"inline" union:"member"`
 
 	Type SubscriptionDiscountType
 }
@@ -338,8 +231,8 @@ const (
 )
 
 type SubscriptionPrices struct {
-	LegacyRecurringProductPrice *LegacyRecurringProductPrice `queryParam:"inline,name=prices"`
-	ProductPrice                *ProductPrice                `queryParam:"inline,name=prices"`
+	LegacyRecurringProductPrice *LegacyRecurringProductPrice `queryParam:"inline" union:"member"`
+	ProductPrice                *ProductPrice                `queryParam:"inline" union:"member"`
 
 	Type SubscriptionPricesType
 }
@@ -434,10 +327,10 @@ type Subscription struct {
 	DiscountID *string `json:"discount_id"`
 	CheckoutID *string `json:"checkout_id"`
 	// The number of seats for seat-based subscriptions. None for non-seat subscriptions.
-	Seats                       *int64                      `json:"seats,omitempty"`
-	CustomerCancellationReason  *CustomerCancellationReason `json:"customer_cancellation_reason"`
-	CustomerCancellationComment *string                     `json:"customer_cancellation_comment"`
-	Metadata                    map[string]Metadata         `json:"metadata"`
+	Seats                       *int64                        `json:"seats,omitempty"`
+	CustomerCancellationReason  *CustomerCancellationReason   `json:"customer_cancellation_reason"`
+	CustomerCancellationComment *string                       `json:"customer_cancellation_comment"`
+	Metadata                    map[string]MetadataOutputType `json:"metadata"`
 	// Key-value object storing custom field values.
 	CustomFieldData map[string]*CustomFieldData `json:"custom_field_data,omitempty"`
 	Customer        SubscriptionCustomer        `json:"customer"`
@@ -455,7 +348,7 @@ func (s Subscription) MarshalJSON() ([]byte, error) {
 }
 
 func (s *Subscription) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &s, "", false, []string{"created_at", "id", "amount", "currency", "recurring_interval", "recurring_interval_count", "status", "current_period_start", "cancel_at_period_end", "customer_id", "product_id", "metadata", "customer", "product", "prices", "meters"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &s, "", false, nil); err != nil {
 		return err
 	}
 	return nil
@@ -629,9 +522,9 @@ func (s *Subscription) GetCustomerCancellationComment() *string {
 	return s.CustomerCancellationComment
 }
 
-func (s *Subscription) GetMetadata() map[string]Metadata {
+func (s *Subscription) GetMetadata() map[string]MetadataOutputType {
 	if s == nil {
-		return map[string]Metadata{}
+		return map[string]MetadataOutputType{}
 	}
 	return s.Metadata
 }

@@ -18,7 +18,7 @@ func (e EventsIngestResponse) MarshalJSON() ([]byte, error) {
 }
 
 func (e *EventsIngestResponse) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &e, "", false, []string{"inserted"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &e, "", false, nil); err != nil {
 		return err
 	}
 	return nil

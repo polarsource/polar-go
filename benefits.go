@@ -88,7 +88,7 @@ func (s *Benefits) List(ctx context.Context, request operations.BenefitsListRequ
 	req.Header.Set("Accept", "application/json")
 	req.Header.Set("User-Agent", s.sdkConfiguration.UserAgent)
 
-	if err := utils.PopulateQueryParams(ctx, req, request, nil); err != nil {
+	if err := utils.PopulateQueryParams(ctx, req, request, nil, nil); err != nil {
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
@@ -256,6 +256,8 @@ func (s *Benefits) List(ctx context.Context, request operations.BenefitsListRequ
 			operations.BenefitsListRequest{
 				OrganizationID: request.OrganizationID,
 				TypeFilter:     request.TypeFilter,
+				ID:             request.ID,
+				ExcludeID:      request.ExcludeID,
 				Query:          request.Query,
 				Page:           &nP,
 				Limit:          request.Limit,
@@ -1402,7 +1404,7 @@ func (s *Benefits) Grants(ctx context.Context, request operations.BenefitsGrants
 	req.Header.Set("Accept", "application/json")
 	req.Header.Set("User-Agent", s.sdkConfiguration.UserAgent)
 
-	if err := utils.PopulateQueryParams(ctx, req, request, nil); err != nil {
+	if err := utils.PopulateQueryParams(ctx, req, request, nil, nil); err != nil {
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
@@ -1571,6 +1573,7 @@ func (s *Benefits) Grants(ctx context.Context, request operations.BenefitsGrants
 				ID:         request.ID,
 				IsGranted:  request.IsGranted,
 				CustomerID: request.CustomerID,
+				MemberID:   request.MemberID,
 				Page:       &nP,
 				Limit:      request.Limit,
 			},

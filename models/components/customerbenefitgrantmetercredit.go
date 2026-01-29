@@ -17,6 +17,7 @@ type CustomerBenefitGrantMeterCredit struct {
 	GrantedAt      *time.Time                        `json:"granted_at"`
 	RevokedAt      *time.Time                        `json:"revoked_at"`
 	CustomerID     string                            `json:"customer_id"`
+	MemberID       *string                           `json:"member_id,omitempty"`
 	BenefitID      string                            `json:"benefit_id"`
 	SubscriptionID *string                           `json:"subscription_id"`
 	OrderID        *string                           `json:"order_id"`
@@ -78,6 +79,13 @@ func (c *CustomerBenefitGrantMeterCredit) GetCustomerID() string {
 		return ""
 	}
 	return c.CustomerID
+}
+
+func (c *CustomerBenefitGrantMeterCredit) GetMemberID() *string {
+	if c == nil {
+		return nil
+	}
+	return c.MemberID
 }
 
 func (c *CustomerBenefitGrantMeterCredit) GetBenefitID() string {

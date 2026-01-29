@@ -88,7 +88,7 @@ func (s *Events) List(ctx context.Context, request operations.EventsListRequest,
 	req.Header.Set("Accept", "application/json")
 	req.Header.Set("User-Agent", s.sdkConfiguration.UserAgent)
 
-	if err := utils.PopulateQueryParams(ctx, req, request, nil); err != nil {
+	if err := utils.PopulateQueryParams(ctx, req, request, nil, nil); err != nil {
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
@@ -197,82 +197,6 @@ func (s *Events) List(ctx context.Context, request operations.EventsListRequest,
 			Response: httpRes,
 		},
 	}
-	res.Next = func() (*operations.EventsListResponse, error) {
-		rawBody, err := utils.ConsumeRawBody(httpRes)
-		if err != nil {
-			return nil, err
-		}
-
-		b, err := ajson.Unmarshal(rawBody)
-		if err != nil {
-			return nil, err
-		}
-		var p int64 = 1
-		if request.Page != nil {
-			p = *request.Page
-		}
-		nP := int64(p + 1)
-		nPs, err := ajson.Eval(b, "$.pagination.max_page")
-		if err != nil {
-			return nil, err
-		}
-		if !nPs.IsNumeric() {
-			return nil, nil
-		}
-
-		nPsVal, err := nPs.GetNumeric()
-		if err != nil {
-			return nil, err
-		}
-		// GetNumeric returns as float64
-		if int(nPsVal) <= int(p) {
-			return nil, nil
-		}
-		r, err := ajson.Eval(b, "$.items")
-		if err != nil {
-			return nil, err
-		}
-		if !r.IsArray() {
-			return nil, nil
-		}
-		arr, err := r.GetArray()
-		if err != nil {
-			return nil, err
-		}
-		if len(arr) == 0 {
-			return nil, nil
-		}
-
-		l := 0
-		if request.Limit != nil {
-			l = int(*request.Limit)
-		}
-		if len(arr) < l {
-			return nil, nil
-		}
-
-		return s.List(
-			ctx,
-			operations.EventsListRequest{
-				Filter:             request.Filter,
-				StartTimestamp:     request.StartTimestamp,
-				EndTimestamp:       request.EndTimestamp,
-				OrganizationID:     request.OrganizationID,
-				CustomerID:         request.CustomerID,
-				ExternalCustomerID: request.ExternalCustomerID,
-				MeterID:            request.MeterID,
-				Name:               request.Name,
-				Source:             request.Source,
-				Query:              request.Query,
-				ParentID:           request.ParentID,
-				Page:               &nP,
-				Limit:              request.Limit,
-				Sorting:            request.Sorting,
-				Metadata:           request.Metadata,
-			},
-			opts...,
-		)
-	}
 
 	switch {
 	case httpRes.StatusCode == 200:
@@ -283,12 +207,12 @@ func (s *Events) List(ctx context.Context, request operations.EventsListRequest,
 				return nil, err
 			}
 
-			var out components.ListResourceEvent
+			var out operations.EventsListResponseEventsList
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.ListResourceEvent = &out
+			res.ResponseEventsList = &out
 		default:
 			rawBody, err := utils.ConsumeRawBody(httpRes)
 			if err != nil {
@@ -397,7 +321,7 @@ func (s *Events) ListNames(ctx context.Context, request operations.EventsListNam
 	req.Header.Set("Accept", "application/json")
 	req.Header.Set("User-Agent", s.sdkConfiguration.UserAgent)
 
-	if err := utils.PopulateQueryParams(ctx, req, request, nil); err != nil {
+	if err := utils.PopulateQueryParams(ctx, req, request, nil, nil); err != nil {
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 

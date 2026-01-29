@@ -19,8 +19,8 @@ const (
 
 // Oauth2AuthorizeResponseOauth2Authorize - Successful Response
 type Oauth2AuthorizeResponseOauth2Authorize struct {
-	AuthorizeResponseUser         *components.AuthorizeResponseUser         `queryParam:"inline,name=Response_Oauth2_Authorize"`
-	AuthorizeResponseOrganization *components.AuthorizeResponseOrganization `queryParam:"inline,name=Response_Oauth2_Authorize"`
+	AuthorizeResponseUser         *components.AuthorizeResponseUser         `queryParam:"inline" union:"member"`
+	AuthorizeResponseOrganization *components.AuthorizeResponseOrganization `queryParam:"inline" union:"member"`
 
 	Type Oauth2AuthorizeResponseOauth2AuthorizeType
 }

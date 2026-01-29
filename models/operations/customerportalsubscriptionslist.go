@@ -10,14 +10,22 @@ import (
 )
 
 type CustomerPortalSubscriptionsListSecurity struct {
-	CustomerSession string `security:"scheme,type=http,subtype=bearer,name=Authorization,env=polar_customer_session"`
+	CustomerSession *string `security:"scheme,type=http,subtype=bearer,name=Authorization,env=polar_customer_session"`
+	MemberSession   *string `security:"scheme,type=http,subtype=bearer,name=Authorization,env=polar_member_session"`
 }
 
-func (c *CustomerPortalSubscriptionsListSecurity) GetCustomerSession() string {
+func (c *CustomerPortalSubscriptionsListSecurity) GetCustomerSession() *string {
 	if c == nil {
-		return ""
+		return nil
 	}
 	return c.CustomerSession
+}
+
+func (c *CustomerPortalSubscriptionsListSecurity) GetMemberSession() *string {
+	if c == nil {
+		return nil
+	}
+	return c.MemberSession
 }
 
 type CustomerPortalSubscriptionsListQueryParamProductIDFilterType string
@@ -29,8 +37,8 @@ const (
 
 // CustomerPortalSubscriptionsListQueryParamProductIDFilter - Filter by product ID.
 type CustomerPortalSubscriptionsListQueryParamProductIDFilter struct {
-	Str        *string  `queryParam:"inline,name=ProductID_Filter"`
-	ArrayOfStr []string `queryParam:"inline,name=ProductID_Filter"`
+	Str        *string  `queryParam:"inline" union:"member"`
+	ArrayOfStr []string `queryParam:"inline" union:"member"`
 
 	Type CustomerPortalSubscriptionsListQueryParamProductIDFilterType
 }

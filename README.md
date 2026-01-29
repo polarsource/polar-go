@@ -155,7 +155,6 @@ import (
 	polargo "github.com/polarsource/polar-go"
 	"github.com/polarsource/polar-go/models/operations"
 	"log"
-	"os"
 )
 
 func main() {
@@ -163,9 +162,7 @@ func main() {
 
 	s := polargo.New()
 
-	res, err := s.CustomerPortal.BenefitGrants.List(ctx, operations.CustomerPortalBenefitGrantsListRequest{}, operations.CustomerPortalBenefitGrantsListSecurity{
-		CustomerSession: os.Getenv("POLAR_CUSTOMER_SESSION"),
-	})
+	res, err := s.CustomerPortal.BenefitGrants.List(ctx, operations.CustomerPortalBenefitGrantsListRequest{}, operations.CustomerPortalBenefitGrantsListSecurity{})
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -226,23 +223,36 @@ func main() {
 * [ClientUpdate](docs/sdks/checkouts/README.md#clientupdate) - Update Checkout Session from Client
 * [ClientConfirm](docs/sdks/checkouts/README.md#clientconfirm) - Confirm Checkout Session from Client
 
+### [CustomFields](docs/sdks/customfields/README.md)
+
+* [List](docs/sdks/customfields/README.md#list) - List Custom Fields
+* [Create](docs/sdks/customfields/README.md#create) - Create Custom Field
+* [Get](docs/sdks/customfields/README.md#get) - Get Custom Field
+* [Update](docs/sdks/customfields/README.md#update) - Update Custom Field
+* [Delete](docs/sdks/customfields/README.md#delete) - Delete Custom Field
+
 ### [CustomerMeters](docs/sdks/customermeters/README.md)
 
 * [List](docs/sdks/customermeters/README.md#list) - List Customer Meters
 * [Get](docs/sdks/customermeters/README.md#get) - Get Customer Meter
 
-#### [CustomerPortal.BenefitGrants](docs/sdks/polarbenefitgrants/README.md)
+### [CustomerPortal.BenefitGrants](docs/sdks/polarbenefitgrants/README.md)
 
 * [List](docs/sdks/polarbenefitgrants/README.md#list) - List Benefit Grants
 * [Get](docs/sdks/polarbenefitgrants/README.md#get) - Get Benefit Grant
 * [Update](docs/sdks/polarbenefitgrants/README.md#update) - Update Benefit Grant
 
-#### [CustomerPortal.CustomerMeters](docs/sdks/polarcustomermeters/README.md)
+### [CustomerPortal.CustomerMeters](docs/sdks/polarcustomermeters/README.md)
 
 * [List](docs/sdks/polarcustomermeters/README.md#list) - List Meters
 * [Get](docs/sdks/polarcustomermeters/README.md#get) - Get Customer Meter
 
-#### [CustomerPortal.Customers](docs/sdks/polarcustomers/README.md)
+### [CustomerPortal.CustomerSession](docs/sdks/customersession/README.md)
+
+* [Introspect](docs/sdks/customersession/README.md#introspect) - Introspect Customer Session
+* [GetAuthenticatedUser](docs/sdks/customersession/README.md#getauthenticateduser) - Get Authenticated Portal User
+
+### [CustomerPortal.Customers](docs/sdks/polarcustomers/README.md)
 
 * [Get](docs/sdks/polarcustomers/README.md#get) - Get Customer
 * [Update](docs/sdks/polarcustomers/README.md#update) - Update Customer
@@ -251,15 +261,11 @@ func main() {
 * [ConfirmPaymentMethod](docs/sdks/polarcustomers/README.md#confirmpaymentmethod) - Confirm Customer Payment Method
 * [DeletePaymentMethod](docs/sdks/polarcustomers/README.md#deletepaymentmethod) - Delete Customer Payment Method
 
-#### [CustomerPortal.CustomerSession](docs/sdks/customersession/README.md)
-
-* [Introspect](docs/sdks/customersession/README.md#introspect) - Introspect Customer Session
-
-#### [CustomerPortal.Downloadables](docs/sdks/downloadables/README.md)
+### [CustomerPortal.Downloadables](docs/sdks/downloadables/README.md)
 
 * [List](docs/sdks/downloadables/README.md#list) - List Downloadables
 
-#### [CustomerPortal.LicenseKeys](docs/sdks/polarlicensekeys/README.md)
+### [CustomerPortal.LicenseKeys](docs/sdks/polarlicensekeys/README.md)
 
 * [List](docs/sdks/polarlicensekeys/README.md#list) - List License Keys
 * [Get](docs/sdks/polarlicensekeys/README.md#get) - Get License Key
@@ -267,7 +273,7 @@ func main() {
 * [Activate](docs/sdks/polarlicensekeys/README.md#activate) - Activate License Key
 * [Deactivate](docs/sdks/polarlicensekeys/README.md#deactivate) - Deactivate License Key
 
-#### [CustomerPortal.Orders](docs/sdks/polarorders/README.md)
+### [CustomerPortal.Orders](docs/sdks/polarorders/README.md)
 
 * [List](docs/sdks/polarorders/README.md#list) - List Orders
 * [Get](docs/sdks/polarorders/README.md#get) - Get Order
@@ -277,11 +283,11 @@ func main() {
 * [GetPaymentStatus](docs/sdks/polarorders/README.md#getpaymentstatus) - Get Order Payment Status
 * [ConfirmRetryPayment](docs/sdks/polarorders/README.md#confirmretrypayment) - Confirm Retry Payment
 
-#### [CustomerPortal.Organizations](docs/sdks/polarorganizations/README.md)
+### [CustomerPortal.Organizations](docs/sdks/polarorganizations/README.md)
 
 * [Get](docs/sdks/polarorganizations/README.md#get) - Get Organization
 
-#### [CustomerPortal.Seats](docs/sdks/seats/README.md)
+### [CustomerPortal.Seats](docs/sdks/seats/README.md)
 
 * [ListSeats](docs/sdks/seats/README.md#listseats) - List Seats
 * [AssignSeat](docs/sdks/seats/README.md#assignseat) - Assign Seat
@@ -289,32 +295,17 @@ func main() {
 * [ResendInvitation](docs/sdks/seats/README.md#resendinvitation) - Resend Invitation
 * [ListClaimedSubscriptions](docs/sdks/seats/README.md#listclaimedsubscriptions) - List Claimed Subscriptions
 
-#### [CustomerPortal.Subscriptions](docs/sdks/polarsubscriptions/README.md)
+### [CustomerPortal.Subscriptions](docs/sdks/polarsubscriptions/README.md)
 
 * [List](docs/sdks/polarsubscriptions/README.md#list) - List Subscriptions
 * [Get](docs/sdks/polarsubscriptions/README.md#get) - Get Subscription
 * [Update](docs/sdks/polarsubscriptions/README.md#update) - Update Subscription
 * [Cancel](docs/sdks/polarsubscriptions/README.md#cancel) - Cancel Subscription
 
-#### [CustomerPortal.Wallets](docs/sdks/polarwallets/README.md)
+### [CustomerPortal.Wallets](docs/sdks/wallets/README.md)
 
-* [List](docs/sdks/polarwallets/README.md#list) - List Wallets
-* [Get](docs/sdks/polarwallets/README.md#get) - Get Wallet
-
-### [Customers](docs/sdks/customers/README.md)
-
-* [List](docs/sdks/customers/README.md#list) - List Customers
-* [Create](docs/sdks/customers/README.md#create) - Create Customer
-* [Export](docs/sdks/customers/README.md#export) - Export Customers
-* [Get](docs/sdks/customers/README.md#get) - Get Customer
-* [Update](docs/sdks/customers/README.md#update) - Update Customer
-* [Delete](docs/sdks/customers/README.md#delete) - Delete Customer
-* [GetExternal](docs/sdks/customers/README.md#getexternal) - Get Customer by External ID
-* [UpdateExternal](docs/sdks/customers/README.md#updateexternal) - Update Customer by External ID
-* [DeleteExternal](docs/sdks/customers/README.md#deleteexternal) - Delete Customer by External ID
-* [GetState](docs/sdks/customers/README.md#getstate) - Get Customer State
-* [GetStateExternal](docs/sdks/customers/README.md#getstateexternal) - Get Customer State by External ID
-* [GetBalance](docs/sdks/customers/README.md#getbalance) - Get Customer Balance
+* [List](docs/sdks/wallets/README.md#list) - List Wallets
+* [Get](docs/sdks/wallets/README.md#get) - Get Wallet
 
 ### [CustomerSeats](docs/sdks/customerseats/README.md)
 
@@ -329,13 +320,19 @@ func main() {
 
 * [Create](docs/sdks/customersessions/README.md#create) - Create Customer Session
 
-### [CustomFields](docs/sdks/customfields/README.md)
+### [Customers](docs/sdks/customers/README.md)
 
-* [List](docs/sdks/customfields/README.md#list) - List Custom Fields
-* [Create](docs/sdks/customfields/README.md#create) - Create Custom Field
-* [Get](docs/sdks/customfields/README.md#get) - Get Custom Field
-* [Update](docs/sdks/customfields/README.md#update) - Update Custom Field
-* [Delete](docs/sdks/customfields/README.md#delete) - Delete Custom Field
+* [List](docs/sdks/customers/README.md#list) - List Customers
+* [Create](docs/sdks/customers/README.md#create) - Create Customer
+* [Export](docs/sdks/customers/README.md#export) - Export Customers
+* [Get](docs/sdks/customers/README.md#get) - Get Customer
+* [Update](docs/sdks/customers/README.md#update) - Update Customer
+* [Delete](docs/sdks/customers/README.md#delete) - Delete Customer
+* [GetExternal](docs/sdks/customers/README.md#getexternal) - Get Customer by External ID
+* [UpdateExternal](docs/sdks/customers/README.md#updateexternal) - Update Customer by External ID
+* [DeleteExternal](docs/sdks/customers/README.md#deleteexternal) - Delete Customer by External ID
+* [GetState](docs/sdks/customers/README.md#getstate) - Get Customer State
+* [GetStateExternal](docs/sdks/customers/README.md#getstateexternal) - Get Customer State by External ID
 
 ### [Discounts](docs/sdks/discounts/README.md)
 
@@ -344,6 +341,16 @@ func main() {
 * [Get](docs/sdks/discounts/README.md#get) - Get Discount
 * [Update](docs/sdks/discounts/README.md#update) - Update Discount
 * [Delete](docs/sdks/discounts/README.md#delete) - Delete Discount
+
+### [Disputes](docs/sdks/disputes/README.md)
+
+* [List](docs/sdks/disputes/README.md#list) - List Disputes
+* [Get](docs/sdks/disputes/README.md#get) - Get Dispute
+
+### [EventTypes](docs/sdks/eventtypes/README.md)
+
+* [List](docs/sdks/eventtypes/README.md#list) - List Event Types
+* [Update](docs/sdks/eventtypes/README.md#update) - Update Event Type
 
 ### [Events](docs/sdks/events/README.md)
 
@@ -369,6 +376,18 @@ func main() {
 * [Validate](docs/sdks/licensekeys/README.md#validate) - Validate License Key
 * [Activate](docs/sdks/licensekeys/README.md#activate) - Activate License Key
 * [Deactivate](docs/sdks/licensekeys/README.md#deactivate) - Deactivate License Key
+
+### [MemberSessions](docs/sdks/membersessions/README.md)
+
+* [Create](docs/sdks/membersessions/README.md#create) - Create Member Session
+
+### [Members](docs/sdks/members/README.md)
+
+* [ListMembers](docs/sdks/members/README.md#listmembers) - List Members
+* [CreateMember](docs/sdks/members/README.md#createmember) - Create Member
+* [GetMember](docs/sdks/members/README.md#getmember) - Get Member
+* [UpdateMember](docs/sdks/members/README.md#updatemember) - Update Member
+* [DeleteMember](docs/sdks/members/README.md#deletemember) - Delete Member
 
 ### [Meters](docs/sdks/meters/README.md)
 
@@ -407,6 +426,13 @@ func main() {
 * [GenerateInvoice](docs/sdks/orders/README.md#generateinvoice) - Generate Order Invoice
 * [Invoice](docs/sdks/orders/README.md#invoice) - Get Order Invoice
 
+### [OrganizationAccessTokens](docs/sdks/organizationaccesstokens/README.md)
+
+* [List](docs/sdks/organizationaccesstokens/README.md#list) - List
+* [Create](docs/sdks/organizationaccesstokens/README.md#create) - Create
+* [Update](docs/sdks/organizationaccesstokens/README.md#update) - Update
+* [Delete](docs/sdks/organizationaccesstokens/README.md#delete) - Delete
+
 ### [Organizations](docs/sdks/organizations/README.md)
 
 * [List](docs/sdks/organizations/README.md#list) - List Organizations
@@ -440,12 +466,6 @@ func main() {
 * [Get](docs/sdks/subscriptions/README.md#get) - Get Subscription
 * [Update](docs/sdks/subscriptions/README.md#update) - Update Subscription
 * [Revoke](docs/sdks/subscriptions/README.md#revoke) - Revoke Subscription
-
-### [Wallets](docs/sdks/wallets/README.md)
-
-* [List](docs/sdks/wallets/README.md#list) - List Wallets
-* [Get](docs/sdks/wallets/README.md#get) - Get Wallet
-* [TopUp](docs/sdks/wallets/README.md#topup) - Top-Up Wallet
 
 ### [Webhooks](docs/sdks/webhooks/README.md)
 

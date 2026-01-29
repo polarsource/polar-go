@@ -1,5 +1,4 @@
 # CheckoutLinks
-(*CheckoutLinks*)
 
 ## Overview
 

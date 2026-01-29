@@ -14,8 +14,9 @@ type ProductPriceCustom struct {
 	// Last modification timestamp of the object.
 	ModifiedAt *time.Time `json:"modified_at"`
 	// The ID of the price.
-	ID         string `json:"id"`
-	amountType string `const:"custom" json:"amount_type"`
+	ID         string             `json:"id"`
+	Source     ProductPriceSource `json:"source"`
+	amountType string             `const:"custom" json:"amount_type"`
 	// Whether the price is archived and no longer available.
 	IsArchived bool `json:"is_archived"`
 	// The ID of the product owning the price.
@@ -25,8 +26,8 @@ type ProductPriceCustom struct {
 	RecurringInterval *SubscriptionRecurringInterval `json:"recurring_interval"`
 	// The currency.
 	PriceCurrency string `json:"price_currency"`
-	// The minimum amount the customer can pay.
-	MinimumAmount *int64 `json:"minimum_amount"`
+	// The minimum amount the customer can pay. If 0, the price is 'free or pay what you want'. Defaults to 50 cents.
+	MinimumAmount int64 `json:"minimum_amount"`
 	// The maximum amount the customer can pay.
 	MaximumAmount *int64 `json:"maximum_amount"`
 	// The initial amount shown to the customer.
@@ -38,7 +39,7 @@ func (p ProductPriceCustom) MarshalJSON() ([]byte, error) {
 }
 
 func (p *ProductPriceCustom) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &p, "", false, []string{"created_at", "id", "amount_type", "is_archived", "product_id", "type", "price_currency"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &p, "", false, []string{"created_at", "id", "source", "amount_type", "is_archived", "product_id", "type", "price_currency", "minimum_amount"}); err != nil {
 		return err
 	}
 	return nil
@@ -63,6 +64,13 @@ func (p *ProductPriceCustom) GetID() string {
 		return ""
 	}
 	return p.ID
+}
+
+func (p *ProductPriceCustom) GetSource() ProductPriceSource {
+	if p == nil {
+		return ProductPriceSource("")
+	}
+	return p.Source
 }
 
 func (p *ProductPriceCustom) GetAmountType() string {
@@ -104,9 +112,9 @@ func (p *ProductPriceCustom) GetPriceCurrency() string {
 	return p.PriceCurrency
 }
 
-func (p *ProductPriceCustom) GetMinimumAmount() *int64 {
+func (p *ProductPriceCustom) GetMinimumAmount() int64 {
 	if p == nil {
-		return nil
+		return 0
 	}
 	return p.MinimumAmount
 }

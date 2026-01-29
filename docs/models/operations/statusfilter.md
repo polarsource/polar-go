@@ -1,19 +1,19 @@
 # StatusFilter
 
-Filter by checkout session status.
+Filter by dispute status.
 
 
 ## Supported Types
 
-### CheckoutStatus
+### DisputeStatus
 
 ```go
-statusFilter := operations.CreateStatusFilterCheckoutStatus(components.CheckoutStatus{/* values here */})
+statusFilter := operations.CreateStatusFilterDisputeStatus(components.DisputeStatus{/* values here */})
 ```
 
 ### 
 
 ```go
-statusFilter := operations.CreateStatusFilterArrayOfCheckoutStatus([]components.CheckoutStatus{/* values here */})
+statusFilter := operations.CreateStatusFilterArrayOfDisputeStatus([]components.DisputeStatus{/* values here */})
 ```
 

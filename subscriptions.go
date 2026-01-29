@@ -88,7 +88,7 @@ func (s *Subscriptions) List(ctx context.Context, request operations.Subscriptio
 	req.Header.Set("Accept", "application/json")
 	req.Header.Set("User-Agent", s.sdkConfiguration.UserAgent)
 
-	if err := utils.PopulateQueryParams(ctx, req, request, nil); err != nil {
+	if err := utils.PopulateQueryParams(ctx, req, request, nil, nil); err != nil {
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
@@ -260,6 +260,7 @@ func (s *Subscriptions) List(ctx context.Context, request operations.Subscriptio
 				ExternalCustomerID: request.ExternalCustomerID,
 				DiscountID:         request.DiscountID,
 				Active:             request.Active,
+				CancelAtPeriodEnd:  request.CancelAtPeriodEnd,
 				Page:               &nP,
 				Limit:              request.Limit,
 				Sorting:            request.Sorting,
@@ -637,7 +638,7 @@ func (s *Subscriptions) Export(ctx context.Context, organizationID *operations.O
 	req.Header.Set("Accept", "application/json")
 	req.Header.Set("User-Agent", s.sdkConfiguration.UserAgent)
 
-	if err := utils.PopulateQueryParams(ctx, req, request, nil); err != nil {
+	if err := utils.PopulateQueryParams(ctx, req, request, nil, nil); err != nil {
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 

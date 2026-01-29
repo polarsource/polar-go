@@ -2,24 +2,9 @@
 
 package components
 
-import (
-	"github.com/polarsource/polar-go/internal/utils"
-)
-
 type OrganizationNotificationSettings struct {
 	NewOrder        bool `json:"new_order"`
 	NewSubscription bool `json:"new_subscription"`
-}
-
-func (o OrganizationNotificationSettings) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(o, "", false)
-}
-
-func (o *OrganizationNotificationSettings) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &o, "", false, []string{"new_order", "new_subscription"}); err != nil {
-		return err
-	}
-	return nil
 }
 
 func (o *OrganizationNotificationSettings) GetNewOrder() bool {

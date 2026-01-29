@@ -12,7 +12,11 @@ type ProductPriceSeatBasedCreate struct {
 	// The currency. Currently, only `usd` is supported.
 	PriceCurrency *string `default:"usd" json:"price_currency"`
 	// List of pricing tiers for seat-based pricing.
-	SeatTiers ProductPriceSeatTiers `json:"seat_tiers"`
+	//
+	// The minimum and maximum seat limits are derived from the tiers:
+	// - minimum_seats = first tier's min_seats
+	// - maximum_seats = last tier's max_seats (None for unlimited)
+	SeatTiers ProductPriceSeatTiersInput `json:"seat_tiers"`
 }
 
 func (p ProductPriceSeatBasedCreate) MarshalJSON() ([]byte, error) {
@@ -37,9 +41,9 @@ func (p *ProductPriceSeatBasedCreate) GetPriceCurrency() *string {
 	return p.PriceCurrency
 }
 
-func (p *ProductPriceSeatBasedCreate) GetSeatTiers() ProductPriceSeatTiers {
+func (p *ProductPriceSeatBasedCreate) GetSeatTiers() ProductPriceSeatTiersInput {
 	if p == nil {
-		return ProductPriceSeatTiers{}
+		return ProductPriceSeatTiersInput{}
 	}
 	return p.SeatTiers
 }

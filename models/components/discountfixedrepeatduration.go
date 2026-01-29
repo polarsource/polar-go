@@ -3,118 +3,9 @@
 package components
 
 import (
-	"errors"
-	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
 	"time"
 )
-
-type DiscountFixedRepeatDurationMetadataType string
-
-const (
-	DiscountFixedRepeatDurationMetadataTypeStr     DiscountFixedRepeatDurationMetadataType = "str"
-	DiscountFixedRepeatDurationMetadataTypeInteger DiscountFixedRepeatDurationMetadataType = "integer"
-	DiscountFixedRepeatDurationMetadataTypeNumber  DiscountFixedRepeatDurationMetadataType = "number"
-	DiscountFixedRepeatDurationMetadataTypeBoolean DiscountFixedRepeatDurationMetadataType = "boolean"
-)
-
-type DiscountFixedRepeatDurationMetadata struct {
-	Str     *string  `queryParam:"inline,name=metadata"`
-	Integer *int64   `queryParam:"inline,name=metadata"`
-	Number  *float64 `queryParam:"inline,name=metadata"`
-	Boolean *bool    `queryParam:"inline,name=metadata"`
-
-	Type DiscountFixedRepeatDurationMetadataType
-}
-
-func CreateDiscountFixedRepeatDurationMetadataStr(str string) DiscountFixedRepeatDurationMetadata {
-	typ := DiscountFixedRepeatDurationMetadataTypeStr
-
-	return DiscountFixedRepeatDurationMetadata{
-		Str:  &str,
-		Type: typ,
-	}
-}
-
-func CreateDiscountFixedRepeatDurationMetadataInteger(integer int64) DiscountFixedRepeatDurationMetadata {
-	typ := DiscountFixedRepeatDurationMetadataTypeInteger
-
-	return DiscountFixedRepeatDurationMetadata{
-		Integer: &integer,
-		Type:    typ,
-	}
-}
-
-func CreateDiscountFixedRepeatDurationMetadataNumber(number float64) DiscountFixedRepeatDurationMetadata {
-	typ := DiscountFixedRepeatDurationMetadataTypeNumber
-
-	return DiscountFixedRepeatDurationMetadata{
-		Number: &number,
-		Type:   typ,
-	}
-}
-
-func CreateDiscountFixedRepeatDurationMetadataBoolean(boolean bool) DiscountFixedRepeatDurationMetadata {
-	typ := DiscountFixedRepeatDurationMetadataTypeBoolean
-
-	return DiscountFixedRepeatDurationMetadata{
-		Boolean: &boolean,
-		Type:    typ,
-	}
-}
-
-func (u *DiscountFixedRepeatDurationMetadata) UnmarshalJSON(data []byte) error {
-
-	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, nil); err == nil {
-		u.Str = &str
-		u.Type = DiscountFixedRepeatDurationMetadataTypeStr
-		return nil
-	}
-
-	var integer int64 = int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
-		u.Integer = &integer
-		u.Type = DiscountFixedRepeatDurationMetadataTypeInteger
-		return nil
-	}
-
-	var number float64 = float64(0)
-	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
-		u.Number = &number
-		u.Type = DiscountFixedRepeatDurationMetadataTypeNumber
-		return nil
-	}
-
-	var boolean bool = false
-	if err := utils.UnmarshalJSON(data, &boolean, "", true, nil); err == nil {
-		u.Boolean = &boolean
-		u.Type = DiscountFixedRepeatDurationMetadataTypeBoolean
-		return nil
-	}
-
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for DiscountFixedRepeatDurationMetadata", string(data))
-}
-
-func (u DiscountFixedRepeatDurationMetadata) MarshalJSON() ([]byte, error) {
-	if u.Str != nil {
-		return utils.MarshalJSON(u.Str, "", true)
-	}
-
-	if u.Integer != nil {
-		return utils.MarshalJSON(u.Integer, "", true)
-	}
-
-	if u.Number != nil {
-		return utils.MarshalJSON(u.Number, "", true)
-	}
-
-	if u.Boolean != nil {
-		return utils.MarshalJSON(u.Boolean, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type DiscountFixedRepeatDurationMetadata: all fields are null")
-}
 
 // DiscountFixedRepeatDuration - Schema for a fixed amount discount that is applied on every invoice
 // for a certain number of months.
@@ -129,8 +20,8 @@ type DiscountFixedRepeatDuration struct {
 	// Last modification timestamp of the object.
 	ModifiedAt *time.Time `json:"modified_at"`
 	// The ID of the object.
-	ID       string                                         `json:"id"`
-	Metadata map[string]DiscountFixedRepeatDurationMetadata `json:"metadata"`
+	ID       string                        `json:"id"`
+	Metadata map[string]MetadataOutputType `json:"metadata"`
 	// Name of the discount. Will be displayed to the customer when the discount is applied.
 	Name string `json:"name"`
 	// Code customers can use to apply the discount during checkout.
@@ -215,9 +106,9 @@ func (d *DiscountFixedRepeatDuration) GetID() string {
 	return d.ID
 }
 
-func (d *DiscountFixedRepeatDuration) GetMetadata() map[string]DiscountFixedRepeatDurationMetadata {
+func (d *DiscountFixedRepeatDuration) GetMetadata() map[string]MetadataOutputType {
 	if d == nil {
-		return map[string]DiscountFixedRepeatDurationMetadata{}
+		return map[string]MetadataOutputType{}
 	}
 	return d.Metadata
 }

@@ -3,118 +3,9 @@
 package components
 
 import (
-	"errors"
-	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
 	"time"
 )
-
-type DiscountFixedRepeatDurationBaseMetadataType string
-
-const (
-	DiscountFixedRepeatDurationBaseMetadataTypeStr     DiscountFixedRepeatDurationBaseMetadataType = "str"
-	DiscountFixedRepeatDurationBaseMetadataTypeInteger DiscountFixedRepeatDurationBaseMetadataType = "integer"
-	DiscountFixedRepeatDurationBaseMetadataTypeNumber  DiscountFixedRepeatDurationBaseMetadataType = "number"
-	DiscountFixedRepeatDurationBaseMetadataTypeBoolean DiscountFixedRepeatDurationBaseMetadataType = "boolean"
-)
-
-type DiscountFixedRepeatDurationBaseMetadata struct {
-	Str     *string  `queryParam:"inline,name=metadata"`
-	Integer *int64   `queryParam:"inline,name=metadata"`
-	Number  *float64 `queryParam:"inline,name=metadata"`
-	Boolean *bool    `queryParam:"inline,name=metadata"`
-
-	Type DiscountFixedRepeatDurationBaseMetadataType
-}
-
-func CreateDiscountFixedRepeatDurationBaseMetadataStr(str string) DiscountFixedRepeatDurationBaseMetadata {
-	typ := DiscountFixedRepeatDurationBaseMetadataTypeStr
-
-	return DiscountFixedRepeatDurationBaseMetadata{
-		Str:  &str,
-		Type: typ,
-	}
-}
-
-func CreateDiscountFixedRepeatDurationBaseMetadataInteger(integer int64) DiscountFixedRepeatDurationBaseMetadata {
-	typ := DiscountFixedRepeatDurationBaseMetadataTypeInteger
-
-	return DiscountFixedRepeatDurationBaseMetadata{
-		Integer: &integer,
-		Type:    typ,
-	}
-}
-
-func CreateDiscountFixedRepeatDurationBaseMetadataNumber(number float64) DiscountFixedRepeatDurationBaseMetadata {
-	typ := DiscountFixedRepeatDurationBaseMetadataTypeNumber
-
-	return DiscountFixedRepeatDurationBaseMetadata{
-		Number: &number,
-		Type:   typ,
-	}
-}
-
-func CreateDiscountFixedRepeatDurationBaseMetadataBoolean(boolean bool) DiscountFixedRepeatDurationBaseMetadata {
-	typ := DiscountFixedRepeatDurationBaseMetadataTypeBoolean
-
-	return DiscountFixedRepeatDurationBaseMetadata{
-		Boolean: &boolean,
-		Type:    typ,
-	}
-}
-
-func (u *DiscountFixedRepeatDurationBaseMetadata) UnmarshalJSON(data []byte) error {
-
-	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, nil); err == nil {
-		u.Str = &str
-		u.Type = DiscountFixedRepeatDurationBaseMetadataTypeStr
-		return nil
-	}
-
-	var integer int64 = int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
-		u.Integer = &integer
-		u.Type = DiscountFixedRepeatDurationBaseMetadataTypeInteger
-		return nil
-	}
-
-	var number float64 = float64(0)
-	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
-		u.Number = &number
-		u.Type = DiscountFixedRepeatDurationBaseMetadataTypeNumber
-		return nil
-	}
-
-	var boolean bool = false
-	if err := utils.UnmarshalJSON(data, &boolean, "", true, nil); err == nil {
-		u.Boolean = &boolean
-		u.Type = DiscountFixedRepeatDurationBaseMetadataTypeBoolean
-		return nil
-	}
-
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for DiscountFixedRepeatDurationBaseMetadata", string(data))
-}
-
-func (u DiscountFixedRepeatDurationBaseMetadata) MarshalJSON() ([]byte, error) {
-	if u.Str != nil {
-		return utils.MarshalJSON(u.Str, "", true)
-	}
-
-	if u.Integer != nil {
-		return utils.MarshalJSON(u.Integer, "", true)
-	}
-
-	if u.Number != nil {
-		return utils.MarshalJSON(u.Number, "", true)
-	}
-
-	if u.Boolean != nil {
-		return utils.MarshalJSON(u.Boolean, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type DiscountFixedRepeatDurationBaseMetadata: all fields are null")
-}
 
 type DiscountFixedRepeatDurationBase struct {
 	Duration         DiscountDuration `json:"duration"`
@@ -127,8 +18,8 @@ type DiscountFixedRepeatDurationBase struct {
 	// Last modification timestamp of the object.
 	ModifiedAt *time.Time `json:"modified_at"`
 	// The ID of the object.
-	ID       string                                             `json:"id"`
-	Metadata map[string]DiscountFixedRepeatDurationBaseMetadata `json:"metadata"`
+	ID       string                        `json:"id"`
+	Metadata map[string]MetadataOutputType `json:"metadata"`
 	// Name of the discount. Will be displayed to the customer when the discount is applied.
 	Name string `json:"name"`
 	// Code customers can use to apply the discount during checkout.
@@ -212,9 +103,9 @@ func (d *DiscountFixedRepeatDurationBase) GetID() string {
 	return d.ID
 }
 
-func (d *DiscountFixedRepeatDurationBase) GetMetadata() map[string]DiscountFixedRepeatDurationBaseMetadata {
+func (d *DiscountFixedRepeatDurationBase) GetMetadata() map[string]MetadataOutputType {
 	if d == nil {
-		return map[string]DiscountFixedRepeatDurationBaseMetadata{}
+		return map[string]MetadataOutputType{}
 	}
 	return d.Metadata
 }

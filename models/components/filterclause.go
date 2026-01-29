@@ -17,9 +17,9 @@ const (
 )
 
 type Value struct {
-	Str     *string `queryParam:"inline,name=Value"`
-	Integer *int64  `queryParam:"inline,name=Value"`
-	Boolean *bool   `queryParam:"inline,name=Value"`
+	Str     *string `queryParam:"inline" union:"member"`
+	Integer *int64  `queryParam:"inline" union:"member"`
+	Boolean *bool   `queryParam:"inline" union:"member"`
 
 	Type ValueType
 }

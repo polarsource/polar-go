@@ -18,6 +18,10 @@ const (
 	SubscriptionSortPropertyMinusStartedAt        SubscriptionSortProperty = "-started_at"
 	SubscriptionSortPropertyCurrentPeriodEnd      SubscriptionSortProperty = "current_period_end"
 	SubscriptionSortPropertyMinusCurrentPeriodEnd SubscriptionSortProperty = "-current_period_end"
+	SubscriptionSortPropertyEndedAt               SubscriptionSortProperty = "ended_at"
+	SubscriptionSortPropertyMinusEndedAt          SubscriptionSortProperty = "-ended_at"
+	SubscriptionSortPropertyEndsAt                SubscriptionSortProperty = "ends_at"
+	SubscriptionSortPropertyMinusEndsAt           SubscriptionSortProperty = "-ends_at"
 	SubscriptionSortPropertyAmount                SubscriptionSortProperty = "amount"
 	SubscriptionSortPropertyMinusAmount           SubscriptionSortProperty = "-amount"
 	SubscriptionSortPropertyProduct               SubscriptionSortProperty = "product"
@@ -50,6 +54,14 @@ func (e *SubscriptionSortProperty) UnmarshalJSON(data []byte) error {
 	case "current_period_end":
 		fallthrough
 	case "-current_period_end":
+		fallthrough
+	case "ended_at":
+		fallthrough
+	case "-ended_at":
+		fallthrough
+	case "ends_at":
+		fallthrough
+	case "-ends_at":
 		fallthrough
 	case "amount":
 		fallthrough

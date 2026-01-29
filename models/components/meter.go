@@ -10,113 +10,6 @@ import (
 	"time"
 )
 
-type MeterMetadataType string
-
-const (
-	MeterMetadataTypeStr     MeterMetadataType = "str"
-	MeterMetadataTypeInteger MeterMetadataType = "integer"
-	MeterMetadataTypeNumber  MeterMetadataType = "number"
-	MeterMetadataTypeBoolean MeterMetadataType = "boolean"
-)
-
-type MeterMetadata struct {
-	Str     *string  `queryParam:"inline,name=metadata"`
-	Integer *int64   `queryParam:"inline,name=metadata"`
-	Number  *float64 `queryParam:"inline,name=metadata"`
-	Boolean *bool    `queryParam:"inline,name=metadata"`
-
-	Type MeterMetadataType
-}
-
-func CreateMeterMetadataStr(str string) MeterMetadata {
-	typ := MeterMetadataTypeStr
-
-	return MeterMetadata{
-		Str:  &str,
-		Type: typ,
-	}
-}
-
-func CreateMeterMetadataInteger(integer int64) MeterMetadata {
-	typ := MeterMetadataTypeInteger
-
-	return MeterMetadata{
-		Integer: &integer,
-		Type:    typ,
-	}
-}
-
-func CreateMeterMetadataNumber(number float64) MeterMetadata {
-	typ := MeterMetadataTypeNumber
-
-	return MeterMetadata{
-		Number: &number,
-		Type:   typ,
-	}
-}
-
-func CreateMeterMetadataBoolean(boolean bool) MeterMetadata {
-	typ := MeterMetadataTypeBoolean
-
-	return MeterMetadata{
-		Boolean: &boolean,
-		Type:    typ,
-	}
-}
-
-func (u *MeterMetadata) UnmarshalJSON(data []byte) error {
-
-	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, nil); err == nil {
-		u.Str = &str
-		u.Type = MeterMetadataTypeStr
-		return nil
-	}
-
-	var integer int64 = int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
-		u.Integer = &integer
-		u.Type = MeterMetadataTypeInteger
-		return nil
-	}
-
-	var number float64 = float64(0)
-	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
-		u.Number = &number
-		u.Type = MeterMetadataTypeNumber
-		return nil
-	}
-
-	var boolean bool = false
-	if err := utils.UnmarshalJSON(data, &boolean, "", true, nil); err == nil {
-		u.Boolean = &boolean
-		u.Type = MeterMetadataTypeBoolean
-		return nil
-	}
-
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for MeterMetadata", string(data))
-}
-
-func (u MeterMetadata) MarshalJSON() ([]byte, error) {
-	if u.Str != nil {
-		return utils.MarshalJSON(u.Str, "", true)
-	}
-
-	if u.Integer != nil {
-		return utils.MarshalJSON(u.Integer, "", true)
-	}
-
-	if u.Number != nil {
-		return utils.MarshalJSON(u.Number, "", true)
-	}
-
-	if u.Boolean != nil {
-		return utils.MarshalJSON(u.Boolean, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type MeterMetadata: all fields are null")
-}
-
 type MeterAggregationType string
 
 const (
@@ -130,9 +23,9 @@ const (
 
 // MeterAggregation - The aggregation to apply on the filtered events to calculate the meter.
 type MeterAggregation struct {
-	CountAggregation    *CountAggregation    `queryParam:"inline,name=Aggregation"`
-	PropertyAggregation *PropertyAggregation `queryParam:"inline,name=Aggregation"`
-	UniqueAggregation   *UniqueAggregation   `queryParam:"inline,name=Aggregation"`
+	CountAggregation    *CountAggregation    `queryParam:"inline" union:"member"`
+	PropertyAggregation *PropertyAggregation `queryParam:"inline" union:"member"`
+	UniqueAggregation   *UniqueAggregation   `queryParam:"inline" union:"member"`
 
 	Type MeterAggregationType
 }
@@ -291,7 +184,7 @@ func (u MeterAggregation) MarshalJSON() ([]byte, error) {
 }
 
 type Meter struct {
-	Metadata map[string]MeterMetadata `json:"metadata"`
+	Metadata map[string]MetadataOutputType `json:"metadata"`
 	// Creation timestamp of the object.
 	CreatedAt time.Time `json:"created_at"`
 	// Last modification timestamp of the object.
@@ -314,15 +207,15 @@ func (m Meter) MarshalJSON() ([]byte, error) {
 }
 
 func (m *Meter) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &m, "", false, []string{"metadata", "created_at", "id", "name", "filter", "aggregation", "organization_id"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &m, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (m *Meter) GetMetadata() map[string]MeterMetadata {
+func (m *Meter) GetMetadata() map[string]MetadataOutputType {
 	if m == nil {
-		return map[string]MeterMetadata{}
+		return map[string]MetadataOutputType{}
 	}
 	return m.Metadata
 }

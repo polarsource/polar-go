@@ -3,122 +3,13 @@
 package components
 
 import (
-	"errors"
-	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
 	"time"
 )
 
-type DiscountProductMetadataType string
-
-const (
-	DiscountProductMetadataTypeStr     DiscountProductMetadataType = "str"
-	DiscountProductMetadataTypeInteger DiscountProductMetadataType = "integer"
-	DiscountProductMetadataTypeNumber  DiscountProductMetadataType = "number"
-	DiscountProductMetadataTypeBoolean DiscountProductMetadataType = "boolean"
-)
-
-type DiscountProductMetadata struct {
-	Str     *string  `queryParam:"inline,name=metadata"`
-	Integer *int64   `queryParam:"inline,name=metadata"`
-	Number  *float64 `queryParam:"inline,name=metadata"`
-	Boolean *bool    `queryParam:"inline,name=metadata"`
-
-	Type DiscountProductMetadataType
-}
-
-func CreateDiscountProductMetadataStr(str string) DiscountProductMetadata {
-	typ := DiscountProductMetadataTypeStr
-
-	return DiscountProductMetadata{
-		Str:  &str,
-		Type: typ,
-	}
-}
-
-func CreateDiscountProductMetadataInteger(integer int64) DiscountProductMetadata {
-	typ := DiscountProductMetadataTypeInteger
-
-	return DiscountProductMetadata{
-		Integer: &integer,
-		Type:    typ,
-	}
-}
-
-func CreateDiscountProductMetadataNumber(number float64) DiscountProductMetadata {
-	typ := DiscountProductMetadataTypeNumber
-
-	return DiscountProductMetadata{
-		Number: &number,
-		Type:   typ,
-	}
-}
-
-func CreateDiscountProductMetadataBoolean(boolean bool) DiscountProductMetadata {
-	typ := DiscountProductMetadataTypeBoolean
-
-	return DiscountProductMetadata{
-		Boolean: &boolean,
-		Type:    typ,
-	}
-}
-
-func (u *DiscountProductMetadata) UnmarshalJSON(data []byte) error {
-
-	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, nil); err == nil {
-		u.Str = &str
-		u.Type = DiscountProductMetadataTypeStr
-		return nil
-	}
-
-	var integer int64 = int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
-		u.Integer = &integer
-		u.Type = DiscountProductMetadataTypeInteger
-		return nil
-	}
-
-	var number float64 = float64(0)
-	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
-		u.Number = &number
-		u.Type = DiscountProductMetadataTypeNumber
-		return nil
-	}
-
-	var boolean bool = false
-	if err := utils.UnmarshalJSON(data, &boolean, "", true, nil); err == nil {
-		u.Boolean = &boolean
-		u.Type = DiscountProductMetadataTypeBoolean
-		return nil
-	}
-
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for DiscountProductMetadata", string(data))
-}
-
-func (u DiscountProductMetadata) MarshalJSON() ([]byte, error) {
-	if u.Str != nil {
-		return utils.MarshalJSON(u.Str, "", true)
-	}
-
-	if u.Integer != nil {
-		return utils.MarshalJSON(u.Integer, "", true)
-	}
-
-	if u.Number != nil {
-		return utils.MarshalJSON(u.Number, "", true)
-	}
-
-	if u.Boolean != nil {
-		return utils.MarshalJSON(u.Boolean, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type DiscountProductMetadata: all fields are null")
-}
-
 // DiscountProduct - A product that a discount can be applied to.
 type DiscountProduct struct {
-	Metadata map[string]DiscountProductMetadata `json:"metadata"`
+	Metadata map[string]MetadataOutputType `json:"metadata"`
 	// The ID of the object.
 	ID string `json:"id"`
 	// Creation timestamp of the object.
@@ -156,9 +47,9 @@ func (d *DiscountProduct) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (d *DiscountProduct) GetMetadata() map[string]DiscountProductMetadata {
+func (d *DiscountProduct) GetMetadata() map[string]MetadataOutputType {
 	if d == nil {
-		return map[string]DiscountProductMetadata{}
+		return map[string]MetadataOutputType{}
 	}
 	return d.Metadata
 }

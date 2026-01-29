@@ -18,8 +18,8 @@ const (
 
 // QueryParamOrganizationIDFilter - Filter by organization ID.
 type QueryParamOrganizationIDFilter struct {
-	Str        *string  `queryParam:"inline,name=OrganizationID_Filter"`
-	ArrayOfStr []string `queryParam:"inline,name=OrganizationID_Filter"`
+	Str        *string  `queryParam:"inline" union:"member"`
+	ArrayOfStr []string `queryParam:"inline" union:"member"`
 
 	Type QueryParamOrganizationIDFilterType
 }
@@ -82,8 +82,8 @@ const (
 
 // BenefitTypeFilter - Filter by benefit type.
 type BenefitTypeFilter struct {
-	BenefitType        *components.BenefitType  `queryParam:"inline,name=BenefitType_Filter"`
-	ArrayOfBenefitType []components.BenefitType `queryParam:"inline,name=BenefitType_Filter"`
+	BenefitType        *components.BenefitType  `queryParam:"inline" union:"member"`
+	ArrayOfBenefitType []components.BenefitType `queryParam:"inline" union:"member"`
 
 	Type BenefitTypeFilterType
 }
@@ -137,11 +137,143 @@ func (u BenefitTypeFilter) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type BenefitTypeFilter: all fields are null")
 }
 
+type FilterIDsType string
+
+const (
+	FilterIDsTypeStr        FilterIDsType = "str"
+	FilterIDsTypeArrayOfStr FilterIDsType = "arrayOfStr"
+)
+
+// FilterIDs - Filter by benefit IDs.
+type FilterIDs struct {
+	Str        *string  `queryParam:"inline" union:"member"`
+	ArrayOfStr []string `queryParam:"inline" union:"member"`
+
+	Type FilterIDsType
+}
+
+func CreateFilterIDsStr(str string) FilterIDs {
+	typ := FilterIDsTypeStr
+
+	return FilterIDs{
+		Str:  &str,
+		Type: typ,
+	}
+}
+
+func CreateFilterIDsArrayOfStr(arrayOfStr []string) FilterIDs {
+	typ := FilterIDsTypeArrayOfStr
+
+	return FilterIDs{
+		ArrayOfStr: arrayOfStr,
+		Type:       typ,
+	}
+}
+
+func (u *FilterIDs) UnmarshalJSON(data []byte) error {
+
+	var str string = ""
+	if err := utils.UnmarshalJSON(data, &str, "", true, nil); err == nil {
+		u.Str = &str
+		u.Type = FilterIDsTypeStr
+		return nil
+	}
+
+	var arrayOfStr []string = []string{}
+	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, nil); err == nil {
+		u.ArrayOfStr = arrayOfStr
+		u.Type = FilterIDsTypeArrayOfStr
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for FilterIDs", string(data))
+}
+
+func (u FilterIDs) MarshalJSON() ([]byte, error) {
+	if u.Str != nil {
+		return utils.MarshalJSON(u.Str, "", true)
+	}
+
+	if u.ArrayOfStr != nil {
+		return utils.MarshalJSON(u.ArrayOfStr, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type FilterIDs: all fields are null")
+}
+
+type ExcludeIDsType string
+
+const (
+	ExcludeIDsTypeStr        ExcludeIDsType = "str"
+	ExcludeIDsTypeArrayOfStr ExcludeIDsType = "arrayOfStr"
+)
+
+// ExcludeIDs - Exclude benefits with these IDs.
+type ExcludeIDs struct {
+	Str        *string  `queryParam:"inline" union:"member"`
+	ArrayOfStr []string `queryParam:"inline" union:"member"`
+
+	Type ExcludeIDsType
+}
+
+func CreateExcludeIDsStr(str string) ExcludeIDs {
+	typ := ExcludeIDsTypeStr
+
+	return ExcludeIDs{
+		Str:  &str,
+		Type: typ,
+	}
+}
+
+func CreateExcludeIDsArrayOfStr(arrayOfStr []string) ExcludeIDs {
+	typ := ExcludeIDsTypeArrayOfStr
+
+	return ExcludeIDs{
+		ArrayOfStr: arrayOfStr,
+		Type:       typ,
+	}
+}
+
+func (u *ExcludeIDs) UnmarshalJSON(data []byte) error {
+
+	var str string = ""
+	if err := utils.UnmarshalJSON(data, &str, "", true, nil); err == nil {
+		u.Str = &str
+		u.Type = ExcludeIDsTypeStr
+		return nil
+	}
+
+	var arrayOfStr []string = []string{}
+	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, nil); err == nil {
+		u.ArrayOfStr = arrayOfStr
+		u.Type = ExcludeIDsTypeArrayOfStr
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for ExcludeIDs", string(data))
+}
+
+func (u ExcludeIDs) MarshalJSON() ([]byte, error) {
+	if u.Str != nil {
+		return utils.MarshalJSON(u.Str, "", true)
+	}
+
+	if u.ArrayOfStr != nil {
+		return utils.MarshalJSON(u.ArrayOfStr, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type ExcludeIDs: all fields are null")
+}
+
 type BenefitsListRequest struct {
 	// Filter by organization ID.
 	OrganizationID *QueryParamOrganizationIDFilter `queryParam:"style=form,explode=true,name=organization_id"`
 	// Filter by benefit type.
 	TypeFilter *BenefitTypeFilter `queryParam:"style=form,explode=true,name=type"`
+	// Filter by benefit IDs.
+	ID *FilterIDs `queryParam:"style=form,explode=true,name=id"`
+	// Exclude benefits with these IDs.
+	ExcludeID *ExcludeIDs `queryParam:"style=form,explode=true,name=exclude_id"`
 	// Filter by description.
 	Query *string `queryParam:"style=form,explode=true,name=query"`
 	// Page number, defaults to 1.
@@ -177,6 +309,20 @@ func (b *BenefitsListRequest) GetTypeFilter() *BenefitTypeFilter {
 		return nil
 	}
 	return b.TypeFilter
+}
+
+func (b *BenefitsListRequest) GetID() *FilterIDs {
+	if b == nil {
+		return nil
+	}
+	return b.ID
+}
+
+func (b *BenefitsListRequest) GetExcludeID() *ExcludeIDs {
+	if b == nil {
+		return nil
+	}
+	return b.ExcludeID
 }
 
 func (b *BenefitsListRequest) GetQuery() *string {

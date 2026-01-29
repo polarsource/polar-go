@@ -9,3 +9,4 @@
 | `SeatBasedPricingEnabled`                           | **bool*                                             | :heavy_minus_sign:                                  | If this organization has seat-based pricing enabled |
 | `RevopsEnabled`                                     | **bool*                                             | :heavy_minus_sign:                                  | If this organization has RevOps enabled             |
 | `WalletsEnabled`                                    | **bool*                                             | :heavy_minus_sign:                                  | If this organization has Wallets enabled            |
+| `MemberModelEnabled`                                | **bool*                                             | :heavy_minus_sign:                                  | If this organization has the Member model enabled   |

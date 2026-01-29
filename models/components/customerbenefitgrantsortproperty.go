@@ -10,12 +10,14 @@ import (
 type CustomerBenefitGrantSortProperty string
 
 const (
-	CustomerBenefitGrantSortPropertyGrantedAt         CustomerBenefitGrantSortProperty = "granted_at"
-	CustomerBenefitGrantSortPropertyMinusGrantedAt    CustomerBenefitGrantSortProperty = "-granted_at"
-	CustomerBenefitGrantSortPropertyType              CustomerBenefitGrantSortProperty = "type"
-	CustomerBenefitGrantSortPropertyMinusType         CustomerBenefitGrantSortProperty = "-type"
-	CustomerBenefitGrantSortPropertyOrganization      CustomerBenefitGrantSortProperty = "organization"
-	CustomerBenefitGrantSortPropertyMinusOrganization CustomerBenefitGrantSortProperty = "-organization"
+	CustomerBenefitGrantSortPropertyGrantedAt           CustomerBenefitGrantSortProperty = "granted_at"
+	CustomerBenefitGrantSortPropertyMinusGrantedAt      CustomerBenefitGrantSortProperty = "-granted_at"
+	CustomerBenefitGrantSortPropertyType                CustomerBenefitGrantSortProperty = "type"
+	CustomerBenefitGrantSortPropertyMinusType           CustomerBenefitGrantSortProperty = "-type"
+	CustomerBenefitGrantSortPropertyOrganization        CustomerBenefitGrantSortProperty = "organization"
+	CustomerBenefitGrantSortPropertyMinusOrganization   CustomerBenefitGrantSortProperty = "-organization"
+	CustomerBenefitGrantSortPropertyProductBenefit      CustomerBenefitGrantSortProperty = "product_benefit"
+	CustomerBenefitGrantSortPropertyMinusProductBenefit CustomerBenefitGrantSortProperty = "-product_benefit"
 )
 
 func (e CustomerBenefitGrantSortProperty) ToPointer() *CustomerBenefitGrantSortProperty {
@@ -38,6 +40,10 @@ func (e *CustomerBenefitGrantSortProperty) UnmarshalJSON(data []byte) error {
 	case "organization":
 		fallthrough
 	case "-organization":
+		fallthrough
+	case "product_benefit":
+		fallthrough
+	case "-product_benefit":
 		*e = CustomerBenefitGrantSortProperty(v)
 		return nil
 	default:

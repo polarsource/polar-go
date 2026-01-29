@@ -18,8 +18,8 @@ const (
 
 // RefundIDFilter - Filter by refund ID.
 type RefundIDFilter struct {
-	Str        *string  `queryParam:"inline,name=RefundID_Filter"`
-	ArrayOfStr []string `queryParam:"inline,name=RefundID_Filter"`
+	Str        *string  `queryParam:"inline" union:"member"`
+	ArrayOfStr []string `queryParam:"inline" union:"member"`
 
 	Type RefundIDFilterType
 }
@@ -82,8 +82,8 @@ const (
 
 // RefundsListQueryParamOrganizationIDFilter - Filter by organization ID.
 type RefundsListQueryParamOrganizationIDFilter struct {
-	Str        *string  `queryParam:"inline,name=OrganizationID_Filter"`
-	ArrayOfStr []string `queryParam:"inline,name=OrganizationID_Filter"`
+	Str        *string  `queryParam:"inline" union:"member"`
+	ArrayOfStr []string `queryParam:"inline" union:"member"`
 
 	Type RefundsListQueryParamOrganizationIDFilterType
 }
@@ -146,8 +146,8 @@ const (
 
 // OrderIDFilter - Filter by order ID.
 type OrderIDFilter struct {
-	Str        *string  `queryParam:"inline,name=OrderID_Filter"`
-	ArrayOfStr []string `queryParam:"inline,name=OrderID_Filter"`
+	Str        *string  `queryParam:"inline" union:"member"`
+	ArrayOfStr []string `queryParam:"inline" union:"member"`
 
 	Type OrderIDFilterType
 }
@@ -210,8 +210,8 @@ const (
 
 // SubscriptionIDFilter - Filter by subscription ID.
 type SubscriptionIDFilter struct {
-	Str        *string  `queryParam:"inline,name=SubscriptionID_Filter"`
-	ArrayOfStr []string `queryParam:"inline,name=SubscriptionID_Filter"`
+	Str        *string  `queryParam:"inline" union:"member"`
+	ArrayOfStr []string `queryParam:"inline" union:"member"`
 
 	Type SubscriptionIDFilterType
 }
@@ -274,8 +274,8 @@ const (
 
 // RefundsListQueryParamCustomerIDFilter - Filter by customer ID.
 type RefundsListQueryParamCustomerIDFilter struct {
-	Str        *string  `queryParam:"inline,name=CustomerID_Filter"`
-	ArrayOfStr []string `queryParam:"inline,name=CustomerID_Filter"`
+	Str        *string  `queryParam:"inline" union:"member"`
+	ArrayOfStr []string `queryParam:"inline" union:"member"`
 
 	Type RefundsListQueryParamCustomerIDFilterType
 }
@@ -329,6 +329,70 @@ func (u RefundsListQueryParamCustomerIDFilter) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type RefundsListQueryParamCustomerIDFilter: all fields are null")
 }
 
+type RefundsListQueryParamExternalCustomerIDFilterType string
+
+const (
+	RefundsListQueryParamExternalCustomerIDFilterTypeStr        RefundsListQueryParamExternalCustomerIDFilterType = "str"
+	RefundsListQueryParamExternalCustomerIDFilterTypeArrayOfStr RefundsListQueryParamExternalCustomerIDFilterType = "arrayOfStr"
+)
+
+// RefundsListQueryParamExternalCustomerIDFilter - Filter by customer external ID.
+type RefundsListQueryParamExternalCustomerIDFilter struct {
+	Str        *string  `queryParam:"inline" union:"member"`
+	ArrayOfStr []string `queryParam:"inline" union:"member"`
+
+	Type RefundsListQueryParamExternalCustomerIDFilterType
+}
+
+func CreateRefundsListQueryParamExternalCustomerIDFilterStr(str string) RefundsListQueryParamExternalCustomerIDFilter {
+	typ := RefundsListQueryParamExternalCustomerIDFilterTypeStr
+
+	return RefundsListQueryParamExternalCustomerIDFilter{
+		Str:  &str,
+		Type: typ,
+	}
+}
+
+func CreateRefundsListQueryParamExternalCustomerIDFilterArrayOfStr(arrayOfStr []string) RefundsListQueryParamExternalCustomerIDFilter {
+	typ := RefundsListQueryParamExternalCustomerIDFilterTypeArrayOfStr
+
+	return RefundsListQueryParamExternalCustomerIDFilter{
+		ArrayOfStr: arrayOfStr,
+		Type:       typ,
+	}
+}
+
+func (u *RefundsListQueryParamExternalCustomerIDFilter) UnmarshalJSON(data []byte) error {
+
+	var str string = ""
+	if err := utils.UnmarshalJSON(data, &str, "", true, nil); err == nil {
+		u.Str = &str
+		u.Type = RefundsListQueryParamExternalCustomerIDFilterTypeStr
+		return nil
+	}
+
+	var arrayOfStr []string = []string{}
+	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, nil); err == nil {
+		u.ArrayOfStr = arrayOfStr
+		u.Type = RefundsListQueryParamExternalCustomerIDFilterTypeArrayOfStr
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for RefundsListQueryParamExternalCustomerIDFilter", string(data))
+}
+
+func (u RefundsListQueryParamExternalCustomerIDFilter) MarshalJSON() ([]byte, error) {
+	if u.Str != nil {
+		return utils.MarshalJSON(u.Str, "", true)
+	}
+
+	if u.ArrayOfStr != nil {
+		return utils.MarshalJSON(u.ArrayOfStr, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type RefundsListQueryParamExternalCustomerIDFilter: all fields are null")
+}
+
 type RefundsListRequest struct {
 	// Filter by refund ID.
 	ID *RefundIDFilter `queryParam:"style=form,explode=true,name=id"`
@@ -340,6 +404,8 @@ type RefundsListRequest struct {
 	SubscriptionID *SubscriptionIDFilter `queryParam:"style=form,explode=true,name=subscription_id"`
 	// Filter by customer ID.
 	CustomerID *RefundsListQueryParamCustomerIDFilter `queryParam:"style=form,explode=true,name=customer_id"`
+	// Filter by customer external ID.
+	ExternalCustomerID *RefundsListQueryParamExternalCustomerIDFilter `queryParam:"style=form,explode=true,name=external_customer_id"`
 	// Filter by `succeeded`.
 	Succeeded *bool `queryParam:"style=form,explode=true,name=succeeded"`
 	// Page number, defaults to 1.
@@ -394,6 +460,13 @@ func (r *RefundsListRequest) GetCustomerID() *RefundsListQueryParamCustomerIDFil
 		return nil
 	}
 	return r.CustomerID
+}
+
+func (r *RefundsListRequest) GetExternalCustomerID() *RefundsListQueryParamExternalCustomerIDFilter {
+	if r == nil {
+		return nil
+	}
+	return r.ExternalCustomerID
 }
 
 func (r *RefundsListRequest) GetSucceeded() *bool {

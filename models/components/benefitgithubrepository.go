@@ -3,118 +3,9 @@
 package components
 
 import (
-	"errors"
-	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
 	"time"
 )
-
-type BenefitGitHubRepositoryMetadataType string
-
-const (
-	BenefitGitHubRepositoryMetadataTypeStr     BenefitGitHubRepositoryMetadataType = "str"
-	BenefitGitHubRepositoryMetadataTypeInteger BenefitGitHubRepositoryMetadataType = "integer"
-	BenefitGitHubRepositoryMetadataTypeNumber  BenefitGitHubRepositoryMetadataType = "number"
-	BenefitGitHubRepositoryMetadataTypeBoolean BenefitGitHubRepositoryMetadataType = "boolean"
-)
-
-type BenefitGitHubRepositoryMetadata struct {
-	Str     *string  `queryParam:"inline,name=metadata"`
-	Integer *int64   `queryParam:"inline,name=metadata"`
-	Number  *float64 `queryParam:"inline,name=metadata"`
-	Boolean *bool    `queryParam:"inline,name=metadata"`
-
-	Type BenefitGitHubRepositoryMetadataType
-}
-
-func CreateBenefitGitHubRepositoryMetadataStr(str string) BenefitGitHubRepositoryMetadata {
-	typ := BenefitGitHubRepositoryMetadataTypeStr
-
-	return BenefitGitHubRepositoryMetadata{
-		Str:  &str,
-		Type: typ,
-	}
-}
-
-func CreateBenefitGitHubRepositoryMetadataInteger(integer int64) BenefitGitHubRepositoryMetadata {
-	typ := BenefitGitHubRepositoryMetadataTypeInteger
-
-	return BenefitGitHubRepositoryMetadata{
-		Integer: &integer,
-		Type:    typ,
-	}
-}
-
-func CreateBenefitGitHubRepositoryMetadataNumber(number float64) BenefitGitHubRepositoryMetadata {
-	typ := BenefitGitHubRepositoryMetadataTypeNumber
-
-	return BenefitGitHubRepositoryMetadata{
-		Number: &number,
-		Type:   typ,
-	}
-}
-
-func CreateBenefitGitHubRepositoryMetadataBoolean(boolean bool) BenefitGitHubRepositoryMetadata {
-	typ := BenefitGitHubRepositoryMetadataTypeBoolean
-
-	return BenefitGitHubRepositoryMetadata{
-		Boolean: &boolean,
-		Type:    typ,
-	}
-}
-
-func (u *BenefitGitHubRepositoryMetadata) UnmarshalJSON(data []byte) error {
-
-	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, nil); err == nil {
-		u.Str = &str
-		u.Type = BenefitGitHubRepositoryMetadataTypeStr
-		return nil
-	}
-
-	var integer int64 = int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
-		u.Integer = &integer
-		u.Type = BenefitGitHubRepositoryMetadataTypeInteger
-		return nil
-	}
-
-	var number float64 = float64(0)
-	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
-		u.Number = &number
-		u.Type = BenefitGitHubRepositoryMetadataTypeNumber
-		return nil
-	}
-
-	var boolean bool = false
-	if err := utils.UnmarshalJSON(data, &boolean, "", true, nil); err == nil {
-		u.Boolean = &boolean
-		u.Type = BenefitGitHubRepositoryMetadataTypeBoolean
-		return nil
-	}
-
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for BenefitGitHubRepositoryMetadata", string(data))
-}
-
-func (u BenefitGitHubRepositoryMetadata) MarshalJSON() ([]byte, error) {
-	if u.Str != nil {
-		return utils.MarshalJSON(u.Str, "", true)
-	}
-
-	if u.Integer != nil {
-		return utils.MarshalJSON(u.Integer, "", true)
-	}
-
-	if u.Number != nil {
-		return utils.MarshalJSON(u.Number, "", true)
-	}
-
-	if u.Boolean != nil {
-		return utils.MarshalJSON(u.Boolean, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type BenefitGitHubRepositoryMetadata: all fields are null")
-}
 
 // BenefitGitHubRepository - A benefit of type `github_repository`.
 //
@@ -134,8 +25,8 @@ type BenefitGitHubRepository struct {
 	// Whether the benefit is deletable.
 	Deletable bool `json:"deletable"`
 	// The ID of the organization owning the benefit.
-	OrganizationID string                                     `json:"organization_id"`
-	Metadata       map[string]BenefitGitHubRepositoryMetadata `json:"metadata"`
+	OrganizationID string                        `json:"organization_id"`
+	Metadata       map[string]MetadataOutputType `json:"metadata"`
 	// Properties for a benefit of type `github_repository`.
 	Properties BenefitGitHubRepositoryProperties `json:"properties"`
 }
@@ -204,9 +95,9 @@ func (b *BenefitGitHubRepository) GetOrganizationID() string {
 	return b.OrganizationID
 }
 
-func (b *BenefitGitHubRepository) GetMetadata() map[string]BenefitGitHubRepositoryMetadata {
+func (b *BenefitGitHubRepository) GetMetadata() map[string]MetadataOutputType {
 	if b == nil {
-		return map[string]BenefitGitHubRepositoryMetadata{}
+		return map[string]MetadataOutputType{}
 	}
 	return b.Metadata
 }

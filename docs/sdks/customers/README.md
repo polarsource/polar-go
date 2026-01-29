@@ -1,5 +1,4 @@
 # Customers
-(*Customers*)
 
 ## Overview
 
@@ -16,7 +15,6 @@
 * [DeleteExternal](#deleteexternal) - Delete Customer by External ID
 * [GetState](#getstate) - Get Customer State
 * [GetStateExternal](#getstateexternal) - Get Customer State by External ID
-* [GetBalance](#getbalance) - Get Customer Balance
 
 ## List
 
@@ -53,7 +51,7 @@ func main() {
     if err != nil {
         log.Fatal(err)
     }
-    if res.ListResourceCustomer != nil {
+    if res.ListResourceCustomerWithMembers != nil {
         for {
             // handle items
 
@@ -132,12 +130,18 @@ func main() {
                 "us_ein",
             )),
         },
+        Type: components.CustomerTypeIndividual.ToPointer(),
         OrganizationID: polargo.Pointer("1dbfc517-0bbf-4301-9ba8-555ca42b9737"),
+        Owner: &components.OwnerCreate{
+            Email: polargo.Pointer("member@example.com"),
+            Name: polargo.Pointer("Jane Doe"),
+            ExternalID: polargo.Pointer("usr_1337"),
+        },
     })
     if err != nil {
         log.Fatal(err)
     }
-    if res.Customer != nil {
+    if res.CustomerWithMembers != nil {
         // handle response
     }
 }
@@ -250,7 +254,7 @@ func main() {
     if err != nil {
         log.Fatal(err)
     }
-    if res.Customer != nil {
+    if res.CustomerWithMembers != nil {
         // handle response
     }
 }
@@ -318,11 +322,12 @@ func main() {
             )),
         },
         ExternalID: polargo.Pointer("usr_1337"),
+        Type: components.CustomerTypeIndividual.ToPointer(),
     })
     if err != nil {
         log.Fatal(err)
     }
-    if res.Customer != nil {
+    if res.CustomerWithMembers != nil {
         // handle response
     }
 }
@@ -365,6 +370,8 @@ a specific subscription or revoke certain benefits.
 Note: The customers information will nonetheless be retained for historic
 orders and subscriptions.
 
+Set `anonymize=true` to also anonymize PII for GDPR compliance.
+
 **Scopes**: `customers:write`
 
 ### Example Usage
@@ -387,7 +394,7 @@ func main() {
         polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )
 
-    res, err := s.Customers.Delete(ctx, "<value>")
+    res, err := s.Customers.Delete(ctx, "<value>", polargo.Pointer(false))
     if err != nil {
         log.Fatal(err)
     }
@@ -399,11 +406,12 @@ func main() {
 
 ### Parameters
 
-| Parameter                                                | Type                                                     | Required                                                 | Description                                              |
-| -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- |
-| `ctx`                                                    | [context.Context](https://pkg.go.dev/context#Context)    | :heavy_check_mark:                                       | The context to use for the request.                      |
-| `id`                                                     | *string*                                                 | :heavy_check_mark:                                       | The customer ID.                                         |
-| `opts`                                                   | [][operations.Option](../../models/operations/option.md) | :heavy_minus_sign:                                       | The options for this request.                            |
+| Parameter                                                                                                                                                                                                                                              | Type                                                                                                                                                                                                                                                   | Required                                                                                                                                                                                                                                               | Description                                                                                                                                                                                                                                            |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `ctx`                                                                                                                                                                                                                                                  | [context.Context](https://pkg.go.dev/context#Context)                                                                                                                                                                                                  | :heavy_check_mark:                                                                                                                                                                                                                                     | The context to use for the request.                                                                                                                                                                                                                    |
+| `id`                                                                                                                                                                                                                                                   | *string*                                                                                                                                                                                                                                               | :heavy_check_mark:                                                                                                                                                                                                                                     | The customer ID.                                                                                                                                                                                                                                       |
+| `anonymize`                                                                                                                                                                                                                                            | **bool*                                                                                                                                                                                                                                                | :heavy_minus_sign:                                                                                                                                                                                                                                     | If true, also anonymize the customer's personal data for GDPR compliance. This replaces email with a hashed version, hashes name and billing name (name preserved for businesses with tax_id), clears billing address, and removes OAuth account data. |
+| `opts`                                                                                                                                                                                                                                                 | [][operations.Option](../../models/operations/option.md)                                                                                                                                                                                               | :heavy_minus_sign:                                                                                                                                                                                                                                     | The options for this request.                                                                                                                                                                                                                          |
 
 ### Response
 
@@ -447,7 +455,7 @@ func main() {
     if err != nil {
         log.Fatal(err)
     }
-    if res.Customer != nil {
+    if res.CustomerWithMembers != nil {
         // handle response
     }
 }
@@ -518,7 +526,7 @@ func main() {
     if err != nil {
         log.Fatal(err)
     }
-    if res.Customer != nil {
+    if res.CustomerWithMembers != nil {
         // handle response
     }
 }
@@ -551,6 +559,8 @@ Delete a customer by external ID.
 
 Immediately cancels any active subscriptions and revokes any active benefits.
 
+Set `anonymize=true` to also anonymize PII for GDPR compliance.
+
 **Scopes**: `customers:write`
 
 ### Example Usage
@@ -573,7 +583,7 @@ func main() {
         polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )
 
-    res, err := s.Customers.DeleteExternal(ctx, "<id>")
+    res, err := s.Customers.DeleteExternal(ctx, "<id>", polargo.Pointer(false))
     if err != nil {
         log.Fatal(err)
     }
@@ -585,11 +595,12 @@ func main() {
 
 ### Parameters
 
-| Parameter                                                | Type                                                     | Required                                                 | Description                                              |
-| -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- |
-| `ctx`                                                    | [context.Context](https://pkg.go.dev/context#Context)    | :heavy_check_mark:                                       | The context to use for the request.                      |
-| `externalID`                                             | *string*                                                 | :heavy_check_mark:                                       | The customer external ID.                                |
-| `opts`                                                   | [][operations.Option](../../models/operations/option.md) | :heavy_minus_sign:                                       | The options for this request.                            |
+| Parameter                                                                 | Type                                                                      | Required                                                                  | Description                                                               |
+| ------------------------------------------------------------------------- | ------------------------------------------------------------------------- | ------------------------------------------------------------------------- | ------------------------------------------------------------------------- |
+| `ctx`                                                                     | [context.Context](https://pkg.go.dev/context#Context)                     | :heavy_check_mark:                                                        | The context to use for the request.                                       |
+| `externalID`                                                              | *string*                                                                  | :heavy_check_mark:                                                        | The customer external ID.                                                 |
+| `anonymize`                                                               | **bool*                                                                   | :heavy_minus_sign:                                                        | If true, also anonymize the customer's personal data for GDPR compliance. |
+| `opts`                                                                    | [][operations.Option](../../models/operations/option.md)                  | :heavy_minus_sign:                                                        | The options for this request.                                             |
 
 ### Response
 
@@ -718,62 +729,6 @@ func main() {
 ### Response
 
 **[*operations.CustomersGetStateExternalResponse](../../models/operations/customersgetstateexternalresponse.md), error**
-
-### Errors
-
-| Error Type                    | Status Code                   | Content Type                  |
-| ----------------------------- | ----------------------------- | ----------------------------- |
-| apierrors.ResourceNotFound    | 404                           | application/json              |
-| apierrors.HTTPValidationError | 422                           | application/json              |
-| apierrors.APIError            | 4XX, 5XX                      | \*/\*                         |
-
-## GetBalance
-
-Get customer balance information.
-
-**Scopes**: `customers:read` `customers:write`
-
-### Example Usage
-
-<!-- UsageSnippet language="go" operationID="customers:get_balance" method="get" path="/v1/customers/{id}/balance" -->
-```go
-package main
-
-import(
-	"context"
-	"os"
-	polargo "github.com/polarsource/polar-go"
-	"log"
-)
-
-func main() {
-    ctx := context.Background()
-
-    s := polargo.New(
-        polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
-    )
-
-    res, err := s.Customers.GetBalance(ctx, "<value>")
-    if err != nil {
-        log.Fatal(err)
-    }
-    if res.CustomerBalance != nil {
-        // handle response
-    }
-}
-```
-
-### Parameters
-
-| Parameter                                                | Type                                                     | Required                                                 | Description                                              |
-| -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- |
-| `ctx`                                                    | [context.Context](https://pkg.go.dev/context#Context)    | :heavy_check_mark:                                       | The context to use for the request.                      |
-| `id`                                                     | *string*                                                 | :heavy_check_mark:                                       | The customer ID.                                         |
-| `opts`                                                   | [][operations.Option](../../models/operations/option.md) | :heavy_minus_sign:                                       | The options for this request.                            |
-
-### Response
-
-**[*operations.CustomersGetBalanceResponse](../../models/operations/customersgetbalanceresponse.md), error**
 
 ### Errors
 

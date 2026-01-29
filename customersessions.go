@@ -34,6 +34,9 @@ func newCustomerSessions(rootSDK *Polar, sdkConfig config.SDKConfiguration, hook
 // Create Customer Session
 // Create a customer session.
 //
+// For organizations with `member_model_enabled`, this will automatically
+// create a member session for the owner member of the customer.
+//
 // **Scopes**: `customer_sessions:write`
 func (s *CustomerSessions) Create(ctx context.Context, request operations.CustomerSessionsCreateCustomerSessionCreate, opts ...operations.Option) (*operations.CustomerSessionsCreateResponse, error) {
 	o := operations.Options{}

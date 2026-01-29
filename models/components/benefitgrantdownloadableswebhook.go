@@ -28,12 +28,15 @@ type BenefitGrantDownloadablesWebhook struct {
 	OrderID *string `json:"order_id"`
 	// The ID of the customer concerned by this grant.
 	CustomerID string `json:"customer_id"`
+	// The ID of the member concerned by this grant.
+	MemberID *string `json:"member_id,omitempty"`
 	// The ID of the benefit concerned by this grant.
 	BenefitID string `json:"benefit_id"`
 	// The error information if the benefit grant failed with an unrecoverable error.
 	Error *BenefitGrantError `json:"error,omitempty"`
 	// A customer in an organization.
 	Customer           Customer                             `json:"customer"`
+	Member             *Member                              `json:"member,omitempty"`
 	Benefit            BenefitDownloadables                 `json:"benefit"`
 	Properties         BenefitGrantDownloadablesProperties  `json:"properties"`
 	PreviousProperties *BenefitGrantDownloadablesProperties `json:"previous_properties,omitempty"`
@@ -120,6 +123,13 @@ func (b *BenefitGrantDownloadablesWebhook) GetCustomerID() string {
 	return b.CustomerID
 }
 
+func (b *BenefitGrantDownloadablesWebhook) GetMemberID() *string {
+	if b == nil {
+		return nil
+	}
+	return b.MemberID
+}
+
 func (b *BenefitGrantDownloadablesWebhook) GetBenefitID() string {
 	if b == nil {
 		return ""
@@ -139,6 +149,13 @@ func (b *BenefitGrantDownloadablesWebhook) GetCustomer() Customer {
 		return Customer{}
 	}
 	return b.Customer
+}
+
+func (b *BenefitGrantDownloadablesWebhook) GetMember() *Member {
+	if b == nil {
+		return nil
+	}
+	return b.Member
 }
 
 func (b *BenefitGrantDownloadablesWebhook) GetBenefit() BenefitDownloadables {

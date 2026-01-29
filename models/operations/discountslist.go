@@ -18,8 +18,8 @@ const (
 
 // DiscountsListQueryParamOrganizationIDFilter - Filter by organization ID.
 type DiscountsListQueryParamOrganizationIDFilter struct {
-	Str        *string  `queryParam:"inline,name=OrganizationID_Filter"`
-	ArrayOfStr []string `queryParam:"inline,name=OrganizationID_Filter"`
+	Str        *string  `queryParam:"inline" union:"member"`
+	ArrayOfStr []string `queryParam:"inline" union:"member"`
 
 	Type DiscountsListQueryParamOrganizationIDFilterType
 }

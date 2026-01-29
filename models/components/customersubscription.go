@@ -17,8 +17,8 @@ const (
 )
 
 type CustomerSubscriptionPrices struct {
-	LegacyRecurringProductPrice *LegacyRecurringProductPrice `queryParam:"inline,name=prices"`
-	ProductPrice                *ProductPrice                `queryParam:"inline,name=prices"`
+	LegacyRecurringProductPrice *LegacyRecurringProductPrice `queryParam:"inline" union:"member"`
+	ProductPrice                *ProductPrice                `queryParam:"inline" union:"member"`
 
 	Type CustomerSubscriptionPricesType
 }
@@ -121,8 +121,6 @@ type CustomerSubscription struct {
 	Prices []CustomerSubscriptionPrices `json:"prices"`
 	// List of meters associated with the subscription.
 	Meters []CustomerSubscriptionMeter `json:"meters"`
-	// Whether the subscription is managed by Polar.
-	IsPolarManaged bool `json:"is_polar_managed"`
 }
 
 func (c CustomerSubscription) MarshalJSON() ([]byte, error) {
@@ -130,7 +128,7 @@ func (c CustomerSubscription) MarshalJSON() ([]byte, error) {
 }
 
 func (c *CustomerSubscription) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &c, "", false, []string{"created_at", "id", "amount", "currency", "recurring_interval", "recurring_interval_count", "status", "current_period_start", "cancel_at_period_end", "customer_id", "product_id", "product", "prices", "meters", "is_polar_managed"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &c, "", false, nil); err != nil {
 		return err
 	}
 	return nil
@@ -323,11 +321,4 @@ func (c *CustomerSubscription) GetMeters() []CustomerSubscriptionMeter {
 		return []CustomerSubscriptionMeter{}
 	}
 	return c.Meters
-}
-
-func (c *CustomerSubscription) GetIsPolarManaged() bool {
-	if c == nil {
-		return false
-	}
-	return c.IsPolarManaged
 }

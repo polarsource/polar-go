@@ -199,12 +199,12 @@ func (s *PolarOrganizations) Get(ctx context.Context, slug string, opts ...opera
 				return nil, err
 			}
 
-			var out components.CustomerOrganization
+			var out components.CustomerOrganizationData
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.CustomerOrganization = &out
+			res.CustomerOrganizationData = &out
 		default:
 			rawBody, err := utils.ConsumeRawBody(httpRes)
 			if err != nil {

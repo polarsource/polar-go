@@ -11,3 +11,5 @@
 | `BenefitSortPropertyMinusDescription` | -description                          |
 | `BenefitSortPropertyType`             | type                                  |
 | `BenefitSortPropertyMinusType`        | -type                                 |
+| `BenefitSortPropertyUserOrder`        | user_order                            |
+| `BenefitSortPropertyMinusUserOrder`   | -user_order                           |

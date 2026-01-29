@@ -16,12 +16,14 @@ const (
 	CheckoutForbiddenErrorTypeAlreadyActiveSubscriptionError CheckoutForbiddenErrorType = "AlreadyActiveSubscriptionError"
 	CheckoutForbiddenErrorTypeNotOpenCheckout                CheckoutForbiddenErrorType = "NotOpenCheckout"
 	CheckoutForbiddenErrorTypePaymentNotReady                CheckoutForbiddenErrorType = "PaymentNotReady"
+	CheckoutForbiddenErrorTypeTrialAlreadyRedeemed           CheckoutForbiddenErrorType = "TrialAlreadyRedeemed"
 )
 
 type CheckoutForbiddenError struct {
-	AlreadyActiveSubscriptionError *components.AlreadyActiveSubscriptionError `queryParam:"inline,name=CheckoutForbiddenError"`
-	NotOpenCheckout                *components.NotOpenCheckout                `queryParam:"inline,name=CheckoutForbiddenError"`
-	PaymentNotReady                *components.PaymentNotReady                `queryParam:"inline,name=CheckoutForbiddenError"`
+	AlreadyActiveSubscriptionError *components.AlreadyActiveSubscriptionError `queryParam:"inline" union:"member"`
+	NotOpenCheckout                *components.NotOpenCheckout                `queryParam:"inline" union:"member"`
+	PaymentNotReady                *components.PaymentNotReady                `queryParam:"inline" union:"member"`
+	TrialAlreadyRedeemed           *components.TrialAlreadyRedeemed           `queryParam:"inline" union:"member"`
 
 	Type CheckoutForbiddenErrorType
 }
@@ -55,6 +57,15 @@ func CreateCheckoutForbiddenErrorPaymentNotReady(paymentNotReady components.Paym
 	}
 }
 
+func CreateCheckoutForbiddenErrorTrialAlreadyRedeemed(trialAlreadyRedeemed components.TrialAlreadyRedeemed) CheckoutForbiddenError {
+	typ := CheckoutForbiddenErrorTypeTrialAlreadyRedeemed
+
+	return CheckoutForbiddenError{
+		TrialAlreadyRedeemed: &trialAlreadyRedeemed,
+		Type:                 typ,
+	}
+}
+
 func (u *CheckoutForbiddenError) UnmarshalJSON(data []byte) error {
 
 	var alreadyActiveSubscriptionError components.AlreadyActiveSubscriptionError = components.AlreadyActiveSubscriptionError{}
@@ -78,6 +89,13 @@ func (u *CheckoutForbiddenError) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
+	var trialAlreadyRedeemed components.TrialAlreadyRedeemed = components.TrialAlreadyRedeemed{}
+	if err := utils.UnmarshalJSON(data, &trialAlreadyRedeemed, "", true, nil); err == nil {
+		u.TrialAlreadyRedeemed = &trialAlreadyRedeemed
+		u.Type = CheckoutForbiddenErrorTypeTrialAlreadyRedeemed
+		return nil
+	}
+
 	return fmt.Errorf("could not unmarshal `%s` into any supported union types for CheckoutForbiddenError", string(data))
 }
 
@@ -94,6 +112,10 @@ func (u CheckoutForbiddenError) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.PaymentNotReady, "", true)
 	}
 
+	if u.TrialAlreadyRedeemed != nil {
+		return utils.MarshalJSON(u.TrialAlreadyRedeemed, "", true)
+	}
+
 	return nil, errors.New("could not marshal union type CheckoutForbiddenError: all fields are null")
 }
 
@@ -107,6 +129,9 @@ func (u CheckoutForbiddenError) Error() string {
 		return string(data)
 	case CheckoutForbiddenErrorTypePaymentNotReady:
 		data, _ := json.Marshal(u.PaymentNotReady)
+		return string(data)
+	case CheckoutForbiddenErrorTypeTrialAlreadyRedeemed:
+		data, _ := json.Marshal(u.TrialAlreadyRedeemed)
 		return string(data)
 	default:
 		return "unknown error"

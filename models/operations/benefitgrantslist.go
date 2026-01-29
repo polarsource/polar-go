@@ -18,8 +18,8 @@ const (
 
 // BenefitGrantsListQueryParamOrganizationIDFilter - Filter by organization ID.
 type BenefitGrantsListQueryParamOrganizationIDFilter struct {
-	Str        *string  `queryParam:"inline,name=OrganizationID_Filter"`
-	ArrayOfStr []string `queryParam:"inline,name=OrganizationID_Filter"`
+	Str        *string  `queryParam:"inline" union:"member"`
+	ArrayOfStr []string `queryParam:"inline" union:"member"`
 
 	Type BenefitGrantsListQueryParamOrganizationIDFilterType
 }
@@ -82,8 +82,8 @@ const (
 
 // BenefitGrantsListQueryParamCustomerIDFilter - Filter by customer ID.
 type BenefitGrantsListQueryParamCustomerIDFilter struct {
-	Str        *string  `queryParam:"inline,name=CustomerID_Filter"`
-	ArrayOfStr []string `queryParam:"inline,name=CustomerID_Filter"`
+	Str        *string  `queryParam:"inline" union:"member"`
+	ArrayOfStr []string `queryParam:"inline" union:"member"`
 
 	Type BenefitGrantsListQueryParamCustomerIDFilterType
 }
@@ -137,11 +137,77 @@ func (u BenefitGrantsListQueryParamCustomerIDFilter) MarshalJSON() ([]byte, erro
 	return nil, errors.New("could not marshal union type BenefitGrantsListQueryParamCustomerIDFilter: all fields are null")
 }
 
+type QueryParamExternalCustomerIDFilterType string
+
+const (
+	QueryParamExternalCustomerIDFilterTypeStr        QueryParamExternalCustomerIDFilterType = "str"
+	QueryParamExternalCustomerIDFilterTypeArrayOfStr QueryParamExternalCustomerIDFilterType = "arrayOfStr"
+)
+
+// QueryParamExternalCustomerIDFilter - Filter by customer external ID.
+type QueryParamExternalCustomerIDFilter struct {
+	Str        *string  `queryParam:"inline" union:"member"`
+	ArrayOfStr []string `queryParam:"inline" union:"member"`
+
+	Type QueryParamExternalCustomerIDFilterType
+}
+
+func CreateQueryParamExternalCustomerIDFilterStr(str string) QueryParamExternalCustomerIDFilter {
+	typ := QueryParamExternalCustomerIDFilterTypeStr
+
+	return QueryParamExternalCustomerIDFilter{
+		Str:  &str,
+		Type: typ,
+	}
+}
+
+func CreateQueryParamExternalCustomerIDFilterArrayOfStr(arrayOfStr []string) QueryParamExternalCustomerIDFilter {
+	typ := QueryParamExternalCustomerIDFilterTypeArrayOfStr
+
+	return QueryParamExternalCustomerIDFilter{
+		ArrayOfStr: arrayOfStr,
+		Type:       typ,
+	}
+}
+
+func (u *QueryParamExternalCustomerIDFilter) UnmarshalJSON(data []byte) error {
+
+	var str string = ""
+	if err := utils.UnmarshalJSON(data, &str, "", true, nil); err == nil {
+		u.Str = &str
+		u.Type = QueryParamExternalCustomerIDFilterTypeStr
+		return nil
+	}
+
+	var arrayOfStr []string = []string{}
+	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, nil); err == nil {
+		u.ArrayOfStr = arrayOfStr
+		u.Type = QueryParamExternalCustomerIDFilterTypeArrayOfStr
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for QueryParamExternalCustomerIDFilter", string(data))
+}
+
+func (u QueryParamExternalCustomerIDFilter) MarshalJSON() ([]byte, error) {
+	if u.Str != nil {
+		return utils.MarshalJSON(u.Str, "", true)
+	}
+
+	if u.ArrayOfStr != nil {
+		return utils.MarshalJSON(u.ArrayOfStr, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type QueryParamExternalCustomerIDFilter: all fields are null")
+}
+
 type BenefitGrantsListRequest struct {
 	// Filter by organization ID.
 	OrganizationID *BenefitGrantsListQueryParamOrganizationIDFilter `queryParam:"style=form,explode=true,name=organization_id"`
 	// Filter by customer ID.
 	CustomerID *BenefitGrantsListQueryParamCustomerIDFilter `queryParam:"style=form,explode=true,name=customer_id"`
+	// Filter by customer external ID.
+	ExternalCustomerID *QueryParamExternalCustomerIDFilter `queryParam:"style=form,explode=true,name=external_customer_id"`
 	// Filter by granted status. If `true`, only granted benefits will be returned. If `false`, only revoked benefits will be returned.
 	IsGranted *bool `queryParam:"style=form,explode=true,name=is_granted"`
 	// Page number, defaults to 1.
@@ -175,6 +241,13 @@ func (b *BenefitGrantsListRequest) GetCustomerID() *BenefitGrantsListQueryParamC
 		return nil
 	}
 	return b.CustomerID
+}
+
+func (b *BenefitGrantsListRequest) GetExternalCustomerID() *QueryParamExternalCustomerIDFilter {
+	if b == nil {
+		return nil
+	}
+	return b.ExternalCustomerID
 }
 
 func (b *BenefitGrantsListRequest) GetIsGranted() *bool {

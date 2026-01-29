@@ -3,118 +3,9 @@
 package components
 
 import (
-	"errors"
-	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
 	"time"
 )
-
-type BenefitMeterCreditSubscriberMetadataType string
-
-const (
-	BenefitMeterCreditSubscriberMetadataTypeStr     BenefitMeterCreditSubscriberMetadataType = "str"
-	BenefitMeterCreditSubscriberMetadataTypeInteger BenefitMeterCreditSubscriberMetadataType = "integer"
-	BenefitMeterCreditSubscriberMetadataTypeNumber  BenefitMeterCreditSubscriberMetadataType = "number"
-	BenefitMeterCreditSubscriberMetadataTypeBoolean BenefitMeterCreditSubscriberMetadataType = "boolean"
-)
-
-type BenefitMeterCreditSubscriberMetadata struct {
-	Str     *string  `queryParam:"inline,name=metadata"`
-	Integer *int64   `queryParam:"inline,name=metadata"`
-	Number  *float64 `queryParam:"inline,name=metadata"`
-	Boolean *bool    `queryParam:"inline,name=metadata"`
-
-	Type BenefitMeterCreditSubscriberMetadataType
-}
-
-func CreateBenefitMeterCreditSubscriberMetadataStr(str string) BenefitMeterCreditSubscriberMetadata {
-	typ := BenefitMeterCreditSubscriberMetadataTypeStr
-
-	return BenefitMeterCreditSubscriberMetadata{
-		Str:  &str,
-		Type: typ,
-	}
-}
-
-func CreateBenefitMeterCreditSubscriberMetadataInteger(integer int64) BenefitMeterCreditSubscriberMetadata {
-	typ := BenefitMeterCreditSubscriberMetadataTypeInteger
-
-	return BenefitMeterCreditSubscriberMetadata{
-		Integer: &integer,
-		Type:    typ,
-	}
-}
-
-func CreateBenefitMeterCreditSubscriberMetadataNumber(number float64) BenefitMeterCreditSubscriberMetadata {
-	typ := BenefitMeterCreditSubscriberMetadataTypeNumber
-
-	return BenefitMeterCreditSubscriberMetadata{
-		Number: &number,
-		Type:   typ,
-	}
-}
-
-func CreateBenefitMeterCreditSubscriberMetadataBoolean(boolean bool) BenefitMeterCreditSubscriberMetadata {
-	typ := BenefitMeterCreditSubscriberMetadataTypeBoolean
-
-	return BenefitMeterCreditSubscriberMetadata{
-		Boolean: &boolean,
-		Type:    typ,
-	}
-}
-
-func (u *BenefitMeterCreditSubscriberMetadata) UnmarshalJSON(data []byte) error {
-
-	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, nil); err == nil {
-		u.Str = &str
-		u.Type = BenefitMeterCreditSubscriberMetadataTypeStr
-		return nil
-	}
-
-	var integer int64 = int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
-		u.Integer = &integer
-		u.Type = BenefitMeterCreditSubscriberMetadataTypeInteger
-		return nil
-	}
-
-	var number float64 = float64(0)
-	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
-		u.Number = &number
-		u.Type = BenefitMeterCreditSubscriberMetadataTypeNumber
-		return nil
-	}
-
-	var boolean bool = false
-	if err := utils.UnmarshalJSON(data, &boolean, "", true, nil); err == nil {
-		u.Boolean = &boolean
-		u.Type = BenefitMeterCreditSubscriberMetadataTypeBoolean
-		return nil
-	}
-
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for BenefitMeterCreditSubscriberMetadata", string(data))
-}
-
-func (u BenefitMeterCreditSubscriberMetadata) MarshalJSON() ([]byte, error) {
-	if u.Str != nil {
-		return utils.MarshalJSON(u.Str, "", true)
-	}
-
-	if u.Integer != nil {
-		return utils.MarshalJSON(u.Integer, "", true)
-	}
-
-	if u.Number != nil {
-		return utils.MarshalJSON(u.Number, "", true)
-	}
-
-	if u.Boolean != nil {
-		return utils.MarshalJSON(u.Boolean, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type BenefitMeterCreditSubscriberMetadata: all fields are null")
-}
 
 type BenefitMeterCreditSubscriber struct {
 	// The ID of the benefit.
@@ -131,9 +22,9 @@ type BenefitMeterCreditSubscriber struct {
 	// Whether the benefit is deletable.
 	Deletable bool `json:"deletable"`
 	// The ID of the organization owning the benefit.
-	OrganizationID string                                          `json:"organization_id"`
-	Metadata       map[string]BenefitMeterCreditSubscriberMetadata `json:"metadata"`
-	Organization   Organization                                    `json:"organization"`
+	OrganizationID string                        `json:"organization_id"`
+	Metadata       map[string]MetadataOutputType `json:"metadata"`
+	Organization   BenefitSubscriberOrganization `json:"organization"`
 	// Properties available to subscribers for a benefit of type `meter_unit`.
 	Properties BenefitMeterCreditSubscriberProperties `json:"properties"`
 }
@@ -202,16 +93,16 @@ func (b *BenefitMeterCreditSubscriber) GetOrganizationID() string {
 	return b.OrganizationID
 }
 
-func (b *BenefitMeterCreditSubscriber) GetMetadata() map[string]BenefitMeterCreditSubscriberMetadata {
+func (b *BenefitMeterCreditSubscriber) GetMetadata() map[string]MetadataOutputType {
 	if b == nil {
-		return map[string]BenefitMeterCreditSubscriberMetadata{}
+		return map[string]MetadataOutputType{}
 	}
 	return b.Metadata
 }
 
-func (b *BenefitMeterCreditSubscriber) GetOrganization() Organization {
+func (b *BenefitMeterCreditSubscriber) GetOrganization() BenefitSubscriberOrganization {
 	if b == nil {
-		return Organization{}
+		return BenefitSubscriberOrganization{}
 	}
 	return b.Organization
 }

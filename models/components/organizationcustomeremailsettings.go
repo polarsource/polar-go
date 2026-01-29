@@ -2,10 +2,6 @@
 
 package components
 
-import (
-	"github.com/polarsource/polar-go/internal/utils"
-)
-
 type OrganizationCustomerEmailSettings struct {
 	OrderConfirmation        bool `json:"order_confirmation"`
 	SubscriptionCancellation bool `json:"subscription_cancellation"`
@@ -15,17 +11,6 @@ type OrganizationCustomerEmailSettings struct {
 	SubscriptionRevoked      bool `json:"subscription_revoked"`
 	SubscriptionUncanceled   bool `json:"subscription_uncanceled"`
 	SubscriptionUpdated      bool `json:"subscription_updated"`
-}
-
-func (o OrganizationCustomerEmailSettings) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(o, "", false)
-}
-
-func (o *OrganizationCustomerEmailSettings) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &o, "", false, []string{"order_confirmation", "subscription_cancellation", "subscription_confirmation", "subscription_cycled", "subscription_past_due", "subscription_revoked", "subscription_uncanceled", "subscription_updated"}); err != nil {
-		return err
-	}
-	return nil
 }
 
 func (o *OrganizationCustomerEmailSettings) GetOrderConfirmation() bool {

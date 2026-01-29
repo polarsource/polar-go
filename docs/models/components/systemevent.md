@@ -3,6 +3,42 @@
 
 ## Supported Types
 
+### BalanceCreditOrderEvent
+
+```go
+systemEvent := components.CreateSystemEventBalanceCreditOrder(components.BalanceCreditOrderEvent{/* values here */})
+```
+
+### BalanceDisputeEvent
+
+```go
+systemEvent := components.CreateSystemEventBalanceDispute(components.BalanceDisputeEvent{/* values here */})
+```
+
+### BalanceDisputeReversalEvent
+
+```go
+systemEvent := components.CreateSystemEventBalanceDisputeReversal(components.BalanceDisputeReversalEvent{/* values here */})
+```
+
+### BalanceOrderEvent
+
+```go
+systemEvent := components.CreateSystemEventBalanceOrder(components.BalanceOrderEvent{/* values here */})
+```
+
+### BalanceRefundEvent
+
+```go
+systemEvent := components.CreateSystemEventBalanceRefund(components.BalanceRefundEvent{/* values here */})
+```
+
+### BalanceRefundReversalEvent
+
+```go
+systemEvent := components.CreateSystemEventBalanceRefundReversal(components.BalanceRefundReversalEvent{/* values here */})
+```
+
 ### BenefitCycledEvent
 
 ```go
@@ -25,6 +61,12 @@ systemEvent := components.CreateSystemEventBenefitRevoked(components.BenefitRevo
 
 ```go
 systemEvent := components.CreateSystemEventBenefitUpdated(components.BenefitUpdatedEvent{/* values here */})
+```
+
+### CheckoutCreatedEvent
+
+```go
+systemEvent := components.CreateSystemEventCheckoutCreated(components.CheckoutCreatedEvent{/* values here */})
 ```
 
 ### CustomerCreatedEvent
@@ -69,6 +111,24 @@ systemEvent := components.CreateSystemEventOrderPaid(components.OrderPaidEvent{/
 systemEvent := components.CreateSystemEventOrderRefunded(components.OrderRefundedEvent{/* values here */})
 ```
 
+### SubscriptionBillingPeriodUpdatedEvent
+
+```go
+systemEvent := components.CreateSystemEventSubscriptionBillingPeriodUpdated(components.SubscriptionBillingPeriodUpdatedEvent{/* values here */})
+```
+
+### SubscriptionCanceledEvent
+
+```go
+systemEvent := components.CreateSystemEventSubscriptionCanceled(components.SubscriptionCanceledEvent{/* values here */})
+```
+
+### SubscriptionCreatedEvent
+
+```go
+systemEvent := components.CreateSystemEventSubscriptionCreated(components.SubscriptionCreatedEvent{/* values here */})
+```
+
 ### SubscriptionCycledEvent
 
 ```go
@@ -85,5 +145,17 @@ systemEvent := components.CreateSystemEventSubscriptionProductUpdated(components
 
 ```go
 systemEvent := components.CreateSystemEventSubscriptionRevoked(components.SubscriptionRevokedEvent{/* values here */})
+```
+
+### SubscriptionSeatsUpdatedEvent
+
+```go
+systemEvent := components.CreateSystemEventSubscriptionSeatsUpdated(components.SubscriptionSeatsUpdatedEvent{/* values here */})
+```
+
+### SubscriptionUncanceledEvent
+
+```go
+systemEvent := components.CreateSystemEventSubscriptionUncanceled(components.SubscriptionUncanceledEvent{/* values here */})
 ```
 

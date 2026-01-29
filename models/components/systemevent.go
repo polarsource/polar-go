@@ -12,39 +12,117 @@ import (
 type SystemEventType string
 
 const (
-	SystemEventTypeBenefitCycled              SystemEventType = "benefit.cycled"
-	SystemEventTypeBenefitGranted             SystemEventType = "benefit.granted"
-	SystemEventTypeBenefitRevoked             SystemEventType = "benefit.revoked"
-	SystemEventTypeBenefitUpdated             SystemEventType = "benefit.updated"
-	SystemEventTypeCustomerCreated            SystemEventType = "customer.created"
-	SystemEventTypeCustomerDeleted            SystemEventType = "customer.deleted"
-	SystemEventTypeCustomerUpdated            SystemEventType = "customer.updated"
-	SystemEventTypeMeterCredited              SystemEventType = "meter.credited"
-	SystemEventTypeMeterReset                 SystemEventType = "meter.reset"
-	SystemEventTypeOrderPaid                  SystemEventType = "order.paid"
-	SystemEventTypeOrderRefunded              SystemEventType = "order.refunded"
-	SystemEventTypeSubscriptionCycled         SystemEventType = "subscription.cycled"
-	SystemEventTypeSubscriptionProductUpdated SystemEventType = "subscription.product_updated"
-	SystemEventTypeSubscriptionRevoked        SystemEventType = "subscription.revoked"
+	SystemEventTypeBalanceCreditOrder               SystemEventType = "balance.credit_order"
+	SystemEventTypeBalanceDispute                   SystemEventType = "balance.dispute"
+	SystemEventTypeBalanceDisputeReversal           SystemEventType = "balance.dispute_reversal"
+	SystemEventTypeBalanceOrder                     SystemEventType = "balance.order"
+	SystemEventTypeBalanceRefund                    SystemEventType = "balance.refund"
+	SystemEventTypeBalanceRefundReversal            SystemEventType = "balance.refund_reversal"
+	SystemEventTypeBenefitCycled                    SystemEventType = "benefit.cycled"
+	SystemEventTypeBenefitGranted                   SystemEventType = "benefit.granted"
+	SystemEventTypeBenefitRevoked                   SystemEventType = "benefit.revoked"
+	SystemEventTypeBenefitUpdated                   SystemEventType = "benefit.updated"
+	SystemEventTypeCheckoutCreated                  SystemEventType = "checkout.created"
+	SystemEventTypeCustomerCreated                  SystemEventType = "customer.created"
+	SystemEventTypeCustomerDeleted                  SystemEventType = "customer.deleted"
+	SystemEventTypeCustomerUpdated                  SystemEventType = "customer.updated"
+	SystemEventTypeMeterCredited                    SystemEventType = "meter.credited"
+	SystemEventTypeMeterReset                       SystemEventType = "meter.reset"
+	SystemEventTypeOrderPaid                        SystemEventType = "order.paid"
+	SystemEventTypeOrderRefunded                    SystemEventType = "order.refunded"
+	SystemEventTypeSubscriptionBillingPeriodUpdated SystemEventType = "subscription.billing_period_updated"
+	SystemEventTypeSubscriptionCanceled             SystemEventType = "subscription.canceled"
+	SystemEventTypeSubscriptionCreated              SystemEventType = "subscription.created"
+	SystemEventTypeSubscriptionCycled               SystemEventType = "subscription.cycled"
+	SystemEventTypeSubscriptionProductUpdated       SystemEventType = "subscription.product_updated"
+	SystemEventTypeSubscriptionRevoked              SystemEventType = "subscription.revoked"
+	SystemEventTypeSubscriptionSeatsUpdated         SystemEventType = "subscription.seats_updated"
+	SystemEventTypeSubscriptionUncanceled           SystemEventType = "subscription.uncanceled"
 )
 
 type SystemEvent struct {
-	MeterCreditEvent                *MeterCreditEvent                `queryParam:"inline,name=SystemEvent"`
-	MeterResetEvent                 *MeterResetEvent                 `queryParam:"inline,name=SystemEvent"`
-	BenefitGrantedEvent             *BenefitGrantedEvent             `queryParam:"inline,name=SystemEvent"`
-	BenefitCycledEvent              *BenefitCycledEvent              `queryParam:"inline,name=SystemEvent"`
-	BenefitUpdatedEvent             *BenefitUpdatedEvent             `queryParam:"inline,name=SystemEvent"`
-	BenefitRevokedEvent             *BenefitRevokedEvent             `queryParam:"inline,name=SystemEvent"`
-	SubscriptionCycledEvent         *SubscriptionCycledEvent         `queryParam:"inline,name=SystemEvent"`
-	SubscriptionRevokedEvent        *SubscriptionRevokedEvent        `queryParam:"inline,name=SystemEvent"`
-	SubscriptionProductUpdatedEvent *SubscriptionProductUpdatedEvent `queryParam:"inline,name=SystemEvent"`
-	OrderPaidEvent                  *OrderPaidEvent                  `queryParam:"inline,name=SystemEvent"`
-	OrderRefundedEvent              *OrderRefundedEvent              `queryParam:"inline,name=SystemEvent"`
-	CustomerCreatedEvent            *CustomerCreatedEvent            `queryParam:"inline,name=SystemEvent"`
-	CustomerUpdatedEvent            *CustomerUpdatedEvent            `queryParam:"inline,name=SystemEvent"`
-	CustomerDeletedEvent            *CustomerDeletedEvent            `queryParam:"inline,name=SystemEvent"`
+	MeterCreditEvent                      *MeterCreditEvent                      `queryParam:"inline" union:"member"`
+	MeterResetEvent                       *MeterResetEvent                       `queryParam:"inline" union:"member"`
+	BenefitGrantedEvent                   *BenefitGrantedEvent                   `queryParam:"inline" union:"member"`
+	BenefitCycledEvent                    *BenefitCycledEvent                    `queryParam:"inline" union:"member"`
+	BenefitUpdatedEvent                   *BenefitUpdatedEvent                   `queryParam:"inline" union:"member"`
+	BenefitRevokedEvent                   *BenefitRevokedEvent                   `queryParam:"inline" union:"member"`
+	SubscriptionCreatedEvent              *SubscriptionCreatedEvent              `queryParam:"inline" union:"member"`
+	SubscriptionCycledEvent               *SubscriptionCycledEvent               `queryParam:"inline" union:"member"`
+	SubscriptionCanceledEvent             *SubscriptionCanceledEvent             `queryParam:"inline" union:"member"`
+	SubscriptionRevokedEvent              *SubscriptionRevokedEvent              `queryParam:"inline" union:"member"`
+	SubscriptionUncanceledEvent           *SubscriptionUncanceledEvent           `queryParam:"inline" union:"member"`
+	SubscriptionProductUpdatedEvent       *SubscriptionProductUpdatedEvent       `queryParam:"inline" union:"member"`
+	SubscriptionSeatsUpdatedEvent         *SubscriptionSeatsUpdatedEvent         `queryParam:"inline" union:"member"`
+	SubscriptionBillingPeriodUpdatedEvent *SubscriptionBillingPeriodUpdatedEvent `queryParam:"inline" union:"member"`
+	OrderPaidEvent                        *OrderPaidEvent                        `queryParam:"inline" union:"member"`
+	OrderRefundedEvent                    *OrderRefundedEvent                    `queryParam:"inline" union:"member"`
+	CheckoutCreatedEvent                  *CheckoutCreatedEvent                  `queryParam:"inline" union:"member"`
+	CustomerCreatedEvent                  *CustomerCreatedEvent                  `queryParam:"inline" union:"member"`
+	CustomerUpdatedEvent                  *CustomerUpdatedEvent                  `queryParam:"inline" union:"member"`
+	CustomerDeletedEvent                  *CustomerDeletedEvent                  `queryParam:"inline" union:"member"`
+	BalanceOrderEvent                     *BalanceOrderEvent                     `queryParam:"inline" union:"member"`
+	BalanceCreditOrderEvent               *BalanceCreditOrderEvent               `queryParam:"inline" union:"member"`
+	BalanceRefundEvent                    *BalanceRefundEvent                    `queryParam:"inline" union:"member"`
+	BalanceRefundReversalEvent            *BalanceRefundReversalEvent            `queryParam:"inline" union:"member"`
+	BalanceDisputeEvent                   *BalanceDisputeEvent                   `queryParam:"inline" union:"member"`
+	BalanceDisputeReversalEvent           *BalanceDisputeReversalEvent           `queryParam:"inline" union:"member"`
 
 	Type SystemEventType
+}
+
+func CreateSystemEventBalanceCreditOrder(balanceCreditOrder BalanceCreditOrderEvent) SystemEvent {
+	typ := SystemEventTypeBalanceCreditOrder
+
+	return SystemEvent{
+		BalanceCreditOrderEvent: &balanceCreditOrder,
+		Type:                    typ,
+	}
+}
+
+func CreateSystemEventBalanceDispute(balanceDispute BalanceDisputeEvent) SystemEvent {
+	typ := SystemEventTypeBalanceDispute
+
+	return SystemEvent{
+		BalanceDisputeEvent: &balanceDispute,
+		Type:                typ,
+	}
+}
+
+func CreateSystemEventBalanceDisputeReversal(balanceDisputeReversal BalanceDisputeReversalEvent) SystemEvent {
+	typ := SystemEventTypeBalanceDisputeReversal
+
+	return SystemEvent{
+		BalanceDisputeReversalEvent: &balanceDisputeReversal,
+		Type:                        typ,
+	}
+}
+
+func CreateSystemEventBalanceOrder(balanceOrder BalanceOrderEvent) SystemEvent {
+	typ := SystemEventTypeBalanceOrder
+
+	return SystemEvent{
+		BalanceOrderEvent: &balanceOrder,
+		Type:              typ,
+	}
+}
+
+func CreateSystemEventBalanceRefund(balanceRefund BalanceRefundEvent) SystemEvent {
+	typ := SystemEventTypeBalanceRefund
+
+	return SystemEvent{
+		BalanceRefundEvent: &balanceRefund,
+		Type:               typ,
+	}
+}
+
+func CreateSystemEventBalanceRefundReversal(balanceRefundReversal BalanceRefundReversalEvent) SystemEvent {
+	typ := SystemEventTypeBalanceRefundReversal
+
+	return SystemEvent{
+		BalanceRefundReversalEvent: &balanceRefundReversal,
+		Type:                       typ,
+	}
 }
 
 func CreateSystemEventBenefitCycled(benefitCycled BenefitCycledEvent) SystemEvent {
@@ -80,6 +158,15 @@ func CreateSystemEventBenefitUpdated(benefitUpdated BenefitUpdatedEvent) SystemE
 	return SystemEvent{
 		BenefitUpdatedEvent: &benefitUpdated,
 		Type:                typ,
+	}
+}
+
+func CreateSystemEventCheckoutCreated(checkoutCreated CheckoutCreatedEvent) SystemEvent {
+	typ := SystemEventTypeCheckoutCreated
+
+	return SystemEvent{
+		CheckoutCreatedEvent: &checkoutCreated,
+		Type:                 typ,
 	}
 }
 
@@ -146,6 +233,33 @@ func CreateSystemEventOrderRefunded(orderRefunded OrderRefundedEvent) SystemEven
 	}
 }
 
+func CreateSystemEventSubscriptionBillingPeriodUpdated(subscriptionBillingPeriodUpdated SubscriptionBillingPeriodUpdatedEvent) SystemEvent {
+	typ := SystemEventTypeSubscriptionBillingPeriodUpdated
+
+	return SystemEvent{
+		SubscriptionBillingPeriodUpdatedEvent: &subscriptionBillingPeriodUpdated,
+		Type:                                  typ,
+	}
+}
+
+func CreateSystemEventSubscriptionCanceled(subscriptionCanceled SubscriptionCanceledEvent) SystemEvent {
+	typ := SystemEventTypeSubscriptionCanceled
+
+	return SystemEvent{
+		SubscriptionCanceledEvent: &subscriptionCanceled,
+		Type:                      typ,
+	}
+}
+
+func CreateSystemEventSubscriptionCreated(subscriptionCreated SubscriptionCreatedEvent) SystemEvent {
+	typ := SystemEventTypeSubscriptionCreated
+
+	return SystemEvent{
+		SubscriptionCreatedEvent: &subscriptionCreated,
+		Type:                     typ,
+	}
+}
+
 func CreateSystemEventSubscriptionCycled(subscriptionCycled SubscriptionCycledEvent) SystemEvent {
 	typ := SystemEventTypeSubscriptionCycled
 
@@ -173,6 +287,24 @@ func CreateSystemEventSubscriptionRevoked(subscriptionRevoked SubscriptionRevoke
 	}
 }
 
+func CreateSystemEventSubscriptionSeatsUpdated(subscriptionSeatsUpdated SubscriptionSeatsUpdatedEvent) SystemEvent {
+	typ := SystemEventTypeSubscriptionSeatsUpdated
+
+	return SystemEvent{
+		SubscriptionSeatsUpdatedEvent: &subscriptionSeatsUpdated,
+		Type:                          typ,
+	}
+}
+
+func CreateSystemEventSubscriptionUncanceled(subscriptionUncanceled SubscriptionUncanceledEvent) SystemEvent {
+	typ := SystemEventTypeSubscriptionUncanceled
+
+	return SystemEvent{
+		SubscriptionUncanceledEvent: &subscriptionUncanceled,
+		Type:                        typ,
+	}
+}
+
 func (u *SystemEvent) UnmarshalJSON(data []byte) error {
 
 	type discriminator struct {
@@ -185,6 +317,60 @@ func (u *SystemEvent) UnmarshalJSON(data []byte) error {
 	}
 
 	switch dis.Name {
+	case "balance.credit_order":
+		balanceCreditOrderEvent := new(BalanceCreditOrderEvent)
+		if err := utils.UnmarshalJSON(data, &balanceCreditOrderEvent, "", true, nil); err != nil {
+			return fmt.Errorf("could not unmarshal `%s` into expected (Name == balance.credit_order) type BalanceCreditOrderEvent within SystemEvent: %w", string(data), err)
+		}
+
+		u.BalanceCreditOrderEvent = balanceCreditOrderEvent
+		u.Type = SystemEventTypeBalanceCreditOrder
+		return nil
+	case "balance.dispute":
+		balanceDisputeEvent := new(BalanceDisputeEvent)
+		if err := utils.UnmarshalJSON(data, &balanceDisputeEvent, "", true, nil); err != nil {
+			return fmt.Errorf("could not unmarshal `%s` into expected (Name == balance.dispute) type BalanceDisputeEvent within SystemEvent: %w", string(data), err)
+		}
+
+		u.BalanceDisputeEvent = balanceDisputeEvent
+		u.Type = SystemEventTypeBalanceDispute
+		return nil
+	case "balance.dispute_reversal":
+		balanceDisputeReversalEvent := new(BalanceDisputeReversalEvent)
+		if err := utils.UnmarshalJSON(data, &balanceDisputeReversalEvent, "", true, nil); err != nil {
+			return fmt.Errorf("could not unmarshal `%s` into expected (Name == balance.dispute_reversal) type BalanceDisputeReversalEvent within SystemEvent: %w", string(data), err)
+		}
+
+		u.BalanceDisputeReversalEvent = balanceDisputeReversalEvent
+		u.Type = SystemEventTypeBalanceDisputeReversal
+		return nil
+	case "balance.order":
+		balanceOrderEvent := new(BalanceOrderEvent)
+		if err := utils.UnmarshalJSON(data, &balanceOrderEvent, "", true, nil); err != nil {
+			return fmt.Errorf("could not unmarshal `%s` into expected (Name == balance.order) type BalanceOrderEvent within SystemEvent: %w", string(data), err)
+		}
+
+		u.BalanceOrderEvent = balanceOrderEvent
+		u.Type = SystemEventTypeBalanceOrder
+		return nil
+	case "balance.refund":
+		balanceRefundEvent := new(BalanceRefundEvent)
+		if err := utils.UnmarshalJSON(data, &balanceRefundEvent, "", true, nil); err != nil {
+			return fmt.Errorf("could not unmarshal `%s` into expected (Name == balance.refund) type BalanceRefundEvent within SystemEvent: %w", string(data), err)
+		}
+
+		u.BalanceRefundEvent = balanceRefundEvent
+		u.Type = SystemEventTypeBalanceRefund
+		return nil
+	case "balance.refund_reversal":
+		balanceRefundReversalEvent := new(BalanceRefundReversalEvent)
+		if err := utils.UnmarshalJSON(data, &balanceRefundReversalEvent, "", true, nil); err != nil {
+			return fmt.Errorf("could not unmarshal `%s` into expected (Name == balance.refund_reversal) type BalanceRefundReversalEvent within SystemEvent: %w", string(data), err)
+		}
+
+		u.BalanceRefundReversalEvent = balanceRefundReversalEvent
+		u.Type = SystemEventTypeBalanceRefundReversal
+		return nil
 	case "benefit.cycled":
 		benefitCycledEvent := new(BenefitCycledEvent)
 		if err := utils.UnmarshalJSON(data, &benefitCycledEvent, "", true, nil); err != nil {
@@ -220,6 +406,15 @@ func (u *SystemEvent) UnmarshalJSON(data []byte) error {
 
 		u.BenefitUpdatedEvent = benefitUpdatedEvent
 		u.Type = SystemEventTypeBenefitUpdated
+		return nil
+	case "checkout.created":
+		checkoutCreatedEvent := new(CheckoutCreatedEvent)
+		if err := utils.UnmarshalJSON(data, &checkoutCreatedEvent, "", true, nil); err != nil {
+			return fmt.Errorf("could not unmarshal `%s` into expected (Name == checkout.created) type CheckoutCreatedEvent within SystemEvent: %w", string(data), err)
+		}
+
+		u.CheckoutCreatedEvent = checkoutCreatedEvent
+		u.Type = SystemEventTypeCheckoutCreated
 		return nil
 	case "customer.created":
 		customerCreatedEvent := new(CustomerCreatedEvent)
@@ -284,6 +479,33 @@ func (u *SystemEvent) UnmarshalJSON(data []byte) error {
 		u.OrderRefundedEvent = orderRefundedEvent
 		u.Type = SystemEventTypeOrderRefunded
 		return nil
+	case "subscription.billing_period_updated":
+		subscriptionBillingPeriodUpdatedEvent := new(SubscriptionBillingPeriodUpdatedEvent)
+		if err := utils.UnmarshalJSON(data, &subscriptionBillingPeriodUpdatedEvent, "", true, nil); err != nil {
+			return fmt.Errorf("could not unmarshal `%s` into expected (Name == subscription.billing_period_updated) type SubscriptionBillingPeriodUpdatedEvent within SystemEvent: %w", string(data), err)
+		}
+
+		u.SubscriptionBillingPeriodUpdatedEvent = subscriptionBillingPeriodUpdatedEvent
+		u.Type = SystemEventTypeSubscriptionBillingPeriodUpdated
+		return nil
+	case "subscription.canceled":
+		subscriptionCanceledEvent := new(SubscriptionCanceledEvent)
+		if err := utils.UnmarshalJSON(data, &subscriptionCanceledEvent, "", true, nil); err != nil {
+			return fmt.Errorf("could not unmarshal `%s` into expected (Name == subscription.canceled) type SubscriptionCanceledEvent within SystemEvent: %w", string(data), err)
+		}
+
+		u.SubscriptionCanceledEvent = subscriptionCanceledEvent
+		u.Type = SystemEventTypeSubscriptionCanceled
+		return nil
+	case "subscription.created":
+		subscriptionCreatedEvent := new(SubscriptionCreatedEvent)
+		if err := utils.UnmarshalJSON(data, &subscriptionCreatedEvent, "", true, nil); err != nil {
+			return fmt.Errorf("could not unmarshal `%s` into expected (Name == subscription.created) type SubscriptionCreatedEvent within SystemEvent: %w", string(data), err)
+		}
+
+		u.SubscriptionCreatedEvent = subscriptionCreatedEvent
+		u.Type = SystemEventTypeSubscriptionCreated
+		return nil
 	case "subscription.cycled":
 		subscriptionCycledEvent := new(SubscriptionCycledEvent)
 		if err := utils.UnmarshalJSON(data, &subscriptionCycledEvent, "", true, nil); err != nil {
@@ -310,6 +532,24 @@ func (u *SystemEvent) UnmarshalJSON(data []byte) error {
 
 		u.SubscriptionRevokedEvent = subscriptionRevokedEvent
 		u.Type = SystemEventTypeSubscriptionRevoked
+		return nil
+	case "subscription.seats_updated":
+		subscriptionSeatsUpdatedEvent := new(SubscriptionSeatsUpdatedEvent)
+		if err := utils.UnmarshalJSON(data, &subscriptionSeatsUpdatedEvent, "", true, nil); err != nil {
+			return fmt.Errorf("could not unmarshal `%s` into expected (Name == subscription.seats_updated) type SubscriptionSeatsUpdatedEvent within SystemEvent: %w", string(data), err)
+		}
+
+		u.SubscriptionSeatsUpdatedEvent = subscriptionSeatsUpdatedEvent
+		u.Type = SystemEventTypeSubscriptionSeatsUpdated
+		return nil
+	case "subscription.uncanceled":
+		subscriptionUncanceledEvent := new(SubscriptionUncanceledEvent)
+		if err := utils.UnmarshalJSON(data, &subscriptionUncanceledEvent, "", true, nil); err != nil {
+			return fmt.Errorf("could not unmarshal `%s` into expected (Name == subscription.uncanceled) type SubscriptionUncanceledEvent within SystemEvent: %w", string(data), err)
+		}
+
+		u.SubscriptionUncanceledEvent = subscriptionUncanceledEvent
+		u.Type = SystemEventTypeSubscriptionUncanceled
 		return nil
 	}
 
@@ -341,16 +581,36 @@ func (u SystemEvent) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.BenefitRevokedEvent, "", true)
 	}
 
+	if u.SubscriptionCreatedEvent != nil {
+		return utils.MarshalJSON(u.SubscriptionCreatedEvent, "", true)
+	}
+
 	if u.SubscriptionCycledEvent != nil {
 		return utils.MarshalJSON(u.SubscriptionCycledEvent, "", true)
+	}
+
+	if u.SubscriptionCanceledEvent != nil {
+		return utils.MarshalJSON(u.SubscriptionCanceledEvent, "", true)
 	}
 
 	if u.SubscriptionRevokedEvent != nil {
 		return utils.MarshalJSON(u.SubscriptionRevokedEvent, "", true)
 	}
 
+	if u.SubscriptionUncanceledEvent != nil {
+		return utils.MarshalJSON(u.SubscriptionUncanceledEvent, "", true)
+	}
+
 	if u.SubscriptionProductUpdatedEvent != nil {
 		return utils.MarshalJSON(u.SubscriptionProductUpdatedEvent, "", true)
+	}
+
+	if u.SubscriptionSeatsUpdatedEvent != nil {
+		return utils.MarshalJSON(u.SubscriptionSeatsUpdatedEvent, "", true)
+	}
+
+	if u.SubscriptionBillingPeriodUpdatedEvent != nil {
+		return utils.MarshalJSON(u.SubscriptionBillingPeriodUpdatedEvent, "", true)
 	}
 
 	if u.OrderPaidEvent != nil {
@@ -359,6 +619,10 @@ func (u SystemEvent) MarshalJSON() ([]byte, error) {
 
 	if u.OrderRefundedEvent != nil {
 		return utils.MarshalJSON(u.OrderRefundedEvent, "", true)
+	}
+
+	if u.CheckoutCreatedEvent != nil {
+		return utils.MarshalJSON(u.CheckoutCreatedEvent, "", true)
 	}
 
 	if u.CustomerCreatedEvent != nil {
@@ -371,6 +635,30 @@ func (u SystemEvent) MarshalJSON() ([]byte, error) {
 
 	if u.CustomerDeletedEvent != nil {
 		return utils.MarshalJSON(u.CustomerDeletedEvent, "", true)
+	}
+
+	if u.BalanceOrderEvent != nil {
+		return utils.MarshalJSON(u.BalanceOrderEvent, "", true)
+	}
+
+	if u.BalanceCreditOrderEvent != nil {
+		return utils.MarshalJSON(u.BalanceCreditOrderEvent, "", true)
+	}
+
+	if u.BalanceRefundEvent != nil {
+		return utils.MarshalJSON(u.BalanceRefundEvent, "", true)
+	}
+
+	if u.BalanceRefundReversalEvent != nil {
+		return utils.MarshalJSON(u.BalanceRefundReversalEvent, "", true)
+	}
+
+	if u.BalanceDisputeEvent != nil {
+		return utils.MarshalJSON(u.BalanceDisputeEvent, "", true)
+	}
+
+	if u.BalanceDisputeReversalEvent != nil {
+		return utils.MarshalJSON(u.BalanceDisputeReversalEvent, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type SystemEvent: all fields are null")

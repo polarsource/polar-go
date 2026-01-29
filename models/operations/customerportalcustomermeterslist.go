@@ -10,14 +10,22 @@ import (
 )
 
 type CustomerPortalCustomerMetersListSecurity struct {
-	CustomerSession string `security:"scheme,type=http,subtype=bearer,name=Authorization,env=polar_customer_session"`
+	CustomerSession *string `security:"scheme,type=http,subtype=bearer,name=Authorization,env=polar_customer_session"`
+	MemberSession   *string `security:"scheme,type=http,subtype=bearer,name=Authorization,env=polar_member_session"`
 }
 
-func (c *CustomerPortalCustomerMetersListSecurity) GetCustomerSession() string {
+func (c *CustomerPortalCustomerMetersListSecurity) GetCustomerSession() *string {
 	if c == nil {
-		return ""
+		return nil
 	}
 	return c.CustomerSession
+}
+
+func (c *CustomerPortalCustomerMetersListSecurity) GetMemberSession() *string {
+	if c == nil {
+		return nil
+	}
+	return c.MemberSession
 }
 
 type MeterIDFilterType string
@@ -29,8 +37,8 @@ const (
 
 // MeterIDFilter - Filter by meter ID.
 type MeterIDFilter struct {
-	Str        *string  `queryParam:"inline,name=MeterID_Filter"`
-	ArrayOfStr []string `queryParam:"inline,name=MeterID_Filter"`
+	Str        *string  `queryParam:"inline" union:"member"`
+	ArrayOfStr []string `queryParam:"inline" union:"member"`
 
 	Type MeterIDFilterType
 }

@@ -1,5 +1,4 @@
 # Events
-(*Events*)
 
 ## Overview
 
@@ -45,20 +44,8 @@ func main() {
     if err != nil {
         log.Fatal(err)
     }
-    if res.ListResourceEvent != nil {
-        for {
-            // handle items
-
-            res, err = res.Next()
-
-            if err != nil {
-                // handle error
-            }
-
-            if res == nil {
-                break
-            }
-        }
+    if res.ResponseEventsList != nil {
+        // handle response
     }
 }
 ```

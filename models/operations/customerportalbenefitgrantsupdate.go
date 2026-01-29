@@ -7,14 +7,22 @@ import (
 )
 
 type CustomerPortalBenefitGrantsUpdateSecurity struct {
-	CustomerSession string `security:"scheme,type=http,subtype=bearer,name=Authorization,env=polar_customer_session"`
+	CustomerSession *string `security:"scheme,type=http,subtype=bearer,name=Authorization,env=polar_customer_session"`
+	MemberSession   *string `security:"scheme,type=http,subtype=bearer,name=Authorization,env=polar_member_session"`
 }
 
-func (c *CustomerPortalBenefitGrantsUpdateSecurity) GetCustomerSession() string {
+func (c *CustomerPortalBenefitGrantsUpdateSecurity) GetCustomerSession() *string {
 	if c == nil {
-		return ""
+		return nil
 	}
 	return c.CustomerSession
+}
+
+func (c *CustomerPortalBenefitGrantsUpdateSecurity) GetMemberSession() *string {
+	if c == nil {
+		return nil
+	}
+	return c.MemberSession
 }
 
 type CustomerPortalBenefitGrantsUpdateRequest struct {

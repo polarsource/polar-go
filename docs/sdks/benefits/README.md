@@ -1,5 +1,4 @@
 # Benefits
-(*Benefits*)
 
 ## Overview
 

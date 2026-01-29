@@ -29,6 +29,7 @@ const (
 	WebhookEventTypeSubscriptionCanceled   WebhookEventType = "subscription.canceled"
 	WebhookEventTypeSubscriptionUncanceled WebhookEventType = "subscription.uncanceled"
 	WebhookEventTypeSubscriptionRevoked    WebhookEventType = "subscription.revoked"
+	WebhookEventTypeSubscriptionPastDue    WebhookEventType = "subscription.past_due"
 	WebhookEventTypeRefundCreated          WebhookEventType = "refund.created"
 	WebhookEventTypeRefundUpdated          WebhookEventType = "refund.updated"
 	WebhookEventTypeProductCreated         WebhookEventType = "product.created"
@@ -88,6 +89,8 @@ func (e *WebhookEventType) UnmarshalJSON(data []byte) error {
 	case "subscription.uncanceled":
 		fallthrough
 	case "subscription.revoked":
+		fallthrough
+	case "subscription.past_due":
 		fallthrough
 	case "refund.created":
 		fallthrough

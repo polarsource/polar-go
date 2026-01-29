@@ -40,9 +40,9 @@ const (
 
 // FilesUploadedResponseFilesUploaded - File upload completed.
 type FilesUploadedResponseFilesUploaded struct {
-	DownloadableFileRead       *components.DownloadableFileRead       `queryParam:"inline,name=Response_Files_Uploaded"`
-	ProductMediaFileRead       *components.ProductMediaFileRead       `queryParam:"inline,name=Response_Files_Uploaded"`
-	OrganizationAvatarFileRead *components.OrganizationAvatarFileRead `queryParam:"inline,name=Response_Files_Uploaded"`
+	DownloadableFileRead       *components.DownloadableFileRead       `queryParam:"inline" union:"member"`
+	ProductMediaFileRead       *components.ProductMediaFileRead       `queryParam:"inline" union:"member"`
+	OrganizationAvatarFileRead *components.OrganizationAvatarFileRead `queryParam:"inline" union:"member"`
 
 	Type FilesUploadedResponseFilesUploadedType
 }

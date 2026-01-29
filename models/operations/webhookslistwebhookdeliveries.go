@@ -3,6 +3,7 @@
 package operations
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
@@ -19,8 +20,8 @@ const (
 
 // EndpointID - Filter by webhook endpoint ID.
 type EndpointID struct {
-	Str        *string  `queryParam:"inline,name=Endpoint_Id"`
-	ArrayOfStr []string `queryParam:"inline,name=Endpoint_Id"`
+	Str        *string  `queryParam:"inline" union:"member"`
+	ArrayOfStr []string `queryParam:"inline" union:"member"`
 
 	Type EndpointIDType
 }
@@ -74,6 +75,103 @@ func (u EndpointID) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type EndpointID: all fields are null")
 }
 
+// HTTPCodeClass - Filter by HTTP response code class (2xx, 3xx, 4xx, 5xx).
+type HTTPCodeClass string
+
+const (
+	HTTPCodeClassTwoxx   HTTPCodeClass = "2xx"
+	HTTPCodeClassThreexx HTTPCodeClass = "3xx"
+	HTTPCodeClassFourxx  HTTPCodeClass = "4xx"
+	HTTPCodeClassFivexx  HTTPCodeClass = "5xx"
+)
+
+func (e HTTPCodeClass) ToPointer() *HTTPCodeClass {
+	return &e
+}
+func (e *HTTPCodeClass) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "2xx":
+		fallthrough
+	case "3xx":
+		fallthrough
+	case "4xx":
+		fallthrough
+	case "5xx":
+		*e = HTTPCodeClass(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for HTTPCodeClass: %v", v)
+	}
+}
+
+type EventTypeType string
+
+const (
+	EventTypeTypeWebhookEventType        EventTypeType = "WebhookEventType"
+	EventTypeTypeArrayOfWebhookEventType EventTypeType = "arrayOfWebhookEventType"
+)
+
+// EventType - Filter by webhook event type.
+type EventType struct {
+	WebhookEventType        *components.WebhookEventType  `queryParam:"inline" union:"member"`
+	ArrayOfWebhookEventType []components.WebhookEventType `queryParam:"inline" union:"member"`
+
+	Type EventTypeType
+}
+
+func CreateEventTypeWebhookEventType(webhookEventType components.WebhookEventType) EventType {
+	typ := EventTypeTypeWebhookEventType
+
+	return EventType{
+		WebhookEventType: &webhookEventType,
+		Type:             typ,
+	}
+}
+
+func CreateEventTypeArrayOfWebhookEventType(arrayOfWebhookEventType []components.WebhookEventType) EventType {
+	typ := EventTypeTypeArrayOfWebhookEventType
+
+	return EventType{
+		ArrayOfWebhookEventType: arrayOfWebhookEventType,
+		Type:                    typ,
+	}
+}
+
+func (u *EventType) UnmarshalJSON(data []byte) error {
+
+	var webhookEventType components.WebhookEventType = components.WebhookEventType("")
+	if err := utils.UnmarshalJSON(data, &webhookEventType, "", true, nil); err == nil {
+		u.WebhookEventType = &webhookEventType
+		u.Type = EventTypeTypeWebhookEventType
+		return nil
+	}
+
+	var arrayOfWebhookEventType []components.WebhookEventType = []components.WebhookEventType{}
+	if err := utils.UnmarshalJSON(data, &arrayOfWebhookEventType, "", true, nil); err == nil {
+		u.ArrayOfWebhookEventType = arrayOfWebhookEventType
+		u.Type = EventTypeTypeArrayOfWebhookEventType
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for EventType", string(data))
+}
+
+func (u EventType) MarshalJSON() ([]byte, error) {
+	if u.WebhookEventType != nil {
+		return utils.MarshalJSON(u.WebhookEventType, "", true)
+	}
+
+	if u.ArrayOfWebhookEventType != nil {
+		return utils.MarshalJSON(u.ArrayOfWebhookEventType, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type EventType: all fields are null")
+}
+
 type WebhooksListWebhookDeliveriesRequest struct {
 	// Filter by webhook endpoint ID.
 	EndpointID *EndpointID `queryParam:"style=form,explode=true,name=endpoint_id"`
@@ -81,6 +179,14 @@ type WebhooksListWebhookDeliveriesRequest struct {
 	StartTimestamp *time.Time `queryParam:"style=form,explode=true,name=start_timestamp"`
 	// Filter deliveries before this timestamp.
 	EndTimestamp *time.Time `queryParam:"style=form,explode=true,name=end_timestamp"`
+	// Filter by delivery success status.
+	Succeeded *bool `queryParam:"style=form,explode=true,name=succeeded"`
+	// Query to filter webhook deliveries.
+	Query *string `queryParam:"style=form,explode=true,name=query"`
+	// Filter by HTTP response code class (2xx, 3xx, 4xx, 5xx).
+	HTTPCodeClass *HTTPCodeClass `queryParam:"style=form,explode=true,name=http_code_class"`
+	// Filter by webhook event type.
+	EventType *EventType `queryParam:"style=form,explode=true,name=event_type"`
 	// Page number, defaults to 1.
 	Page *int64 `default:"1" queryParam:"style=form,explode=true,name=page"`
 	// Size of a page, defaults to 10. Maximum is 100.
@@ -117,6 +223,34 @@ func (w *WebhooksListWebhookDeliveriesRequest) GetEndTimestamp() *time.Time {
 		return nil
 	}
 	return w.EndTimestamp
+}
+
+func (w *WebhooksListWebhookDeliveriesRequest) GetSucceeded() *bool {
+	if w == nil {
+		return nil
+	}
+	return w.Succeeded
+}
+
+func (w *WebhooksListWebhookDeliveriesRequest) GetQuery() *string {
+	if w == nil {
+		return nil
+	}
+	return w.Query
+}
+
+func (w *WebhooksListWebhookDeliveriesRequest) GetHTTPCodeClass() *HTTPCodeClass {
+	if w == nil {
+		return nil
+	}
+	return w.HTTPCodeClass
+}
+
+func (w *WebhooksListWebhookDeliveriesRequest) GetEventType() *EventType {
+	if w == nil {
+		return nil
+	}
+	return w.EventType
 }
 
 func (w *WebhooksListWebhookDeliveriesRequest) GetPage() *int64 {

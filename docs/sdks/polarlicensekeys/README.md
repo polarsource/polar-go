@@ -1,5 +1,4 @@
-# PolarLicenseKeys
-(*CustomerPortal.LicenseKeys*)
+# CustomerPortal.LicenseKeys
 
 ## Overview
 
@@ -35,7 +34,7 @@ func main() {
     s := polargo.New()
 
     res, err := s.CustomerPortal.LicenseKeys.List(ctx, operations.CustomerPortalLicenseKeysListSecurity{
-        CustomerSession: os.Getenv("POLAR_CUSTOMER_SESSION"),
+        CustomerSession: polargo.Pointer(os.Getenv("POLAR_CUSTOMER_SESSION")),
     }, nil, polargo.Pointer[int64](1), polargo.Pointer[int64](10))
     if err != nil {
         log.Fatal(err)
@@ -108,7 +107,7 @@ func main() {
     s := polargo.New()
 
     res, err := s.CustomerPortal.LicenseKeys.Get(ctx, operations.CustomerPortalLicenseKeysGetSecurity{
-        CustomerSession: os.Getenv("POLAR_CUSTOMER_SESSION"),
+        CustomerSession: polargo.Pointer(os.Getenv("POLAR_CUSTOMER_SESSION")),
     }, "<value>")
     if err != nil {
         log.Fatal(err)

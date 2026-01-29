@@ -18,8 +18,8 @@ const (
 
 // LicenseKeysListQueryParamOrganizationIDFilter - Filter by organization ID.
 type LicenseKeysListQueryParamOrganizationIDFilter struct {
-	Str        *string  `queryParam:"inline,name=OrganizationID_Filter"`
-	ArrayOfStr []string `queryParam:"inline,name=OrganizationID_Filter"`
+	Str        *string  `queryParam:"inline" union:"member"`
+	ArrayOfStr []string `queryParam:"inline" union:"member"`
 
 	Type LicenseKeysListQueryParamOrganizationIDFilterType
 }
@@ -82,8 +82,8 @@ const (
 
 // QueryParamBenefitIDFilter - Filter by benefit ID.
 type QueryParamBenefitIDFilter struct {
-	Str        *string  `queryParam:"inline,name=BenefitID_Filter"`
-	ArrayOfStr []string `queryParam:"inline,name=BenefitID_Filter"`
+	Str        *string  `queryParam:"inline" union:"member"`
+	ArrayOfStr []string `queryParam:"inline" union:"member"`
 
 	Type QueryParamBenefitIDFilterType
 }

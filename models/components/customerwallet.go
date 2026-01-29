@@ -30,7 +30,7 @@ func (c CustomerWallet) MarshalJSON() ([]byte, error) {
 }
 
 func (c *CustomerWallet) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &c, "", false, []string{"id", "created_at", "customer_id", "balance", "currency"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &c, "", false, nil); err != nil {
 		return err
 	}
 	return nil

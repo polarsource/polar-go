@@ -8,22 +8,22 @@ import (
 	"github.com/polarsource/polar-go/internal/utils"
 )
 
-type EventType string
+type EventUnionType string
 
 const (
-	EventTypeSystemEvent EventType = "SystemEvent"
-	EventTypeUserEvent   EventType = "UserEvent"
+	EventUnionTypeSystemEvent EventUnionType = "SystemEvent"
+	EventUnionTypeUserEvent   EventUnionType = "UserEvent"
 )
 
 type Event struct {
-	SystemEvent *SystemEvent `queryParam:"inline,name=Event"`
-	UserEvent   *UserEvent   `queryParam:"inline,name=Event"`
+	SystemEvent *SystemEvent `queryParam:"inline" union:"member"`
+	UserEvent   *UserEvent   `queryParam:"inline" union:"member"`
 
-	Type EventType
+	Type EventUnionType
 }
 
 func CreateEventSystemEvent(systemEvent SystemEvent) Event {
-	typ := EventTypeSystemEvent
+	typ := EventUnionTypeSystemEvent
 
 	return Event{
 		SystemEvent: &systemEvent,
@@ -32,7 +32,7 @@ func CreateEventSystemEvent(systemEvent SystemEvent) Event {
 }
 
 func CreateEventUserEvent(userEvent UserEvent) Event {
-	typ := EventTypeUserEvent
+	typ := EventUnionTypeUserEvent
 
 	return Event{
 		UserEvent: &userEvent,
@@ -45,14 +45,14 @@ func (u *Event) UnmarshalJSON(data []byte) error {
 	var userEvent UserEvent = UserEvent{}
 	if err := utils.UnmarshalJSON(data, &userEvent, "", true, nil); err == nil {
 		u.UserEvent = &userEvent
-		u.Type = EventTypeUserEvent
+		u.Type = EventUnionTypeUserEvent
 		return nil
 	}
 
 	var systemEvent SystemEvent = SystemEvent{}
 	if err := utils.UnmarshalJSON(data, &systemEvent, "", true, nil); err == nil {
 		u.SystemEvent = &systemEvent
-		u.Type = EventTypeSystemEvent
+		u.Type = EventUnionTypeSystemEvent
 		return nil
 	}
 

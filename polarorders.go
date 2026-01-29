@@ -34,8 +34,6 @@ func newPolarOrders(rootSDK *Polar, sdkConfig config.SDKConfiguration, hooks *ho
 
 // List Orders
 // List orders of the authenticated customer.
-//
-// **Scopes**: `customer_portal:read` `customer_portal:write`
 func (s *PolarOrders) List(ctx context.Context, request operations.CustomerPortalOrdersListRequest, security operations.CustomerPortalOrdersListSecurity, opts ...operations.Option) (*operations.CustomerPortalOrdersListResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{
@@ -88,7 +86,7 @@ func (s *PolarOrders) List(ctx context.Context, request operations.CustomerPorta
 	req.Header.Set("Accept", "application/json")
 	req.Header.Set("User-Agent", s.sdkConfiguration.UserAgent)
 
-	if err := utils.PopulateQueryParams(ctx, req, request, nil); err != nil {
+	if err := utils.PopulateQueryParams(ctx, req, request, nil, nil); err != nil {
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
@@ -336,8 +334,6 @@ func (s *PolarOrders) List(ctx context.Context, request operations.CustomerPorta
 
 // Get Order
 // Get an order by ID for the authenticated customer.
-//
-// **Scopes**: `customer_portal:read` `customer_portal:write`
 func (s *PolarOrders) Get(ctx context.Context, security operations.CustomerPortalOrdersGetSecurity, id string, opts ...operations.Option) (*operations.CustomerPortalOrdersGetResponse, error) {
 	request := operations.CustomerPortalOrdersGetRequest{
 		ID: id,
@@ -590,8 +586,6 @@ func (s *PolarOrders) Get(ctx context.Context, security operations.CustomerPorta
 
 // Update Order
 // Update an order for the authenticated customer.
-//
-// **Scopes**: `customer_portal:write`
 func (s *PolarOrders) Update(ctx context.Context, security operations.CustomerPortalOrdersUpdateSecurity, id string, customerOrderUpdate components.CustomerOrderUpdate, opts ...operations.Option) (*operations.CustomerPortalOrdersUpdateResponse, error) {
 	request := operations.CustomerPortalOrdersUpdateRequest{
 		ID:                  id,
@@ -852,8 +846,6 @@ func (s *PolarOrders) Update(ctx context.Context, security operations.CustomerPo
 
 // GenerateInvoice - Generate Order Invoice
 // Trigger generation of an order's invoice.
-//
-// **Scopes**: `customer_portal:read` `customer_portal:write`
 func (s *PolarOrders) GenerateInvoice(ctx context.Context, security operations.CustomerPortalOrdersGenerateInvoiceSecurity, id string, opts ...operations.Option) (*operations.CustomerPortalOrdersGenerateInvoiceResponse, error) {
 	request := operations.CustomerPortalOrdersGenerateInvoiceRequest{
 		ID: id,
@@ -1085,8 +1077,6 @@ func (s *PolarOrders) GenerateInvoice(ctx context.Context, security operations.C
 
 // Invoice - Get Order Invoice
 // Get an order's invoice data.
-//
-// **Scopes**: `customer_portal:read` `customer_portal:write`
 func (s *PolarOrders) Invoice(ctx context.Context, security operations.CustomerPortalOrdersInvoiceSecurity, id string, opts ...operations.Option) (*operations.CustomerPortalOrdersInvoiceResponse, error) {
 	request := operations.CustomerPortalOrdersInvoiceRequest{
 		ID: id,
@@ -1339,8 +1329,6 @@ func (s *PolarOrders) Invoice(ctx context.Context, security operations.CustomerP
 
 // GetPaymentStatus - Get Order Payment Status
 // Get the current payment status for an order.
-//
-// **Scopes**: `customer_portal:read` `customer_portal:write`
 func (s *PolarOrders) GetPaymentStatus(ctx context.Context, security operations.CustomerPortalOrdersGetPaymentStatusSecurity, id string, opts ...operations.Option) (*operations.CustomerPortalOrdersGetPaymentStatusResponse, error) {
 	request := operations.CustomerPortalOrdersGetPaymentStatusRequest{
 		ID: id,
@@ -1593,8 +1581,6 @@ func (s *PolarOrders) GetPaymentStatus(ctx context.Context, security operations.
 
 // ConfirmRetryPayment - Confirm Retry Payment
 // Confirm a retry payment using a Stripe confirmation token.
-//
-// **Scopes**: `customer_portal:write`
 func (s *PolarOrders) ConfirmRetryPayment(ctx context.Context, security operations.CustomerPortalOrdersConfirmRetryPaymentSecurity, id string, customerOrderConfirmPayment components.CustomerOrderConfirmPayment, opts ...operations.Option) (*operations.CustomerPortalOrdersConfirmRetryPaymentResponse, error) {
 	request := operations.CustomerPortalOrdersConfirmRetryPaymentRequest{
 		ID:                          id,

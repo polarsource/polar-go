@@ -20,11 +20,11 @@ const (
 )
 
 type ProductPrice struct {
-	ProductPriceFixed       *ProductPriceFixed       `queryParam:"inline,name=ProductPrice"`
-	ProductPriceCustom      *ProductPriceCustom      `queryParam:"inline,name=ProductPrice"`
-	ProductPriceFree        *ProductPriceFree        `queryParam:"inline,name=ProductPrice"`
-	ProductPriceSeatBased   *ProductPriceSeatBased   `queryParam:"inline,name=ProductPrice"`
-	ProductPriceMeteredUnit *ProductPriceMeteredUnit `queryParam:"inline,name=ProductPrice"`
+	ProductPriceFixed       *ProductPriceFixed       `queryParam:"inline" union:"member"`
+	ProductPriceCustom      *ProductPriceCustom      `queryParam:"inline" union:"member"`
+	ProductPriceFree        *ProductPriceFree        `queryParam:"inline" union:"member"`
+	ProductPriceSeatBased   *ProductPriceSeatBased   `queryParam:"inline" union:"member"`
+	ProductPriceMeteredUnit *ProductPriceMeteredUnit `queryParam:"inline" union:"member"`
 
 	Type ProductPriceUnionType
 }

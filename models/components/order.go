@@ -9,113 +9,6 @@ import (
 	"time"
 )
 
-type OrderMetadataType string
-
-const (
-	OrderMetadataTypeStr     OrderMetadataType = "str"
-	OrderMetadataTypeInteger OrderMetadataType = "integer"
-	OrderMetadataTypeNumber  OrderMetadataType = "number"
-	OrderMetadataTypeBoolean OrderMetadataType = "boolean"
-)
-
-type OrderMetadata struct {
-	Str     *string  `queryParam:"inline,name=metadata"`
-	Integer *int64   `queryParam:"inline,name=metadata"`
-	Number  *float64 `queryParam:"inline,name=metadata"`
-	Boolean *bool    `queryParam:"inline,name=metadata"`
-
-	Type OrderMetadataType
-}
-
-func CreateOrderMetadataStr(str string) OrderMetadata {
-	typ := OrderMetadataTypeStr
-
-	return OrderMetadata{
-		Str:  &str,
-		Type: typ,
-	}
-}
-
-func CreateOrderMetadataInteger(integer int64) OrderMetadata {
-	typ := OrderMetadataTypeInteger
-
-	return OrderMetadata{
-		Integer: &integer,
-		Type:    typ,
-	}
-}
-
-func CreateOrderMetadataNumber(number float64) OrderMetadata {
-	typ := OrderMetadataTypeNumber
-
-	return OrderMetadata{
-		Number: &number,
-		Type:   typ,
-	}
-}
-
-func CreateOrderMetadataBoolean(boolean bool) OrderMetadata {
-	typ := OrderMetadataTypeBoolean
-
-	return OrderMetadata{
-		Boolean: &boolean,
-		Type:    typ,
-	}
-}
-
-func (u *OrderMetadata) UnmarshalJSON(data []byte) error {
-
-	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, nil); err == nil {
-		u.Str = &str
-		u.Type = OrderMetadataTypeStr
-		return nil
-	}
-
-	var integer int64 = int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
-		u.Integer = &integer
-		u.Type = OrderMetadataTypeInteger
-		return nil
-	}
-
-	var number float64 = float64(0)
-	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
-		u.Number = &number
-		u.Type = OrderMetadataTypeNumber
-		return nil
-	}
-
-	var boolean bool = false
-	if err := utils.UnmarshalJSON(data, &boolean, "", true, nil); err == nil {
-		u.Boolean = &boolean
-		u.Type = OrderMetadataTypeBoolean
-		return nil
-	}
-
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for OrderMetadata", string(data))
-}
-
-func (u OrderMetadata) MarshalJSON() ([]byte, error) {
-	if u.Str != nil {
-		return utils.MarshalJSON(u.Str, "", true)
-	}
-
-	if u.Integer != nil {
-		return utils.MarshalJSON(u.Integer, "", true)
-	}
-
-	if u.Number != nil {
-		return utils.MarshalJSON(u.Number, "", true)
-	}
-
-	if u.Boolean != nil {
-		return utils.MarshalJSON(u.Boolean, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type OrderMetadata: all fields are null")
-}
-
 type OrderCustomFieldDataType string
 
 const (
@@ -126,10 +19,10 @@ const (
 )
 
 type OrderCustomFieldData struct {
-	Str      *string    `queryParam:"inline,name=custom_field_data"`
-	Integer  *int64     `queryParam:"inline,name=custom_field_data"`
-	Boolean  *bool      `queryParam:"inline,name=custom_field_data"`
-	DateTime *time.Time `queryParam:"inline,name=custom_field_data"`
+	Str      *string    `queryParam:"inline" union:"member"`
+	Integer  *int64     `queryParam:"inline" union:"member"`
+	Boolean  *bool      `queryParam:"inline" union:"member"`
+	DateTime *time.Time `queryParam:"inline" union:"member"`
 
 	Type OrderCustomFieldDataType
 }
@@ -233,10 +126,10 @@ const (
 )
 
 type OrderDiscount struct {
-	DiscountFixedOnceForeverDurationBase      *DiscountFixedOnceForeverDurationBase      `queryParam:"inline,name=OrderDiscount"`
-	DiscountFixedRepeatDurationBase           *DiscountFixedRepeatDurationBase           `queryParam:"inline,name=OrderDiscount"`
-	DiscountPercentageOnceForeverDurationBase *DiscountPercentageOnceForeverDurationBase `queryParam:"inline,name=OrderDiscount"`
-	DiscountPercentageRepeatDurationBase      *DiscountPercentageRepeatDurationBase      `queryParam:"inline,name=OrderDiscount"`
+	DiscountFixedOnceForeverDurationBase      *DiscountFixedOnceForeverDurationBase      `queryParam:"inline" union:"member"`
+	DiscountFixedRepeatDurationBase           *DiscountFixedRepeatDurationBase           `queryParam:"inline" union:"member"`
+	DiscountPercentageOnceForeverDurationBase *DiscountPercentageOnceForeverDurationBase `queryParam:"inline" union:"member"`
+	DiscountPercentageRepeatDurationBase      *DiscountPercentageRepeatDurationBase      `queryParam:"inline" union:"member"`
 
 	Type OrderDiscountType
 }
@@ -368,18 +261,20 @@ type Order struct {
 	// Whether an invoice has been generated for this order.
 	IsInvoiceGenerated bool `json:"is_invoice_generated"`
 	// Number of seats purchased (for seat-based one-time orders).
-	Seats          *int64                   `json:"seats,omitempty"`
-	CustomerID     string                   `json:"customer_id"`
-	ProductID      *string                  `json:"product_id"`
-	DiscountID     *string                  `json:"discount_id"`
-	SubscriptionID *string                  `json:"subscription_id"`
-	CheckoutID     *string                  `json:"checkout_id"`
-	Metadata       map[string]OrderMetadata `json:"metadata"`
+	Seats          *int64                        `json:"seats,omitempty"`
+	CustomerID     string                        `json:"customer_id"`
+	ProductID      *string                       `json:"product_id"`
+	DiscountID     *string                       `json:"discount_id"`
+	SubscriptionID *string                       `json:"subscription_id"`
+	CheckoutID     *string                       `json:"checkout_id"`
+	Metadata       map[string]MetadataOutputType `json:"metadata"`
 	// Key-value object storing custom field values.
 	CustomFieldData map[string]*OrderCustomFieldData `json:"custom_field_data,omitempty"`
 	// Platform fee amount in cents.
-	PlatformFeeAmount int64         `json:"platform_fee_amount"`
-	Customer          OrderCustomer `json:"customer"`
+	PlatformFeeAmount int64 `json:"platform_fee_amount"`
+	// Currency of the platform fee.
+	PlatformFeeCurrency *string       `json:"platform_fee_currency"`
+	Customer            OrderCustomer `json:"customer"`
 	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
 	UserID       string             `json:"user_id"`
 	Product      *OrderProduct      `json:"product"`
@@ -396,7 +291,7 @@ func (o Order) MarshalJSON() ([]byte, error) {
 }
 
 func (o *Order) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &o, "", false, []string{"id", "created_at", "status", "paid", "subtotal_amount", "discount_amount", "net_amount", "tax_amount", "total_amount", "applied_balance_amount", "due_amount", "refunded_amount", "refunded_tax_amount", "currency", "billing_reason", "invoice_number", "is_invoice_generated", "customer_id", "metadata", "platform_fee_amount", "customer", "user_id", "items", "description"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &o, "", false, nil); err != nil {
 		return err
 	}
 	return nil
@@ -584,9 +479,9 @@ func (o *Order) GetCheckoutID() *string {
 	return o.CheckoutID
 }
 
-func (o *Order) GetMetadata() map[string]OrderMetadata {
+func (o *Order) GetMetadata() map[string]MetadataOutputType {
 	if o == nil {
-		return map[string]OrderMetadata{}
+		return map[string]MetadataOutputType{}
 	}
 	return o.Metadata
 }
@@ -603,6 +498,13 @@ func (o *Order) GetPlatformFeeAmount() int64 {
 		return 0
 	}
 	return o.PlatformFeeAmount
+}
+
+func (o *Order) GetPlatformFeeCurrency() *string {
+	if o == nil {
+		return nil
+	}
+	return o.PlatformFeeCurrency
 }
 
 func (o *Order) GetCustomer() OrderCustomer {

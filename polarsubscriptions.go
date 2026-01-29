@@ -88,7 +88,7 @@ func (s *PolarSubscriptions) List(ctx context.Context, request operations.Custom
 	req.Header.Set("Accept", "application/json")
 	req.Header.Set("User-Agent", s.sdkConfiguration.UserAgent)
 
-	if err := utils.PopulateQueryParams(ctx, req, request, nil); err != nil {
+	if err := utils.PopulateQueryParams(ctx, req, request, nil, nil); err != nil {
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
@@ -589,8 +589,6 @@ func (s *PolarSubscriptions) Get(ctx context.Context, security operations.Custom
 
 // Update Subscription
 // Update a subscription of the authenticated customer.
-//
-// **Scopes**: `customer_portal:write`
 func (s *PolarSubscriptions) Update(ctx context.Context, security operations.CustomerPortalSubscriptionsUpdateSecurity, id string, customerSubscriptionUpdate components.CustomerSubscriptionUpdate, opts ...operations.Option) (*operations.CustomerPortalSubscriptionsUpdateResponse, error) {
 	request := operations.CustomerPortalSubscriptionsUpdateRequest{
 		ID:                         id,
@@ -872,8 +870,6 @@ func (s *PolarSubscriptions) Update(ctx context.Context, security operations.Cus
 
 // Cancel Subscription
 // Cancel a subscription of the authenticated customer.
-//
-// **Scopes**: `customer_portal:write`
 func (s *PolarSubscriptions) Cancel(ctx context.Context, security operations.CustomerPortalSubscriptionsCancelSecurity, id string, opts ...operations.Option) (*operations.CustomerPortalSubscriptionsCancelResponse, error) {
 	request := operations.CustomerPortalSubscriptionsCancelRequest{
 		ID: id,

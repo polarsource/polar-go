@@ -17,8 +17,8 @@ const (
 )
 
 type Orders struct {
-	Integer *int64   `queryParam:"inline,name=Orders"`
-	Number  *float64 `queryParam:"inline,name=Orders"`
+	Integer *int64   `queryParam:"inline" union:"member"`
+	Number  *float64 `queryParam:"inline" union:"member"`
 
 	Type OrdersType
 }
@@ -80,8 +80,8 @@ const (
 )
 
 type Revenue struct {
-	Integer *int64   `queryParam:"inline,name=Revenue"`
-	Number  *float64 `queryParam:"inline,name=Revenue"`
+	Integer *int64   `queryParam:"inline" union:"member"`
+	Number  *float64 `queryParam:"inline" union:"member"`
 
 	Type RevenueType
 }
@@ -143,8 +143,8 @@ const (
 )
 
 type NetRevenue struct {
-	Integer *int64   `queryParam:"inline,name=Net_Revenue"`
-	Number  *float64 `queryParam:"inline,name=Net_Revenue"`
+	Integer *int64   `queryParam:"inline" union:"member"`
+	Number  *float64 `queryParam:"inline" union:"member"`
 
 	Type NetRevenueType
 }
@@ -206,8 +206,8 @@ const (
 )
 
 type CumulativeRevenue struct {
-	Integer *int64   `queryParam:"inline,name=Cumulative_Revenue"`
-	Number  *float64 `queryParam:"inline,name=Cumulative_Revenue"`
+	Integer *int64   `queryParam:"inline" union:"member"`
+	Number  *float64 `queryParam:"inline" union:"member"`
 
 	Type CumulativeRevenueType
 }
@@ -269,8 +269,8 @@ const (
 )
 
 type NetCumulativeRevenue struct {
-	Integer *int64   `queryParam:"inline,name=Net_Cumulative_Revenue"`
-	Number  *float64 `queryParam:"inline,name=Net_Cumulative_Revenue"`
+	Integer *int64   `queryParam:"inline" union:"member"`
+	Number  *float64 `queryParam:"inline" union:"member"`
 
 	Type NetCumulativeRevenueType
 }
@@ -332,8 +332,8 @@ const (
 )
 
 type Costs struct {
-	Integer *int64   `queryParam:"inline,name=Costs"`
-	Number  *float64 `queryParam:"inline,name=Costs"`
+	Integer *int64   `queryParam:"inline" union:"member"`
+	Number  *float64 `queryParam:"inline" union:"member"`
 
 	Type CostsType
 }
@@ -395,8 +395,8 @@ const (
 )
 
 type CumulativeCosts struct {
-	Integer *int64   `queryParam:"inline,name=Cumulative_Costs"`
-	Number  *float64 `queryParam:"inline,name=Cumulative_Costs"`
+	Integer *int64   `queryParam:"inline" union:"member"`
+	Number  *float64 `queryParam:"inline" union:"member"`
 
 	Type CumulativeCostsType
 }
@@ -458,8 +458,8 @@ const (
 )
 
 type AverageOrderValue struct {
-	Integer *int64   `queryParam:"inline,name=Average_Order_Value"`
-	Number  *float64 `queryParam:"inline,name=Average_Order_Value"`
+	Integer *int64   `queryParam:"inline" union:"member"`
+	Number  *float64 `queryParam:"inline" union:"member"`
 
 	Type AverageOrderValueType
 }
@@ -521,8 +521,8 @@ const (
 )
 
 type NetAverageOrderValue struct {
-	Integer *int64   `queryParam:"inline,name=Net_Average_Order_Value"`
-	Number  *float64 `queryParam:"inline,name=Net_Average_Order_Value"`
+	Integer *int64   `queryParam:"inline" union:"member"`
+	Number  *float64 `queryParam:"inline" union:"member"`
 
 	Type NetAverageOrderValueType
 }
@@ -584,8 +584,8 @@ const (
 )
 
 type AverageRevenuePerUser struct {
-	Integer *int64   `queryParam:"inline,name=Average_Revenue_Per_User"`
-	Number  *float64 `queryParam:"inline,name=Average_Revenue_Per_User"`
+	Integer *int64   `queryParam:"inline" union:"member"`
+	Number  *float64 `queryParam:"inline" union:"member"`
 
 	Type AverageRevenuePerUserType
 }
@@ -647,8 +647,8 @@ const (
 )
 
 type CostPerUser struct {
-	Integer *int64   `queryParam:"inline,name=Cost_Per_User"`
-	Number  *float64 `queryParam:"inline,name=Cost_Per_User"`
+	Integer *int64   `queryParam:"inline" union:"member"`
+	Number  *float64 `queryParam:"inline" union:"member"`
 
 	Type CostPerUserType
 }
@@ -710,8 +710,8 @@ const (
 )
 
 type ActiveUserByEvent struct {
-	Integer *int64   `queryParam:"inline,name=Active_User_By_Event"`
-	Number  *float64 `queryParam:"inline,name=Active_User_By_Event"`
+	Integer *int64   `queryParam:"inline" union:"member"`
+	Number  *float64 `queryParam:"inline" union:"member"`
 
 	Type ActiveUserByEventType
 }
@@ -773,8 +773,8 @@ const (
 )
 
 type OneTimeProducts struct {
-	Integer *int64   `queryParam:"inline,name=One_Time_Products"`
-	Number  *float64 `queryParam:"inline,name=One_Time_Products"`
+	Integer *int64   `queryParam:"inline" union:"member"`
+	Number  *float64 `queryParam:"inline" union:"member"`
 
 	Type OneTimeProductsType
 }
@@ -836,8 +836,8 @@ const (
 )
 
 type OneTimeProductsRevenue struct {
-	Integer *int64   `queryParam:"inline,name=One_Time_Products_Revenue"`
-	Number  *float64 `queryParam:"inline,name=One_Time_Products_Revenue"`
+	Integer *int64   `queryParam:"inline" union:"member"`
+	Number  *float64 `queryParam:"inline" union:"member"`
 
 	Type OneTimeProductsRevenueType
 }
@@ -899,8 +899,8 @@ const (
 )
 
 type OneTimeProductsNetRevenue struct {
-	Integer *int64   `queryParam:"inline,name=One_Time_Products_Net_Revenue"`
-	Number  *float64 `queryParam:"inline,name=One_Time_Products_Net_Revenue"`
+	Integer *int64   `queryParam:"inline" union:"member"`
+	Number  *float64 `queryParam:"inline" union:"member"`
 
 	Type OneTimeProductsNetRevenueType
 }
@@ -962,8 +962,8 @@ const (
 )
 
 type NewSubscriptions struct {
-	Integer *int64   `queryParam:"inline,name=New_Subscriptions"`
-	Number  *float64 `queryParam:"inline,name=New_Subscriptions"`
+	Integer *int64   `queryParam:"inline" union:"member"`
+	Number  *float64 `queryParam:"inline" union:"member"`
 
 	Type NewSubscriptionsType
 }
@@ -1025,8 +1025,8 @@ const (
 )
 
 type NewSubscriptionsRevenue struct {
-	Integer *int64   `queryParam:"inline,name=New_Subscriptions_Revenue"`
-	Number  *float64 `queryParam:"inline,name=New_Subscriptions_Revenue"`
+	Integer *int64   `queryParam:"inline" union:"member"`
+	Number  *float64 `queryParam:"inline" union:"member"`
 
 	Type NewSubscriptionsRevenueType
 }
@@ -1088,8 +1088,8 @@ const (
 )
 
 type NewSubscriptionsNetRevenue struct {
-	Integer *int64   `queryParam:"inline,name=New_Subscriptions_Net_Revenue"`
-	Number  *float64 `queryParam:"inline,name=New_Subscriptions_Net_Revenue"`
+	Integer *int64   `queryParam:"inline" union:"member"`
+	Number  *float64 `queryParam:"inline" union:"member"`
 
 	Type NewSubscriptionsNetRevenueType
 }
@@ -1151,8 +1151,8 @@ const (
 )
 
 type RenewedSubscriptions struct {
-	Integer *int64   `queryParam:"inline,name=Renewed_Subscriptions"`
-	Number  *float64 `queryParam:"inline,name=Renewed_Subscriptions"`
+	Integer *int64   `queryParam:"inline" union:"member"`
+	Number  *float64 `queryParam:"inline" union:"member"`
 
 	Type RenewedSubscriptionsType
 }
@@ -1214,8 +1214,8 @@ const (
 )
 
 type RenewedSubscriptionsRevenue struct {
-	Integer *int64   `queryParam:"inline,name=Renewed_Subscriptions_Revenue"`
-	Number  *float64 `queryParam:"inline,name=Renewed_Subscriptions_Revenue"`
+	Integer *int64   `queryParam:"inline" union:"member"`
+	Number  *float64 `queryParam:"inline" union:"member"`
 
 	Type RenewedSubscriptionsRevenueType
 }
@@ -1277,8 +1277,8 @@ const (
 )
 
 type RenewedSubscriptionsNetRevenue struct {
-	Integer *int64   `queryParam:"inline,name=Renewed_Subscriptions_Net_Revenue"`
-	Number  *float64 `queryParam:"inline,name=Renewed_Subscriptions_Net_Revenue"`
+	Integer *int64   `queryParam:"inline" union:"member"`
+	Number  *float64 `queryParam:"inline" union:"member"`
 
 	Type RenewedSubscriptionsNetRevenueType
 }
@@ -1340,8 +1340,8 @@ const (
 )
 
 type ActiveSubscriptions struct {
-	Integer *int64   `queryParam:"inline,name=Active_Subscriptions"`
-	Number  *float64 `queryParam:"inline,name=Active_Subscriptions"`
+	Integer *int64   `queryParam:"inline" union:"member"`
+	Number  *float64 `queryParam:"inline" union:"member"`
 
 	Type ActiveSubscriptionsType
 }
@@ -1395,6 +1395,69 @@ func (u ActiveSubscriptions) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type ActiveSubscriptions: all fields are null")
 }
 
+type CommittedSubscriptionsType string
+
+const (
+	CommittedSubscriptionsTypeInteger CommittedSubscriptionsType = "integer"
+	CommittedSubscriptionsTypeNumber  CommittedSubscriptionsType = "number"
+)
+
+type CommittedSubscriptions struct {
+	Integer *int64   `queryParam:"inline" union:"member"`
+	Number  *float64 `queryParam:"inline" union:"member"`
+
+	Type CommittedSubscriptionsType
+}
+
+func CreateCommittedSubscriptionsInteger(integer int64) CommittedSubscriptions {
+	typ := CommittedSubscriptionsTypeInteger
+
+	return CommittedSubscriptions{
+		Integer: &integer,
+		Type:    typ,
+	}
+}
+
+func CreateCommittedSubscriptionsNumber(number float64) CommittedSubscriptions {
+	typ := CommittedSubscriptionsTypeNumber
+
+	return CommittedSubscriptions{
+		Number: &number,
+		Type:   typ,
+	}
+}
+
+func (u *CommittedSubscriptions) UnmarshalJSON(data []byte) error {
+
+	var integer int64 = int64(0)
+	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
+		u.Integer = &integer
+		u.Type = CommittedSubscriptionsTypeInteger
+		return nil
+	}
+
+	var number float64 = float64(0)
+	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
+		u.Number = &number
+		u.Type = CommittedSubscriptionsTypeNumber
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for CommittedSubscriptions", string(data))
+}
+
+func (u CommittedSubscriptions) MarshalJSON() ([]byte, error) {
+	if u.Integer != nil {
+		return utils.MarshalJSON(u.Integer, "", true)
+	}
+
+	if u.Number != nil {
+		return utils.MarshalJSON(u.Number, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type CommittedSubscriptions: all fields are null")
+}
+
 type MonthlyRecurringRevenueType string
 
 const (
@@ -1403,8 +1466,8 @@ const (
 )
 
 type MonthlyRecurringRevenue struct {
-	Integer *int64   `queryParam:"inline,name=Monthly_Recurring_Revenue"`
-	Number  *float64 `queryParam:"inline,name=Monthly_Recurring_Revenue"`
+	Integer *int64   `queryParam:"inline" union:"member"`
+	Number  *float64 `queryParam:"inline" union:"member"`
 
 	Type MonthlyRecurringRevenueType
 }
@@ -1466,8 +1529,8 @@ const (
 )
 
 type CommittedMonthlyRecurringRevenue struct {
-	Integer *int64   `queryParam:"inline,name=Committed_Monthly_Recurring_Revenue"`
-	Number  *float64 `queryParam:"inline,name=Committed_Monthly_Recurring_Revenue"`
+	Integer *int64   `queryParam:"inline" union:"member"`
+	Number  *float64 `queryParam:"inline" union:"member"`
 
 	Type CommittedMonthlyRecurringRevenueType
 }
@@ -1529,8 +1592,8 @@ const (
 )
 
 type Checkouts struct {
-	Integer *int64   `queryParam:"inline,name=Checkouts"`
-	Number  *float64 `queryParam:"inline,name=Checkouts"`
+	Integer *int64   `queryParam:"inline" union:"member"`
+	Number  *float64 `queryParam:"inline" union:"member"`
 
 	Type CheckoutsType
 }
@@ -1592,8 +1655,8 @@ const (
 )
 
 type SucceededCheckouts struct {
-	Integer *int64   `queryParam:"inline,name=Succeeded_Checkouts"`
-	Number  *float64 `queryParam:"inline,name=Succeeded_Checkouts"`
+	Integer *int64   `queryParam:"inline" union:"member"`
+	Number  *float64 `queryParam:"inline" union:"member"`
 
 	Type SucceededCheckoutsType
 }
@@ -1655,8 +1718,8 @@ const (
 )
 
 type CheckoutsConversion struct {
-	Integer *int64   `queryParam:"inline,name=Checkouts_Conversion"`
-	Number  *float64 `queryParam:"inline,name=Checkouts_Conversion"`
+	Integer *int64   `queryParam:"inline" union:"member"`
+	Number  *float64 `queryParam:"inline" union:"member"`
 
 	Type CheckoutsConversionType
 }
@@ -1718,8 +1781,8 @@ const (
 )
 
 type CanceledSubscriptions struct {
-	Integer *int64   `queryParam:"inline,name=Canceled_Subscriptions"`
-	Number  *float64 `queryParam:"inline,name=Canceled_Subscriptions"`
+	Integer *int64   `queryParam:"inline" union:"member"`
+	Number  *float64 `queryParam:"inline" union:"member"`
 
 	Type CanceledSubscriptionsType
 }
@@ -1781,8 +1844,8 @@ const (
 )
 
 type CanceledSubscriptionsCustomerService struct {
-	Integer *int64   `queryParam:"inline,name=Canceled_Subscriptions_Customer_Service"`
-	Number  *float64 `queryParam:"inline,name=Canceled_Subscriptions_Customer_Service"`
+	Integer *int64   `queryParam:"inline" union:"member"`
+	Number  *float64 `queryParam:"inline" union:"member"`
 
 	Type CanceledSubscriptionsCustomerServiceType
 }
@@ -1844,8 +1907,8 @@ const (
 )
 
 type CanceledSubscriptionsLowQuality struct {
-	Integer *int64   `queryParam:"inline,name=Canceled_Subscriptions_Low_Quality"`
-	Number  *float64 `queryParam:"inline,name=Canceled_Subscriptions_Low_Quality"`
+	Integer *int64   `queryParam:"inline" union:"member"`
+	Number  *float64 `queryParam:"inline" union:"member"`
 
 	Type CanceledSubscriptionsLowQualityType
 }
@@ -1907,8 +1970,8 @@ const (
 )
 
 type CanceledSubscriptionsMissingFeatures struct {
-	Integer *int64   `queryParam:"inline,name=Canceled_Subscriptions_Missing_Features"`
-	Number  *float64 `queryParam:"inline,name=Canceled_Subscriptions_Missing_Features"`
+	Integer *int64   `queryParam:"inline" union:"member"`
+	Number  *float64 `queryParam:"inline" union:"member"`
 
 	Type CanceledSubscriptionsMissingFeaturesType
 }
@@ -1970,8 +2033,8 @@ const (
 )
 
 type CanceledSubscriptionsSwitchedService struct {
-	Integer *int64   `queryParam:"inline,name=Canceled_Subscriptions_Switched_Service"`
-	Number  *float64 `queryParam:"inline,name=Canceled_Subscriptions_Switched_Service"`
+	Integer *int64   `queryParam:"inline" union:"member"`
+	Number  *float64 `queryParam:"inline" union:"member"`
 
 	Type CanceledSubscriptionsSwitchedServiceType
 }
@@ -2033,8 +2096,8 @@ const (
 )
 
 type CanceledSubscriptionsTooComplex struct {
-	Integer *int64   `queryParam:"inline,name=Canceled_Subscriptions_Too_Complex"`
-	Number  *float64 `queryParam:"inline,name=Canceled_Subscriptions_Too_Complex"`
+	Integer *int64   `queryParam:"inline" union:"member"`
+	Number  *float64 `queryParam:"inline" union:"member"`
 
 	Type CanceledSubscriptionsTooComplexType
 }
@@ -2096,8 +2159,8 @@ const (
 )
 
 type CanceledSubscriptionsTooExpensive struct {
-	Integer *int64   `queryParam:"inline,name=Canceled_Subscriptions_Too_Expensive"`
-	Number  *float64 `queryParam:"inline,name=Canceled_Subscriptions_Too_Expensive"`
+	Integer *int64   `queryParam:"inline" union:"member"`
+	Number  *float64 `queryParam:"inline" union:"member"`
 
 	Type CanceledSubscriptionsTooExpensiveType
 }
@@ -2159,8 +2222,8 @@ const (
 )
 
 type CanceledSubscriptionsUnused struct {
-	Integer *int64   `queryParam:"inline,name=Canceled_Subscriptions_Unused"`
-	Number  *float64 `queryParam:"inline,name=Canceled_Subscriptions_Unused"`
+	Integer *int64   `queryParam:"inline" union:"member"`
+	Number  *float64 `queryParam:"inline" union:"member"`
 
 	Type CanceledSubscriptionsUnusedType
 }
@@ -2222,8 +2285,8 @@ const (
 )
 
 type CanceledSubscriptionsOther struct {
-	Integer *int64   `queryParam:"inline,name=Canceled_Subscriptions_Other"`
-	Number  *float64 `queryParam:"inline,name=Canceled_Subscriptions_Other"`
+	Integer *int64   `queryParam:"inline" union:"member"`
+	Number  *float64 `queryParam:"inline" union:"member"`
 
 	Type CanceledSubscriptionsOtherType
 }
@@ -2277,6 +2340,69 @@ func (u CanceledSubscriptionsOther) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type CanceledSubscriptionsOther: all fields are null")
 }
 
+type ChurnedSubscriptionsType string
+
+const (
+	ChurnedSubscriptionsTypeInteger ChurnedSubscriptionsType = "integer"
+	ChurnedSubscriptionsTypeNumber  ChurnedSubscriptionsType = "number"
+)
+
+type ChurnedSubscriptions struct {
+	Integer *int64   `queryParam:"inline" union:"member"`
+	Number  *float64 `queryParam:"inline" union:"member"`
+
+	Type ChurnedSubscriptionsType
+}
+
+func CreateChurnedSubscriptionsInteger(integer int64) ChurnedSubscriptions {
+	typ := ChurnedSubscriptionsTypeInteger
+
+	return ChurnedSubscriptions{
+		Integer: &integer,
+		Type:    typ,
+	}
+}
+
+func CreateChurnedSubscriptionsNumber(number float64) ChurnedSubscriptions {
+	typ := ChurnedSubscriptionsTypeNumber
+
+	return ChurnedSubscriptions{
+		Number: &number,
+		Type:   typ,
+	}
+}
+
+func (u *ChurnedSubscriptions) UnmarshalJSON(data []byte) error {
+
+	var integer int64 = int64(0)
+	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
+		u.Integer = &integer
+		u.Type = ChurnedSubscriptionsTypeInteger
+		return nil
+	}
+
+	var number float64 = float64(0)
+	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
+		u.Number = &number
+		u.Type = ChurnedSubscriptionsTypeNumber
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for ChurnedSubscriptions", string(data))
+}
+
+func (u ChurnedSubscriptions) MarshalJSON() ([]byte, error) {
+	if u.Integer != nil {
+		return utils.MarshalJSON(u.Integer, "", true)
+	}
+
+	if u.Number != nil {
+		return utils.MarshalJSON(u.Number, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type ChurnedSubscriptions: all fields are null")
+}
+
 type ChurnRateType string
 
 const (
@@ -2285,8 +2411,8 @@ const (
 )
 
 type ChurnRate struct {
-	Integer *int64   `queryParam:"inline,name=Churn_Rate"`
-	Number  *float64 `queryParam:"inline,name=Churn_Rate"`
+	Integer *int64   `queryParam:"inline" union:"member"`
+	Number  *float64 `queryParam:"inline" union:"member"`
 
 	Type ChurnRateType
 }
@@ -2340,6 +2466,69 @@ func (u ChurnRate) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type ChurnRate: all fields are null")
 }
 
+type LtvType string
+
+const (
+	LtvTypeInteger LtvType = "integer"
+	LtvTypeNumber  LtvType = "number"
+)
+
+type Ltv struct {
+	Integer *int64   `queryParam:"inline" union:"member"`
+	Number  *float64 `queryParam:"inline" union:"member"`
+
+	Type LtvType
+}
+
+func CreateLtvInteger(integer int64) Ltv {
+	typ := LtvTypeInteger
+
+	return Ltv{
+		Integer: &integer,
+		Type:    typ,
+	}
+}
+
+func CreateLtvNumber(number float64) Ltv {
+	typ := LtvTypeNumber
+
+	return Ltv{
+		Number: &number,
+		Type:   typ,
+	}
+}
+
+func (u *Ltv) UnmarshalJSON(data []byte) error {
+
+	var integer int64 = int64(0)
+	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
+		u.Integer = &integer
+		u.Type = LtvTypeInteger
+		return nil
+	}
+
+	var number float64 = float64(0)
+	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
+		u.Number = &number
+		u.Type = LtvTypeNumber
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for Ltv", string(data))
+}
+
+func (u Ltv) MarshalJSON() ([]byte, error) {
+	if u.Integer != nil {
+		return utils.MarshalJSON(u.Integer, "", true)
+	}
+
+	if u.Number != nil {
+		return utils.MarshalJSON(u.Number, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type Ltv: all fields are null")
+}
+
 type GrossMarginType string
 
 const (
@@ -2348,8 +2537,8 @@ const (
 )
 
 type GrossMargin struct {
-	Integer *int64   `queryParam:"inline,name=Gross_Margin"`
-	Number  *float64 `queryParam:"inline,name=Gross_Margin"`
+	Integer *int64   `queryParam:"inline" union:"member"`
+	Number  *float64 `queryParam:"inline" union:"member"`
 
 	Type GrossMarginType
 }
@@ -2411,8 +2600,8 @@ const (
 )
 
 type GrossMarginPercentage struct {
-	Integer *int64   `queryParam:"inline,name=Gross_Margin_Percentage"`
-	Number  *float64 `queryParam:"inline,name=Gross_Margin_Percentage"`
+	Integer *int64   `queryParam:"inline" union:"member"`
+	Number  *float64 `queryParam:"inline" union:"member"`
 
 	Type GrossMarginPercentageType
 }
@@ -2474,8 +2663,8 @@ const (
 )
 
 type Cashflow struct {
-	Integer *int64   `queryParam:"inline,name=Cashflow"`
-	Number  *float64 `queryParam:"inline,name=Cashflow"`
+	Integer *int64   `queryParam:"inline" union:"member"`
+	Number  *float64 `queryParam:"inline" union:"member"`
 
 	Type CashflowType
 }
@@ -2531,47 +2720,50 @@ func (u Cashflow) MarshalJSON() ([]byte, error) {
 
 type MetricPeriod struct {
 	// Timestamp of this period data.
-	Timestamp                            time.Time                            `json:"timestamp"`
-	Orders                               Orders                               `json:"orders"`
-	Revenue                              Revenue                              `json:"revenue"`
-	NetRevenue                           NetRevenue                           `json:"net_revenue"`
-	CumulativeRevenue                    CumulativeRevenue                    `json:"cumulative_revenue"`
-	NetCumulativeRevenue                 NetCumulativeRevenue                 `json:"net_cumulative_revenue"`
-	Costs                                Costs                                `json:"costs"`
-	CumulativeCosts                      CumulativeCosts                      `json:"cumulative_costs"`
-	AverageOrderValue                    AverageOrderValue                    `json:"average_order_value"`
-	NetAverageOrderValue                 NetAverageOrderValue                 `json:"net_average_order_value"`
-	AverageRevenuePerUser                AverageRevenuePerUser                `json:"average_revenue_per_user"`
-	CostPerUser                          CostPerUser                          `json:"cost_per_user"`
-	ActiveUserByEvent                    ActiveUserByEvent                    `json:"active_user_by_event"`
-	OneTimeProducts                      OneTimeProducts                      `json:"one_time_products"`
-	OneTimeProductsRevenue               OneTimeProductsRevenue               `json:"one_time_products_revenue"`
-	OneTimeProductsNetRevenue            OneTimeProductsNetRevenue            `json:"one_time_products_net_revenue"`
-	NewSubscriptions                     NewSubscriptions                     `json:"new_subscriptions"`
-	NewSubscriptionsRevenue              NewSubscriptionsRevenue              `json:"new_subscriptions_revenue"`
-	NewSubscriptionsNetRevenue           NewSubscriptionsNetRevenue           `json:"new_subscriptions_net_revenue"`
-	RenewedSubscriptions                 RenewedSubscriptions                 `json:"renewed_subscriptions"`
-	RenewedSubscriptionsRevenue          RenewedSubscriptionsRevenue          `json:"renewed_subscriptions_revenue"`
-	RenewedSubscriptionsNetRevenue       RenewedSubscriptionsNetRevenue       `json:"renewed_subscriptions_net_revenue"`
-	ActiveSubscriptions                  ActiveSubscriptions                  `json:"active_subscriptions"`
-	MonthlyRecurringRevenue              MonthlyRecurringRevenue              `json:"monthly_recurring_revenue"`
-	CommittedMonthlyRecurringRevenue     CommittedMonthlyRecurringRevenue     `json:"committed_monthly_recurring_revenue"`
-	Checkouts                            Checkouts                            `json:"checkouts"`
-	SucceededCheckouts                   SucceededCheckouts                   `json:"succeeded_checkouts"`
-	CheckoutsConversion                  CheckoutsConversion                  `json:"checkouts_conversion"`
-	CanceledSubscriptions                CanceledSubscriptions                `json:"canceled_subscriptions"`
-	CanceledSubscriptionsCustomerService CanceledSubscriptionsCustomerService `json:"canceled_subscriptions_customer_service"`
-	CanceledSubscriptionsLowQuality      CanceledSubscriptionsLowQuality      `json:"canceled_subscriptions_low_quality"`
-	CanceledSubscriptionsMissingFeatures CanceledSubscriptionsMissingFeatures `json:"canceled_subscriptions_missing_features"`
-	CanceledSubscriptionsSwitchedService CanceledSubscriptionsSwitchedService `json:"canceled_subscriptions_switched_service"`
-	CanceledSubscriptionsTooComplex      CanceledSubscriptionsTooComplex      `json:"canceled_subscriptions_too_complex"`
-	CanceledSubscriptionsTooExpensive    CanceledSubscriptionsTooExpensive    `json:"canceled_subscriptions_too_expensive"`
-	CanceledSubscriptionsUnused          CanceledSubscriptionsUnused          `json:"canceled_subscriptions_unused"`
-	CanceledSubscriptionsOther           CanceledSubscriptionsOther           `json:"canceled_subscriptions_other"`
-	ChurnRate                            ChurnRate                            `json:"churn_rate"`
-	GrossMargin                          GrossMargin                          `json:"gross_margin"`
-	GrossMarginPercentage                GrossMarginPercentage                `json:"gross_margin_percentage"`
-	Cashflow                             Cashflow                             `json:"cashflow"`
+	Timestamp                            time.Time                             `json:"timestamp"`
+	Orders                               *Orders                               `json:"orders,omitempty"`
+	Revenue                              *Revenue                              `json:"revenue,omitempty"`
+	NetRevenue                           *NetRevenue                           `json:"net_revenue,omitempty"`
+	CumulativeRevenue                    *CumulativeRevenue                    `json:"cumulative_revenue,omitempty"`
+	NetCumulativeRevenue                 *NetCumulativeRevenue                 `json:"net_cumulative_revenue,omitempty"`
+	Costs                                *Costs                                `json:"costs,omitempty"`
+	CumulativeCosts                      *CumulativeCosts                      `json:"cumulative_costs,omitempty"`
+	AverageOrderValue                    *AverageOrderValue                    `json:"average_order_value,omitempty"`
+	NetAverageOrderValue                 *NetAverageOrderValue                 `json:"net_average_order_value,omitempty"`
+	AverageRevenuePerUser                *AverageRevenuePerUser                `json:"average_revenue_per_user,omitempty"`
+	CostPerUser                          *CostPerUser                          `json:"cost_per_user,omitempty"`
+	ActiveUserByEvent                    *ActiveUserByEvent                    `json:"active_user_by_event,omitempty"`
+	OneTimeProducts                      *OneTimeProducts                      `json:"one_time_products,omitempty"`
+	OneTimeProductsRevenue               *OneTimeProductsRevenue               `json:"one_time_products_revenue,omitempty"`
+	OneTimeProductsNetRevenue            *OneTimeProductsNetRevenue            `json:"one_time_products_net_revenue,omitempty"`
+	NewSubscriptions                     *NewSubscriptions                     `json:"new_subscriptions,omitempty"`
+	NewSubscriptionsRevenue              *NewSubscriptionsRevenue              `json:"new_subscriptions_revenue,omitempty"`
+	NewSubscriptionsNetRevenue           *NewSubscriptionsNetRevenue           `json:"new_subscriptions_net_revenue,omitempty"`
+	RenewedSubscriptions                 *RenewedSubscriptions                 `json:"renewed_subscriptions,omitempty"`
+	RenewedSubscriptionsRevenue          *RenewedSubscriptionsRevenue          `json:"renewed_subscriptions_revenue,omitempty"`
+	RenewedSubscriptionsNetRevenue       *RenewedSubscriptionsNetRevenue       `json:"renewed_subscriptions_net_revenue,omitempty"`
+	ActiveSubscriptions                  *ActiveSubscriptions                  `json:"active_subscriptions,omitempty"`
+	CommittedSubscriptions               *CommittedSubscriptions               `json:"committed_subscriptions,omitempty"`
+	MonthlyRecurringRevenue              *MonthlyRecurringRevenue              `json:"monthly_recurring_revenue,omitempty"`
+	CommittedMonthlyRecurringRevenue     *CommittedMonthlyRecurringRevenue     `json:"committed_monthly_recurring_revenue,omitempty"`
+	Checkouts                            *Checkouts                            `json:"checkouts,omitempty"`
+	SucceededCheckouts                   *SucceededCheckouts                   `json:"succeeded_checkouts,omitempty"`
+	CheckoutsConversion                  *CheckoutsConversion                  `json:"checkouts_conversion,omitempty"`
+	CanceledSubscriptions                *CanceledSubscriptions                `json:"canceled_subscriptions,omitempty"`
+	CanceledSubscriptionsCustomerService *CanceledSubscriptionsCustomerService `json:"canceled_subscriptions_customer_service,omitempty"`
+	CanceledSubscriptionsLowQuality      *CanceledSubscriptionsLowQuality      `json:"canceled_subscriptions_low_quality,omitempty"`
+	CanceledSubscriptionsMissingFeatures *CanceledSubscriptionsMissingFeatures `json:"canceled_subscriptions_missing_features,omitempty"`
+	CanceledSubscriptionsSwitchedService *CanceledSubscriptionsSwitchedService `json:"canceled_subscriptions_switched_service,omitempty"`
+	CanceledSubscriptionsTooComplex      *CanceledSubscriptionsTooComplex      `json:"canceled_subscriptions_too_complex,omitempty"`
+	CanceledSubscriptionsTooExpensive    *CanceledSubscriptionsTooExpensive    `json:"canceled_subscriptions_too_expensive,omitempty"`
+	CanceledSubscriptionsUnused          *CanceledSubscriptionsUnused          `json:"canceled_subscriptions_unused,omitempty"`
+	CanceledSubscriptionsOther           *CanceledSubscriptionsOther           `json:"canceled_subscriptions_other,omitempty"`
+	ChurnedSubscriptions                 *ChurnedSubscriptions                 `json:"churned_subscriptions,omitempty"`
+	ChurnRate                            *ChurnRate                            `json:"churn_rate,omitempty"`
+	Ltv                                  *Ltv                                  `json:"ltv,omitempty"`
+	GrossMargin                          *GrossMargin                          `json:"gross_margin,omitempty"`
+	GrossMarginPercentage                *GrossMarginPercentage                `json:"gross_margin_percentage,omitempty"`
+	Cashflow                             *Cashflow                             `json:"cashflow,omitempty"`
 }
 
 func (m MetricPeriod) MarshalJSON() ([]byte, error) {
@@ -2579,7 +2771,7 @@ func (m MetricPeriod) MarshalJSON() ([]byte, error) {
 }
 
 func (m *MetricPeriod) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &m, "", false, []string{"timestamp", "orders", "revenue", "net_revenue", "cumulative_revenue", "net_cumulative_revenue", "costs", "cumulative_costs", "average_order_value", "net_average_order_value", "average_revenue_per_user", "cost_per_user", "active_user_by_event", "one_time_products", "one_time_products_revenue", "one_time_products_net_revenue", "new_subscriptions", "new_subscriptions_revenue", "new_subscriptions_net_revenue", "renewed_subscriptions", "renewed_subscriptions_revenue", "renewed_subscriptions_net_revenue", "active_subscriptions", "monthly_recurring_revenue", "committed_monthly_recurring_revenue", "checkouts", "succeeded_checkouts", "checkouts_conversion", "canceled_subscriptions", "canceled_subscriptions_customer_service", "canceled_subscriptions_low_quality", "canceled_subscriptions_missing_features", "canceled_subscriptions_switched_service", "canceled_subscriptions_too_complex", "canceled_subscriptions_too_expensive", "canceled_subscriptions_unused", "canceled_subscriptions_other", "churn_rate", "gross_margin", "gross_margin_percentage", "cashflow"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &m, "", false, nil); err != nil {
 		return err
 	}
 	return nil
@@ -2592,282 +2784,303 @@ func (m *MetricPeriod) GetTimestamp() time.Time {
 	return m.Timestamp
 }
 
-func (m *MetricPeriod) GetOrders() Orders {
+func (m *MetricPeriod) GetOrders() *Orders {
 	if m == nil {
-		return Orders{}
+		return nil
 	}
 	return m.Orders
 }
 
-func (m *MetricPeriod) GetRevenue() Revenue {
+func (m *MetricPeriod) GetRevenue() *Revenue {
 	if m == nil {
-		return Revenue{}
+		return nil
 	}
 	return m.Revenue
 }
 
-func (m *MetricPeriod) GetNetRevenue() NetRevenue {
+func (m *MetricPeriod) GetNetRevenue() *NetRevenue {
 	if m == nil {
-		return NetRevenue{}
+		return nil
 	}
 	return m.NetRevenue
 }
 
-func (m *MetricPeriod) GetCumulativeRevenue() CumulativeRevenue {
+func (m *MetricPeriod) GetCumulativeRevenue() *CumulativeRevenue {
 	if m == nil {
-		return CumulativeRevenue{}
+		return nil
 	}
 	return m.CumulativeRevenue
 }
 
-func (m *MetricPeriod) GetNetCumulativeRevenue() NetCumulativeRevenue {
+func (m *MetricPeriod) GetNetCumulativeRevenue() *NetCumulativeRevenue {
 	if m == nil {
-		return NetCumulativeRevenue{}
+		return nil
 	}
 	return m.NetCumulativeRevenue
 }
 
-func (m *MetricPeriod) GetCosts() Costs {
+func (m *MetricPeriod) GetCosts() *Costs {
 	if m == nil {
-		return Costs{}
+		return nil
 	}
 	return m.Costs
 }
 
-func (m *MetricPeriod) GetCumulativeCosts() CumulativeCosts {
+func (m *MetricPeriod) GetCumulativeCosts() *CumulativeCosts {
 	if m == nil {
-		return CumulativeCosts{}
+		return nil
 	}
 	return m.CumulativeCosts
 }
 
-func (m *MetricPeriod) GetAverageOrderValue() AverageOrderValue {
+func (m *MetricPeriod) GetAverageOrderValue() *AverageOrderValue {
 	if m == nil {
-		return AverageOrderValue{}
+		return nil
 	}
 	return m.AverageOrderValue
 }
 
-func (m *MetricPeriod) GetNetAverageOrderValue() NetAverageOrderValue {
+func (m *MetricPeriod) GetNetAverageOrderValue() *NetAverageOrderValue {
 	if m == nil {
-		return NetAverageOrderValue{}
+		return nil
 	}
 	return m.NetAverageOrderValue
 }
 
-func (m *MetricPeriod) GetAverageRevenuePerUser() AverageRevenuePerUser {
+func (m *MetricPeriod) GetAverageRevenuePerUser() *AverageRevenuePerUser {
 	if m == nil {
-		return AverageRevenuePerUser{}
+		return nil
 	}
 	return m.AverageRevenuePerUser
 }
 
-func (m *MetricPeriod) GetCostPerUser() CostPerUser {
+func (m *MetricPeriod) GetCostPerUser() *CostPerUser {
 	if m == nil {
-		return CostPerUser{}
+		return nil
 	}
 	return m.CostPerUser
 }
 
-func (m *MetricPeriod) GetActiveUserByEvent() ActiveUserByEvent {
+func (m *MetricPeriod) GetActiveUserByEvent() *ActiveUserByEvent {
 	if m == nil {
-		return ActiveUserByEvent{}
+		return nil
 	}
 	return m.ActiveUserByEvent
 }
 
-func (m *MetricPeriod) GetOneTimeProducts() OneTimeProducts {
+func (m *MetricPeriod) GetOneTimeProducts() *OneTimeProducts {
 	if m == nil {
-		return OneTimeProducts{}
+		return nil
 	}
 	return m.OneTimeProducts
 }
 
-func (m *MetricPeriod) GetOneTimeProductsRevenue() OneTimeProductsRevenue {
+func (m *MetricPeriod) GetOneTimeProductsRevenue() *OneTimeProductsRevenue {
 	if m == nil {
-		return OneTimeProductsRevenue{}
+		return nil
 	}
 	return m.OneTimeProductsRevenue
 }
 
-func (m *MetricPeriod) GetOneTimeProductsNetRevenue() OneTimeProductsNetRevenue {
+func (m *MetricPeriod) GetOneTimeProductsNetRevenue() *OneTimeProductsNetRevenue {
 	if m == nil {
-		return OneTimeProductsNetRevenue{}
+		return nil
 	}
 	return m.OneTimeProductsNetRevenue
 }
 
-func (m *MetricPeriod) GetNewSubscriptions() NewSubscriptions {
+func (m *MetricPeriod) GetNewSubscriptions() *NewSubscriptions {
 	if m == nil {
-		return NewSubscriptions{}
+		return nil
 	}
 	return m.NewSubscriptions
 }
 
-func (m *MetricPeriod) GetNewSubscriptionsRevenue() NewSubscriptionsRevenue {
+func (m *MetricPeriod) GetNewSubscriptionsRevenue() *NewSubscriptionsRevenue {
 	if m == nil {
-		return NewSubscriptionsRevenue{}
+		return nil
 	}
 	return m.NewSubscriptionsRevenue
 }
 
-func (m *MetricPeriod) GetNewSubscriptionsNetRevenue() NewSubscriptionsNetRevenue {
+func (m *MetricPeriod) GetNewSubscriptionsNetRevenue() *NewSubscriptionsNetRevenue {
 	if m == nil {
-		return NewSubscriptionsNetRevenue{}
+		return nil
 	}
 	return m.NewSubscriptionsNetRevenue
 }
 
-func (m *MetricPeriod) GetRenewedSubscriptions() RenewedSubscriptions {
+func (m *MetricPeriod) GetRenewedSubscriptions() *RenewedSubscriptions {
 	if m == nil {
-		return RenewedSubscriptions{}
+		return nil
 	}
 	return m.RenewedSubscriptions
 }
 
-func (m *MetricPeriod) GetRenewedSubscriptionsRevenue() RenewedSubscriptionsRevenue {
+func (m *MetricPeriod) GetRenewedSubscriptionsRevenue() *RenewedSubscriptionsRevenue {
 	if m == nil {
-		return RenewedSubscriptionsRevenue{}
+		return nil
 	}
 	return m.RenewedSubscriptionsRevenue
 }
 
-func (m *MetricPeriod) GetRenewedSubscriptionsNetRevenue() RenewedSubscriptionsNetRevenue {
+func (m *MetricPeriod) GetRenewedSubscriptionsNetRevenue() *RenewedSubscriptionsNetRevenue {
 	if m == nil {
-		return RenewedSubscriptionsNetRevenue{}
+		return nil
 	}
 	return m.RenewedSubscriptionsNetRevenue
 }
 
-func (m *MetricPeriod) GetActiveSubscriptions() ActiveSubscriptions {
+func (m *MetricPeriod) GetActiveSubscriptions() *ActiveSubscriptions {
 	if m == nil {
-		return ActiveSubscriptions{}
+		return nil
 	}
 	return m.ActiveSubscriptions
 }
 
-func (m *MetricPeriod) GetMonthlyRecurringRevenue() MonthlyRecurringRevenue {
+func (m *MetricPeriod) GetCommittedSubscriptions() *CommittedSubscriptions {
 	if m == nil {
-		return MonthlyRecurringRevenue{}
+		return nil
+	}
+	return m.CommittedSubscriptions
+}
+
+func (m *MetricPeriod) GetMonthlyRecurringRevenue() *MonthlyRecurringRevenue {
+	if m == nil {
+		return nil
 	}
 	return m.MonthlyRecurringRevenue
 }
 
-func (m *MetricPeriod) GetCommittedMonthlyRecurringRevenue() CommittedMonthlyRecurringRevenue {
+func (m *MetricPeriod) GetCommittedMonthlyRecurringRevenue() *CommittedMonthlyRecurringRevenue {
 	if m == nil {
-		return CommittedMonthlyRecurringRevenue{}
+		return nil
 	}
 	return m.CommittedMonthlyRecurringRevenue
 }
 
-func (m *MetricPeriod) GetCheckouts() Checkouts {
+func (m *MetricPeriod) GetCheckouts() *Checkouts {
 	if m == nil {
-		return Checkouts{}
+		return nil
 	}
 	return m.Checkouts
 }
 
-func (m *MetricPeriod) GetSucceededCheckouts() SucceededCheckouts {
+func (m *MetricPeriod) GetSucceededCheckouts() *SucceededCheckouts {
 	if m == nil {
-		return SucceededCheckouts{}
+		return nil
 	}
 	return m.SucceededCheckouts
 }
 
-func (m *MetricPeriod) GetCheckoutsConversion() CheckoutsConversion {
+func (m *MetricPeriod) GetCheckoutsConversion() *CheckoutsConversion {
 	if m == nil {
-		return CheckoutsConversion{}
+		return nil
 	}
 	return m.CheckoutsConversion
 }
 
-func (m *MetricPeriod) GetCanceledSubscriptions() CanceledSubscriptions {
+func (m *MetricPeriod) GetCanceledSubscriptions() *CanceledSubscriptions {
 	if m == nil {
-		return CanceledSubscriptions{}
+		return nil
 	}
 	return m.CanceledSubscriptions
 }
 
-func (m *MetricPeriod) GetCanceledSubscriptionsCustomerService() CanceledSubscriptionsCustomerService {
+func (m *MetricPeriod) GetCanceledSubscriptionsCustomerService() *CanceledSubscriptionsCustomerService {
 	if m == nil {
-		return CanceledSubscriptionsCustomerService{}
+		return nil
 	}
 	return m.CanceledSubscriptionsCustomerService
 }
 
-func (m *MetricPeriod) GetCanceledSubscriptionsLowQuality() CanceledSubscriptionsLowQuality {
+func (m *MetricPeriod) GetCanceledSubscriptionsLowQuality() *CanceledSubscriptionsLowQuality {
 	if m == nil {
-		return CanceledSubscriptionsLowQuality{}
+		return nil
 	}
 	return m.CanceledSubscriptionsLowQuality
 }
 
-func (m *MetricPeriod) GetCanceledSubscriptionsMissingFeatures() CanceledSubscriptionsMissingFeatures {
+func (m *MetricPeriod) GetCanceledSubscriptionsMissingFeatures() *CanceledSubscriptionsMissingFeatures {
 	if m == nil {
-		return CanceledSubscriptionsMissingFeatures{}
+		return nil
 	}
 	return m.CanceledSubscriptionsMissingFeatures
 }
 
-func (m *MetricPeriod) GetCanceledSubscriptionsSwitchedService() CanceledSubscriptionsSwitchedService {
+func (m *MetricPeriod) GetCanceledSubscriptionsSwitchedService() *CanceledSubscriptionsSwitchedService {
 	if m == nil {
-		return CanceledSubscriptionsSwitchedService{}
+		return nil
 	}
 	return m.CanceledSubscriptionsSwitchedService
 }
 
-func (m *MetricPeriod) GetCanceledSubscriptionsTooComplex() CanceledSubscriptionsTooComplex {
+func (m *MetricPeriod) GetCanceledSubscriptionsTooComplex() *CanceledSubscriptionsTooComplex {
 	if m == nil {
-		return CanceledSubscriptionsTooComplex{}
+		return nil
 	}
 	return m.CanceledSubscriptionsTooComplex
 }
 
-func (m *MetricPeriod) GetCanceledSubscriptionsTooExpensive() CanceledSubscriptionsTooExpensive {
+func (m *MetricPeriod) GetCanceledSubscriptionsTooExpensive() *CanceledSubscriptionsTooExpensive {
 	if m == nil {
-		return CanceledSubscriptionsTooExpensive{}
+		return nil
 	}
 	return m.CanceledSubscriptionsTooExpensive
 }
 
-func (m *MetricPeriod) GetCanceledSubscriptionsUnused() CanceledSubscriptionsUnused {
+func (m *MetricPeriod) GetCanceledSubscriptionsUnused() *CanceledSubscriptionsUnused {
 	if m == nil {
-		return CanceledSubscriptionsUnused{}
+		return nil
 	}
 	return m.CanceledSubscriptionsUnused
 }
 
-func (m *MetricPeriod) GetCanceledSubscriptionsOther() CanceledSubscriptionsOther {
+func (m *MetricPeriod) GetCanceledSubscriptionsOther() *CanceledSubscriptionsOther {
 	if m == nil {
-		return CanceledSubscriptionsOther{}
+		return nil
 	}
 	return m.CanceledSubscriptionsOther
 }
 
-func (m *MetricPeriod) GetChurnRate() ChurnRate {
+func (m *MetricPeriod) GetChurnedSubscriptions() *ChurnedSubscriptions {
 	if m == nil {
-		return ChurnRate{}
+		return nil
+	}
+	return m.ChurnedSubscriptions
+}
+
+func (m *MetricPeriod) GetChurnRate() *ChurnRate {
+	if m == nil {
+		return nil
 	}
 	return m.ChurnRate
 }
 
-func (m *MetricPeriod) GetGrossMargin() GrossMargin {
+func (m *MetricPeriod) GetLtv() *Ltv {
 	if m == nil {
-		return GrossMargin{}
+		return nil
+	}
+	return m.Ltv
+}
+
+func (m *MetricPeriod) GetGrossMargin() *GrossMargin {
+	if m == nil {
+		return nil
 	}
 	return m.GrossMargin
 }
 
-func (m *MetricPeriod) GetGrossMarginPercentage() GrossMarginPercentage {
+func (m *MetricPeriod) GetGrossMarginPercentage() *GrossMarginPercentage {
 	if m == nil {
-		return GrossMarginPercentage{}
+		return nil
 	}
 	return m.GrossMarginPercentage
 }
 
-func (m *MetricPeriod) GetCashflow() Cashflow {
+func (m *MetricPeriod) GetCashflow() *Cashflow {
 	if m == nil {
-		return Cashflow{}
+		return nil
 	}
 	return m.Cashflow
 }

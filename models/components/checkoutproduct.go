@@ -17,8 +17,8 @@ const (
 )
 
 type CheckoutProductPrices struct {
-	LegacyRecurringProductPrice *LegacyRecurringProductPrice `queryParam:"inline,name=prices"`
-	ProductPrice                *ProductPrice                `queryParam:"inline,name=prices"`
+	LegacyRecurringProductPrice *LegacyRecurringProductPrice `queryParam:"inline" union:"member"`
+	ProductPrice                *ProductPrice                `queryParam:"inline" union:"member"`
 
 	Type CheckoutProductPricesType
 }
@@ -111,7 +111,7 @@ func (c CheckoutProduct) MarshalJSON() ([]byte, error) {
 }
 
 func (c *CheckoutProduct) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &c, "", false, []string{"id", "created_at", "name", "is_recurring", "is_archived", "organization_id", "prices", "benefits", "medias"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &c, "", false, nil); err != nil {
 		return err
 	}
 	return nil

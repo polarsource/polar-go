@@ -18,8 +18,8 @@ const (
 
 // OrganizationIDFilter - Filter by organization ID.
 type OrganizationIDFilter struct {
-	Str        *string  `queryParam:"inline,name=OrganizationID_Filter"`
-	ArrayOfStr []string `queryParam:"inline,name=OrganizationID_Filter"`
+	Str        *string  `queryParam:"inline" union:"member"`
+	ArrayOfStr []string `queryParam:"inline" union:"member"`
 
 	Type OrganizationIDFilterType
 }
@@ -82,8 +82,8 @@ const (
 
 // ProductIDFilter - Filter by product ID.
 type ProductIDFilter struct {
-	Str        *string  `queryParam:"inline,name=ProductID_Filter"`
-	ArrayOfStr []string `queryParam:"inline,name=ProductID_Filter"`
+	Str        *string  `queryParam:"inline" union:"member"`
+	ArrayOfStr []string `queryParam:"inline" union:"member"`
 
 	Type ProductIDFilterType
 }
@@ -146,8 +146,8 @@ const (
 
 // CustomerIDFilter - Filter by customer ID.
 type CustomerIDFilter struct {
-	Str        *string  `queryParam:"inline,name=CustomerID_Filter"`
-	ArrayOfStr []string `queryParam:"inline,name=CustomerID_Filter"`
+	Str        *string  `queryParam:"inline" union:"member"`
+	ArrayOfStr []string `queryParam:"inline" union:"member"`
 
 	Type CustomerIDFilterType
 }
@@ -210,8 +210,8 @@ const (
 
 // ExternalCustomerIDFilter - Filter by customer external ID.
 type ExternalCustomerIDFilter struct {
-	Str        *string  `queryParam:"inline,name=ExternalCustomerID_Filter"`
-	ArrayOfStr []string `queryParam:"inline,name=ExternalCustomerID_Filter"`
+	Str        *string  `queryParam:"inline" union:"member"`
+	ArrayOfStr []string `queryParam:"inline" union:"member"`
 
 	Type ExternalCustomerIDFilterType
 }
@@ -274,8 +274,8 @@ const (
 
 // DiscountIDFilter - Filter by discount ID.
 type DiscountIDFilter struct {
-	Str        *string  `queryParam:"inline,name=DiscountID_Filter"`
-	ArrayOfStr []string `queryParam:"inline,name=DiscountID_Filter"`
+	Str        *string  `queryParam:"inline" union:"member"`
+	ArrayOfStr []string `queryParam:"inline" union:"member"`
 
 	Type DiscountIDFilterType
 }
@@ -342,6 +342,8 @@ type SubscriptionsListRequest struct {
 	DiscountID *DiscountIDFilter `queryParam:"style=form,explode=true,name=discount_id"`
 	// Filter by active or inactive subscription.
 	Active *bool `queryParam:"style=form,explode=true,name=active"`
+	// Filter by subscriptions that are set to cancel at period end.
+	CancelAtPeriodEnd *bool `queryParam:"style=form,explode=true,name=cancel_at_period_end"`
 	// Page number, defaults to 1.
 	Page *int64 `default:"1" queryParam:"style=form,explode=true,name=page"`
 	// Size of a page, defaults to 10. Maximum is 100.
@@ -403,6 +405,13 @@ func (s *SubscriptionsListRequest) GetActive() *bool {
 		return nil
 	}
 	return s.Active
+}
+
+func (s *SubscriptionsListRequest) GetCancelAtPeriodEnd() *bool {
+	if s == nil {
+		return nil
+	}
+	return s.CancelAtPeriodEnd
 }
 
 func (s *SubscriptionsListRequest) GetPage() *int64 {

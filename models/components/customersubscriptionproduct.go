@@ -17,8 +17,8 @@ const (
 )
 
 type CustomerSubscriptionProductPrices struct {
-	LegacyRecurringProductPrice *LegacyRecurringProductPrice `queryParam:"inline,name=prices"`
-	ProductPrice                *ProductPrice                `queryParam:"inline,name=prices"`
+	LegacyRecurringProductPrice *LegacyRecurringProductPrice `queryParam:"inline" union:"member"`
+	ProductPrice                *ProductPrice                `queryParam:"inline" union:"member"`
 
 	Type CustomerSubscriptionProductPricesType
 }
@@ -103,7 +103,7 @@ type CustomerSubscriptionProduct struct {
 	Benefits []BenefitPublic `json:"benefits"`
 	// List of medias associated to the product.
 	Medias       []ProductMediaFileRead `json:"medias"`
-	Organization Organization           `json:"organization"`
+	Organization CustomerOrganization   `json:"organization"`
 }
 
 func (c CustomerSubscriptionProduct) MarshalJSON() ([]byte, error) {
@@ -111,7 +111,7 @@ func (c CustomerSubscriptionProduct) MarshalJSON() ([]byte, error) {
 }
 
 func (c *CustomerSubscriptionProduct) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &c, "", false, []string{"id", "created_at", "name", "is_recurring", "is_archived", "organization_id", "prices", "benefits", "medias", "organization"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &c, "", false, nil); err != nil {
 		return err
 	}
 	return nil
@@ -222,9 +222,9 @@ func (c *CustomerSubscriptionProduct) GetMedias() []ProductMediaFileRead {
 	return c.Medias
 }
 
-func (c *CustomerSubscriptionProduct) GetOrganization() Organization {
+func (c *CustomerSubscriptionProduct) GetOrganization() CustomerOrganization {
 	if c == nil {
-		return Organization{}
+		return CustomerOrganization{}
 	}
 	return c.Organization
 }

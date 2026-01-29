@@ -7,10 +7,20 @@ import (
 )
 
 type OrderPaidMetadata struct {
-	OrderID    string `json:"order_id"`
-	Amount     int64  `json:"amount"`
-	Currency   string `json:"currency"`
-	Backfilled *bool  `json:"backfilled,omitempty"`
+	OrderID                string  `json:"order_id"`
+	ProductID              *string `json:"product_id,omitempty"`
+	BillingType            *string `json:"billing_type,omitempty"`
+	Amount                 int64   `json:"amount"`
+	Currency               *string `json:"currency,omitempty"`
+	NetAmount              *int64  `json:"net_amount,omitempty"`
+	TaxAmount              *int64  `json:"tax_amount,omitempty"`
+	AppliedBalanceAmount   *int64  `json:"applied_balance_amount,omitempty"`
+	DiscountAmount         *int64  `json:"discount_amount,omitempty"`
+	DiscountID             *string `json:"discount_id,omitempty"`
+	PlatformFee            *int64  `json:"platform_fee,omitempty"`
+	SubscriptionID         *string `json:"subscription_id,omitempty"`
+	RecurringInterval      *string `json:"recurring_interval,omitempty"`
+	RecurringIntervalCount *int64  `json:"recurring_interval_count,omitempty"`
 }
 
 func (o OrderPaidMetadata) MarshalJSON() ([]byte, error) {
@@ -18,7 +28,7 @@ func (o OrderPaidMetadata) MarshalJSON() ([]byte, error) {
 }
 
 func (o *OrderPaidMetadata) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &o, "", false, []string{"order_id", "amount", "currency"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &o, "", false, []string{"order_id", "amount"}); err != nil {
 		return err
 	}
 	return nil
@@ -31,6 +41,20 @@ func (o *OrderPaidMetadata) GetOrderID() string {
 	return o.OrderID
 }
 
+func (o *OrderPaidMetadata) GetProductID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ProductID
+}
+
+func (o *OrderPaidMetadata) GetBillingType() *string {
+	if o == nil {
+		return nil
+	}
+	return o.BillingType
+}
+
 func (o *OrderPaidMetadata) GetAmount() int64 {
 	if o == nil {
 		return 0
@@ -38,16 +62,72 @@ func (o *OrderPaidMetadata) GetAmount() int64 {
 	return o.Amount
 }
 
-func (o *OrderPaidMetadata) GetCurrency() string {
+func (o *OrderPaidMetadata) GetCurrency() *string {
 	if o == nil {
-		return ""
+		return nil
 	}
 	return o.Currency
 }
 
-func (o *OrderPaidMetadata) GetBackfilled() *bool {
+func (o *OrderPaidMetadata) GetNetAmount() *int64 {
 	if o == nil {
 		return nil
 	}
-	return o.Backfilled
+	return o.NetAmount
+}
+
+func (o *OrderPaidMetadata) GetTaxAmount() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.TaxAmount
+}
+
+func (o *OrderPaidMetadata) GetAppliedBalanceAmount() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.AppliedBalanceAmount
+}
+
+func (o *OrderPaidMetadata) GetDiscountAmount() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.DiscountAmount
+}
+
+func (o *OrderPaidMetadata) GetDiscountID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.DiscountID
+}
+
+func (o *OrderPaidMetadata) GetPlatformFee() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.PlatformFee
+}
+
+func (o *OrderPaidMetadata) GetSubscriptionID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.SubscriptionID
+}
+
+func (o *OrderPaidMetadata) GetRecurringInterval() *string {
+	if o == nil {
+		return nil
+	}
+	return o.RecurringInterval
+}
+
+func (o *OrderPaidMetadata) GetRecurringIntervalCount() *int64 {
+	if o == nil {
+		return nil
+	}
+	return o.RecurringIntervalCount
 }

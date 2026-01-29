@@ -33,7 +33,7 @@ func (w WebhookEndpoint) MarshalJSON() ([]byte, error) {
 }
 
 func (w *WebhookEndpoint) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &w, "", false, []string{"created_at", "id", "url", "format", "secret", "organization_id", "events", "enabled"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &w, "", false, nil); err != nil {
 		return err
 	}
 	return nil

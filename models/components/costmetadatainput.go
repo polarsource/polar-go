@@ -17,8 +17,8 @@ const (
 
 // Amount - The amount in cents.
 type Amount struct {
-	Number *float64 `queryParam:"inline,name=Amount"`
-	Str    *string  `queryParam:"inline,name=Amount"`
+	Number *float64 `queryParam:"inline" union:"member"`
+	Str    *string  `queryParam:"inline" union:"member"`
 
 	Type AmountType
 }

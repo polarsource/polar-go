@@ -1,5 +1,4 @@
 # Meters
-(*Meters*)
 
 ## Overview
 

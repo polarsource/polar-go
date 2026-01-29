@@ -20,12 +20,12 @@ const (
 )
 
 type BenefitGrantWebhook struct {
-	BenefitGrantDiscordWebhook          *BenefitGrantDiscordWebhook          `queryParam:"inline,name=BenefitGrantWebhook"`
-	BenefitGrantCustomWebhook           *BenefitGrantCustomWebhook           `queryParam:"inline,name=BenefitGrantWebhook"`
-	BenefitGrantGitHubRepositoryWebhook *BenefitGrantGitHubRepositoryWebhook `queryParam:"inline,name=BenefitGrantWebhook"`
-	BenefitGrantDownloadablesWebhook    *BenefitGrantDownloadablesWebhook    `queryParam:"inline,name=BenefitGrantWebhook"`
-	BenefitGrantLicenseKeysWebhook      *BenefitGrantLicenseKeysWebhook      `queryParam:"inline,name=BenefitGrantWebhook"`
-	BenefitGrantMeterCreditWebhook      *BenefitGrantMeterCreditWebhook      `queryParam:"inline,name=BenefitGrantWebhook"`
+	BenefitGrantDiscordWebhook          *BenefitGrantDiscordWebhook          `queryParam:"inline" union:"member"`
+	BenefitGrantCustomWebhook           *BenefitGrantCustomWebhook           `queryParam:"inline" union:"member"`
+	BenefitGrantGitHubRepositoryWebhook *BenefitGrantGitHubRepositoryWebhook `queryParam:"inline" union:"member"`
+	BenefitGrantDownloadablesWebhook    *BenefitGrantDownloadablesWebhook    `queryParam:"inline" union:"member"`
+	BenefitGrantLicenseKeysWebhook      *BenefitGrantLicenseKeysWebhook      `queryParam:"inline" union:"member"`
+	BenefitGrantMeterCreditWebhook      *BenefitGrantMeterCreditWebhook      `queryParam:"inline" union:"member"`
 
 	Type BenefitGrantWebhookType
 }

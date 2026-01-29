@@ -1,5 +1,4 @@
-# PolarBenefitGrants
-(*CustomerPortal.BenefitGrants*)
+# CustomerPortal.BenefitGrants
 
 ## Overview
 
@@ -35,7 +34,7 @@ func main() {
     s := polargo.New()
 
     res, err := s.CustomerPortal.BenefitGrants.List(ctx, operations.CustomerPortalBenefitGrantsListRequest{}, operations.CustomerPortalBenefitGrantsListSecurity{
-        CustomerSession: os.Getenv("POLAR_CUSTOMER_SESSION"),
+        CustomerSession: polargo.Pointer(os.Getenv("POLAR_CUSTOMER_SESSION")),
     })
     if err != nil {
         log.Fatal(err)
@@ -104,7 +103,7 @@ func main() {
     s := polargo.New()
 
     res, err := s.CustomerPortal.BenefitGrants.Get(ctx, operations.CustomerPortalBenefitGrantsGetSecurity{
-        CustomerSession: os.Getenv("POLAR_CUSTOMER_SESSION"),
+        CustomerSession: polargo.Pointer(os.Getenv("POLAR_CUSTOMER_SESSION")),
     }, "<value>")
     if err != nil {
         log.Fatal(err)
@@ -163,7 +162,7 @@ func main() {
     s := polargo.New()
 
     res, err := s.CustomerPortal.BenefitGrants.Update(ctx, operations.CustomerPortalBenefitGrantsUpdateSecurity{
-        CustomerSession: os.Getenv("POLAR_CUSTOMER_SESSION"),
+        CustomerSession: polargo.Pointer(os.Getenv("POLAR_CUSTOMER_SESSION")),
     }, "<value>", components.CreateCustomerBenefitGrantUpdateLicenseKeys(
         components.CustomerBenefitGrantLicenseKeysUpdate{},
     ))

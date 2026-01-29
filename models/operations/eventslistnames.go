@@ -18,8 +18,8 @@ const (
 
 // EventsListNamesQueryParamOrganizationIDFilter - Filter by organization ID.
 type EventsListNamesQueryParamOrganizationIDFilter struct {
-	Str        *string  `queryParam:"inline,name=OrganizationID_Filter"`
-	ArrayOfStr []string `queryParam:"inline,name=OrganizationID_Filter"`
+	Str        *string  `queryParam:"inline" union:"member"`
+	ArrayOfStr []string `queryParam:"inline" union:"member"`
 
 	Type EventsListNamesQueryParamOrganizationIDFilterType
 }
@@ -82,8 +82,8 @@ const (
 
 // EventsListNamesQueryParamCustomerIDFilter - Filter by customer ID.
 type EventsListNamesQueryParamCustomerIDFilter struct {
-	Str        *string  `queryParam:"inline,name=CustomerID_Filter"`
-	ArrayOfStr []string `queryParam:"inline,name=CustomerID_Filter"`
+	Str        *string  `queryParam:"inline" union:"member"`
+	ArrayOfStr []string `queryParam:"inline" union:"member"`
 
 	Type EventsListNamesQueryParamCustomerIDFilterType
 }
@@ -146,8 +146,8 @@ const (
 
 // EventsListNamesQueryParamExternalCustomerIDFilter - Filter by external customer ID.
 type EventsListNamesQueryParamExternalCustomerIDFilter struct {
-	Str        *string  `queryParam:"inline,name=ExternalCustomerID_Filter"`
-	ArrayOfStr []string `queryParam:"inline,name=ExternalCustomerID_Filter"`
+	Str        *string  `queryParam:"inline" union:"member"`
+	ArrayOfStr []string `queryParam:"inline" union:"member"`
 
 	Type EventsListNamesQueryParamExternalCustomerIDFilterType
 }
@@ -210,8 +210,8 @@ const (
 
 // QueryParamSourceFilter - Filter by event source.
 type QueryParamSourceFilter struct {
-	EventSource        *components.EventSource  `queryParam:"inline,name=Source_Filter"`
-	ArrayOfEventSource []components.EventSource `queryParam:"inline,name=Source_Filter"`
+	EventSource        *components.EventSource  `queryParam:"inline" union:"member"`
+	ArrayOfEventSource []components.EventSource `queryParam:"inline" union:"member"`
 
 	Type QueryParamSourceFilterType
 }

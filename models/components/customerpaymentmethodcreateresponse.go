@@ -17,8 +17,8 @@ const (
 )
 
 type CustomerPaymentMethodCreateResponse struct {
-	CustomerPaymentMethodCreateSucceededResponse      *CustomerPaymentMethodCreateSucceededResponse      `queryParam:"inline,name=CustomerPaymentMethodCreateResponse"`
-	CustomerPaymentMethodCreateRequiresActionResponse *CustomerPaymentMethodCreateRequiresActionResponse `queryParam:"inline,name=CustomerPaymentMethodCreateResponse"`
+	CustomerPaymentMethodCreateSucceededResponse      *CustomerPaymentMethodCreateSucceededResponse      `queryParam:"inline" union:"member"`
+	CustomerPaymentMethodCreateRequiresActionResponse *CustomerPaymentMethodCreateRequiresActionResponse `queryParam:"inline" union:"member"`
 
 	Type CustomerPaymentMethodCreateResponseType
 }

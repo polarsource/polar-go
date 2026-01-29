@@ -3,364 +3,348 @@
 package components
 
 type Metrics struct {
-	// Information about a metric.
-	Orders Metric `json:"orders"`
-	// Information about a metric.
-	Revenue Metric `json:"revenue"`
-	// Information about a metric.
-	NetRevenue Metric `json:"net_revenue"`
-	// Information about a metric.
-	CumulativeRevenue Metric `json:"cumulative_revenue"`
-	// Information about a metric.
-	NetCumulativeRevenue Metric `json:"net_cumulative_revenue"`
-	// Information about a metric.
-	Costs Metric `json:"costs"`
-	// Information about a metric.
-	CumulativeCosts Metric `json:"cumulative_costs"`
-	// Information about a metric.
-	AverageOrderValue Metric `json:"average_order_value"`
-	// Information about a metric.
-	NetAverageOrderValue Metric `json:"net_average_order_value"`
-	// Information about a metric.
-	AverageRevenuePerUser Metric `json:"average_revenue_per_user"`
-	// Information about a metric.
-	CostPerUser Metric `json:"cost_per_user"`
-	// Information about a metric.
-	ActiveUserByEvent Metric `json:"active_user_by_event"`
-	// Information about a metric.
-	OneTimeProducts Metric `json:"one_time_products"`
-	// Information about a metric.
-	OneTimeProductsRevenue Metric `json:"one_time_products_revenue"`
-	// Information about a metric.
-	OneTimeProductsNetRevenue Metric `json:"one_time_products_net_revenue"`
-	// Information about a metric.
-	NewSubscriptions Metric `json:"new_subscriptions"`
-	// Information about a metric.
-	NewSubscriptionsRevenue Metric `json:"new_subscriptions_revenue"`
-	// Information about a metric.
-	NewSubscriptionsNetRevenue Metric `json:"new_subscriptions_net_revenue"`
-	// Information about a metric.
-	RenewedSubscriptions Metric `json:"renewed_subscriptions"`
-	// Information about a metric.
-	RenewedSubscriptionsRevenue Metric `json:"renewed_subscriptions_revenue"`
-	// Information about a metric.
-	RenewedSubscriptionsNetRevenue Metric `json:"renewed_subscriptions_net_revenue"`
-	// Information about a metric.
-	ActiveSubscriptions Metric `json:"active_subscriptions"`
-	// Information about a metric.
-	MonthlyRecurringRevenue Metric `json:"monthly_recurring_revenue"`
-	// Information about a metric.
-	CommittedMonthlyRecurringRevenue Metric `json:"committed_monthly_recurring_revenue"`
-	// Information about a metric.
-	Checkouts Metric `json:"checkouts"`
-	// Information about a metric.
-	SucceededCheckouts Metric `json:"succeeded_checkouts"`
-	// Information about a metric.
-	CheckoutsConversion Metric `json:"checkouts_conversion"`
-	// Information about a metric.
-	CanceledSubscriptions Metric `json:"canceled_subscriptions"`
-	// Information about a metric.
-	CanceledSubscriptionsCustomerService Metric `json:"canceled_subscriptions_customer_service"`
-	// Information about a metric.
-	CanceledSubscriptionsLowQuality Metric `json:"canceled_subscriptions_low_quality"`
-	// Information about a metric.
-	CanceledSubscriptionsMissingFeatures Metric `json:"canceled_subscriptions_missing_features"`
-	// Information about a metric.
-	CanceledSubscriptionsSwitchedService Metric `json:"canceled_subscriptions_switched_service"`
-	// Information about a metric.
-	CanceledSubscriptionsTooComplex Metric `json:"canceled_subscriptions_too_complex"`
-	// Information about a metric.
-	CanceledSubscriptionsTooExpensive Metric `json:"canceled_subscriptions_too_expensive"`
-	// Information about a metric.
-	CanceledSubscriptionsUnused Metric `json:"canceled_subscriptions_unused"`
-	// Information about a metric.
-	CanceledSubscriptionsOther Metric `json:"canceled_subscriptions_other"`
-	// Information about a metric.
-	ChurnRate Metric `json:"churn_rate"`
-	// Information about a metric.
-	GrossMargin Metric `json:"gross_margin"`
-	// Information about a metric.
-	GrossMarginPercentage Metric `json:"gross_margin_percentage"`
-	// Information about a metric.
-	Cashflow Metric `json:"cashflow"`
+	Orders                               *Metric `json:"orders,omitempty"`
+	Revenue                              *Metric `json:"revenue,omitempty"`
+	NetRevenue                           *Metric `json:"net_revenue,omitempty"`
+	CumulativeRevenue                    *Metric `json:"cumulative_revenue,omitempty"`
+	NetCumulativeRevenue                 *Metric `json:"net_cumulative_revenue,omitempty"`
+	Costs                                *Metric `json:"costs,omitempty"`
+	CumulativeCosts                      *Metric `json:"cumulative_costs,omitempty"`
+	AverageOrderValue                    *Metric `json:"average_order_value,omitempty"`
+	NetAverageOrderValue                 *Metric `json:"net_average_order_value,omitempty"`
+	AverageRevenuePerUser                *Metric `json:"average_revenue_per_user,omitempty"`
+	CostPerUser                          *Metric `json:"cost_per_user,omitempty"`
+	ActiveUserByEvent                    *Metric `json:"active_user_by_event,omitempty"`
+	OneTimeProducts                      *Metric `json:"one_time_products,omitempty"`
+	OneTimeProductsRevenue               *Metric `json:"one_time_products_revenue,omitempty"`
+	OneTimeProductsNetRevenue            *Metric `json:"one_time_products_net_revenue,omitempty"`
+	NewSubscriptions                     *Metric `json:"new_subscriptions,omitempty"`
+	NewSubscriptionsRevenue              *Metric `json:"new_subscriptions_revenue,omitempty"`
+	NewSubscriptionsNetRevenue           *Metric `json:"new_subscriptions_net_revenue,omitempty"`
+	RenewedSubscriptions                 *Metric `json:"renewed_subscriptions,omitempty"`
+	RenewedSubscriptionsRevenue          *Metric `json:"renewed_subscriptions_revenue,omitempty"`
+	RenewedSubscriptionsNetRevenue       *Metric `json:"renewed_subscriptions_net_revenue,omitempty"`
+	ActiveSubscriptions                  *Metric `json:"active_subscriptions,omitempty"`
+	CommittedSubscriptions               *Metric `json:"committed_subscriptions,omitempty"`
+	MonthlyRecurringRevenue              *Metric `json:"monthly_recurring_revenue,omitempty"`
+	CommittedMonthlyRecurringRevenue     *Metric `json:"committed_monthly_recurring_revenue,omitempty"`
+	Checkouts                            *Metric `json:"checkouts,omitempty"`
+	SucceededCheckouts                   *Metric `json:"succeeded_checkouts,omitempty"`
+	CheckoutsConversion                  *Metric `json:"checkouts_conversion,omitempty"`
+	CanceledSubscriptions                *Metric `json:"canceled_subscriptions,omitempty"`
+	CanceledSubscriptionsCustomerService *Metric `json:"canceled_subscriptions_customer_service,omitempty"`
+	CanceledSubscriptionsLowQuality      *Metric `json:"canceled_subscriptions_low_quality,omitempty"`
+	CanceledSubscriptionsMissingFeatures *Metric `json:"canceled_subscriptions_missing_features,omitempty"`
+	CanceledSubscriptionsSwitchedService *Metric `json:"canceled_subscriptions_switched_service,omitempty"`
+	CanceledSubscriptionsTooComplex      *Metric `json:"canceled_subscriptions_too_complex,omitempty"`
+	CanceledSubscriptionsTooExpensive    *Metric `json:"canceled_subscriptions_too_expensive,omitempty"`
+	CanceledSubscriptionsUnused          *Metric `json:"canceled_subscriptions_unused,omitempty"`
+	CanceledSubscriptionsOther           *Metric `json:"canceled_subscriptions_other,omitempty"`
+	ChurnedSubscriptions                 *Metric `json:"churned_subscriptions,omitempty"`
+	ChurnRate                            *Metric `json:"churn_rate,omitempty"`
+	Ltv                                  *Metric `json:"ltv,omitempty"`
+	GrossMargin                          *Metric `json:"gross_margin,omitempty"`
+	GrossMarginPercentage                *Metric `json:"gross_margin_percentage,omitempty"`
+	Cashflow                             *Metric `json:"cashflow,omitempty"`
 }
 
-func (m *Metrics) GetOrders() Metric {
+func (m *Metrics) GetOrders() *Metric {
 	if m == nil {
-		return Metric{}
+		return nil
 	}
 	return m.Orders
 }
 
-func (m *Metrics) GetRevenue() Metric {
+func (m *Metrics) GetRevenue() *Metric {
 	if m == nil {
-		return Metric{}
+		return nil
 	}
 	return m.Revenue
 }
 
-func (m *Metrics) GetNetRevenue() Metric {
+func (m *Metrics) GetNetRevenue() *Metric {
 	if m == nil {
-		return Metric{}
+		return nil
 	}
 	return m.NetRevenue
 }
 
-func (m *Metrics) GetCumulativeRevenue() Metric {
+func (m *Metrics) GetCumulativeRevenue() *Metric {
 	if m == nil {
-		return Metric{}
+		return nil
 	}
 	return m.CumulativeRevenue
 }
 
-func (m *Metrics) GetNetCumulativeRevenue() Metric {
+func (m *Metrics) GetNetCumulativeRevenue() *Metric {
 	if m == nil {
-		return Metric{}
+		return nil
 	}
 	return m.NetCumulativeRevenue
 }
 
-func (m *Metrics) GetCosts() Metric {
+func (m *Metrics) GetCosts() *Metric {
 	if m == nil {
-		return Metric{}
+		return nil
 	}
 	return m.Costs
 }
 
-func (m *Metrics) GetCumulativeCosts() Metric {
+func (m *Metrics) GetCumulativeCosts() *Metric {
 	if m == nil {
-		return Metric{}
+		return nil
 	}
 	return m.CumulativeCosts
 }
 
-func (m *Metrics) GetAverageOrderValue() Metric {
+func (m *Metrics) GetAverageOrderValue() *Metric {
 	if m == nil {
-		return Metric{}
+		return nil
 	}
 	return m.AverageOrderValue
 }
 
-func (m *Metrics) GetNetAverageOrderValue() Metric {
+func (m *Metrics) GetNetAverageOrderValue() *Metric {
 	if m == nil {
-		return Metric{}
+		return nil
 	}
 	return m.NetAverageOrderValue
 }
 
-func (m *Metrics) GetAverageRevenuePerUser() Metric {
+func (m *Metrics) GetAverageRevenuePerUser() *Metric {
 	if m == nil {
-		return Metric{}
+		return nil
 	}
 	return m.AverageRevenuePerUser
 }
 
-func (m *Metrics) GetCostPerUser() Metric {
+func (m *Metrics) GetCostPerUser() *Metric {
 	if m == nil {
-		return Metric{}
+		return nil
 	}
 	return m.CostPerUser
 }
 
-func (m *Metrics) GetActiveUserByEvent() Metric {
+func (m *Metrics) GetActiveUserByEvent() *Metric {
 	if m == nil {
-		return Metric{}
+		return nil
 	}
 	return m.ActiveUserByEvent
 }
 
-func (m *Metrics) GetOneTimeProducts() Metric {
+func (m *Metrics) GetOneTimeProducts() *Metric {
 	if m == nil {
-		return Metric{}
+		return nil
 	}
 	return m.OneTimeProducts
 }
 
-func (m *Metrics) GetOneTimeProductsRevenue() Metric {
+func (m *Metrics) GetOneTimeProductsRevenue() *Metric {
 	if m == nil {
-		return Metric{}
+		return nil
 	}
 	return m.OneTimeProductsRevenue
 }
 
-func (m *Metrics) GetOneTimeProductsNetRevenue() Metric {
+func (m *Metrics) GetOneTimeProductsNetRevenue() *Metric {
 	if m == nil {
-		return Metric{}
+		return nil
 	}
 	return m.OneTimeProductsNetRevenue
 }
 
-func (m *Metrics) GetNewSubscriptions() Metric {
+func (m *Metrics) GetNewSubscriptions() *Metric {
 	if m == nil {
-		return Metric{}
+		return nil
 	}
 	return m.NewSubscriptions
 }
 
-func (m *Metrics) GetNewSubscriptionsRevenue() Metric {
+func (m *Metrics) GetNewSubscriptionsRevenue() *Metric {
 	if m == nil {
-		return Metric{}
+		return nil
 	}
 	return m.NewSubscriptionsRevenue
 }
 
-func (m *Metrics) GetNewSubscriptionsNetRevenue() Metric {
+func (m *Metrics) GetNewSubscriptionsNetRevenue() *Metric {
 	if m == nil {
-		return Metric{}
+		return nil
 	}
 	return m.NewSubscriptionsNetRevenue
 }
 
-func (m *Metrics) GetRenewedSubscriptions() Metric {
+func (m *Metrics) GetRenewedSubscriptions() *Metric {
 	if m == nil {
-		return Metric{}
+		return nil
 	}
 	return m.RenewedSubscriptions
 }
 
-func (m *Metrics) GetRenewedSubscriptionsRevenue() Metric {
+func (m *Metrics) GetRenewedSubscriptionsRevenue() *Metric {
 	if m == nil {
-		return Metric{}
+		return nil
 	}
 	return m.RenewedSubscriptionsRevenue
 }
 
-func (m *Metrics) GetRenewedSubscriptionsNetRevenue() Metric {
+func (m *Metrics) GetRenewedSubscriptionsNetRevenue() *Metric {
 	if m == nil {
-		return Metric{}
+		return nil
 	}
 	return m.RenewedSubscriptionsNetRevenue
 }
 
-func (m *Metrics) GetActiveSubscriptions() Metric {
+func (m *Metrics) GetActiveSubscriptions() *Metric {
 	if m == nil {
-		return Metric{}
+		return nil
 	}
 	return m.ActiveSubscriptions
 }
 
-func (m *Metrics) GetMonthlyRecurringRevenue() Metric {
+func (m *Metrics) GetCommittedSubscriptions() *Metric {
 	if m == nil {
-		return Metric{}
+		return nil
+	}
+	return m.CommittedSubscriptions
+}
+
+func (m *Metrics) GetMonthlyRecurringRevenue() *Metric {
+	if m == nil {
+		return nil
 	}
 	return m.MonthlyRecurringRevenue
 }
 
-func (m *Metrics) GetCommittedMonthlyRecurringRevenue() Metric {
+func (m *Metrics) GetCommittedMonthlyRecurringRevenue() *Metric {
 	if m == nil {
-		return Metric{}
+		return nil
 	}
 	return m.CommittedMonthlyRecurringRevenue
 }
 
-func (m *Metrics) GetCheckouts() Metric {
+func (m *Metrics) GetCheckouts() *Metric {
 	if m == nil {
-		return Metric{}
+		return nil
 	}
 	return m.Checkouts
 }
 
-func (m *Metrics) GetSucceededCheckouts() Metric {
+func (m *Metrics) GetSucceededCheckouts() *Metric {
 	if m == nil {
-		return Metric{}
+		return nil
 	}
 	return m.SucceededCheckouts
 }
 
-func (m *Metrics) GetCheckoutsConversion() Metric {
+func (m *Metrics) GetCheckoutsConversion() *Metric {
 	if m == nil {
-		return Metric{}
+		return nil
 	}
 	return m.CheckoutsConversion
 }
 
-func (m *Metrics) GetCanceledSubscriptions() Metric {
+func (m *Metrics) GetCanceledSubscriptions() *Metric {
 	if m == nil {
-		return Metric{}
+		return nil
 	}
 	return m.CanceledSubscriptions
 }
 
-func (m *Metrics) GetCanceledSubscriptionsCustomerService() Metric {
+func (m *Metrics) GetCanceledSubscriptionsCustomerService() *Metric {
 	if m == nil {
-		return Metric{}
+		return nil
 	}
 	return m.CanceledSubscriptionsCustomerService
 }
 
-func (m *Metrics) GetCanceledSubscriptionsLowQuality() Metric {
+func (m *Metrics) GetCanceledSubscriptionsLowQuality() *Metric {
 	if m == nil {
-		return Metric{}
+		return nil
 	}
 	return m.CanceledSubscriptionsLowQuality
 }
 
-func (m *Metrics) GetCanceledSubscriptionsMissingFeatures() Metric {
+func (m *Metrics) GetCanceledSubscriptionsMissingFeatures() *Metric {
 	if m == nil {
-		return Metric{}
+		return nil
 	}
 	return m.CanceledSubscriptionsMissingFeatures
 }
 
-func (m *Metrics) GetCanceledSubscriptionsSwitchedService() Metric {
+func (m *Metrics) GetCanceledSubscriptionsSwitchedService() *Metric {
 	if m == nil {
-		return Metric{}
+		return nil
 	}
 	return m.CanceledSubscriptionsSwitchedService
 }
 
-func (m *Metrics) GetCanceledSubscriptionsTooComplex() Metric {
+func (m *Metrics) GetCanceledSubscriptionsTooComplex() *Metric {
 	if m == nil {
-		return Metric{}
+		return nil
 	}
 	return m.CanceledSubscriptionsTooComplex
 }
 
-func (m *Metrics) GetCanceledSubscriptionsTooExpensive() Metric {
+func (m *Metrics) GetCanceledSubscriptionsTooExpensive() *Metric {
 	if m == nil {
-		return Metric{}
+		return nil
 	}
 	return m.CanceledSubscriptionsTooExpensive
 }
 
-func (m *Metrics) GetCanceledSubscriptionsUnused() Metric {
+func (m *Metrics) GetCanceledSubscriptionsUnused() *Metric {
 	if m == nil {
-		return Metric{}
+		return nil
 	}
 	return m.CanceledSubscriptionsUnused
 }
 
-func (m *Metrics) GetCanceledSubscriptionsOther() Metric {
+func (m *Metrics) GetCanceledSubscriptionsOther() *Metric {
 	if m == nil {
-		return Metric{}
+		return nil
 	}
 	return m.CanceledSubscriptionsOther
 }
 
-func (m *Metrics) GetChurnRate() Metric {
+func (m *Metrics) GetChurnedSubscriptions() *Metric {
 	if m == nil {
-		return Metric{}
+		return nil
+	}
+	return m.ChurnedSubscriptions
+}
+
+func (m *Metrics) GetChurnRate() *Metric {
+	if m == nil {
+		return nil
 	}
 	return m.ChurnRate
 }
 
-func (m *Metrics) GetGrossMargin() Metric {
+func (m *Metrics) GetLtv() *Metric {
 	if m == nil {
-		return Metric{}
+		return nil
+	}
+	return m.Ltv
+}
+
+func (m *Metrics) GetGrossMargin() *Metric {
+	if m == nil {
+		return nil
 	}
 	return m.GrossMargin
 }
 
-func (m *Metrics) GetGrossMarginPercentage() Metric {
+func (m *Metrics) GetGrossMarginPercentage() *Metric {
 	if m == nil {
-		return Metric{}
+		return nil
 	}
 	return m.GrossMarginPercentage
 }
 
-func (m *Metrics) GetCashflow() Metric {
+func (m *Metrics) GetCashflow() *Metric {
 	if m == nil {
-		return Metric{}
+		return nil
 	}
 	return m.Cashflow
 }

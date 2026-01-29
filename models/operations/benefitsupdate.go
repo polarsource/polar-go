@@ -21,12 +21,12 @@ const (
 )
 
 type BenefitsUpdateBenefitUpdate struct {
-	BenefitCustomUpdate           *components.BenefitCustomUpdate           `queryParam:"inline,name=Benefit_Update"`
-	BenefitDiscordUpdate          *components.BenefitDiscordUpdate          `queryParam:"inline,name=Benefit_Update"`
-	BenefitGitHubRepositoryUpdate *components.BenefitGitHubRepositoryUpdate `queryParam:"inline,name=Benefit_Update"`
-	BenefitDownloadablesUpdate    *components.BenefitDownloadablesUpdate    `queryParam:"inline,name=Benefit_Update"`
-	BenefitLicenseKeysUpdate      *components.BenefitLicenseKeysUpdate      `queryParam:"inline,name=Benefit_Update"`
-	BenefitMeterCreditUpdate      *components.BenefitMeterCreditUpdate      `queryParam:"inline,name=Benefit_Update"`
+	BenefitCustomUpdate           *components.BenefitCustomUpdate           `queryParam:"inline" union:"member"`
+	BenefitDiscordUpdate          *components.BenefitDiscordUpdate          `queryParam:"inline" union:"member"`
+	BenefitGitHubRepositoryUpdate *components.BenefitGitHubRepositoryUpdate `queryParam:"inline" union:"member"`
+	BenefitDownloadablesUpdate    *components.BenefitDownloadablesUpdate    `queryParam:"inline" union:"member"`
+	BenefitLicenseKeysUpdate      *components.BenefitLicenseKeysUpdate      `queryParam:"inline" union:"member"`
+	BenefitMeterCreditUpdate      *components.BenefitMeterCreditUpdate      `queryParam:"inline" union:"member"`
 
 	Type BenefitsUpdateBenefitUpdateType
 }

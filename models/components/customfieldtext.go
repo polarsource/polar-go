@@ -3,118 +3,9 @@
 package components
 
 import (
-	"errors"
-	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
 	"time"
 )
-
-type CustomFieldTextMetadataType string
-
-const (
-	CustomFieldTextMetadataTypeStr     CustomFieldTextMetadataType = "str"
-	CustomFieldTextMetadataTypeInteger CustomFieldTextMetadataType = "integer"
-	CustomFieldTextMetadataTypeNumber  CustomFieldTextMetadataType = "number"
-	CustomFieldTextMetadataTypeBoolean CustomFieldTextMetadataType = "boolean"
-)
-
-type CustomFieldTextMetadata struct {
-	Str     *string  `queryParam:"inline,name=metadata"`
-	Integer *int64   `queryParam:"inline,name=metadata"`
-	Number  *float64 `queryParam:"inline,name=metadata"`
-	Boolean *bool    `queryParam:"inline,name=metadata"`
-
-	Type CustomFieldTextMetadataType
-}
-
-func CreateCustomFieldTextMetadataStr(str string) CustomFieldTextMetadata {
-	typ := CustomFieldTextMetadataTypeStr
-
-	return CustomFieldTextMetadata{
-		Str:  &str,
-		Type: typ,
-	}
-}
-
-func CreateCustomFieldTextMetadataInteger(integer int64) CustomFieldTextMetadata {
-	typ := CustomFieldTextMetadataTypeInteger
-
-	return CustomFieldTextMetadata{
-		Integer: &integer,
-		Type:    typ,
-	}
-}
-
-func CreateCustomFieldTextMetadataNumber(number float64) CustomFieldTextMetadata {
-	typ := CustomFieldTextMetadataTypeNumber
-
-	return CustomFieldTextMetadata{
-		Number: &number,
-		Type:   typ,
-	}
-}
-
-func CreateCustomFieldTextMetadataBoolean(boolean bool) CustomFieldTextMetadata {
-	typ := CustomFieldTextMetadataTypeBoolean
-
-	return CustomFieldTextMetadata{
-		Boolean: &boolean,
-		Type:    typ,
-	}
-}
-
-func (u *CustomFieldTextMetadata) UnmarshalJSON(data []byte) error {
-
-	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, nil); err == nil {
-		u.Str = &str
-		u.Type = CustomFieldTextMetadataTypeStr
-		return nil
-	}
-
-	var integer int64 = int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
-		u.Integer = &integer
-		u.Type = CustomFieldTextMetadataTypeInteger
-		return nil
-	}
-
-	var number float64 = float64(0)
-	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
-		u.Number = &number
-		u.Type = CustomFieldTextMetadataTypeNumber
-		return nil
-	}
-
-	var boolean bool = false
-	if err := utils.UnmarshalJSON(data, &boolean, "", true, nil); err == nil {
-		u.Boolean = &boolean
-		u.Type = CustomFieldTextMetadataTypeBoolean
-		return nil
-	}
-
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for CustomFieldTextMetadata", string(data))
-}
-
-func (u CustomFieldTextMetadata) MarshalJSON() ([]byte, error) {
-	if u.Str != nil {
-		return utils.MarshalJSON(u.Str, "", true)
-	}
-
-	if u.Integer != nil {
-		return utils.MarshalJSON(u.Integer, "", true)
-	}
-
-	if u.Number != nil {
-		return utils.MarshalJSON(u.Number, "", true)
-	}
-
-	if u.Boolean != nil {
-		return utils.MarshalJSON(u.Boolean, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type CustomFieldTextMetadata: all fields are null")
-}
 
 // CustomFieldText - Schema for a custom field of type text.
 type CustomFieldText struct {
@@ -123,9 +14,9 @@ type CustomFieldText struct {
 	// Last modification timestamp of the object.
 	ModifiedAt *time.Time `json:"modified_at"`
 	// The ID of the object.
-	ID       string                             `json:"id"`
-	Metadata map[string]CustomFieldTextMetadata `json:"metadata"`
-	type_    string                             `const:"text" json:"type"`
+	ID       string                        `json:"id"`
+	Metadata map[string]MetadataOutputType `json:"metadata"`
+	type_    string                        `const:"text" json:"type"`
 	// Identifier of the custom field. It'll be used as key when storing the value.
 	Slug string `json:"slug"`
 	// Name of the custom field.
@@ -167,9 +58,9 @@ func (c *CustomFieldText) GetID() string {
 	return c.ID
 }
 
-func (c *CustomFieldText) GetMetadata() map[string]CustomFieldTextMetadata {
+func (c *CustomFieldText) GetMetadata() map[string]MetadataOutputType {
 	if c == nil {
-		return map[string]CustomFieldTextMetadata{}
+		return map[string]MetadataOutputType{}
 	}
 	return c.Metadata
 }
