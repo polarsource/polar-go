@@ -20,12 +20,12 @@ const (
 )
 
 type EventMetadataOutput struct {
-	Str                *string             `queryParam:"inline,name=EventMetadataOutput"`
-	Integer            *int64              `queryParam:"inline,name=EventMetadataOutput"`
-	Number             *float64            `queryParam:"inline,name=EventMetadataOutput"`
-	Boolean            *bool               `queryParam:"inline,name=EventMetadataOutput"`
-	CostMetadataOutput *CostMetadataOutput `queryParam:"inline,name=EventMetadataOutput"`
-	LLMMetadata        *LLMMetadata        `queryParam:"inline,name=EventMetadataOutput"`
+	Str                *string             `queryParam:"inline" union:"member"`
+	Integer            *int64              `queryParam:"inline" union:"member"`
+	Number             *float64            `queryParam:"inline" union:"member"`
+	Boolean            *bool               `queryParam:"inline" union:"member"`
+	CostMetadataOutput *CostMetadataOutput `queryParam:"inline" union:"member"`
+	LLMMetadata        *LLMMetadata        `queryParam:"inline" union:"member"`
 
 	Type EventMetadataOutputType
 }

@@ -21,12 +21,12 @@ const (
 )
 
 type BenefitsUpdateBenefitUpdate struct {
-	BenefitCustomUpdate           *components.BenefitCustomUpdate           `queryParam:"inline,name=Benefit_Update"`
-	BenefitDiscordUpdate          *components.BenefitDiscordUpdate          `queryParam:"inline,name=Benefit_Update"`
-	BenefitGitHubRepositoryUpdate *components.BenefitGitHubRepositoryUpdate `queryParam:"inline,name=Benefit_Update"`
-	BenefitDownloadablesUpdate    *components.BenefitDownloadablesUpdate    `queryParam:"inline,name=Benefit_Update"`
-	BenefitLicenseKeysUpdate      *components.BenefitLicenseKeysUpdate      `queryParam:"inline,name=Benefit_Update"`
-	BenefitMeterCreditUpdate      *components.BenefitMeterCreditUpdate      `queryParam:"inline,name=Benefit_Update"`
+	BenefitCustomUpdate           *components.BenefitCustomUpdate           `queryParam:"inline" union:"member"`
+	BenefitDiscordUpdate          *components.BenefitDiscordUpdate          `queryParam:"inline" union:"member"`
+	BenefitGitHubRepositoryUpdate *components.BenefitGitHubRepositoryUpdate `queryParam:"inline" union:"member"`
+	BenefitDownloadablesUpdate    *components.BenefitDownloadablesUpdate    `queryParam:"inline" union:"member"`
+	BenefitLicenseKeysUpdate      *components.BenefitLicenseKeysUpdate      `queryParam:"inline" union:"member"`
+	BenefitMeterCreditUpdate      *components.BenefitMeterCreditUpdate      `queryParam:"inline" union:"member"`
 
 	Type BenefitsUpdateBenefitUpdateType
 }
@@ -197,4 +197,46 @@ func (b *BenefitsUpdateResponse) GetBenefit() *components.Benefit {
 		return nil
 	}
 	return b.Benefit
+}
+
+func (b *BenefitsUpdateResponse) GetBenefitCustom() *components.BenefitCustom {
+	if v := b.GetBenefit(); v != nil {
+		return v.BenefitCustom
+	}
+	return nil
+}
+
+func (b *BenefitsUpdateResponse) GetBenefitDiscord() *components.BenefitDiscord {
+	if v := b.GetBenefit(); v != nil {
+		return v.BenefitDiscord
+	}
+	return nil
+}
+
+func (b *BenefitsUpdateResponse) GetBenefitDownloadables() *components.BenefitDownloadables {
+	if v := b.GetBenefit(); v != nil {
+		return v.BenefitDownloadables
+	}
+	return nil
+}
+
+func (b *BenefitsUpdateResponse) GetBenefitGithubRepository() *components.BenefitGitHubRepository {
+	if v := b.GetBenefit(); v != nil {
+		return v.BenefitGitHubRepository
+	}
+	return nil
+}
+
+func (b *BenefitsUpdateResponse) GetBenefitLicenseKeys() *components.BenefitLicenseKeys {
+	if v := b.GetBenefit(); v != nil {
+		return v.BenefitLicenseKeys
+	}
+	return nil
+}
+
+func (b *BenefitsUpdateResponse) GetBenefitMeterCredit() *components.BenefitMeterCredit {
+	if v := b.GetBenefit(); v != nil {
+		return v.BenefitMeterCredit
+	}
+	return nil
 }

@@ -18,9 +18,9 @@ const (
 )
 
 type FileRead struct {
-	DownloadableFileRead       *DownloadableFileRead       `queryParam:"inline,name=FileRead"`
-	ProductMediaFileRead       *ProductMediaFileRead       `queryParam:"inline,name=FileRead"`
-	OrganizationAvatarFileRead *OrganizationAvatarFileRead `queryParam:"inline,name=FileRead"`
+	DownloadableFileRead       *DownloadableFileRead       `queryParam:"inline" union:"member"`
+	ProductMediaFileRead       *ProductMediaFileRead       `queryParam:"inline" union:"member"`
+	OrganizationAvatarFileRead *OrganizationAvatarFileRead `queryParam:"inline" union:"member"`
 
 	Type FileReadType
 }

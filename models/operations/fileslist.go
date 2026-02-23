@@ -18,8 +18,8 @@ const (
 
 // FilesListQueryParamOrganizationIDFilter - Filter by organization ID.
 type FilesListQueryParamOrganizationIDFilter struct {
-	Str        *string  `queryParam:"inline,name=OrganizationID_Filter"`
-	ArrayOfStr []string `queryParam:"inline,name=OrganizationID_Filter"`
+	Str        *string  `queryParam:"inline" union:"member"`
+	ArrayOfStr []string `queryParam:"inline" union:"member"`
 
 	Type FilesListQueryParamOrganizationIDFilterType
 }
@@ -82,8 +82,8 @@ const (
 
 // FileIDFilter - Filter by file ID.
 type FileIDFilter struct {
-	Str        *string  `queryParam:"inline,name=FileID_Filter"`
-	ArrayOfStr []string `queryParam:"inline,name=FileID_Filter"`
+	Str        *string  `queryParam:"inline" union:"member"`
+	ArrayOfStr []string `queryParam:"inline" union:"member"`
 
 	Type FileIDFilterType
 }

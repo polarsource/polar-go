@@ -17,3 +17,15 @@ customerPortalOrdersListQueryParamProductBillingTypeFilter := operations.CreateC
 customerPortalOrdersListQueryParamProductBillingTypeFilter := operations.CreateCustomerPortalOrdersListQueryParamProductBillingTypeFilterArrayOfProductBillingType([]components.ProductBillingType{/* values here */})
 ```
 
+## Union Discrimination
+
+Use the `Type` field to determine which variant is active, then access the corresponding field:
+
+```go
+switch customerPortalOrdersListQueryParamProductBillingTypeFilter.Type {
+	case operations.CustomerPortalOrdersListQueryParamProductBillingTypeFilterTypeProductBillingType:
+		// customerPortalOrdersListQueryParamProductBillingTypeFilter.ProductBillingType is populated
+	case operations.CustomerPortalOrdersListQueryParamProductBillingTypeFilterTypeArrayOfProductBillingType:
+		// customerPortalOrdersListQueryParamProductBillingTypeFilter.ArrayOfProductBillingType is populated
+}
+```

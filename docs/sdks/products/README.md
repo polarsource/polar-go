@@ -1,5 +1,4 @@
 # Products
-(*Products*)
 
 ## Overview
 
@@ -116,11 +115,14 @@ func main() {
             Prices: []components.ProductCreateOneTimePrices{
                 components.CreateProductCreateOneTimePricesFixed(
                     components.ProductPriceFixedCreate{
+                        PriceCurrency: components.PresentmentCurrencyUsd.ToPointer(),
                         PriceAmount: 677078,
                     },
                 ),
                 components.CreateProductCreateOneTimePricesCustom(
-                    components.ProductPriceCustomCreate{},
+                    components.ProductPriceCustomCreate{
+                        PriceCurrency: components.PresentmentCurrencyUsd.ToPointer(),
+                    },
                 ),
             },
             OrganizationID: polargo.Pointer("1dbfc517-0bbf-4301-9ba8-555ca42b9737"),

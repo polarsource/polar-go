@@ -8,11 +8,10 @@ import (
 
 // ProductPriceFixedCreate - Schema to create a fixed price.
 type ProductPriceFixedCreate struct {
-	amountType string `const:"fixed" json:"amount_type"`
+	amountType    string               `const:"fixed" json:"amount_type"`
+	PriceCurrency *PresentmentCurrency `json:"price_currency,omitempty"`
 	// The price in cents.
 	PriceAmount int64 `json:"price_amount"`
-	// The currency. Currently, only `usd` is supported.
-	PriceCurrency *string `default:"usd" json:"price_currency"`
 }
 
 func (p ProductPriceFixedCreate) MarshalJSON() ([]byte, error) {
@@ -30,16 +29,16 @@ func (p *ProductPriceFixedCreate) GetAmountType() string {
 	return "fixed"
 }
 
+func (p *ProductPriceFixedCreate) GetPriceCurrency() *PresentmentCurrency {
+	if p == nil {
+		return nil
+	}
+	return p.PriceCurrency
+}
+
 func (p *ProductPriceFixedCreate) GetPriceAmount() int64 {
 	if p == nil {
 		return 0
 	}
 	return p.PriceAmount
-}
-
-func (p *ProductPriceFixedCreate) GetPriceCurrency() *string {
-	if p == nil {
-		return nil
-	}
-	return p.PriceCurrency
 }

@@ -88,7 +88,7 @@ func (s *Checkouts) List(ctx context.Context, request operations.CheckoutsListRe
 	req.Header.Set("Accept", "application/json")
 	req.Header.Set("User-Agent", s.sdkConfiguration.UserAgent)
 
-	if err := utils.PopulateQueryParams(ctx, req, request, nil); err != nil {
+	if err := utils.PopulateQueryParams(ctx, req, request, nil, nil); err != nil {
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
@@ -254,14 +254,15 @@ func (s *Checkouts) List(ctx context.Context, request operations.CheckoutsListRe
 		return s.List(
 			ctx,
 			operations.CheckoutsListRequest{
-				OrganizationID: request.OrganizationID,
-				ProductID:      request.ProductID,
-				CustomerID:     request.CustomerID,
-				Status:         request.Status,
-				Query:          request.Query,
-				Page:           &nP,
-				Limit:          request.Limit,
-				Sorting:        request.Sorting,
+				OrganizationID:     request.OrganizationID,
+				ProductID:          request.ProductID,
+				CustomerID:         request.CustomerID,
+				ExternalCustomerID: request.ExternalCustomerID,
+				Status:             request.Status,
+				Query:              request.Query,
+				Page:               &nP,
+				Limit:              request.Limit,
+				Sorting:            request.Sorting,
 			},
 			opts...,
 		)

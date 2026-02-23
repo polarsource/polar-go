@@ -10,14 +10,22 @@ import (
 )
 
 type CustomerPortalOrdersListSecurity struct {
-	CustomerSession string `security:"scheme,type=http,subtype=bearer,name=Authorization,env=polar_customer_session"`
+	CustomerSession *string `security:"scheme,type=http,subtype=bearer,name=Authorization,env=polar_customer_session"`
+	MemberSession   *string `security:"scheme,type=http,subtype=bearer,name=Authorization,env=polar_member_session"`
 }
 
-func (c *CustomerPortalOrdersListSecurity) GetCustomerSession() string {
+func (c *CustomerPortalOrdersListSecurity) GetCustomerSession() *string {
 	if c == nil {
-		return ""
+		return nil
 	}
 	return c.CustomerSession
+}
+
+func (c *CustomerPortalOrdersListSecurity) GetMemberSession() *string {
+	if c == nil {
+		return nil
+	}
+	return c.MemberSession
 }
 
 type CustomerPortalOrdersListQueryParamProductIDFilterType string
@@ -29,8 +37,8 @@ const (
 
 // CustomerPortalOrdersListQueryParamProductIDFilter - Filter by product ID.
 type CustomerPortalOrdersListQueryParamProductIDFilter struct {
-	Str        *string  `queryParam:"inline,name=ProductID_Filter"`
-	ArrayOfStr []string `queryParam:"inline,name=ProductID_Filter"`
+	Str        *string  `queryParam:"inline" union:"member"`
+	ArrayOfStr []string `queryParam:"inline" union:"member"`
 
 	Type CustomerPortalOrdersListQueryParamProductIDFilterType
 }
@@ -93,8 +101,8 @@ const (
 
 // CustomerPortalOrdersListQueryParamProductBillingTypeFilter - Filter by product billing type. `recurring` will filter data corresponding to subscriptions creations or renewals. `one_time` will filter data corresponding to one-time purchases.
 type CustomerPortalOrdersListQueryParamProductBillingTypeFilter struct {
-	ProductBillingType        *components.ProductBillingType  `queryParam:"inline,name=ProductBillingType_Filter"`
-	ArrayOfProductBillingType []components.ProductBillingType `queryParam:"inline,name=ProductBillingType_Filter"`
+	ProductBillingType        *components.ProductBillingType  `queryParam:"inline" union:"member"`
+	ArrayOfProductBillingType []components.ProductBillingType `queryParam:"inline" union:"member"`
 
 	Type CustomerPortalOrdersListQueryParamProductBillingTypeFilterType
 }
@@ -157,8 +165,8 @@ const (
 
 // CustomerPortalOrdersListQueryParamSubscriptionIDFilter - Filter by subscription ID.
 type CustomerPortalOrdersListQueryParamSubscriptionIDFilter struct {
-	Str        *string  `queryParam:"inline,name=SubscriptionID_Filter"`
-	ArrayOfStr []string `queryParam:"inline,name=SubscriptionID_Filter"`
+	Str        *string  `queryParam:"inline" union:"member"`
+	ArrayOfStr []string `queryParam:"inline" union:"member"`
 
 	Type CustomerPortalOrdersListQueryParamSubscriptionIDFilterType
 }

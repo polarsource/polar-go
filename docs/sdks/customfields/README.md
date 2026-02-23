@@ -1,5 +1,4 @@
 # CustomFields
-(*CustomFields*)
 
 ## Overview
 
@@ -8,8 +7,8 @@
 * [List](#list) - List Custom Fields
 * [Create](#create) - Create Custom Field
 * [Get](#get) - Get Custom Field
-* [Update](#update) - Update Custom Field
 * [Delete](#delete) - Delete Custom Field
+* [Update](#update) - Update Custom Field
 
 ## List
 
@@ -124,7 +123,19 @@ func main() {
         log.Fatal(err)
     }
     if res.CustomField != nil {
-        // handle response
+        switch res.CustomField.Type {
+            case components.CustomFieldUnionTypeCheckbox:
+                // res.CustomField.CustomFieldCheckbox is populated
+            case components.CustomFieldUnionTypeDate:
+                // res.CustomField.CustomFieldDate is populated
+            case components.CustomFieldUnionTypeNumber:
+                // res.CustomField.CustomFieldNumber is populated
+            case components.CustomFieldUnionTypeSelect:
+                // res.CustomField.CustomFieldSelect is populated
+            case components.CustomFieldUnionTypeText:
+                // res.CustomField.CustomFieldText is populated
+        }
+
     }
 }
 ```
@@ -165,6 +176,7 @@ import(
 	"os"
 	polargo "github.com/polarsource/polar-go"
 	"log"
+	"github.com/polarsource/polar-go/models/components"
 )
 
 func main() {
@@ -179,7 +191,19 @@ func main() {
         log.Fatal(err)
     }
     if res.CustomField != nil {
-        // handle response
+        switch res.CustomField.Type {
+            case components.CustomFieldUnionTypeCheckbox:
+                // res.CustomField.CustomFieldCheckbox is populated
+            case components.CustomFieldUnionTypeDate:
+                // res.CustomField.CustomFieldDate is populated
+            case components.CustomFieldUnionTypeNumber:
+                // res.CustomField.CustomFieldNumber is populated
+            case components.CustomFieldUnionTypeSelect:
+                // res.CustomField.CustomFieldSelect is populated
+            case components.CustomFieldUnionTypeText:
+                // res.CustomField.CustomFieldText is populated
+        }
+
     }
 }
 ```
@@ -195,66 +219,6 @@ func main() {
 ### Response
 
 **[*operations.CustomFieldsGetResponse](../../models/operations/customfieldsgetresponse.md), error**
-
-### Errors
-
-| Error Type                    | Status Code                   | Content Type                  |
-| ----------------------------- | ----------------------------- | ----------------------------- |
-| apierrors.ResourceNotFound    | 404                           | application/json              |
-| apierrors.HTTPValidationError | 422                           | application/json              |
-| apierrors.APIError            | 4XX, 5XX                      | \*/\*                         |
-
-## Update
-
-Update a custom field.
-
-**Scopes**: `custom_fields:write`
-
-### Example Usage
-
-<!-- UsageSnippet language="go" operationID="custom-fields:update" method="patch" path="/v1/custom-fields/{id}" -->
-```go
-package main
-
-import(
-	"context"
-	"os"
-	polargo "github.com/polarsource/polar-go"
-	"github.com/polarsource/polar-go/models/components"
-	"log"
-)
-
-func main() {
-    ctx := context.Background()
-
-    s := polargo.New(
-        polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
-    )
-
-    res, err := s.CustomFields.Update(ctx, "<value>", components.CreateCustomFieldUpdateDate(
-        components.CustomFieldUpdateDate{},
-    ))
-    if err != nil {
-        log.Fatal(err)
-    }
-    if res.CustomField != nil {
-        // handle response
-    }
-}
-```
-
-### Parameters
-
-| Parameter                                                                    | Type                                                                         | Required                                                                     | Description                                                                  |
-| ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
-| `ctx`                                                                        | [context.Context](https://pkg.go.dev/context#Context)                        | :heavy_check_mark:                                                           | The context to use for the request.                                          |
-| `id`                                                                         | *string*                                                                     | :heavy_check_mark:                                                           | The custom field ID.                                                         |
-| `customFieldUpdate`                                                          | [components.CustomFieldUpdate](../../models/components/customfieldupdate.md) | :heavy_check_mark:                                                           | N/A                                                                          |
-| `opts`                                                                       | [][operations.Option](../../models/operations/option.md)                     | :heavy_minus_sign:                                                           | The options for this request.                                                |
-
-### Response
-
-**[*operations.CustomFieldsUpdateResponse](../../models/operations/customfieldsupdateresponse.md), error**
 
 ### Errors
 
@@ -311,6 +275,78 @@ func main() {
 ### Response
 
 **[*operations.CustomFieldsDeleteResponse](../../models/operations/customfieldsdeleteresponse.md), error**
+
+### Errors
+
+| Error Type                    | Status Code                   | Content Type                  |
+| ----------------------------- | ----------------------------- | ----------------------------- |
+| apierrors.ResourceNotFound    | 404                           | application/json              |
+| apierrors.HTTPValidationError | 422                           | application/json              |
+| apierrors.APIError            | 4XX, 5XX                      | \*/\*                         |
+
+## Update
+
+Update a custom field.
+
+**Scopes**: `custom_fields:write`
+
+### Example Usage
+
+<!-- UsageSnippet language="go" operationID="custom-fields:update" method="patch" path="/v1/custom-fields/{id}" -->
+```go
+package main
+
+import(
+	"context"
+	"os"
+	polargo "github.com/polarsource/polar-go"
+	"github.com/polarsource/polar-go/models/components"
+	"log"
+)
+
+func main() {
+    ctx := context.Background()
+
+    s := polargo.New(
+        polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
+    )
+
+    res, err := s.CustomFields.Update(ctx, "<value>", components.CreateCustomFieldUpdateDate(
+        components.CustomFieldUpdateDate{},
+    ))
+    if err != nil {
+        log.Fatal(err)
+    }
+    if res.CustomField != nil {
+        switch res.CustomField.Type {
+            case components.CustomFieldUnionTypeCheckbox:
+                // res.CustomField.CustomFieldCheckbox is populated
+            case components.CustomFieldUnionTypeDate:
+                // res.CustomField.CustomFieldDate is populated
+            case components.CustomFieldUnionTypeNumber:
+                // res.CustomField.CustomFieldNumber is populated
+            case components.CustomFieldUnionTypeSelect:
+                // res.CustomField.CustomFieldSelect is populated
+            case components.CustomFieldUnionTypeText:
+                // res.CustomField.CustomFieldText is populated
+        }
+
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                                    | Type                                                                         | Required                                                                     | Description                                                                  |
+| ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
+| `ctx`                                                                        | [context.Context](https://pkg.go.dev/context#Context)                        | :heavy_check_mark:                                                           | The context to use for the request.                                          |
+| `id`                                                                         | *string*                                                                     | :heavy_check_mark:                                                           | The custom field ID.                                                         |
+| `customFieldUpdate`                                                          | [components.CustomFieldUpdate](../../models/components/customfieldupdate.md) | :heavy_check_mark:                                                           | N/A                                                                          |
+| `opts`                                                                       | [][operations.Option](../../models/operations/option.md)                     | :heavy_minus_sign:                                                           | The options for this request.                                                |
+
+### Response
+
+**[*operations.CustomFieldsUpdateResponse](../../models/operations/customfieldsupdateresponse.md), error**
 
 ### Errors
 

@@ -27,3 +27,19 @@ customFieldCreateDateMetadata := components.CreateCustomFieldCreateDateMetadataN
 customFieldCreateDateMetadata := components.CreateCustomFieldCreateDateMetadataBoolean(bool{/* values here */})
 ```
 
+## Union Discrimination
+
+Use the `Type` field to determine which variant is active, then access the corresponding field:
+
+```go
+switch customFieldCreateDateMetadata.Type {
+	case components.CustomFieldCreateDateMetadataTypeStr:
+		// customFieldCreateDateMetadata.Str is populated
+	case components.CustomFieldCreateDateMetadataTypeInteger:
+		// customFieldCreateDateMetadata.Integer is populated
+	case components.CustomFieldCreateDateMetadataTypeNumber:
+		// customFieldCreateDateMetadata.Number is populated
+	case components.CustomFieldCreateDateMetadataTypeBoolean:
+		// customFieldCreateDateMetadata.Boolean is populated
+}
+```

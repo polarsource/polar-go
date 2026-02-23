@@ -9,113 +9,6 @@ import (
 	"time"
 )
 
-type SubscriptionCustomerMetadataType string
-
-const (
-	SubscriptionCustomerMetadataTypeStr     SubscriptionCustomerMetadataType = "str"
-	SubscriptionCustomerMetadataTypeInteger SubscriptionCustomerMetadataType = "integer"
-	SubscriptionCustomerMetadataTypeNumber  SubscriptionCustomerMetadataType = "number"
-	SubscriptionCustomerMetadataTypeBoolean SubscriptionCustomerMetadataType = "boolean"
-)
-
-type SubscriptionCustomerMetadata struct {
-	Str     *string  `queryParam:"inline,name=metadata"`
-	Integer *int64   `queryParam:"inline,name=metadata"`
-	Number  *float64 `queryParam:"inline,name=metadata"`
-	Boolean *bool    `queryParam:"inline,name=metadata"`
-
-	Type SubscriptionCustomerMetadataType
-}
-
-func CreateSubscriptionCustomerMetadataStr(str string) SubscriptionCustomerMetadata {
-	typ := SubscriptionCustomerMetadataTypeStr
-
-	return SubscriptionCustomerMetadata{
-		Str:  &str,
-		Type: typ,
-	}
-}
-
-func CreateSubscriptionCustomerMetadataInteger(integer int64) SubscriptionCustomerMetadata {
-	typ := SubscriptionCustomerMetadataTypeInteger
-
-	return SubscriptionCustomerMetadata{
-		Integer: &integer,
-		Type:    typ,
-	}
-}
-
-func CreateSubscriptionCustomerMetadataNumber(number float64) SubscriptionCustomerMetadata {
-	typ := SubscriptionCustomerMetadataTypeNumber
-
-	return SubscriptionCustomerMetadata{
-		Number: &number,
-		Type:   typ,
-	}
-}
-
-func CreateSubscriptionCustomerMetadataBoolean(boolean bool) SubscriptionCustomerMetadata {
-	typ := SubscriptionCustomerMetadataTypeBoolean
-
-	return SubscriptionCustomerMetadata{
-		Boolean: &boolean,
-		Type:    typ,
-	}
-}
-
-func (u *SubscriptionCustomerMetadata) UnmarshalJSON(data []byte) error {
-
-	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, nil); err == nil {
-		u.Str = &str
-		u.Type = SubscriptionCustomerMetadataTypeStr
-		return nil
-	}
-
-	var integer int64 = int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
-		u.Integer = &integer
-		u.Type = SubscriptionCustomerMetadataTypeInteger
-		return nil
-	}
-
-	var number float64 = float64(0)
-	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
-		u.Number = &number
-		u.Type = SubscriptionCustomerMetadataTypeNumber
-		return nil
-	}
-
-	var boolean bool = false
-	if err := utils.UnmarshalJSON(data, &boolean, "", true, nil); err == nil {
-		u.Boolean = &boolean
-		u.Type = SubscriptionCustomerMetadataTypeBoolean
-		return nil
-	}
-
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SubscriptionCustomerMetadata", string(data))
-}
-
-func (u SubscriptionCustomerMetadata) MarshalJSON() ([]byte, error) {
-	if u.Str != nil {
-		return utils.MarshalJSON(u.Str, "", true)
-	}
-
-	if u.Integer != nil {
-		return utils.MarshalJSON(u.Integer, "", true)
-	}
-
-	if u.Number != nil {
-		return utils.MarshalJSON(u.Number, "", true)
-	}
-
-	if u.Boolean != nil {
-		return utils.MarshalJSON(u.Boolean, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type SubscriptionCustomerMetadata: all fields are null")
-}
-
 type TaxIDType string
 
 const (
@@ -124,8 +17,8 @@ const (
 )
 
 type TaxID struct {
-	Str         *string      `queryParam:"inline,name=tax_id"`
-	TaxIDFormat *TaxIDFormat `queryParam:"inline,name=tax_id"`
+	Str         *string      `queryParam:"inline" union:"member"`
+	TaxIDFormat *TaxIDFormat `queryParam:"inline" union:"member"`
 
 	Type TaxIDType
 }
@@ -185,18 +78,21 @@ type SubscriptionCustomer struct {
 	// Creation timestamp of the object.
 	CreatedAt time.Time `json:"created_at"`
 	// Last modification timestamp of the object.
-	ModifiedAt *time.Time                              `json:"modified_at"`
-	Metadata   map[string]SubscriptionCustomerMetadata `json:"metadata"`
+	ModifiedAt *time.Time                    `json:"modified_at"`
+	Metadata   map[string]MetadataOutputType `json:"metadata"`
 	// The ID of the customer in your system. This must be unique within the organization. Once set, it can't be updated.
 	ExternalID *string `json:"external_id"`
 	// The email address of the customer. This must be unique within the organization.
 	Email string `json:"email"`
 	// Whether the customer email address is verified. The address is automatically verified when the customer accesses the customer portal using their email address.
 	EmailVerified bool `json:"email_verified"`
+	// The type of customer: 'individual' for single users, 'team' for customers with multiple members. Legacy customers may have NULL type which is treated as 'individual'.
+	Type *CustomerType `json:"type,omitempty"`
 	// The name of the customer.
 	Name           *string  `json:"name"`
 	BillingAddress *Address `json:"billing_address"`
 	TaxID          []*TaxID `json:"tax_id"`
+	Locale         *string  `json:"locale,omitempty"`
 	// The ID of the organization owning the customer.
 	OrganizationID string `json:"organization_id"`
 	// Timestamp for when the customer was soft deleted.
@@ -209,7 +105,7 @@ func (s SubscriptionCustomer) MarshalJSON() ([]byte, error) {
 }
 
 func (s *SubscriptionCustomer) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &s, "", false, []string{"id", "created_at", "metadata", "email", "email_verified", "organization_id", "avatar_url"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &s, "", false, nil); err != nil {
 		return err
 	}
 	return nil
@@ -236,9 +132,9 @@ func (s *SubscriptionCustomer) GetModifiedAt() *time.Time {
 	return s.ModifiedAt
 }
 
-func (s *SubscriptionCustomer) GetMetadata() map[string]SubscriptionCustomerMetadata {
+func (s *SubscriptionCustomer) GetMetadata() map[string]MetadataOutputType {
 	if s == nil {
-		return map[string]SubscriptionCustomerMetadata{}
+		return map[string]MetadataOutputType{}
 	}
 	return s.Metadata
 }
@@ -264,6 +160,13 @@ func (s *SubscriptionCustomer) GetEmailVerified() bool {
 	return s.EmailVerified
 }
 
+func (s *SubscriptionCustomer) GetType() *CustomerType {
+	if s == nil {
+		return nil
+	}
+	return s.Type
+}
+
 func (s *SubscriptionCustomer) GetName() *string {
 	if s == nil {
 		return nil
@@ -283,6 +186,13 @@ func (s *SubscriptionCustomer) GetTaxID() []*TaxID {
 		return nil
 	}
 	return s.TaxID
+}
+
+func (s *SubscriptionCustomer) GetLocale() *string {
+	if s == nil {
+		return nil
+	}
+	return s.Locale
 }
 
 func (s *SubscriptionCustomer) GetOrganizationID() string {

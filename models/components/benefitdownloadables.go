@@ -3,118 +3,9 @@
 package components
 
 import (
-	"errors"
-	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
 	"time"
 )
-
-type BenefitDownloadablesMetadataType string
-
-const (
-	BenefitDownloadablesMetadataTypeStr     BenefitDownloadablesMetadataType = "str"
-	BenefitDownloadablesMetadataTypeInteger BenefitDownloadablesMetadataType = "integer"
-	BenefitDownloadablesMetadataTypeNumber  BenefitDownloadablesMetadataType = "number"
-	BenefitDownloadablesMetadataTypeBoolean BenefitDownloadablesMetadataType = "boolean"
-)
-
-type BenefitDownloadablesMetadata struct {
-	Str     *string  `queryParam:"inline,name=metadata"`
-	Integer *int64   `queryParam:"inline,name=metadata"`
-	Number  *float64 `queryParam:"inline,name=metadata"`
-	Boolean *bool    `queryParam:"inline,name=metadata"`
-
-	Type BenefitDownloadablesMetadataType
-}
-
-func CreateBenefitDownloadablesMetadataStr(str string) BenefitDownloadablesMetadata {
-	typ := BenefitDownloadablesMetadataTypeStr
-
-	return BenefitDownloadablesMetadata{
-		Str:  &str,
-		Type: typ,
-	}
-}
-
-func CreateBenefitDownloadablesMetadataInteger(integer int64) BenefitDownloadablesMetadata {
-	typ := BenefitDownloadablesMetadataTypeInteger
-
-	return BenefitDownloadablesMetadata{
-		Integer: &integer,
-		Type:    typ,
-	}
-}
-
-func CreateBenefitDownloadablesMetadataNumber(number float64) BenefitDownloadablesMetadata {
-	typ := BenefitDownloadablesMetadataTypeNumber
-
-	return BenefitDownloadablesMetadata{
-		Number: &number,
-		Type:   typ,
-	}
-}
-
-func CreateBenefitDownloadablesMetadataBoolean(boolean bool) BenefitDownloadablesMetadata {
-	typ := BenefitDownloadablesMetadataTypeBoolean
-
-	return BenefitDownloadablesMetadata{
-		Boolean: &boolean,
-		Type:    typ,
-	}
-}
-
-func (u *BenefitDownloadablesMetadata) UnmarshalJSON(data []byte) error {
-
-	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, nil); err == nil {
-		u.Str = &str
-		u.Type = BenefitDownloadablesMetadataTypeStr
-		return nil
-	}
-
-	var integer int64 = int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
-		u.Integer = &integer
-		u.Type = BenefitDownloadablesMetadataTypeInteger
-		return nil
-	}
-
-	var number float64 = float64(0)
-	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
-		u.Number = &number
-		u.Type = BenefitDownloadablesMetadataTypeNumber
-		return nil
-	}
-
-	var boolean bool = false
-	if err := utils.UnmarshalJSON(data, &boolean, "", true, nil); err == nil {
-		u.Boolean = &boolean
-		u.Type = BenefitDownloadablesMetadataTypeBoolean
-		return nil
-	}
-
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for BenefitDownloadablesMetadata", string(data))
-}
-
-func (u BenefitDownloadablesMetadata) MarshalJSON() ([]byte, error) {
-	if u.Str != nil {
-		return utils.MarshalJSON(u.Str, "", true)
-	}
-
-	if u.Integer != nil {
-		return utils.MarshalJSON(u.Integer, "", true)
-	}
-
-	if u.Number != nil {
-		return utils.MarshalJSON(u.Number, "", true)
-	}
-
-	if u.Boolean != nil {
-		return utils.MarshalJSON(u.Boolean, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type BenefitDownloadablesMetadata: all fields are null")
-}
 
 type BenefitDownloadables struct {
 	// The ID of the benefit.
@@ -131,9 +22,9 @@ type BenefitDownloadables struct {
 	// Whether the benefit is deletable.
 	Deletable bool `json:"deletable"`
 	// The ID of the organization owning the benefit.
-	OrganizationID string                                  `json:"organization_id"`
-	Metadata       map[string]BenefitDownloadablesMetadata `json:"metadata"`
-	Properties     BenefitDownloadablesProperties          `json:"properties"`
+	OrganizationID string                         `json:"organization_id"`
+	Metadata       map[string]MetadataOutputType  `json:"metadata"`
+	Properties     BenefitDownloadablesProperties `json:"properties"`
 }
 
 func (b BenefitDownloadables) MarshalJSON() ([]byte, error) {
@@ -200,9 +91,9 @@ func (b *BenefitDownloadables) GetOrganizationID() string {
 	return b.OrganizationID
 }
 
-func (b *BenefitDownloadables) GetMetadata() map[string]BenefitDownloadablesMetadata {
+func (b *BenefitDownloadables) GetMetadata() map[string]MetadataOutputType {
 	if b == nil {
-		return map[string]BenefitDownloadablesMetadata{}
+		return map[string]MetadataOutputType{}
 	}
 	return b.Metadata
 }

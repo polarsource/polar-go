@@ -18,8 +18,8 @@ const (
 
 // CustomersListQueryParamOrganizationIDFilter - Filter by organization ID.
 type CustomersListQueryParamOrganizationIDFilter struct {
-	Str        *string  `queryParam:"inline,name=OrganizationID_Filter"`
-	ArrayOfStr []string `queryParam:"inline,name=OrganizationID_Filter"`
+	Str        *string  `queryParam:"inline" union:"member"`
+	ArrayOfStr []string `queryParam:"inline" union:"member"`
 
 	Type CustomersListQueryParamOrganizationIDFilterType
 }
@@ -153,7 +153,7 @@ func (c *CustomersListRequest) GetMetadata() map[string]components.MetadataQuery
 type CustomersListResponse struct {
 	HTTPMeta components.HTTPMetadata `json:"-"`
 	// Successful Response
-	ListResourceCustomer *components.ListResourceCustomer
+	ListResourceCustomerWithMembers *components.ListResourceCustomerWithMembers
 
 	Next func() (*CustomersListResponse, error)
 }
@@ -165,9 +165,9 @@ func (c *CustomersListResponse) GetHTTPMeta() components.HTTPMetadata {
 	return c.HTTPMeta
 }
 
-func (c *CustomersListResponse) GetListResourceCustomer() *components.ListResourceCustomer {
+func (c *CustomersListResponse) GetListResourceCustomerWithMembers() *components.ListResourceCustomerWithMembers {
 	if c == nil {
 		return nil
 	}
-	return c.ListResourceCustomer
+	return c.ListResourceCustomerWithMembers
 }

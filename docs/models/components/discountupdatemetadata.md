@@ -27,3 +27,19 @@ discountUpdateMetadata := components.CreateDiscountUpdateMetadataNumber(float64{
 discountUpdateMetadata := components.CreateDiscountUpdateMetadataBoolean(bool{/* values here */})
 ```
 
+## Union Discrimination
+
+Use the `Type` field to determine which variant is active, then access the corresponding field:
+
+```go
+switch discountUpdateMetadata.Type {
+	case components.DiscountUpdateMetadataTypeStr:
+		// discountUpdateMetadata.Str is populated
+	case components.DiscountUpdateMetadataTypeInteger:
+		// discountUpdateMetadata.Integer is populated
+	case components.DiscountUpdateMetadataTypeNumber:
+		// discountUpdateMetadata.Number is populated
+	case components.DiscountUpdateMetadataTypeBoolean:
+		// discountUpdateMetadata.Boolean is populated
+}
+```

@@ -2,9 +2,24 @@
 
 package components
 
+import (
+	"github.com/polarsource/polar-go/internal/utils"
+)
+
 type Pagination struct {
 	TotalCount int64 `json:"total_count"`
 	MaxPage    int64 `json:"max_page"`
+}
+
+func (p Pagination) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(p, "", false)
+}
+
+func (p *Pagination) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &p, "", false, []string{"total_count", "max_page"}); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (p *Pagination) GetTotalCount() int64 {

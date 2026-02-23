@@ -7,7 +7,12 @@ import (
 )
 
 type SubscriptionCycledMetadata struct {
-	SubscriptionID string `json:"subscription_id"`
+	SubscriptionID         string  `json:"subscription_id"`
+	ProductID              *string `json:"product_id,omitempty"`
+	Amount                 *int64  `json:"amount,omitempty"`
+	Currency               *string `json:"currency,omitempty"`
+	RecurringInterval      *string `json:"recurring_interval,omitempty"`
+	RecurringIntervalCount *int64  `json:"recurring_interval_count,omitempty"`
 }
 
 func (s SubscriptionCycledMetadata) MarshalJSON() ([]byte, error) {
@@ -26,4 +31,39 @@ func (s *SubscriptionCycledMetadata) GetSubscriptionID() string {
 		return ""
 	}
 	return s.SubscriptionID
+}
+
+func (s *SubscriptionCycledMetadata) GetProductID() *string {
+	if s == nil {
+		return nil
+	}
+	return s.ProductID
+}
+
+func (s *SubscriptionCycledMetadata) GetAmount() *int64 {
+	if s == nil {
+		return nil
+	}
+	return s.Amount
+}
+
+func (s *SubscriptionCycledMetadata) GetCurrency() *string {
+	if s == nil {
+		return nil
+	}
+	return s.Currency
+}
+
+func (s *SubscriptionCycledMetadata) GetRecurringInterval() *string {
+	if s == nil {
+		return nil
+	}
+	return s.RecurringInterval
+}
+
+func (s *SubscriptionCycledMetadata) GetRecurringIntervalCount() *int64 {
+	if s == nil {
+		return nil
+	}
+	return s.RecurringIntervalCount
 }

@@ -17,3 +17,15 @@ ordersListQueryParamProductIDFilter := operations.CreateOrdersListQueryParamProd
 ordersListQueryParamProductIDFilter := operations.CreateOrdersListQueryParamProductIDFilterArrayOfStr([]string{/* values here */})
 ```
 
+## Union Discrimination
+
+Use the `Type` field to determine which variant is active, then access the corresponding field:
+
+```go
+switch ordersListQueryParamProductIDFilter.Type {
+	case operations.OrdersListQueryParamProductIDFilterTypeStr:
+		// ordersListQueryParamProductIDFilter.Str is populated
+	case operations.OrdersListQueryParamProductIDFilterTypeArrayOfStr:
+		// ordersListQueryParamProductIDFilter.ArrayOfStr is populated
+}
+```

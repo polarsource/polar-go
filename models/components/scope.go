@@ -10,67 +10,69 @@ import (
 type Scope string
 
 const (
-	ScopeOpenid                      Scope = "openid"
-	ScopeProfile                     Scope = "profile"
-	ScopeEmail                       Scope = "email"
-	ScopeUserRead                    Scope = "user:read"
-	ScopeWebRead                     Scope = "web:read"
-	ScopeWebWrite                    Scope = "web:write"
-	ScopeOrganizationsRead           Scope = "organizations:read"
-	ScopeOrganizationsWrite          Scope = "organizations:write"
-	ScopeCustomFieldsRead            Scope = "custom_fields:read"
-	ScopeCustomFieldsWrite           Scope = "custom_fields:write"
-	ScopeDiscountsRead               Scope = "discounts:read"
-	ScopeDiscountsWrite              Scope = "discounts:write"
-	ScopeCheckoutLinksRead           Scope = "checkout_links:read"
-	ScopeCheckoutLinksWrite          Scope = "checkout_links:write"
-	ScopeCheckoutsRead               Scope = "checkouts:read"
-	ScopeCheckoutsWrite              Scope = "checkouts:write"
-	ScopeTransactionsRead            Scope = "transactions:read"
-	ScopeTransactionsWrite           Scope = "transactions:write"
-	ScopePayoutsRead                 Scope = "payouts:read"
-	ScopePayoutsWrite                Scope = "payouts:write"
-	ScopeProductsRead                Scope = "products:read"
-	ScopeProductsWrite               Scope = "products:write"
-	ScopeBenefitsRead                Scope = "benefits:read"
-	ScopeBenefitsWrite               Scope = "benefits:write"
-	ScopeEventsRead                  Scope = "events:read"
-	ScopeEventsWrite                 Scope = "events:write"
-	ScopeMetersRead                  Scope = "meters:read"
-	ScopeMetersWrite                 Scope = "meters:write"
-	ScopeFilesRead                   Scope = "files:read"
-	ScopeFilesWrite                  Scope = "files:write"
-	ScopeSubscriptionsRead           Scope = "subscriptions:read"
-	ScopeSubscriptionsWrite          Scope = "subscriptions:write"
-	ScopeCustomersRead               Scope = "customers:read"
-	ScopeCustomersWrite              Scope = "customers:write"
-	ScopeWalletsRead                 Scope = "wallets:read"
-	ScopeWalletsWrite                Scope = "wallets:write"
-	ScopeCustomerMetersRead          Scope = "customer_meters:read"
-	ScopeCustomerSessionsWrite       Scope = "customer_sessions:write"
-	ScopeCustomerSeatsRead           Scope = "customer_seats:read"
-	ScopeCustomerSeatsWrite          Scope = "customer_seats:write"
-	ScopeOrdersRead                  Scope = "orders:read"
-	ScopeOrdersWrite                 Scope = "orders:write"
-	ScopeRefundsRead                 Scope = "refunds:read"
-	ScopeRefundsWrite                Scope = "refunds:write"
-	ScopePaymentsRead                Scope = "payments:read"
-	ScopeMetricsRead                 Scope = "metrics:read"
-	ScopeWebhooksRead                Scope = "webhooks:read"
-	ScopeWebhooksWrite               Scope = "webhooks:write"
-	ScopeExternalOrganizationsRead   Scope = "external_organizations:read"
-	ScopeLicenseKeysRead             Scope = "license_keys:read"
-	ScopeLicenseKeysWrite            Scope = "license_keys:write"
-	ScopeRepositoriesRead            Scope = "repositories:read"
-	ScopeRepositoriesWrite           Scope = "repositories:write"
-	ScopeIssuesRead                  Scope = "issues:read"
-	ScopeIssuesWrite                 Scope = "issues:write"
-	ScopeCustomerPortalRead          Scope = "customer_portal:read"
-	ScopeCustomerPortalWrite         Scope = "customer_portal:write"
-	ScopeNotificationsRead           Scope = "notifications:read"
-	ScopeNotificationsWrite          Scope = "notifications:write"
-	ScopeNotificationRecipientsRead  Scope = "notification_recipients:read"
-	ScopeNotificationRecipientsWrite Scope = "notification_recipients:write"
+	ScopeOpenid                        Scope = "openid"
+	ScopeProfile                       Scope = "profile"
+	ScopeEmail                         Scope = "email"
+	ScopeUserRead                      Scope = "user:read"
+	ScopeUserWrite                     Scope = "user:write"
+	ScopeWebRead                       Scope = "web:read"
+	ScopeWebWrite                      Scope = "web:write"
+	ScopeOrganizationsRead             Scope = "organizations:read"
+	ScopeOrganizationsWrite            Scope = "organizations:write"
+	ScopeCustomFieldsRead              Scope = "custom_fields:read"
+	ScopeCustomFieldsWrite             Scope = "custom_fields:write"
+	ScopeDiscountsRead                 Scope = "discounts:read"
+	ScopeDiscountsWrite                Scope = "discounts:write"
+	ScopeCheckoutLinksRead             Scope = "checkout_links:read"
+	ScopeCheckoutLinksWrite            Scope = "checkout_links:write"
+	ScopeCheckoutsRead                 Scope = "checkouts:read"
+	ScopeCheckoutsWrite                Scope = "checkouts:write"
+	ScopeTransactionsRead              Scope = "transactions:read"
+	ScopeTransactionsWrite             Scope = "transactions:write"
+	ScopePayoutsRead                   Scope = "payouts:read"
+	ScopePayoutsWrite                  Scope = "payouts:write"
+	ScopeProductsRead                  Scope = "products:read"
+	ScopeProductsWrite                 Scope = "products:write"
+	ScopeBenefitsRead                  Scope = "benefits:read"
+	ScopeBenefitsWrite                 Scope = "benefits:write"
+	ScopeEventsRead                    Scope = "events:read"
+	ScopeEventsWrite                   Scope = "events:write"
+	ScopeMetersRead                    Scope = "meters:read"
+	ScopeMetersWrite                   Scope = "meters:write"
+	ScopeFilesRead                     Scope = "files:read"
+	ScopeFilesWrite                    Scope = "files:write"
+	ScopeSubscriptionsRead             Scope = "subscriptions:read"
+	ScopeSubscriptionsWrite            Scope = "subscriptions:write"
+	ScopeCustomersRead                 Scope = "customers:read"
+	ScopeCustomersWrite                Scope = "customers:write"
+	ScopeMembersRead                   Scope = "members:read"
+	ScopeMembersWrite                  Scope = "members:write"
+	ScopeWalletsRead                   Scope = "wallets:read"
+	ScopeWalletsWrite                  Scope = "wallets:write"
+	ScopeDisputesRead                  Scope = "disputes:read"
+	ScopeCustomerMetersRead            Scope = "customer_meters:read"
+	ScopeCustomerSessionsWrite         Scope = "customer_sessions:write"
+	ScopeMemberSessionsWrite           Scope = "member_sessions:write"
+	ScopeCustomerSeatsRead             Scope = "customer_seats:read"
+	ScopeCustomerSeatsWrite            Scope = "customer_seats:write"
+	ScopeOrdersRead                    Scope = "orders:read"
+	ScopeOrdersWrite                   Scope = "orders:write"
+	ScopeRefundsRead                   Scope = "refunds:read"
+	ScopeRefundsWrite                  Scope = "refunds:write"
+	ScopePaymentsRead                  Scope = "payments:read"
+	ScopeMetricsRead                   Scope = "metrics:read"
+	ScopeWebhooksRead                  Scope = "webhooks:read"
+	ScopeWebhooksWrite                 Scope = "webhooks:write"
+	ScopeLicenseKeysRead               Scope = "license_keys:read"
+	ScopeLicenseKeysWrite              Scope = "license_keys:write"
+	ScopeCustomerPortalRead            Scope = "customer_portal:read"
+	ScopeCustomerPortalWrite           Scope = "customer_portal:write"
+	ScopeNotificationsRead             Scope = "notifications:read"
+	ScopeNotificationsWrite            Scope = "notifications:write"
+	ScopeNotificationRecipientsRead    Scope = "notification_recipients:read"
+	ScopeNotificationRecipientsWrite   Scope = "notification_recipients:write"
+	ScopeOrganizationAccessTokensRead  Scope = "organization_access_tokens:read"
+	ScopeOrganizationAccessTokensWrite Scope = "organization_access_tokens:write"
 )
 
 func (e Scope) ToPointer() *Scope {
@@ -89,6 +91,8 @@ func (e *Scope) UnmarshalJSON(data []byte) error {
 	case "email":
 		fallthrough
 	case "user:read":
+		fallthrough
+	case "user:write":
 		fallthrough
 	case "web:read":
 		fallthrough
@@ -150,13 +154,21 @@ func (e *Scope) UnmarshalJSON(data []byte) error {
 		fallthrough
 	case "customers:write":
 		fallthrough
+	case "members:read":
+		fallthrough
+	case "members:write":
+		fallthrough
 	case "wallets:read":
 		fallthrough
 	case "wallets:write":
 		fallthrough
+	case "disputes:read":
+		fallthrough
 	case "customer_meters:read":
 		fallthrough
 	case "customer_sessions:write":
+		fallthrough
+	case "member_sessions:write":
 		fallthrough
 	case "customer_seats:read":
 		fallthrough
@@ -178,19 +190,9 @@ func (e *Scope) UnmarshalJSON(data []byte) error {
 		fallthrough
 	case "webhooks:write":
 		fallthrough
-	case "external_organizations:read":
-		fallthrough
 	case "license_keys:read":
 		fallthrough
 	case "license_keys:write":
-		fallthrough
-	case "repositories:read":
-		fallthrough
-	case "repositories:write":
-		fallthrough
-	case "issues:read":
-		fallthrough
-	case "issues:write":
 		fallthrough
 	case "customer_portal:read":
 		fallthrough
@@ -203,6 +205,10 @@ func (e *Scope) UnmarshalJSON(data []byte) error {
 	case "notification_recipients:read":
 		fallthrough
 	case "notification_recipients:write":
+		fallthrough
+	case "organization_access_tokens:read":
+		fallthrough
+	case "organization_access_tokens:write":
 		*e = Scope(v)
 		return nil
 	default:

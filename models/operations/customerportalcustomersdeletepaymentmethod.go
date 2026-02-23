@@ -7,14 +7,22 @@ import (
 )
 
 type CustomerPortalCustomersDeletePaymentMethodSecurity struct {
-	CustomerSession string `security:"scheme,type=http,subtype=bearer,name=Authorization,env=polar_customer_session"`
+	CustomerSession *string `security:"scheme,type=http,subtype=bearer,name=Authorization,env=polar_customer_session"`
+	MemberSession   *string `security:"scheme,type=http,subtype=bearer,name=Authorization,env=polar_member_session"`
 }
 
-func (c *CustomerPortalCustomersDeletePaymentMethodSecurity) GetCustomerSession() string {
+func (c *CustomerPortalCustomersDeletePaymentMethodSecurity) GetCustomerSession() *string {
 	if c == nil {
-		return ""
+		return nil
 	}
 	return c.CustomerSession
+}
+
+func (c *CustomerPortalCustomersDeletePaymentMethodSecurity) GetMemberSession() *string {
+	if c == nil {
+		return nil
+	}
+	return c.MemberSession
 }
 
 type CustomerPortalCustomersDeletePaymentMethodRequest struct {

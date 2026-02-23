@@ -6,6 +6,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
+	"github.com/polarsource/polar-go/types"
 	"time"
 )
 
@@ -19,10 +20,10 @@ const (
 )
 
 type CheckoutConfirmStripeCustomFieldData struct {
-	Str      *string    `queryParam:"inline,name=custom_field_data"`
-	Integer  *int64     `queryParam:"inline,name=custom_field_data"`
-	Boolean  *bool      `queryParam:"inline,name=custom_field_data"`
-	DateTime *time.Time `queryParam:"inline,name=custom_field_data"`
+	Str      *string    `queryParam:"inline" union:"member"`
+	Integer  *int64     `queryParam:"inline" union:"member"`
+	Boolean  *bool      `queryParam:"inline" union:"member"`
+	DateTime *time.Time `queryParam:"inline" union:"member"`
 
 	Type CheckoutConfirmStripeCustomFieldDataType
 }
@@ -135,10 +136,24 @@ type CheckoutConfirmStripe struct {
 	CustomerBillingName    *string       `json:"customer_billing_name,omitempty"`
 	CustomerBillingAddress *AddressInput `json:"customer_billing_address,omitempty"`
 	CustomerTaxID          *string       `json:"customer_tax_id,omitempty"`
+	Locale                 *string       `json:"locale,omitempty"`
 	// Discount code to apply to the checkout.
 	DiscountCode *string `json:"discount_code,omitempty"`
+	// Disable the trial period for the checkout session. It's mainly useful when the trial is blocked because the customer already redeemed one.
+	allowTrial *bool `const:"false" json:"allow_trial,omitempty"`
 	// ID of the Stripe confirmation token. Required for fixed prices and custom prices.
 	ConfirmationTokenID *string `json:"confirmation_token_id,omitempty"`
+}
+
+func (c CheckoutConfirmStripe) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(c, "", false)
+}
+
+func (c *CheckoutConfirmStripe) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &c, "", false, nil); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (c *CheckoutConfirmStripe) GetCustomFieldData() map[string]*CheckoutConfirmStripeCustomFieldData {
@@ -218,11 +233,22 @@ func (c *CheckoutConfirmStripe) GetCustomerTaxID() *string {
 	return c.CustomerTaxID
 }
 
+func (c *CheckoutConfirmStripe) GetLocale() *string {
+	if c == nil {
+		return nil
+	}
+	return c.Locale
+}
+
 func (c *CheckoutConfirmStripe) GetDiscountCode() *string {
 	if c == nil {
 		return nil
 	}
 	return c.DiscountCode
+}
+
+func (c *CheckoutConfirmStripe) GetAllowTrial() *bool {
+	return types.Pointer(false)
 }
 
 func (c *CheckoutConfirmStripe) GetConfirmationTokenID() *string {

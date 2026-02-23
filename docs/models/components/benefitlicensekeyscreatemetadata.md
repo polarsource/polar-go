@@ -27,3 +27,19 @@ benefitLicenseKeysCreateMetadata := components.CreateBenefitLicenseKeysCreateMet
 benefitLicenseKeysCreateMetadata := components.CreateBenefitLicenseKeysCreateMetadataBoolean(bool{/* values here */})
 ```
 
+## Union Discrimination
+
+Use the `Type` field to determine which variant is active, then access the corresponding field:
+
+```go
+switch benefitLicenseKeysCreateMetadata.Type {
+	case components.BenefitLicenseKeysCreateMetadataTypeStr:
+		// benefitLicenseKeysCreateMetadata.Str is populated
+	case components.BenefitLicenseKeysCreateMetadataTypeInteger:
+		// benefitLicenseKeysCreateMetadata.Integer is populated
+	case components.BenefitLicenseKeysCreateMetadataTypeNumber:
+		// benefitLicenseKeysCreateMetadata.Number is populated
+	case components.BenefitLicenseKeysCreateMetadataTypeBoolean:
+		// benefitLicenseKeysCreateMetadata.Boolean is populated
+}
+```

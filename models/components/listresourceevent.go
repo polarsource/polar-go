@@ -2,9 +2,24 @@
 
 package components
 
+import (
+	"github.com/polarsource/polar-go/internal/utils"
+)
+
 type ListResourceEvent struct {
 	Items      []Event    `json:"items"`
 	Pagination Pagination `json:"pagination"`
+}
+
+func (l ListResourceEvent) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(l, "", false)
+}
+
+func (l *ListResourceEvent) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &l, "", false, []string{"items", "pagination"}); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (l *ListResourceEvent) GetItems() []Event {

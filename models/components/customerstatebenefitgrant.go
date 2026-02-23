@@ -9,113 +9,6 @@ import (
 	"time"
 )
 
-type BenefitMetadataType string
-
-const (
-	BenefitMetadataTypeStr     BenefitMetadataType = "str"
-	BenefitMetadataTypeInteger BenefitMetadataType = "integer"
-	BenefitMetadataTypeNumber  BenefitMetadataType = "number"
-	BenefitMetadataTypeBoolean BenefitMetadataType = "boolean"
-)
-
-type BenefitMetadata struct {
-	Str     *string  `queryParam:"inline,name=benefit_metadata"`
-	Integer *int64   `queryParam:"inline,name=benefit_metadata"`
-	Number  *float64 `queryParam:"inline,name=benefit_metadata"`
-	Boolean *bool    `queryParam:"inline,name=benefit_metadata"`
-
-	Type BenefitMetadataType
-}
-
-func CreateBenefitMetadataStr(str string) BenefitMetadata {
-	typ := BenefitMetadataTypeStr
-
-	return BenefitMetadata{
-		Str:  &str,
-		Type: typ,
-	}
-}
-
-func CreateBenefitMetadataInteger(integer int64) BenefitMetadata {
-	typ := BenefitMetadataTypeInteger
-
-	return BenefitMetadata{
-		Integer: &integer,
-		Type:    typ,
-	}
-}
-
-func CreateBenefitMetadataNumber(number float64) BenefitMetadata {
-	typ := BenefitMetadataTypeNumber
-
-	return BenefitMetadata{
-		Number: &number,
-		Type:   typ,
-	}
-}
-
-func CreateBenefitMetadataBoolean(boolean bool) BenefitMetadata {
-	typ := BenefitMetadataTypeBoolean
-
-	return BenefitMetadata{
-		Boolean: &boolean,
-		Type:    typ,
-	}
-}
-
-func (u *BenefitMetadata) UnmarshalJSON(data []byte) error {
-
-	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, nil); err == nil {
-		u.Str = &str
-		u.Type = BenefitMetadataTypeStr
-		return nil
-	}
-
-	var integer int64 = int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
-		u.Integer = &integer
-		u.Type = BenefitMetadataTypeInteger
-		return nil
-	}
-
-	var number float64 = float64(0)
-	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
-		u.Number = &number
-		u.Type = BenefitMetadataTypeNumber
-		return nil
-	}
-
-	var boolean bool = false
-	if err := utils.UnmarshalJSON(data, &boolean, "", true, nil); err == nil {
-		u.Boolean = &boolean
-		u.Type = BenefitMetadataTypeBoolean
-		return nil
-	}
-
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for BenefitMetadata", string(data))
-}
-
-func (u BenefitMetadata) MarshalJSON() ([]byte, error) {
-	if u.Str != nil {
-		return utils.MarshalJSON(u.Str, "", true)
-	}
-
-	if u.Integer != nil {
-		return utils.MarshalJSON(u.Integer, "", true)
-	}
-
-	if u.Number != nil {
-		return utils.MarshalJSON(u.Number, "", true)
-	}
-
-	if u.Boolean != nil {
-		return utils.MarshalJSON(u.Boolean, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type BenefitMetadata: all fields are null")
-}
-
 type CustomerStateBenefitGrantPropertiesType string
 
 const (
@@ -127,11 +20,11 @@ const (
 )
 
 type CustomerStateBenefitGrantProperties struct {
-	BenefitGrantDiscordProperties          *BenefitGrantDiscordProperties          `queryParam:"inline,name=Properties"`
-	BenefitGrantGitHubRepositoryProperties *BenefitGrantGitHubRepositoryProperties `queryParam:"inline,name=Properties"`
-	BenefitGrantDownloadablesProperties    *BenefitGrantDownloadablesProperties    `queryParam:"inline,name=Properties"`
-	BenefitGrantLicenseKeysProperties      *BenefitGrantLicenseKeysProperties      `queryParam:"inline,name=Properties"`
-	BenefitGrantCustomProperties           *BenefitGrantCustomProperties           `queryParam:"inline,name=Properties"`
+	BenefitGrantDiscordProperties          *BenefitGrantDiscordProperties          `queryParam:"inline" union:"member"`
+	BenefitGrantGitHubRepositoryProperties *BenefitGrantGitHubRepositoryProperties `queryParam:"inline" union:"member"`
+	BenefitGrantDownloadablesProperties    *BenefitGrantDownloadablesProperties    `queryParam:"inline" union:"member"`
+	BenefitGrantLicenseKeysProperties      *BenefitGrantLicenseKeysProperties      `queryParam:"inline" union:"member"`
+	BenefitGrantCustomProperties           *BenefitGrantCustomProperties           `queryParam:"inline" union:"member"`
 
 	Type CustomerStateBenefitGrantPropertiesType
 }
@@ -256,10 +149,9 @@ type CustomerStateBenefitGrant struct {
 	// The timestamp when the benefit was granted.
 	GrantedAt time.Time `json:"granted_at"`
 	// The ID of the benefit concerned by this grant.
-	BenefitID   string      `json:"benefit_id"`
-	BenefitType BenefitType `json:"benefit_type"`
-	// The metadata of the benefit concerned by this grant.
-	BenefitMetadata map[string]BenefitMetadata          `json:"benefit_metadata"`
+	BenefitID       string                              `json:"benefit_id"`
+	BenefitType     BenefitType                         `json:"benefit_type"`
+	BenefitMetadata map[string]MetadataOutputType       `json:"benefit_metadata"`
 	Properties      CustomerStateBenefitGrantProperties `json:"properties"`
 }
 
@@ -268,7 +160,7 @@ func (c CustomerStateBenefitGrant) MarshalJSON() ([]byte, error) {
 }
 
 func (c *CustomerStateBenefitGrant) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &c, "", false, []string{"id", "created_at", "granted_at", "benefit_id", "benefit_type", "benefit_metadata", "properties"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &c, "", false, nil); err != nil {
 		return err
 	}
 	return nil
@@ -316,9 +208,9 @@ func (c *CustomerStateBenefitGrant) GetBenefitType() BenefitType {
 	return c.BenefitType
 }
 
-func (c *CustomerStateBenefitGrant) GetBenefitMetadata() map[string]BenefitMetadata {
+func (c *CustomerStateBenefitGrant) GetBenefitMetadata() map[string]MetadataOutputType {
 	if c == nil {
-		return map[string]BenefitMetadata{}
+		return map[string]MetadataOutputType{}
 	}
 	return c.BenefitMetadata
 }

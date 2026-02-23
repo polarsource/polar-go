@@ -19,10 +19,10 @@ const (
 )
 
 type CheckoutCustomFieldData struct {
-	Str      *string    `queryParam:"inline,name=custom_field_data"`
-	Integer  *int64     `queryParam:"inline,name=custom_field_data"`
-	Boolean  *bool      `queryParam:"inline,name=custom_field_data"`
-	DateTime *time.Time `queryParam:"inline,name=custom_field_data"`
+	Str      *string    `queryParam:"inline" union:"member"`
+	Integer  *int64     `queryParam:"inline" union:"member"`
+	Boolean  *bool      `queryParam:"inline" union:"member"`
+	DateTime *time.Time `queryParam:"inline" union:"member"`
 
 	Type CheckoutCustomFieldDataType
 }
@@ -116,113 +116,6 @@ func (u CheckoutCustomFieldData) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type CheckoutCustomFieldData: all fields are null")
 }
 
-type CheckoutMetadataType string
-
-const (
-	CheckoutMetadataTypeStr     CheckoutMetadataType = "str"
-	CheckoutMetadataTypeInteger CheckoutMetadataType = "integer"
-	CheckoutMetadataTypeNumber  CheckoutMetadataType = "number"
-	CheckoutMetadataTypeBoolean CheckoutMetadataType = "boolean"
-)
-
-type CheckoutMetadata struct {
-	Str     *string  `queryParam:"inline,name=metadata"`
-	Integer *int64   `queryParam:"inline,name=metadata"`
-	Number  *float64 `queryParam:"inline,name=metadata"`
-	Boolean *bool    `queryParam:"inline,name=metadata"`
-
-	Type CheckoutMetadataType
-}
-
-func CreateCheckoutMetadataStr(str string) CheckoutMetadata {
-	typ := CheckoutMetadataTypeStr
-
-	return CheckoutMetadata{
-		Str:  &str,
-		Type: typ,
-	}
-}
-
-func CreateCheckoutMetadataInteger(integer int64) CheckoutMetadata {
-	typ := CheckoutMetadataTypeInteger
-
-	return CheckoutMetadata{
-		Integer: &integer,
-		Type:    typ,
-	}
-}
-
-func CreateCheckoutMetadataNumber(number float64) CheckoutMetadata {
-	typ := CheckoutMetadataTypeNumber
-
-	return CheckoutMetadata{
-		Number: &number,
-		Type:   typ,
-	}
-}
-
-func CreateCheckoutMetadataBoolean(boolean bool) CheckoutMetadata {
-	typ := CheckoutMetadataTypeBoolean
-
-	return CheckoutMetadata{
-		Boolean: &boolean,
-		Type:    typ,
-	}
-}
-
-func (u *CheckoutMetadata) UnmarshalJSON(data []byte) error {
-
-	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, nil); err == nil {
-		u.Str = &str
-		u.Type = CheckoutMetadataTypeStr
-		return nil
-	}
-
-	var integer int64 = int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
-		u.Integer = &integer
-		u.Type = CheckoutMetadataTypeInteger
-		return nil
-	}
-
-	var number float64 = float64(0)
-	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
-		u.Number = &number
-		u.Type = CheckoutMetadataTypeNumber
-		return nil
-	}
-
-	var boolean bool = false
-	if err := utils.UnmarshalJSON(data, &boolean, "", true, nil); err == nil {
-		u.Boolean = &boolean
-		u.Type = CheckoutMetadataTypeBoolean
-		return nil
-	}
-
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for CheckoutMetadata", string(data))
-}
-
-func (u CheckoutMetadata) MarshalJSON() ([]byte, error) {
-	if u.Str != nil {
-		return utils.MarshalJSON(u.Str, "", true)
-	}
-
-	if u.Integer != nil {
-		return utils.MarshalJSON(u.Integer, "", true)
-	}
-
-	if u.Number != nil {
-		return utils.MarshalJSON(u.Number, "", true)
-	}
-
-	if u.Boolean != nil {
-		return utils.MarshalJSON(u.Boolean, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type CheckoutMetadata: all fields are null")
-}
-
 type CheckoutProductPriceType string
 
 const (
@@ -231,8 +124,8 @@ const (
 )
 
 type CheckoutProductPrice struct {
-	LegacyRecurringProductPrice *LegacyRecurringProductPrice `queryParam:"inline,name=product_price"`
-	ProductPrice                *ProductPrice                `queryParam:"inline,name=product_price"`
+	LegacyRecurringProductPrice *LegacyRecurringProductPrice `queryParam:"inline" union:"member"`
+	ProductPrice                *ProductPrice                `queryParam:"inline" union:"member"`
 
 	Type CheckoutProductPriceType
 }
@@ -286,6 +179,69 @@ func (u CheckoutProductPrice) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type CheckoutProductPrice: all fields are null")
 }
 
+type CheckoutPricesType string
+
+const (
+	CheckoutPricesTypeLegacyRecurringProductPrice CheckoutPricesType = "LegacyRecurringProductPrice"
+	CheckoutPricesTypeProductPrice                CheckoutPricesType = "ProductPrice"
+)
+
+type CheckoutPrices struct {
+	LegacyRecurringProductPrice *LegacyRecurringProductPrice `queryParam:"inline" union:"member"`
+	ProductPrice                *ProductPrice                `queryParam:"inline" union:"member"`
+
+	Type CheckoutPricesType
+}
+
+func CreateCheckoutPricesLegacyRecurringProductPrice(legacyRecurringProductPrice LegacyRecurringProductPrice) CheckoutPrices {
+	typ := CheckoutPricesTypeLegacyRecurringProductPrice
+
+	return CheckoutPrices{
+		LegacyRecurringProductPrice: &legacyRecurringProductPrice,
+		Type:                        typ,
+	}
+}
+
+func CreateCheckoutPricesProductPrice(productPrice ProductPrice) CheckoutPrices {
+	typ := CheckoutPricesTypeProductPrice
+
+	return CheckoutPrices{
+		ProductPrice: &productPrice,
+		Type:         typ,
+	}
+}
+
+func (u *CheckoutPrices) UnmarshalJSON(data []byte) error {
+
+	var legacyRecurringProductPrice LegacyRecurringProductPrice = LegacyRecurringProductPrice{}
+	if err := utils.UnmarshalJSON(data, &legacyRecurringProductPrice, "", true, nil); err == nil {
+		u.LegacyRecurringProductPrice = &legacyRecurringProductPrice
+		u.Type = CheckoutPricesTypeLegacyRecurringProductPrice
+		return nil
+	}
+
+	var productPrice ProductPrice = ProductPrice{}
+	if err := utils.UnmarshalJSON(data, &productPrice, "", true, nil); err == nil {
+		u.ProductPrice = &productPrice
+		u.Type = CheckoutPricesTypeProductPrice
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for CheckoutPrices", string(data))
+}
+
+func (u CheckoutPrices) MarshalJSON() ([]byte, error) {
+	if u.LegacyRecurringProductPrice != nil {
+		return utils.MarshalJSON(u.LegacyRecurringProductPrice, "", true)
+	}
+
+	if u.ProductPrice != nil {
+		return utils.MarshalJSON(u.ProductPrice, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type CheckoutPrices: all fields are null")
+}
+
 type CheckoutDiscountType string
 
 const (
@@ -296,10 +252,10 @@ const (
 )
 
 type CheckoutDiscount struct {
-	CheckoutDiscountFixedOnceForeverDuration      *CheckoutDiscountFixedOnceForeverDuration      `queryParam:"inline,name=discount"`
-	CheckoutDiscountFixedRepeatDuration           *CheckoutDiscountFixedRepeatDuration           `queryParam:"inline,name=discount"`
-	CheckoutDiscountPercentageOnceForeverDuration *CheckoutDiscountPercentageOnceForeverDuration `queryParam:"inline,name=discount"`
-	CheckoutDiscountPercentageRepeatDuration      *CheckoutDiscountPercentageRepeatDuration      `queryParam:"inline,name=discount"`
+	CheckoutDiscountFixedOnceForeverDuration      *CheckoutDiscountFixedOnceForeverDuration      `queryParam:"inline" union:"member"`
+	CheckoutDiscountFixedRepeatDuration           *CheckoutDiscountFixedRepeatDuration           `queryParam:"inline" union:"member"`
+	CheckoutDiscountPercentageOnceForeverDuration *CheckoutDiscountPercentageOnceForeverDuration `queryParam:"inline" union:"member"`
+	CheckoutDiscountPercentageRepeatDuration      *CheckoutDiscountPercentageRepeatDuration      `queryParam:"inline" union:"member"`
 
 	Type CheckoutDiscountType
 }
@@ -402,9 +358,9 @@ const (
 )
 
 type CustomerMetadata struct {
-	Str     *string `queryParam:"inline,name=customer_metadata"`
-	Integer *int64  `queryParam:"inline,name=customer_metadata"`
-	Boolean *bool   `queryParam:"inline,name=customer_metadata"`
+	Str     *string `queryParam:"inline" union:"member"`
+	Integer *int64  `queryParam:"inline" union:"member"`
+	Boolean *bool   `queryParam:"inline" union:"member"`
 
 	Type CustomerMetadataType
 }
@@ -518,6 +474,8 @@ type Checkout struct {
 	TotalAmount int64 `json:"total_amount"`
 	// Currency code of the checkout session.
 	Currency string `json:"currency"`
+	// Whether to enable the trial period for the checkout session. If `false`, the trial period will be disabled, even if the selected product has a trial configured.
+	AllowTrial *bool `json:"allow_trial"`
 	// Interval unit of the trial period, if any. This value is either set from the checkout, if `trial_interval` is set, or from the selected product.
 	ActiveTrialInterval *TrialInterval `json:"active_trial_interval"`
 	// Number of interval units of the trial period, if any. This value is either set from the checkout, if `trial_interval_count` is set, or from the selected product.
@@ -529,6 +487,8 @@ type Checkout struct {
 	// ID of the product to checkout.
 	ProductID *string `json:"product_id"`
 	// ID of the product price to checkout.
+	//
+	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
 	ProductPriceID *string `json:"product_price_id"`
 	// ID of the discount applied to the checkout.
 	DiscountID *string `json:"discount_id"`
@@ -557,13 +517,14 @@ type Checkout struct {
 	CustomerBillingName      *string                      `json:"customer_billing_name"`
 	CustomerBillingAddress   *Address                     `json:"customer_billing_address"`
 	CustomerTaxID            *string                      `json:"customer_tax_id"`
+	Locale                   *string                      `json:"locale,omitempty"`
 	PaymentProcessorMetadata map[string]string            `json:"payment_processor_metadata"`
 	BillingAddressFields     CheckoutBillingAddressFields `json:"billing_address_fields"`
 	// The interval unit for the trial period.
 	TrialInterval *TrialInterval `json:"trial_interval"`
 	// The number of interval units for the trial period.
-	TrialIntervalCount *int64                      `json:"trial_interval_count"`
-	Metadata           map[string]CheckoutMetadata `json:"metadata"`
+	TrialIntervalCount *int64                        `json:"trial_interval_count"`
+	Metadata           map[string]MetadataOutputType `json:"metadata"`
 	// ID of the customer in your system. If a matching customer exists on Polar, the resulting order will be linked to this customer. Otherwise, a new customer will be created with this external ID set.
 	ExternalCustomerID *string `json:"external_customer_id"`
 	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
@@ -573,7 +534,11 @@ type Checkout struct {
 	// Product selected to checkout.
 	Product *CheckoutProduct `json:"product"`
 	// Price of the selected product.
-	ProductPrice         *CheckoutProductPrice       `json:"product_price"`
+	//
+	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
+	ProductPrice *CheckoutProductPrice `json:"product_price"`
+	// Mapping of product IDs to their list of prices.
+	Prices               map[string][]CheckoutPrices `json:"prices"`
 	Discount             *CheckoutDiscount           `json:"discount"`
 	SubscriptionID       *string                     `json:"subscription_id"`
 	AttachedCustomFields []AttachedCustomField       `json:"attached_custom_fields"`
@@ -585,7 +550,7 @@ func (c Checkout) MarshalJSON() ([]byte, error) {
 }
 
 func (c *Checkout) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &c, "", false, []string{"id", "created_at", "payment_processor", "status", "client_secret", "url", "expires_at", "success_url", "amount", "discount_amount", "net_amount", "total_amount", "currency", "organization_id", "allow_discount_codes", "require_billing_address", "is_discount_applicable", "is_free_product_price", "is_payment_required", "is_payment_setup_required", "is_payment_form_required", "is_business_customer", "payment_processor_metadata", "billing_address_fields", "metadata", "products", "customer_metadata"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &c, "", false, nil); err != nil {
 		return err
 	}
 	return nil
@@ -729,6 +694,13 @@ func (c *Checkout) GetCurrency() string {
 		return ""
 	}
 	return c.Currency
+}
+
+func (c *Checkout) GetAllowTrial() *bool {
+	if c == nil {
+		return nil
+	}
+	return c.AllowTrial
 }
 
 func (c *Checkout) GetActiveTrialInterval() *TrialInterval {
@@ -885,6 +857,13 @@ func (c *Checkout) GetCustomerTaxID() *string {
 	return c.CustomerTaxID
 }
 
+func (c *Checkout) GetLocale() *string {
+	if c == nil {
+		return nil
+	}
+	return c.Locale
+}
+
 func (c *Checkout) GetPaymentProcessorMetadata() map[string]string {
 	if c == nil {
 		return map[string]string{}
@@ -913,9 +892,9 @@ func (c *Checkout) GetTrialIntervalCount() *int64 {
 	return c.TrialIntervalCount
 }
 
-func (c *Checkout) GetMetadata() map[string]CheckoutMetadata {
+func (c *Checkout) GetMetadata() map[string]MetadataOutputType {
 	if c == nil {
-		return map[string]CheckoutMetadata{}
+		return map[string]MetadataOutputType{}
 	}
 	return c.Metadata
 }
@@ -953,6 +932,13 @@ func (c *Checkout) GetProductPrice() *CheckoutProductPrice {
 		return nil
 	}
 	return c.ProductPrice
+}
+
+func (c *Checkout) GetPrices() map[string][]CheckoutPrices {
+	if c == nil {
+		return nil
+	}
+	return c.Prices
 }
 
 func (c *Checkout) GetDiscount() *CheckoutDiscount {

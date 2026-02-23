@@ -8,14 +8,13 @@ import (
 
 // ProductPriceCustomCreate - Schema to create a pay-what-you-want price.
 type ProductPriceCustomCreate struct {
-	amountType string `const:"custom" json:"amount_type"`
-	// The currency. Currently, only `usd` is supported.
-	PriceCurrency *string `default:"usd" json:"price_currency"`
-	// The minimum amount the customer can pay.
-	MinimumAmount *int64 `json:"minimum_amount,omitempty"`
+	amountType    string               `const:"custom" json:"amount_type"`
+	PriceCurrency *PresentmentCurrency `json:"price_currency,omitempty"`
+	// The minimum amount the customer can pay. If set to 0, the price is 'free or pay what you want' and $0 is accepted. If set to a value between 1-49, it will be rejected. Defaults to 50 cents.
+	MinimumAmount *int64 `default:"50" json:"minimum_amount"`
 	// The maximum amount the customer can pay.
 	MaximumAmount *int64 `json:"maximum_amount,omitempty"`
-	// The initial amount shown to the customer.
+	// The initial amount shown to the customer. If 0, the customer will see $0 as the default. Values between 1-49 are rejected.
 	PresetAmount *int64 `json:"preset_amount,omitempty"`
 }
 
@@ -34,7 +33,7 @@ func (p *ProductPriceCustomCreate) GetAmountType() string {
 	return "custom"
 }
 
-func (p *ProductPriceCustomCreate) GetPriceCurrency() *string {
+func (p *ProductPriceCustomCreate) GetPriceCurrency() *PresentmentCurrency {
 	if p == nil {
 		return nil
 	}

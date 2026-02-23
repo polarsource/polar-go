@@ -22,7 +22,7 @@ func (w WebhookCheckoutCreatedPayload) MarshalJSON() ([]byte, error) {
 }
 
 func (w *WebhookCheckoutCreatedPayload) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &w, "", false, []string{"type", "timestamp", "data"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &w, "", false, nil); err != nil {
 		return err
 	}
 	return nil

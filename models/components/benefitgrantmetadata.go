@@ -10,6 +10,7 @@ type BenefitGrantMetadata struct {
 	BenefitID      string      `json:"benefit_id"`
 	BenefitGrantID string      `json:"benefit_grant_id"`
 	BenefitType    BenefitType `json:"benefit_type"`
+	MemberID       *string     `json:"member_id,omitempty"`
 }
 
 func (b BenefitGrantMetadata) MarshalJSON() ([]byte, error) {
@@ -42,4 +43,11 @@ func (b *BenefitGrantMetadata) GetBenefitType() BenefitType {
 		return BenefitType("")
 	}
 	return b.BenefitType
+}
+
+func (b *BenefitGrantMetadata) GetMemberID() *string {
+	if b == nil {
+		return nil
+	}
+	return b.MemberID
 }

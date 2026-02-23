@@ -33,3 +33,21 @@ customFieldCreate := components.CreateCustomFieldCreateSelect(components.CustomF
 customFieldCreate := components.CreateCustomFieldCreateText(components.CustomFieldCreateText{/* values here */})
 ```
 
+## Union Discrimination
+
+Use the `Type` field to determine which variant is active, then access the corresponding field:
+
+```go
+switch customFieldCreate.Type {
+	case components.CustomFieldCreateTypeCheckbox:
+		// customFieldCreate.CustomFieldCreateCheckbox is populated
+	case components.CustomFieldCreateTypeDate:
+		// customFieldCreate.CustomFieldCreateDate is populated
+	case components.CustomFieldCreateTypeNumber:
+		// customFieldCreate.CustomFieldCreateNumber is populated
+	case components.CustomFieldCreateTypeSelect:
+		// customFieldCreate.CustomFieldCreateSelect is populated
+	case components.CustomFieldCreateTypeText:
+		// customFieldCreate.CustomFieldCreateText is populated
+}
+```

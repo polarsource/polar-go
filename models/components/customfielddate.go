@@ -3,118 +3,9 @@
 package components
 
 import (
-	"errors"
-	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
 	"time"
 )
-
-type CustomFieldDateMetadataType string
-
-const (
-	CustomFieldDateMetadataTypeStr     CustomFieldDateMetadataType = "str"
-	CustomFieldDateMetadataTypeInteger CustomFieldDateMetadataType = "integer"
-	CustomFieldDateMetadataTypeNumber  CustomFieldDateMetadataType = "number"
-	CustomFieldDateMetadataTypeBoolean CustomFieldDateMetadataType = "boolean"
-)
-
-type CustomFieldDateMetadata struct {
-	Str     *string  `queryParam:"inline,name=metadata"`
-	Integer *int64   `queryParam:"inline,name=metadata"`
-	Number  *float64 `queryParam:"inline,name=metadata"`
-	Boolean *bool    `queryParam:"inline,name=metadata"`
-
-	Type CustomFieldDateMetadataType
-}
-
-func CreateCustomFieldDateMetadataStr(str string) CustomFieldDateMetadata {
-	typ := CustomFieldDateMetadataTypeStr
-
-	return CustomFieldDateMetadata{
-		Str:  &str,
-		Type: typ,
-	}
-}
-
-func CreateCustomFieldDateMetadataInteger(integer int64) CustomFieldDateMetadata {
-	typ := CustomFieldDateMetadataTypeInteger
-
-	return CustomFieldDateMetadata{
-		Integer: &integer,
-		Type:    typ,
-	}
-}
-
-func CreateCustomFieldDateMetadataNumber(number float64) CustomFieldDateMetadata {
-	typ := CustomFieldDateMetadataTypeNumber
-
-	return CustomFieldDateMetadata{
-		Number: &number,
-		Type:   typ,
-	}
-}
-
-func CreateCustomFieldDateMetadataBoolean(boolean bool) CustomFieldDateMetadata {
-	typ := CustomFieldDateMetadataTypeBoolean
-
-	return CustomFieldDateMetadata{
-		Boolean: &boolean,
-		Type:    typ,
-	}
-}
-
-func (u *CustomFieldDateMetadata) UnmarshalJSON(data []byte) error {
-
-	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, nil); err == nil {
-		u.Str = &str
-		u.Type = CustomFieldDateMetadataTypeStr
-		return nil
-	}
-
-	var integer int64 = int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
-		u.Integer = &integer
-		u.Type = CustomFieldDateMetadataTypeInteger
-		return nil
-	}
-
-	var number float64 = float64(0)
-	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
-		u.Number = &number
-		u.Type = CustomFieldDateMetadataTypeNumber
-		return nil
-	}
-
-	var boolean bool = false
-	if err := utils.UnmarshalJSON(data, &boolean, "", true, nil); err == nil {
-		u.Boolean = &boolean
-		u.Type = CustomFieldDateMetadataTypeBoolean
-		return nil
-	}
-
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for CustomFieldDateMetadata", string(data))
-}
-
-func (u CustomFieldDateMetadata) MarshalJSON() ([]byte, error) {
-	if u.Str != nil {
-		return utils.MarshalJSON(u.Str, "", true)
-	}
-
-	if u.Integer != nil {
-		return utils.MarshalJSON(u.Integer, "", true)
-	}
-
-	if u.Number != nil {
-		return utils.MarshalJSON(u.Number, "", true)
-	}
-
-	if u.Boolean != nil {
-		return utils.MarshalJSON(u.Boolean, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type CustomFieldDateMetadata: all fields are null")
-}
 
 // CustomFieldDate - Schema for a custom field of type date.
 type CustomFieldDate struct {
@@ -123,9 +14,9 @@ type CustomFieldDate struct {
 	// Last modification timestamp of the object.
 	ModifiedAt *time.Time `json:"modified_at"`
 	// The ID of the object.
-	ID       string                             `json:"id"`
-	Metadata map[string]CustomFieldDateMetadata `json:"metadata"`
-	type_    string                             `const:"date" json:"type"`
+	ID       string                        `json:"id"`
+	Metadata map[string]MetadataOutputType `json:"metadata"`
+	type_    string                        `const:"date" json:"type"`
 	// Identifier of the custom field. It'll be used as key when storing the value.
 	Slug string `json:"slug"`
 	// Name of the custom field.
@@ -167,9 +58,9 @@ func (c *CustomFieldDate) GetID() string {
 	return c.ID
 }
 
-func (c *CustomFieldDate) GetMetadata() map[string]CustomFieldDateMetadata {
+func (c *CustomFieldDate) GetMetadata() map[string]MetadataOutputType {
 	if c == nil {
-		return map[string]CustomFieldDateMetadata{}
+		return map[string]MetadataOutputType{}
 	}
 	return c.Metadata
 }

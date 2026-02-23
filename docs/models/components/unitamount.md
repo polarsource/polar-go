@@ -17,3 +17,15 @@ unitAmount := components.CreateUnitAmountNumber(float64{/* values here */})
 unitAmount := components.CreateUnitAmountStr(string{/* values here */})
 ```
 
+## Union Discrimination
+
+Use the `Type` field to determine which variant is active, then access the corresponding field:
+
+```go
+switch unitAmount.Type {
+	case components.UnitAmountTypeNumber:
+		// unitAmount.Number is populated
+	case components.UnitAmountTypeStr:
+		// unitAmount.Str is populated
+}
+```

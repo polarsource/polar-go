@@ -16,8 +16,11 @@ type LegacyRecurringProductPriceFree struct {
 	// Last modification timestamp of the object.
 	ModifiedAt *time.Time `json:"modified_at"`
 	// The ID of the price.
-	ID         string `json:"id"`
-	amountType string `const:"free" json:"amount_type"`
+	ID         string             `json:"id"`
+	Source     ProductPriceSource `json:"source"`
+	amountType string             `const:"free" json:"amount_type"`
+	// The currency in which the customer will be charged.
+	PriceCurrency string `json:"price_currency"`
 	// Whether the price is archived and no longer available.
 	IsArchived bool `json:"is_archived"`
 	// The ID of the product owning the price.
@@ -33,7 +36,7 @@ func (l LegacyRecurringProductPriceFree) MarshalJSON() ([]byte, error) {
 }
 
 func (l *LegacyRecurringProductPriceFree) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &l, "", false, []string{"created_at", "id", "amount_type", "is_archived", "product_id", "type", "recurring_interval", "legacy"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &l, "", false, []string{"created_at", "id", "source", "amount_type", "price_currency", "is_archived", "product_id", "type", "recurring_interval", "legacy"}); err != nil {
 		return err
 	}
 	return nil
@@ -60,8 +63,22 @@ func (l *LegacyRecurringProductPriceFree) GetID() string {
 	return l.ID
 }
 
+func (l *LegacyRecurringProductPriceFree) GetSource() ProductPriceSource {
+	if l == nil {
+		return ProductPriceSource("")
+	}
+	return l.Source
+}
+
 func (l *LegacyRecurringProductPriceFree) GetAmountType() string {
 	return "free"
+}
+
+func (l *LegacyRecurringProductPriceFree) GetPriceCurrency() string {
+	if l == nil {
+		return ""
+	}
+	return l.PriceCurrency
 }
 
 func (l *LegacyRecurringProductPriceFree) GetIsArchived() bool {

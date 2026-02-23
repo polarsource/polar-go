@@ -16,7 +16,8 @@ import (
 // * A subscription is renewed. In this case, `billing_reason` is set to `subscription_cycle`.
 // * A subscription is upgraded or downgraded with an immediate proration invoice. In this case, `billing_reason` is set to `subscription_update`.
 //
-// <Warning>The order might not be paid yet, so the `status` field might be `pending`.</Warning>
+// > [!WARNING]
+// > The order might not be paid yet, so the `status` field might be `pending`.
 //
 // **Discord & Slack support:** Full
 type WebhookOrderCreatedPayload struct {
@@ -30,7 +31,7 @@ func (w WebhookOrderCreatedPayload) MarshalJSON() ([]byte, error) {
 }
 
 func (w *WebhookOrderCreatedPayload) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &w, "", false, []string{"type", "timestamp", "data"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &w, "", false, nil); err != nil {
 		return err
 	}
 	return nil

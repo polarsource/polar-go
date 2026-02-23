@@ -21,3 +21,17 @@ customerSubscriptionUpdate := components.CreateCustomerSubscriptionUpdateCustome
 customerSubscriptionUpdate := components.CreateCustomerSubscriptionUpdateCustomerSubscriptionCancel(components.CustomerSubscriptionCancel{/* values here */})
 ```
 
+## Union Discrimination
+
+Use the `Type` field to determine which variant is active, then access the corresponding field:
+
+```go
+switch customerSubscriptionUpdate.Type {
+	case components.CustomerSubscriptionUpdateTypeCustomerSubscriptionUpdateProduct:
+		// customerSubscriptionUpdate.CustomerSubscriptionUpdateProduct is populated
+	case components.CustomerSubscriptionUpdateTypeCustomerSubscriptionUpdateSeats:
+		// customerSubscriptionUpdate.CustomerSubscriptionUpdateSeats is populated
+	case components.CustomerSubscriptionUpdateTypeCustomerSubscriptionCancel:
+		// customerSubscriptionUpdate.CustomerSubscriptionCancel is populated
+}
+```

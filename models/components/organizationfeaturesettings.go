@@ -15,6 +15,16 @@ type OrganizationFeatureSettings struct {
 	RevopsEnabled *bool `default:"false" json:"revops_enabled"`
 	// If this organization has Wallets enabled
 	WalletsEnabled *bool `default:"false" json:"wallets_enabled"`
+	// If this organization has the Member model enabled
+	MemberModelEnabled *bool `default:"false" json:"member_model_enabled"`
+	// If this organization reads from Tinybird
+	TinybirdRead *bool `default:"false" json:"tinybird_read"`
+	// If this organization compares Tinybird results with database
+	TinybirdCompare *bool `default:"false" json:"tinybird_compare"`
+	// If this organization has multiple presentment currencies enabled
+	PresentmentCurrenciesEnabled *bool `default:"false" json:"presentment_currencies_enabled"`
+	// If this organization has checkout localization enabled
+	CheckoutLocalizationEnabled *bool `default:"false" json:"checkout_localization_enabled"`
 }
 
 func (o OrganizationFeatureSettings) MarshalJSON() ([]byte, error) {
@@ -54,4 +64,39 @@ func (o *OrganizationFeatureSettings) GetWalletsEnabled() *bool {
 		return nil
 	}
 	return o.WalletsEnabled
+}
+
+func (o *OrganizationFeatureSettings) GetMemberModelEnabled() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.MemberModelEnabled
+}
+
+func (o *OrganizationFeatureSettings) GetTinybirdRead() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.TinybirdRead
+}
+
+func (o *OrganizationFeatureSettings) GetTinybirdCompare() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.TinybirdCompare
+}
+
+func (o *OrganizationFeatureSettings) GetPresentmentCurrenciesEnabled() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.PresentmentCurrenciesEnabled
+}
+
+func (o *OrganizationFeatureSettings) GetCheckoutLocalizationEnabled() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.CheckoutLocalizationEnabled
 }

@@ -11,21 +11,23 @@ import (
 type SubscriptionUpdateType string
 
 const (
-	SubscriptionUpdateTypeSubscriptionUpdateProduct  SubscriptionUpdateType = "SubscriptionUpdateProduct"
-	SubscriptionUpdateTypeSubscriptionUpdateDiscount SubscriptionUpdateType = "SubscriptionUpdateDiscount"
-	SubscriptionUpdateTypeSubscriptionUpdateTrial    SubscriptionUpdateType = "SubscriptionUpdateTrial"
-	SubscriptionUpdateTypeSubscriptionUpdateSeats    SubscriptionUpdateType = "SubscriptionUpdateSeats"
-	SubscriptionUpdateTypeSubscriptionCancel         SubscriptionUpdateType = "SubscriptionCancel"
-	SubscriptionUpdateTypeSubscriptionRevoke         SubscriptionUpdateType = "SubscriptionRevoke"
+	SubscriptionUpdateTypeSubscriptionUpdateProduct       SubscriptionUpdateType = "SubscriptionUpdateProduct"
+	SubscriptionUpdateTypeSubscriptionUpdateDiscount      SubscriptionUpdateType = "SubscriptionUpdateDiscount"
+	SubscriptionUpdateTypeSubscriptionUpdateTrial         SubscriptionUpdateType = "SubscriptionUpdateTrial"
+	SubscriptionUpdateTypeSubscriptionUpdateSeats         SubscriptionUpdateType = "SubscriptionUpdateSeats"
+	SubscriptionUpdateTypeSubscriptionUpdateBillingPeriod SubscriptionUpdateType = "SubscriptionUpdateBillingPeriod"
+	SubscriptionUpdateTypeSubscriptionCancel              SubscriptionUpdateType = "SubscriptionCancel"
+	SubscriptionUpdateTypeSubscriptionRevoke              SubscriptionUpdateType = "SubscriptionRevoke"
 )
 
 type SubscriptionUpdate struct {
-	SubscriptionUpdateProduct  *SubscriptionUpdateProduct  `queryParam:"inline,name=SubscriptionUpdate"`
-	SubscriptionUpdateDiscount *SubscriptionUpdateDiscount `queryParam:"inline,name=SubscriptionUpdate"`
-	SubscriptionUpdateTrial    *SubscriptionUpdateTrial    `queryParam:"inline,name=SubscriptionUpdate"`
-	SubscriptionUpdateSeats    *SubscriptionUpdateSeats    `queryParam:"inline,name=SubscriptionUpdate"`
-	SubscriptionCancel         *SubscriptionCancel         `queryParam:"inline,name=SubscriptionUpdate"`
-	SubscriptionRevoke         *SubscriptionRevoke         `queryParam:"inline,name=SubscriptionUpdate"`
+	SubscriptionUpdateProduct       *SubscriptionUpdateProduct       `queryParam:"inline" union:"member"`
+	SubscriptionUpdateDiscount      *SubscriptionUpdateDiscount      `queryParam:"inline" union:"member"`
+	SubscriptionUpdateTrial         *SubscriptionUpdateTrial         `queryParam:"inline" union:"member"`
+	SubscriptionUpdateSeats         *SubscriptionUpdateSeats         `queryParam:"inline" union:"member"`
+	SubscriptionUpdateBillingPeriod *SubscriptionUpdateBillingPeriod `queryParam:"inline" union:"member"`
+	SubscriptionCancel              *SubscriptionCancel              `queryParam:"inline" union:"member"`
+	SubscriptionRevoke              *SubscriptionRevoke              `queryParam:"inline" union:"member"`
 
 	Type SubscriptionUpdateType
 }
@@ -63,6 +65,15 @@ func CreateSubscriptionUpdateSubscriptionUpdateSeats(subscriptionUpdateSeats Sub
 	return SubscriptionUpdate{
 		SubscriptionUpdateSeats: &subscriptionUpdateSeats,
 		Type:                    typ,
+	}
+}
+
+func CreateSubscriptionUpdateSubscriptionUpdateBillingPeriod(subscriptionUpdateBillingPeriod SubscriptionUpdateBillingPeriod) SubscriptionUpdate {
+	typ := SubscriptionUpdateTypeSubscriptionUpdateBillingPeriod
+
+	return SubscriptionUpdate{
+		SubscriptionUpdateBillingPeriod: &subscriptionUpdateBillingPeriod,
+		Type:                            typ,
 	}
 }
 
@@ -114,6 +125,13 @@ func (u *SubscriptionUpdate) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
+	var subscriptionUpdateBillingPeriod SubscriptionUpdateBillingPeriod = SubscriptionUpdateBillingPeriod{}
+	if err := utils.UnmarshalJSON(data, &subscriptionUpdateBillingPeriod, "", true, nil); err == nil {
+		u.SubscriptionUpdateBillingPeriod = &subscriptionUpdateBillingPeriod
+		u.Type = SubscriptionUpdateTypeSubscriptionUpdateBillingPeriod
+		return nil
+	}
+
 	var subscriptionCancel SubscriptionCancel = SubscriptionCancel{}
 	if err := utils.UnmarshalJSON(data, &subscriptionCancel, "", true, nil); err == nil {
 		u.SubscriptionCancel = &subscriptionCancel
@@ -146,6 +164,10 @@ func (u SubscriptionUpdate) MarshalJSON() ([]byte, error) {
 
 	if u.SubscriptionUpdateSeats != nil {
 		return utils.MarshalJSON(u.SubscriptionUpdateSeats, "", true)
+	}
+
+	if u.SubscriptionUpdateBillingPeriod != nil {
+		return utils.MarshalJSON(u.SubscriptionUpdateBillingPeriod, "", true)
 	}
 
 	if u.SubscriptionCancel != nil {

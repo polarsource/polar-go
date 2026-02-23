@@ -21,8 +21,16 @@ type OrderPaidEvent struct {
 	Customer *Customer `json:"customer"`
 	// ID of the customer in your system associated with the event.
 	ExternalCustomerID *string `json:"external_customer_id"`
+	// ID of the member within the customer's organization who performed the action inside B2B.
+	MemberID *string `json:"member_id,omitempty"`
+	// ID of the member in your system within the customer's organization who performed the action inside B2B.
+	ExternalMemberID *string `json:"external_member_id,omitempty"`
 	// Number of direct child events linked to this event.
 	ChildCount *int64 `default:"0" json:"child_count"`
+	// The ID of the parent event.
+	ParentID *string `json:"parent_id,omitempty"`
+	// Human readable label of the event type.
+	Label string `json:"label"`
 	// The source of the event. `system` events are created by Polar. `user` events are the one you create through our ingestion API.
 	source string `const:"system" json:"source"`
 	// The name of the event.
@@ -35,7 +43,7 @@ func (o OrderPaidEvent) MarshalJSON() ([]byte, error) {
 }
 
 func (o *OrderPaidEvent) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &o, "", false, []string{"id", "timestamp", "organization_id", "source", "name", "metadata"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &o, "", false, []string{"id", "timestamp", "organization_id", "label", "source", "name", "metadata"}); err != nil {
 		return err
 	}
 	return nil
@@ -83,11 +91,39 @@ func (o *OrderPaidEvent) GetExternalCustomerID() *string {
 	return o.ExternalCustomerID
 }
 
+func (o *OrderPaidEvent) GetMemberID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.MemberID
+}
+
+func (o *OrderPaidEvent) GetExternalMemberID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ExternalMemberID
+}
+
 func (o *OrderPaidEvent) GetChildCount() *int64 {
 	if o == nil {
 		return nil
 	}
 	return o.ChildCount
+}
+
+func (o *OrderPaidEvent) GetParentID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.ParentID
+}
+
+func (o *OrderPaidEvent) GetLabel() string {
+	if o == nil {
+		return ""
+	}
+	return o.Label
 }
 
 func (o *OrderPaidEvent) GetSource() string {

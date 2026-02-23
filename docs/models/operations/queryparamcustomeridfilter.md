@@ -17,3 +17,15 @@ queryParamCustomerIDFilter := operations.CreateQueryParamCustomerIDFilterStr(str
 queryParamCustomerIDFilter := operations.CreateQueryParamCustomerIDFilterArrayOfStr([]string{/* values here */})
 ```
 
+## Union Discrimination
+
+Use the `Type` field to determine which variant is active, then access the corresponding field:
+
+```go
+switch queryParamCustomerIDFilter.Type {
+	case operations.QueryParamCustomerIDFilterTypeStr:
+		// queryParamCustomerIDFilter.Str is populated
+	case operations.QueryParamCustomerIDFilterTypeArrayOfStr:
+		// queryParamCustomerIDFilter.ArrayOfStr is populated
+}
+```

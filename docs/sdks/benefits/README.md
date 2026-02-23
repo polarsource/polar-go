@@ -1,5 +1,4 @@
 # Benefits
-(*Benefits*)
 
 ## Overview
 
@@ -8,8 +7,8 @@
 * [List](#list) - List Benefits
 * [Create](#create) - Create Benefit
 * [Get](#get) - Get Benefit
-* [Update](#update) - Update Benefit
 * [Delete](#delete) - Delete Benefit
+* [Update](#update) - Update Benefit
 * [Grants](#grants) - List Benefit Grants
 
 ## List
@@ -122,7 +121,21 @@ func main() {
         log.Fatal(err)
     }
     if res.Benefit != nil {
-        // handle response
+        switch res.Benefit.Type {
+            case components.BenefitUnionTypeCustom:
+                // res.Benefit.BenefitCustom is populated
+            case components.BenefitUnionTypeDiscord:
+                // res.Benefit.BenefitDiscord is populated
+            case components.BenefitUnionTypeDownloadables:
+                // res.Benefit.BenefitDownloadables is populated
+            case components.BenefitUnionTypeGithubRepository:
+                // res.Benefit.BenefitGitHubRepository is populated
+            case components.BenefitUnionTypeLicenseKeys:
+                // res.Benefit.BenefitLicenseKeys is populated
+            case components.BenefitUnionTypeMeterCredit:
+                // res.Benefit.BenefitMeterCredit is populated
+        }
+
     }
 }
 ```
@@ -163,6 +176,7 @@ import(
 	"os"
 	polargo "github.com/polarsource/polar-go"
 	"log"
+	"github.com/polarsource/polar-go/models/components"
 )
 
 func main() {
@@ -177,7 +191,21 @@ func main() {
         log.Fatal(err)
     }
     if res.Benefit != nil {
-        // handle response
+        switch res.Benefit.Type {
+            case components.BenefitUnionTypeCustom:
+                // res.Benefit.BenefitCustom is populated
+            case components.BenefitUnionTypeDiscord:
+                // res.Benefit.BenefitDiscord is populated
+            case components.BenefitUnionTypeDownloadables:
+                // res.Benefit.BenefitDownloadables is populated
+            case components.BenefitUnionTypeGithubRepository:
+                // res.Benefit.BenefitGitHubRepository is populated
+            case components.BenefitUnionTypeLicenseKeys:
+                // res.Benefit.BenefitLicenseKeys is populated
+            case components.BenefitUnionTypeMeterCredit:
+                // res.Benefit.BenefitMeterCredit is populated
+        }
+
     }
 }
 ```
@@ -193,67 +221,6 @@ func main() {
 ### Response
 
 **[*operations.BenefitsGetResponse](../../models/operations/benefitsgetresponse.md), error**
-
-### Errors
-
-| Error Type                    | Status Code                   | Content Type                  |
-| ----------------------------- | ----------------------------- | ----------------------------- |
-| apierrors.ResourceNotFound    | 404                           | application/json              |
-| apierrors.HTTPValidationError | 422                           | application/json              |
-| apierrors.APIError            | 4XX, 5XX                      | \*/\*                         |
-
-## Update
-
-Update a benefit.
-
-**Scopes**: `benefits:write`
-
-### Example Usage
-
-<!-- UsageSnippet language="go" operationID="benefits:update" method="patch" path="/v1/benefits/{id}" -->
-```go
-package main
-
-import(
-	"context"
-	"os"
-	polargo "github.com/polarsource/polar-go"
-	"github.com/polarsource/polar-go/models/components"
-	"github.com/polarsource/polar-go/models/operations"
-	"log"
-)
-
-func main() {
-    ctx := context.Background()
-
-    s := polargo.New(
-        polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
-    )
-
-    res, err := s.Benefits.Update(ctx, "<value>", operations.CreateBenefitsUpdateBenefitUpdateBenefitCustomUpdate(
-        components.BenefitCustomUpdate{},
-    ))
-    if err != nil {
-        log.Fatal(err)
-    }
-    if res.Benefit != nil {
-        // handle response
-    }
-}
-```
-
-### Parameters
-
-| Parameter                                                                                        | Type                                                                                             | Required                                                                                         | Description                                                                                      |
-| ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------ |
-| `ctx`                                                                                            | [context.Context](https://pkg.go.dev/context#Context)                                            | :heavy_check_mark:                                                                               | The context to use for the request.                                                              |
-| `id`                                                                                             | *string*                                                                                         | :heavy_check_mark:                                                                               | N/A                                                                                              |
-| `requestBody`                                                                                    | [operations.BenefitsUpdateBenefitUpdate](../../models/operations/benefitsupdatebenefitupdate.md) | :heavy_check_mark:                                                                               | N/A                                                                                              |
-| `opts`                                                                                           | [][operations.Option](../../models/operations/option.md)                                         | :heavy_minus_sign:                                                                               | The options for this request.                                                                    |
-
-### Response
-
-**[*operations.BenefitsUpdateResponse](../../models/operations/benefitsupdateresponse.md), error**
 
 ### Errors
 
@@ -320,6 +287,81 @@ func main() {
 | Error Type                    | Status Code                   | Content Type                  |
 | ----------------------------- | ----------------------------- | ----------------------------- |
 | apierrors.NotPermitted        | 403                           | application/json              |
+| apierrors.ResourceNotFound    | 404                           | application/json              |
+| apierrors.HTTPValidationError | 422                           | application/json              |
+| apierrors.APIError            | 4XX, 5XX                      | \*/\*                         |
+
+## Update
+
+Update a benefit.
+
+**Scopes**: `benefits:write`
+
+### Example Usage
+
+<!-- UsageSnippet language="go" operationID="benefits:update" method="patch" path="/v1/benefits/{id}" -->
+```go
+package main
+
+import(
+	"context"
+	"os"
+	polargo "github.com/polarsource/polar-go"
+	"github.com/polarsource/polar-go/models/components"
+	"github.com/polarsource/polar-go/models/operations"
+	"log"
+)
+
+func main() {
+    ctx := context.Background()
+
+    s := polargo.New(
+        polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
+    )
+
+    res, err := s.Benefits.Update(ctx, "<value>", operations.CreateBenefitsUpdateBenefitUpdateBenefitCustomUpdate(
+        components.BenefitCustomUpdate{},
+    ))
+    if err != nil {
+        log.Fatal(err)
+    }
+    if res.Benefit != nil {
+        switch res.Benefit.Type {
+            case components.BenefitUnionTypeCustom:
+                // res.Benefit.BenefitCustom is populated
+            case components.BenefitUnionTypeDiscord:
+                // res.Benefit.BenefitDiscord is populated
+            case components.BenefitUnionTypeDownloadables:
+                // res.Benefit.BenefitDownloadables is populated
+            case components.BenefitUnionTypeGithubRepository:
+                // res.Benefit.BenefitGitHubRepository is populated
+            case components.BenefitUnionTypeLicenseKeys:
+                // res.Benefit.BenefitLicenseKeys is populated
+            case components.BenefitUnionTypeMeterCredit:
+                // res.Benefit.BenefitMeterCredit is populated
+        }
+
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                                                        | Type                                                                                             | Required                                                                                         | Description                                                                                      |
+| ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------ |
+| `ctx`                                                                                            | [context.Context](https://pkg.go.dev/context#Context)                                            | :heavy_check_mark:                                                                               | The context to use for the request.                                                              |
+| `id`                                                                                             | *string*                                                                                         | :heavy_check_mark:                                                                               | N/A                                                                                              |
+| `requestBody`                                                                                    | [operations.BenefitsUpdateBenefitUpdate](../../models/operations/benefitsupdatebenefitupdate.md) | :heavy_check_mark:                                                                               | N/A                                                                                              |
+| `opts`                                                                                           | [][operations.Option](../../models/operations/option.md)                                         | :heavy_minus_sign:                                                                               | The options for this request.                                                                    |
+
+### Response
+
+**[*operations.BenefitsUpdateResponse](../../models/operations/benefitsupdateresponse.md), error**
+
+### Errors
+
+| Error Type                    | Status Code                   | Content Type                  |
+| ----------------------------- | ----------------------------- | ----------------------------- |
 | apierrors.ResourceNotFound    | 404                           | application/json              |
 | apierrors.HTTPValidationError | 422                           | application/json              |
 | apierrors.APIError            | 4XX, 5XX                      | \*/\*                         |

@@ -1,5 +1,4 @@
-# Clients
-(*Oauth2.Clients*)
+# Oauth2.Clients
 
 ## Overview
 

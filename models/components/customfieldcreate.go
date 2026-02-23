@@ -20,11 +20,11 @@ const (
 )
 
 type CustomFieldCreate struct {
-	CustomFieldCreateText     *CustomFieldCreateText     `queryParam:"inline,name=CustomFieldCreate"`
-	CustomFieldCreateNumber   *CustomFieldCreateNumber   `queryParam:"inline,name=CustomFieldCreate"`
-	CustomFieldCreateDate     *CustomFieldCreateDate     `queryParam:"inline,name=CustomFieldCreate"`
-	CustomFieldCreateCheckbox *CustomFieldCreateCheckbox `queryParam:"inline,name=CustomFieldCreate"`
-	CustomFieldCreateSelect   *CustomFieldCreateSelect   `queryParam:"inline,name=CustomFieldCreate"`
+	CustomFieldCreateText     *CustomFieldCreateText     `queryParam:"inline" union:"member"`
+	CustomFieldCreateNumber   *CustomFieldCreateNumber   `queryParam:"inline" union:"member"`
+	CustomFieldCreateDate     *CustomFieldCreateDate     `queryParam:"inline" union:"member"`
+	CustomFieldCreateCheckbox *CustomFieldCreateCheckbox `queryParam:"inline" union:"member"`
+	CustomFieldCreateSelect   *CustomFieldCreateSelect   `queryParam:"inline" union:"member"`
 
 	Type CustomFieldCreateType
 }

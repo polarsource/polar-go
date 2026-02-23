@@ -27,3 +27,19 @@ benefitCustomCreateMetadata := components.CreateBenefitCustomCreateMetadataNumbe
 benefitCustomCreateMetadata := components.CreateBenefitCustomCreateMetadataBoolean(bool{/* values here */})
 ```
 
+## Union Discrimination
+
+Use the `Type` field to determine which variant is active, then access the corresponding field:
+
+```go
+switch benefitCustomCreateMetadata.Type {
+	case components.BenefitCustomCreateMetadataTypeStr:
+		// benefitCustomCreateMetadata.Str is populated
+	case components.BenefitCustomCreateMetadataTypeInteger:
+		// benefitCustomCreateMetadata.Integer is populated
+	case components.BenefitCustomCreateMetadataTypeNumber:
+		// benefitCustomCreateMetadata.Number is populated
+	case components.BenefitCustomCreateMetadataTypeBoolean:
+		// benefitCustomCreateMetadata.Boolean is populated
+}
+```

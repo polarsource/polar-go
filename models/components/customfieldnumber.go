@@ -3,118 +3,9 @@
 package components
 
 import (
-	"errors"
-	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
 	"time"
 )
-
-type CustomFieldNumberMetadataType string
-
-const (
-	CustomFieldNumberMetadataTypeStr     CustomFieldNumberMetadataType = "str"
-	CustomFieldNumberMetadataTypeInteger CustomFieldNumberMetadataType = "integer"
-	CustomFieldNumberMetadataTypeNumber  CustomFieldNumberMetadataType = "number"
-	CustomFieldNumberMetadataTypeBoolean CustomFieldNumberMetadataType = "boolean"
-)
-
-type CustomFieldNumberMetadata struct {
-	Str     *string  `queryParam:"inline,name=metadata"`
-	Integer *int64   `queryParam:"inline,name=metadata"`
-	Number  *float64 `queryParam:"inline,name=metadata"`
-	Boolean *bool    `queryParam:"inline,name=metadata"`
-
-	Type CustomFieldNumberMetadataType
-}
-
-func CreateCustomFieldNumberMetadataStr(str string) CustomFieldNumberMetadata {
-	typ := CustomFieldNumberMetadataTypeStr
-
-	return CustomFieldNumberMetadata{
-		Str:  &str,
-		Type: typ,
-	}
-}
-
-func CreateCustomFieldNumberMetadataInteger(integer int64) CustomFieldNumberMetadata {
-	typ := CustomFieldNumberMetadataTypeInteger
-
-	return CustomFieldNumberMetadata{
-		Integer: &integer,
-		Type:    typ,
-	}
-}
-
-func CreateCustomFieldNumberMetadataNumber(number float64) CustomFieldNumberMetadata {
-	typ := CustomFieldNumberMetadataTypeNumber
-
-	return CustomFieldNumberMetadata{
-		Number: &number,
-		Type:   typ,
-	}
-}
-
-func CreateCustomFieldNumberMetadataBoolean(boolean bool) CustomFieldNumberMetadata {
-	typ := CustomFieldNumberMetadataTypeBoolean
-
-	return CustomFieldNumberMetadata{
-		Boolean: &boolean,
-		Type:    typ,
-	}
-}
-
-func (u *CustomFieldNumberMetadata) UnmarshalJSON(data []byte) error {
-
-	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, nil); err == nil {
-		u.Str = &str
-		u.Type = CustomFieldNumberMetadataTypeStr
-		return nil
-	}
-
-	var integer int64 = int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
-		u.Integer = &integer
-		u.Type = CustomFieldNumberMetadataTypeInteger
-		return nil
-	}
-
-	var number float64 = float64(0)
-	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
-		u.Number = &number
-		u.Type = CustomFieldNumberMetadataTypeNumber
-		return nil
-	}
-
-	var boolean bool = false
-	if err := utils.UnmarshalJSON(data, &boolean, "", true, nil); err == nil {
-		u.Boolean = &boolean
-		u.Type = CustomFieldNumberMetadataTypeBoolean
-		return nil
-	}
-
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for CustomFieldNumberMetadata", string(data))
-}
-
-func (u CustomFieldNumberMetadata) MarshalJSON() ([]byte, error) {
-	if u.Str != nil {
-		return utils.MarshalJSON(u.Str, "", true)
-	}
-
-	if u.Integer != nil {
-		return utils.MarshalJSON(u.Integer, "", true)
-	}
-
-	if u.Number != nil {
-		return utils.MarshalJSON(u.Number, "", true)
-	}
-
-	if u.Boolean != nil {
-		return utils.MarshalJSON(u.Boolean, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type CustomFieldNumberMetadata: all fields are null")
-}
 
 // CustomFieldNumber - Schema for a custom field of type number.
 type CustomFieldNumber struct {
@@ -123,9 +14,9 @@ type CustomFieldNumber struct {
 	// Last modification timestamp of the object.
 	ModifiedAt *time.Time `json:"modified_at"`
 	// The ID of the object.
-	ID       string                               `json:"id"`
-	Metadata map[string]CustomFieldNumberMetadata `json:"metadata"`
-	type_    string                               `const:"number" json:"type"`
+	ID       string                        `json:"id"`
+	Metadata map[string]MetadataOutputType `json:"metadata"`
+	type_    string                        `const:"number" json:"type"`
 	// Identifier of the custom field. It'll be used as key when storing the value.
 	Slug string `json:"slug"`
 	// Name of the custom field.
@@ -167,9 +58,9 @@ func (c *CustomFieldNumber) GetID() string {
 	return c.ID
 }
 
-func (c *CustomFieldNumber) GetMetadata() map[string]CustomFieldNumberMetadata {
+func (c *CustomFieldNumber) GetMetadata() map[string]MetadataOutputType {
 	if c == nil {
-		return map[string]CustomFieldNumberMetadata{}
+		return map[string]MetadataOutputType{}
 	}
 	return c.Metadata
 }

@@ -1,5 +1,4 @@
-# PolarSubscriptions
-(*CustomerPortal.Subscriptions*)
+# CustomerPortal.Subscriptions
 
 ## Overview
 
@@ -7,8 +6,8 @@
 
 * [List](#list) - List Subscriptions
 * [Get](#get) - Get Subscription
-* [Update](#update) - Update Subscription
 * [Cancel](#cancel) - Cancel Subscription
+* [Update](#update) - Update Subscription
 
 ## List
 
@@ -36,7 +35,7 @@ func main() {
     s := polargo.New()
 
     res, err := s.CustomerPortal.Subscriptions.List(ctx, operations.CustomerPortalSubscriptionsListRequest{}, operations.CustomerPortalSubscriptionsListSecurity{
-        CustomerSession: os.Getenv("POLAR_CUSTOMER_SESSION"),
+        CustomerSession: polargo.Pointer(os.Getenv("POLAR_CUSTOMER_SESSION")),
     })
     if err != nil {
         log.Fatal(err)
@@ -105,7 +104,7 @@ func main() {
     s := polargo.New()
 
     res, err := s.CustomerPortal.Subscriptions.Get(ctx, operations.CustomerPortalSubscriptionsGetSecurity{
-        CustomerSession: os.Getenv("POLAR_CUSTOMER_SESSION"),
+        CustomerSession: polargo.Pointer(os.Getenv("POLAR_CUSTOMER_SESSION")),
     }, "<value>")
     if err != nil {
         log.Fatal(err)
@@ -137,11 +136,66 @@ func main() {
 | apierrors.HTTPValidationError | 422                           | application/json              |
 | apierrors.APIError            | 4XX, 5XX                      | \*/\*                         |
 
+## Cancel
+
+Cancel a subscription of the authenticated customer.
+
+### Example Usage
+
+<!-- UsageSnippet language="go" operationID="customer_portal:subscriptions:cancel" method="delete" path="/v1/customer-portal/subscriptions/{id}" -->
+```go
+package main
+
+import(
+	"context"
+	polargo "github.com/polarsource/polar-go"
+	"os"
+	"github.com/polarsource/polar-go/models/operations"
+	"log"
+)
+
+func main() {
+    ctx := context.Background()
+
+    s := polargo.New()
+
+    res, err := s.CustomerPortal.Subscriptions.Cancel(ctx, operations.CustomerPortalSubscriptionsCancelSecurity{
+        CustomerSession: polargo.Pointer(os.Getenv("POLAR_CUSTOMER_SESSION")),
+    }, "<value>")
+    if err != nil {
+        log.Fatal(err)
+    }
+    if res.CustomerSubscription != nil {
+        // handle response
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                                                                                    | Type                                                                                                                         | Required                                                                                                                     | Description                                                                                                                  |
+| ---------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| `ctx`                                                                                                                        | [context.Context](https://pkg.go.dev/context#Context)                                                                        | :heavy_check_mark:                                                                                                           | The context to use for the request.                                                                                          |
+| `security`                                                                                                                   | [operations.CustomerPortalSubscriptionsCancelSecurity](../../models/operations/customerportalsubscriptionscancelsecurity.md) | :heavy_check_mark:                                                                                                           | The security requirements to use for the request.                                                                            |
+| `id`                                                                                                                         | *string*                                                                                                                     | :heavy_check_mark:                                                                                                           | The subscription ID.                                                                                                         |
+| `opts`                                                                                                                       | [][operations.Option](../../models/operations/option.md)                                                                     | :heavy_minus_sign:                                                                                                           | The options for this request.                                                                                                |
+
+### Response
+
+**[*operations.CustomerPortalSubscriptionsCancelResponse](../../models/operations/customerportalsubscriptionscancelresponse.md), error**
+
+### Errors
+
+| Error Type                            | Status Code                           | Content Type                          |
+| ------------------------------------- | ------------------------------------- | ------------------------------------- |
+| apierrors.AlreadyCanceledSubscription | 403                                   | application/json                      |
+| apierrors.ResourceNotFound            | 404                                   | application/json                      |
+| apierrors.HTTPValidationError         | 422                                   | application/json                      |
+| apierrors.APIError                    | 4XX, 5XX                              | \*/\*                                 |
+
 ## Update
 
 Update a subscription of the authenticated customer.
-
-**Scopes**: `customer_portal:write`
 
 ### Example Usage
 
@@ -164,7 +218,7 @@ func main() {
     s := polargo.New()
 
     res, err := s.CustomerPortal.Subscriptions.Update(ctx, operations.CustomerPortalSubscriptionsUpdateSecurity{
-        CustomerSession: os.Getenv("POLAR_CUSTOMER_SESSION"),
+        CustomerSession: polargo.Pointer(os.Getenv("POLAR_CUSTOMER_SESSION")),
     }, "<value>", components.CreateCustomerSubscriptionUpdateCustomerSubscriptionCancel(
         components.CustomerSubscriptionCancel{},
     ))
@@ -190,65 +244,6 @@ func main() {
 ### Response
 
 **[*operations.CustomerPortalSubscriptionsUpdateResponse](../../models/operations/customerportalsubscriptionsupdateresponse.md), error**
-
-### Errors
-
-| Error Type                            | Status Code                           | Content Type                          |
-| ------------------------------------- | ------------------------------------- | ------------------------------------- |
-| apierrors.AlreadyCanceledSubscription | 403                                   | application/json                      |
-| apierrors.ResourceNotFound            | 404                                   | application/json                      |
-| apierrors.HTTPValidationError         | 422                                   | application/json                      |
-| apierrors.APIError                    | 4XX, 5XX                              | \*/\*                                 |
-
-## Cancel
-
-Cancel a subscription of the authenticated customer.
-
-**Scopes**: `customer_portal:write`
-
-### Example Usage
-
-<!-- UsageSnippet language="go" operationID="customer_portal:subscriptions:cancel" method="delete" path="/v1/customer-portal/subscriptions/{id}" -->
-```go
-package main
-
-import(
-	"context"
-	polargo "github.com/polarsource/polar-go"
-	"os"
-	"github.com/polarsource/polar-go/models/operations"
-	"log"
-)
-
-func main() {
-    ctx := context.Background()
-
-    s := polargo.New()
-
-    res, err := s.CustomerPortal.Subscriptions.Cancel(ctx, operations.CustomerPortalSubscriptionsCancelSecurity{
-        CustomerSession: os.Getenv("POLAR_CUSTOMER_SESSION"),
-    }, "<value>")
-    if err != nil {
-        log.Fatal(err)
-    }
-    if res.CustomerSubscription != nil {
-        // handle response
-    }
-}
-```
-
-### Parameters
-
-| Parameter                                                                                                                    | Type                                                                                                                         | Required                                                                                                                     | Description                                                                                                                  |
-| ---------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
-| `ctx`                                                                                                                        | [context.Context](https://pkg.go.dev/context#Context)                                                                        | :heavy_check_mark:                                                                                                           | The context to use for the request.                                                                                          |
-| `security`                                                                                                                   | [operations.CustomerPortalSubscriptionsCancelSecurity](../../models/operations/customerportalsubscriptionscancelsecurity.md) | :heavy_check_mark:                                                                                                           | The security requirements to use for the request.                                                                            |
-| `id`                                                                                                                         | *string*                                                                                                                     | :heavy_check_mark:                                                                                                           | The subscription ID.                                                                                                         |
-| `opts`                                                                                                                       | [][operations.Option](../../models/operations/option.md)                                                                     | :heavy_minus_sign:                                                                                                           | The options for this request.                                                                                                |
-
-### Response
-
-**[*operations.CustomerPortalSubscriptionsCancelResponse](../../models/operations/customerportalsubscriptionscancelresponse.md), error**
 
 ### Errors
 

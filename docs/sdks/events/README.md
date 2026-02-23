@@ -1,5 +1,4 @@
 # Events
-(*Events*)
 
 ## Overview
 
@@ -45,20 +44,14 @@ func main() {
     if err != nil {
         log.Fatal(err)
     }
-    if res.ListResourceEvent != nil {
-        for {
-            // handle items
-
-            res, err = res.Next()
-
-            if err != nil {
-                // handle error
-            }
-
-            if res == nil {
-                break
-            }
+    if res.ResponseEventsList != nil {
+        switch res.ResponseEventsList.Type {
+            case operations.EventsListResponseEventsListTypeListResourceEvent:
+                // res.ResponseEventsList.ListResourceEvent is populated
+            case operations.EventsListResponseEventsListTypeListResourceWithCursorPaginationEvent:
+                // res.ResponseEventsList.ListResourceWithCursorPaginationEvent is populated
         }
+
     }
 }
 ```
@@ -171,6 +164,7 @@ import(
 	"os"
 	polargo "github.com/polarsource/polar-go"
 	"log"
+	"github.com/polarsource/polar-go/models/components"
 )
 
 func main() {
@@ -185,7 +179,13 @@ func main() {
         log.Fatal(err)
     }
     if res.Event != nil {
-        // handle response
+        switch res.Event.Type {
+            case components.EventUnionTypeSystemEvent:
+                // res.Event.SystemEvent is populated
+            case components.EventUnionTypeUserEvent:
+                // res.Event.UserEvent is populated
+        }
+
     }
 }
 ```

@@ -17,8 +17,8 @@ const (
 )
 
 type SubscriptionsCreateSubscriptionCreate struct {
-	SubscriptionCreateCustomer         *components.SubscriptionCreateCustomer         `queryParam:"inline,name=Subscription_Create"`
-	SubscriptionCreateExternalCustomer *components.SubscriptionCreateExternalCustomer `queryParam:"inline,name=Subscription_Create"`
+	SubscriptionCreateCustomer         *components.SubscriptionCreateCustomer         `queryParam:"inline" union:"member"`
+	SubscriptionCreateExternalCustomer *components.SubscriptionCreateExternalCustomer `queryParam:"inline" union:"member"`
 
 	Type SubscriptionsCreateSubscriptionCreateType
 }

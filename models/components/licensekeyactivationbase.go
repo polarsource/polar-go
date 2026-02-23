@@ -19,10 +19,10 @@ const (
 )
 
 type Meta struct {
-	Str     *string  `queryParam:"inline,name=meta"`
-	Integer *int64   `queryParam:"inline,name=meta"`
-	Number  *float64 `queryParam:"inline,name=meta"`
-	Boolean *bool    `queryParam:"inline,name=meta"`
+	Str     *string  `queryParam:"inline" union:"member"`
+	Integer *int64   `queryParam:"inline" union:"member"`
+	Number  *float64 `queryParam:"inline" union:"member"`
+	Boolean *bool    `queryParam:"inline" union:"member"`
 
 	Type MetaType
 }
@@ -130,7 +130,7 @@ func (l LicenseKeyActivationBase) MarshalJSON() ([]byte, error) {
 }
 
 func (l *LicenseKeyActivationBase) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &l, "", false, []string{"id", "license_key_id", "label", "meta", "created_at"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &l, "", false, nil); err != nil {
 		return err
 	}
 	return nil

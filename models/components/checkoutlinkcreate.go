@@ -17,9 +17,9 @@ const (
 )
 
 type CheckoutLinkCreate struct {
-	CheckoutLinkCreateProductPrice *CheckoutLinkCreateProductPrice `queryParam:"inline,name=CheckoutLinkCreate"`
-	CheckoutLinkCreateProduct      *CheckoutLinkCreateProduct      `queryParam:"inline,name=CheckoutLinkCreate"`
-	CheckoutLinkCreateProducts     *CheckoutLinkCreateProducts     `queryParam:"inline,name=CheckoutLinkCreate"`
+	CheckoutLinkCreateProductPrice *CheckoutLinkCreateProductPrice `queryParam:"inline" union:"member"`
+	CheckoutLinkCreateProduct      *CheckoutLinkCreateProduct      `queryParam:"inline" union:"member"`
+	CheckoutLinkCreateProducts     *CheckoutLinkCreateProducts     `queryParam:"inline" union:"member"`
 
 	Type CheckoutLinkCreateType
 }

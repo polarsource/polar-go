@@ -3,122 +3,13 @@
 package components
 
 import (
-	"errors"
-	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
 	"time"
 )
 
-type DiscountProductMetadataType string
-
-const (
-	DiscountProductMetadataTypeStr     DiscountProductMetadataType = "str"
-	DiscountProductMetadataTypeInteger DiscountProductMetadataType = "integer"
-	DiscountProductMetadataTypeNumber  DiscountProductMetadataType = "number"
-	DiscountProductMetadataTypeBoolean DiscountProductMetadataType = "boolean"
-)
-
-type DiscountProductMetadata struct {
-	Str     *string  `queryParam:"inline,name=metadata"`
-	Integer *int64   `queryParam:"inline,name=metadata"`
-	Number  *float64 `queryParam:"inline,name=metadata"`
-	Boolean *bool    `queryParam:"inline,name=metadata"`
-
-	Type DiscountProductMetadataType
-}
-
-func CreateDiscountProductMetadataStr(str string) DiscountProductMetadata {
-	typ := DiscountProductMetadataTypeStr
-
-	return DiscountProductMetadata{
-		Str:  &str,
-		Type: typ,
-	}
-}
-
-func CreateDiscountProductMetadataInteger(integer int64) DiscountProductMetadata {
-	typ := DiscountProductMetadataTypeInteger
-
-	return DiscountProductMetadata{
-		Integer: &integer,
-		Type:    typ,
-	}
-}
-
-func CreateDiscountProductMetadataNumber(number float64) DiscountProductMetadata {
-	typ := DiscountProductMetadataTypeNumber
-
-	return DiscountProductMetadata{
-		Number: &number,
-		Type:   typ,
-	}
-}
-
-func CreateDiscountProductMetadataBoolean(boolean bool) DiscountProductMetadata {
-	typ := DiscountProductMetadataTypeBoolean
-
-	return DiscountProductMetadata{
-		Boolean: &boolean,
-		Type:    typ,
-	}
-}
-
-func (u *DiscountProductMetadata) UnmarshalJSON(data []byte) error {
-
-	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, nil); err == nil {
-		u.Str = &str
-		u.Type = DiscountProductMetadataTypeStr
-		return nil
-	}
-
-	var integer int64 = int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
-		u.Integer = &integer
-		u.Type = DiscountProductMetadataTypeInteger
-		return nil
-	}
-
-	var number float64 = float64(0)
-	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
-		u.Number = &number
-		u.Type = DiscountProductMetadataTypeNumber
-		return nil
-	}
-
-	var boolean bool = false
-	if err := utils.UnmarshalJSON(data, &boolean, "", true, nil); err == nil {
-		u.Boolean = &boolean
-		u.Type = DiscountProductMetadataTypeBoolean
-		return nil
-	}
-
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for DiscountProductMetadata", string(data))
-}
-
-func (u DiscountProductMetadata) MarshalJSON() ([]byte, error) {
-	if u.Str != nil {
-		return utils.MarshalJSON(u.Str, "", true)
-	}
-
-	if u.Integer != nil {
-		return utils.MarshalJSON(u.Integer, "", true)
-	}
-
-	if u.Number != nil {
-		return utils.MarshalJSON(u.Number, "", true)
-	}
-
-	if u.Boolean != nil {
-		return utils.MarshalJSON(u.Boolean, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type DiscountProductMetadata: all fields are null")
-}
-
 // DiscountProduct - A product that a discount can be applied to.
 type DiscountProduct struct {
-	Metadata map[string]DiscountProductMetadata `json:"metadata"`
+	Metadata map[string]MetadataOutputType `json:"metadata"`
 	// The ID of the object.
 	ID string `json:"id"`
 	// Creation timestamp of the object.
@@ -132,7 +23,8 @@ type DiscountProduct struct {
 	// The name of the product.
 	Name string `json:"name"`
 	// The description of the product.
-	Description *string `json:"description"`
+	Description *string           `json:"description"`
+	Visibility  ProductVisibility `json:"visibility"`
 	// The recurring interval of the product. If `None`, the product is a one-time purchase.
 	RecurringInterval *SubscriptionRecurringInterval `json:"recurring_interval"`
 	// Number of interval units of the subscription. If this is set to 1 the charge will happen every interval (e.g. every month), if set to 2 it will be every other month, and so on. None for one-time products.
@@ -150,15 +42,15 @@ func (d DiscountProduct) MarshalJSON() ([]byte, error) {
 }
 
 func (d *DiscountProduct) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &d, "", false, []string{"metadata", "id", "created_at", "name", "is_recurring", "is_archived", "organization_id"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &d, "", false, []string{"metadata", "id", "created_at", "name", "visibility", "is_recurring", "is_archived", "organization_id"}); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (d *DiscountProduct) GetMetadata() map[string]DiscountProductMetadata {
+func (d *DiscountProduct) GetMetadata() map[string]MetadataOutputType {
 	if d == nil {
-		return map[string]DiscountProductMetadata{}
+		return map[string]MetadataOutputType{}
 	}
 	return d.Metadata
 }
@@ -210,6 +102,13 @@ func (d *DiscountProduct) GetDescription() *string {
 		return nil
 	}
 	return d.Description
+}
+
+func (d *DiscountProduct) GetVisibility() ProductVisibility {
+	if d == nil {
+		return ProductVisibility("")
+	}
+	return d.Visibility
 }
 
 func (d *DiscountProduct) GetRecurringInterval() *SubscriptionRecurringInterval {

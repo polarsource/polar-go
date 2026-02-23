@@ -27,6 +27,12 @@ subscriptionUpdate := components.CreateSubscriptionUpdateSubscriptionUpdateTrial
 subscriptionUpdate := components.CreateSubscriptionUpdateSubscriptionUpdateSeats(components.SubscriptionUpdateSeats{/* values here */})
 ```
 
+### SubscriptionUpdateBillingPeriod
+
+```go
+subscriptionUpdate := components.CreateSubscriptionUpdateSubscriptionUpdateBillingPeriod(components.SubscriptionUpdateBillingPeriod{/* values here */})
+```
+
 ### SubscriptionCancel
 
 ```go
@@ -39,3 +45,25 @@ subscriptionUpdate := components.CreateSubscriptionUpdateSubscriptionCancel(comp
 subscriptionUpdate := components.CreateSubscriptionUpdateSubscriptionRevoke(components.SubscriptionRevoke{/* values here */})
 ```
 
+## Union Discrimination
+
+Use the `Type` field to determine which variant is active, then access the corresponding field:
+
+```go
+switch subscriptionUpdate.Type {
+	case components.SubscriptionUpdateTypeSubscriptionUpdateProduct:
+		// subscriptionUpdate.SubscriptionUpdateProduct is populated
+	case components.SubscriptionUpdateTypeSubscriptionUpdateDiscount:
+		// subscriptionUpdate.SubscriptionUpdateDiscount is populated
+	case components.SubscriptionUpdateTypeSubscriptionUpdateTrial:
+		// subscriptionUpdate.SubscriptionUpdateTrial is populated
+	case components.SubscriptionUpdateTypeSubscriptionUpdateSeats:
+		// subscriptionUpdate.SubscriptionUpdateSeats is populated
+	case components.SubscriptionUpdateTypeSubscriptionUpdateBillingPeriod:
+		// subscriptionUpdate.SubscriptionUpdateBillingPeriod is populated
+	case components.SubscriptionUpdateTypeSubscriptionCancel:
+		// subscriptionUpdate.SubscriptionCancel is populated
+	case components.SubscriptionUpdateTypeSubscriptionRevoke:
+		// subscriptionUpdate.SubscriptionRevoke is populated
+}
+```

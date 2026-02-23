@@ -19,8 +19,8 @@ const (
 
 // MetricsGetQueryParamOrganizationIDFilter - Filter by organization ID.
 type MetricsGetQueryParamOrganizationIDFilter struct {
-	Str        *string  `queryParam:"inline,name=OrganizationID_Filter"`
-	ArrayOfStr []string `queryParam:"inline,name=OrganizationID_Filter"`
+	Str        *string  `queryParam:"inline" union:"member"`
+	ArrayOfStr []string `queryParam:"inline" union:"member"`
 
 	Type MetricsGetQueryParamOrganizationIDFilterType
 }
@@ -83,8 +83,8 @@ const (
 
 // MetricsGetQueryParamProductIDFilter - Filter by product ID.
 type MetricsGetQueryParamProductIDFilter struct {
-	Str        *string  `queryParam:"inline,name=ProductID_Filter"`
-	ArrayOfStr []string `queryParam:"inline,name=ProductID_Filter"`
+	Str        *string  `queryParam:"inline" union:"member"`
+	ArrayOfStr []string `queryParam:"inline" union:"member"`
 
 	Type MetricsGetQueryParamProductIDFilterType
 }
@@ -147,8 +147,8 @@ const (
 
 // QueryParamProductBillingTypeFilter - Filter by billing type. `recurring` will filter data corresponding to subscriptions creations or renewals. `one_time` will filter data corresponding to one-time purchases.
 type QueryParamProductBillingTypeFilter struct {
-	ProductBillingType        *components.ProductBillingType  `queryParam:"inline,name=ProductBillingType_Filter"`
-	ArrayOfProductBillingType []components.ProductBillingType `queryParam:"inline,name=ProductBillingType_Filter"`
+	ProductBillingType        *components.ProductBillingType  `queryParam:"inline" union:"member"`
+	ArrayOfProductBillingType []components.ProductBillingType `queryParam:"inline" union:"member"`
 
 	Type QueryParamProductBillingTypeFilterType
 }
@@ -211,8 +211,8 @@ const (
 
 // MetricsGetQueryParamCustomerIDFilter - Filter by customer ID.
 type MetricsGetQueryParamCustomerIDFilter struct {
-	Str        *string  `queryParam:"inline,name=CustomerID_Filter"`
-	ArrayOfStr []string `queryParam:"inline,name=CustomerID_Filter"`
+	Str        *string  `queryParam:"inline" union:"member"`
+	ArrayOfStr []string `queryParam:"inline" union:"member"`
 
 	Type MetricsGetQueryParamCustomerIDFilterType
 }
@@ -283,6 +283,8 @@ type MetricsGetRequest struct {
 	BillingType *QueryParamProductBillingTypeFilter `queryParam:"style=form,explode=true,name=billing_type"`
 	// Filter by customer ID.
 	CustomerID *MetricsGetQueryParamCustomerIDFilter `queryParam:"style=form,explode=true,name=customer_id"`
+	// List of metric slugs to focus on. When provided, only the queries needed for these metrics will be executed, improving performance. If not provided, all metrics are returned.
+	Metrics []string `queryParam:"style=form,explode=true,name=metrics"`
 }
 
 func (m MetricsGetRequest) MarshalJSON() ([]byte, error) {
@@ -290,7 +292,7 @@ func (m MetricsGetRequest) MarshalJSON() ([]byte, error) {
 }
 
 func (m *MetricsGetRequest) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &m, "", false, []string{"start_date", "end_date", "interval"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &m, "", false, nil); err != nil {
 		return err
 	}
 	return nil
@@ -350,6 +352,13 @@ func (m *MetricsGetRequest) GetCustomerID() *MetricsGetQueryParamCustomerIDFilte
 		return nil
 	}
 	return m.CustomerID
+}
+
+func (m *MetricsGetRequest) GetMetrics() []string {
+	if m == nil {
+		return nil
+	}
+	return m.Metrics
 }
 
 type MetricsGetResponse struct {

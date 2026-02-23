@@ -39,3 +39,23 @@ customerBenefitGrant := components.CreateCustomerBenefitGrantCustomerBenefitGran
 customerBenefitGrant := components.CreateCustomerBenefitGrantCustomerBenefitGrantMeterCredit(components.CustomerBenefitGrantMeterCredit{/* values here */})
 ```
 
+## Union Discrimination
+
+Use the `Type` field to determine which variant is active, then access the corresponding field:
+
+```go
+switch customerBenefitGrant.Type {
+	case components.CustomerBenefitGrantTypeCustomerBenefitGrantDiscord:
+		// customerBenefitGrant.CustomerBenefitGrantDiscord is populated
+	case components.CustomerBenefitGrantTypeCustomerBenefitGrantGitHubRepository:
+		// customerBenefitGrant.CustomerBenefitGrantGitHubRepository is populated
+	case components.CustomerBenefitGrantTypeCustomerBenefitGrantDownloadables:
+		// customerBenefitGrant.CustomerBenefitGrantDownloadables is populated
+	case components.CustomerBenefitGrantTypeCustomerBenefitGrantLicenseKeys:
+		// customerBenefitGrant.CustomerBenefitGrantLicenseKeys is populated
+	case components.CustomerBenefitGrantTypeCustomerBenefitGrantCustom:
+		// customerBenefitGrant.CustomerBenefitGrantCustom is populated
+	case components.CustomerBenefitGrantTypeCustomerBenefitGrantMeterCredit:
+		// customerBenefitGrant.CustomerBenefitGrantMeterCredit is populated
+}
+```

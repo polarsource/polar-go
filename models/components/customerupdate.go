@@ -18,10 +18,10 @@ const (
 )
 
 type CustomerUpdateMetadata struct {
-	Str     *string  `queryParam:"inline,name=metadata"`
-	Integer *int64   `queryParam:"inline,name=metadata"`
-	Number  *float64 `queryParam:"inline,name=metadata"`
-	Boolean *bool    `queryParam:"inline,name=metadata"`
+	Str     *string  `queryParam:"inline" union:"member"`
+	Integer *int64   `queryParam:"inline" union:"member"`
+	Number  *float64 `queryParam:"inline" union:"member"`
+	Boolean *bool    `queryParam:"inline" union:"member"`
 
 	Type CustomerUpdateMetadataType
 }
@@ -123,8 +123,8 @@ const (
 )
 
 type CustomerUpdateTaxID struct {
-	Str         *string      `queryParam:"inline,name=tax_id"`
-	TaxIDFormat *TaxIDFormat `queryParam:"inline,name=tax_id"`
+	Str         *string      `queryParam:"inline" union:"member"`
+	TaxIDFormat *TaxIDFormat `queryParam:"inline" union:"member"`
 
 	Type CustomerUpdateTaxIDType
 }
@@ -196,8 +196,11 @@ type CustomerUpdate struct {
 	Name           *string                `json:"name,omitempty"`
 	BillingAddress *AddressInput          `json:"billing_address,omitempty"`
 	TaxID          []*CustomerUpdateTaxID `json:"tax_id,omitempty"`
+	Locale         *string                `json:"locale,omitempty"`
 	// The ID of the customer in your system. This must be unique within the organization. Once set, it can't be updated.
 	ExternalID *string `json:"external_id,omitempty"`
+	// The customer type. Can only be upgraded from 'individual' to 'team', never downgraded.
+	Type *CustomerType `json:"type,omitempty"`
 }
 
 func (c *CustomerUpdate) GetMetadata() map[string]CustomerUpdateMetadata {
@@ -235,9 +238,23 @@ func (c *CustomerUpdate) GetTaxID() []*CustomerUpdateTaxID {
 	return c.TaxID
 }
 
+func (c *CustomerUpdate) GetLocale() *string {
+	if c == nil {
+		return nil
+	}
+	return c.Locale
+}
+
 func (c *CustomerUpdate) GetExternalID() *string {
 	if c == nil {
 		return nil
 	}
 	return c.ExternalID
+}
+
+func (c *CustomerUpdate) GetType() *CustomerType {
+	if c == nil {
+		return nil
+	}
+	return c.Type
 }

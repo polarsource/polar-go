@@ -27,3 +27,19 @@ customerUpdateMetadata := components.CreateCustomerUpdateMetadataNumber(float64{
 customerUpdateMetadata := components.CreateCustomerUpdateMetadataBoolean(bool{/* values here */})
 ```
 
+## Union Discrimination
+
+Use the `Type` field to determine which variant is active, then access the corresponding field:
+
+```go
+switch customerUpdateMetadata.Type {
+	case components.CustomerUpdateMetadataTypeStr:
+		// customerUpdateMetadata.Str is populated
+	case components.CustomerUpdateMetadataTypeInteger:
+		// customerUpdateMetadata.Integer is populated
+	case components.CustomerUpdateMetadataTypeNumber:
+		// customerUpdateMetadata.Number is populated
+	case components.CustomerUpdateMetadataTypeBoolean:
+		// customerUpdateMetadata.Boolean is populated
+}
+```

@@ -23,7 +23,7 @@ func (c CustomerCustomerMeterMeter) MarshalJSON() ([]byte, error) {
 }
 
 func (c *CustomerCustomerMeterMeter) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &c, "", false, []string{"created_at", "id", "name"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &c, "", false, nil); err != nil {
 		return err
 	}
 	return nil

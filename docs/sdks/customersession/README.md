@@ -1,11 +1,11 @@
-# CustomerSession
-(*CustomerPortal.CustomerSession*)
+# CustomerPortal.CustomerSession
 
 ## Overview
 
 ### Available Operations
 
 * [Introspect](#introspect) - Introspect Customer Session
+* [GetAuthenticatedUser](#getauthenticateduser) - Get Authenticated Portal User
 
 ## Introspect
 
@@ -33,7 +33,7 @@ func main() {
     s := polargo.New()
 
     res, err := s.CustomerPortal.CustomerSession.Introspect(ctx, operations.CustomerPortalCustomerSessionIntrospectSecurity{
-        CustomerSession: os.Getenv("POLAR_CUSTOMER_SESSION"),
+        CustomerSession: polargo.Pointer(os.Getenv("POLAR_CUSTOMER_SESSION")),
     })
     if err != nil {
         log.Fatal(err)
@@ -55,6 +55,61 @@ func main() {
 ### Response
 
 **[*operations.CustomerPortalCustomerSessionIntrospectResponse](../../models/operations/customerportalcustomersessionintrospectresponse.md), error**
+
+### Errors
+
+| Error Type         | Status Code        | Content Type       |
+| ------------------ | ------------------ | ------------------ |
+| apierrors.APIError | 4XX, 5XX           | \*/\*              |
+
+## GetAuthenticatedUser
+
+Get information about the currently authenticated portal user.
+
+**Scopes**: `customer_portal:read` `customer_portal:write`
+
+### Example Usage
+
+<!-- UsageSnippet language="go" operationID="customer_portal:customer-session:get_authenticated_user" method="get" path="/v1/customer-portal/customer-session/user" -->
+```go
+package main
+
+import(
+	"context"
+	polargo "github.com/polarsource/polar-go"
+	"os"
+	"github.com/polarsource/polar-go/models/operations"
+	"log"
+)
+
+func main() {
+    ctx := context.Background()
+
+    s := polargo.New()
+
+    res, err := s.CustomerPortal.CustomerSession.GetAuthenticatedUser(ctx, operations.CustomerPortalCustomerSessionGetAuthenticatedUserSecurity{
+        CustomerSession: polargo.Pointer(os.Getenv("POLAR_CUSTOMER_SESSION")),
+    })
+    if err != nil {
+        log.Fatal(err)
+    }
+    if res.PortalAuthenticatedUser != nil {
+        // handle response
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                                                                                                                    | Type                                                                                                                                                         | Required                                                                                                                                                     | Description                                                                                                                                                  |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `ctx`                                                                                                                                                        | [context.Context](https://pkg.go.dev/context#Context)                                                                                                        | :heavy_check_mark:                                                                                                                                           | The context to use for the request.                                                                                                                          |
+| `security`                                                                                                                                                   | [operations.CustomerPortalCustomerSessionGetAuthenticatedUserSecurity](../../models/operations/customerportalcustomersessiongetauthenticatedusersecurity.md) | :heavy_check_mark:                                                                                                                                           | The security requirements to use for the request.                                                                                                            |
+| `opts`                                                                                                                                                       | [][operations.Option](../../models/operations/option.md)                                                                                                     | :heavy_minus_sign:                                                                                                                                           | The options for this request.                                                                                                                                |
+
+### Response
+
+**[*operations.CustomerPortalCustomerSessionGetAuthenticatedUserResponse](../../models/operations/customerportalcustomersessiongetauthenticateduserresponse.md), error**
 
 ### Errors
 

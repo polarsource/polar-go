@@ -33,7 +33,7 @@ func newRefunds(rootSDK *Polar, sdkConfig config.SDKConfiguration, hooks *hooks.
 }
 
 // List Refunds
-// List products.
+// List refunds.
 //
 // **Scopes**: `refunds:read` `refunds:write`
 func (s *Refunds) List(ctx context.Context, request operations.RefundsListRequest, opts ...operations.Option) (*operations.RefundsListResponse, error) {
@@ -88,7 +88,7 @@ func (s *Refunds) List(ctx context.Context, request operations.RefundsListReques
 	req.Header.Set("Accept", "application/json")
 	req.Header.Set("User-Agent", s.sdkConfiguration.UserAgent)
 
-	if err := utils.PopulateQueryParams(ctx, req, request, nil); err != nil {
+	if err := utils.PopulateQueryParams(ctx, req, request, nil, nil); err != nil {
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
@@ -254,15 +254,16 @@ func (s *Refunds) List(ctx context.Context, request operations.RefundsListReques
 		return s.List(
 			ctx,
 			operations.RefundsListRequest{
-				ID:             request.ID,
-				OrganizationID: request.OrganizationID,
-				OrderID:        request.OrderID,
-				SubscriptionID: request.SubscriptionID,
-				CustomerID:     request.CustomerID,
-				Succeeded:      request.Succeeded,
-				Page:           &nP,
-				Limit:          request.Limit,
-				Sorting:        request.Sorting,
+				ID:                 request.ID,
+				OrganizationID:     request.OrganizationID,
+				OrderID:            request.OrderID,
+				SubscriptionID:     request.SubscriptionID,
+				CustomerID:         request.CustomerID,
+				ExternalCustomerID: request.ExternalCustomerID,
+				Succeeded:          request.Succeeded,
+				Page:               &nP,
+				Limit:              request.Limit,
+				Sorting:            request.Sorting,
 			},
 			opts...,
 		)
@@ -482,7 +483,7 @@ func (s *Refunds) Create(ctx context.Context, request components.RefundCreate, o
 
 			_, err = s.hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
 			return nil, err
-		} else if utils.MatchStatusCodes([]string{"400", "403", "422", "4XX", "5XX"}, httpRes.StatusCode) {
+		} else if utils.MatchStatusCodes([]string{"403", "422", "4XX", "5XX"}, httpRes.StatusCode) {
 			_httpRes, err := s.hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
 			if err != nil {
 				return nil, err
@@ -505,7 +506,7 @@ func (s *Refunds) Create(ctx context.Context, request components.RefundCreate, o
 	}
 
 	switch {
-	case httpRes.StatusCode == 200:
+	case httpRes.StatusCode == 201:
 		switch {
 		case utils.MatchContentType(httpRes.Header.Get("Content-Type"), `application/json`):
 			rawBody, err := utils.ConsumeRawBody(httpRes)
@@ -519,28 +520,6 @@ func (s *Refunds) Create(ctx context.Context, request components.RefundCreate, o
 			}
 
 			res.Refund = &out
-		default:
-			rawBody, err := utils.ConsumeRawBody(httpRes)
-			if err != nil {
-				return nil, err
-			}
-			return nil, apierrors.NewAPIError(fmt.Sprintf("unknown content-type received: %s", httpRes.Header.Get("Content-Type")), httpRes.StatusCode, string(rawBody), httpRes)
-		}
-	case httpRes.StatusCode == 201:
-	case httpRes.StatusCode == 400:
-		switch {
-		case utils.MatchContentType(httpRes.Header.Get("Content-Type"), `application/json`):
-			rawBody, err := utils.ConsumeRawBody(httpRes)
-			if err != nil {
-				return nil, err
-			}
-
-			var out apierrors.RefundAmountTooHigh
-			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
-				return nil, err
-			}
-
-			return nil, &out
 		default:
 			rawBody, err := utils.ConsumeRawBody(httpRes)
 			if err != nil {

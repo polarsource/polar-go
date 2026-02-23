@@ -3,118 +3,9 @@
 package components
 
 import (
-	"errors"
-	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
 	"time"
 )
-
-type BenefitCustomMetadataType string
-
-const (
-	BenefitCustomMetadataTypeStr     BenefitCustomMetadataType = "str"
-	BenefitCustomMetadataTypeInteger BenefitCustomMetadataType = "integer"
-	BenefitCustomMetadataTypeNumber  BenefitCustomMetadataType = "number"
-	BenefitCustomMetadataTypeBoolean BenefitCustomMetadataType = "boolean"
-)
-
-type BenefitCustomMetadata struct {
-	Str     *string  `queryParam:"inline,name=metadata"`
-	Integer *int64   `queryParam:"inline,name=metadata"`
-	Number  *float64 `queryParam:"inline,name=metadata"`
-	Boolean *bool    `queryParam:"inline,name=metadata"`
-
-	Type BenefitCustomMetadataType
-}
-
-func CreateBenefitCustomMetadataStr(str string) BenefitCustomMetadata {
-	typ := BenefitCustomMetadataTypeStr
-
-	return BenefitCustomMetadata{
-		Str:  &str,
-		Type: typ,
-	}
-}
-
-func CreateBenefitCustomMetadataInteger(integer int64) BenefitCustomMetadata {
-	typ := BenefitCustomMetadataTypeInteger
-
-	return BenefitCustomMetadata{
-		Integer: &integer,
-		Type:    typ,
-	}
-}
-
-func CreateBenefitCustomMetadataNumber(number float64) BenefitCustomMetadata {
-	typ := BenefitCustomMetadataTypeNumber
-
-	return BenefitCustomMetadata{
-		Number: &number,
-		Type:   typ,
-	}
-}
-
-func CreateBenefitCustomMetadataBoolean(boolean bool) BenefitCustomMetadata {
-	typ := BenefitCustomMetadataTypeBoolean
-
-	return BenefitCustomMetadata{
-		Boolean: &boolean,
-		Type:    typ,
-	}
-}
-
-func (u *BenefitCustomMetadata) UnmarshalJSON(data []byte) error {
-
-	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, nil); err == nil {
-		u.Str = &str
-		u.Type = BenefitCustomMetadataTypeStr
-		return nil
-	}
-
-	var integer int64 = int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
-		u.Integer = &integer
-		u.Type = BenefitCustomMetadataTypeInteger
-		return nil
-	}
-
-	var number float64 = float64(0)
-	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
-		u.Number = &number
-		u.Type = BenefitCustomMetadataTypeNumber
-		return nil
-	}
-
-	var boolean bool = false
-	if err := utils.UnmarshalJSON(data, &boolean, "", true, nil); err == nil {
-		u.Boolean = &boolean
-		u.Type = BenefitCustomMetadataTypeBoolean
-		return nil
-	}
-
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for BenefitCustomMetadata", string(data))
-}
-
-func (u BenefitCustomMetadata) MarshalJSON() ([]byte, error) {
-	if u.Str != nil {
-		return utils.MarshalJSON(u.Str, "", true)
-	}
-
-	if u.Integer != nil {
-		return utils.MarshalJSON(u.Integer, "", true)
-	}
-
-	if u.Number != nil {
-		return utils.MarshalJSON(u.Number, "", true)
-	}
-
-	if u.Boolean != nil {
-		return utils.MarshalJSON(u.Boolean, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type BenefitCustomMetadata: all fields are null")
-}
 
 // BenefitCustom - A benefit of type `custom`.
 //
@@ -134,8 +25,8 @@ type BenefitCustom struct {
 	// Whether the benefit is deletable.
 	Deletable bool `json:"deletable"`
 	// The ID of the organization owning the benefit.
-	OrganizationID string                           `json:"organization_id"`
-	Metadata       map[string]BenefitCustomMetadata `json:"metadata"`
+	OrganizationID string                        `json:"organization_id"`
+	Metadata       map[string]MetadataOutputType `json:"metadata"`
 	// Properties for a benefit of type `custom`.
 	Properties BenefitCustomProperties `json:"properties"`
 }
@@ -204,9 +95,9 @@ func (b *BenefitCustom) GetOrganizationID() string {
 	return b.OrganizationID
 }
 
-func (b *BenefitCustom) GetMetadata() map[string]BenefitCustomMetadata {
+func (b *BenefitCustom) GetMetadata() map[string]MetadataOutputType {
 	if b == nil {
-		return map[string]BenefitCustomMetadata{}
+		return map[string]MetadataOutputType{}
 	}
 	return b.Metadata
 }

@@ -14,8 +14,11 @@ type ProductPriceSeatBased struct {
 	// Last modification timestamp of the object.
 	ModifiedAt *time.Time `json:"modified_at"`
 	// The ID of the price.
-	ID         string `json:"id"`
-	amountType string `const:"seat_based" json:"amount_type"`
+	ID         string             `json:"id"`
+	Source     ProductPriceSource `json:"source"`
+	amountType string             `const:"seat_based" json:"amount_type"`
+	// The currency in which the customer will be charged.
+	PriceCurrency string `json:"price_currency"`
 	// Whether the price is archived and no longer available.
 	IsArchived bool `json:"is_archived"`
 	// The ID of the product owning the price.
@@ -23,10 +26,12 @@ type ProductPriceSeatBased struct {
 	Type      ProductPriceType `json:"type"`
 	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
 	RecurringInterval *SubscriptionRecurringInterval `json:"recurring_interval"`
-	// The currency.
-	PriceCurrency string `json:"price_currency"`
 	// List of pricing tiers for seat-based pricing.
-	SeatTiers ProductPriceSeatTiers `json:"seat_tiers"`
+	//
+	// The minimum and maximum seat limits are derived from the tiers:
+	// - minimum_seats = first tier's min_seats
+	// - maximum_seats = last tier's max_seats (None for unlimited)
+	SeatTiers ProductPriceSeatTiersOutput `json:"seat_tiers"`
 }
 
 func (p ProductPriceSeatBased) MarshalJSON() ([]byte, error) {
@@ -34,7 +39,7 @@ func (p ProductPriceSeatBased) MarshalJSON() ([]byte, error) {
 }
 
 func (p *ProductPriceSeatBased) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &p, "", false, []string{"created_at", "id", "amount_type", "is_archived", "product_id", "type", "price_currency", "seat_tiers"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &p, "", false, []string{"created_at", "id", "source", "amount_type", "price_currency", "is_archived", "product_id", "type", "seat_tiers"}); err != nil {
 		return err
 	}
 	return nil
@@ -61,8 +66,22 @@ func (p *ProductPriceSeatBased) GetID() string {
 	return p.ID
 }
 
+func (p *ProductPriceSeatBased) GetSource() ProductPriceSource {
+	if p == nil {
+		return ProductPriceSource("")
+	}
+	return p.Source
+}
+
 func (p *ProductPriceSeatBased) GetAmountType() string {
 	return "seat_based"
+}
+
+func (p *ProductPriceSeatBased) GetPriceCurrency() string {
+	if p == nil {
+		return ""
+	}
+	return p.PriceCurrency
 }
 
 func (p *ProductPriceSeatBased) GetIsArchived() bool {
@@ -93,16 +112,9 @@ func (p *ProductPriceSeatBased) GetRecurringInterval() *SubscriptionRecurringInt
 	return p.RecurringInterval
 }
 
-func (p *ProductPriceSeatBased) GetPriceCurrency() string {
+func (p *ProductPriceSeatBased) GetSeatTiers() ProductPriceSeatTiersOutput {
 	if p == nil {
-		return ""
-	}
-	return p.PriceCurrency
-}
-
-func (p *ProductPriceSeatBased) GetSeatTiers() ProductPriceSeatTiers {
-	if p == nil {
-		return ProductPriceSeatTiers{}
+		return ProductPriceSeatTiersOutput{}
 	}
 	return p.SeatTiers
 }

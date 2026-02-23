@@ -19,10 +19,10 @@ const (
 )
 
 type CheckoutUpdateCustomFieldData struct {
-	Str      *string    `queryParam:"inline,name=custom_field_data"`
-	Integer  *int64     `queryParam:"inline,name=custom_field_data"`
-	Boolean  *bool      `queryParam:"inline,name=custom_field_data"`
-	DateTime *time.Time `queryParam:"inline,name=custom_field_data"`
+	Str      *string    `queryParam:"inline" union:"member"`
+	Integer  *int64     `queryParam:"inline" union:"member"`
+	Boolean  *bool      `queryParam:"inline" union:"member"`
+	DateTime *time.Time `queryParam:"inline" union:"member"`
 
 	Type CheckoutUpdateCustomFieldDataType
 }
@@ -126,10 +126,10 @@ const (
 )
 
 type CheckoutUpdateMetadata struct {
-	Str     *string  `queryParam:"inline,name=metadata"`
-	Integer *int64   `queryParam:"inline,name=metadata"`
-	Number  *float64 `queryParam:"inline,name=metadata"`
-	Boolean *bool    `queryParam:"inline,name=metadata"`
+	Str     *string  `queryParam:"inline" union:"member"`
+	Integer *int64   `queryParam:"inline" union:"member"`
+	Number  *float64 `queryParam:"inline" union:"member"`
+	Boolean *bool    `queryParam:"inline" union:"member"`
 
 	Type CheckoutUpdateMetadataType
 }
@@ -233,10 +233,10 @@ const (
 )
 
 type CheckoutUpdateCustomerMetadata struct {
-	Str     *string  `queryParam:"inline,name=customer_metadata"`
-	Integer *int64   `queryParam:"inline,name=customer_metadata"`
-	Number  *float64 `queryParam:"inline,name=customer_metadata"`
-	Boolean *bool    `queryParam:"inline,name=customer_metadata"`
+	Str     *string  `queryParam:"inline" union:"member"`
+	Integer *int64   `queryParam:"inline" union:"member"`
+	Number  *float64 `queryParam:"inline" union:"member"`
+	Boolean *bool    `queryParam:"inline" union:"member"`
 
 	Type CheckoutUpdateCustomerMetadataType
 }
@@ -349,6 +349,7 @@ type CheckoutUpdate struct {
 	CustomerBillingName    *string       `json:"customer_billing_name,omitempty"`
 	CustomerBillingAddress *AddressInput `json:"customer_billing_address,omitempty"`
 	CustomerTaxID          *string       `json:"customer_tax_id,omitempty"`
+	Locale                 *string       `json:"locale,omitempty"`
 	// The interval unit for the trial period.
 	TrialInterval *TrialInterval `json:"trial_interval,omitempty"`
 	// The number of interval units for the trial period.
@@ -365,13 +366,16 @@ type CheckoutUpdate struct {
 	//
 	// You can store up to **50 key-value pairs**.
 	Metadata map[string]CheckoutUpdateMetadata `json:"metadata,omitempty"`
+	Currency *PresentmentCurrency              `json:"currency,omitempty"`
 	// ID of the discount to apply to the checkout.
 	DiscountID *string `json:"discount_id,omitempty"`
 	// Whether to allow the customer to apply discount codes. If you apply a discount through `discount_id`, it'll still be applied, but the customer won't be able to change it.
 	AllowDiscountCodes *bool `json:"allow_discount_codes,omitempty"`
 	// Whether to require the customer to fill their full billing address, instead of just the country. Customers in the US will always be required to fill their full address, regardless of this setting. If you preset the billing address, this setting will be automatically set to `true`.
-	RequireBillingAddress *bool   `json:"require_billing_address,omitempty"`
-	CustomerIPAddress     *string `json:"customer_ip_address,omitempty"`
+	RequireBillingAddress *bool `json:"require_billing_address,omitempty"`
+	// Whether to enable the trial period for the checkout session. If `false`, the trial period will be disabled, even if the selected product has a trial configured.
+	AllowTrial        *bool   `json:"allow_trial,omitempty"`
+	CustomerIPAddress *string `json:"customer_ip_address,omitempty"`
 	// Key-value object allowing you to store additional information that'll be copied to the created customer.
 	//
 	// The key must be a string with a maximum length of **40 characters**.
@@ -469,6 +473,13 @@ func (c *CheckoutUpdate) GetCustomerTaxID() *string {
 	return c.CustomerTaxID
 }
 
+func (c *CheckoutUpdate) GetLocale() *string {
+	if c == nil {
+		return nil
+	}
+	return c.Locale
+}
+
 func (c *CheckoutUpdate) GetTrialInterval() *TrialInterval {
 	if c == nil {
 		return nil
@@ -490,6 +501,13 @@ func (c *CheckoutUpdate) GetMetadata() map[string]CheckoutUpdateMetadata {
 	return c.Metadata
 }
 
+func (c *CheckoutUpdate) GetCurrency() *PresentmentCurrency {
+	if c == nil {
+		return nil
+	}
+	return c.Currency
+}
+
 func (c *CheckoutUpdate) GetDiscountID() *string {
 	if c == nil {
 		return nil
@@ -509,6 +527,13 @@ func (c *CheckoutUpdate) GetRequireBillingAddress() *bool {
 		return nil
 	}
 	return c.RequireBillingAddress
+}
+
+func (c *CheckoutUpdate) GetAllowTrial() *bool {
+	if c == nil {
+		return nil
+	}
+	return c.AllowTrial
 }
 
 func (c *CheckoutUpdate) GetCustomerIPAddress() *string {

@@ -3,121 +3,12 @@
 package components
 
 import (
-	"errors"
-	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
 	"time"
 )
 
-type OrderSubscriptionMetadataType string
-
-const (
-	OrderSubscriptionMetadataTypeStr     OrderSubscriptionMetadataType = "str"
-	OrderSubscriptionMetadataTypeInteger OrderSubscriptionMetadataType = "integer"
-	OrderSubscriptionMetadataTypeNumber  OrderSubscriptionMetadataType = "number"
-	OrderSubscriptionMetadataTypeBoolean OrderSubscriptionMetadataType = "boolean"
-)
-
-type OrderSubscriptionMetadata struct {
-	Str     *string  `queryParam:"inline,name=metadata"`
-	Integer *int64   `queryParam:"inline,name=metadata"`
-	Number  *float64 `queryParam:"inline,name=metadata"`
-	Boolean *bool    `queryParam:"inline,name=metadata"`
-
-	Type OrderSubscriptionMetadataType
-}
-
-func CreateOrderSubscriptionMetadataStr(str string) OrderSubscriptionMetadata {
-	typ := OrderSubscriptionMetadataTypeStr
-
-	return OrderSubscriptionMetadata{
-		Str:  &str,
-		Type: typ,
-	}
-}
-
-func CreateOrderSubscriptionMetadataInteger(integer int64) OrderSubscriptionMetadata {
-	typ := OrderSubscriptionMetadataTypeInteger
-
-	return OrderSubscriptionMetadata{
-		Integer: &integer,
-		Type:    typ,
-	}
-}
-
-func CreateOrderSubscriptionMetadataNumber(number float64) OrderSubscriptionMetadata {
-	typ := OrderSubscriptionMetadataTypeNumber
-
-	return OrderSubscriptionMetadata{
-		Number: &number,
-		Type:   typ,
-	}
-}
-
-func CreateOrderSubscriptionMetadataBoolean(boolean bool) OrderSubscriptionMetadata {
-	typ := OrderSubscriptionMetadataTypeBoolean
-
-	return OrderSubscriptionMetadata{
-		Boolean: &boolean,
-		Type:    typ,
-	}
-}
-
-func (u *OrderSubscriptionMetadata) UnmarshalJSON(data []byte) error {
-
-	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, nil); err == nil {
-		u.Str = &str
-		u.Type = OrderSubscriptionMetadataTypeStr
-		return nil
-	}
-
-	var integer int64 = int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
-		u.Integer = &integer
-		u.Type = OrderSubscriptionMetadataTypeInteger
-		return nil
-	}
-
-	var number float64 = float64(0)
-	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
-		u.Number = &number
-		u.Type = OrderSubscriptionMetadataTypeNumber
-		return nil
-	}
-
-	var boolean bool = false
-	if err := utils.UnmarshalJSON(data, &boolean, "", true, nil); err == nil {
-		u.Boolean = &boolean
-		u.Type = OrderSubscriptionMetadataTypeBoolean
-		return nil
-	}
-
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for OrderSubscriptionMetadata", string(data))
-}
-
-func (u OrderSubscriptionMetadata) MarshalJSON() ([]byte, error) {
-	if u.Str != nil {
-		return utils.MarshalJSON(u.Str, "", true)
-	}
-
-	if u.Integer != nil {
-		return utils.MarshalJSON(u.Integer, "", true)
-	}
-
-	if u.Number != nil {
-		return utils.MarshalJSON(u.Number, "", true)
-	}
-
-	if u.Boolean != nil {
-		return utils.MarshalJSON(u.Boolean, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type OrderSubscriptionMetadata: all fields are null")
-}
-
 type OrderSubscription struct {
-	Metadata map[string]OrderSubscriptionMetadata `json:"metadata"`
+	Metadata map[string]MetadataOutputType `json:"metadata"`
 	// Creation timestamp of the object.
 	CreatedAt time.Time `json:"created_at"`
 	// Last modification timestamp of the object.
@@ -168,15 +59,15 @@ func (o OrderSubscription) MarshalJSON() ([]byte, error) {
 }
 
 func (o *OrderSubscription) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &o, "", false, []string{"metadata", "created_at", "id", "amount", "currency", "recurring_interval", "recurring_interval_count", "status", "current_period_start", "cancel_at_period_end", "customer_id", "product_id"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &o, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (o *OrderSubscription) GetMetadata() map[string]OrderSubscriptionMetadata {
+func (o *OrderSubscription) GetMetadata() map[string]MetadataOutputType {
 	if o == nil {
-		return map[string]OrderSubscriptionMetadata{}
+		return map[string]MetadataOutputType{}
 	}
 	return o.Metadata
 }

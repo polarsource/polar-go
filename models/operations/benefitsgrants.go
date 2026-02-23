@@ -18,8 +18,8 @@ const (
 
 // QueryParamCustomerIDFilter - Filter by customer.
 type QueryParamCustomerIDFilter struct {
-	Str        *string  `queryParam:"inline,name=CustomerID_Filter"`
-	ArrayOfStr []string `queryParam:"inline,name=CustomerID_Filter"`
+	Str        *string  `queryParam:"inline" union:"member"`
+	ArrayOfStr []string `queryParam:"inline" union:"member"`
 
 	Type QueryParamCustomerIDFilterType
 }
@@ -73,12 +73,78 @@ func (u QueryParamCustomerIDFilter) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type QueryParamCustomerIDFilter: all fields are null")
 }
 
+type MemberIDFilterType string
+
+const (
+	MemberIDFilterTypeStr        MemberIDFilterType = "str"
+	MemberIDFilterTypeArrayOfStr MemberIDFilterType = "arrayOfStr"
+)
+
+// MemberIDFilter - Filter by member.
+type MemberIDFilter struct {
+	Str        *string  `queryParam:"inline" union:"member"`
+	ArrayOfStr []string `queryParam:"inline" union:"member"`
+
+	Type MemberIDFilterType
+}
+
+func CreateMemberIDFilterStr(str string) MemberIDFilter {
+	typ := MemberIDFilterTypeStr
+
+	return MemberIDFilter{
+		Str:  &str,
+		Type: typ,
+	}
+}
+
+func CreateMemberIDFilterArrayOfStr(arrayOfStr []string) MemberIDFilter {
+	typ := MemberIDFilterTypeArrayOfStr
+
+	return MemberIDFilter{
+		ArrayOfStr: arrayOfStr,
+		Type:       typ,
+	}
+}
+
+func (u *MemberIDFilter) UnmarshalJSON(data []byte) error {
+
+	var str string = ""
+	if err := utils.UnmarshalJSON(data, &str, "", true, nil); err == nil {
+		u.Str = &str
+		u.Type = MemberIDFilterTypeStr
+		return nil
+	}
+
+	var arrayOfStr []string = []string{}
+	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, nil); err == nil {
+		u.ArrayOfStr = arrayOfStr
+		u.Type = MemberIDFilterTypeArrayOfStr
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for MemberIDFilter", string(data))
+}
+
+func (u MemberIDFilter) MarshalJSON() ([]byte, error) {
+	if u.Str != nil {
+		return utils.MarshalJSON(u.Str, "", true)
+	}
+
+	if u.ArrayOfStr != nil {
+		return utils.MarshalJSON(u.ArrayOfStr, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type MemberIDFilter: all fields are null")
+}
+
 type BenefitsGrantsRequest struct {
 	ID string `pathParam:"style=simple,explode=false,name=id"`
 	// Filter by granted status. If `true`, only granted benefits will be returned. If `false`, only revoked benefits will be returned.
 	IsGranted *bool `queryParam:"style=form,explode=true,name=is_granted"`
 	// Filter by customer.
 	CustomerID *QueryParamCustomerIDFilter `queryParam:"style=form,explode=true,name=customer_id"`
+	// Filter by member.
+	MemberID *MemberIDFilter `queryParam:"style=form,explode=true,name=member_id"`
 	// Page number, defaults to 1.
 	Page *int64 `default:"1" queryParam:"style=form,explode=true,name=page"`
 	// Size of a page, defaults to 10. Maximum is 100.
@@ -90,7 +156,7 @@ func (b BenefitsGrantsRequest) MarshalJSON() ([]byte, error) {
 }
 
 func (b *BenefitsGrantsRequest) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &b, "", false, []string{"id"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &b, "", false, nil); err != nil {
 		return err
 	}
 	return nil
@@ -115,6 +181,13 @@ func (b *BenefitsGrantsRequest) GetCustomerID() *QueryParamCustomerIDFilter {
 		return nil
 	}
 	return b.CustomerID
+}
+
+func (b *BenefitsGrantsRequest) GetMemberID() *MemberIDFilter {
+	if b == nil {
+		return nil
+	}
+	return b.MemberID
 }
 
 func (b *BenefitsGrantsRequest) GetPage() *int64 {

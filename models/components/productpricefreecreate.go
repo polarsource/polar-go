@@ -8,7 +8,8 @@ import (
 
 // ProductPriceFreeCreate - Schema to create a free price.
 type ProductPriceFreeCreate struct {
-	amountType string `const:"free" json:"amount_type"`
+	amountType    string               `const:"free" json:"amount_type"`
+	PriceCurrency *PresentmentCurrency `json:"price_currency,omitempty"`
 }
 
 func (p ProductPriceFreeCreate) MarshalJSON() ([]byte, error) {
@@ -24,4 +25,11 @@ func (p *ProductPriceFreeCreate) UnmarshalJSON(data []byte) error {
 
 func (p *ProductPriceFreeCreate) GetAmountType() string {
 	return "free"
+}
+
+func (p *ProductPriceFreeCreate) GetPriceCurrency() *PresentmentCurrency {
+	if p == nil {
+		return nil
+	}
+	return p.PriceCurrency
 }

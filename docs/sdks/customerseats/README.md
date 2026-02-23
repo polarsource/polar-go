@@ -1,70 +1,15 @@
 # CustomerSeats
-(*CustomerSeats*)
 
 ## Overview
 
 ### Available Operations
 
-* [AssignSeat](#assignseat) - Assign Seat
 * [ListSeats](#listseats) - List Seats
+* [AssignSeat](#assignseat) - Assign Seat
 * [RevokeSeat](#revokeseat) - Revoke Seat
 * [ResendInvitation](#resendinvitation) - Resend Invitation
 * [GetClaimInfo](#getclaiminfo) - Get Claim Info
 * [ClaimSeat](#claimseat) - Claim Seat
-
-## AssignSeat
-
-**Scopes**: `customer_seats:write`
-
-### Example Usage
-
-<!-- UsageSnippet language="go" operationID="customer-seats:assign_seat" method="post" path="/v1/customer-seats" -->
-```go
-package main
-
-import(
-	"context"
-	"os"
-	polargo "github.com/polarsource/polar-go"
-	"github.com/polarsource/polar-go/models/components"
-	"log"
-)
-
-func main() {
-    ctx := context.Background()
-
-    s := polargo.New(
-        polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
-    )
-
-    res, err := s.CustomerSeats.AssignSeat(ctx, components.SeatAssign{})
-    if err != nil {
-        log.Fatal(err)
-    }
-    if res.CustomerSeat != nil {
-        // handle response
-    }
-}
-```
-
-### Parameters
-
-| Parameter                                                      | Type                                                           | Required                                                       | Description                                                    |
-| -------------------------------------------------------------- | -------------------------------------------------------------- | -------------------------------------------------------------- | -------------------------------------------------------------- |
-| `ctx`                                                          | [context.Context](https://pkg.go.dev/context#Context)          | :heavy_check_mark:                                             | The context to use for the request.                            |
-| `request`                                                      | [components.SeatAssign](../../models/components/seatassign.md) | :heavy_check_mark:                                             | The request object to use for the request.                     |
-| `opts`                                                         | [][operations.Option](../../models/operations/option.md)       | :heavy_minus_sign:                                             | The options for this request.                                  |
-
-### Response
-
-**[*operations.CustomerSeatsAssignSeatResponse](../../models/operations/customerseatsassignseatresponse.md), error**
-
-### Errors
-
-| Error Type                    | Status Code                   | Content Type                  |
-| ----------------------------- | ----------------------------- | ----------------------------- |
-| apierrors.HTTPValidationError | 422                           | application/json              |
-| apierrors.APIError            | 4XX, 5XX                      | \*/\*                         |
 
 ## ListSeats
 
@@ -112,6 +57,60 @@ func main() {
 ### Response
 
 **[*operations.CustomerSeatsListSeatsResponse](../../models/operations/customerseatslistseatsresponse.md), error**
+
+### Errors
+
+| Error Type                    | Status Code                   | Content Type                  |
+| ----------------------------- | ----------------------------- | ----------------------------- |
+| apierrors.HTTPValidationError | 422                           | application/json              |
+| apierrors.APIError            | 4XX, 5XX                      | \*/\*                         |
+
+## AssignSeat
+
+**Scopes**: `customer_seats:write`
+
+### Example Usage
+
+<!-- UsageSnippet language="go" operationID="customer-seats:assign_seat" method="post" path="/v1/customer-seats" -->
+```go
+package main
+
+import(
+	"context"
+	"os"
+	polargo "github.com/polarsource/polar-go"
+	"github.com/polarsource/polar-go/models/components"
+	"log"
+)
+
+func main() {
+    ctx := context.Background()
+
+    s := polargo.New(
+        polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
+    )
+
+    res, err := s.CustomerSeats.AssignSeat(ctx, components.SeatAssign{})
+    if err != nil {
+        log.Fatal(err)
+    }
+    if res.CustomerSeat != nil {
+        // handle response
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                      | Type                                                           | Required                                                       | Description                                                    |
+| -------------------------------------------------------------- | -------------------------------------------------------------- | -------------------------------------------------------------- | -------------------------------------------------------------- |
+| `ctx`                                                          | [context.Context](https://pkg.go.dev/context#Context)          | :heavy_check_mark:                                             | The context to use for the request.                            |
+| `request`                                                      | [components.SeatAssign](../../models/components/seatassign.md) | :heavy_check_mark:                                             | The request object to use for the request.                     |
+| `opts`                                                         | [][operations.Option](../../models/operations/option.md)       | :heavy_minus_sign:                                             | The options for this request.                                  |
+
+### Response
+
+**[*operations.CustomerSeatsAssignSeatResponse](../../models/operations/customerseatsassignseatresponse.md), error**
 
 ### Errors
 

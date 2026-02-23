@@ -9,113 +9,6 @@ import (
 	"time"
 )
 
-type OrderCustomerMetadataType string
-
-const (
-	OrderCustomerMetadataTypeStr     OrderCustomerMetadataType = "str"
-	OrderCustomerMetadataTypeInteger OrderCustomerMetadataType = "integer"
-	OrderCustomerMetadataTypeNumber  OrderCustomerMetadataType = "number"
-	OrderCustomerMetadataTypeBoolean OrderCustomerMetadataType = "boolean"
-)
-
-type OrderCustomerMetadata struct {
-	Str     *string  `queryParam:"inline,name=metadata"`
-	Integer *int64   `queryParam:"inline,name=metadata"`
-	Number  *float64 `queryParam:"inline,name=metadata"`
-	Boolean *bool    `queryParam:"inline,name=metadata"`
-
-	Type OrderCustomerMetadataType
-}
-
-func CreateOrderCustomerMetadataStr(str string) OrderCustomerMetadata {
-	typ := OrderCustomerMetadataTypeStr
-
-	return OrderCustomerMetadata{
-		Str:  &str,
-		Type: typ,
-	}
-}
-
-func CreateOrderCustomerMetadataInteger(integer int64) OrderCustomerMetadata {
-	typ := OrderCustomerMetadataTypeInteger
-
-	return OrderCustomerMetadata{
-		Integer: &integer,
-		Type:    typ,
-	}
-}
-
-func CreateOrderCustomerMetadataNumber(number float64) OrderCustomerMetadata {
-	typ := OrderCustomerMetadataTypeNumber
-
-	return OrderCustomerMetadata{
-		Number: &number,
-		Type:   typ,
-	}
-}
-
-func CreateOrderCustomerMetadataBoolean(boolean bool) OrderCustomerMetadata {
-	typ := OrderCustomerMetadataTypeBoolean
-
-	return OrderCustomerMetadata{
-		Boolean: &boolean,
-		Type:    typ,
-	}
-}
-
-func (u *OrderCustomerMetadata) UnmarshalJSON(data []byte) error {
-
-	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, nil); err == nil {
-		u.Str = &str
-		u.Type = OrderCustomerMetadataTypeStr
-		return nil
-	}
-
-	var integer int64 = int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
-		u.Integer = &integer
-		u.Type = OrderCustomerMetadataTypeInteger
-		return nil
-	}
-
-	var number float64 = float64(0)
-	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
-		u.Number = &number
-		u.Type = OrderCustomerMetadataTypeNumber
-		return nil
-	}
-
-	var boolean bool = false
-	if err := utils.UnmarshalJSON(data, &boolean, "", true, nil); err == nil {
-		u.Boolean = &boolean
-		u.Type = OrderCustomerMetadataTypeBoolean
-		return nil
-	}
-
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for OrderCustomerMetadata", string(data))
-}
-
-func (u OrderCustomerMetadata) MarshalJSON() ([]byte, error) {
-	if u.Str != nil {
-		return utils.MarshalJSON(u.Str, "", true)
-	}
-
-	if u.Integer != nil {
-		return utils.MarshalJSON(u.Integer, "", true)
-	}
-
-	if u.Number != nil {
-		return utils.MarshalJSON(u.Number, "", true)
-	}
-
-	if u.Boolean != nil {
-		return utils.MarshalJSON(u.Boolean, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type OrderCustomerMetadata: all fields are null")
-}
-
 type OrderCustomerTaxIDType string
 
 const (
@@ -124,8 +17,8 @@ const (
 )
 
 type OrderCustomerTaxID struct {
-	Str         *string      `queryParam:"inline,name=tax_id"`
-	TaxIDFormat *TaxIDFormat `queryParam:"inline,name=tax_id"`
+	Str         *string      `queryParam:"inline" union:"member"`
+	TaxIDFormat *TaxIDFormat `queryParam:"inline" union:"member"`
 
 	Type OrderCustomerTaxIDType
 }
@@ -185,18 +78,21 @@ type OrderCustomer struct {
 	// Creation timestamp of the object.
 	CreatedAt time.Time `json:"created_at"`
 	// Last modification timestamp of the object.
-	ModifiedAt *time.Time                       `json:"modified_at"`
-	Metadata   map[string]OrderCustomerMetadata `json:"metadata"`
+	ModifiedAt *time.Time                    `json:"modified_at"`
+	Metadata   map[string]MetadataOutputType `json:"metadata"`
 	// The ID of the customer in your system. This must be unique within the organization. Once set, it can't be updated.
 	ExternalID *string `json:"external_id"`
 	// The email address of the customer. This must be unique within the organization.
 	Email string `json:"email"`
 	// Whether the customer email address is verified. The address is automatically verified when the customer accesses the customer portal using their email address.
 	EmailVerified bool `json:"email_verified"`
+	// The type of customer: 'individual' for single users, 'team' for customers with multiple members. Legacy customers may have NULL type which is treated as 'individual'.
+	Type *CustomerType `json:"type,omitempty"`
 	// The name of the customer.
 	Name           *string               `json:"name"`
 	BillingAddress *Address              `json:"billing_address"`
 	TaxID          []*OrderCustomerTaxID `json:"tax_id"`
+	Locale         *string               `json:"locale,omitempty"`
 	// The ID of the organization owning the customer.
 	OrganizationID string `json:"organization_id"`
 	// Timestamp for when the customer was soft deleted.
@@ -209,7 +105,7 @@ func (o OrderCustomer) MarshalJSON() ([]byte, error) {
 }
 
 func (o *OrderCustomer) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &o, "", false, []string{"id", "created_at", "metadata", "email", "email_verified", "organization_id", "avatar_url"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &o, "", false, nil); err != nil {
 		return err
 	}
 	return nil
@@ -236,9 +132,9 @@ func (o *OrderCustomer) GetModifiedAt() *time.Time {
 	return o.ModifiedAt
 }
 
-func (o *OrderCustomer) GetMetadata() map[string]OrderCustomerMetadata {
+func (o *OrderCustomer) GetMetadata() map[string]MetadataOutputType {
 	if o == nil {
-		return map[string]OrderCustomerMetadata{}
+		return map[string]MetadataOutputType{}
 	}
 	return o.Metadata
 }
@@ -264,6 +160,13 @@ func (o *OrderCustomer) GetEmailVerified() bool {
 	return o.EmailVerified
 }
 
+func (o *OrderCustomer) GetType() *CustomerType {
+	if o == nil {
+		return nil
+	}
+	return o.Type
+}
+
 func (o *OrderCustomer) GetName() *string {
 	if o == nil {
 		return nil
@@ -283,6 +186,13 @@ func (o *OrderCustomer) GetTaxID() []*OrderCustomerTaxID {
 		return nil
 	}
 	return o.TaxID
+}
+
+func (o *OrderCustomer) GetLocale() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Locale
 }
 
 func (o *OrderCustomer) GetOrganizationID() string {

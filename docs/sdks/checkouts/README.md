@@ -1,5 +1,4 @@
 # Checkouts
-(*Checkouts*)
 
 ## Overview
 
@@ -117,6 +116,7 @@ func main() {
         CustomerBillingAddress: &components.AddressInput{
             Country: components.CountryAlpha2InputUs,
         },
+        Locale: polargo.Pointer("en"),
         Products: []string{
             "<value 1>",
             "<value 2>",
@@ -127,7 +127,13 @@ func main() {
         log.Fatal(err)
     }
     if res.Checkout != nil {
-        // handle response
+        switch res.Checkout.ProductPrice.Type {
+            case components.CheckoutProductPriceTypeLegacyRecurringProductPrice:
+                // res.Checkout.ProductPrice.LegacyRecurringProductPrice is populated
+            case components.CheckoutProductPriceTypeProductPrice:
+                // res.Checkout.ProductPrice.ProductPrice is populated
+        }
+
     }
 }
 ```
@@ -168,6 +174,7 @@ import(
 	"os"
 	polargo "github.com/polarsource/polar-go"
 	"log"
+	"github.com/polarsource/polar-go/models/components"
 )
 
 func main() {
@@ -182,7 +189,13 @@ func main() {
         log.Fatal(err)
     }
     if res.Checkout != nil {
-        // handle response
+        switch res.Checkout.ProductPrice.Type {
+            case components.CheckoutProductPriceTypeLegacyRecurringProductPrice:
+                // res.Checkout.ProductPrice.LegacyRecurringProductPrice is populated
+            case components.CheckoutProductPriceTypeProductPrice:
+                // res.Checkout.ProductPrice.ProductPrice is populated
+        }
+
     }
 }
 ```
@@ -239,12 +252,19 @@ func main() {
         CustomerBillingAddress: &components.AddressInput{
             Country: components.CountryAlpha2InputUs,
         },
+        Locale: polargo.Pointer("en"),
     })
     if err != nil {
         log.Fatal(err)
     }
     if res.Checkout != nil {
-        // handle response
+        switch res.Checkout.ProductPrice.Type {
+            case components.CheckoutProductPriceTypeLegacyRecurringProductPrice:
+                // res.Checkout.ProductPrice.LegacyRecurringProductPrice is populated
+            case components.CheckoutProductPriceTypeProductPrice:
+                // res.Checkout.ProductPrice.ProductPrice is populated
+        }
+
     }
 }
 ```
@@ -285,6 +305,7 @@ import(
 	"context"
 	polargo "github.com/polarsource/polar-go"
 	"log"
+	"github.com/polarsource/polar-go/models/components"
 )
 
 func main() {
@@ -297,7 +318,13 @@ func main() {
         log.Fatal(err)
     }
     if res.CheckoutPublic != nil {
-        // handle response
+        switch res.CheckoutPublic.ProductPrice.Type {
+            case components.CheckoutPublicProductPriceTypeLegacyRecurringProductPrice:
+                // res.CheckoutPublic.ProductPrice.LegacyRecurringProductPrice is populated
+            case components.CheckoutPublicProductPriceTypeProductPrice:
+                // res.CheckoutPublic.ProductPrice.ProductPrice is populated
+        }
+
     }
 }
 ```
@@ -350,12 +377,19 @@ func main() {
         CustomerBillingAddress: &components.AddressInput{
             Country: components.CountryAlpha2InputUs,
         },
+        Locale: polargo.Pointer("en"),
     })
     if err != nil {
         log.Fatal(err)
     }
     if res.CheckoutPublic != nil {
-        // handle response
+        switch res.CheckoutPublic.ProductPrice.Type {
+            case components.CheckoutPublicProductPriceTypeLegacyRecurringProductPrice:
+                // res.CheckoutPublic.ProductPrice.LegacyRecurringProductPrice is populated
+            case components.CheckoutPublicProductPriceTypeProductPrice:
+                // res.CheckoutPublic.ProductPrice.ProductPrice is populated
+        }
+
     }
 }
 ```
@@ -415,12 +449,19 @@ func main() {
         CustomerBillingAddress: &components.AddressInput{
             Country: components.CountryAlpha2InputUs,
         },
+        Locale: polargo.Pointer("en"),
     })
     if err != nil {
         log.Fatal(err)
     }
     if res.CheckoutPublicConfirmed != nil {
-        // handle response
+        switch res.CheckoutPublicConfirmed.ProductPrice.Type {
+            case components.CheckoutPublicConfirmedProductPriceTypeLegacyRecurringProductPrice:
+                // res.CheckoutPublicConfirmed.ProductPrice.LegacyRecurringProductPrice is populated
+            case components.CheckoutPublicConfirmedProductPriceTypeProductPrice:
+                // res.CheckoutPublicConfirmed.ProductPrice.ProductPrice is populated
+        }
+
     }
 }
 ```

@@ -9,113 +9,6 @@ import (
 	"time"
 )
 
-type CustomerMetadata1Type string
-
-const (
-	CustomerMetadata1TypeStr     CustomerMetadata1Type = "str"
-	CustomerMetadata1TypeInteger CustomerMetadata1Type = "integer"
-	CustomerMetadata1TypeNumber  CustomerMetadata1Type = "number"
-	CustomerMetadata1TypeBoolean CustomerMetadata1Type = "boolean"
-)
-
-type CustomerMetadata1 struct {
-	Str     *string  `queryParam:"inline,name=metadata"`
-	Integer *int64   `queryParam:"inline,name=metadata"`
-	Number  *float64 `queryParam:"inline,name=metadata"`
-	Boolean *bool    `queryParam:"inline,name=metadata"`
-
-	Type CustomerMetadata1Type
-}
-
-func CreateCustomerMetadata1Str(str string) CustomerMetadata1 {
-	typ := CustomerMetadata1TypeStr
-
-	return CustomerMetadata1{
-		Str:  &str,
-		Type: typ,
-	}
-}
-
-func CreateCustomerMetadata1Integer(integer int64) CustomerMetadata1 {
-	typ := CustomerMetadata1TypeInteger
-
-	return CustomerMetadata1{
-		Integer: &integer,
-		Type:    typ,
-	}
-}
-
-func CreateCustomerMetadata1Number(number float64) CustomerMetadata1 {
-	typ := CustomerMetadata1TypeNumber
-
-	return CustomerMetadata1{
-		Number: &number,
-		Type:   typ,
-	}
-}
-
-func CreateCustomerMetadata1Boolean(boolean bool) CustomerMetadata1 {
-	typ := CustomerMetadata1TypeBoolean
-
-	return CustomerMetadata1{
-		Boolean: &boolean,
-		Type:    typ,
-	}
-}
-
-func (u *CustomerMetadata1) UnmarshalJSON(data []byte) error {
-
-	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, nil); err == nil {
-		u.Str = &str
-		u.Type = CustomerMetadata1TypeStr
-		return nil
-	}
-
-	var integer int64 = int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
-		u.Integer = &integer
-		u.Type = CustomerMetadata1TypeInteger
-		return nil
-	}
-
-	var number float64 = float64(0)
-	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
-		u.Number = &number
-		u.Type = CustomerMetadata1TypeNumber
-		return nil
-	}
-
-	var boolean bool = false
-	if err := utils.UnmarshalJSON(data, &boolean, "", true, nil); err == nil {
-		u.Boolean = &boolean
-		u.Type = CustomerMetadata1TypeBoolean
-		return nil
-	}
-
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for CustomerMetadata1", string(data))
-}
-
-func (u CustomerMetadata1) MarshalJSON() ([]byte, error) {
-	if u.Str != nil {
-		return utils.MarshalJSON(u.Str, "", true)
-	}
-
-	if u.Integer != nil {
-		return utils.MarshalJSON(u.Integer, "", true)
-	}
-
-	if u.Number != nil {
-		return utils.MarshalJSON(u.Number, "", true)
-	}
-
-	if u.Boolean != nil {
-		return utils.MarshalJSON(u.Boolean, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type CustomerMetadata1: all fields are null")
-}
-
 type CustomerTaxIDType string
 
 const (
@@ -124,8 +17,8 @@ const (
 )
 
 type CustomerTaxID struct {
-	Str         *string      `queryParam:"inline,name=tax_id"`
-	TaxIDFormat *TaxIDFormat `queryParam:"inline,name=tax_id"`
+	Str         *string      `queryParam:"inline" union:"member"`
+	TaxIDFormat *TaxIDFormat `queryParam:"inline" union:"member"`
 
 	Type CustomerTaxIDType
 }
@@ -186,18 +79,21 @@ type Customer struct {
 	// Creation timestamp of the object.
 	CreatedAt time.Time `json:"created_at"`
 	// Last modification timestamp of the object.
-	ModifiedAt *time.Time                   `json:"modified_at"`
-	Metadata   map[string]CustomerMetadata1 `json:"metadata"`
+	ModifiedAt *time.Time                    `json:"modified_at"`
+	Metadata   map[string]MetadataOutputType `json:"metadata"`
 	// The ID of the customer in your system. This must be unique within the organization. Once set, it can't be updated.
 	ExternalID *string `json:"external_id"`
 	// The email address of the customer. This must be unique within the organization.
 	Email string `json:"email"`
 	// Whether the customer email address is verified. The address is automatically verified when the customer accesses the customer portal using their email address.
 	EmailVerified bool `json:"email_verified"`
+	// The type of customer: 'individual' for single users, 'team' for customers with multiple members. Legacy customers may have NULL type which is treated as 'individual'.
+	Type *CustomerType `json:"type,omitempty"`
 	// The name of the customer.
 	Name           *string          `json:"name"`
 	BillingAddress *Address         `json:"billing_address"`
 	TaxID          []*CustomerTaxID `json:"tax_id"`
+	Locale         *string          `json:"locale,omitempty"`
 	// The ID of the organization owning the customer.
 	OrganizationID string `json:"organization_id"`
 	// Timestamp for when the customer was soft deleted.
@@ -237,9 +133,9 @@ func (c *Customer) GetModifiedAt() *time.Time {
 	return c.ModifiedAt
 }
 
-func (c *Customer) GetMetadata() map[string]CustomerMetadata1 {
+func (c *Customer) GetMetadata() map[string]MetadataOutputType {
 	if c == nil {
-		return map[string]CustomerMetadata1{}
+		return map[string]MetadataOutputType{}
 	}
 	return c.Metadata
 }
@@ -265,6 +161,13 @@ func (c *Customer) GetEmailVerified() bool {
 	return c.EmailVerified
 }
 
+func (c *Customer) GetType() *CustomerType {
+	if c == nil {
+		return nil
+	}
+	return c.Type
+}
+
 func (c *Customer) GetName() *string {
 	if c == nil {
 		return nil
@@ -284,6 +187,13 @@ func (c *Customer) GetTaxID() []*CustomerTaxID {
 		return nil
 	}
 	return c.TaxID
+}
+
+func (c *Customer) GetLocale() *string {
+	if c == nil {
+		return nil
+	}
+	return c.Locale
 }
 
 func (c *Customer) GetOrganizationID() string {

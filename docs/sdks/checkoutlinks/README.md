@@ -1,5 +1,4 @@
 # CheckoutLinks
-(*CheckoutLinks*)
 
 ## Overview
 
@@ -8,8 +7,8 @@
 * [List](#list) - List Checkout Links
 * [Create](#create) - Create Checkout Link
 * [Get](#get) - Get Checkout Link
-* [Update](#update) - Update Checkout Link
 * [Delete](#delete) - Delete Checkout Link
+* [Update](#update) - Update Checkout Link
 
 ## List
 
@@ -119,7 +118,17 @@ func main() {
         log.Fatal(err)
     }
     if res.CheckoutLink != nil {
-        // handle response
+        switch res.CheckoutLink.Discount.Type {
+            case components.CheckoutLinkDiscountTypeDiscountFixedOnceForeverDurationBase:
+                // res.CheckoutLink.Discount.DiscountFixedOnceForeverDurationBase is populated
+            case components.CheckoutLinkDiscountTypeDiscountFixedRepeatDurationBase:
+                // res.CheckoutLink.Discount.DiscountFixedRepeatDurationBase is populated
+            case components.CheckoutLinkDiscountTypeDiscountPercentageOnceForeverDurationBase:
+                // res.CheckoutLink.Discount.DiscountPercentageOnceForeverDurationBase is populated
+            case components.CheckoutLinkDiscountTypeDiscountPercentageRepeatDurationBase:
+                // res.CheckoutLink.Discount.DiscountPercentageRepeatDurationBase is populated
+        }
+
     }
 }
 ```
@@ -160,6 +169,7 @@ import(
 	"os"
 	polargo "github.com/polarsource/polar-go"
 	"log"
+	"github.com/polarsource/polar-go/models/components"
 )
 
 func main() {
@@ -174,7 +184,17 @@ func main() {
         log.Fatal(err)
     }
     if res.CheckoutLink != nil {
-        // handle response
+        switch res.CheckoutLink.Discount.Type {
+            case components.CheckoutLinkDiscountTypeDiscountFixedOnceForeverDurationBase:
+                // res.CheckoutLink.Discount.DiscountFixedOnceForeverDurationBase is populated
+            case components.CheckoutLinkDiscountTypeDiscountFixedRepeatDurationBase:
+                // res.CheckoutLink.Discount.DiscountFixedRepeatDurationBase is populated
+            case components.CheckoutLinkDiscountTypeDiscountPercentageOnceForeverDurationBase:
+                // res.CheckoutLink.Discount.DiscountPercentageOnceForeverDurationBase is populated
+            case components.CheckoutLinkDiscountTypeDiscountPercentageRepeatDurationBase:
+                // res.CheckoutLink.Discount.DiscountPercentageRepeatDurationBase is populated
+        }
+
     }
 }
 ```
@@ -190,64 +210,6 @@ func main() {
 ### Response
 
 **[*operations.CheckoutLinksGetResponse](../../models/operations/checkoutlinksgetresponse.md), error**
-
-### Errors
-
-| Error Type                    | Status Code                   | Content Type                  |
-| ----------------------------- | ----------------------------- | ----------------------------- |
-| apierrors.ResourceNotFound    | 404                           | application/json              |
-| apierrors.HTTPValidationError | 422                           | application/json              |
-| apierrors.APIError            | 4XX, 5XX                      | \*/\*                         |
-
-## Update
-
-Update a checkout link.
-
-**Scopes**: `checkout_links:write`
-
-### Example Usage
-
-<!-- UsageSnippet language="go" operationID="checkout-links:update" method="patch" path="/v1/checkout-links/{id}" -->
-```go
-package main
-
-import(
-	"context"
-	"os"
-	polargo "github.com/polarsource/polar-go"
-	"github.com/polarsource/polar-go/models/components"
-	"log"
-)
-
-func main() {
-    ctx := context.Background()
-
-    s := polargo.New(
-        polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
-    )
-
-    res, err := s.CheckoutLinks.Update(ctx, "<value>", components.CheckoutLinkUpdate{})
-    if err != nil {
-        log.Fatal(err)
-    }
-    if res.CheckoutLink != nil {
-        // handle response
-    }
-}
-```
-
-### Parameters
-
-| Parameter                                                                      | Type                                                                           | Required                                                                       | Description                                                                    |
-| ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ |
-| `ctx`                                                                          | [context.Context](https://pkg.go.dev/context#Context)                          | :heavy_check_mark:                                                             | The context to use for the request.                                            |
-| `id`                                                                           | *string*                                                                       | :heavy_check_mark:                                                             | The checkout link ID.                                                          |
-| `checkoutLinkUpdate`                                                           | [components.CheckoutLinkUpdate](../../models/components/checkoutlinkupdate.md) | :heavy_check_mark:                                                             | N/A                                                                            |
-| `opts`                                                                         | [][operations.Option](../../models/operations/option.md)                       | :heavy_minus_sign:                                                             | The options for this request.                                                  |
-
-### Response
-
-**[*operations.CheckoutLinksUpdateResponse](../../models/operations/checkoutlinksupdateresponse.md), error**
 
 ### Errors
 
@@ -304,6 +266,74 @@ func main() {
 ### Response
 
 **[*operations.CheckoutLinksDeleteResponse](../../models/operations/checkoutlinksdeleteresponse.md), error**
+
+### Errors
+
+| Error Type                    | Status Code                   | Content Type                  |
+| ----------------------------- | ----------------------------- | ----------------------------- |
+| apierrors.ResourceNotFound    | 404                           | application/json              |
+| apierrors.HTTPValidationError | 422                           | application/json              |
+| apierrors.APIError            | 4XX, 5XX                      | \*/\*                         |
+
+## Update
+
+Update a checkout link.
+
+**Scopes**: `checkout_links:write`
+
+### Example Usage
+
+<!-- UsageSnippet language="go" operationID="checkout-links:update" method="patch" path="/v1/checkout-links/{id}" -->
+```go
+package main
+
+import(
+	"context"
+	"os"
+	polargo "github.com/polarsource/polar-go"
+	"github.com/polarsource/polar-go/models/components"
+	"log"
+)
+
+func main() {
+    ctx := context.Background()
+
+    s := polargo.New(
+        polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
+    )
+
+    res, err := s.CheckoutLinks.Update(ctx, "<value>", components.CheckoutLinkUpdate{})
+    if err != nil {
+        log.Fatal(err)
+    }
+    if res.CheckoutLink != nil {
+        switch res.CheckoutLink.Discount.Type {
+            case components.CheckoutLinkDiscountTypeDiscountFixedOnceForeverDurationBase:
+                // res.CheckoutLink.Discount.DiscountFixedOnceForeverDurationBase is populated
+            case components.CheckoutLinkDiscountTypeDiscountFixedRepeatDurationBase:
+                // res.CheckoutLink.Discount.DiscountFixedRepeatDurationBase is populated
+            case components.CheckoutLinkDiscountTypeDiscountPercentageOnceForeverDurationBase:
+                // res.CheckoutLink.Discount.DiscountPercentageOnceForeverDurationBase is populated
+            case components.CheckoutLinkDiscountTypeDiscountPercentageRepeatDurationBase:
+                // res.CheckoutLink.Discount.DiscountPercentageRepeatDurationBase is populated
+        }
+
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                                      | Type                                                                           | Required                                                                       | Description                                                                    |
+| ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ |
+| `ctx`                                                                          | [context.Context](https://pkg.go.dev/context#Context)                          | :heavy_check_mark:                                                             | The context to use for the request.                                            |
+| `id`                                                                           | *string*                                                                       | :heavy_check_mark:                                                             | The checkout link ID.                                                          |
+| `checkoutLinkUpdate`                                                           | [components.CheckoutLinkUpdate](../../models/components/checkoutlinkupdate.md) | :heavy_check_mark:                                                             | N/A                                                                            |
+| `opts`                                                                         | [][operations.Option](../../models/operations/option.md)                       | :heavy_minus_sign:                                                             | The options for this request.                                                  |
+
+### Response
+
+**[*operations.CheckoutLinksUpdateResponse](../../models/operations/checkoutlinksupdateresponse.md), error**
 
 ### Errors
 

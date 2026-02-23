@@ -3,118 +3,9 @@
 package components
 
 import (
-	"errors"
-	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
 	"time"
 )
-
-type BenefitLicenseKeysSubscriberMetadataType string
-
-const (
-	BenefitLicenseKeysSubscriberMetadataTypeStr     BenefitLicenseKeysSubscriberMetadataType = "str"
-	BenefitLicenseKeysSubscriberMetadataTypeInteger BenefitLicenseKeysSubscriberMetadataType = "integer"
-	BenefitLicenseKeysSubscriberMetadataTypeNumber  BenefitLicenseKeysSubscriberMetadataType = "number"
-	BenefitLicenseKeysSubscriberMetadataTypeBoolean BenefitLicenseKeysSubscriberMetadataType = "boolean"
-)
-
-type BenefitLicenseKeysSubscriberMetadata struct {
-	Str     *string  `queryParam:"inline,name=metadata"`
-	Integer *int64   `queryParam:"inline,name=metadata"`
-	Number  *float64 `queryParam:"inline,name=metadata"`
-	Boolean *bool    `queryParam:"inline,name=metadata"`
-
-	Type BenefitLicenseKeysSubscriberMetadataType
-}
-
-func CreateBenefitLicenseKeysSubscriberMetadataStr(str string) BenefitLicenseKeysSubscriberMetadata {
-	typ := BenefitLicenseKeysSubscriberMetadataTypeStr
-
-	return BenefitLicenseKeysSubscriberMetadata{
-		Str:  &str,
-		Type: typ,
-	}
-}
-
-func CreateBenefitLicenseKeysSubscriberMetadataInteger(integer int64) BenefitLicenseKeysSubscriberMetadata {
-	typ := BenefitLicenseKeysSubscriberMetadataTypeInteger
-
-	return BenefitLicenseKeysSubscriberMetadata{
-		Integer: &integer,
-		Type:    typ,
-	}
-}
-
-func CreateBenefitLicenseKeysSubscriberMetadataNumber(number float64) BenefitLicenseKeysSubscriberMetadata {
-	typ := BenefitLicenseKeysSubscriberMetadataTypeNumber
-
-	return BenefitLicenseKeysSubscriberMetadata{
-		Number: &number,
-		Type:   typ,
-	}
-}
-
-func CreateBenefitLicenseKeysSubscriberMetadataBoolean(boolean bool) BenefitLicenseKeysSubscriberMetadata {
-	typ := BenefitLicenseKeysSubscriberMetadataTypeBoolean
-
-	return BenefitLicenseKeysSubscriberMetadata{
-		Boolean: &boolean,
-		Type:    typ,
-	}
-}
-
-func (u *BenefitLicenseKeysSubscriberMetadata) UnmarshalJSON(data []byte) error {
-
-	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, nil); err == nil {
-		u.Str = &str
-		u.Type = BenefitLicenseKeysSubscriberMetadataTypeStr
-		return nil
-	}
-
-	var integer int64 = int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
-		u.Integer = &integer
-		u.Type = BenefitLicenseKeysSubscriberMetadataTypeInteger
-		return nil
-	}
-
-	var number float64 = float64(0)
-	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
-		u.Number = &number
-		u.Type = BenefitLicenseKeysSubscriberMetadataTypeNumber
-		return nil
-	}
-
-	var boolean bool = false
-	if err := utils.UnmarshalJSON(data, &boolean, "", true, nil); err == nil {
-		u.Boolean = &boolean
-		u.Type = BenefitLicenseKeysSubscriberMetadataTypeBoolean
-		return nil
-	}
-
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for BenefitLicenseKeysSubscriberMetadata", string(data))
-}
-
-func (u BenefitLicenseKeysSubscriberMetadata) MarshalJSON() ([]byte, error) {
-	if u.Str != nil {
-		return utils.MarshalJSON(u.Str, "", true)
-	}
-
-	if u.Integer != nil {
-		return utils.MarshalJSON(u.Integer, "", true)
-	}
-
-	if u.Number != nil {
-		return utils.MarshalJSON(u.Number, "", true)
-	}
-
-	if u.Boolean != nil {
-		return utils.MarshalJSON(u.Boolean, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type BenefitLicenseKeysSubscriberMetadata: all fields are null")
-}
 
 type BenefitLicenseKeysSubscriber struct {
 	// The ID of the benefit.
@@ -131,10 +22,10 @@ type BenefitLicenseKeysSubscriber struct {
 	// Whether the benefit is deletable.
 	Deletable bool `json:"deletable"`
 	// The ID of the organization owning the benefit.
-	OrganizationID string                                          `json:"organization_id"`
-	Metadata       map[string]BenefitLicenseKeysSubscriberMetadata `json:"metadata"`
-	Organization   Organization                                    `json:"organization"`
-	Properties     BenefitLicenseKeysSubscriberProperties          `json:"properties"`
+	OrganizationID string                                 `json:"organization_id"`
+	Metadata       map[string]MetadataOutputType          `json:"metadata"`
+	Organization   BenefitSubscriberOrganization          `json:"organization"`
+	Properties     BenefitLicenseKeysSubscriberProperties `json:"properties"`
 }
 
 func (b BenefitLicenseKeysSubscriber) MarshalJSON() ([]byte, error) {
@@ -201,16 +92,16 @@ func (b *BenefitLicenseKeysSubscriber) GetOrganizationID() string {
 	return b.OrganizationID
 }
 
-func (b *BenefitLicenseKeysSubscriber) GetMetadata() map[string]BenefitLicenseKeysSubscriberMetadata {
+func (b *BenefitLicenseKeysSubscriber) GetMetadata() map[string]MetadataOutputType {
 	if b == nil {
-		return map[string]BenefitLicenseKeysSubscriberMetadata{}
+		return map[string]MetadataOutputType{}
 	}
 	return b.Metadata
 }
 
-func (b *BenefitLicenseKeysSubscriber) GetOrganization() Organization {
+func (b *BenefitLicenseKeysSubscriber) GetOrganization() BenefitSubscriberOrganization {
 	if b == nil {
-		return Organization{}
+		return BenefitSubscriberOrganization{}
 	}
 	return b.Organization
 }

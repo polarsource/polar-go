@@ -1,5 +1,4 @@
-# Seats
-(*CustomerPortal.Seats*)
+# CustomerPortal.Seats
 
 ## Overview
 
@@ -35,7 +34,7 @@ func main() {
     s := polargo.New()
 
     res, err := s.CustomerPortal.Seats.ListSeats(ctx, operations.CustomerPortalSeatsListSeatsSecurity{
-        CustomerSession: os.Getenv("POLAR_CUSTOMER_SESSION"),
+        CustomerSession: polargo.Pointer(os.Getenv("POLAR_CUSTOMER_SESSION")),
     }, polargo.Pointer("<id>"), nil)
     if err != nil {
         log.Fatal(err)
@@ -69,7 +68,7 @@ func main() {
 
 ## AssignSeat
 
-**Scopes**: `customer_portal:write`
+Assign Seat
 
 ### Example Usage
 
@@ -92,7 +91,7 @@ func main() {
     s := polargo.New()
 
     res, err := s.CustomerPortal.Seats.AssignSeat(ctx, components.SeatAssign{}, operations.CustomerPortalSeatsAssignSeatSecurity{
-        CustomerSession: os.Getenv("POLAR_CUSTOMER_SESSION"),
+        CustomerSession: polargo.Pointer(os.Getenv("POLAR_CUSTOMER_SESSION")),
     })
     if err != nil {
         log.Fatal(err)
@@ -125,7 +124,7 @@ func main() {
 
 ## RevokeSeat
 
-**Scopes**: `customer_portal:write`
+Revoke Seat
 
 ### Example Usage
 
@@ -147,7 +146,7 @@ func main() {
     s := polargo.New()
 
     res, err := s.CustomerPortal.Seats.RevokeSeat(ctx, operations.CustomerPortalSeatsRevokeSeatSecurity{
-        CustomerSession: os.Getenv("POLAR_CUSTOMER_SESSION"),
+        CustomerSession: polargo.Pointer(os.Getenv("POLAR_CUSTOMER_SESSION")),
     }, "4b3d74b3-01ff-4aac-bd03-320535cd5ce4")
     if err != nil {
         log.Fatal(err)
@@ -180,7 +179,7 @@ func main() {
 
 ## ResendInvitation
 
-**Scopes**: `customer_portal:write`
+Resend Invitation
 
 ### Example Usage
 
@@ -202,7 +201,7 @@ func main() {
     s := polargo.New()
 
     res, err := s.CustomerPortal.Seats.ResendInvitation(ctx, operations.CustomerPortalSeatsResendInvitationSecurity{
-        CustomerSession: os.Getenv("POLAR_CUSTOMER_SESSION"),
+        CustomerSession: polargo.Pointer(os.Getenv("POLAR_CUSTOMER_SESSION")),
     }, "e3817437-8d53-4578-88d2-1dc256825965")
     if err != nil {
         log.Fatal(err)
@@ -259,13 +258,25 @@ func main() {
     s := polargo.New()
 
     res, err := s.CustomerPortal.Seats.ListClaimedSubscriptions(ctx, operations.CustomerPortalSeatsListClaimedSubscriptionsSecurity{
-        CustomerSession: os.Getenv("POLAR_CUSTOMER_SESSION"),
-    })
+        CustomerSession: polargo.Pointer(os.Getenv("POLAR_CUSTOMER_SESSION")),
+    }, polargo.Pointer[int64](1), polargo.Pointer[int64](10))
     if err != nil {
         log.Fatal(err)
     }
-    if res.ResponseCustomerPortalSeatsListClaimedSubscriptions != nil {
-        // handle response
+    if res.ListResourceCustomerSubscription != nil {
+        for {
+            // handle items
+
+            res, err = res.Next()
+
+            if err != nil {
+                // handle error
+            }
+
+            if res == nil {
+                break
+            }
+        }
     }
 }
 ```
@@ -276,6 +287,8 @@ func main() {
 | ------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `ctx`                                                                                                                                            | [context.Context](https://pkg.go.dev/context#Context)                                                                                            | :heavy_check_mark:                                                                                                                               | The context to use for the request.                                                                                                              |
 | `security`                                                                                                                                       | [operations.CustomerPortalSeatsListClaimedSubscriptionsSecurity](../../models/operations/customerportalseatslistclaimedsubscriptionssecurity.md) | :heavy_check_mark:                                                                                                                               | The security requirements to use for the request.                                                                                                |
+| `page`                                                                                                                                           | **int64*                                                                                                                                         | :heavy_minus_sign:                                                                                                                               | Page number, defaults to 1.                                                                                                                      |
+| `limit`                                                                                                                                          | **int64*                                                                                                                                         | :heavy_minus_sign:                                                                                                                               | Size of a page, defaults to 10. Maximum is 100.                                                                                                  |
 | `opts`                                                                                                                                           | [][operations.Option](../../models/operations/option.md)                                                                                         | :heavy_minus_sign:                                                                                                                               | The options for this request.                                                                                                                    |
 
 ### Response
@@ -284,6 +297,7 @@ func main() {
 
 ### Errors
 
-| Error Type         | Status Code        | Content Type       |
-| ------------------ | ------------------ | ------------------ |
-| apierrors.APIError | 4XX, 5XX           | \*/\*              |
+| Error Type                    | Status Code                   | Content Type                  |
+| ----------------------------- | ----------------------------- | ----------------------------- |
+| apierrors.HTTPValidationError | 422                           | application/json              |
+| apierrors.APIError            | 4XX, 5XX                      | \*/\*                         |

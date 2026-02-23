@@ -21,3 +21,17 @@ fileRead := components.CreateFileReadOrganizationAvatar(components.OrganizationA
 fileRead := components.CreateFileReadProductMedia(components.ProductMediaFileRead{/* values here */})
 ```
 
+## Union Discrimination
+
+Use the `Type` field to determine which variant is active, then access the corresponding field:
+
+```go
+switch fileRead.Type {
+	case components.FileReadTypeDownloadable:
+		// fileRead.DownloadableFileRead is populated
+	case components.FileReadTypeOrganizationAvatar:
+		// fileRead.OrganizationAvatarFileRead is populated
+	case components.FileReadTypeProductMedia:
+		// fileRead.ProductMediaFileRead is populated
+}
+```

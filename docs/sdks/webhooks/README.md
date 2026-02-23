@@ -1,5 +1,4 @@
 # Webhooks
-(*Webhooks*)
 
 ## Overview
 
@@ -8,8 +7,8 @@
 * [ListWebhookEndpoints](#listwebhookendpoints) - List Webhook Endpoints
 * [CreateWebhookEndpoint](#createwebhookendpoint) - Create Webhook Endpoint
 * [GetWebhookEndpoint](#getwebhookendpoint) - Get Webhook Endpoint
-* [UpdateWebhookEndpoint](#updatewebhookendpoint) - Update Webhook Endpoint
 * [DeleteWebhookEndpoint](#deletewebhookendpoint) - Delete Webhook Endpoint
+* [UpdateWebhookEndpoint](#updatewebhookendpoint) - Update Webhook Endpoint
 * [ResetWebhookEndpointSecret](#resetwebhookendpointsecret) - Reset Webhook Endpoint Secret
 * [ListWebhookDeliveries](#listwebhookdeliveries) - List Webhook Deliveries
 * [RedeliverWebhookEvent](#redeliverwebhookevent) - Redeliver Webhook Event
@@ -205,6 +204,62 @@ func main() {
 | apierrors.HTTPValidationError | 422                           | application/json              |
 | apierrors.APIError            | 4XX, 5XX                      | \*/\*                         |
 
+## DeleteWebhookEndpoint
+
+Delete a webhook endpoint.
+
+**Scopes**: `webhooks:write`
+
+### Example Usage
+
+<!-- UsageSnippet language="go" operationID="webhooks:delete_webhook_endpoint" method="delete" path="/v1/webhooks/endpoints/{id}" -->
+```go
+package main
+
+import(
+	"context"
+	"os"
+	polargo "github.com/polarsource/polar-go"
+	"log"
+)
+
+func main() {
+    ctx := context.Background()
+
+    s := polargo.New(
+        polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
+    )
+
+    res, err := s.Webhooks.DeleteWebhookEndpoint(ctx, "<value>")
+    if err != nil {
+        log.Fatal(err)
+    }
+    if res != nil {
+        // handle response
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                | Type                                                     | Required                                                 | Description                                              |
+| -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- |
+| `ctx`                                                    | [context.Context](https://pkg.go.dev/context#Context)    | :heavy_check_mark:                                       | The context to use for the request.                      |
+| `id`                                                     | *string*                                                 | :heavy_check_mark:                                       | The webhook endpoint ID.                                 |
+| `opts`                                                   | [][operations.Option](../../models/operations/option.md) | :heavy_minus_sign:                                       | The options for this request.                            |
+
+### Response
+
+**[*operations.WebhooksDeleteWebhookEndpointResponse](../../models/operations/webhooksdeletewebhookendpointresponse.md), error**
+
+### Errors
+
+| Error Type                    | Status Code                   | Content Type                  |
+| ----------------------------- | ----------------------------- | ----------------------------- |
+| apierrors.ResourceNotFound    | 404                           | application/json              |
+| apierrors.HTTPValidationError | 422                           | application/json              |
+| apierrors.APIError            | 4XX, 5XX                      | \*/\*                         |
+
 ## UpdateWebhookEndpoint
 
 Update a webhook endpoint.
@@ -256,62 +311,6 @@ func main() {
 ### Response
 
 **[*operations.WebhooksUpdateWebhookEndpointResponse](../../models/operations/webhooksupdatewebhookendpointresponse.md), error**
-
-### Errors
-
-| Error Type                    | Status Code                   | Content Type                  |
-| ----------------------------- | ----------------------------- | ----------------------------- |
-| apierrors.ResourceNotFound    | 404                           | application/json              |
-| apierrors.HTTPValidationError | 422                           | application/json              |
-| apierrors.APIError            | 4XX, 5XX                      | \*/\*                         |
-
-## DeleteWebhookEndpoint
-
-Delete a webhook endpoint.
-
-**Scopes**: `webhooks:write`
-
-### Example Usage
-
-<!-- UsageSnippet language="go" operationID="webhooks:delete_webhook_endpoint" method="delete" path="/v1/webhooks/endpoints/{id}" -->
-```go
-package main
-
-import(
-	"context"
-	"os"
-	polargo "github.com/polarsource/polar-go"
-	"log"
-)
-
-func main() {
-    ctx := context.Background()
-
-    s := polargo.New(
-        polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
-    )
-
-    res, err := s.Webhooks.DeleteWebhookEndpoint(ctx, "<value>")
-    if err != nil {
-        log.Fatal(err)
-    }
-    if res != nil {
-        // handle response
-    }
-}
-```
-
-### Parameters
-
-| Parameter                                                | Type                                                     | Required                                                 | Description                                              |
-| -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- |
-| `ctx`                                                    | [context.Context](https://pkg.go.dev/context#Context)    | :heavy_check_mark:                                       | The context to use for the request.                      |
-| `id`                                                     | *string*                                                 | :heavy_check_mark:                                       | The webhook endpoint ID.                                 |
-| `opts`                                                   | [][operations.Option](../../models/operations/option.md) | :heavy_minus_sign:                                       | The options for this request.                            |
-
-### Response
-
-**[*operations.WebhooksDeleteWebhookEndpointResponse](../../models/operations/webhooksdeletewebhookendpointresponse.md), error**
 
 ### Errors
 

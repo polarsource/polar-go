@@ -27,3 +27,19 @@ checkoutLinkDiscount := components.CreateCheckoutLinkDiscountDiscountPercentageO
 checkoutLinkDiscount := components.CreateCheckoutLinkDiscountDiscountPercentageRepeatDurationBase(components.DiscountPercentageRepeatDurationBase{/* values here */})
 ```
 
+## Union Discrimination
+
+Use the `Type` field to determine which variant is active, then access the corresponding field:
+
+```go
+switch checkoutLinkDiscount.Type {
+	case components.CheckoutLinkDiscountTypeDiscountFixedOnceForeverDurationBase:
+		// checkoutLinkDiscount.DiscountFixedOnceForeverDurationBase is populated
+	case components.CheckoutLinkDiscountTypeDiscountFixedRepeatDurationBase:
+		// checkoutLinkDiscount.DiscountFixedRepeatDurationBase is populated
+	case components.CheckoutLinkDiscountTypeDiscountPercentageOnceForeverDurationBase:
+		// checkoutLinkDiscount.DiscountPercentageOnceForeverDurationBase is populated
+	case components.CheckoutLinkDiscountTypeDiscountPercentageRepeatDurationBase:
+		// checkoutLinkDiscount.DiscountPercentageRepeatDurationBase is populated
+}
+```

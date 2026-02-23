@@ -3,6 +3,7 @@
 package components
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
@@ -19,10 +20,10 @@ const (
 )
 
 type CheckoutCreateMetadata struct {
-	Str     *string  `queryParam:"inline,name=metadata"`
-	Integer *int64   `queryParam:"inline,name=metadata"`
-	Number  *float64 `queryParam:"inline,name=metadata"`
-	Boolean *bool    `queryParam:"inline,name=metadata"`
+	Str     *string  `queryParam:"inline" union:"member"`
+	Integer *int64   `queryParam:"inline" union:"member"`
+	Number  *float64 `queryParam:"inline" union:"member"`
+	Boolean *bool    `queryParam:"inline" union:"member"`
 
 	Type CheckoutCreateMetadataType
 }
@@ -126,10 +127,10 @@ const (
 )
 
 type CheckoutCreateCustomFieldData struct {
-	Str      *string    `queryParam:"inline,name=custom_field_data"`
-	Integer  *int64     `queryParam:"inline,name=custom_field_data"`
-	Boolean  *bool      `queryParam:"inline,name=custom_field_data"`
-	DateTime *time.Time `queryParam:"inline,name=custom_field_data"`
+	Str      *string    `queryParam:"inline" union:"member"`
+	Integer  *int64     `queryParam:"inline" union:"member"`
+	Boolean  *bool      `queryParam:"inline" union:"member"`
+	DateTime *time.Time `queryParam:"inline" union:"member"`
 
 	Type CheckoutCreateCustomFieldDataType
 }
@@ -233,10 +234,10 @@ const (
 )
 
 type CheckoutCreateCustomerMetadata struct {
-	Str     *string  `queryParam:"inline,name=customer_metadata"`
-	Integer *int64   `queryParam:"inline,name=customer_metadata"`
-	Number  *float64 `queryParam:"inline,name=customer_metadata"`
-	Boolean *bool    `queryParam:"inline,name=customer_metadata"`
+	Str     *string  `queryParam:"inline" union:"member"`
+	Integer *int64   `queryParam:"inline" union:"member"`
+	Number  *float64 `queryParam:"inline" union:"member"`
+	Boolean *bool    `queryParam:"inline" union:"member"`
 
 	Type CheckoutCreateCustomerMetadataType
 }
@@ -330,6 +331,157 @@ func (u CheckoutCreateCustomerMetadata) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type CheckoutCreateCustomerMetadata: all fields are null")
 }
 
+type CheckoutCreatePricesType string
+
+const (
+	CheckoutCreatePricesTypeCustom      CheckoutCreatePricesType = "custom"
+	CheckoutCreatePricesTypeFixed       CheckoutCreatePricesType = "fixed"
+	CheckoutCreatePricesTypeFree        CheckoutCreatePricesType = "free"
+	CheckoutCreatePricesTypeMeteredUnit CheckoutCreatePricesType = "metered_unit"
+	CheckoutCreatePricesTypeSeatBased   CheckoutCreatePricesType = "seat_based"
+)
+
+type CheckoutCreatePrices struct {
+	ProductPriceFixedCreate       *ProductPriceFixedCreate       `queryParam:"inline" union:"member"`
+	ProductPriceCustomCreate      *ProductPriceCustomCreate      `queryParam:"inline" union:"member"`
+	ProductPriceFreeCreate        *ProductPriceFreeCreate        `queryParam:"inline" union:"member"`
+	ProductPriceSeatBasedCreate   *ProductPriceSeatBasedCreate   `queryParam:"inline" union:"member"`
+	ProductPriceMeteredUnitCreate *ProductPriceMeteredUnitCreate `queryParam:"inline" union:"member"`
+
+	Type CheckoutCreatePricesType
+}
+
+func CreateCheckoutCreatePricesCustom(custom ProductPriceCustomCreate) CheckoutCreatePrices {
+	typ := CheckoutCreatePricesTypeCustom
+
+	return CheckoutCreatePrices{
+		ProductPriceCustomCreate: &custom,
+		Type:                     typ,
+	}
+}
+
+func CreateCheckoutCreatePricesFixed(fixed ProductPriceFixedCreate) CheckoutCreatePrices {
+	typ := CheckoutCreatePricesTypeFixed
+
+	return CheckoutCreatePrices{
+		ProductPriceFixedCreate: &fixed,
+		Type:                    typ,
+	}
+}
+
+func CreateCheckoutCreatePricesFree(free ProductPriceFreeCreate) CheckoutCreatePrices {
+	typ := CheckoutCreatePricesTypeFree
+
+	return CheckoutCreatePrices{
+		ProductPriceFreeCreate: &free,
+		Type:                   typ,
+	}
+}
+
+func CreateCheckoutCreatePricesMeteredUnit(meteredUnit ProductPriceMeteredUnitCreate) CheckoutCreatePrices {
+	typ := CheckoutCreatePricesTypeMeteredUnit
+
+	return CheckoutCreatePrices{
+		ProductPriceMeteredUnitCreate: &meteredUnit,
+		Type:                          typ,
+	}
+}
+
+func CreateCheckoutCreatePricesSeatBased(seatBased ProductPriceSeatBasedCreate) CheckoutCreatePrices {
+	typ := CheckoutCreatePricesTypeSeatBased
+
+	return CheckoutCreatePrices{
+		ProductPriceSeatBasedCreate: &seatBased,
+		Type:                        typ,
+	}
+}
+
+func (u *CheckoutCreatePrices) UnmarshalJSON(data []byte) error {
+
+	type discriminator struct {
+		AmountType string `json:"amount_type"`
+	}
+
+	dis := new(discriminator)
+	if err := json.Unmarshal(data, &dis); err != nil {
+		return fmt.Errorf("could not unmarshal discriminator: %w", err)
+	}
+
+	switch dis.AmountType {
+	case "custom":
+		productPriceCustomCreate := new(ProductPriceCustomCreate)
+		if err := utils.UnmarshalJSON(data, &productPriceCustomCreate, "", true, nil); err != nil {
+			return fmt.Errorf("could not unmarshal `%s` into expected (AmountType == custom) type ProductPriceCustomCreate within CheckoutCreatePrices: %w", string(data), err)
+		}
+
+		u.ProductPriceCustomCreate = productPriceCustomCreate
+		u.Type = CheckoutCreatePricesTypeCustom
+		return nil
+	case "fixed":
+		productPriceFixedCreate := new(ProductPriceFixedCreate)
+		if err := utils.UnmarshalJSON(data, &productPriceFixedCreate, "", true, nil); err != nil {
+			return fmt.Errorf("could not unmarshal `%s` into expected (AmountType == fixed) type ProductPriceFixedCreate within CheckoutCreatePrices: %w", string(data), err)
+		}
+
+		u.ProductPriceFixedCreate = productPriceFixedCreate
+		u.Type = CheckoutCreatePricesTypeFixed
+		return nil
+	case "free":
+		productPriceFreeCreate := new(ProductPriceFreeCreate)
+		if err := utils.UnmarshalJSON(data, &productPriceFreeCreate, "", true, nil); err != nil {
+			return fmt.Errorf("could not unmarshal `%s` into expected (AmountType == free) type ProductPriceFreeCreate within CheckoutCreatePrices: %w", string(data), err)
+		}
+
+		u.ProductPriceFreeCreate = productPriceFreeCreate
+		u.Type = CheckoutCreatePricesTypeFree
+		return nil
+	case "metered_unit":
+		productPriceMeteredUnitCreate := new(ProductPriceMeteredUnitCreate)
+		if err := utils.UnmarshalJSON(data, &productPriceMeteredUnitCreate, "", true, nil); err != nil {
+			return fmt.Errorf("could not unmarshal `%s` into expected (AmountType == metered_unit) type ProductPriceMeteredUnitCreate within CheckoutCreatePrices: %w", string(data), err)
+		}
+
+		u.ProductPriceMeteredUnitCreate = productPriceMeteredUnitCreate
+		u.Type = CheckoutCreatePricesTypeMeteredUnit
+		return nil
+	case "seat_based":
+		productPriceSeatBasedCreate := new(ProductPriceSeatBasedCreate)
+		if err := utils.UnmarshalJSON(data, &productPriceSeatBasedCreate, "", true, nil); err != nil {
+			return fmt.Errorf("could not unmarshal `%s` into expected (AmountType == seat_based) type ProductPriceSeatBasedCreate within CheckoutCreatePrices: %w", string(data), err)
+		}
+
+		u.ProductPriceSeatBasedCreate = productPriceSeatBasedCreate
+		u.Type = CheckoutCreatePricesTypeSeatBased
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for CheckoutCreatePrices", string(data))
+}
+
+func (u CheckoutCreatePrices) MarshalJSON() ([]byte, error) {
+	if u.ProductPriceFixedCreate != nil {
+		return utils.MarshalJSON(u.ProductPriceFixedCreate, "", true)
+	}
+
+	if u.ProductPriceCustomCreate != nil {
+		return utils.MarshalJSON(u.ProductPriceCustomCreate, "", true)
+	}
+
+	if u.ProductPriceFreeCreate != nil {
+		return utils.MarshalJSON(u.ProductPriceFreeCreate, "", true)
+	}
+
+	if u.ProductPriceSeatBasedCreate != nil {
+		return utils.MarshalJSON(u.ProductPriceSeatBasedCreate, "", true)
+	}
+
+	if u.ProductPriceMeteredUnitCreate != nil {
+		return utils.MarshalJSON(u.ProductPriceMeteredUnitCreate, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type CheckoutCreatePrices: all fields are null")
+}
+
 // CheckoutCreate - Create a new checkout session from a list of products.
 // Customers will be able to switch between those products.
 //
@@ -363,6 +515,8 @@ type CheckoutCreate struct {
 	Amount                *int64 `json:"amount,omitempty"`
 	// Number of seats for seat-based pricing. Required for seat-based products.
 	Seats *int64 `json:"seats,omitempty"`
+	// Whether to enable the trial period for the checkout session. If `false`, the trial period will be disabled, even if the selected product has a trial configured.
+	AllowTrial *bool `default:"true" json:"allow_trial"`
 	// ID of an existing customer in the organization. The customer data will be pre-filled in the checkout form. The resulting order will be linked to this customer.
 	CustomerID *string `json:"customer_id,omitempty"`
 	// Whether the customer is a business or an individual. If `true`, the customer will be required to fill their full billing address and billing name.
@@ -394,9 +548,13 @@ type CheckoutCreate struct {
 	// When set, a back button will be shown in the checkout to return to this URL.
 	ReturnURL *string `json:"return_url,omitempty"`
 	// If you plan to embed the checkout session, set this to the Origin of the embedding page. It'll allow the Polar iframe to communicate with the parent page.
-	EmbedOrigin *string `json:"embed_origin,omitempty"`
+	EmbedOrigin *string              `json:"embed_origin,omitempty"`
+	Locale      *string              `json:"locale,omitempty"`
+	Currency    *PresentmentCurrency `json:"currency,omitempty"`
 	// List of product IDs available to select at that checkout. The first one will be selected by default.
 	Products []string `json:"products"`
+	// Optional mapping of product IDs to a list of ad-hoc prices to create for that product. If not set, catalog prices of the product will be used.
+	Prices map[string][]CheckoutCreatePrices `json:"prices,omitempty"`
 }
 
 func (c CheckoutCreate) MarshalJSON() ([]byte, error) {
@@ -404,7 +562,7 @@ func (c CheckoutCreate) MarshalJSON() ([]byte, error) {
 }
 
 func (c *CheckoutCreate) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &c, "", false, []string{"products"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &c, "", false, nil); err != nil {
 		return err
 	}
 	return nil
@@ -471,6 +629,13 @@ func (c *CheckoutCreate) GetSeats() *int64 {
 		return nil
 	}
 	return c.Seats
+}
+
+func (c *CheckoutCreate) GetAllowTrial() *bool {
+	if c == nil {
+		return nil
+	}
+	return c.AllowTrial
 }
 
 func (c *CheckoutCreate) GetCustomerID() *string {
@@ -571,9 +736,30 @@ func (c *CheckoutCreate) GetEmbedOrigin() *string {
 	return c.EmbedOrigin
 }
 
+func (c *CheckoutCreate) GetLocale() *string {
+	if c == nil {
+		return nil
+	}
+	return c.Locale
+}
+
+func (c *CheckoutCreate) GetCurrency() *PresentmentCurrency {
+	if c == nil {
+		return nil
+	}
+	return c.Currency
+}
+
 func (c *CheckoutCreate) GetProducts() []string {
 	if c == nil {
 		return []string{}
 	}
 	return c.Products
+}
+
+func (c *CheckoutCreate) GetPrices() map[string][]CheckoutCreatePrices {
+	if c == nil {
+		return nil
+	}
+	return c.Prices
 }

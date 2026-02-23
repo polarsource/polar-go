@@ -17,8 +17,8 @@ const (
 )
 
 type CustomerSessionsCreateCustomerSessionCreate struct {
-	CustomerSessionCustomerIDCreate         *components.CustomerSessionCustomerIDCreate         `queryParam:"inline,name=Customer_Session_Create"`
-	CustomerSessionCustomerExternalIDCreate *components.CustomerSessionCustomerExternalIDCreate `queryParam:"inline,name=Customer_Session_Create"`
+	CustomerSessionCustomerIDCreate         *components.CustomerSessionCustomerIDCreate         `queryParam:"inline" union:"member"`
+	CustomerSessionCustomerExternalIDCreate *components.CustomerSessionCustomerExternalIDCreate `queryParam:"inline" union:"member"`
 
 	Type CustomerSessionsCreateCustomerSessionCreateType
 }

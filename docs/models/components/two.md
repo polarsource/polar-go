@@ -33,3 +33,21 @@ two := components.CreateTwoMeteredUnit(components.ProductPriceMeteredUnitCreate{
 two := components.CreateTwoSeatBased(components.ProductPriceSeatBasedCreate{/* values here */})
 ```
 
+## Union Discrimination
+
+Use the `Type` field to determine which variant is active, then access the corresponding field:
+
+```go
+switch two.Type {
+	case components.TwoTypeCustom:
+		// two.ProductPriceCustomCreate is populated
+	case components.TwoTypeFixed:
+		// two.ProductPriceFixedCreate is populated
+	case components.TwoTypeFree:
+		// two.ProductPriceFreeCreate is populated
+	case components.TwoTypeMeteredUnit:
+		// two.ProductPriceMeteredUnitCreate is populated
+	case components.TwoTypeSeatBased:
+		// two.ProductPriceSeatBasedCreate is populated
+}
+```

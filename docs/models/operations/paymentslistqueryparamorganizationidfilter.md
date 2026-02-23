@@ -17,3 +17,15 @@ paymentsListQueryParamOrganizationIDFilter := operations.CreatePaymentsListQuery
 paymentsListQueryParamOrganizationIDFilter := operations.CreatePaymentsListQueryParamOrganizationIDFilterArrayOfStr([]string{/* values here */})
 ```
 
+## Union Discrimination
+
+Use the `Type` field to determine which variant is active, then access the corresponding field:
+
+```go
+switch paymentsListQueryParamOrganizationIDFilter.Type {
+	case operations.PaymentsListQueryParamOrganizationIDFilterTypeStr:
+		// paymentsListQueryParamOrganizationIDFilter.Str is populated
+	case operations.PaymentsListQueryParamOrganizationIDFilterTypeArrayOfStr:
+		// paymentsListQueryParamOrganizationIDFilter.ArrayOfStr is populated
+}
+```

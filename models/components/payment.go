@@ -16,8 +16,8 @@ const (
 )
 
 type Payment struct {
-	CardPayment    *CardPayment    `queryParam:"inline,name=Payment"`
-	GenericPayment *GenericPayment `queryParam:"inline,name=Payment"`
+	CardPayment    *CardPayment    `queryParam:"inline" union:"member"`
+	GenericPayment *GenericPayment `queryParam:"inline" union:"member"`
 
 	Type PaymentType
 }

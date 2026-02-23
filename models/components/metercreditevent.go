@@ -21,8 +21,16 @@ type MeterCreditEvent struct {
 	Customer *Customer `json:"customer"`
 	// ID of the customer in your system associated with the event.
 	ExternalCustomerID *string `json:"external_customer_id"`
+	// ID of the member within the customer's organization who performed the action inside B2B.
+	MemberID *string `json:"member_id,omitempty"`
+	// ID of the member in your system within the customer's organization who performed the action inside B2B.
+	ExternalMemberID *string `json:"external_member_id,omitempty"`
 	// Number of direct child events linked to this event.
 	ChildCount *int64 `default:"0" json:"child_count"`
+	// The ID of the parent event.
+	ParentID *string `json:"parent_id,omitempty"`
+	// Human readable label of the event type.
+	Label string `json:"label"`
 	// The source of the event. `system` events are created by Polar. `user` events are the one you create through our ingestion API.
 	source string `const:"system" json:"source"`
 	// The name of the event.
@@ -35,7 +43,7 @@ func (m MeterCreditEvent) MarshalJSON() ([]byte, error) {
 }
 
 func (m *MeterCreditEvent) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &m, "", false, []string{"id", "timestamp", "organization_id", "source", "name", "metadata"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &m, "", false, []string{"id", "timestamp", "organization_id", "label", "source", "name", "metadata"}); err != nil {
 		return err
 	}
 	return nil
@@ -83,11 +91,39 @@ func (m *MeterCreditEvent) GetExternalCustomerID() *string {
 	return m.ExternalCustomerID
 }
 
+func (m *MeterCreditEvent) GetMemberID() *string {
+	if m == nil {
+		return nil
+	}
+	return m.MemberID
+}
+
+func (m *MeterCreditEvent) GetExternalMemberID() *string {
+	if m == nil {
+		return nil
+	}
+	return m.ExternalMemberID
+}
+
 func (m *MeterCreditEvent) GetChildCount() *int64 {
 	if m == nil {
 		return nil
 	}
 	return m.ChildCount
+}
+
+func (m *MeterCreditEvent) GetParentID() *string {
+	if m == nil {
+		return nil
+	}
+	return m.ParentID
+}
+
+func (m *MeterCreditEvent) GetLabel() string {
+	if m == nil {
+		return ""
+	}
+	return m.Label
 }
 
 func (m *MeterCreditEvent) GetSource() string {

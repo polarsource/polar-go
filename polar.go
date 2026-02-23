@@ -2,7 +2,7 @@
 
 package polargo
 
-// Generated from OpenAPI doc version 0.1.0 and generator version 2.737.0
+// Generated from OpenAPI doc version 0.1.0 and generator version 2.835.2
 
 import (
 	"context"
@@ -58,32 +58,36 @@ func Pointer[T any](v T) *T { return &v }
 // Polar API: Polar HTTP and Webhooks API
 // Read the docs at https://polar.sh/docs/api-reference
 type Polar struct {
-	SDKVersion       string
-	Organizations    *Organizations
-	Subscriptions    *Subscriptions
-	Oauth2           *Oauth2
-	Benefits         *Benefits
-	BenefitGrants    *BenefitGrants
-	Webhooks         *Webhooks
-	Products         *Products
-	Orders           *Orders
-	Refunds          *Refunds
-	Checkouts        *Checkouts
-	Files            *Files
-	Metrics          *Metrics
-	LicenseKeys      *LicenseKeys
-	CheckoutLinks    *CheckoutLinks
-	CustomFields     *CustomFields
-	Discounts        *Discounts
-	Customers        *Customers
-	CustomerPortal   *CustomerPortal
-	CustomerSeats    *CustomerSeats
-	CustomerSessions *CustomerSessions
-	Events           *Events
-	Meters           *Meters
-	CustomerMeters   *CustomerMeters
-	Payments         *Payments
-	Wallets          *Wallets
+	SDKVersion               string
+	Organizations            *Organizations
+	Subscriptions            *Subscriptions
+	Oauth2                   *Oauth2
+	Benefits                 *Benefits
+	BenefitGrants            *BenefitGrants
+	Webhooks                 *Webhooks
+	Products                 *Products
+	Orders                   *Orders
+	Refunds                  *Refunds
+	Disputes                 *Disputes
+	Checkouts                *Checkouts
+	Files                    *Files
+	Metrics                  *Metrics
+	LicenseKeys              *LicenseKeys
+	CheckoutLinks            *CheckoutLinks
+	CustomFields             *CustomFields
+	Discounts                *Discounts
+	Customers                *Customers
+	Members                  *Members
+	CustomerPortal           *CustomerPortal
+	CustomerSeats            *CustomerSeats
+	CustomerSessions         *CustomerSessions
+	MemberSessions           *MemberSessions
+	Events                   *Events
+	EventTypes               *EventTypes
+	Meters                   *Meters
+	OrganizationAccessTokens *OrganizationAccessTokens
+	CustomerMeters           *CustomerMeters
+	Payments                 *Payments
 
 	sdkConfiguration config.SDKConfiguration
 	hooks            *hooks.Hooks
@@ -161,9 +165,9 @@ func WithTimeout(timeout time.Duration) SDKOption {
 // New creates a new instance of the SDK with the provided options
 func New(opts ...SDKOption) *Polar {
 	sdk := &Polar{
-		SDKVersion: "0.12.0",
+		SDKVersion: "0.13.0",
 		sdkConfiguration: config.SDKConfiguration{
-			UserAgent:  "speakeasy-sdk/go 0.12.0 2.737.0 0.1.0 github.com/polarsource/polar-go",
+			UserAgent:  "speakeasy-sdk/go 0.13.0 2.835.2 0.1.0 github.com/polarsource/polar-go",
 			ServerList: ServerList,
 		},
 		hooks: hooks.New(),
@@ -200,6 +204,7 @@ func New(opts ...SDKOption) *Polar {
 	sdk.Products = newProducts(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.Orders = newOrders(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.Refunds = newRefunds(sdk, sdk.sdkConfiguration, sdk.hooks)
+	sdk.Disputes = newDisputes(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.Checkouts = newCheckouts(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.Files = newFiles(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.Metrics = newMetrics(sdk, sdk.sdkConfiguration, sdk.hooks)
@@ -208,14 +213,17 @@ func New(opts ...SDKOption) *Polar {
 	sdk.CustomFields = newCustomFields(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.Discounts = newDiscounts(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.Customers = newCustomers(sdk, sdk.sdkConfiguration, sdk.hooks)
+	sdk.Members = newMembers(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.CustomerPortal = newCustomerPortal(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.CustomerSeats = newCustomerSeats(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.CustomerSessions = newCustomerSessions(sdk, sdk.sdkConfiguration, sdk.hooks)
+	sdk.MemberSessions = newMemberSessions(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.Events = newEvents(sdk, sdk.sdkConfiguration, sdk.hooks)
+	sdk.EventTypes = newEventTypes(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.Meters = newMeters(sdk, sdk.sdkConfiguration, sdk.hooks)
+	sdk.OrganizationAccessTokens = newOrganizationAccessTokens(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.CustomerMeters = newCustomerMeters(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.Payments = newPayments(sdk, sdk.sdkConfiguration, sdk.hooks)
-	sdk.Wallets = newWallets(sdk, sdk.sdkConfiguration, sdk.hooks)
 
 	return sdk
 }

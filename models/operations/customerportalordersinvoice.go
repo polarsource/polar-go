@@ -7,14 +7,22 @@ import (
 )
 
 type CustomerPortalOrdersInvoiceSecurity struct {
-	CustomerSession string `security:"scheme,type=http,subtype=bearer,name=Authorization,env=polar_customer_session"`
+	CustomerSession *string `security:"scheme,type=http,subtype=bearer,name=Authorization,env=polar_customer_session"`
+	MemberSession   *string `security:"scheme,type=http,subtype=bearer,name=Authorization,env=polar_member_session"`
 }
 
-func (c *CustomerPortalOrdersInvoiceSecurity) GetCustomerSession() string {
+func (c *CustomerPortalOrdersInvoiceSecurity) GetCustomerSession() *string {
 	if c == nil {
-		return ""
+		return nil
 	}
 	return c.CustomerSession
+}
+
+func (c *CustomerPortalOrdersInvoiceSecurity) GetMemberSession() *string {
+	if c == nil {
+		return nil
+	}
+	return c.MemberSession
 }
 
 type CustomerPortalOrdersInvoiceRequest struct {

@@ -27,3 +27,19 @@ subscriptionCreateExternalCustomerMetadata := components.CreateSubscriptionCreat
 subscriptionCreateExternalCustomerMetadata := components.CreateSubscriptionCreateExternalCustomerMetadataBoolean(bool{/* values here */})
 ```
 
+## Union Discrimination
+
+Use the `Type` field to determine which variant is active, then access the corresponding field:
+
+```go
+switch subscriptionCreateExternalCustomerMetadata.Type {
+	case components.SubscriptionCreateExternalCustomerMetadataTypeStr:
+		// subscriptionCreateExternalCustomerMetadata.Str is populated
+	case components.SubscriptionCreateExternalCustomerMetadataTypeInteger:
+		// subscriptionCreateExternalCustomerMetadata.Integer is populated
+	case components.SubscriptionCreateExternalCustomerMetadataTypeNumber:
+		// subscriptionCreateExternalCustomerMetadata.Number is populated
+	case components.SubscriptionCreateExternalCustomerMetadataTypeBoolean:
+		// subscriptionCreateExternalCustomerMetadata.Boolean is populated
+}
+```

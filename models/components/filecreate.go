@@ -18,9 +18,9 @@ const (
 )
 
 type FileCreate struct {
-	DownloadableFileCreate       *DownloadableFileCreate       `queryParam:"inline,name=FileCreate"`
-	ProductMediaFileCreate       *ProductMediaFileCreate       `queryParam:"inline,name=FileCreate"`
-	OrganizationAvatarFileCreate *OrganizationAvatarFileCreate `queryParam:"inline,name=FileCreate"`
+	DownloadableFileCreate       *DownloadableFileCreate       `queryParam:"inline" union:"member"`
+	ProductMediaFileCreate       *ProductMediaFileCreate       `queryParam:"inline" union:"member"`
+	OrganizationAvatarFileCreate *OrganizationAvatarFileCreate `queryParam:"inline" union:"member"`
 
 	Type FileCreateType
 }

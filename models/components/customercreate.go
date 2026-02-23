@@ -18,10 +18,10 @@ const (
 )
 
 type CustomerCreateMetadata struct {
-	Str     *string  `queryParam:"inline,name=metadata"`
-	Integer *int64   `queryParam:"inline,name=metadata"`
-	Number  *float64 `queryParam:"inline,name=metadata"`
-	Boolean *bool    `queryParam:"inline,name=metadata"`
+	Str     *string  `queryParam:"inline" union:"member"`
+	Integer *int64   `queryParam:"inline" union:"member"`
+	Number  *float64 `queryParam:"inline" union:"member"`
+	Boolean *bool    `queryParam:"inline" union:"member"`
 
 	Type CustomerCreateMetadataType
 }
@@ -123,8 +123,8 @@ const (
 )
 
 type CustomerCreateTaxID struct {
-	Str         *string      `queryParam:"inline,name=tax_id"`
-	TaxIDFormat *TaxIDFormat `queryParam:"inline,name=tax_id"`
+	Str         *string      `queryParam:"inline" union:"member"`
+	TaxIDFormat *TaxIDFormat `queryParam:"inline" union:"member"`
 
 	Type CustomerCreateTaxIDType
 }
@@ -198,8 +198,13 @@ type CustomerCreate struct {
 	Name           *string                `json:"name,omitempty"`
 	BillingAddress *AddressInput          `json:"billing_address,omitempty"`
 	TaxID          []*CustomerCreateTaxID `json:"tax_id,omitempty"`
+	Locale         *string                `json:"locale,omitempty"`
+	// The type of customer. Defaults to 'individual'. Set to 'team' for customers that can have multiple members.
+	Type *CustomerType `json:"type,omitempty"`
 	// The ID of the organization owning the customer. **Required unless you use an organization token.**
 	OrganizationID *string `json:"organization_id,omitempty"`
+	// Optional owner member to create with the customer. If not provided, an owner member will be automatically created using the customer's email and name.
+	Owner *OwnerCreate `json:"owner,omitempty"`
 }
 
 func (c *CustomerCreate) GetMetadata() map[string]CustomerCreateMetadata {
@@ -244,9 +249,30 @@ func (c *CustomerCreate) GetTaxID() []*CustomerCreateTaxID {
 	return c.TaxID
 }
 
+func (c *CustomerCreate) GetLocale() *string {
+	if c == nil {
+		return nil
+	}
+	return c.Locale
+}
+
+func (c *CustomerCreate) GetType() *CustomerType {
+	if c == nil {
+		return nil
+	}
+	return c.Type
+}
+
 func (c *CustomerCreate) GetOrganizationID() *string {
 	if c == nil {
 		return nil
 	}
 	return c.OrganizationID
+}
+
+func (c *CustomerCreate) GetOwner() *OwnerCreate {
+	if c == nil {
+		return nil
+	}
+	return c.Owner
 }

@@ -27,3 +27,19 @@ discountFixedOnceForeverDurationCreateMetadata := components.CreateDiscountFixed
 discountFixedOnceForeverDurationCreateMetadata := components.CreateDiscountFixedOnceForeverDurationCreateMetadataBoolean(bool{/* values here */})
 ```
 
+## Union Discrimination
+
+Use the `Type` field to determine which variant is active, then access the corresponding field:
+
+```go
+switch discountFixedOnceForeverDurationCreateMetadata.Type {
+	case components.DiscountFixedOnceForeverDurationCreateMetadataTypeStr:
+		// discountFixedOnceForeverDurationCreateMetadata.Str is populated
+	case components.DiscountFixedOnceForeverDurationCreateMetadataTypeInteger:
+		// discountFixedOnceForeverDurationCreateMetadata.Integer is populated
+	case components.DiscountFixedOnceForeverDurationCreateMetadataTypeNumber:
+		// discountFixedOnceForeverDurationCreateMetadata.Number is populated
+	case components.DiscountFixedOnceForeverDurationCreateMetadataTypeBoolean:
+		// discountFixedOnceForeverDurationCreateMetadata.Boolean is populated
+}
+```

@@ -16,6 +16,8 @@ const (
 	BenefitSortPropertyMinusDescription BenefitSortProperty = "-description"
 	BenefitSortPropertyType             BenefitSortProperty = "type"
 	BenefitSortPropertyMinusType        BenefitSortProperty = "-type"
+	BenefitSortPropertyUserOrder        BenefitSortProperty = "user_order"
+	BenefitSortPropertyMinusUserOrder   BenefitSortProperty = "-user_order"
 )
 
 func (e BenefitSortProperty) ToPointer() *BenefitSortProperty {
@@ -38,6 +40,10 @@ func (e *BenefitSortProperty) UnmarshalJSON(data []byte) error {
 	case "type":
 		fallthrough
 	case "-type":
+		fallthrough
+	case "user_order":
+		fallthrough
+	case "-user_order":
 		*e = BenefitSortProperty(v)
 		return nil
 	default:

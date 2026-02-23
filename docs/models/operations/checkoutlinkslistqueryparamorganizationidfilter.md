@@ -17,3 +17,15 @@ checkoutLinksListQueryParamOrganizationIDFilter := operations.CreateCheckoutLink
 checkoutLinksListQueryParamOrganizationIDFilter := operations.CreateCheckoutLinksListQueryParamOrganizationIDFilterArrayOfStr([]string{/* values here */})
 ```
 
+## Union Discrimination
+
+Use the `Type` field to determine which variant is active, then access the corresponding field:
+
+```go
+switch checkoutLinksListQueryParamOrganizationIDFilter.Type {
+	case operations.CheckoutLinksListQueryParamOrganizationIDFilterTypeStr:
+		// checkoutLinksListQueryParamOrganizationIDFilter.Str is populated
+	case operations.CheckoutLinksListQueryParamOrganizationIDFilterTypeArrayOfStr:
+		// checkoutLinksListQueryParamOrganizationIDFilter.ArrayOfStr is populated
+}
+```

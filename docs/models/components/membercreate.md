@@ -1,0 +1,14 @@
+# MemberCreate
+
+Schema for creating a new member.
+
+
+## Fields
+
+| Field                                                                          | Type                                                                           | Required                                                                       | Description                                                                    | Example                                                                        |
+| ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ |
+| `CustomerID`                                                                   | *string*                                                                       | :heavy_check_mark:                                                             | The ID of the customer this member belongs to.                                 |                                                                                |
+| `Email`                                                                        | *string*                                                                       | :heavy_check_mark:                                                             | The email address of the member.                                               | member@example.com                                                             |
+| `Name`                                                                         | **string*                                                                      | :heavy_minus_sign:                                                             | N/A                                                                            | Jane Doe                                                                       |
+| `ExternalID`                                                                   | **string*                                                                      | :heavy_minus_sign:                                                             | The ID of the member in your system. This must be unique within the customer.  | usr_1337                                                                       |
+| `Role`                                                                         | [*components.MemberRole](../../models/components/memberrole.md)                | :heavy_minus_sign:                                                             | N/A                                                                            |                                                                                |

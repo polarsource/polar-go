@@ -27,3 +27,19 @@ checkoutUpdatePublicCustomFieldData := components.CreateCheckoutUpdatePublicCust
 checkoutUpdatePublicCustomFieldData := components.CreateCheckoutUpdatePublicCustomFieldDataDateTime(time.Time{/* values here */})
 ```
 
+## Union Discrimination
+
+Use the `Type` field to determine which variant is active, then access the corresponding field:
+
+```go
+switch checkoutUpdatePublicCustomFieldData.Type {
+	case components.CheckoutUpdatePublicCustomFieldDataTypeStr:
+		// checkoutUpdatePublicCustomFieldData.Str is populated
+	case components.CheckoutUpdatePublicCustomFieldDataTypeInteger:
+		// checkoutUpdatePublicCustomFieldData.Integer is populated
+	case components.CheckoutUpdatePublicCustomFieldDataTypeBoolean:
+		// checkoutUpdatePublicCustomFieldData.Boolean is populated
+	case components.CheckoutUpdatePublicCustomFieldDataTypeDateTime:
+		// checkoutUpdatePublicCustomFieldData.DateTime is populated
+}
+```

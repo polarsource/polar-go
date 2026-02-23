@@ -17,3 +17,15 @@ customerMetersListQueryParamOrganizationIDFilter := operations.CreateCustomerMet
 customerMetersListQueryParamOrganizationIDFilter := operations.CreateCustomerMetersListQueryParamOrganizationIDFilterArrayOfStr([]string{/* values here */})
 ```
 
+## Union Discrimination
+
+Use the `Type` field to determine which variant is active, then access the corresponding field:
+
+```go
+switch customerMetersListQueryParamOrganizationIDFilter.Type {
+	case operations.CustomerMetersListQueryParamOrganizationIDFilterTypeStr:
+		// customerMetersListQueryParamOrganizationIDFilter.Str is populated
+	case operations.CustomerMetersListQueryParamOrganizationIDFilterTypeArrayOfStr:
+		// customerMetersListQueryParamOrganizationIDFilter.ArrayOfStr is populated
+}
+```

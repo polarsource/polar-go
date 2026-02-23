@@ -18,8 +18,8 @@ const (
 
 // OrdersExportQueryParamOrganizationIDFilter - Filter by organization ID.
 type OrdersExportQueryParamOrganizationIDFilter struct {
-	Str        *string  `queryParam:"inline,name=OrganizationID_Filter"`
-	ArrayOfStr []string `queryParam:"inline,name=OrganizationID_Filter"`
+	Str        *string  `queryParam:"inline" union:"member"`
+	ArrayOfStr []string `queryParam:"inline" union:"member"`
 
 	Type OrdersExportQueryParamOrganizationIDFilterType
 }
@@ -82,8 +82,8 @@ const (
 
 // OrdersExportQueryParamProductIDFilter - Filter by product ID.
 type OrdersExportQueryParamProductIDFilter struct {
-	Str        *string  `queryParam:"inline,name=ProductID_Filter"`
-	ArrayOfStr []string `queryParam:"inline,name=ProductID_Filter"`
+	Str        *string  `queryParam:"inline" union:"member"`
+	ArrayOfStr []string `queryParam:"inline" union:"member"`
 
 	Type OrdersExportQueryParamProductIDFilterType
 }
@@ -162,6 +162,8 @@ type OrdersExportResponse struct {
 	HTTPMeta components.HTTPMetadata `json:"-"`
 	// Successful Response
 	Any any
+	// Successful Response
+	Res *string
 }
 
 func (o *OrdersExportResponse) GetHTTPMeta() components.HTTPMetadata {
@@ -176,4 +178,11 @@ func (o *OrdersExportResponse) GetAny() any {
 		return nil
 	}
 	return o.Any
+}
+
+func (o *OrdersExportResponse) GetRes() *string {
+	if o == nil {
+		return nil
+	}
+	return o.Res
 }

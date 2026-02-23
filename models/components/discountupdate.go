@@ -19,10 +19,10 @@ const (
 )
 
 type DiscountUpdateMetadata struct {
-	Str     *string  `queryParam:"inline,name=metadata"`
-	Integer *int64   `queryParam:"inline,name=metadata"`
-	Number  *float64 `queryParam:"inline,name=metadata"`
-	Boolean *bool    `queryParam:"inline,name=metadata"`
+	Str     *string  `queryParam:"inline" union:"member"`
+	Integer *int64   `queryParam:"inline" union:"member"`
+	Number  *float64 `queryParam:"inline" union:"member"`
+	Boolean *bool    `queryParam:"inline" union:"member"`
 
 	Type DiscountUpdateMetadataType
 }
@@ -138,14 +138,14 @@ type DiscountUpdate struct {
 	// Optional timestamp after which the discount is no longer redeemable.
 	EndsAt *time.Time `json:"ends_at,omitempty"`
 	// Optional maximum number of times the discount can be redeemed.
-	MaxRedemptions   *int64            `json:"max_redemptions,omitempty"`
-	Duration         *DiscountDuration `json:"duration,omitempty"`
-	DurationInMonths *int64            `json:"duration_in_months,omitempty"`
-	Type             *DiscountType     `json:"type,omitempty"`
-	Amount           *int64            `json:"amount,omitempty"`
-	Currency         *string           `json:"currency,omitempty"`
-	BasisPoints      *int64            `json:"basis_points,omitempty"`
-	Products         []string          `json:"products,omitempty"`
+	MaxRedemptions   *int64               `json:"max_redemptions,omitempty"`
+	Duration         *DiscountDuration    `json:"duration,omitempty"`
+	DurationInMonths *int64               `json:"duration_in_months,omitempty"`
+	Type             *DiscountType        `json:"type,omitempty"`
+	Amount           *int64               `json:"amount,omitempty"`
+	Currency         *PresentmentCurrency `json:"currency,omitempty"`
+	BasisPoints      *int64               `json:"basis_points,omitempty"`
+	Products         []string             `json:"products,omitempty"`
 }
 
 func (d DiscountUpdate) MarshalJSON() ([]byte, error) {
@@ -229,7 +229,7 @@ func (d *DiscountUpdate) GetAmount() *int64 {
 	return d.Amount
 }
 
-func (d *DiscountUpdate) GetCurrency() *string {
+func (d *DiscountUpdate) GetCurrency() *PresentmentCurrency {
 	if d == nil {
 		return nil
 	}

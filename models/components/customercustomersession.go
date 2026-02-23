@@ -17,7 +17,7 @@ func (c CustomerCustomerSession) MarshalJSON() ([]byte, error) {
 }
 
 func (c *CustomerCustomerSession) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &c, "", false, []string{"expires_at"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &c, "", false, nil); err != nil {
 		return err
 	}
 	return nil

@@ -18,8 +18,8 @@ const (
 
 // OrdersListQueryParamOrganizationIDFilter - Filter by organization ID.
 type OrdersListQueryParamOrganizationIDFilter struct {
-	Str        *string  `queryParam:"inline,name=OrganizationID_Filter"`
-	ArrayOfStr []string `queryParam:"inline,name=OrganizationID_Filter"`
+	Str        *string  `queryParam:"inline" union:"member"`
+	ArrayOfStr []string `queryParam:"inline" union:"member"`
 
 	Type OrdersListQueryParamOrganizationIDFilterType
 }
@@ -82,8 +82,8 @@ const (
 
 // OrdersListQueryParamProductIDFilter - Filter by product ID.
 type OrdersListQueryParamProductIDFilter struct {
-	Str        *string  `queryParam:"inline,name=ProductID_Filter"`
-	ArrayOfStr []string `queryParam:"inline,name=ProductID_Filter"`
+	Str        *string  `queryParam:"inline" union:"member"`
+	ArrayOfStr []string `queryParam:"inline" union:"member"`
 
 	Type OrdersListQueryParamProductIDFilterType
 }
@@ -146,8 +146,8 @@ const (
 
 // ProductBillingTypeFilter - Filter by product billing type. `recurring` will filter data corresponding to subscriptions creations or renewals. `one_time` will filter data corresponding to one-time purchases.
 type ProductBillingTypeFilter struct {
-	ProductBillingType        *components.ProductBillingType  `queryParam:"inline,name=ProductBillingType_Filter"`
-	ArrayOfProductBillingType []components.ProductBillingType `queryParam:"inline,name=ProductBillingType_Filter"`
+	ProductBillingType        *components.ProductBillingType  `queryParam:"inline" union:"member"`
+	ArrayOfProductBillingType []components.ProductBillingType `queryParam:"inline" union:"member"`
 
 	Type ProductBillingTypeFilterType
 }
@@ -210,8 +210,8 @@ const (
 
 // QueryParamDiscountIDFilter - Filter by discount ID.
 type QueryParamDiscountIDFilter struct {
-	Str        *string  `queryParam:"inline,name=DiscountID_Filter"`
-	ArrayOfStr []string `queryParam:"inline,name=DiscountID_Filter"`
+	Str        *string  `queryParam:"inline" union:"member"`
+	ArrayOfStr []string `queryParam:"inline" union:"member"`
 
 	Type QueryParamDiscountIDFilterType
 }
@@ -274,8 +274,8 @@ const (
 
 // OrdersListQueryParamCustomerIDFilter - Filter by customer ID.
 type OrdersListQueryParamCustomerIDFilter struct {
-	Str        *string  `queryParam:"inline,name=CustomerID_Filter"`
-	ArrayOfStr []string `queryParam:"inline,name=CustomerID_Filter"`
+	Str        *string  `queryParam:"inline" union:"member"`
+	ArrayOfStr []string `queryParam:"inline" union:"member"`
 
 	Type OrdersListQueryParamCustomerIDFilterType
 }
@@ -329,6 +329,70 @@ func (u OrdersListQueryParamCustomerIDFilter) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type OrdersListQueryParamCustomerIDFilter: all fields are null")
 }
 
+type OrdersListQueryParamExternalCustomerIDFilterType string
+
+const (
+	OrdersListQueryParamExternalCustomerIDFilterTypeStr        OrdersListQueryParamExternalCustomerIDFilterType = "str"
+	OrdersListQueryParamExternalCustomerIDFilterTypeArrayOfStr OrdersListQueryParamExternalCustomerIDFilterType = "arrayOfStr"
+)
+
+// OrdersListQueryParamExternalCustomerIDFilter - Filter by customer external ID.
+type OrdersListQueryParamExternalCustomerIDFilter struct {
+	Str        *string  `queryParam:"inline" union:"member"`
+	ArrayOfStr []string `queryParam:"inline" union:"member"`
+
+	Type OrdersListQueryParamExternalCustomerIDFilterType
+}
+
+func CreateOrdersListQueryParamExternalCustomerIDFilterStr(str string) OrdersListQueryParamExternalCustomerIDFilter {
+	typ := OrdersListQueryParamExternalCustomerIDFilterTypeStr
+
+	return OrdersListQueryParamExternalCustomerIDFilter{
+		Str:  &str,
+		Type: typ,
+	}
+}
+
+func CreateOrdersListQueryParamExternalCustomerIDFilterArrayOfStr(arrayOfStr []string) OrdersListQueryParamExternalCustomerIDFilter {
+	typ := OrdersListQueryParamExternalCustomerIDFilterTypeArrayOfStr
+
+	return OrdersListQueryParamExternalCustomerIDFilter{
+		ArrayOfStr: arrayOfStr,
+		Type:       typ,
+	}
+}
+
+func (u *OrdersListQueryParamExternalCustomerIDFilter) UnmarshalJSON(data []byte) error {
+
+	var str string = ""
+	if err := utils.UnmarshalJSON(data, &str, "", true, nil); err == nil {
+		u.Str = &str
+		u.Type = OrdersListQueryParamExternalCustomerIDFilterTypeStr
+		return nil
+	}
+
+	var arrayOfStr []string = []string{}
+	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, nil); err == nil {
+		u.ArrayOfStr = arrayOfStr
+		u.Type = OrdersListQueryParamExternalCustomerIDFilterTypeArrayOfStr
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for OrdersListQueryParamExternalCustomerIDFilter", string(data))
+}
+
+func (u OrdersListQueryParamExternalCustomerIDFilter) MarshalJSON() ([]byte, error) {
+	if u.Str != nil {
+		return utils.MarshalJSON(u.Str, "", true)
+	}
+
+	if u.ArrayOfStr != nil {
+		return utils.MarshalJSON(u.ArrayOfStr, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type OrdersListQueryParamExternalCustomerIDFilter: all fields are null")
+}
+
 type CheckoutIDFilterType string
 
 const (
@@ -338,8 +402,8 @@ const (
 
 // CheckoutIDFilter - Filter by checkout ID.
 type CheckoutIDFilter struct {
-	Str        *string  `queryParam:"inline,name=CheckoutID_Filter"`
-	ArrayOfStr []string `queryParam:"inline,name=CheckoutID_Filter"`
+	Str        *string  `queryParam:"inline" union:"member"`
+	ArrayOfStr []string `queryParam:"inline" union:"member"`
 
 	Type CheckoutIDFilterType
 }
@@ -404,6 +468,8 @@ type OrdersListRequest struct {
 	DiscountID *QueryParamDiscountIDFilter `queryParam:"style=form,explode=true,name=discount_id"`
 	// Filter by customer ID.
 	CustomerID *OrdersListQueryParamCustomerIDFilter `queryParam:"style=form,explode=true,name=customer_id"`
+	// Filter by customer external ID.
+	ExternalCustomerID *OrdersListQueryParamExternalCustomerIDFilter `queryParam:"style=form,explode=true,name=external_customer_id"`
 	// Filter by checkout ID.
 	CheckoutID *CheckoutIDFilter `queryParam:"style=form,explode=true,name=checkout_id"`
 	// Page number, defaults to 1.
@@ -460,6 +526,13 @@ func (o *OrdersListRequest) GetCustomerID() *OrdersListQueryParamCustomerIDFilte
 		return nil
 	}
 	return o.CustomerID
+}
+
+func (o *OrdersListRequest) GetExternalCustomerID() *OrdersListQueryParamExternalCustomerIDFilter {
+	if o == nil {
+		return nil
+	}
+	return o.ExternalCustomerID
 }
 
 func (o *OrdersListRequest) GetCheckoutID() *CheckoutIDFilter {

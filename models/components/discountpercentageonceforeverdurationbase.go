@@ -3,118 +3,9 @@
 package components
 
 import (
-	"errors"
-	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
 	"time"
 )
-
-type DiscountPercentageOnceForeverDurationBaseMetadataType string
-
-const (
-	DiscountPercentageOnceForeverDurationBaseMetadataTypeStr     DiscountPercentageOnceForeverDurationBaseMetadataType = "str"
-	DiscountPercentageOnceForeverDurationBaseMetadataTypeInteger DiscountPercentageOnceForeverDurationBaseMetadataType = "integer"
-	DiscountPercentageOnceForeverDurationBaseMetadataTypeNumber  DiscountPercentageOnceForeverDurationBaseMetadataType = "number"
-	DiscountPercentageOnceForeverDurationBaseMetadataTypeBoolean DiscountPercentageOnceForeverDurationBaseMetadataType = "boolean"
-)
-
-type DiscountPercentageOnceForeverDurationBaseMetadata struct {
-	Str     *string  `queryParam:"inline,name=metadata"`
-	Integer *int64   `queryParam:"inline,name=metadata"`
-	Number  *float64 `queryParam:"inline,name=metadata"`
-	Boolean *bool    `queryParam:"inline,name=metadata"`
-
-	Type DiscountPercentageOnceForeverDurationBaseMetadataType
-}
-
-func CreateDiscountPercentageOnceForeverDurationBaseMetadataStr(str string) DiscountPercentageOnceForeverDurationBaseMetadata {
-	typ := DiscountPercentageOnceForeverDurationBaseMetadataTypeStr
-
-	return DiscountPercentageOnceForeverDurationBaseMetadata{
-		Str:  &str,
-		Type: typ,
-	}
-}
-
-func CreateDiscountPercentageOnceForeverDurationBaseMetadataInteger(integer int64) DiscountPercentageOnceForeverDurationBaseMetadata {
-	typ := DiscountPercentageOnceForeverDurationBaseMetadataTypeInteger
-
-	return DiscountPercentageOnceForeverDurationBaseMetadata{
-		Integer: &integer,
-		Type:    typ,
-	}
-}
-
-func CreateDiscountPercentageOnceForeverDurationBaseMetadataNumber(number float64) DiscountPercentageOnceForeverDurationBaseMetadata {
-	typ := DiscountPercentageOnceForeverDurationBaseMetadataTypeNumber
-
-	return DiscountPercentageOnceForeverDurationBaseMetadata{
-		Number: &number,
-		Type:   typ,
-	}
-}
-
-func CreateDiscountPercentageOnceForeverDurationBaseMetadataBoolean(boolean bool) DiscountPercentageOnceForeverDurationBaseMetadata {
-	typ := DiscountPercentageOnceForeverDurationBaseMetadataTypeBoolean
-
-	return DiscountPercentageOnceForeverDurationBaseMetadata{
-		Boolean: &boolean,
-		Type:    typ,
-	}
-}
-
-func (u *DiscountPercentageOnceForeverDurationBaseMetadata) UnmarshalJSON(data []byte) error {
-
-	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, nil); err == nil {
-		u.Str = &str
-		u.Type = DiscountPercentageOnceForeverDurationBaseMetadataTypeStr
-		return nil
-	}
-
-	var integer int64 = int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
-		u.Integer = &integer
-		u.Type = DiscountPercentageOnceForeverDurationBaseMetadataTypeInteger
-		return nil
-	}
-
-	var number float64 = float64(0)
-	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
-		u.Number = &number
-		u.Type = DiscountPercentageOnceForeverDurationBaseMetadataTypeNumber
-		return nil
-	}
-
-	var boolean bool = false
-	if err := utils.UnmarshalJSON(data, &boolean, "", true, nil); err == nil {
-		u.Boolean = &boolean
-		u.Type = DiscountPercentageOnceForeverDurationBaseMetadataTypeBoolean
-		return nil
-	}
-
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for DiscountPercentageOnceForeverDurationBaseMetadata", string(data))
-}
-
-func (u DiscountPercentageOnceForeverDurationBaseMetadata) MarshalJSON() ([]byte, error) {
-	if u.Str != nil {
-		return utils.MarshalJSON(u.Str, "", true)
-	}
-
-	if u.Integer != nil {
-		return utils.MarshalJSON(u.Integer, "", true)
-	}
-
-	if u.Number != nil {
-		return utils.MarshalJSON(u.Number, "", true)
-	}
-
-	if u.Boolean != nil {
-		return utils.MarshalJSON(u.Boolean, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type DiscountPercentageOnceForeverDurationBaseMetadata: all fields are null")
-}
 
 type DiscountPercentageOnceForeverDurationBase struct {
 	Duration DiscountDuration `json:"duration"`
@@ -126,8 +17,8 @@ type DiscountPercentageOnceForeverDurationBase struct {
 	// Last modification timestamp of the object.
 	ModifiedAt *time.Time `json:"modified_at"`
 	// The ID of the object.
-	ID       string                                                       `json:"id"`
-	Metadata map[string]DiscountPercentageOnceForeverDurationBaseMetadata `json:"metadata"`
+	ID       string                        `json:"id"`
+	Metadata map[string]MetadataOutputType `json:"metadata"`
 	// Name of the discount. Will be displayed to the customer when the discount is applied.
 	Name string `json:"name"`
 	// Code customers can use to apply the discount during checkout.
@@ -197,9 +88,9 @@ func (d *DiscountPercentageOnceForeverDurationBase) GetID() string {
 	return d.ID
 }
 
-func (d *DiscountPercentageOnceForeverDurationBase) GetMetadata() map[string]DiscountPercentageOnceForeverDurationBaseMetadata {
+func (d *DiscountPercentageOnceForeverDurationBase) GetMetadata() map[string]MetadataOutputType {
 	if d == nil {
-		return map[string]DiscountPercentageOnceForeverDurationBaseMetadata{}
+		return map[string]MetadataOutputType{}
 	}
 	return d.Metadata
 }

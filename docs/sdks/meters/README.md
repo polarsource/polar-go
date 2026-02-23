@@ -1,5 +1,4 @@
 # Meters
-(*Meters*)
 
 ## Overview
 
@@ -138,7 +137,21 @@ func main() {
         log.Fatal(err)
     }
     if res.Meter != nil {
-        // handle response
+        switch res.Meter.Aggregation.Type {
+            case components.MeterAggregationTypeAvg:
+                // res.Meter.Aggregation.PropertyAggregation is populated
+            case components.MeterAggregationTypeCount:
+                // res.Meter.Aggregation.CountAggregation is populated
+            case components.MeterAggregationTypeMax:
+                // res.Meter.Aggregation.PropertyAggregation is populated
+            case components.MeterAggregationTypeMin:
+                // res.Meter.Aggregation.PropertyAggregation is populated
+            case components.MeterAggregationTypeSum:
+                // res.Meter.Aggregation.PropertyAggregation is populated
+            case components.MeterAggregationTypeUnique:
+                // res.Meter.Aggregation.UniqueAggregation is populated
+        }
+
     }
 }
 ```
@@ -179,6 +192,7 @@ import(
 	"os"
 	polargo "github.com/polarsource/polar-go"
 	"log"
+	"github.com/polarsource/polar-go/models/components"
 )
 
 func main() {
@@ -193,7 +207,21 @@ func main() {
         log.Fatal(err)
     }
     if res.Meter != nil {
-        // handle response
+        switch res.Meter.Aggregation.Type {
+            case components.MeterAggregationTypeAvg:
+                // res.Meter.Aggregation.PropertyAggregation is populated
+            case components.MeterAggregationTypeCount:
+                // res.Meter.Aggregation.CountAggregation is populated
+            case components.MeterAggregationTypeMax:
+                // res.Meter.Aggregation.PropertyAggregation is populated
+            case components.MeterAggregationTypeMin:
+                // res.Meter.Aggregation.PropertyAggregation is populated
+            case components.MeterAggregationTypeSum:
+                // res.Meter.Aggregation.PropertyAggregation is populated
+            case components.MeterAggregationTypeUnique:
+                // res.Meter.Aggregation.UniqueAggregation is populated
+        }
+
     }
 }
 ```
@@ -250,7 +278,21 @@ func main() {
         log.Fatal(err)
     }
     if res.Meter != nil {
-        // handle response
+        switch res.Meter.Aggregation.Type {
+            case components.MeterAggregationTypeAvg:
+                // res.Meter.Aggregation.PropertyAggregation is populated
+            case components.MeterAggregationTypeCount:
+                // res.Meter.Aggregation.CountAggregation is populated
+            case components.MeterAggregationTypeMax:
+                // res.Meter.Aggregation.PropertyAggregation is populated
+            case components.MeterAggregationTypeMin:
+                // res.Meter.Aggregation.PropertyAggregation is populated
+            case components.MeterAggregationTypeSum:
+                // res.Meter.Aggregation.PropertyAggregation is populated
+            case components.MeterAggregationTypeUnique:
+                // res.Meter.Aggregation.UniqueAggregation is populated
+        }
+
     }
 }
 ```

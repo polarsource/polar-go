@@ -15,3 +15,15 @@ customerSubscriptionPrices := components.CreateCustomerSubscriptionPricesLegacyR
 customerSubscriptionPrices := components.CreateCustomerSubscriptionPricesProductPrice(components.ProductPrice{/* values here */})
 ```
 
+## Union Discrimination
+
+Use the `Type` field to determine which variant is active, then access the corresponding field:
+
+```go
+switch customerSubscriptionPrices.Type {
+	case components.CustomerSubscriptionPricesTypeLegacyRecurringProductPrice:
+		// customerSubscriptionPrices.LegacyRecurringProductPrice is populated
+	case components.CustomerSubscriptionPricesTypeProductPrice:
+		// customerSubscriptionPrices.ProductPrice is populated
+}
+```

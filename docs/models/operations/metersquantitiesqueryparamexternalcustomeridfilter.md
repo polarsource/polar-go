@@ -17,3 +17,15 @@ metersQuantitiesQueryParamExternalCustomerIDFilter := operations.CreateMetersQua
 metersQuantitiesQueryParamExternalCustomerIDFilter := operations.CreateMetersQuantitiesQueryParamExternalCustomerIDFilterArrayOfStr([]string{/* values here */})
 ```
 
+## Union Discrimination
+
+Use the `Type` field to determine which variant is active, then access the corresponding field:
+
+```go
+switch metersQuantitiesQueryParamExternalCustomerIDFilter.Type {
+	case operations.MetersQuantitiesQueryParamExternalCustomerIDFilterTypeStr:
+		// metersQuantitiesQueryParamExternalCustomerIDFilter.Str is populated
+	case operations.MetersQuantitiesQueryParamExternalCustomerIDFilterTypeArrayOfStr:
+		// metersQuantitiesQueryParamExternalCustomerIDFilter.ArrayOfStr is populated
+}
+```

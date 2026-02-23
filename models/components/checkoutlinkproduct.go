@@ -9,113 +9,6 @@ import (
 	"time"
 )
 
-type CheckoutLinkProductMetadataType string
-
-const (
-	CheckoutLinkProductMetadataTypeStr     CheckoutLinkProductMetadataType = "str"
-	CheckoutLinkProductMetadataTypeInteger CheckoutLinkProductMetadataType = "integer"
-	CheckoutLinkProductMetadataTypeNumber  CheckoutLinkProductMetadataType = "number"
-	CheckoutLinkProductMetadataTypeBoolean CheckoutLinkProductMetadataType = "boolean"
-)
-
-type CheckoutLinkProductMetadata struct {
-	Str     *string  `queryParam:"inline,name=metadata"`
-	Integer *int64   `queryParam:"inline,name=metadata"`
-	Number  *float64 `queryParam:"inline,name=metadata"`
-	Boolean *bool    `queryParam:"inline,name=metadata"`
-
-	Type CheckoutLinkProductMetadataType
-}
-
-func CreateCheckoutLinkProductMetadataStr(str string) CheckoutLinkProductMetadata {
-	typ := CheckoutLinkProductMetadataTypeStr
-
-	return CheckoutLinkProductMetadata{
-		Str:  &str,
-		Type: typ,
-	}
-}
-
-func CreateCheckoutLinkProductMetadataInteger(integer int64) CheckoutLinkProductMetadata {
-	typ := CheckoutLinkProductMetadataTypeInteger
-
-	return CheckoutLinkProductMetadata{
-		Integer: &integer,
-		Type:    typ,
-	}
-}
-
-func CreateCheckoutLinkProductMetadataNumber(number float64) CheckoutLinkProductMetadata {
-	typ := CheckoutLinkProductMetadataTypeNumber
-
-	return CheckoutLinkProductMetadata{
-		Number: &number,
-		Type:   typ,
-	}
-}
-
-func CreateCheckoutLinkProductMetadataBoolean(boolean bool) CheckoutLinkProductMetadata {
-	typ := CheckoutLinkProductMetadataTypeBoolean
-
-	return CheckoutLinkProductMetadata{
-		Boolean: &boolean,
-		Type:    typ,
-	}
-}
-
-func (u *CheckoutLinkProductMetadata) UnmarshalJSON(data []byte) error {
-
-	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, nil); err == nil {
-		u.Str = &str
-		u.Type = CheckoutLinkProductMetadataTypeStr
-		return nil
-	}
-
-	var integer int64 = int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
-		u.Integer = &integer
-		u.Type = CheckoutLinkProductMetadataTypeInteger
-		return nil
-	}
-
-	var number float64 = float64(0)
-	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
-		u.Number = &number
-		u.Type = CheckoutLinkProductMetadataTypeNumber
-		return nil
-	}
-
-	var boolean bool = false
-	if err := utils.UnmarshalJSON(data, &boolean, "", true, nil); err == nil {
-		u.Boolean = &boolean
-		u.Type = CheckoutLinkProductMetadataTypeBoolean
-		return nil
-	}
-
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for CheckoutLinkProductMetadata", string(data))
-}
-
-func (u CheckoutLinkProductMetadata) MarshalJSON() ([]byte, error) {
-	if u.Str != nil {
-		return utils.MarshalJSON(u.Str, "", true)
-	}
-
-	if u.Integer != nil {
-		return utils.MarshalJSON(u.Integer, "", true)
-	}
-
-	if u.Number != nil {
-		return utils.MarshalJSON(u.Number, "", true)
-	}
-
-	if u.Boolean != nil {
-		return utils.MarshalJSON(u.Boolean, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type CheckoutLinkProductMetadata: all fields are null")
-}
-
 type CheckoutLinkProductPricesType string
 
 const (
@@ -124,8 +17,8 @@ const (
 )
 
 type CheckoutLinkProductPrices struct {
-	LegacyRecurringProductPrice *LegacyRecurringProductPrice `queryParam:"inline,name=prices"`
-	ProductPrice                *ProductPrice                `queryParam:"inline,name=prices"`
+	LegacyRecurringProductPrice *LegacyRecurringProductPrice `queryParam:"inline" union:"member"`
+	ProductPrice                *ProductPrice                `queryParam:"inline" union:"member"`
 
 	Type CheckoutLinkProductPricesType
 }
@@ -181,7 +74,7 @@ func (u CheckoutLinkProductPrices) MarshalJSON() ([]byte, error) {
 
 // CheckoutLinkProduct - Product data for a checkout link.
 type CheckoutLinkProduct struct {
-	Metadata map[string]CheckoutLinkProductMetadata `json:"metadata"`
+	Metadata map[string]MetadataOutputType `json:"metadata"`
 	// The ID of the object.
 	ID string `json:"id"`
 	// Creation timestamp of the object.
@@ -195,7 +88,8 @@ type CheckoutLinkProduct struct {
 	// The name of the product.
 	Name string `json:"name"`
 	// The description of the product.
-	Description *string `json:"description"`
+	Description *string           `json:"description"`
+	Visibility  ProductVisibility `json:"visibility"`
 	// The recurring interval of the product. If `None`, the product is a one-time purchase.
 	RecurringInterval *SubscriptionRecurringInterval `json:"recurring_interval"`
 	// Number of interval units of the subscription. If this is set to 1 the charge will happen every interval (e.g. every month), if set to 2 it will be every other month, and so on. None for one-time products.
@@ -219,15 +113,15 @@ func (c CheckoutLinkProduct) MarshalJSON() ([]byte, error) {
 }
 
 func (c *CheckoutLinkProduct) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &c, "", false, []string{"metadata", "id", "created_at", "name", "is_recurring", "is_archived", "organization_id", "prices", "benefits", "medias"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &c, "", false, nil); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (c *CheckoutLinkProduct) GetMetadata() map[string]CheckoutLinkProductMetadata {
+func (c *CheckoutLinkProduct) GetMetadata() map[string]MetadataOutputType {
 	if c == nil {
-		return map[string]CheckoutLinkProductMetadata{}
+		return map[string]MetadataOutputType{}
 	}
 	return c.Metadata
 }
@@ -279,6 +173,13 @@ func (c *CheckoutLinkProduct) GetDescription() *string {
 		return nil
 	}
 	return c.Description
+}
+
+func (c *CheckoutLinkProduct) GetVisibility() ProductVisibility {
+	if c == nil {
+		return ProductVisibility("")
+	}
+	return c.Visibility
 }
 
 func (c *CheckoutLinkProduct) GetRecurringInterval() *SubscriptionRecurringInterval {

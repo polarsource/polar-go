@@ -18,10 +18,10 @@ const (
 )
 
 type CheckoutLinkUpdateMetadata struct {
-	Str     *string  `queryParam:"inline,name=metadata"`
-	Integer *int64   `queryParam:"inline,name=metadata"`
-	Number  *float64 `queryParam:"inline,name=metadata"`
-	Boolean *bool    `queryParam:"inline,name=metadata"`
+	Str     *string  `queryParam:"inline" union:"member"`
+	Integer *int64   `queryParam:"inline" union:"member"`
+	Number  *float64 `queryParam:"inline" union:"member"`
+	Boolean *bool    `queryParam:"inline" union:"member"`
 
 	Type CheckoutLinkUpdateMetadataType
 }
@@ -144,6 +144,8 @@ type CheckoutLinkUpdate struct {
 	DiscountID *string `json:"discount_id,omitempty"`
 	// URL where the customer will be redirected after a successful payment.You can add the `checkout_id={CHECKOUT_ID}` query parameter to retrieve the checkout session id.
 	SuccessURL *string `json:"success_url,omitempty"`
+	// When set, a back button will be shown in the checkout to return to this URL.
+	ReturnURL *string `json:"return_url,omitempty"`
 }
 
 func (c *CheckoutLinkUpdate) GetTrialInterval() *TrialInterval {
@@ -207,4 +209,11 @@ func (c *CheckoutLinkUpdate) GetSuccessURL() *string {
 		return nil
 	}
 	return c.SuccessURL
+}
+
+func (c *CheckoutLinkUpdate) GetReturnURL() *string {
+	if c == nil {
+		return nil
+	}
+	return c.ReturnURL
 }

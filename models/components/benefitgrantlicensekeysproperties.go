@@ -7,8 +7,9 @@ import (
 )
 
 type BenefitGrantLicenseKeysProperties struct {
-	LicenseKeyID *string `json:"license_key_id,omitempty"`
-	DisplayKey   *string `json:"display_key,omitempty"`
+	UserProvidedKey *string `json:"user_provided_key,omitempty"`
+	LicenseKeyID    *string `json:"license_key_id,omitempty"`
+	DisplayKey      *string `json:"display_key,omitempty"`
 }
 
 func (b BenefitGrantLicenseKeysProperties) MarshalJSON() ([]byte, error) {
@@ -20,6 +21,13 @@ func (b *BenefitGrantLicenseKeysProperties) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
+}
+
+func (b *BenefitGrantLicenseKeysProperties) GetUserProvidedKey() *string {
+	if b == nil {
+		return nil
+	}
+	return b.UserProvidedKey
 }
 
 func (b *BenefitGrantLicenseKeysProperties) GetLicenseKeyID() *string {

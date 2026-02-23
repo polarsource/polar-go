@@ -19,10 +19,10 @@ const (
 )
 
 type ProductUpdateMetadata struct {
-	Str     *string  `queryParam:"inline,name=metadata"`
-	Integer *int64   `queryParam:"inline,name=metadata"`
-	Number  *float64 `queryParam:"inline,name=metadata"`
-	Boolean *bool    `queryParam:"inline,name=metadata"`
+	Str     *string  `queryParam:"inline" union:"member"`
+	Integer *int64   `queryParam:"inline" union:"member"`
+	Number  *float64 `queryParam:"inline" union:"member"`
+	Boolean *bool    `queryParam:"inline" union:"member"`
 
 	Type ProductUpdateMetadataType
 }
@@ -127,11 +127,11 @@ const (
 )
 
 type Two struct {
-	ProductPriceFixedCreate       *ProductPriceFixedCreate       `queryParam:"inline,name=two"`
-	ProductPriceCustomCreate      *ProductPriceCustomCreate      `queryParam:"inline,name=two"`
-	ProductPriceFreeCreate        *ProductPriceFreeCreate        `queryParam:"inline,name=two"`
-	ProductPriceSeatBasedCreate   *ProductPriceSeatBasedCreate   `queryParam:"inline,name=two"`
-	ProductPriceMeteredUnitCreate *ProductPriceMeteredUnitCreate `queryParam:"inline,name=two"`
+	ProductPriceFixedCreate       *ProductPriceFixedCreate       `queryParam:"inline" union:"member"`
+	ProductPriceCustomCreate      *ProductPriceCustomCreate      `queryParam:"inline" union:"member"`
+	ProductPriceFreeCreate        *ProductPriceFreeCreate        `queryParam:"inline" union:"member"`
+	ProductPriceSeatBasedCreate   *ProductPriceSeatBasedCreate   `queryParam:"inline" union:"member"`
+	ProductPriceMeteredUnitCreate *ProductPriceMeteredUnitCreate `queryParam:"inline" union:"member"`
 
 	Type TwoType
 }
@@ -275,8 +275,8 @@ const (
 )
 
 type ProductUpdatePrices struct {
-	ExistingProductPrice *ExistingProductPrice `queryParam:"inline,name=prices"`
-	Two                  *Two                  `queryParam:"inline,name=prices"`
+	ExistingProductPrice *ExistingProductPrice `queryParam:"inline" union:"member"`
+	Two                  *Two                  `queryParam:"inline" union:"member"`
 
 	Type ProductUpdatePricesType
 }
@@ -357,6 +357,8 @@ type ProductUpdate struct {
 	RecurringIntervalCount *int64 `json:"recurring_interval_count,omitempty"`
 	// Whether the product is archived. If `true`, the product won't be available for purchase anymore. Existing customers will still have access to their benefits, and subscriptions will continue normally.
 	IsArchived *bool `json:"is_archived,omitempty"`
+	// The visibility of the product.
+	Visibility *ProductVisibility `json:"visibility,omitempty"`
 	// List of available prices for this product. If you want to keep existing prices, include them in the list as an `ExistingProductPrice` object.
 	Prices []ProductUpdatePrices `json:"prices,omitempty"`
 	// List of file IDs. Each one must be on the same organization as the product, of type `product_media` and correctly uploaded.
@@ -418,6 +420,13 @@ func (p *ProductUpdate) GetIsArchived() *bool {
 		return nil
 	}
 	return p.IsArchived
+}
+
+func (p *ProductUpdate) GetVisibility() *ProductVisibility {
+	if p == nil {
+		return nil
+	}
+	return p.Visibility
 }
 
 func (p *ProductUpdate) GetPrices() []ProductUpdatePrices {

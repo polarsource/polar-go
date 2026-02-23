@@ -3,118 +3,9 @@
 package components
 
 import (
-	"errors"
-	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
 	"time"
 )
-
-type BenefitDiscordMetadataType string
-
-const (
-	BenefitDiscordMetadataTypeStr     BenefitDiscordMetadataType = "str"
-	BenefitDiscordMetadataTypeInteger BenefitDiscordMetadataType = "integer"
-	BenefitDiscordMetadataTypeNumber  BenefitDiscordMetadataType = "number"
-	BenefitDiscordMetadataTypeBoolean BenefitDiscordMetadataType = "boolean"
-)
-
-type BenefitDiscordMetadata struct {
-	Str     *string  `queryParam:"inline,name=metadata"`
-	Integer *int64   `queryParam:"inline,name=metadata"`
-	Number  *float64 `queryParam:"inline,name=metadata"`
-	Boolean *bool    `queryParam:"inline,name=metadata"`
-
-	Type BenefitDiscordMetadataType
-}
-
-func CreateBenefitDiscordMetadataStr(str string) BenefitDiscordMetadata {
-	typ := BenefitDiscordMetadataTypeStr
-
-	return BenefitDiscordMetadata{
-		Str:  &str,
-		Type: typ,
-	}
-}
-
-func CreateBenefitDiscordMetadataInteger(integer int64) BenefitDiscordMetadata {
-	typ := BenefitDiscordMetadataTypeInteger
-
-	return BenefitDiscordMetadata{
-		Integer: &integer,
-		Type:    typ,
-	}
-}
-
-func CreateBenefitDiscordMetadataNumber(number float64) BenefitDiscordMetadata {
-	typ := BenefitDiscordMetadataTypeNumber
-
-	return BenefitDiscordMetadata{
-		Number: &number,
-		Type:   typ,
-	}
-}
-
-func CreateBenefitDiscordMetadataBoolean(boolean bool) BenefitDiscordMetadata {
-	typ := BenefitDiscordMetadataTypeBoolean
-
-	return BenefitDiscordMetadata{
-		Boolean: &boolean,
-		Type:    typ,
-	}
-}
-
-func (u *BenefitDiscordMetadata) UnmarshalJSON(data []byte) error {
-
-	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, nil); err == nil {
-		u.Str = &str
-		u.Type = BenefitDiscordMetadataTypeStr
-		return nil
-	}
-
-	var integer int64 = int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
-		u.Integer = &integer
-		u.Type = BenefitDiscordMetadataTypeInteger
-		return nil
-	}
-
-	var number float64 = float64(0)
-	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
-		u.Number = &number
-		u.Type = BenefitDiscordMetadataTypeNumber
-		return nil
-	}
-
-	var boolean bool = false
-	if err := utils.UnmarshalJSON(data, &boolean, "", true, nil); err == nil {
-		u.Boolean = &boolean
-		u.Type = BenefitDiscordMetadataTypeBoolean
-		return nil
-	}
-
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for BenefitDiscordMetadata", string(data))
-}
-
-func (u BenefitDiscordMetadata) MarshalJSON() ([]byte, error) {
-	if u.Str != nil {
-		return utils.MarshalJSON(u.Str, "", true)
-	}
-
-	if u.Integer != nil {
-		return utils.MarshalJSON(u.Integer, "", true)
-	}
-
-	if u.Number != nil {
-		return utils.MarshalJSON(u.Number, "", true)
-	}
-
-	if u.Boolean != nil {
-		return utils.MarshalJSON(u.Boolean, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type BenefitDiscordMetadata: all fields are null")
-}
 
 // BenefitDiscord - A benefit of type `discord`.
 //
@@ -134,8 +25,8 @@ type BenefitDiscord struct {
 	// Whether the benefit is deletable.
 	Deletable bool `json:"deletable"`
 	// The ID of the organization owning the benefit.
-	OrganizationID string                            `json:"organization_id"`
-	Metadata       map[string]BenefitDiscordMetadata `json:"metadata"`
+	OrganizationID string                        `json:"organization_id"`
+	Metadata       map[string]MetadataOutputType `json:"metadata"`
 	// Properties for a benefit of type `discord`.
 	Properties BenefitDiscordProperties `json:"properties"`
 }
@@ -204,9 +95,9 @@ func (b *BenefitDiscord) GetOrganizationID() string {
 	return b.OrganizationID
 }
 
-func (b *BenefitDiscord) GetMetadata() map[string]BenefitDiscordMetadata {
+func (b *BenefitDiscord) GetMetadata() map[string]MetadataOutputType {
 	if b == nil {
-		return map[string]BenefitDiscordMetadata{}
+		return map[string]MetadataOutputType{}
 	}
 	return b.Metadata
 }

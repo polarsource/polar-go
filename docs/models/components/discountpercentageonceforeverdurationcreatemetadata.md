@@ -27,3 +27,19 @@ discountPercentageOnceForeverDurationCreateMetadata := components.CreateDiscount
 discountPercentageOnceForeverDurationCreateMetadata := components.CreateDiscountPercentageOnceForeverDurationCreateMetadataBoolean(bool{/* values here */})
 ```
 
+## Union Discrimination
+
+Use the `Type` field to determine which variant is active, then access the corresponding field:
+
+```go
+switch discountPercentageOnceForeverDurationCreateMetadata.Type {
+	case components.DiscountPercentageOnceForeverDurationCreateMetadataTypeStr:
+		// discountPercentageOnceForeverDurationCreateMetadata.Str is populated
+	case components.DiscountPercentageOnceForeverDurationCreateMetadataTypeInteger:
+		// discountPercentageOnceForeverDurationCreateMetadata.Integer is populated
+	case components.DiscountPercentageOnceForeverDurationCreateMetadataTypeNumber:
+		// discountPercentageOnceForeverDurationCreateMetadata.Number is populated
+	case components.DiscountPercentageOnceForeverDurationCreateMetadataTypeBoolean:
+		// discountPercentageOnceForeverDurationCreateMetadata.Boolean is populated
+}
+```

@@ -27,3 +27,19 @@ licenseKeyActivationReadMeta := components.CreateLicenseKeyActivationReadMetaNum
 licenseKeyActivationReadMeta := components.CreateLicenseKeyActivationReadMetaBoolean(bool{/* values here */})
 ```
 
+## Union Discrimination
+
+Use the `Type` field to determine which variant is active, then access the corresponding field:
+
+```go
+switch licenseKeyActivationReadMeta.Type {
+	case components.LicenseKeyActivationReadMetaTypeStr:
+		// licenseKeyActivationReadMeta.Str is populated
+	case components.LicenseKeyActivationReadMetaTypeInteger:
+		// licenseKeyActivationReadMeta.Integer is populated
+	case components.LicenseKeyActivationReadMetaTypeNumber:
+		// licenseKeyActivationReadMeta.Number is populated
+	case components.LicenseKeyActivationReadMetaTypeBoolean:
+		// licenseKeyActivationReadMeta.Boolean is populated
+}
+```

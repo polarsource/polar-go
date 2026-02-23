@@ -1,5 +1,4 @@
-# PolarBenefitGrants
-(*CustomerPortal.BenefitGrants*)
+# CustomerPortal.BenefitGrants
 
 ## Overview
 
@@ -35,7 +34,7 @@ func main() {
     s := polargo.New()
 
     res, err := s.CustomerPortal.BenefitGrants.List(ctx, operations.CustomerPortalBenefitGrantsListRequest{}, operations.CustomerPortalBenefitGrantsListSecurity{
-        CustomerSession: os.Getenv("POLAR_CUSTOMER_SESSION"),
+        CustomerSession: polargo.Pointer(os.Getenv("POLAR_CUSTOMER_SESSION")),
     })
     if err != nil {
         log.Fatal(err)
@@ -96,6 +95,7 @@ import(
 	"os"
 	"github.com/polarsource/polar-go/models/operations"
 	"log"
+	"github.com/polarsource/polar-go/models/components"
 )
 
 func main() {
@@ -104,13 +104,27 @@ func main() {
     s := polargo.New()
 
     res, err := s.CustomerPortal.BenefitGrants.Get(ctx, operations.CustomerPortalBenefitGrantsGetSecurity{
-        CustomerSession: os.Getenv("POLAR_CUSTOMER_SESSION"),
+        CustomerSession: polargo.Pointer(os.Getenv("POLAR_CUSTOMER_SESSION")),
     }, "<value>")
     if err != nil {
         log.Fatal(err)
     }
     if res.CustomerBenefitGrant != nil {
-        // handle response
+        switch res.CustomerBenefitGrant.Type {
+            case components.CustomerBenefitGrantTypeCustomerBenefitGrantDiscord:
+                // res.CustomerBenefitGrant.CustomerBenefitGrantDiscord is populated
+            case components.CustomerBenefitGrantTypeCustomerBenefitGrantGitHubRepository:
+                // res.CustomerBenefitGrant.CustomerBenefitGrantGitHubRepository is populated
+            case components.CustomerBenefitGrantTypeCustomerBenefitGrantDownloadables:
+                // res.CustomerBenefitGrant.CustomerBenefitGrantDownloadables is populated
+            case components.CustomerBenefitGrantTypeCustomerBenefitGrantLicenseKeys:
+                // res.CustomerBenefitGrant.CustomerBenefitGrantLicenseKeys is populated
+            case components.CustomerBenefitGrantTypeCustomerBenefitGrantCustom:
+                // res.CustomerBenefitGrant.CustomerBenefitGrantCustom is populated
+            case components.CustomerBenefitGrantTypeCustomerBenefitGrantMeterCredit:
+                // res.CustomerBenefitGrant.CustomerBenefitGrantMeterCredit is populated
+        }
+
     }
 }
 ```
@@ -163,7 +177,7 @@ func main() {
     s := polargo.New()
 
     res, err := s.CustomerPortal.BenefitGrants.Update(ctx, operations.CustomerPortalBenefitGrantsUpdateSecurity{
-        CustomerSession: os.Getenv("POLAR_CUSTOMER_SESSION"),
+        CustomerSession: polargo.Pointer(os.Getenv("POLAR_CUSTOMER_SESSION")),
     }, "<value>", components.CreateCustomerBenefitGrantUpdateLicenseKeys(
         components.CustomerBenefitGrantLicenseKeysUpdate{},
     ))
@@ -171,7 +185,21 @@ func main() {
         log.Fatal(err)
     }
     if res.CustomerBenefitGrant != nil {
-        // handle response
+        switch res.CustomerBenefitGrant.Type {
+            case components.CustomerBenefitGrantTypeCustomerBenefitGrantDiscord:
+                // res.CustomerBenefitGrant.CustomerBenefitGrantDiscord is populated
+            case components.CustomerBenefitGrantTypeCustomerBenefitGrantGitHubRepository:
+                // res.CustomerBenefitGrant.CustomerBenefitGrantGitHubRepository is populated
+            case components.CustomerBenefitGrantTypeCustomerBenefitGrantDownloadables:
+                // res.CustomerBenefitGrant.CustomerBenefitGrantDownloadables is populated
+            case components.CustomerBenefitGrantTypeCustomerBenefitGrantLicenseKeys:
+                // res.CustomerBenefitGrant.CustomerBenefitGrantLicenseKeys is populated
+            case components.CustomerBenefitGrantTypeCustomerBenefitGrantCustom:
+                // res.CustomerBenefitGrant.CustomerBenefitGrantCustom is populated
+            case components.CustomerBenefitGrantTypeCustomerBenefitGrantMeterCredit:
+                // res.CustomerBenefitGrant.CustomerBenefitGrantMeterCredit is populated
+        }
+
     }
 }
 ```

@@ -9,113 +9,6 @@ import (
 	"time"
 )
 
-type LicenseKeyCustomerMetadataType string
-
-const (
-	LicenseKeyCustomerMetadataTypeStr     LicenseKeyCustomerMetadataType = "str"
-	LicenseKeyCustomerMetadataTypeInteger LicenseKeyCustomerMetadataType = "integer"
-	LicenseKeyCustomerMetadataTypeNumber  LicenseKeyCustomerMetadataType = "number"
-	LicenseKeyCustomerMetadataTypeBoolean LicenseKeyCustomerMetadataType = "boolean"
-)
-
-type LicenseKeyCustomerMetadata struct {
-	Str     *string  `queryParam:"inline,name=metadata"`
-	Integer *int64   `queryParam:"inline,name=metadata"`
-	Number  *float64 `queryParam:"inline,name=metadata"`
-	Boolean *bool    `queryParam:"inline,name=metadata"`
-
-	Type LicenseKeyCustomerMetadataType
-}
-
-func CreateLicenseKeyCustomerMetadataStr(str string) LicenseKeyCustomerMetadata {
-	typ := LicenseKeyCustomerMetadataTypeStr
-
-	return LicenseKeyCustomerMetadata{
-		Str:  &str,
-		Type: typ,
-	}
-}
-
-func CreateLicenseKeyCustomerMetadataInteger(integer int64) LicenseKeyCustomerMetadata {
-	typ := LicenseKeyCustomerMetadataTypeInteger
-
-	return LicenseKeyCustomerMetadata{
-		Integer: &integer,
-		Type:    typ,
-	}
-}
-
-func CreateLicenseKeyCustomerMetadataNumber(number float64) LicenseKeyCustomerMetadata {
-	typ := LicenseKeyCustomerMetadataTypeNumber
-
-	return LicenseKeyCustomerMetadata{
-		Number: &number,
-		Type:   typ,
-	}
-}
-
-func CreateLicenseKeyCustomerMetadataBoolean(boolean bool) LicenseKeyCustomerMetadata {
-	typ := LicenseKeyCustomerMetadataTypeBoolean
-
-	return LicenseKeyCustomerMetadata{
-		Boolean: &boolean,
-		Type:    typ,
-	}
-}
-
-func (u *LicenseKeyCustomerMetadata) UnmarshalJSON(data []byte) error {
-
-	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, nil); err == nil {
-		u.Str = &str
-		u.Type = LicenseKeyCustomerMetadataTypeStr
-		return nil
-	}
-
-	var integer int64 = int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
-		u.Integer = &integer
-		u.Type = LicenseKeyCustomerMetadataTypeInteger
-		return nil
-	}
-
-	var number float64 = float64(0)
-	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
-		u.Number = &number
-		u.Type = LicenseKeyCustomerMetadataTypeNumber
-		return nil
-	}
-
-	var boolean bool = false
-	if err := utils.UnmarshalJSON(data, &boolean, "", true, nil); err == nil {
-		u.Boolean = &boolean
-		u.Type = LicenseKeyCustomerMetadataTypeBoolean
-		return nil
-	}
-
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for LicenseKeyCustomerMetadata", string(data))
-}
-
-func (u LicenseKeyCustomerMetadata) MarshalJSON() ([]byte, error) {
-	if u.Str != nil {
-		return utils.MarshalJSON(u.Str, "", true)
-	}
-
-	if u.Integer != nil {
-		return utils.MarshalJSON(u.Integer, "", true)
-	}
-
-	if u.Number != nil {
-		return utils.MarshalJSON(u.Number, "", true)
-	}
-
-	if u.Boolean != nil {
-		return utils.MarshalJSON(u.Boolean, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type LicenseKeyCustomerMetadata: all fields are null")
-}
-
 type LicenseKeyCustomerTaxIDType string
 
 const (
@@ -124,8 +17,8 @@ const (
 )
 
 type LicenseKeyCustomerTaxID struct {
-	Str         *string      `queryParam:"inline,name=tax_id"`
-	TaxIDFormat *TaxIDFormat `queryParam:"inline,name=tax_id"`
+	Str         *string      `queryParam:"inline" union:"member"`
+	TaxIDFormat *TaxIDFormat `queryParam:"inline" union:"member"`
 
 	Type LicenseKeyCustomerTaxIDType
 }
@@ -185,18 +78,21 @@ type LicenseKeyCustomer struct {
 	// Creation timestamp of the object.
 	CreatedAt time.Time `json:"created_at"`
 	// Last modification timestamp of the object.
-	ModifiedAt *time.Time                            `json:"modified_at"`
-	Metadata   map[string]LicenseKeyCustomerMetadata `json:"metadata"`
+	ModifiedAt *time.Time                    `json:"modified_at"`
+	Metadata   map[string]MetadataOutputType `json:"metadata"`
 	// The ID of the customer in your system. This must be unique within the organization. Once set, it can't be updated.
 	ExternalID *string `json:"external_id"`
 	// The email address of the customer. This must be unique within the organization.
 	Email string `json:"email"`
 	// Whether the customer email address is verified. The address is automatically verified when the customer accesses the customer portal using their email address.
 	EmailVerified bool `json:"email_verified"`
+	// The type of customer: 'individual' for single users, 'team' for customers with multiple members. Legacy customers may have NULL type which is treated as 'individual'.
+	Type *CustomerType `json:"type,omitempty"`
 	// The name of the customer.
 	Name           *string                    `json:"name"`
 	BillingAddress *Address                   `json:"billing_address"`
 	TaxID          []*LicenseKeyCustomerTaxID `json:"tax_id"`
+	Locale         *string                    `json:"locale,omitempty"`
 	// The ID of the organization owning the customer.
 	OrganizationID string `json:"organization_id"`
 	// Timestamp for when the customer was soft deleted.
@@ -209,7 +105,7 @@ func (l LicenseKeyCustomer) MarshalJSON() ([]byte, error) {
 }
 
 func (l *LicenseKeyCustomer) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &l, "", false, []string{"id", "created_at", "metadata", "email", "email_verified", "organization_id", "avatar_url"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &l, "", false, nil); err != nil {
 		return err
 	}
 	return nil
@@ -236,9 +132,9 @@ func (l *LicenseKeyCustomer) GetModifiedAt() *time.Time {
 	return l.ModifiedAt
 }
 
-func (l *LicenseKeyCustomer) GetMetadata() map[string]LicenseKeyCustomerMetadata {
+func (l *LicenseKeyCustomer) GetMetadata() map[string]MetadataOutputType {
 	if l == nil {
-		return map[string]LicenseKeyCustomerMetadata{}
+		return map[string]MetadataOutputType{}
 	}
 	return l.Metadata
 }
@@ -264,6 +160,13 @@ func (l *LicenseKeyCustomer) GetEmailVerified() bool {
 	return l.EmailVerified
 }
 
+func (l *LicenseKeyCustomer) GetType() *CustomerType {
+	if l == nil {
+		return nil
+	}
+	return l.Type
+}
+
 func (l *LicenseKeyCustomer) GetName() *string {
 	if l == nil {
 		return nil
@@ -283,6 +186,13 @@ func (l *LicenseKeyCustomer) GetTaxID() []*LicenseKeyCustomerTaxID {
 		return nil
 	}
 	return l.TaxID
+}
+
+func (l *LicenseKeyCustomer) GetLocale() *string {
+	if l == nil {
+		return nil
+	}
+	return l.Locale
 }
 
 func (l *LicenseKeyCustomer) GetOrganizationID() string {

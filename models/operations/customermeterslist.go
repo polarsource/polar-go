@@ -18,8 +18,8 @@ const (
 
 // CustomerMetersListQueryParamOrganizationIDFilter - Filter by organization ID.
 type CustomerMetersListQueryParamOrganizationIDFilter struct {
-	Str        *string  `queryParam:"inline,name=OrganizationID_Filter"`
-	ArrayOfStr []string `queryParam:"inline,name=OrganizationID_Filter"`
+	Str        *string  `queryParam:"inline" union:"member"`
+	ArrayOfStr []string `queryParam:"inline" union:"member"`
 
 	Type CustomerMetersListQueryParamOrganizationIDFilterType
 }
@@ -82,8 +82,8 @@ const (
 
 // CustomerMetersListQueryParamCustomerIDFilter - Filter by customer ID.
 type CustomerMetersListQueryParamCustomerIDFilter struct {
-	Str        *string  `queryParam:"inline,name=CustomerID_Filter"`
-	ArrayOfStr []string `queryParam:"inline,name=CustomerID_Filter"`
+	Str        *string  `queryParam:"inline" union:"member"`
+	ArrayOfStr []string `queryParam:"inline" union:"member"`
 
 	Type CustomerMetersListQueryParamCustomerIDFilterType
 }
@@ -146,8 +146,8 @@ const (
 
 // CustomerMetersListQueryParamExternalCustomerIDFilter - Filter by external customer ID.
 type CustomerMetersListQueryParamExternalCustomerIDFilter struct {
-	Str        *string  `queryParam:"inline,name=ExternalCustomerID_Filter"`
-	ArrayOfStr []string `queryParam:"inline,name=ExternalCustomerID_Filter"`
+	Str        *string  `queryParam:"inline" union:"member"`
+	ArrayOfStr []string `queryParam:"inline" union:"member"`
 
 	Type CustomerMetersListQueryParamExternalCustomerIDFilterType
 }
@@ -210,8 +210,8 @@ const (
 
 // QueryParamMeterIDFilter - Filter by meter ID.
 type QueryParamMeterIDFilter struct {
-	Str        *string  `queryParam:"inline,name=MeterID_Filter"`
-	ArrayOfStr []string `queryParam:"inline,name=MeterID_Filter"`
+	Str        *string  `queryParam:"inline" union:"member"`
+	ArrayOfStr []string `queryParam:"inline" union:"member"`
 
 	Type QueryParamMeterIDFilterType
 }

@@ -3,12 +3,26 @@
 package operations
 
 import (
+	"github.com/polarsource/polar-go/internal/utils"
 	"github.com/polarsource/polar-go/models/components"
 )
 
 type CustomersDeleteExternalRequest struct {
 	// The customer external ID.
 	ExternalID string `pathParam:"style=simple,explode=false,name=external_id"`
+	// If true, also anonymize the customer's personal data for GDPR compliance.
+	Anonymize *bool `default:"false" queryParam:"style=form,explode=true,name=anonymize"`
+}
+
+func (c CustomersDeleteExternalRequest) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(c, "", false)
+}
+
+func (c *CustomersDeleteExternalRequest) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &c, "", false, nil); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (c *CustomersDeleteExternalRequest) GetExternalID() string {
@@ -16,6 +30,13 @@ func (c *CustomersDeleteExternalRequest) GetExternalID() string {
 		return ""
 	}
 	return c.ExternalID
+}
+
+func (c *CustomersDeleteExternalRequest) GetAnonymize() *bool {
+	if c == nil {
+		return nil
+	}
+	return c.Anonymize
 }
 
 type CustomersDeleteExternalResponse struct {

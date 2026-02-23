@@ -2,22 +2,109 @@
 
 package components
 
-// CustomerOrganization - Schema of an organization and related data for customer portal.
+import (
+	"github.com/polarsource/polar-go/internal/utils"
+	"time"
+)
+
 type CustomerOrganization struct {
-	Organization Organization      `json:"organization"`
-	Products     []CustomerProduct `json:"products"`
+	// Creation timestamp of the object.
+	CreatedAt time.Time `json:"created_at"`
+	// Last modification timestamp of the object.
+	ModifiedAt *time.Time `json:"modified_at"`
+	// The ID of the object.
+	ID string `json:"id"`
+	// Organization name shown in checkout, customer portal, emails etc.
+	Name string `json:"name"`
+	// Unique organization slug in checkout, customer portal and credit card statements.
+	Slug string `json:"slug"`
+	// Avatar URL shown in checkout, customer portal, emails etc.
+	AvatarURL         *string                       `json:"avatar_url"`
+	ProrationBehavior SubscriptionProrationBehavior `json:"proration_behavior"`
+	// Whether customers can update their subscriptions from the customer portal.
+	AllowCustomerUpdates   bool                               `json:"allow_customer_updates"`
+	CustomerPortalSettings OrganizationCustomerPortalSettings `json:"customer_portal_settings"`
+	// Feature flags exposed to the customer portal.
+	OrganizationFeatures *CustomerOrganizationFeatureSettings `json:"organization_features,omitempty"`
 }
 
-func (c *CustomerOrganization) GetOrganization() Organization {
-	if c == nil {
-		return Organization{}
-	}
-	return c.Organization
+func (c CustomerOrganization) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(c, "", false)
 }
 
-func (c *CustomerOrganization) GetProducts() []CustomerProduct {
-	if c == nil {
-		return []CustomerProduct{}
+func (c *CustomerOrganization) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &c, "", false, nil); err != nil {
+		return err
 	}
-	return c.Products
+	return nil
+}
+
+func (c *CustomerOrganization) GetCreatedAt() time.Time {
+	if c == nil {
+		return time.Time{}
+	}
+	return c.CreatedAt
+}
+
+func (c *CustomerOrganization) GetModifiedAt() *time.Time {
+	if c == nil {
+		return nil
+	}
+	return c.ModifiedAt
+}
+
+func (c *CustomerOrganization) GetID() string {
+	if c == nil {
+		return ""
+	}
+	return c.ID
+}
+
+func (c *CustomerOrganization) GetName() string {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *CustomerOrganization) GetSlug() string {
+	if c == nil {
+		return ""
+	}
+	return c.Slug
+}
+
+func (c *CustomerOrganization) GetAvatarURL() *string {
+	if c == nil {
+		return nil
+	}
+	return c.AvatarURL
+}
+
+func (c *CustomerOrganization) GetProrationBehavior() SubscriptionProrationBehavior {
+	if c == nil {
+		return SubscriptionProrationBehavior("")
+	}
+	return c.ProrationBehavior
+}
+
+func (c *CustomerOrganization) GetAllowCustomerUpdates() bool {
+	if c == nil {
+		return false
+	}
+	return c.AllowCustomerUpdates
+}
+
+func (c *CustomerOrganization) GetCustomerPortalSettings() OrganizationCustomerPortalSettings {
+	if c == nil {
+		return OrganizationCustomerPortalSettings{}
+	}
+	return c.CustomerPortalSettings
+}
+
+func (c *CustomerOrganization) GetOrganizationFeatures() *CustomerOrganizationFeatureSettings {
+	if c == nil {
+		return nil
+	}
+	return c.OrganizationFeatures
 }

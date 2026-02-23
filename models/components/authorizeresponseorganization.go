@@ -7,11 +7,12 @@ import (
 )
 
 type AuthorizeResponseOrganization struct {
-	Client        OAuth2ClientPublic      `json:"client"`
-	subType       string                  `const:"organization" json:"sub_type"`
-	Sub           *AuthorizeOrganization  `json:"sub"`
-	Scopes        []Scope                 `json:"scopes"`
-	Organizations []AuthorizeOrganization `json:"organizations"`
+	Client            OAuth2ClientPublic      `json:"client"`
+	subType           string                  `const:"organization" json:"sub_type"`
+	Sub               *AuthorizeOrganization  `json:"sub"`
+	Scopes            []Scope                 `json:"scopes"`
+	ScopeDisplayNames map[string]string       `json:"scope_display_names,omitempty"`
+	Organizations     []AuthorizeOrganization `json:"organizations"`
 }
 
 func (a AuthorizeResponseOrganization) MarshalJSON() ([]byte, error) {
@@ -48,6 +49,13 @@ func (a *AuthorizeResponseOrganization) GetScopes() []Scope {
 		return []Scope{}
 	}
 	return a.Scopes
+}
+
+func (a *AuthorizeResponseOrganization) GetScopeDisplayNames() map[string]string {
+	if a == nil {
+		return nil
+	}
+	return a.ScopeDisplayNames
 }
 
 func (a *AuthorizeResponseOrganization) GetOrganizations() []AuthorizeOrganization {

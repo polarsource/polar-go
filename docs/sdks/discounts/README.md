@@ -1,5 +1,4 @@
 # Discounts
-(*Discounts*)
 
 ## Overview
 
@@ -8,8 +7,8 @@
 * [List](#list) - List Discounts
 * [Create](#create) - Create Discount
 * [Get](#get) - Get Discount
-* [Update](#update) - Update Discount
 * [Delete](#delete) - Delete Discount
+* [Update](#update) - Update Discount
 
 ## List
 
@@ -123,7 +122,17 @@ func main() {
         log.Fatal(err)
     }
     if res.Discount != nil {
-        // handle response
+        switch res.Discount.Type {
+            case components.DiscountUnionTypeDiscountFixedOnceForeverDuration:
+                // res.Discount.DiscountFixedOnceForeverDuration is populated
+            case components.DiscountUnionTypeDiscountFixedRepeatDuration:
+                // res.Discount.DiscountFixedRepeatDuration is populated
+            case components.DiscountUnionTypeDiscountPercentageOnceForeverDuration:
+                // res.Discount.DiscountPercentageOnceForeverDuration is populated
+            case components.DiscountUnionTypeDiscountPercentageRepeatDuration:
+                // res.Discount.DiscountPercentageRepeatDuration is populated
+        }
+
     }
 }
 ```
@@ -164,6 +173,7 @@ import(
 	"os"
 	polargo "github.com/polarsource/polar-go"
 	"log"
+	"github.com/polarsource/polar-go/models/components"
 )
 
 func main() {
@@ -178,7 +188,17 @@ func main() {
         log.Fatal(err)
     }
     if res.Discount != nil {
-        // handle response
+        switch res.Discount.Type {
+            case components.DiscountUnionTypeDiscountFixedOnceForeverDuration:
+                // res.Discount.DiscountFixedOnceForeverDuration is populated
+            case components.DiscountUnionTypeDiscountFixedRepeatDuration:
+                // res.Discount.DiscountFixedRepeatDuration is populated
+            case components.DiscountUnionTypeDiscountPercentageOnceForeverDuration:
+                // res.Discount.DiscountPercentageOnceForeverDuration is populated
+            case components.DiscountUnionTypeDiscountPercentageRepeatDuration:
+                // res.Discount.DiscountPercentageRepeatDuration is populated
+        }
+
     }
 }
 ```
@@ -194,64 +214,6 @@ func main() {
 ### Response
 
 **[*operations.DiscountsGetResponse](../../models/operations/discountsgetresponse.md), error**
-
-### Errors
-
-| Error Type                    | Status Code                   | Content Type                  |
-| ----------------------------- | ----------------------------- | ----------------------------- |
-| apierrors.ResourceNotFound    | 404                           | application/json              |
-| apierrors.HTTPValidationError | 422                           | application/json              |
-| apierrors.APIError            | 4XX, 5XX                      | \*/\*                         |
-
-## Update
-
-Update a discount.
-
-**Scopes**: `discounts:write`
-
-### Example Usage
-
-<!-- UsageSnippet language="go" operationID="discounts:update" method="patch" path="/v1/discounts/{id}" -->
-```go
-package main
-
-import(
-	"context"
-	"os"
-	polargo "github.com/polarsource/polar-go"
-	"github.com/polarsource/polar-go/models/components"
-	"log"
-)
-
-func main() {
-    ctx := context.Background()
-
-    s := polargo.New(
-        polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
-    )
-
-    res, err := s.Discounts.Update(ctx, "<value>", components.DiscountUpdate{})
-    if err != nil {
-        log.Fatal(err)
-    }
-    if res.Discount != nil {
-        // handle response
-    }
-}
-```
-
-### Parameters
-
-| Parameter                                                              | Type                                                                   | Required                                                               | Description                                                            |
-| ---------------------------------------------------------------------- | ---------------------------------------------------------------------- | ---------------------------------------------------------------------- | ---------------------------------------------------------------------- |
-| `ctx`                                                                  | [context.Context](https://pkg.go.dev/context#Context)                  | :heavy_check_mark:                                                     | The context to use for the request.                                    |
-| `id`                                                                   | *string*                                                               | :heavy_check_mark:                                                     | The discount ID.                                                       |
-| `discountUpdate`                                                       | [components.DiscountUpdate](../../models/components/discountupdate.md) | :heavy_check_mark:                                                     | N/A                                                                    |
-| `opts`                                                                 | [][operations.Option](../../models/operations/option.md)               | :heavy_minus_sign:                                                     | The options for this request.                                          |
-
-### Response
-
-**[*operations.DiscountsUpdateResponse](../../models/operations/discountsupdateresponse.md), error**
 
 ### Errors
 
@@ -308,6 +270,74 @@ func main() {
 ### Response
 
 **[*operations.DiscountsDeleteResponse](../../models/operations/discountsdeleteresponse.md), error**
+
+### Errors
+
+| Error Type                    | Status Code                   | Content Type                  |
+| ----------------------------- | ----------------------------- | ----------------------------- |
+| apierrors.ResourceNotFound    | 404                           | application/json              |
+| apierrors.HTTPValidationError | 422                           | application/json              |
+| apierrors.APIError            | 4XX, 5XX                      | \*/\*                         |
+
+## Update
+
+Update a discount.
+
+**Scopes**: `discounts:write`
+
+### Example Usage
+
+<!-- UsageSnippet language="go" operationID="discounts:update" method="patch" path="/v1/discounts/{id}" -->
+```go
+package main
+
+import(
+	"context"
+	"os"
+	polargo "github.com/polarsource/polar-go"
+	"github.com/polarsource/polar-go/models/components"
+	"log"
+)
+
+func main() {
+    ctx := context.Background()
+
+    s := polargo.New(
+        polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
+    )
+
+    res, err := s.Discounts.Update(ctx, "<value>", components.DiscountUpdate{})
+    if err != nil {
+        log.Fatal(err)
+    }
+    if res.Discount != nil {
+        switch res.Discount.Type {
+            case components.DiscountUnionTypeDiscountFixedOnceForeverDuration:
+                // res.Discount.DiscountFixedOnceForeverDuration is populated
+            case components.DiscountUnionTypeDiscountFixedRepeatDuration:
+                // res.Discount.DiscountFixedRepeatDuration is populated
+            case components.DiscountUnionTypeDiscountPercentageOnceForeverDuration:
+                // res.Discount.DiscountPercentageOnceForeverDuration is populated
+            case components.DiscountUnionTypeDiscountPercentageRepeatDuration:
+                // res.Discount.DiscountPercentageRepeatDuration is populated
+        }
+
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                              | Type                                                                   | Required                                                               | Description                                                            |
+| ---------------------------------------------------------------------- | ---------------------------------------------------------------------- | ---------------------------------------------------------------------- | ---------------------------------------------------------------------- |
+| `ctx`                                                                  | [context.Context](https://pkg.go.dev/context#Context)                  | :heavy_check_mark:                                                     | The context to use for the request.                                    |
+| `id`                                                                   | *string*                                                               | :heavy_check_mark:                                                     | The discount ID.                                                       |
+| `discountUpdate`                                                       | [components.DiscountUpdate](../../models/components/discountupdate.md) | :heavy_check_mark:                                                     | N/A                                                                    |
+| `opts`                                                                 | [][operations.Option](../../models/operations/option.md)               | :heavy_minus_sign:                                                     | The options for this request.                                          |
+
+### Response
+
+**[*operations.DiscountsUpdateResponse](../../models/operations/discountsupdateresponse.md), error**
 
 ### Errors
 

@@ -39,3 +39,23 @@ aggregation := components.CreateAggregationSum(components.PropertyAggregation{/*
 aggregation := components.CreateAggregationUnique(components.UniqueAggregation{/* values here */})
 ```
 
+## Union Discrimination
+
+Use the `Type` field to determine which variant is active, then access the corresponding field:
+
+```go
+switch aggregation.Type {
+	case components.AggregationTypeAvg:
+		// aggregation.PropertyAggregation is populated
+	case components.AggregationTypeCount:
+		// aggregation.CountAggregation is populated
+	case components.AggregationTypeMax:
+		// aggregation.PropertyAggregation is populated
+	case components.AggregationTypeMin:
+		// aggregation.PropertyAggregation is populated
+	case components.AggregationTypeSum:
+		// aggregation.PropertyAggregation is populated
+	case components.AggregationTypeUnique:
+		// aggregation.UniqueAggregation is populated
+}
+```

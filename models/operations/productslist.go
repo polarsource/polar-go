@@ -18,8 +18,8 @@ const (
 
 // QueryParamProductIDFilter - Filter by product ID.
 type QueryParamProductIDFilter struct {
-	Str        *string  `queryParam:"inline,name=ProductID_Filter"`
-	ArrayOfStr []string `queryParam:"inline,name=ProductID_Filter"`
+	Str        *string  `queryParam:"inline" union:"member"`
+	ArrayOfStr []string `queryParam:"inline" union:"member"`
 
 	Type QueryParamProductIDFilterType
 }
@@ -82,8 +82,8 @@ const (
 
 // ProductsListQueryParamOrganizationIDFilter - Filter by organization ID.
 type ProductsListQueryParamOrganizationIDFilter struct {
-	Str        *string  `queryParam:"inline,name=OrganizationID_Filter"`
-	ArrayOfStr []string `queryParam:"inline,name=OrganizationID_Filter"`
+	Str        *string  `queryParam:"inline" union:"member"`
+	ArrayOfStr []string `queryParam:"inline" union:"member"`
 
 	Type ProductsListQueryParamOrganizationIDFilterType
 }
@@ -146,8 +146,8 @@ const (
 
 // BenefitIDFilter - Filter products granting specific benefit.
 type BenefitIDFilter struct {
-	Str        *string  `queryParam:"inline,name=BenefitID_Filter"`
-	ArrayOfStr []string `queryParam:"inline,name=BenefitID_Filter"`
+	Str        *string  `queryParam:"inline" union:"member"`
+	ArrayOfStr []string `queryParam:"inline" union:"member"`
 
 	Type BenefitIDFilterType
 }
@@ -214,6 +214,8 @@ type ProductsListRequest struct {
 	IsRecurring *bool `queryParam:"style=form,explode=true,name=is_recurring"`
 	// Filter products granting specific benefit.
 	BenefitID *BenefitIDFilter `queryParam:"style=form,explode=true,name=benefit_id"`
+	// Filter by visibility.
+	Visibility []components.ProductVisibility `queryParam:"style=form,explode=true,name=visibility"`
 	// Page number, defaults to 1.
 	Page *int64 `default:"1" queryParam:"style=form,explode=true,name=page"`
 	// Size of a page, defaults to 10. Maximum is 100.
@@ -275,6 +277,13 @@ func (p *ProductsListRequest) GetBenefitID() *BenefitIDFilter {
 		return nil
 	}
 	return p.BenefitID
+}
+
+func (p *ProductsListRequest) GetVisibility() []components.ProductVisibility {
+	if p == nil {
+		return nil
+	}
+	return p.Visibility
 }
 
 func (p *ProductsListRequest) GetPage() *int64 {

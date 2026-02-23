@@ -17,8 +17,8 @@ const (
 )
 
 type CustomerPortalCustomerTaxID struct {
-	Str         *string      `queryParam:"inline,name=tax_id"`
-	TaxIDFormat *TaxIDFormat `queryParam:"inline,name=tax_id"`
+	Str         *string      `queryParam:"inline" union:"member"`
+	TaxIDFormat *TaxIDFormat `queryParam:"inline" union:"member"`
 
 	Type CustomerPortalCustomerTaxIDType
 }
@@ -87,6 +87,7 @@ type CustomerPortalCustomer struct {
 	TaxID                  []*CustomerPortalCustomerTaxID        `json:"tax_id"`
 	OauthAccounts          map[string]CustomerPortalOAuthAccount `json:"oauth_accounts"`
 	DefaultPaymentMethodID *string                               `json:"default_payment_method_id,omitempty"`
+	Type                   *CustomerType                         `json:"type,omitempty"`
 }
 
 func (c CustomerPortalCustomer) MarshalJSON() ([]byte, error) {
@@ -175,4 +176,11 @@ func (c *CustomerPortalCustomer) GetDefaultPaymentMethodID() *string {
 		return nil
 	}
 	return c.DefaultPaymentMethodID
+}
+
+func (c *CustomerPortalCustomer) GetType() *CustomerType {
+	if c == nil {
+		return nil
+	}
+	return c.Type
 }

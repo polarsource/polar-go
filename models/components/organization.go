@@ -12,14 +12,17 @@ type Organization struct {
 	CreatedAt time.Time `json:"created_at"`
 	// Last modification timestamp of the object.
 	ModifiedAt *time.Time `json:"modified_at"`
-	// The organization ID.
+	// The ID of the object.
 	ID string `json:"id"`
 	// Organization name shown in checkout, customer portal, emails etc.
 	Name string `json:"name"`
 	// Unique organization slug in checkout, customer portal and credit card statements.
 	Slug string `json:"slug"`
 	// Avatar URL shown in checkout, customer portal, emails etc.
-	AvatarURL *string `json:"avatar_url"`
+	AvatarURL         *string                       `json:"avatar_url"`
+	ProrationBehavior SubscriptionProrationBehavior `json:"proration_behavior"`
+	// Whether customers can update their subscriptions from the customer portal.
+	AllowCustomerUpdates bool `json:"allow_customer_updates"`
 	// Public support email.
 	Email *string `json:"email"`
 	// Official website of the organization.
@@ -29,11 +32,14 @@ type Organization struct {
 	Status  OrganizationStatus       `json:"status"`
 	// When the business details were submitted.
 	DetailsSubmittedAt *time.Time `json:"details_submitted_at"`
+	// Default presentment currency. Used as fallback in checkout and customer portal, if the customer's local currency is not available.
+	DefaultPresentmentCurrency string `json:"default_presentment_currency"`
 	// Organization feature settings
-	FeatureSettings       *OrganizationFeatureSettings      `json:"feature_settings"`
-	SubscriptionSettings  OrganizationSubscriptionSettings  `json:"subscription_settings"`
-	NotificationSettings  OrganizationNotificationSettings  `json:"notification_settings"`
-	CustomerEmailSettings OrganizationCustomerEmailSettings `json:"customer_email_settings"`
+	FeatureSettings        *OrganizationFeatureSettings       `json:"feature_settings"`
+	SubscriptionSettings   OrganizationSubscriptionSettings   `json:"subscription_settings"`
+	NotificationSettings   OrganizationNotificationSettings   `json:"notification_settings"`
+	CustomerEmailSettings  OrganizationCustomerEmailSettings  `json:"customer_email_settings"`
+	CustomerPortalSettings OrganizationCustomerPortalSettings `json:"customer_portal_settings"`
 }
 
 func (o Organization) MarshalJSON() ([]byte, error) {
@@ -41,7 +47,7 @@ func (o Organization) MarshalJSON() ([]byte, error) {
 }
 
 func (o *Organization) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &o, "", false, []string{"created_at", "id", "name", "slug", "socials", "status", "subscription_settings", "notification_settings", "customer_email_settings"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &o, "", false, nil); err != nil {
 		return err
 	}
 	return nil
@@ -89,6 +95,20 @@ func (o *Organization) GetAvatarURL() *string {
 	return o.AvatarURL
 }
 
+func (o *Organization) GetProrationBehavior() SubscriptionProrationBehavior {
+	if o == nil {
+		return SubscriptionProrationBehavior("")
+	}
+	return o.ProrationBehavior
+}
+
+func (o *Organization) GetAllowCustomerUpdates() bool {
+	if o == nil {
+		return false
+	}
+	return o.AllowCustomerUpdates
+}
+
 func (o *Organization) GetEmail() *string {
 	if o == nil {
 		return nil
@@ -124,6 +144,13 @@ func (o *Organization) GetDetailsSubmittedAt() *time.Time {
 	return o.DetailsSubmittedAt
 }
 
+func (o *Organization) GetDefaultPresentmentCurrency() string {
+	if o == nil {
+		return ""
+	}
+	return o.DefaultPresentmentCurrency
+}
+
 func (o *Organization) GetFeatureSettings() *OrganizationFeatureSettings {
 	if o == nil {
 		return nil
@@ -150,4 +177,11 @@ func (o *Organization) GetCustomerEmailSettings() OrganizationCustomerEmailSetti
 		return OrganizationCustomerEmailSettings{}
 	}
 	return o.CustomerEmailSettings
+}
+
+func (o *Organization) GetCustomerPortalSettings() OrganizationCustomerPortalSettings {
+	if o == nil {
+		return OrganizationCustomerPortalSettings{}
+	}
+	return o.CustomerPortalSettings
 }

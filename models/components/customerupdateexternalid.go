@@ -18,10 +18,10 @@ const (
 )
 
 type CustomerUpdateExternalIDMetadata struct {
-	Str     *string  `queryParam:"inline,name=metadata"`
-	Integer *int64   `queryParam:"inline,name=metadata"`
-	Number  *float64 `queryParam:"inline,name=metadata"`
-	Boolean *bool    `queryParam:"inline,name=metadata"`
+	Str     *string  `queryParam:"inline" union:"member"`
+	Integer *int64   `queryParam:"inline" union:"member"`
+	Number  *float64 `queryParam:"inline" union:"member"`
+	Boolean *bool    `queryParam:"inline" union:"member"`
 
 	Type CustomerUpdateExternalIDMetadataType
 }
@@ -123,8 +123,8 @@ const (
 )
 
 type CustomerUpdateExternalIDTaxID struct {
-	Str         *string      `queryParam:"inline,name=tax_id"`
-	TaxIDFormat *TaxIDFormat `queryParam:"inline,name=tax_id"`
+	Str         *string      `queryParam:"inline" union:"member"`
+	TaxIDFormat *TaxIDFormat `queryParam:"inline" union:"member"`
 
 	Type CustomerUpdateExternalIDTaxIDType
 }
@@ -196,6 +196,7 @@ type CustomerUpdateExternalID struct {
 	Name           *string                          `json:"name,omitempty"`
 	BillingAddress *AddressInput                    `json:"billing_address,omitempty"`
 	TaxID          []*CustomerUpdateExternalIDTaxID `json:"tax_id,omitempty"`
+	Locale         *string                          `json:"locale,omitempty"`
 }
 
 func (c *CustomerUpdateExternalID) GetMetadata() map[string]CustomerUpdateExternalIDMetadata {
@@ -231,4 +232,11 @@ func (c *CustomerUpdateExternalID) GetTaxID() []*CustomerUpdateExternalIDTaxID {
 		return nil
 	}
 	return c.TaxID
+}
+
+func (c *CustomerUpdateExternalID) GetLocale() *string {
+	if c == nil {
+		return nil
+	}
+	return c.Locale
 }

@@ -1,5 +1,4 @@
 # Refunds
-(*Refunds*)
 
 ## Overview
 
@@ -10,7 +9,7 @@
 
 ## List
 
-List products.
+List refunds.
 
 **Scopes**: `refunds:read` `refunds:write`
 
@@ -137,7 +136,6 @@ func main() {
 
 | Error Type                    | Status Code                   | Content Type                  |
 | ----------------------------- | ----------------------------- | ----------------------------- |
-| apierrors.RefundAmountTooHigh | 400                           | application/json              |
 | apierrors.RefundedAlready     | 403                           | application/json              |
 | apierrors.HTTPValidationError | 422                           | application/json              |
 | apierrors.APIError            | 4XX, 5XX                      | \*/\*                         |

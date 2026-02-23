@@ -21,7 +21,7 @@ func (w WebhookBenefitUpdatedPayload) MarshalJSON() ([]byte, error) {
 }
 
 func (w *WebhookBenefitUpdatedPayload) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &w, "", false, []string{"type", "timestamp", "data"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &w, "", false, nil); err != nil {
 		return err
 	}
 	return nil
@@ -43,4 +43,28 @@ func (w *WebhookBenefitUpdatedPayload) GetData() Benefit {
 		return Benefit{}
 	}
 	return w.Data
+}
+
+func (w *WebhookBenefitUpdatedPayload) GetDataCustom() *BenefitCustom {
+	return w.GetData().BenefitCustom
+}
+
+func (w *WebhookBenefitUpdatedPayload) GetDataDiscord() *BenefitDiscord {
+	return w.GetData().BenefitDiscord
+}
+
+func (w *WebhookBenefitUpdatedPayload) GetDataDownloadables() *BenefitDownloadables {
+	return w.GetData().BenefitDownloadables
+}
+
+func (w *WebhookBenefitUpdatedPayload) GetDataGithubRepository() *BenefitGitHubRepository {
+	return w.GetData().BenefitGitHubRepository
+}
+
+func (w *WebhookBenefitUpdatedPayload) GetDataLicenseKeys() *BenefitLicenseKeys {
+	return w.GetData().BenefitLicenseKeys
+}
+
+func (w *WebhookBenefitUpdatedPayload) GetDataMeterCredit() *BenefitMeterCredit {
+	return w.GetData().BenefitMeterCredit
 }

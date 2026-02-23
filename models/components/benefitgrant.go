@@ -20,11 +20,11 @@ const (
 )
 
 type Properties struct {
-	BenefitGrantDiscordProperties          *BenefitGrantDiscordProperties          `queryParam:"inline,name=Properties"`
-	BenefitGrantGitHubRepositoryProperties *BenefitGrantGitHubRepositoryProperties `queryParam:"inline,name=Properties"`
-	BenefitGrantDownloadablesProperties    *BenefitGrantDownloadablesProperties    `queryParam:"inline,name=Properties"`
-	BenefitGrantLicenseKeysProperties      *BenefitGrantLicenseKeysProperties      `queryParam:"inline,name=Properties"`
-	BenefitGrantCustomProperties           *BenefitGrantCustomProperties           `queryParam:"inline,name=Properties"`
+	BenefitGrantDiscordProperties          *BenefitGrantDiscordProperties          `queryParam:"inline" union:"member"`
+	BenefitGrantGitHubRepositoryProperties *BenefitGrantGitHubRepositoryProperties `queryParam:"inline" union:"member"`
+	BenefitGrantDownloadablesProperties    *BenefitGrantDownloadablesProperties    `queryParam:"inline" union:"member"`
+	BenefitGrantLicenseKeysProperties      *BenefitGrantLicenseKeysProperties      `queryParam:"inline" union:"member"`
+	BenefitGrantCustomProperties           *BenefitGrantCustomProperties           `queryParam:"inline" union:"member"`
 
 	Type PropertiesType
 }
@@ -159,12 +159,15 @@ type BenefitGrant struct {
 	OrderID *string `json:"order_id"`
 	// The ID of the customer concerned by this grant.
 	CustomerID string `json:"customer_id"`
+	// The ID of the member concerned by this grant.
+	MemberID *string `json:"member_id,omitempty"`
 	// The ID of the benefit concerned by this grant.
 	BenefitID string `json:"benefit_id"`
 	// The error information if the benefit grant failed with an unrecoverable error.
 	Error *BenefitGrantError `json:"error,omitempty"`
 	// A customer in an organization.
 	Customer   Customer   `json:"customer"`
+	Member     *Member    `json:"member,omitempty"`
 	Benefit    Benefit    `json:"benefit"`
 	Properties Properties `json:"properties"`
 }
@@ -174,7 +177,7 @@ func (b BenefitGrant) MarshalJSON() ([]byte, error) {
 }
 
 func (b *BenefitGrant) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &b, "", false, []string{"created_at", "id", "is_granted", "is_revoked", "customer_id", "benefit_id", "customer", "benefit", "properties"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &b, "", false, nil); err != nil {
 		return err
 	}
 	return nil
@@ -250,6 +253,13 @@ func (b *BenefitGrant) GetCustomerID() string {
 	return b.CustomerID
 }
 
+func (b *BenefitGrant) GetMemberID() *string {
+	if b == nil {
+		return nil
+	}
+	return b.MemberID
+}
+
 func (b *BenefitGrant) GetBenefitID() string {
 	if b == nil {
 		return ""
@@ -271,11 +281,42 @@ func (b *BenefitGrant) GetCustomer() Customer {
 	return b.Customer
 }
 
+func (b *BenefitGrant) GetMember() *Member {
+	if b == nil {
+		return nil
+	}
+	return b.Member
+}
+
 func (b *BenefitGrant) GetBenefit() Benefit {
 	if b == nil {
 		return Benefit{}
 	}
 	return b.Benefit
+}
+
+func (b *BenefitGrant) GetBenefitCustom() *BenefitCustom {
+	return b.GetBenefit().BenefitCustom
+}
+
+func (b *BenefitGrant) GetBenefitDiscord() *BenefitDiscord {
+	return b.GetBenefit().BenefitDiscord
+}
+
+func (b *BenefitGrant) GetBenefitDownloadables() *BenefitDownloadables {
+	return b.GetBenefit().BenefitDownloadables
+}
+
+func (b *BenefitGrant) GetBenefitGithubRepository() *BenefitGitHubRepository {
+	return b.GetBenefit().BenefitGitHubRepository
+}
+
+func (b *BenefitGrant) GetBenefitLicenseKeys() *BenefitLicenseKeys {
+	return b.GetBenefit().BenefitLicenseKeys
+}
+
+func (b *BenefitGrant) GetBenefitMeterCredit() *BenefitMeterCredit {
+	return b.GetBenefit().BenefitMeterCredit
 }
 
 func (b *BenefitGrant) GetProperties() Properties {

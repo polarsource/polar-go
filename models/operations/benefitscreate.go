@@ -25,3 +25,45 @@ func (b *BenefitsCreateResponse) GetBenefit() *components.Benefit {
 	}
 	return b.Benefit
 }
+
+func (b *BenefitsCreateResponse) GetBenefitCustom() *components.BenefitCustom {
+	if v := b.GetBenefit(); v != nil {
+		return v.BenefitCustom
+	}
+	return nil
+}
+
+func (b *BenefitsCreateResponse) GetBenefitDiscord() *components.BenefitDiscord {
+	if v := b.GetBenefit(); v != nil {
+		return v.BenefitDiscord
+	}
+	return nil
+}
+
+func (b *BenefitsCreateResponse) GetBenefitDownloadables() *components.BenefitDownloadables {
+	if v := b.GetBenefit(); v != nil {
+		return v.BenefitDownloadables
+	}
+	return nil
+}
+
+func (b *BenefitsCreateResponse) GetBenefitGithubRepository() *components.BenefitGitHubRepository {
+	if v := b.GetBenefit(); v != nil {
+		return v.BenefitGitHubRepository
+	}
+	return nil
+}
+
+func (b *BenefitsCreateResponse) GetBenefitLicenseKeys() *components.BenefitLicenseKeys {
+	if v := b.GetBenefit(); v != nil {
+		return v.BenefitLicenseKeys
+	}
+	return nil
+}
+
+func (b *BenefitsCreateResponse) GetBenefitMeterCredit() *components.BenefitMeterCredit {
+	if v := b.GetBenefit(); v != nil {
+		return v.BenefitMeterCredit
+	}
+	return nil
+}

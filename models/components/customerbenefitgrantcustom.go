@@ -17,11 +17,13 @@ type CustomerBenefitGrantCustom struct {
 	GrantedAt      *time.Time                   `json:"granted_at"`
 	RevokedAt      *time.Time                   `json:"revoked_at"`
 	CustomerID     string                       `json:"customer_id"`
+	MemberID       *string                      `json:"member_id,omitempty"`
 	BenefitID      string                       `json:"benefit_id"`
 	SubscriptionID *string                      `json:"subscription_id"`
 	OrderID        *string                      `json:"order_id"`
 	IsGranted      bool                         `json:"is_granted"`
 	IsRevoked      bool                         `json:"is_revoked"`
+	Error          *BenefitGrantError           `json:"error,omitempty"`
 	Customer       CustomerPortalCustomer       `json:"customer"`
 	Benefit        BenefitCustomSubscriber      `json:"benefit"`
 	Properties     BenefitGrantCustomProperties `json:"properties"`
@@ -80,6 +82,13 @@ func (c *CustomerBenefitGrantCustom) GetCustomerID() string {
 	return c.CustomerID
 }
 
+func (c *CustomerBenefitGrantCustom) GetMemberID() *string {
+	if c == nil {
+		return nil
+	}
+	return c.MemberID
+}
+
 func (c *CustomerBenefitGrantCustom) GetBenefitID() string {
 	if c == nil {
 		return ""
@@ -113,6 +122,13 @@ func (c *CustomerBenefitGrantCustom) GetIsRevoked() bool {
 		return false
 	}
 	return c.IsRevoked
+}
+
+func (c *CustomerBenefitGrantCustom) GetError() *BenefitGrantError {
+	if c == nil {
+		return nil
+	}
+	return c.Error
 }
 
 func (c *CustomerBenefitGrantCustom) GetCustomer() CustomerPortalCustomer {

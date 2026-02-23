@@ -10,14 +10,22 @@ import (
 )
 
 type CustomerPortalDownloadablesListSecurity struct {
-	CustomerSession string `security:"scheme,type=http,subtype=bearer,name=Authorization,env=polar_customer_session"`
+	CustomerSession *string `security:"scheme,type=http,subtype=bearer,name=Authorization,env=polar_customer_session"`
+	MemberSession   *string `security:"scheme,type=http,subtype=bearer,name=Authorization,env=polar_member_session"`
 }
 
-func (c *CustomerPortalDownloadablesListSecurity) GetCustomerSession() string {
+func (c *CustomerPortalDownloadablesListSecurity) GetCustomerSession() *string {
 	if c == nil {
-		return ""
+		return nil
 	}
 	return c.CustomerSession
+}
+
+func (c *CustomerPortalDownloadablesListSecurity) GetMemberSession() *string {
+	if c == nil {
+		return nil
+	}
+	return c.MemberSession
 }
 
 type CustomerPortalDownloadablesListQueryParamBenefitIDFilterType string
@@ -29,8 +37,8 @@ const (
 
 // CustomerPortalDownloadablesListQueryParamBenefitIDFilter - Filter by benefit ID.
 type CustomerPortalDownloadablesListQueryParamBenefitIDFilter struct {
-	Str        *string  `queryParam:"inline,name=BenefitID_Filter"`
-	ArrayOfStr []string `queryParam:"inline,name=BenefitID_Filter"`
+	Str        *string  `queryParam:"inline" union:"member"`
+	ArrayOfStr []string `queryParam:"inline" union:"member"`
 
 	Type CustomerPortalDownloadablesListQueryParamBenefitIDFilterType
 }

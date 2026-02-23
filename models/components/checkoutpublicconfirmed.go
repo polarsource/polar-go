@@ -19,10 +19,10 @@ const (
 )
 
 type CheckoutPublicConfirmedCustomFieldData struct {
-	Str      *string    `queryParam:"inline,name=custom_field_data"`
-	Integer  *int64     `queryParam:"inline,name=custom_field_data"`
-	Boolean  *bool      `queryParam:"inline,name=custom_field_data"`
-	DateTime *time.Time `queryParam:"inline,name=custom_field_data"`
+	Str      *string    `queryParam:"inline" union:"member"`
+	Integer  *int64     `queryParam:"inline" union:"member"`
+	Boolean  *bool      `queryParam:"inline" union:"member"`
+	DateTime *time.Time `queryParam:"inline" union:"member"`
 
 	Type CheckoutPublicConfirmedCustomFieldDataType
 }
@@ -124,8 +124,8 @@ const (
 )
 
 type CheckoutPublicConfirmedProductPrice struct {
-	LegacyRecurringProductPrice *LegacyRecurringProductPrice `queryParam:"inline,name=product_price"`
-	ProductPrice                *ProductPrice                `queryParam:"inline,name=product_price"`
+	LegacyRecurringProductPrice *LegacyRecurringProductPrice `queryParam:"inline" union:"member"`
+	ProductPrice                *ProductPrice                `queryParam:"inline" union:"member"`
 
 	Type CheckoutPublicConfirmedProductPriceType
 }
@@ -179,6 +179,69 @@ func (u CheckoutPublicConfirmedProductPrice) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type CheckoutPublicConfirmedProductPrice: all fields are null")
 }
 
+type CheckoutPublicConfirmedPricesType string
+
+const (
+	CheckoutPublicConfirmedPricesTypeLegacyRecurringProductPrice CheckoutPublicConfirmedPricesType = "LegacyRecurringProductPrice"
+	CheckoutPublicConfirmedPricesTypeProductPrice                CheckoutPublicConfirmedPricesType = "ProductPrice"
+)
+
+type CheckoutPublicConfirmedPrices struct {
+	LegacyRecurringProductPrice *LegacyRecurringProductPrice `queryParam:"inline" union:"member"`
+	ProductPrice                *ProductPrice                `queryParam:"inline" union:"member"`
+
+	Type CheckoutPublicConfirmedPricesType
+}
+
+func CreateCheckoutPublicConfirmedPricesLegacyRecurringProductPrice(legacyRecurringProductPrice LegacyRecurringProductPrice) CheckoutPublicConfirmedPrices {
+	typ := CheckoutPublicConfirmedPricesTypeLegacyRecurringProductPrice
+
+	return CheckoutPublicConfirmedPrices{
+		LegacyRecurringProductPrice: &legacyRecurringProductPrice,
+		Type:                        typ,
+	}
+}
+
+func CreateCheckoutPublicConfirmedPricesProductPrice(productPrice ProductPrice) CheckoutPublicConfirmedPrices {
+	typ := CheckoutPublicConfirmedPricesTypeProductPrice
+
+	return CheckoutPublicConfirmedPrices{
+		ProductPrice: &productPrice,
+		Type:         typ,
+	}
+}
+
+func (u *CheckoutPublicConfirmedPrices) UnmarshalJSON(data []byte) error {
+
+	var legacyRecurringProductPrice LegacyRecurringProductPrice = LegacyRecurringProductPrice{}
+	if err := utils.UnmarshalJSON(data, &legacyRecurringProductPrice, "", true, nil); err == nil {
+		u.LegacyRecurringProductPrice = &legacyRecurringProductPrice
+		u.Type = CheckoutPublicConfirmedPricesTypeLegacyRecurringProductPrice
+		return nil
+	}
+
+	var productPrice ProductPrice = ProductPrice{}
+	if err := utils.UnmarshalJSON(data, &productPrice, "", true, nil); err == nil {
+		u.ProductPrice = &productPrice
+		u.Type = CheckoutPublicConfirmedPricesTypeProductPrice
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for CheckoutPublicConfirmedPrices", string(data))
+}
+
+func (u CheckoutPublicConfirmedPrices) MarshalJSON() ([]byte, error) {
+	if u.LegacyRecurringProductPrice != nil {
+		return utils.MarshalJSON(u.LegacyRecurringProductPrice, "", true)
+	}
+
+	if u.ProductPrice != nil {
+		return utils.MarshalJSON(u.ProductPrice, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type CheckoutPublicConfirmedPrices: all fields are null")
+}
+
 type CheckoutPublicConfirmedDiscountType string
 
 const (
@@ -189,10 +252,10 @@ const (
 )
 
 type CheckoutPublicConfirmedDiscount struct {
-	CheckoutDiscountFixedOnceForeverDuration      *CheckoutDiscountFixedOnceForeverDuration      `queryParam:"inline,name=discount"`
-	CheckoutDiscountFixedRepeatDuration           *CheckoutDiscountFixedRepeatDuration           `queryParam:"inline,name=discount"`
-	CheckoutDiscountPercentageOnceForeverDuration *CheckoutDiscountPercentageOnceForeverDuration `queryParam:"inline,name=discount"`
-	CheckoutDiscountPercentageRepeatDuration      *CheckoutDiscountPercentageRepeatDuration      `queryParam:"inline,name=discount"`
+	CheckoutDiscountFixedOnceForeverDuration      *CheckoutDiscountFixedOnceForeverDuration      `queryParam:"inline" union:"member"`
+	CheckoutDiscountFixedRepeatDuration           *CheckoutDiscountFixedRepeatDuration           `queryParam:"inline" union:"member"`
+	CheckoutDiscountPercentageOnceForeverDuration *CheckoutDiscountPercentageOnceForeverDuration `queryParam:"inline" union:"member"`
+	CheckoutDiscountPercentageRepeatDuration      *CheckoutDiscountPercentageRepeatDuration      `queryParam:"inline" union:"member"`
 
 	Type CheckoutPublicConfirmedDiscountType
 }
@@ -329,6 +392,8 @@ type CheckoutPublicConfirmed struct {
 	TotalAmount int64 `json:"total_amount"`
 	// Currency code of the checkout session.
 	Currency string `json:"currency"`
+	// Whether to enable the trial period for the checkout session. If `false`, the trial period will be disabled, even if the selected product has a trial configured.
+	AllowTrial *bool `json:"allow_trial"`
 	// Interval unit of the trial period, if any. This value is either set from the checkout, if `trial_interval` is set, or from the selected product.
 	ActiveTrialInterval *TrialInterval `json:"active_trial_interval"`
 	// Number of interval units of the trial period, if any. This value is either set from the checkout, if `trial_interval_count` is set, or from the selected product.
@@ -340,6 +405,8 @@ type CheckoutPublicConfirmed struct {
 	// ID of the product to checkout.
 	ProductID *string `json:"product_id"`
 	// ID of the product price to checkout.
+	//
+	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
 	ProductPriceID *string `json:"product_price_id"`
 	// ID of the discount applied to the checkout.
 	DiscountID *string `json:"discount_id"`
@@ -368,6 +435,7 @@ type CheckoutPublicConfirmed struct {
 	CustomerBillingName      *string                      `json:"customer_billing_name"`
 	CustomerBillingAddress   *Address                     `json:"customer_billing_address"`
 	CustomerTaxID            *string                      `json:"customer_tax_id"`
+	Locale                   *string                      `json:"locale,omitempty"`
 	PaymentProcessorMetadata map[string]string            `json:"payment_processor_metadata"`
 	BillingAddressFields     CheckoutBillingAddressFields `json:"billing_address_fields"`
 	// List of products available to select.
@@ -375,11 +443,15 @@ type CheckoutPublicConfirmed struct {
 	// Product selected to checkout.
 	Product *CheckoutProduct `json:"product"`
 	// Price of the selected product.
-	ProductPrice         *CheckoutPublicConfirmedProductPrice `json:"product_price"`
-	Discount             *CheckoutPublicConfirmedDiscount     `json:"discount"`
-	Organization         Organization                         `json:"organization"`
-	AttachedCustomFields []AttachedCustomField                `json:"attached_custom_fields"`
-	CustomerSessionToken string                               `json:"customer_session_token"`
+	//
+	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
+	ProductPrice *CheckoutPublicConfirmedProductPrice `json:"product_price"`
+	// Mapping of product IDs to their list of prices.
+	Prices               map[string][]CheckoutPublicConfirmedPrices `json:"prices"`
+	Discount             *CheckoutPublicConfirmedDiscount           `json:"discount"`
+	Organization         CheckoutOrganization                       `json:"organization"`
+	AttachedCustomFields []AttachedCustomField                      `json:"attached_custom_fields"`
+	CustomerSessionToken string                                     `json:"customer_session_token"`
 }
 
 func (c CheckoutPublicConfirmed) MarshalJSON() ([]byte, error) {
@@ -387,7 +459,7 @@ func (c CheckoutPublicConfirmed) MarshalJSON() ([]byte, error) {
 }
 
 func (c *CheckoutPublicConfirmed) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &c, "", false, []string{"id", "created_at", "payment_processor", "status", "client_secret", "url", "expires_at", "success_url", "amount", "discount_amount", "net_amount", "total_amount", "currency", "organization_id", "allow_discount_codes", "require_billing_address", "is_discount_applicable", "is_free_product_price", "is_payment_required", "is_payment_setup_required", "is_payment_form_required", "is_business_customer", "payment_processor_metadata", "billing_address_fields", "products", "organization", "customer_session_token"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &c, "", false, nil); err != nil {
 		return err
 	}
 	return nil
@@ -528,6 +600,13 @@ func (c *CheckoutPublicConfirmed) GetCurrency() string {
 		return ""
 	}
 	return c.Currency
+}
+
+func (c *CheckoutPublicConfirmed) GetAllowTrial() *bool {
+	if c == nil {
+		return nil
+	}
+	return c.AllowTrial
 }
 
 func (c *CheckoutPublicConfirmed) GetActiveTrialInterval() *TrialInterval {
@@ -684,6 +763,13 @@ func (c *CheckoutPublicConfirmed) GetCustomerTaxID() *string {
 	return c.CustomerTaxID
 }
 
+func (c *CheckoutPublicConfirmed) GetLocale() *string {
+	if c == nil {
+		return nil
+	}
+	return c.Locale
+}
+
 func (c *CheckoutPublicConfirmed) GetPaymentProcessorMetadata() map[string]string {
 	if c == nil {
 		return map[string]string{}
@@ -719,6 +805,13 @@ func (c *CheckoutPublicConfirmed) GetProductPrice() *CheckoutPublicConfirmedProd
 	return c.ProductPrice
 }
 
+func (c *CheckoutPublicConfirmed) GetPrices() map[string][]CheckoutPublicConfirmedPrices {
+	if c == nil {
+		return nil
+	}
+	return c.Prices
+}
+
 func (c *CheckoutPublicConfirmed) GetDiscount() *CheckoutPublicConfirmedDiscount {
 	if c == nil {
 		return nil
@@ -726,9 +819,9 @@ func (c *CheckoutPublicConfirmed) GetDiscount() *CheckoutPublicConfirmedDiscount
 	return c.Discount
 }
 
-func (c *CheckoutPublicConfirmed) GetOrganization() Organization {
+func (c *CheckoutPublicConfirmed) GetOrganization() CheckoutOrganization {
 	if c == nil {
-		return Organization{}
+		return CheckoutOrganization{}
 	}
 	return c.Organization
 }

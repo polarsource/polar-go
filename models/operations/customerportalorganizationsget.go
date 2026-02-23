@@ -21,7 +21,7 @@ func (c *CustomerPortalOrganizationsGetRequest) GetSlug() string {
 type CustomerPortalOrganizationsGetResponse struct {
 	HTTPMeta components.HTTPMetadata `json:"-"`
 	// Successful Response
-	CustomerOrganization *components.CustomerOrganization
+	CustomerOrganizationData *components.CustomerOrganizationData
 }
 
 func (c *CustomerPortalOrganizationsGetResponse) GetHTTPMeta() components.HTTPMetadata {
@@ -31,9 +31,9 @@ func (c *CustomerPortalOrganizationsGetResponse) GetHTTPMeta() components.HTTPMe
 	return c.HTTPMeta
 }
 
-func (c *CustomerPortalOrganizationsGetResponse) GetCustomerOrganization() *components.CustomerOrganization {
+func (c *CustomerPortalOrganizationsGetResponse) GetCustomerOrganizationData() *components.CustomerOrganizationData {
 	if c == nil {
 		return nil
 	}
-	return c.CustomerOrganization
+	return c.CustomerOrganizationData
 }

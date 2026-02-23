@@ -21,6 +21,8 @@ type EventCreateExternalCustomer struct {
 	Metadata map[string]EventMetadataInput `json:"metadata,omitempty"`
 	// ID of the customer in your system associated with the event.
 	ExternalCustomerID string `json:"external_customer_id"`
+	// ID of the member in your system within the customer's organization who performed the action. Used for member-level attribution in B2B.
+	ExternalMemberID *string `json:"external_member_id,omitempty"`
 }
 
 func (e EventCreateExternalCustomer) MarshalJSON() ([]byte, error) {
@@ -81,4 +83,11 @@ func (e *EventCreateExternalCustomer) GetExternalCustomerID() string {
 		return ""
 	}
 	return e.ExternalCustomerID
+}
+
+func (e *EventCreateExternalCustomer) GetExternalMemberID() *string {
+	if e == nil {
+		return nil
+	}
+	return e.ExternalMemberID
 }

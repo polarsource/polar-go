@@ -1,5 +1,4 @@
 # Files
-(*Files*)
 
 ## Overview
 
@@ -8,8 +7,8 @@
 * [List](#list) - List Files
 * [Create](#create) - Create File
 * [Uploaded](#uploaded) - Complete File Upload
-* [Update](#update) - Update File
 * [Delete](#delete) - Delete File
+* [Update](#update) - Update File
 
 ## List
 
@@ -168,6 +167,7 @@ import(
 	polargo "github.com/polarsource/polar-go"
 	"github.com/polarsource/polar-go/models/components"
 	"log"
+	"github.com/polarsource/polar-go/models/operations"
 )
 
 func main() {
@@ -202,7 +202,15 @@ func main() {
         log.Fatal(err)
     }
     if res.ResponseFilesUploaded != nil {
-        // handle response
+        switch res.ResponseFilesUploaded.Type {
+            case operations.FilesUploadedResponseFilesUploadedTypeDownloadable:
+                // res.ResponseFilesUploaded.DownloadableFileRead is populated
+            case operations.FilesUploadedResponseFilesUploadedTypeProductMedia:
+                // res.ResponseFilesUploaded.ProductMediaFileRead is populated
+            case operations.FilesUploadedResponseFilesUploadedTypeOrganizationAvatar:
+                // res.ResponseFilesUploaded.OrganizationAvatarFileRead is populated
+        }
+
     }
 }
 ```
@@ -219,65 +227,6 @@ func main() {
 ### Response
 
 **[*operations.FilesUploadedResponse](../../models/operations/filesuploadedresponse.md), error**
-
-### Errors
-
-| Error Type                    | Status Code                   | Content Type                  |
-| ----------------------------- | ----------------------------- | ----------------------------- |
-| apierrors.NotPermitted        | 403                           | application/json              |
-| apierrors.ResourceNotFound    | 404                           | application/json              |
-| apierrors.HTTPValidationError | 422                           | application/json              |
-| apierrors.APIError            | 4XX, 5XX                      | \*/\*                         |
-
-## Update
-
-Update a file.
-
-**Scopes**: `files:write`
-
-### Example Usage
-
-<!-- UsageSnippet language="go" operationID="files:update" method="patch" path="/v1/files/{id}" -->
-```go
-package main
-
-import(
-	"context"
-	"os"
-	polargo "github.com/polarsource/polar-go"
-	"github.com/polarsource/polar-go/models/components"
-	"log"
-)
-
-func main() {
-    ctx := context.Background()
-
-    s := polargo.New(
-        polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
-    )
-
-    res, err := s.Files.Update(ctx, "<value>", components.FilePatch{})
-    if err != nil {
-        log.Fatal(err)
-    }
-    if res.ResponseFilesUpdate != nil {
-        // handle response
-    }
-}
-```
-
-### Parameters
-
-| Parameter                                                    | Type                                                         | Required                                                     | Description                                                  |
-| ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| `ctx`                                                        | [context.Context](https://pkg.go.dev/context#Context)        | :heavy_check_mark:                                           | The context to use for the request.                          |
-| `id`                                                         | *string*                                                     | :heavy_check_mark:                                           | The file ID.                                                 |
-| `filePatch`                                                  | [components.FilePatch](../../models/components/filepatch.md) | :heavy_check_mark:                                           | N/A                                                          |
-| `opts`                                                       | [][operations.Option](../../models/operations/option.md)     | :heavy_minus_sign:                                           | The options for this request.                                |
-
-### Response
-
-**[*operations.FilesUpdateResponse](../../models/operations/filesupdateresponse.md), error**
 
 ### Errors
 
@@ -335,6 +284,74 @@ func main() {
 ### Response
 
 **[*operations.FilesDeleteResponse](../../models/operations/filesdeleteresponse.md), error**
+
+### Errors
+
+| Error Type                    | Status Code                   | Content Type                  |
+| ----------------------------- | ----------------------------- | ----------------------------- |
+| apierrors.NotPermitted        | 403                           | application/json              |
+| apierrors.ResourceNotFound    | 404                           | application/json              |
+| apierrors.HTTPValidationError | 422                           | application/json              |
+| apierrors.APIError            | 4XX, 5XX                      | \*/\*                         |
+
+## Update
+
+Update a file.
+
+**Scopes**: `files:write`
+
+### Example Usage
+
+<!-- UsageSnippet language="go" operationID="files:update" method="patch" path="/v1/files/{id}" -->
+```go
+package main
+
+import(
+	"context"
+	"os"
+	polargo "github.com/polarsource/polar-go"
+	"github.com/polarsource/polar-go/models/components"
+	"log"
+	"github.com/polarsource/polar-go/models/operations"
+)
+
+func main() {
+    ctx := context.Background()
+
+    s := polargo.New(
+        polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
+    )
+
+    res, err := s.Files.Update(ctx, "<value>", components.FilePatch{})
+    if err != nil {
+        log.Fatal(err)
+    }
+    if res.ResponseFilesUpdate != nil {
+        switch res.ResponseFilesUpdate.Type {
+            case operations.FilesUpdateResponseFilesUpdateTypeDownloadable:
+                // res.ResponseFilesUpdate.DownloadableFileRead is populated
+            case operations.FilesUpdateResponseFilesUpdateTypeProductMedia:
+                // res.ResponseFilesUpdate.ProductMediaFileRead is populated
+            case operations.FilesUpdateResponseFilesUpdateTypeOrganizationAvatar:
+                // res.ResponseFilesUpdate.OrganizationAvatarFileRead is populated
+        }
+
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                    | Type                                                         | Required                                                     | Description                                                  |
+| ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| `ctx`                                                        | [context.Context](https://pkg.go.dev/context#Context)        | :heavy_check_mark:                                           | The context to use for the request.                          |
+| `id`                                                         | *string*                                                     | :heavy_check_mark:                                           | The file ID.                                                 |
+| `filePatch`                                                  | [components.FilePatch](../../models/components/filepatch.md) | :heavy_check_mark:                                           | N/A                                                          |
+| `opts`                                                       | [][operations.Option](../../models/operations/option.md)     | :heavy_minus_sign:                                           | The options for this request.                                |
+
+### Response
+
+**[*operations.FilesUpdateResponse](../../models/operations/filesupdateresponse.md), error**
 
 ### Errors
 

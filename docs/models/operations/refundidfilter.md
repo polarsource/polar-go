@@ -17,3 +17,15 @@ refundIDFilter := operations.CreateRefundIDFilterStr(string{/* values here */})
 refundIDFilter := operations.CreateRefundIDFilterArrayOfStr([]string{/* values here */})
 ```
 
+## Union Discrimination
+
+Use the `Type` field to determine which variant is active, then access the corresponding field:
+
+```go
+switch refundIDFilter.Type {
+	case operations.RefundIDFilterTypeStr:
+		// refundIDFilter.Str is populated
+	case operations.RefundIDFilterTypeArrayOfStr:
+		// refundIDFilter.ArrayOfStr is populated
+}
+```

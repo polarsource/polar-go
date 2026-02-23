@@ -19,8 +19,8 @@ const (
 
 // EventsListQueryParamOrganizationIDFilter - Filter by organization ID.
 type EventsListQueryParamOrganizationIDFilter struct {
-	Str        *string  `queryParam:"inline,name=OrganizationID_Filter"`
-	ArrayOfStr []string `queryParam:"inline,name=OrganizationID_Filter"`
+	Str        *string  `queryParam:"inline" union:"member"`
+	ArrayOfStr []string `queryParam:"inline" union:"member"`
 
 	Type EventsListQueryParamOrganizationIDFilterType
 }
@@ -83,8 +83,8 @@ const (
 
 // EventsListQueryParamCustomerIDFilter - Filter by customer ID.
 type EventsListQueryParamCustomerIDFilter struct {
-	Str        *string  `queryParam:"inline,name=CustomerID_Filter"`
-	ArrayOfStr []string `queryParam:"inline,name=CustomerID_Filter"`
+	Str        *string  `queryParam:"inline" union:"member"`
+	ArrayOfStr []string `queryParam:"inline" union:"member"`
 
 	Type EventsListQueryParamCustomerIDFilterType
 }
@@ -138,59 +138,59 @@ func (u EventsListQueryParamCustomerIDFilter) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type EventsListQueryParamCustomerIDFilter: all fields are null")
 }
 
-type QueryParamExternalCustomerIDFilterType string
+type EventsListQueryParamExternalCustomerIDFilterType string
 
 const (
-	QueryParamExternalCustomerIDFilterTypeStr        QueryParamExternalCustomerIDFilterType = "str"
-	QueryParamExternalCustomerIDFilterTypeArrayOfStr QueryParamExternalCustomerIDFilterType = "arrayOfStr"
+	EventsListQueryParamExternalCustomerIDFilterTypeStr        EventsListQueryParamExternalCustomerIDFilterType = "str"
+	EventsListQueryParamExternalCustomerIDFilterTypeArrayOfStr EventsListQueryParamExternalCustomerIDFilterType = "arrayOfStr"
 )
 
-// QueryParamExternalCustomerIDFilter - Filter by external customer ID.
-type QueryParamExternalCustomerIDFilter struct {
-	Str        *string  `queryParam:"inline,name=ExternalCustomerID_Filter"`
-	ArrayOfStr []string `queryParam:"inline,name=ExternalCustomerID_Filter"`
+// EventsListQueryParamExternalCustomerIDFilter - Filter by external customer ID.
+type EventsListQueryParamExternalCustomerIDFilter struct {
+	Str        *string  `queryParam:"inline" union:"member"`
+	ArrayOfStr []string `queryParam:"inline" union:"member"`
 
-	Type QueryParamExternalCustomerIDFilterType
+	Type EventsListQueryParamExternalCustomerIDFilterType
 }
 
-func CreateQueryParamExternalCustomerIDFilterStr(str string) QueryParamExternalCustomerIDFilter {
-	typ := QueryParamExternalCustomerIDFilterTypeStr
+func CreateEventsListQueryParamExternalCustomerIDFilterStr(str string) EventsListQueryParamExternalCustomerIDFilter {
+	typ := EventsListQueryParamExternalCustomerIDFilterTypeStr
 
-	return QueryParamExternalCustomerIDFilter{
+	return EventsListQueryParamExternalCustomerIDFilter{
 		Str:  &str,
 		Type: typ,
 	}
 }
 
-func CreateQueryParamExternalCustomerIDFilterArrayOfStr(arrayOfStr []string) QueryParamExternalCustomerIDFilter {
-	typ := QueryParamExternalCustomerIDFilterTypeArrayOfStr
+func CreateEventsListQueryParamExternalCustomerIDFilterArrayOfStr(arrayOfStr []string) EventsListQueryParamExternalCustomerIDFilter {
+	typ := EventsListQueryParamExternalCustomerIDFilterTypeArrayOfStr
 
-	return QueryParamExternalCustomerIDFilter{
+	return EventsListQueryParamExternalCustomerIDFilter{
 		ArrayOfStr: arrayOfStr,
 		Type:       typ,
 	}
 }
 
-func (u *QueryParamExternalCustomerIDFilter) UnmarshalJSON(data []byte) error {
+func (u *EventsListQueryParamExternalCustomerIDFilter) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
 	if err := utils.UnmarshalJSON(data, &str, "", true, nil); err == nil {
 		u.Str = &str
-		u.Type = QueryParamExternalCustomerIDFilterTypeStr
+		u.Type = EventsListQueryParamExternalCustomerIDFilterTypeStr
 		return nil
 	}
 
 	var arrayOfStr []string = []string{}
 	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, nil); err == nil {
 		u.ArrayOfStr = arrayOfStr
-		u.Type = QueryParamExternalCustomerIDFilterTypeArrayOfStr
+		u.Type = EventsListQueryParamExternalCustomerIDFilterTypeArrayOfStr
 		return nil
 	}
 
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for QueryParamExternalCustomerIDFilter", string(data))
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for EventsListQueryParamExternalCustomerIDFilter", string(data))
 }
 
-func (u QueryParamExternalCustomerIDFilter) MarshalJSON() ([]byte, error) {
+func (u EventsListQueryParamExternalCustomerIDFilter) MarshalJSON() ([]byte, error) {
 	if u.Str != nil {
 		return utils.MarshalJSON(u.Str, "", true)
 	}
@@ -199,7 +199,7 @@ func (u QueryParamExternalCustomerIDFilter) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.ArrayOfStr, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type QueryParamExternalCustomerIDFilter: all fields are null")
+	return nil, errors.New("could not marshal union type EventsListQueryParamExternalCustomerIDFilter: all fields are null")
 }
 
 type NameFilterType string
@@ -211,8 +211,8 @@ const (
 
 // NameFilter - Filter by event name.
 type NameFilter struct {
-	Str        *string  `queryParam:"inline,name=Name_Filter"`
-	ArrayOfStr []string `queryParam:"inline,name=Name_Filter"`
+	Str        *string  `queryParam:"inline" union:"member"`
+	ArrayOfStr []string `queryParam:"inline" union:"member"`
 
 	Type NameFilterType
 }
@@ -275,8 +275,8 @@ const (
 
 // SourceFilter - Filter by event source.
 type SourceFilter struct {
-	EventSource        *components.EventSource  `queryParam:"inline,name=Source_Filter"`
-	ArrayOfEventSource []components.EventSource `queryParam:"inline,name=Source_Filter"`
+	EventSource        *components.EventSource  `queryParam:"inline" union:"member"`
+	ArrayOfEventSource []components.EventSource `queryParam:"inline" union:"member"`
 
 	Type SourceFilterType
 }
@@ -342,7 +342,7 @@ type EventsListRequest struct {
 	// Filter by customer ID.
 	CustomerID *EventsListQueryParamCustomerIDFilter `queryParam:"style=form,explode=true,name=customer_id"`
 	// Filter by external customer ID.
-	ExternalCustomerID *QueryParamExternalCustomerIDFilter `queryParam:"style=form,explode=true,name=external_customer_id"`
+	ExternalCustomerID *EventsListQueryParamExternalCustomerIDFilter `queryParam:"style=form,explode=true,name=external_customer_id"`
 	// Filter by a meter filter clause.
 	MeterID *string `queryParam:"style=form,explode=true,name=meter_id"`
 	// Filter by event name.
@@ -351,8 +351,10 @@ type EventsListRequest struct {
 	Source *SourceFilter `queryParam:"style=form,explode=true,name=source"`
 	// Query to filter events.
 	Query *string `queryParam:"style=form,explode=true,name=query"`
-	// Filter events by parent event ID. When not specified, returns root events only.
+	// When combined with depth, use this event as the anchor instead of root events.
 	ParentID *string `queryParam:"style=form,explode=true,name=parent_id"`
+	// Fetch descendants up to this depth. When set: 0=root events only, 1=roots+children, etc. Max 5. When not set, returns all events.
+	Depth *int64 `queryParam:"style=form,explode=true,name=depth"`
 	// Page number, defaults to 1.
 	Page *int64 `default:"1" queryParam:"style=form,explode=true,name=page"`
 	// Size of a page, defaults to 10. Maximum is 100.
@@ -409,7 +411,7 @@ func (e *EventsListRequest) GetCustomerID() *EventsListQueryParamCustomerIDFilte
 	return e.CustomerID
 }
 
-func (e *EventsListRequest) GetExternalCustomerID() *QueryParamExternalCustomerIDFilter {
+func (e *EventsListRequest) GetExternalCustomerID() *EventsListQueryParamExternalCustomerIDFilter {
 	if e == nil {
 		return nil
 	}
@@ -451,6 +453,13 @@ func (e *EventsListRequest) GetParentID() *string {
 	return e.ParentID
 }
 
+func (e *EventsListRequest) GetDepth() *int64 {
+	if e == nil {
+		return nil
+	}
+	return e.Depth
+}
+
 func (e *EventsListRequest) GetPage() *int64 {
 	if e == nil {
 		return nil
@@ -479,12 +488,74 @@ func (e *EventsListRequest) GetMetadata() map[string]components.MetadataQuery {
 	return e.Metadata
 }
 
+type EventsListResponseEventsListType string
+
+const (
+	EventsListResponseEventsListTypeListResourceEvent                     EventsListResponseEventsListType = "ListResource_Event_"
+	EventsListResponseEventsListTypeListResourceWithCursorPaginationEvent EventsListResponseEventsListType = "ListResourceWithCursorPagination_Event_"
+)
+
+// EventsListResponseEventsList - Successful Response
+type EventsListResponseEventsList struct {
+	ListResourceEvent                     *components.ListResourceEvent                     `queryParam:"inline" union:"member"`
+	ListResourceWithCursorPaginationEvent *components.ListResourceWithCursorPaginationEvent `queryParam:"inline" union:"member"`
+
+	Type EventsListResponseEventsListType
+}
+
+func CreateEventsListResponseEventsListListResourceEvent(listResourceEvent components.ListResourceEvent) EventsListResponseEventsList {
+	typ := EventsListResponseEventsListTypeListResourceEvent
+
+	return EventsListResponseEventsList{
+		ListResourceEvent: &listResourceEvent,
+		Type:              typ,
+	}
+}
+
+func CreateEventsListResponseEventsListListResourceWithCursorPaginationEvent(listResourceWithCursorPaginationEvent components.ListResourceWithCursorPaginationEvent) EventsListResponseEventsList {
+	typ := EventsListResponseEventsListTypeListResourceWithCursorPaginationEvent
+
+	return EventsListResponseEventsList{
+		ListResourceWithCursorPaginationEvent: &listResourceWithCursorPaginationEvent,
+		Type:                                  typ,
+	}
+}
+
+func (u *EventsListResponseEventsList) UnmarshalJSON(data []byte) error {
+
+	var listResourceEvent components.ListResourceEvent = components.ListResourceEvent{}
+	if err := utils.UnmarshalJSON(data, &listResourceEvent, "", true, nil); err == nil {
+		u.ListResourceEvent = &listResourceEvent
+		u.Type = EventsListResponseEventsListTypeListResourceEvent
+		return nil
+	}
+
+	var listResourceWithCursorPaginationEvent components.ListResourceWithCursorPaginationEvent = components.ListResourceWithCursorPaginationEvent{}
+	if err := utils.UnmarshalJSON(data, &listResourceWithCursorPaginationEvent, "", true, nil); err == nil {
+		u.ListResourceWithCursorPaginationEvent = &listResourceWithCursorPaginationEvent
+		u.Type = EventsListResponseEventsListTypeListResourceWithCursorPaginationEvent
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for EventsListResponseEventsList", string(data))
+}
+
+func (u EventsListResponseEventsList) MarshalJSON() ([]byte, error) {
+	if u.ListResourceEvent != nil {
+		return utils.MarshalJSON(u.ListResourceEvent, "", true)
+	}
+
+	if u.ListResourceWithCursorPaginationEvent != nil {
+		return utils.MarshalJSON(u.ListResourceWithCursorPaginationEvent, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type EventsListResponseEventsList: all fields are null")
+}
+
 type EventsListResponse struct {
 	HTTPMeta components.HTTPMetadata `json:"-"`
 	// Successful Response
-	ListResourceEvent *components.ListResourceEvent
-
-	Next func() (*EventsListResponse, error)
+	ResponseEventsList *EventsListResponseEventsList
 }
 
 func (e *EventsListResponse) GetHTTPMeta() components.HTTPMetadata {
@@ -494,9 +565,9 @@ func (e *EventsListResponse) GetHTTPMeta() components.HTTPMetadata {
 	return e.HTTPMeta
 }
 
-func (e *EventsListResponse) GetListResourceEvent() *components.ListResourceEvent {
+func (e *EventsListResponse) GetResponseEventsList() *EventsListResponseEventsList {
 	if e == nil {
 		return nil
 	}
-	return e.ListResourceEvent
+	return e.ResponseEventsList
 }

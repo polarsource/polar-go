@@ -41,3 +41,23 @@ meterCreateAggregation := components.CreateMeterCreateAggregationSum(components.
 meterCreateAggregation := components.CreateMeterCreateAggregationUnique(components.UniqueAggregation{/* values here */})
 ```
 
+## Union Discrimination
+
+Use the `Type` field to determine which variant is active, then access the corresponding field:
+
+```go
+switch meterCreateAggregation.Type {
+	case components.MeterCreateAggregationTypeAvg:
+		// meterCreateAggregation.PropertyAggregation is populated
+	case components.MeterCreateAggregationTypeCount:
+		// meterCreateAggregation.CountAggregation is populated
+	case components.MeterCreateAggregationTypeMax:
+		// meterCreateAggregation.PropertyAggregation is populated
+	case components.MeterCreateAggregationTypeMin:
+		// meterCreateAggregation.PropertyAggregation is populated
+	case components.MeterCreateAggregationTypeSum:
+		// meterCreateAggregation.PropertyAggregation is populated
+	case components.MeterCreateAggregationTypeUnique:
+		// meterCreateAggregation.UniqueAggregation is populated
+}
+```

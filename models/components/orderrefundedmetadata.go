@@ -10,7 +10,6 @@ type OrderRefundedMetadata struct {
 	OrderID        string `json:"order_id"`
 	RefundedAmount int64  `json:"refunded_amount"`
 	Currency       string `json:"currency"`
-	Backfilled     *bool  `json:"backfilled,omitempty"`
 }
 
 func (o OrderRefundedMetadata) MarshalJSON() ([]byte, error) {
@@ -43,11 +42,4 @@ func (o *OrderRefundedMetadata) GetCurrency() string {
 		return ""
 	}
 	return o.Currency
-}
-
-func (o *OrderRefundedMetadata) GetBackfilled() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.Backfilled
 }

@@ -27,3 +27,19 @@ discount := components.CreateDiscountDiscountPercentageOnceForeverDuration(compo
 discount := components.CreateDiscountDiscountPercentageRepeatDuration(components.DiscountPercentageRepeatDuration{/* values here */})
 ```
 
+## Union Discrimination
+
+Use the `Type` field to determine which variant is active, then access the corresponding field:
+
+```go
+switch discount.Type {
+	case components.DiscountUnionTypeDiscountFixedOnceForeverDuration:
+		// discount.DiscountFixedOnceForeverDuration is populated
+	case components.DiscountUnionTypeDiscountFixedRepeatDuration:
+		// discount.DiscountFixedRepeatDuration is populated
+	case components.DiscountUnionTypeDiscountPercentageOnceForeverDuration:
+		// discount.DiscountPercentageOnceForeverDuration is populated
+	case components.DiscountUnionTypeDiscountPercentageRepeatDuration:
+		// discount.DiscountPercentageRepeatDuration is populated
+}
+```

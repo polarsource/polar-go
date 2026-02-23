@@ -19,8 +19,14 @@ type CustomerSeat struct {
 	// The order ID (for one-time purchase seats)
 	OrderID *string    `json:"order_id,omitempty"`
 	Status  SeatStatus `json:"status"`
-	// The assigned customer ID
+	// The customer ID. When member_model_enabled is true, this is the billing customer (purchaser). When false, this is the seat member customer.
 	CustomerID *string `json:"customer_id,omitempty"`
+	// The member ID of the seat occupant
+	MemberID *string `json:"member_id,omitempty"`
+	// The member associated with this seat
+	Member *Member `json:"member,omitempty"`
+	// Email of the seat member (set when member_model_enabled is true)
+	Email *string `json:"email,omitempty"`
 	// The assigned customer email
 	CustomerEmail *string `json:"customer_email,omitempty"`
 	// When the invitation token expires
@@ -38,7 +44,7 @@ func (c CustomerSeat) MarshalJSON() ([]byte, error) {
 }
 
 func (c *CustomerSeat) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &c, "", false, []string{"created_at", "id", "status"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &c, "", false, nil); err != nil {
 		return err
 	}
 	return nil
@@ -91,6 +97,27 @@ func (c *CustomerSeat) GetCustomerID() *string {
 		return nil
 	}
 	return c.CustomerID
+}
+
+func (c *CustomerSeat) GetMemberID() *string {
+	if c == nil {
+		return nil
+	}
+	return c.MemberID
+}
+
+func (c *CustomerSeat) GetMember() *Member {
+	if c == nil {
+		return nil
+	}
+	return c.Member
+}
+
+func (c *CustomerSeat) GetEmail() *string {
+	if c == nil {
+		return nil
+	}
+	return c.Email
 }
 
 func (c *CustomerSeat) GetCustomerEmail() *string {

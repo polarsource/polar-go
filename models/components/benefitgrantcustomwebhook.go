@@ -28,12 +28,15 @@ type BenefitGrantCustomWebhook struct {
 	OrderID *string `json:"order_id"`
 	// The ID of the customer concerned by this grant.
 	CustomerID string `json:"customer_id"`
+	// The ID of the member concerned by this grant.
+	MemberID *string `json:"member_id,omitempty"`
 	// The ID of the benefit concerned by this grant.
 	BenefitID string `json:"benefit_id"`
 	// The error information if the benefit grant failed with an unrecoverable error.
 	Error *BenefitGrantError `json:"error,omitempty"`
 	// A customer in an organization.
 	Customer Customer `json:"customer"`
+	Member   *Member  `json:"member,omitempty"`
 	// A benefit of type `custom`.
 	//
 	// Use it to grant any kind of benefit that doesn't fit in the other types.
@@ -123,6 +126,13 @@ func (b *BenefitGrantCustomWebhook) GetCustomerID() string {
 	return b.CustomerID
 }
 
+func (b *BenefitGrantCustomWebhook) GetMemberID() *string {
+	if b == nil {
+		return nil
+	}
+	return b.MemberID
+}
+
 func (b *BenefitGrantCustomWebhook) GetBenefitID() string {
 	if b == nil {
 		return ""
@@ -142,6 +152,13 @@ func (b *BenefitGrantCustomWebhook) GetCustomer() Customer {
 		return Customer{}
 	}
 	return b.Customer
+}
+
+func (b *BenefitGrantCustomWebhook) GetMember() *Member {
+	if b == nil {
+		return nil
+	}
+	return b.Member
 }
 
 func (b *BenefitGrantCustomWebhook) GetBenefit() BenefitCustom {

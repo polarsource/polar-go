@@ -17,3 +17,15 @@ ordersGenerateInvoiceResponse422OrdersGenerateInvoice := apierrors.CreateOrdersG
 ordersGenerateInvoiceResponse422OrdersGenerateInvoice := apierrors.CreateOrdersGenerateInvoiceResponse422OrdersGenerateInvoiceNotPaidOrder(components.NotPaidOrder{/* values here */})
 ```
 
+## Union Discrimination
+
+Use the `Type` field to determine which variant is active, then access the corresponding field:
+
+```go
+switch ordersGenerateInvoiceResponse422OrdersGenerateInvoice.Type {
+	case apierrors.OrdersGenerateInvoiceResponse422OrdersGenerateInvoiceTypeMissingInvoiceBillingDetails:
+		// ordersGenerateInvoiceResponse422OrdersGenerateInvoice.MissingInvoiceBillingDetails is populated
+	case apierrors.OrdersGenerateInvoiceResponse422OrdersGenerateInvoiceTypeNotPaidOrder:
+		// ordersGenerateInvoiceResponse422OrdersGenerateInvoice.NotPaidOrder is populated
+}
+```

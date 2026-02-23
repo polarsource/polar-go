@@ -29,7 +29,7 @@ func (c *CustomersUpdateRequest) GetCustomerUpdate() components.CustomerUpdate {
 type CustomersUpdateResponse struct {
 	HTTPMeta components.HTTPMetadata `json:"-"`
 	// Customer updated.
-	Customer *components.Customer
+	CustomerWithMembers *components.CustomerWithMembers
 }
 
 func (c *CustomersUpdateResponse) GetHTTPMeta() components.HTTPMetadata {
@@ -39,9 +39,9 @@ func (c *CustomersUpdateResponse) GetHTTPMeta() components.HTTPMetadata {
 	return c.HTTPMeta
 }
 
-func (c *CustomersUpdateResponse) GetCustomer() *components.Customer {
+func (c *CustomersUpdateResponse) GetCustomerWithMembers() *components.CustomerWithMembers {
 	if c == nil {
 		return nil
 	}
-	return c.Customer
+	return c.CustomerWithMembers
 }

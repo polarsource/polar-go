@@ -1,5 +1,4 @@
 # Payments
-(*Payments*)
 
 ## Overview
 
@@ -97,6 +96,7 @@ import(
 	"os"
 	polargo "github.com/polarsource/polar-go"
 	"log"
+	"github.com/polarsource/polar-go/models/components"
 )
 
 func main() {
@@ -111,7 +111,13 @@ func main() {
         log.Fatal(err)
     }
     if res.Payment != nil {
-        // handle response
+        switch res.Payment.Type {
+            case components.PaymentTypeCardPayment:
+                // res.Payment.CardPayment is populated
+            case components.PaymentTypeGenericPayment:
+                // res.Payment.GenericPayment is populated
+        }
+
     }
 }
 ```

@@ -4,10 +4,10 @@ package components
 
 // OrderUpdate - Schema to update an order.
 type OrderUpdate struct {
-	// The name of the customer that should appear on the invoice. Can't be updated after the invoice is generated.
-	BillingName *string `json:"billing_name"`
-	// The address of the customer that should appear on the invoice. Can't be updated after the invoice is generated.
-	BillingAddress *AddressInput `json:"billing_address"`
+	// The name of the customer that should appear on the invoice.
+	BillingName *string `json:"billing_name,omitempty"`
+	// The address of the customer that should appear on the invoice. Country and state fields cannot be updated.
+	BillingAddress *AddressInput `json:"billing_address,omitempty"`
 }
 
 func (o *OrderUpdate) GetBillingName() *string {

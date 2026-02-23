@@ -3,24 +3,67 @@
 package operations
 
 import (
+	"github.com/polarsource/polar-go/internal/utils"
 	"github.com/polarsource/polar-go/models/components"
 )
 
 type CustomerPortalSeatsListClaimedSubscriptionsSecurity struct {
-	CustomerSession string `security:"scheme,type=http,subtype=bearer,name=Authorization,env=polar_customer_session"`
+	CustomerSession *string `security:"scheme,type=http,subtype=bearer,name=Authorization,env=polar_customer_session"`
+	MemberSession   *string `security:"scheme,type=http,subtype=bearer,name=Authorization,env=polar_member_session"`
 }
 
-func (c *CustomerPortalSeatsListClaimedSubscriptionsSecurity) GetCustomerSession() string {
+func (c *CustomerPortalSeatsListClaimedSubscriptionsSecurity) GetCustomerSession() *string {
 	if c == nil {
-		return ""
+		return nil
 	}
 	return c.CustomerSession
+}
+
+func (c *CustomerPortalSeatsListClaimedSubscriptionsSecurity) GetMemberSession() *string {
+	if c == nil {
+		return nil
+	}
+	return c.MemberSession
+}
+
+type CustomerPortalSeatsListClaimedSubscriptionsRequest struct {
+	// Page number, defaults to 1.
+	Page *int64 `default:"1" queryParam:"style=form,explode=true,name=page"`
+	// Size of a page, defaults to 10. Maximum is 100.
+	Limit *int64 `default:"10" queryParam:"style=form,explode=true,name=limit"`
+}
+
+func (c CustomerPortalSeatsListClaimedSubscriptionsRequest) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(c, "", false)
+}
+
+func (c *CustomerPortalSeatsListClaimedSubscriptionsRequest) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &c, "", false, nil); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (c *CustomerPortalSeatsListClaimedSubscriptionsRequest) GetPage() *int64 {
+	if c == nil {
+		return nil
+	}
+	return c.Page
+}
+
+func (c *CustomerPortalSeatsListClaimedSubscriptionsRequest) GetLimit() *int64 {
+	if c == nil {
+		return nil
+	}
+	return c.Limit
 }
 
 type CustomerPortalSeatsListClaimedSubscriptionsResponse struct {
 	HTTPMeta components.HTTPMetadata `json:"-"`
 	// Successful Response
-	ResponseCustomerPortalSeatsListClaimedSubscriptions []components.CustomerSubscription
+	ListResourceCustomerSubscription *components.ListResourceCustomerSubscription
+
+	Next func() (*CustomerPortalSeatsListClaimedSubscriptionsResponse, error)
 }
 
 func (c *CustomerPortalSeatsListClaimedSubscriptionsResponse) GetHTTPMeta() components.HTTPMetadata {
@@ -30,9 +73,9 @@ func (c *CustomerPortalSeatsListClaimedSubscriptionsResponse) GetHTTPMeta() comp
 	return c.HTTPMeta
 }
 
-func (c *CustomerPortalSeatsListClaimedSubscriptionsResponse) GetResponseCustomerPortalSeatsListClaimedSubscriptions() []components.CustomerSubscription {
+func (c *CustomerPortalSeatsListClaimedSubscriptionsResponse) GetListResourceCustomerSubscription() *components.ListResourceCustomerSubscription {
 	if c == nil {
 		return nil
 	}
-	return c.ResponseCustomerPortalSeatsListClaimedSubscriptions
+	return c.ListResourceCustomerSubscription
 }

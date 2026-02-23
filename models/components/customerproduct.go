@@ -17,8 +17,8 @@ const (
 )
 
 type CustomerProductPrices struct {
-	LegacyRecurringProductPrice *LegacyRecurringProductPrice `queryParam:"inline,name=prices"`
-	ProductPrice                *ProductPrice                `queryParam:"inline,name=prices"`
+	LegacyRecurringProductPrice *LegacyRecurringProductPrice `queryParam:"inline" union:"member"`
+	ProductPrice                *ProductPrice                `queryParam:"inline" union:"member"`
 
 	Type CustomerProductPricesType
 }
@@ -87,7 +87,8 @@ type CustomerProduct struct {
 	// The name of the product.
 	Name string `json:"name"`
 	// The description of the product.
-	Description *string `json:"description"`
+	Description *string           `json:"description"`
+	Visibility  ProductVisibility `json:"visibility"`
 	// The recurring interval of the product. If `None`, the product is a one-time purchase.
 	RecurringInterval *SubscriptionRecurringInterval `json:"recurring_interval"`
 	// Number of interval units of the subscription. If this is set to 1 the charge will happen every interval (e.g. every month), if set to 2 it will be every other month, and so on. None for one-time products.
@@ -111,7 +112,7 @@ func (c CustomerProduct) MarshalJSON() ([]byte, error) {
 }
 
 func (c *CustomerProduct) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &c, "", false, []string{"id", "created_at", "name", "is_recurring", "is_archived", "organization_id", "prices", "benefits", "medias"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &c, "", false, nil); err != nil {
 		return err
 	}
 	return nil
@@ -164,6 +165,13 @@ func (c *CustomerProduct) GetDescription() *string {
 		return nil
 	}
 	return c.Description
+}
+
+func (c *CustomerProduct) GetVisibility() ProductVisibility {
+	if c == nil {
+		return ProductVisibility("")
+	}
+	return c.Visibility
 }
 
 func (c *CustomerProduct) GetRecurringInterval() *SubscriptionRecurringInterval {

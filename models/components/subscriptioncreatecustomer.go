@@ -8,94 +8,94 @@ import (
 	"github.com/polarsource/polar-go/internal/utils"
 )
 
-type SubscriptionCreateCustomerMetadataType string
+type MetadataType string
 
 const (
-	SubscriptionCreateCustomerMetadataTypeStr     SubscriptionCreateCustomerMetadataType = "str"
-	SubscriptionCreateCustomerMetadataTypeInteger SubscriptionCreateCustomerMetadataType = "integer"
-	SubscriptionCreateCustomerMetadataTypeNumber  SubscriptionCreateCustomerMetadataType = "number"
-	SubscriptionCreateCustomerMetadataTypeBoolean SubscriptionCreateCustomerMetadataType = "boolean"
+	MetadataTypeStr     MetadataType = "str"
+	MetadataTypeInteger MetadataType = "integer"
+	MetadataTypeNumber  MetadataType = "number"
+	MetadataTypeBoolean MetadataType = "boolean"
 )
 
-type SubscriptionCreateCustomerMetadata struct {
-	Str     *string  `queryParam:"inline,name=metadata"`
-	Integer *int64   `queryParam:"inline,name=metadata"`
-	Number  *float64 `queryParam:"inline,name=metadata"`
-	Boolean *bool    `queryParam:"inline,name=metadata"`
+type Metadata struct {
+	Str     *string  `queryParam:"inline" union:"member"`
+	Integer *int64   `queryParam:"inline" union:"member"`
+	Number  *float64 `queryParam:"inline" union:"member"`
+	Boolean *bool    `queryParam:"inline" union:"member"`
 
-	Type SubscriptionCreateCustomerMetadataType
+	Type MetadataType
 }
 
-func CreateSubscriptionCreateCustomerMetadataStr(str string) SubscriptionCreateCustomerMetadata {
-	typ := SubscriptionCreateCustomerMetadataTypeStr
+func CreateMetadataStr(str string) Metadata {
+	typ := MetadataTypeStr
 
-	return SubscriptionCreateCustomerMetadata{
+	return Metadata{
 		Str:  &str,
 		Type: typ,
 	}
 }
 
-func CreateSubscriptionCreateCustomerMetadataInteger(integer int64) SubscriptionCreateCustomerMetadata {
-	typ := SubscriptionCreateCustomerMetadataTypeInteger
+func CreateMetadataInteger(integer int64) Metadata {
+	typ := MetadataTypeInteger
 
-	return SubscriptionCreateCustomerMetadata{
+	return Metadata{
 		Integer: &integer,
 		Type:    typ,
 	}
 }
 
-func CreateSubscriptionCreateCustomerMetadataNumber(number float64) SubscriptionCreateCustomerMetadata {
-	typ := SubscriptionCreateCustomerMetadataTypeNumber
+func CreateMetadataNumber(number float64) Metadata {
+	typ := MetadataTypeNumber
 
-	return SubscriptionCreateCustomerMetadata{
+	return Metadata{
 		Number: &number,
 		Type:   typ,
 	}
 }
 
-func CreateSubscriptionCreateCustomerMetadataBoolean(boolean bool) SubscriptionCreateCustomerMetadata {
-	typ := SubscriptionCreateCustomerMetadataTypeBoolean
+func CreateMetadataBoolean(boolean bool) Metadata {
+	typ := MetadataTypeBoolean
 
-	return SubscriptionCreateCustomerMetadata{
+	return Metadata{
 		Boolean: &boolean,
 		Type:    typ,
 	}
 }
 
-func (u *SubscriptionCreateCustomerMetadata) UnmarshalJSON(data []byte) error {
+func (u *Metadata) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
 	if err := utils.UnmarshalJSON(data, &str, "", true, nil); err == nil {
 		u.Str = &str
-		u.Type = SubscriptionCreateCustomerMetadataTypeStr
+		u.Type = MetadataTypeStr
 		return nil
 	}
 
 	var integer int64 = int64(0)
 	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
 		u.Integer = &integer
-		u.Type = SubscriptionCreateCustomerMetadataTypeInteger
+		u.Type = MetadataTypeInteger
 		return nil
 	}
 
 	var number float64 = float64(0)
 	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
 		u.Number = &number
-		u.Type = SubscriptionCreateCustomerMetadataTypeNumber
+		u.Type = MetadataTypeNumber
 		return nil
 	}
 
 	var boolean bool = false
 	if err := utils.UnmarshalJSON(data, &boolean, "", true, nil); err == nil {
 		u.Boolean = &boolean
-		u.Type = SubscriptionCreateCustomerMetadataTypeBoolean
+		u.Type = MetadataTypeBoolean
 		return nil
 	}
 
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SubscriptionCreateCustomerMetadata", string(data))
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for Metadata", string(data))
 }
 
-func (u SubscriptionCreateCustomerMetadata) MarshalJSON() ([]byte, error) {
+func (u Metadata) MarshalJSON() ([]byte, error) {
 	if u.Str != nil {
 		return utils.MarshalJSON(u.Str, "", true)
 	}
@@ -112,7 +112,7 @@ func (u SubscriptionCreateCustomerMetadata) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.Boolean, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type SubscriptionCreateCustomerMetadata: all fields are null")
+	return nil, errors.New("could not marshal union type Metadata: all fields are null")
 }
 
 // SubscriptionCreateCustomer - Create a subscription for an existing customer.
@@ -128,7 +128,7 @@ type SubscriptionCreateCustomer struct {
 	// * A boolean
 	//
 	// You can store up to **50 key-value pairs**.
-	Metadata map[string]SubscriptionCreateCustomerMetadata `json:"metadata,omitempty"`
+	Metadata map[string]Metadata `json:"metadata,omitempty"`
 	// The ID of the recurring product to subscribe to. Must be a free product, otherwise the customer should go through a checkout flow.
 	ProductID string `json:"product_id"`
 	// The ID of the customer to create the subscription for.
@@ -146,7 +146,7 @@ func (s *SubscriptionCreateCustomer) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (s *SubscriptionCreateCustomer) GetMetadata() map[string]SubscriptionCreateCustomerMetadata {
+func (s *SubscriptionCreateCustomer) GetMetadata() map[string]Metadata {
 	if s == nil {
 		return nil
 	}

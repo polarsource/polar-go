@@ -242,8 +242,6 @@ func (s *PolarCustomers) Get(ctx context.Context, security operations.CustomerPo
 
 // Update Customer
 // Update authenticated customer.
-//
-// **Scopes**: `customer_portal:write`
 func (s *PolarCustomers) Update(ctx context.Context, request components.CustomerPortalCustomerUpdate, security operations.CustomerPortalCustomersUpdateSecurity, opts ...operations.Option) (*operations.CustomerPortalCustomersUpdateResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{
@@ -478,8 +476,6 @@ func (s *PolarCustomers) Update(ctx context.Context, request components.Customer
 
 // ListPaymentMethods - List Customer Payment Methods
 // Get saved payment methods of the authenticated customer.
-//
-// **Scopes**: `customer_portal:read` `customer_portal:write`
 func (s *PolarCustomers) ListPaymentMethods(ctx context.Context, security operations.CustomerPortalCustomersListPaymentMethodsSecurity, page *int64, limit *int64, opts ...operations.Option) (*operations.CustomerPortalCustomersListPaymentMethodsResponse, error) {
 	request := operations.CustomerPortalCustomersListPaymentMethodsRequest{
 		Page:  page,
@@ -537,7 +533,7 @@ func (s *PolarCustomers) ListPaymentMethods(ctx context.Context, security operat
 	req.Header.Set("Accept", "application/json")
 	req.Header.Set("User-Agent", s.sdkConfiguration.UserAgent)
 
-	if err := utils.PopulateQueryParams(ctx, req, request, nil); err != nil {
+	if err := utils.PopulateQueryParams(ctx, req, request, nil, nil); err != nil {
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
@@ -778,8 +774,6 @@ func (s *PolarCustomers) ListPaymentMethods(ctx context.Context, security operat
 
 // AddPaymentMethod - Add Customer Payment Method
 // Add a payment method to the authenticated customer.
-//
-// **Scopes**: `customer_portal:read` `customer_portal:write`
 func (s *PolarCustomers) AddPaymentMethod(ctx context.Context, request components.CustomerPaymentMethodCreate, security operations.CustomerPortalCustomersAddPaymentMethodSecurity, opts ...operations.Option) (*operations.CustomerPortalCustomersAddPaymentMethodResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{
@@ -1014,8 +1008,6 @@ func (s *PolarCustomers) AddPaymentMethod(ctx context.Context, request component
 
 // ConfirmPaymentMethod - Confirm Customer Payment Method
 // Confirm a payment method for the authenticated customer.
-//
-// **Scopes**: `customer_portal:read` `customer_portal:write`
 func (s *PolarCustomers) ConfirmPaymentMethod(ctx context.Context, request components.CustomerPaymentMethodConfirm, security operations.CustomerPortalCustomersConfirmPaymentMethodSecurity, opts ...operations.Option) (*operations.CustomerPortalCustomersConfirmPaymentMethodResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{
@@ -1271,8 +1263,6 @@ func (s *PolarCustomers) ConfirmPaymentMethod(ctx context.Context, request compo
 
 // DeletePaymentMethod - Delete Customer Payment Method
 // Delete a payment method from the authenticated customer.
-//
-// **Scopes**: `customer_portal:read` `customer_portal:write`
 func (s *PolarCustomers) DeletePaymentMethod(ctx context.Context, security operations.CustomerPortalCustomersDeletePaymentMethodSecurity, id string, opts ...operations.Option) (*operations.CustomerPortalCustomersDeletePaymentMethodResponse, error) {
 	request := operations.CustomerPortalCustomersDeletePaymentMethodRequest{
 		ID: id,
@@ -1437,6 +1427,7 @@ func (s *PolarCustomers) DeletePaymentMethod(ctx context.Context, security opera
 
 	switch {
 	case httpRes.StatusCode == 204:
+		utils.DrainBody(httpRes)
 	case httpRes.StatusCode == 400:
 		switch {
 		case utils.MatchContentType(httpRes.Header.Get("Content-Type"), `application/json`):

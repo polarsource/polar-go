@@ -19,10 +19,10 @@ const (
 )
 
 type DiscountFixedRepeatDurationCreateMetadata struct {
-	Str     *string  `queryParam:"inline,name=metadata"`
-	Integer *int64   `queryParam:"inline,name=metadata"`
-	Number  *float64 `queryParam:"inline,name=metadata"`
-	Boolean *bool    `queryParam:"inline,name=metadata"`
+	Str     *string  `queryParam:"inline" union:"member"`
+	Integer *int64   `queryParam:"inline" union:"member"`
+	Number  *float64 `queryParam:"inline" union:"member"`
+	Boolean *bool    `queryParam:"inline" union:"member"`
 
 	Type DiscountFixedRepeatDurationCreateMetadataType
 }
@@ -127,9 +127,8 @@ type DiscountFixedRepeatDurationCreate struct {
 	DurationInMonths int64        `json:"duration_in_months"`
 	Type             DiscountType `json:"type"`
 	// Fixed amount to discount from the invoice total.
-	Amount int64 `json:"amount"`
-	// The currency. Currently, only `usd` is supported.
-	Currency *string `default:"usd" json:"currency"`
+	Amount   int64                `json:"amount"`
+	Currency *PresentmentCurrency `json:"currency,omitempty"`
 	// Key-value object allowing you to store additional information.
 	//
 	// The key must be a string with a maximum length of **40 characters**.
@@ -196,7 +195,7 @@ func (d *DiscountFixedRepeatDurationCreate) GetAmount() int64 {
 	return d.Amount
 }
 
-func (d *DiscountFixedRepeatDurationCreate) GetCurrency() *string {
+func (d *DiscountFixedRepeatDurationCreate) GetCurrency() *PresentmentCurrency {
 	if d == nil {
 		return nil
 	}

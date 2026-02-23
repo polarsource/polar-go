@@ -15,6 +15,7 @@ const (
 	RefundReasonCustomerRequest       RefundReason = "customer_request"
 	RefundReasonServiceDisruption     RefundReason = "service_disruption"
 	RefundReasonSatisfactionGuarantee RefundReason = "satisfaction_guarantee"
+	RefundReasonDisputePrevention     RefundReason = "dispute_prevention"
 	RefundReasonOther                 RefundReason = "other"
 )
 
@@ -36,6 +37,8 @@ func (e *RefundReason) UnmarshalJSON(data []byte) error {
 	case "service_disruption":
 		fallthrough
 	case "satisfaction_guarantee":
+		fallthrough
+	case "dispute_prevention":
 		fallthrough
 	case "other":
 		*e = RefundReason(v)

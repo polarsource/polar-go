@@ -7,6 +7,7 @@
 | ---------------------------------------- | ---------------------------------------- |
 | `WebhookEventTypeCheckoutCreated`        | checkout.created                         |
 | `WebhookEventTypeCheckoutUpdated`        | checkout.updated                         |
+| `WebhookEventTypeCheckoutExpired`        | checkout.expired                         |
 | `WebhookEventTypeCustomerCreated`        | customer.created                         |
 | `WebhookEventTypeCustomerUpdated`        | customer.updated                         |
 | `WebhookEventTypeCustomerDeleted`        | customer.deleted                         |
@@ -14,6 +15,9 @@
 | `WebhookEventTypeCustomerSeatAssigned`   | customer_seat.assigned                   |
 | `WebhookEventTypeCustomerSeatClaimed`    | customer_seat.claimed                    |
 | `WebhookEventTypeCustomerSeatRevoked`    | customer_seat.revoked                    |
+| `WebhookEventTypeMemberCreated`          | member.created                           |
+| `WebhookEventTypeMemberUpdated`          | member.updated                           |
+| `WebhookEventTypeMemberDeleted`          | member.deleted                           |
 | `WebhookEventTypeOrderCreated`           | order.created                            |
 | `WebhookEventTypeOrderUpdated`           | order.updated                            |
 | `WebhookEventTypeOrderPaid`              | order.paid                               |
@@ -24,6 +28,7 @@
 | `WebhookEventTypeSubscriptionCanceled`   | subscription.canceled                    |
 | `WebhookEventTypeSubscriptionUncanceled` | subscription.uncanceled                  |
 | `WebhookEventTypeSubscriptionRevoked`    | subscription.revoked                     |
+| `WebhookEventTypeSubscriptionPastDue`    | subscription.past_due                    |
 | `WebhookEventTypeRefundCreated`          | refund.created                           |
 | `WebhookEventTypeRefundUpdated`          | refund.updated                           |
 | `WebhookEventTypeProductCreated`         | product.created                          |

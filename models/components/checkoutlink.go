@@ -9,113 +9,6 @@ import (
 	"time"
 )
 
-type CheckoutLinkMetadataType string
-
-const (
-	CheckoutLinkMetadataTypeStr     CheckoutLinkMetadataType = "str"
-	CheckoutLinkMetadataTypeInteger CheckoutLinkMetadataType = "integer"
-	CheckoutLinkMetadataTypeNumber  CheckoutLinkMetadataType = "number"
-	CheckoutLinkMetadataTypeBoolean CheckoutLinkMetadataType = "boolean"
-)
-
-type CheckoutLinkMetadata struct {
-	Str     *string  `queryParam:"inline,name=metadata"`
-	Integer *int64   `queryParam:"inline,name=metadata"`
-	Number  *float64 `queryParam:"inline,name=metadata"`
-	Boolean *bool    `queryParam:"inline,name=metadata"`
-
-	Type CheckoutLinkMetadataType
-}
-
-func CreateCheckoutLinkMetadataStr(str string) CheckoutLinkMetadata {
-	typ := CheckoutLinkMetadataTypeStr
-
-	return CheckoutLinkMetadata{
-		Str:  &str,
-		Type: typ,
-	}
-}
-
-func CreateCheckoutLinkMetadataInteger(integer int64) CheckoutLinkMetadata {
-	typ := CheckoutLinkMetadataTypeInteger
-
-	return CheckoutLinkMetadata{
-		Integer: &integer,
-		Type:    typ,
-	}
-}
-
-func CreateCheckoutLinkMetadataNumber(number float64) CheckoutLinkMetadata {
-	typ := CheckoutLinkMetadataTypeNumber
-
-	return CheckoutLinkMetadata{
-		Number: &number,
-		Type:   typ,
-	}
-}
-
-func CreateCheckoutLinkMetadataBoolean(boolean bool) CheckoutLinkMetadata {
-	typ := CheckoutLinkMetadataTypeBoolean
-
-	return CheckoutLinkMetadata{
-		Boolean: &boolean,
-		Type:    typ,
-	}
-}
-
-func (u *CheckoutLinkMetadata) UnmarshalJSON(data []byte) error {
-
-	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, nil); err == nil {
-		u.Str = &str
-		u.Type = CheckoutLinkMetadataTypeStr
-		return nil
-	}
-
-	var integer int64 = int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
-		u.Integer = &integer
-		u.Type = CheckoutLinkMetadataTypeInteger
-		return nil
-	}
-
-	var number float64 = float64(0)
-	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
-		u.Number = &number
-		u.Type = CheckoutLinkMetadataTypeNumber
-		return nil
-	}
-
-	var boolean bool = false
-	if err := utils.UnmarshalJSON(data, &boolean, "", true, nil); err == nil {
-		u.Boolean = &boolean
-		u.Type = CheckoutLinkMetadataTypeBoolean
-		return nil
-	}
-
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for CheckoutLinkMetadata", string(data))
-}
-
-func (u CheckoutLinkMetadata) MarshalJSON() ([]byte, error) {
-	if u.Str != nil {
-		return utils.MarshalJSON(u.Str, "", true)
-	}
-
-	if u.Integer != nil {
-		return utils.MarshalJSON(u.Integer, "", true)
-	}
-
-	if u.Number != nil {
-		return utils.MarshalJSON(u.Number, "", true)
-	}
-
-	if u.Boolean != nil {
-		return utils.MarshalJSON(u.Boolean, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type CheckoutLinkMetadata: all fields are null")
-}
-
 type CheckoutLinkDiscountType string
 
 const (
@@ -126,10 +19,10 @@ const (
 )
 
 type CheckoutLinkDiscount struct {
-	DiscountFixedOnceForeverDurationBase      *DiscountFixedOnceForeverDurationBase      `queryParam:"inline,name=CheckoutLinkDiscount"`
-	DiscountFixedRepeatDurationBase           *DiscountFixedRepeatDurationBase           `queryParam:"inline,name=CheckoutLinkDiscount"`
-	DiscountPercentageOnceForeverDurationBase *DiscountPercentageOnceForeverDurationBase `queryParam:"inline,name=CheckoutLinkDiscount"`
-	DiscountPercentageRepeatDurationBase      *DiscountPercentageRepeatDurationBase      `queryParam:"inline,name=CheckoutLinkDiscount"`
+	DiscountFixedOnceForeverDurationBase      *DiscountFixedOnceForeverDurationBase      `queryParam:"inline" union:"member"`
+	DiscountFixedRepeatDurationBase           *DiscountFixedRepeatDurationBase           `queryParam:"inline" union:"member"`
+	DiscountPercentageOnceForeverDurationBase *DiscountPercentageOnceForeverDurationBase `queryParam:"inline" union:"member"`
+	DiscountPercentageRepeatDurationBase      *DiscountPercentageRepeatDurationBase      `queryParam:"inline" union:"member"`
 
 	Type CheckoutLinkDiscountType
 }
@@ -234,13 +127,15 @@ type CheckoutLink struct {
 	// The interval unit for the trial period.
 	TrialInterval *TrialInterval `json:"trial_interval"`
 	// The number of interval units for the trial period.
-	TrialIntervalCount *int64                          `json:"trial_interval_count"`
-	Metadata           map[string]CheckoutLinkMetadata `json:"metadata"`
-	PaymentProcessor   PaymentProcessor                `json:"payment_processor"`
+	TrialIntervalCount *int64                        `json:"trial_interval_count"`
+	Metadata           map[string]MetadataOutputType `json:"metadata"`
+	PaymentProcessor   PaymentProcessor              `json:"payment_processor"`
 	// Client secret used to access the checkout link.
 	ClientSecret string `json:"client_secret"`
 	// URL where the customer will be redirected after a successful payment.
 	SuccessURL *string `json:"success_url"`
+	// When set, a back button will be shown in the checkout to return to this URL.
+	ReturnURL *string `json:"return_url"`
 	// Optional label to distinguish links internally
 	Label *string `json:"label"`
 	// Whether to allow the customer to apply discount codes. If you apply a discount through `discount_id`, it'll still be applied, but the customer won't be able to change it.
@@ -261,7 +156,7 @@ func (c CheckoutLink) MarshalJSON() ([]byte, error) {
 }
 
 func (c *CheckoutLink) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &c, "", false, []string{"id", "created_at", "metadata", "payment_processor", "client_secret", "allow_discount_codes", "require_billing_address", "organization_id", "products", "url"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &c, "", false, nil); err != nil {
 		return err
 	}
 	return nil
@@ -302,9 +197,9 @@ func (c *CheckoutLink) GetTrialIntervalCount() *int64 {
 	return c.TrialIntervalCount
 }
 
-func (c *CheckoutLink) GetMetadata() map[string]CheckoutLinkMetadata {
+func (c *CheckoutLink) GetMetadata() map[string]MetadataOutputType {
 	if c == nil {
-		return map[string]CheckoutLinkMetadata{}
+		return map[string]MetadataOutputType{}
 	}
 	return c.Metadata
 }
@@ -328,6 +223,13 @@ func (c *CheckoutLink) GetSuccessURL() *string {
 		return nil
 	}
 	return c.SuccessURL
+}
+
+func (c *CheckoutLink) GetReturnURL() *string {
+	if c == nil {
+		return nil
+	}
+	return c.ReturnURL
 }
 
 func (c *CheckoutLink) GetLabel() *string {

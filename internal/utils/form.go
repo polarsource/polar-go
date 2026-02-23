@@ -14,13 +14,15 @@ import (
 	"github.com/polarsource/polar-go/types"
 )
 
-func populateForm(paramName string, explode bool, objType reflect.Type, objValue reflect.Value, delimiter string, defaultValue *string, getFieldName func(reflect.StructField) string) url.Values {
+func populateForm(paramName string, explode bool, objType reflect.Type, objValue reflect.Value, delimiter string, defaultValue *string, allowEmptyValue map[string]struct{}, getFieldName func(reflect.StructField) string) url.Values {
 
 	formValues := url.Values{}
 
 	if isNil(objType, objValue) {
 		if defaultValue != nil {
 			formValues.Add(paramName, *defaultValue)
+		} else if _, ok := allowEmptyValue[paramName]; ok {
+			formValues.Add(paramName, "")
 		}
 
 		return formValues
@@ -103,12 +105,31 @@ func populateForm(paramName string, explode bool, objType reflect.Type, objValue
 			formValues.Add(paramName, strings.Join(items, delimiter))
 		}
 	case reflect.Slice, reflect.Array:
-		values := parseDelimitedArray(explode, objValue, delimiter)
-		for _, v := range values {
-			formValues.Add(paramName, v)
+		if objValue.Len() == 0 {
+			if _, ok := allowEmptyValue[paramName]; ok {
+				formValues.Add(paramName, "")
+			}
+		} else {
+			values := parseDelimitedArray(explode, objValue, delimiter)
+			for _, v := range values {
+				formValues.Add(paramName, v)
+			}
 		}
 	default:
-		formValues.Add(paramName, valToString(objValue.Interface()))
+		// For string types, use the value directly without conversion
+		if objType.Kind() == reflect.String {
+			stringValue := objValue.String()
+			formValues.Add(paramName, stringValue)
+		} else {
+			stringValue := valToString(objValue.Interface())
+			if stringValue == "" {
+				if _, ok := allowEmptyValue[paramName]; ok {
+					formValues.Add(paramName, "")
+				}
+			} else if stringValue != "" {
+				formValues.Add(paramName, stringValue)
+			}
+		}
 	}
 
 	return formValues

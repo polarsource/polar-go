@@ -20,10 +20,10 @@ const (
 )
 
 type CustomerStateSubscriptionCustomFieldData struct {
-	Str      *string    `queryParam:"inline,name=custom_field_data"`
-	Integer  *int64     `queryParam:"inline,name=custom_field_data"`
-	Boolean  *bool      `queryParam:"inline,name=custom_field_data"`
-	DateTime *time.Time `queryParam:"inline,name=custom_field_data"`
+	Str      *string    `queryParam:"inline" union:"member"`
+	Integer  *int64     `queryParam:"inline" union:"member"`
+	Boolean  *bool      `queryParam:"inline" union:"member"`
+	DateTime *time.Time `queryParam:"inline" union:"member"`
 
 	Type CustomerStateSubscriptionCustomFieldDataType
 }
@@ -117,113 +117,6 @@ func (u CustomerStateSubscriptionCustomFieldData) MarshalJSON() ([]byte, error) 
 	return nil, errors.New("could not marshal union type CustomerStateSubscriptionCustomFieldData: all fields are null")
 }
 
-type CustomerStateSubscriptionMetadataType string
-
-const (
-	CustomerStateSubscriptionMetadataTypeStr     CustomerStateSubscriptionMetadataType = "str"
-	CustomerStateSubscriptionMetadataTypeInteger CustomerStateSubscriptionMetadataType = "integer"
-	CustomerStateSubscriptionMetadataTypeNumber  CustomerStateSubscriptionMetadataType = "number"
-	CustomerStateSubscriptionMetadataTypeBoolean CustomerStateSubscriptionMetadataType = "boolean"
-)
-
-type CustomerStateSubscriptionMetadata struct {
-	Str     *string  `queryParam:"inline,name=metadata"`
-	Integer *int64   `queryParam:"inline,name=metadata"`
-	Number  *float64 `queryParam:"inline,name=metadata"`
-	Boolean *bool    `queryParam:"inline,name=metadata"`
-
-	Type CustomerStateSubscriptionMetadataType
-}
-
-func CreateCustomerStateSubscriptionMetadataStr(str string) CustomerStateSubscriptionMetadata {
-	typ := CustomerStateSubscriptionMetadataTypeStr
-
-	return CustomerStateSubscriptionMetadata{
-		Str:  &str,
-		Type: typ,
-	}
-}
-
-func CreateCustomerStateSubscriptionMetadataInteger(integer int64) CustomerStateSubscriptionMetadata {
-	typ := CustomerStateSubscriptionMetadataTypeInteger
-
-	return CustomerStateSubscriptionMetadata{
-		Integer: &integer,
-		Type:    typ,
-	}
-}
-
-func CreateCustomerStateSubscriptionMetadataNumber(number float64) CustomerStateSubscriptionMetadata {
-	typ := CustomerStateSubscriptionMetadataTypeNumber
-
-	return CustomerStateSubscriptionMetadata{
-		Number: &number,
-		Type:   typ,
-	}
-}
-
-func CreateCustomerStateSubscriptionMetadataBoolean(boolean bool) CustomerStateSubscriptionMetadata {
-	typ := CustomerStateSubscriptionMetadataTypeBoolean
-
-	return CustomerStateSubscriptionMetadata{
-		Boolean: &boolean,
-		Type:    typ,
-	}
-}
-
-func (u *CustomerStateSubscriptionMetadata) UnmarshalJSON(data []byte) error {
-
-	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, nil); err == nil {
-		u.Str = &str
-		u.Type = CustomerStateSubscriptionMetadataTypeStr
-		return nil
-	}
-
-	var integer int64 = int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
-		u.Integer = &integer
-		u.Type = CustomerStateSubscriptionMetadataTypeInteger
-		return nil
-	}
-
-	var number float64 = float64(0)
-	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
-		u.Number = &number
-		u.Type = CustomerStateSubscriptionMetadataTypeNumber
-		return nil
-	}
-
-	var boolean bool = false
-	if err := utils.UnmarshalJSON(data, &boolean, "", true, nil); err == nil {
-		u.Boolean = &boolean
-		u.Type = CustomerStateSubscriptionMetadataTypeBoolean
-		return nil
-	}
-
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for CustomerStateSubscriptionMetadata", string(data))
-}
-
-func (u CustomerStateSubscriptionMetadata) MarshalJSON() ([]byte, error) {
-	if u.Str != nil {
-		return utils.MarshalJSON(u.Str, "", true)
-	}
-
-	if u.Integer != nil {
-		return utils.MarshalJSON(u.Integer, "", true)
-	}
-
-	if u.Number != nil {
-		return utils.MarshalJSON(u.Number, "", true)
-	}
-
-	if u.Boolean != nil {
-		return utils.MarshalJSON(u.Boolean, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type CustomerStateSubscriptionMetadata: all fields are null")
-}
-
 type Status string
 
 const (
@@ -260,7 +153,7 @@ type CustomerStateSubscription struct {
 	ModifiedAt *time.Time `json:"modified_at"`
 	// Key-value object storing custom field values.
 	CustomFieldData map[string]*CustomerStateSubscriptionCustomFieldData `json:"custom_field_data,omitempty"`
-	Metadata        map[string]CustomerStateSubscriptionMetadata         `json:"metadata"`
+	Metadata        map[string]MetadataOutputType                        `json:"metadata"`
 	Status          Status                                               `json:"status"`
 	// The amount of the subscription.
 	Amount int64 `json:"amount"`
@@ -296,7 +189,7 @@ func (c CustomerStateSubscription) MarshalJSON() ([]byte, error) {
 }
 
 func (c *CustomerStateSubscription) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &c, "", false, []string{"id", "created_at", "metadata", "status", "amount", "currency", "recurring_interval", "current_period_start", "cancel_at_period_end", "product_id", "meters"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &c, "", false, nil); err != nil {
 		return err
 	}
 	return nil
@@ -330,9 +223,9 @@ func (c *CustomerStateSubscription) GetCustomFieldData() map[string]*CustomerSta
 	return c.CustomFieldData
 }
 
-func (c *CustomerStateSubscription) GetMetadata() map[string]CustomerStateSubscriptionMetadata {
+func (c *CustomerStateSubscription) GetMetadata() map[string]MetadataOutputType {
 	if c == nil {
-		return map[string]CustomerStateSubscriptionMetadata{}
+		return map[string]MetadataOutputType{}
 	}
 	return c.Metadata
 }

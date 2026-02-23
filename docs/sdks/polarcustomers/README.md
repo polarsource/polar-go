@@ -1,5 +1,4 @@
-# PolarCustomers
-(*CustomerPortal.Customers*)
+# CustomerPortal.Customers
 
 ## Overview
 
@@ -38,7 +37,7 @@ func main() {
     s := polargo.New()
 
     res, err := s.CustomerPortal.Customers.Get(ctx, operations.CustomerPortalCustomersGetSecurity{
-        CustomerSession: os.Getenv("POLAR_CUSTOMER_SESSION"),
+        CustomerSession: polargo.Pointer(os.Getenv("POLAR_CUSTOMER_SESSION")),
     })
     if err != nil {
         log.Fatal(err)
@@ -71,8 +70,6 @@ func main() {
 
 Update authenticated customer.
 
-**Scopes**: `customer_portal:write`
-
 ### Example Usage
 
 <!-- UsageSnippet language="go" operationID="customer_portal:customers:update" method="patch" path="/v1/customer-portal/customers/me" -->
@@ -98,7 +95,7 @@ func main() {
             Country: components.CountryAlpha2InputUs,
         },
     }, operations.CustomerPortalCustomersUpdateSecurity{
-        CustomerSession: os.Getenv("POLAR_CUSTOMER_SESSION"),
+        CustomerSession: polargo.Pointer(os.Getenv("POLAR_CUSTOMER_SESSION")),
     })
     if err != nil {
         log.Fatal(err)
@@ -133,8 +130,6 @@ func main() {
 
 Get saved payment methods of the authenticated customer.
 
-**Scopes**: `customer_portal:read` `customer_portal:write`
-
 ### Example Usage
 
 <!-- UsageSnippet language="go" operationID="customer_portal:customers:list_payment_methods" method="get" path="/v1/customer-portal/customers/me/payment-methods" -->
@@ -155,7 +150,7 @@ func main() {
     s := polargo.New()
 
     res, err := s.CustomerPortal.Customers.ListPaymentMethods(ctx, operations.CustomerPortalCustomersListPaymentMethodsSecurity{
-        CustomerSession: os.Getenv("POLAR_CUSTOMER_SESSION"),
+        CustomerSession: polargo.Pointer(os.Getenv("POLAR_CUSTOMER_SESSION")),
     }, polargo.Pointer[int64](1), polargo.Pointer[int64](10))
     if err != nil {
         log.Fatal(err)
@@ -203,8 +198,6 @@ func main() {
 
 Add a payment method to the authenticated customer.
 
-**Scopes**: `customer_portal:read` `customer_portal:write`
-
 ### Example Usage
 
 <!-- UsageSnippet language="go" operationID="customer_portal:customers:add_payment_method" method="post" path="/v1/customer-portal/customers/me/payment-methods" -->
@@ -230,13 +223,19 @@ func main() {
         SetDefault: false,
         ReturnURL: "https://yearly-custom.net/",
     }, operations.CustomerPortalCustomersAddPaymentMethodSecurity{
-        CustomerSession: os.Getenv("POLAR_CUSTOMER_SESSION"),
+        CustomerSession: polargo.Pointer(os.Getenv("POLAR_CUSTOMER_SESSION")),
     })
     if err != nil {
         log.Fatal(err)
     }
     if res.CustomerPaymentMethodCreateResponse != nil {
-        // handle response
+        switch res.CustomerPaymentMethodCreateResponse.Type {
+            case components.CustomerPaymentMethodCreateResponseTypeRequiresAction:
+                // res.CustomerPaymentMethodCreateResponse.CustomerPaymentMethodCreateRequiresActionResponse is populated
+            case components.CustomerPaymentMethodCreateResponseTypeSucceeded:
+                // res.CustomerPaymentMethodCreateResponse.CustomerPaymentMethodCreateSucceededResponse is populated
+        }
+
     }
 }
 ```
@@ -265,8 +264,6 @@ func main() {
 
 Confirm a payment method for the authenticated customer.
 
-**Scopes**: `customer_portal:read` `customer_portal:write`
-
 ### Example Usage
 
 <!-- UsageSnippet language="go" operationID="customer_portal:customers:confirm_payment_method" method="post" path="/v1/customer-portal/customers/me/payment-methods/confirm" -->
@@ -291,13 +288,19 @@ func main() {
         SetupIntentID: "<id>",
         SetDefault: true,
     }, operations.CustomerPortalCustomersConfirmPaymentMethodSecurity{
-        CustomerSession: os.Getenv("POLAR_CUSTOMER_SESSION"),
+        CustomerSession: polargo.Pointer(os.Getenv("POLAR_CUSTOMER_SESSION")),
     })
     if err != nil {
         log.Fatal(err)
     }
     if res.CustomerPaymentMethodCreateResponse != nil {
-        // handle response
+        switch res.CustomerPaymentMethodCreateResponse.Type {
+            case components.CustomerPaymentMethodCreateResponseTypeRequiresAction:
+                // res.CustomerPaymentMethodCreateResponse.CustomerPaymentMethodCreateRequiresActionResponse is populated
+            case components.CustomerPaymentMethodCreateResponseTypeSucceeded:
+                // res.CustomerPaymentMethodCreateResponse.CustomerPaymentMethodCreateSucceededResponse is populated
+        }
+
     }
 }
 ```
@@ -327,8 +330,6 @@ func main() {
 
 Delete a payment method from the authenticated customer.
 
-**Scopes**: `customer_portal:read` `customer_portal:write`
-
 ### Example Usage
 
 <!-- UsageSnippet language="go" operationID="customer_portal:customers:delete_payment_method" method="delete" path="/v1/customer-portal/customers/me/payment-methods/{id}" -->
@@ -349,7 +350,7 @@ func main() {
     s := polargo.New()
 
     res, err := s.CustomerPortal.Customers.DeletePaymentMethod(ctx, operations.CustomerPortalCustomersDeletePaymentMethodSecurity{
-        CustomerSession: os.Getenv("POLAR_CUSTOMER_SESSION"),
+        CustomerSession: polargo.Pointer(os.Getenv("POLAR_CUSTOMER_SESSION")),
     }, "<id>")
     if err != nil {
         log.Fatal(err)

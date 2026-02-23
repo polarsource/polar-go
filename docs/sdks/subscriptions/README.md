@@ -1,5 +1,4 @@
 # Subscriptions
-(*Subscriptions*)
 
 ## Overview
 
@@ -9,8 +8,8 @@
 * [Create](#create) - Create Subscription
 * [Export](#export) - Export Subscriptions
 * [Get](#get) - Get Subscription
-* [Update](#update) - Update Subscription
 * [Revoke](#revoke) - Revoke Subscription
+* [Update](#update) - Update Subscription
 
 ## List
 
@@ -127,7 +126,17 @@ func main() {
         log.Fatal(err)
     }
     if res.Subscription != nil {
-        // handle response
+        switch res.Subscription.Discount.Type {
+            case components.SubscriptionDiscountTypeDiscountFixedOnceForeverDurationBase:
+                // res.Subscription.Discount.DiscountFixedOnceForeverDurationBase is populated
+            case components.SubscriptionDiscountTypeDiscountFixedRepeatDurationBase:
+                // res.Subscription.Discount.DiscountFixedRepeatDurationBase is populated
+            case components.SubscriptionDiscountTypeDiscountPercentageOnceForeverDurationBase:
+                // res.Subscription.Discount.DiscountPercentageOnceForeverDurationBase is populated
+            case components.SubscriptionDiscountTypeDiscountPercentageRepeatDurationBase:
+                // res.Subscription.Discount.DiscountPercentageRepeatDurationBase is populated
+        }
+
     }
 }
 ```
@@ -226,6 +235,7 @@ import(
 	"os"
 	polargo "github.com/polarsource/polar-go"
 	"log"
+	"github.com/polarsource/polar-go/models/components"
 )
 
 func main() {
@@ -240,7 +250,17 @@ func main() {
         log.Fatal(err)
     }
     if res.Subscription != nil {
-        // handle response
+        switch res.Subscription.Discount.Type {
+            case components.SubscriptionDiscountTypeDiscountFixedOnceForeverDurationBase:
+                // res.Subscription.Discount.DiscountFixedOnceForeverDurationBase is populated
+            case components.SubscriptionDiscountTypeDiscountFixedRepeatDurationBase:
+                // res.Subscription.Discount.DiscountFixedRepeatDurationBase is populated
+            case components.SubscriptionDiscountTypeDiscountPercentageOnceForeverDurationBase:
+                // res.Subscription.Discount.DiscountPercentageOnceForeverDurationBase is populated
+            case components.SubscriptionDiscountTypeDiscountPercentageRepeatDurationBase:
+                // res.Subscription.Discount.DiscountPercentageRepeatDurationBase is populated
+        }
+
     }
 }
 ```
@@ -264,6 +284,75 @@ func main() {
 | apierrors.ResourceNotFound    | 404                           | application/json              |
 | apierrors.HTTPValidationError | 422                           | application/json              |
 | apierrors.APIError            | 4XX, 5XX                      | \*/\*                         |
+
+## Revoke
+
+Revoke a subscription, i.e cancel immediately.
+
+**Scopes**: `subscriptions:write`
+
+### Example Usage
+
+<!-- UsageSnippet language="go" operationID="subscriptions:revoke" method="delete" path="/v1/subscriptions/{id}" -->
+```go
+package main
+
+import(
+	"context"
+	"os"
+	polargo "github.com/polarsource/polar-go"
+	"log"
+	"github.com/polarsource/polar-go/models/components"
+)
+
+func main() {
+    ctx := context.Background()
+
+    s := polargo.New(
+        polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
+    )
+
+    res, err := s.Subscriptions.Revoke(ctx, "<value>")
+    if err != nil {
+        log.Fatal(err)
+    }
+    if res.Subscription != nil {
+        switch res.Subscription.Discount.Type {
+            case components.SubscriptionDiscountTypeDiscountFixedOnceForeverDurationBase:
+                // res.Subscription.Discount.DiscountFixedOnceForeverDurationBase is populated
+            case components.SubscriptionDiscountTypeDiscountFixedRepeatDurationBase:
+                // res.Subscription.Discount.DiscountFixedRepeatDurationBase is populated
+            case components.SubscriptionDiscountTypeDiscountPercentageOnceForeverDurationBase:
+                // res.Subscription.Discount.DiscountPercentageOnceForeverDurationBase is populated
+            case components.SubscriptionDiscountTypeDiscountPercentageRepeatDurationBase:
+                // res.Subscription.Discount.DiscountPercentageRepeatDurationBase is populated
+        }
+
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                | Type                                                     | Required                                                 | Description                                              |
+| -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- |
+| `ctx`                                                    | [context.Context](https://pkg.go.dev/context#Context)    | :heavy_check_mark:                                       | The context to use for the request.                      |
+| `id`                                                     | *string*                                                 | :heavy_check_mark:                                       | The subscription ID.                                     |
+| `opts`                                                   | [][operations.Option](../../models/operations/option.md) | :heavy_minus_sign:                                       | The options for this request.                            |
+
+### Response
+
+**[*operations.SubscriptionsRevokeResponse](../../models/operations/subscriptionsrevokeresponse.md), error**
+
+### Errors
+
+| Error Type                            | Status Code                           | Content Type                          |
+| ------------------------------------- | ------------------------------------- | ------------------------------------- |
+| apierrors.AlreadyCanceledSubscription | 403                                   | application/json                      |
+| apierrors.ResourceNotFound            | 404                                   | application/json                      |
+| apierrors.SubscriptionLocked          | 409                                   | application/json                      |
+| apierrors.HTTPValidationError         | 422                                   | application/json                      |
+| apierrors.APIError                    | 4XX, 5XX                              | \*/\*                                 |
 
 ## Update
 
@@ -301,7 +390,17 @@ func main() {
         log.Fatal(err)
     }
     if res.Subscription != nil {
-        // handle response
+        switch res.Subscription.Discount.Type {
+            case components.SubscriptionDiscountTypeDiscountFixedOnceForeverDurationBase:
+                // res.Subscription.Discount.DiscountFixedOnceForeverDurationBase is populated
+            case components.SubscriptionDiscountTypeDiscountFixedRepeatDurationBase:
+                // res.Subscription.Discount.DiscountFixedRepeatDurationBase is populated
+            case components.SubscriptionDiscountTypeDiscountPercentageOnceForeverDurationBase:
+                // res.Subscription.Discount.DiscountPercentageOnceForeverDurationBase is populated
+            case components.SubscriptionDiscountTypeDiscountPercentageRepeatDurationBase:
+                // res.Subscription.Discount.DiscountPercentageRepeatDurationBase is populated
+        }
+
     }
 }
 ```
@@ -318,64 +417,6 @@ func main() {
 ### Response
 
 **[*operations.SubscriptionsUpdateResponse](../../models/operations/subscriptionsupdateresponse.md), error**
-
-### Errors
-
-| Error Type                            | Status Code                           | Content Type                          |
-| ------------------------------------- | ------------------------------------- | ------------------------------------- |
-| apierrors.AlreadyCanceledSubscription | 403                                   | application/json                      |
-| apierrors.ResourceNotFound            | 404                                   | application/json                      |
-| apierrors.SubscriptionLocked          | 409                                   | application/json                      |
-| apierrors.HTTPValidationError         | 422                                   | application/json                      |
-| apierrors.APIError                    | 4XX, 5XX                              | \*/\*                                 |
-
-## Revoke
-
-Revoke a subscription, i.e cancel immediately.
-
-**Scopes**: `subscriptions:write`
-
-### Example Usage
-
-<!-- UsageSnippet language="go" operationID="subscriptions:revoke" method="delete" path="/v1/subscriptions/{id}" -->
-```go
-package main
-
-import(
-	"context"
-	"os"
-	polargo "github.com/polarsource/polar-go"
-	"log"
-)
-
-func main() {
-    ctx := context.Background()
-
-    s := polargo.New(
-        polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
-    )
-
-    res, err := s.Subscriptions.Revoke(ctx, "<value>")
-    if err != nil {
-        log.Fatal(err)
-    }
-    if res.Subscription != nil {
-        // handle response
-    }
-}
-```
-
-### Parameters
-
-| Parameter                                                | Type                                                     | Required                                                 | Description                                              |
-| -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- |
-| `ctx`                                                    | [context.Context](https://pkg.go.dev/context#Context)    | :heavy_check_mark:                                       | The context to use for the request.                      |
-| `id`                                                     | *string*                                                 | :heavy_check_mark:                                       | The subscription ID.                                     |
-| `opts`                                                   | [][operations.Option](../../models/operations/option.md) | :heavy_minus_sign:                                       | The options for this request.                            |
-
-### Response
-
-**[*operations.SubscriptionsRevokeResponse](../../models/operations/subscriptionsrevokeresponse.md), error**
 
 ### Errors
 

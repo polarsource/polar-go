@@ -17,8 +17,8 @@ const (
 
 // UnitAmount - The price per unit in cents. Supports up to 12 decimal places.
 type UnitAmount struct {
-	Number *float64 `queryParam:"inline,name=Unit_Amount"`
-	Str    *string  `queryParam:"inline,name=Unit_Amount"`
+	Number *float64 `queryParam:"inline" union:"member"`
+	Str    *string  `queryParam:"inline" union:"member"`
 
 	Type UnitAmountType
 }
@@ -74,11 +74,10 @@ func (u UnitAmount) MarshalJSON() ([]byte, error) {
 
 // ProductPriceMeteredUnitCreate - Schema to create a metered price with a fixed unit price.
 type ProductPriceMeteredUnitCreate struct {
-	amountType string `const:"metered_unit" json:"amount_type"`
+	amountType    string               `const:"metered_unit" json:"amount_type"`
+	PriceCurrency *PresentmentCurrency `json:"price_currency,omitempty"`
 	// The ID of the meter associated to the price.
 	MeterID string `json:"meter_id"`
-	// The currency. Currently, only `usd` is supported.
-	PriceCurrency *string `default:"usd" json:"price_currency"`
 	// The price per unit in cents. Supports up to 12 decimal places.
 	UnitAmount UnitAmount `json:"unit_amount"`
 	// Optional maximum amount in cents that can be charged, regardless of the number of units consumed.
@@ -100,18 +99,18 @@ func (p *ProductPriceMeteredUnitCreate) GetAmountType() string {
 	return "metered_unit"
 }
 
+func (p *ProductPriceMeteredUnitCreate) GetPriceCurrency() *PresentmentCurrency {
+	if p == nil {
+		return nil
+	}
+	return p.PriceCurrency
+}
+
 func (p *ProductPriceMeteredUnitCreate) GetMeterID() string {
 	if p == nil {
 		return ""
 	}
 	return p.MeterID
-}
-
-func (p *ProductPriceMeteredUnitCreate) GetPriceCurrency() *string {
-	if p == nil {
-		return nil
-	}
-	return p.PriceCurrency
 }
 
 func (p *ProductPriceMeteredUnitCreate) GetUnitAmount() UnitAmount {

@@ -8,7 +8,7 @@ import (
 
 type RefundsCreateResponse struct {
 	HTTPMeta components.HTTPMetadata `json:"-"`
-	// Successful Response
+	// Refund created.
 	Refund *components.Refund
 }
 

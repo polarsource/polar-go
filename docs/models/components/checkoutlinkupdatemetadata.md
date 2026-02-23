@@ -27,3 +27,19 @@ checkoutLinkUpdateMetadata := components.CreateCheckoutLinkUpdateMetadataNumber(
 checkoutLinkUpdateMetadata := components.CreateCheckoutLinkUpdateMetadataBoolean(bool{/* values here */})
 ```
 
+## Union Discrimination
+
+Use the `Type` field to determine which variant is active, then access the corresponding field:
+
+```go
+switch checkoutLinkUpdateMetadata.Type {
+	case components.CheckoutLinkUpdateMetadataTypeStr:
+		// checkoutLinkUpdateMetadata.Str is populated
+	case components.CheckoutLinkUpdateMetadataTypeInteger:
+		// checkoutLinkUpdateMetadata.Integer is populated
+	case components.CheckoutLinkUpdateMetadataTypeNumber:
+		// checkoutLinkUpdateMetadata.Number is populated
+	case components.CheckoutLinkUpdateMetadataTypeBoolean:
+		// checkoutLinkUpdateMetadata.Boolean is populated
+}
+```

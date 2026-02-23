@@ -17,3 +17,15 @@ queryParamDiscountIDFilter := operations.CreateQueryParamDiscountIDFilterStr(str
 queryParamDiscountIDFilter := operations.CreateQueryParamDiscountIDFilterArrayOfStr([]string{/* values here */})
 ```
 
+## Union Discrimination
+
+Use the `Type` field to determine which variant is active, then access the corresponding field:
+
+```go
+switch queryParamDiscountIDFilter.Type {
+	case operations.QueryParamDiscountIDFilterTypeStr:
+		// queryParamDiscountIDFilter.Str is populated
+	case operations.QueryParamDiscountIDFilterTypeArrayOfStr:
+		// queryParamDiscountIDFilter.ArrayOfStr is populated
+}
+```

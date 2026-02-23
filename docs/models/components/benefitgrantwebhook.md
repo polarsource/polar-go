@@ -39,3 +39,23 @@ benefitGrantWebhook := components.CreateBenefitGrantWebhookBenefitGrantLicenseKe
 benefitGrantWebhook := components.CreateBenefitGrantWebhookBenefitGrantMeterCreditWebhook(components.BenefitGrantMeterCreditWebhook{/* values here */})
 ```
 
+## Union Discrimination
+
+Use the `Type` field to determine which variant is active, then access the corresponding field:
+
+```go
+switch benefitGrantWebhook.Type {
+	case components.BenefitGrantWebhookTypeBenefitGrantDiscordWebhook:
+		// benefitGrantWebhook.BenefitGrantDiscordWebhook is populated
+	case components.BenefitGrantWebhookTypeBenefitGrantCustomWebhook:
+		// benefitGrantWebhook.BenefitGrantCustomWebhook is populated
+	case components.BenefitGrantWebhookTypeBenefitGrantGitHubRepositoryWebhook:
+		// benefitGrantWebhook.BenefitGrantGitHubRepositoryWebhook is populated
+	case components.BenefitGrantWebhookTypeBenefitGrantDownloadablesWebhook:
+		// benefitGrantWebhook.BenefitGrantDownloadablesWebhook is populated
+	case components.BenefitGrantWebhookTypeBenefitGrantLicenseKeysWebhook:
+		// benefitGrantWebhook.BenefitGrantLicenseKeysWebhook is populated
+	case components.BenefitGrantWebhookTypeBenefitGrantMeterCreditWebhook:
+		// benefitGrantWebhook.BenefitGrantMeterCreditWebhook is populated
+}
+```

@@ -18,8 +18,8 @@ const (
 
 // CustomersExportQueryParamOrganizationID - Filter by organization ID.
 type CustomersExportQueryParamOrganizationID struct {
-	Str        *string  `queryParam:"inline,name=Organization_Id"`
-	ArrayOfStr []string `queryParam:"inline,name=Organization_Id"`
+	Str        *string  `queryParam:"inline" union:"member"`
+	ArrayOfStr []string `queryParam:"inline" union:"member"`
 
 	Type CustomersExportQueryParamOrganizationIDType
 }
@@ -89,6 +89,8 @@ type CustomersExportResponse struct {
 	HTTPMeta components.HTTPMetadata `json:"-"`
 	// Successful Response
 	Any any
+	// Successful Response
+	Res *string
 }
 
 func (c *CustomersExportResponse) GetHTTPMeta() components.HTTPMetadata {
@@ -103,4 +105,11 @@ func (c *CustomersExportResponse) GetAny() any {
 		return nil
 	}
 	return c.Any
+}
+
+func (c *CustomersExportResponse) GetRes() *string {
+	if c == nil {
+		return nil
+	}
+	return c.Res
 }

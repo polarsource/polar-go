@@ -19,8 +19,8 @@ const (
 
 // MetersQuantitiesQueryParamCustomerIDFilter - Filter by customer ID.
 type MetersQuantitiesQueryParamCustomerIDFilter struct {
-	Str        *string  `queryParam:"inline,name=CustomerID_Filter"`
-	ArrayOfStr []string `queryParam:"inline,name=CustomerID_Filter"`
+	Str        *string  `queryParam:"inline" union:"member"`
+	ArrayOfStr []string `queryParam:"inline" union:"member"`
 
 	Type MetersQuantitiesQueryParamCustomerIDFilterType
 }
@@ -83,8 +83,8 @@ const (
 
 // MetersQuantitiesQueryParamExternalCustomerIDFilter - Filter by external customer ID.
 type MetersQuantitiesQueryParamExternalCustomerIDFilter struct {
-	Str        *string  `queryParam:"inline,name=ExternalCustomerID_Filter"`
-	ArrayOfStr []string `queryParam:"inline,name=ExternalCustomerID_Filter"`
+	Str        *string  `queryParam:"inline" union:"member"`
+	ArrayOfStr []string `queryParam:"inline" union:"member"`
 
 	Type MetersQuantitiesQueryParamExternalCustomerIDFilterType
 }
@@ -147,6 +147,8 @@ type MetersQuantitiesRequest struct {
 	EndTimestamp time.Time `queryParam:"style=form,explode=true,name=end_timestamp"`
 	// Interval between two timestamps.
 	Interval components.TimeInterval `queryParam:"style=form,explode=true,name=interval"`
+	// Timezone to use for the timestamps. Default is UTC.
+	Timezone *string `default:"UTC" queryParam:"style=form,explode=true,name=timezone"`
 	// Filter by customer ID.
 	CustomerID *MetersQuantitiesQueryParamCustomerIDFilter `queryParam:"style=form,explode=true,name=customer_id"`
 	// Filter by external customer ID.
@@ -162,7 +164,7 @@ func (m MetersQuantitiesRequest) MarshalJSON() ([]byte, error) {
 }
 
 func (m *MetersQuantitiesRequest) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &m, "", false, []string{"id", "start_timestamp", "end_timestamp", "interval"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &m, "", false, nil); err != nil {
 		return err
 	}
 	return nil
@@ -194,6 +196,13 @@ func (m *MetersQuantitiesRequest) GetInterval() components.TimeInterval {
 		return components.TimeInterval("")
 	}
 	return m.Interval
+}
+
+func (m *MetersQuantitiesRequest) GetTimezone() *string {
+	if m == nil {
+		return nil
+	}
+	return m.Timezone
 }
 
 func (m *MetersQuantitiesRequest) GetCustomerID() *MetersQuantitiesQueryParamCustomerIDFilter {

@@ -12,11 +12,14 @@ type OrganizationUpdate struct {
 	// Links to social profiles.
 	Socials []OrganizationSocialLink `json:"socials,omitempty"`
 	// Additional, private, business details Polar needs about active organizations for compliance (KYC).
-	Details               *OrganizationDetails               `json:"details,omitempty"`
-	FeatureSettings       *OrganizationFeatureSettings       `json:"feature_settings,omitempty"`
-	SubscriptionSettings  *OrganizationSubscriptionSettings  `json:"subscription_settings,omitempty"`
-	NotificationSettings  *OrganizationNotificationSettings  `json:"notification_settings,omitempty"`
-	CustomerEmailSettings *OrganizationCustomerEmailSettings `json:"customer_email_settings,omitempty"`
+	Details                *OrganizationDetails                `json:"details,omitempty"`
+	FeatureSettings        *OrganizationFeatureSettings        `json:"feature_settings,omitempty"`
+	SubscriptionSettings   *OrganizationSubscriptionSettings   `json:"subscription_settings,omitempty"`
+	NotificationSettings   *OrganizationNotificationSettings   `json:"notification_settings,omitempty"`
+	CustomerEmailSettings  *OrganizationCustomerEmailSettings  `json:"customer_email_settings,omitempty"`
+	CustomerPortalSettings *OrganizationCustomerPortalSettings `json:"customer_portal_settings,omitempty"`
+	// Default presentment currency for the organization
+	DefaultPresentmentCurrency *PresentmentCurrency `json:"default_presentment_currency,omitempty"`
 }
 
 func (o *OrganizationUpdate) GetName() *string {
@@ -87,4 +90,18 @@ func (o *OrganizationUpdate) GetCustomerEmailSettings() *OrganizationCustomerEma
 		return nil
 	}
 	return o.CustomerEmailSettings
+}
+
+func (o *OrganizationUpdate) GetCustomerPortalSettings() *OrganizationCustomerPortalSettings {
+	if o == nil {
+		return nil
+	}
+	return o.CustomerPortalSettings
+}
+
+func (o *OrganizationUpdate) GetDefaultPresentmentCurrency() *PresentmentCurrency {
+	if o == nil {
+		return nil
+	}
+	return o.DefaultPresentmentCurrency
 }

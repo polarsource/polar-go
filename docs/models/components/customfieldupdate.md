@@ -33,3 +33,21 @@ customFieldUpdate := components.CreateCustomFieldUpdateSelect(components.CustomF
 customFieldUpdate := components.CreateCustomFieldUpdateText(components.CustomFieldUpdateText{/* values here */})
 ```
 
+## Union Discrimination
+
+Use the `Type` field to determine which variant is active, then access the corresponding field:
+
+```go
+switch customFieldUpdate.Type {
+	case components.CustomFieldUpdateTypeCheckbox:
+		// customFieldUpdate.CustomFieldUpdateCheckbox is populated
+	case components.CustomFieldUpdateTypeDate:
+		// customFieldUpdate.CustomFieldUpdateDate is populated
+	case components.CustomFieldUpdateTypeNumber:
+		// customFieldUpdate.CustomFieldUpdateNumber is populated
+	case components.CustomFieldUpdateTypeSelect:
+		// customFieldUpdate.CustomFieldUpdateSelect is populated
+	case components.CustomFieldUpdateTypeText:
+		// customFieldUpdate.CustomFieldUpdateText is populated
+}
+```

@@ -9,11 +9,11 @@ import (
 
 // WebhookSubscriptionUpdatedPayload - Sent when a subscription is updated. This event fires for all changes to the subscription, including renewals.
 //
-// If you want more specific events, you can listen to `subscription.active`, `subscription.canceled`, and `subscription.revoked`.
+// If you want more specific events, you can listen to `subscription.active`, `subscription.canceled`, `subscription.past_due`, and `subscription.revoked`.
 //
 // To listen specifically for renewals, you can listen to `order.created` events and check the `billing_reason` field.
 //
-// **Discord & Slack support:** On cancellation and revocation. Renewals are skipped.
+// **Discord & Slack support:** On cancellation, past due, and revocation. Renewals are skipped.
 type WebhookSubscriptionUpdatedPayload struct {
 	type_     string       `const:"subscription.updated" json:"type"`
 	Timestamp time.Time    `json:"timestamp"`
@@ -25,7 +25,7 @@ func (w WebhookSubscriptionUpdatedPayload) MarshalJSON() ([]byte, error) {
 }
 
 func (w *WebhookSubscriptionUpdatedPayload) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &w, "", false, []string{"type", "timestamp", "data"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &w, "", false, nil); err != nil {
 		return err
 	}
 	return nil

@@ -26,7 +26,7 @@ func (w WebhookCustomerUpdatedPayload) MarshalJSON() ([]byte, error) {
 }
 
 func (w *WebhookCustomerUpdatedPayload) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &w, "", false, []string{"type", "timestamp", "data"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &w, "", false, nil); err != nil {
 		return err
 	}
 	return nil

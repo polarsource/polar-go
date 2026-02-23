@@ -18,8 +18,8 @@ const (
 
 // PaymentsListQueryParamOrganizationIDFilter - Filter by organization ID.
 type PaymentsListQueryParamOrganizationIDFilter struct {
-	Str        *string  `queryParam:"inline,name=OrganizationID_Filter"`
-	ArrayOfStr []string `queryParam:"inline,name=OrganizationID_Filter"`
+	Str        *string  `queryParam:"inline" union:"member"`
+	ArrayOfStr []string `queryParam:"inline" union:"member"`
 
 	Type PaymentsListQueryParamOrganizationIDFilterType
 }
@@ -82,8 +82,8 @@ const (
 
 // PaymentsListQueryParamCheckoutIDFilter - Filter by checkout ID.
 type PaymentsListQueryParamCheckoutIDFilter struct {
-	Str        *string  `queryParam:"inline,name=CheckoutID_Filter"`
-	ArrayOfStr []string `queryParam:"inline,name=CheckoutID_Filter"`
+	Str        *string  `queryParam:"inline" union:"member"`
+	ArrayOfStr []string `queryParam:"inline" union:"member"`
 
 	Type PaymentsListQueryParamCheckoutIDFilterType
 }
@@ -146,8 +146,8 @@ const (
 
 // PaymentsListQueryParamOrderIDFilter - Filter by order ID.
 type PaymentsListQueryParamOrderIDFilter struct {
-	Str        *string  `queryParam:"inline,name=OrderID_Filter"`
-	ArrayOfStr []string `queryParam:"inline,name=OrderID_Filter"`
+	Str        *string  `queryParam:"inline" union:"member"`
+	ArrayOfStr []string `queryParam:"inline" union:"member"`
 
 	Type PaymentsListQueryParamOrderIDFilterType
 }
@@ -201,59 +201,59 @@ func (u PaymentsListQueryParamOrderIDFilter) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type PaymentsListQueryParamOrderIDFilter: all fields are null")
 }
 
-type QueryParamStatusFilterType string
+type PaymentsListQueryParamStatusFilterType string
 
 const (
-	QueryParamStatusFilterTypePaymentStatus        QueryParamStatusFilterType = "PaymentStatus"
-	QueryParamStatusFilterTypeArrayOfPaymentStatus QueryParamStatusFilterType = "arrayOfPaymentStatus"
+	PaymentsListQueryParamStatusFilterTypePaymentStatus        PaymentsListQueryParamStatusFilterType = "PaymentStatus"
+	PaymentsListQueryParamStatusFilterTypeArrayOfPaymentStatus PaymentsListQueryParamStatusFilterType = "arrayOfPaymentStatus"
 )
 
-// QueryParamStatusFilter - Filter by payment status.
-type QueryParamStatusFilter struct {
-	PaymentStatus        *components.PaymentStatus  `queryParam:"inline,name=Status_Filter"`
-	ArrayOfPaymentStatus []components.PaymentStatus `queryParam:"inline,name=Status_Filter"`
+// PaymentsListQueryParamStatusFilter - Filter by payment status.
+type PaymentsListQueryParamStatusFilter struct {
+	PaymentStatus        *components.PaymentStatus  `queryParam:"inline" union:"member"`
+	ArrayOfPaymentStatus []components.PaymentStatus `queryParam:"inline" union:"member"`
 
-	Type QueryParamStatusFilterType
+	Type PaymentsListQueryParamStatusFilterType
 }
 
-func CreateQueryParamStatusFilterPaymentStatus(paymentStatus components.PaymentStatus) QueryParamStatusFilter {
-	typ := QueryParamStatusFilterTypePaymentStatus
+func CreatePaymentsListQueryParamStatusFilterPaymentStatus(paymentStatus components.PaymentStatus) PaymentsListQueryParamStatusFilter {
+	typ := PaymentsListQueryParamStatusFilterTypePaymentStatus
 
-	return QueryParamStatusFilter{
+	return PaymentsListQueryParamStatusFilter{
 		PaymentStatus: &paymentStatus,
 		Type:          typ,
 	}
 }
 
-func CreateQueryParamStatusFilterArrayOfPaymentStatus(arrayOfPaymentStatus []components.PaymentStatus) QueryParamStatusFilter {
-	typ := QueryParamStatusFilterTypeArrayOfPaymentStatus
+func CreatePaymentsListQueryParamStatusFilterArrayOfPaymentStatus(arrayOfPaymentStatus []components.PaymentStatus) PaymentsListQueryParamStatusFilter {
+	typ := PaymentsListQueryParamStatusFilterTypeArrayOfPaymentStatus
 
-	return QueryParamStatusFilter{
+	return PaymentsListQueryParamStatusFilter{
 		ArrayOfPaymentStatus: arrayOfPaymentStatus,
 		Type:                 typ,
 	}
 }
 
-func (u *QueryParamStatusFilter) UnmarshalJSON(data []byte) error {
+func (u *PaymentsListQueryParamStatusFilter) UnmarshalJSON(data []byte) error {
 
 	var paymentStatus components.PaymentStatus = components.PaymentStatus("")
 	if err := utils.UnmarshalJSON(data, &paymentStatus, "", true, nil); err == nil {
 		u.PaymentStatus = &paymentStatus
-		u.Type = QueryParamStatusFilterTypePaymentStatus
+		u.Type = PaymentsListQueryParamStatusFilterTypePaymentStatus
 		return nil
 	}
 
 	var arrayOfPaymentStatus []components.PaymentStatus = []components.PaymentStatus{}
 	if err := utils.UnmarshalJSON(data, &arrayOfPaymentStatus, "", true, nil); err == nil {
 		u.ArrayOfPaymentStatus = arrayOfPaymentStatus
-		u.Type = QueryParamStatusFilterTypeArrayOfPaymentStatus
+		u.Type = PaymentsListQueryParamStatusFilterTypeArrayOfPaymentStatus
 		return nil
 	}
 
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for QueryParamStatusFilter", string(data))
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for PaymentsListQueryParamStatusFilter", string(data))
 }
 
-func (u QueryParamStatusFilter) MarshalJSON() ([]byte, error) {
+func (u PaymentsListQueryParamStatusFilter) MarshalJSON() ([]byte, error) {
 	if u.PaymentStatus != nil {
 		return utils.MarshalJSON(u.PaymentStatus, "", true)
 	}
@@ -262,7 +262,7 @@ func (u QueryParamStatusFilter) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.ArrayOfPaymentStatus, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type QueryParamStatusFilter: all fields are null")
+	return nil, errors.New("could not marshal union type PaymentsListQueryParamStatusFilter: all fields are null")
 }
 
 type MethodFilterType string
@@ -274,8 +274,8 @@ const (
 
 // MethodFilter - Filter by payment method.
 type MethodFilter struct {
-	Str        *string  `queryParam:"inline,name=Method_Filter"`
-	ArrayOfStr []string `queryParam:"inline,name=Method_Filter"`
+	Str        *string  `queryParam:"inline" union:"member"`
+	ArrayOfStr []string `queryParam:"inline" union:"member"`
 
 	Type MethodFilterType
 }
@@ -338,8 +338,8 @@ const (
 
 // CustomerEmailFilter - Filter by customer email.
 type CustomerEmailFilter struct {
-	Str        *string  `queryParam:"inline,name=CustomerEmail_Filter"`
-	ArrayOfStr []string `queryParam:"inline,name=CustomerEmail_Filter"`
+	Str        *string  `queryParam:"inline" union:"member"`
+	ArrayOfStr []string `queryParam:"inline" union:"member"`
 
 	Type CustomerEmailFilterType
 }
@@ -401,7 +401,7 @@ type PaymentsListRequest struct {
 	// Filter by order ID.
 	OrderID *PaymentsListQueryParamOrderIDFilter `queryParam:"style=form,explode=true,name=order_id"`
 	// Filter by payment status.
-	Status *QueryParamStatusFilter `queryParam:"style=form,explode=true,name=status"`
+	Status *PaymentsListQueryParamStatusFilter `queryParam:"style=form,explode=true,name=status"`
 	// Filter by payment method.
 	Method *MethodFilter `queryParam:"style=form,explode=true,name=method"`
 	// Filter by customer email.
@@ -446,7 +446,7 @@ func (p *PaymentsListRequest) GetOrderID() *PaymentsListQueryParamOrderIDFilter 
 	return p.OrderID
 }
 
-func (p *PaymentsListRequest) GetStatus() *QueryParamStatusFilter {
+func (p *PaymentsListRequest) GetStatus() *PaymentsListQueryParamStatusFilter {
 	if p == nil {
 		return nil
 	}

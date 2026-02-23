@@ -3,118 +3,9 @@
 package components
 
 import (
-	"errors"
-	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
 	"time"
 )
-
-type BenefitMeterCreditMetadataType string
-
-const (
-	BenefitMeterCreditMetadataTypeStr     BenefitMeterCreditMetadataType = "str"
-	BenefitMeterCreditMetadataTypeInteger BenefitMeterCreditMetadataType = "integer"
-	BenefitMeterCreditMetadataTypeNumber  BenefitMeterCreditMetadataType = "number"
-	BenefitMeterCreditMetadataTypeBoolean BenefitMeterCreditMetadataType = "boolean"
-)
-
-type BenefitMeterCreditMetadata struct {
-	Str     *string  `queryParam:"inline,name=metadata"`
-	Integer *int64   `queryParam:"inline,name=metadata"`
-	Number  *float64 `queryParam:"inline,name=metadata"`
-	Boolean *bool    `queryParam:"inline,name=metadata"`
-
-	Type BenefitMeterCreditMetadataType
-}
-
-func CreateBenefitMeterCreditMetadataStr(str string) BenefitMeterCreditMetadata {
-	typ := BenefitMeterCreditMetadataTypeStr
-
-	return BenefitMeterCreditMetadata{
-		Str:  &str,
-		Type: typ,
-	}
-}
-
-func CreateBenefitMeterCreditMetadataInteger(integer int64) BenefitMeterCreditMetadata {
-	typ := BenefitMeterCreditMetadataTypeInteger
-
-	return BenefitMeterCreditMetadata{
-		Integer: &integer,
-		Type:    typ,
-	}
-}
-
-func CreateBenefitMeterCreditMetadataNumber(number float64) BenefitMeterCreditMetadata {
-	typ := BenefitMeterCreditMetadataTypeNumber
-
-	return BenefitMeterCreditMetadata{
-		Number: &number,
-		Type:   typ,
-	}
-}
-
-func CreateBenefitMeterCreditMetadataBoolean(boolean bool) BenefitMeterCreditMetadata {
-	typ := BenefitMeterCreditMetadataTypeBoolean
-
-	return BenefitMeterCreditMetadata{
-		Boolean: &boolean,
-		Type:    typ,
-	}
-}
-
-func (u *BenefitMeterCreditMetadata) UnmarshalJSON(data []byte) error {
-
-	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, nil); err == nil {
-		u.Str = &str
-		u.Type = BenefitMeterCreditMetadataTypeStr
-		return nil
-	}
-
-	var integer int64 = int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
-		u.Integer = &integer
-		u.Type = BenefitMeterCreditMetadataTypeInteger
-		return nil
-	}
-
-	var number float64 = float64(0)
-	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
-		u.Number = &number
-		u.Type = BenefitMeterCreditMetadataTypeNumber
-		return nil
-	}
-
-	var boolean bool = false
-	if err := utils.UnmarshalJSON(data, &boolean, "", true, nil); err == nil {
-		u.Boolean = &boolean
-		u.Type = BenefitMeterCreditMetadataTypeBoolean
-		return nil
-	}
-
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for BenefitMeterCreditMetadata", string(data))
-}
-
-func (u BenefitMeterCreditMetadata) MarshalJSON() ([]byte, error) {
-	if u.Str != nil {
-		return utils.MarshalJSON(u.Str, "", true)
-	}
-
-	if u.Integer != nil {
-		return utils.MarshalJSON(u.Integer, "", true)
-	}
-
-	if u.Number != nil {
-		return utils.MarshalJSON(u.Number, "", true)
-	}
-
-	if u.Boolean != nil {
-		return utils.MarshalJSON(u.Boolean, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type BenefitMeterCreditMetadata: all fields are null")
-}
 
 // BenefitMeterCredit - A benefit of type `meter_unit`.
 //
@@ -134,8 +25,8 @@ type BenefitMeterCredit struct {
 	// Whether the benefit is deletable.
 	Deletable bool `json:"deletable"`
 	// The ID of the organization owning the benefit.
-	OrganizationID string                                `json:"organization_id"`
-	Metadata       map[string]BenefitMeterCreditMetadata `json:"metadata"`
+	OrganizationID string                        `json:"organization_id"`
+	Metadata       map[string]MetadataOutputType `json:"metadata"`
 	// Properties for a benefit of type `meter_unit`.
 	Properties BenefitMeterCreditProperties `json:"properties"`
 }
@@ -204,9 +95,9 @@ func (b *BenefitMeterCredit) GetOrganizationID() string {
 	return b.OrganizationID
 }
 
-func (b *BenefitMeterCredit) GetMetadata() map[string]BenefitMeterCreditMetadata {
+func (b *BenefitMeterCredit) GetMetadata() map[string]MetadataOutputType {
 	if b == nil {
-		return map[string]BenefitMeterCreditMetadata{}
+		return map[string]MetadataOutputType{}
 	}
 	return b.Metadata
 }

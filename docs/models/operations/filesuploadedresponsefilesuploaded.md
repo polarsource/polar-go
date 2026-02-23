@@ -23,3 +23,17 @@ filesUploadedResponseFilesUploaded := operations.CreateFilesUploadedResponseFile
 filesUploadedResponseFilesUploaded := operations.CreateFilesUploadedResponseFilesUploadedOrganizationAvatar(components.OrganizationAvatarFileRead{/* values here */})
 ```
 
+## Union Discrimination
+
+Use the `Type` field to determine which variant is active, then access the corresponding field:
+
+```go
+switch filesUploadedResponseFilesUploaded.Type {
+	case operations.FilesUploadedResponseFilesUploadedTypeDownloadable:
+		// filesUploadedResponseFilesUploaded.DownloadableFileRead is populated
+	case operations.FilesUploadedResponseFilesUploadedTypeProductMedia:
+		// filesUploadedResponseFilesUploaded.ProductMediaFileRead is populated
+	case operations.FilesUploadedResponseFilesUploadedTypeOrganizationAvatar:
+		// filesUploadedResponseFilesUploaded.OrganizationAvatarFileRead is populated
+}
+```

@@ -88,7 +88,7 @@ func (s *PolarBenefitGrants) List(ctx context.Context, request operations.Custom
 	req.Header.Set("Accept", "application/json")
 	req.Header.Set("User-Agent", s.sdkConfiguration.UserAgent)
 
-	if err := utils.PopulateQueryParams(ctx, req, request, nil); err != nil {
+	if err := utils.PopulateQueryParams(ctx, req, request, nil, nil); err != nil {
 		return nil, fmt.Errorf("error populating query params: %w", err)
 	}
 
@@ -254,11 +254,13 @@ func (s *PolarBenefitGrants) List(ctx context.Context, request operations.Custom
 		return s.List(
 			ctx,
 			operations.CustomerPortalBenefitGrantsListRequest{
+				Query:          request.Query,
 				TypeFilter:     request.TypeFilter,
 				BenefitID:      request.BenefitID,
 				CheckoutID:     request.CheckoutID,
 				OrderID:        request.OrderID,
 				SubscriptionID: request.SubscriptionID,
+				MemberID:       request.MemberID,
 				Page:           &nP,
 				Limit:          request.Limit,
 				Sorting:        request.Sorting,

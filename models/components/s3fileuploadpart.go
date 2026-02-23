@@ -22,7 +22,7 @@ func (s S3FileUploadPart) MarshalJSON() ([]byte, error) {
 }
 
 func (s *S3FileUploadPart) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &s, "", false, []string{"number", "chunk_start", "chunk_end", "url", "expires_at"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &s, "", false, nil); err != nil {
 		return err
 	}
 	return nil

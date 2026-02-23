@@ -1,16 +1,15 @@
 # Orders
-(*Orders*)
 
 ## Overview
 
 ### Available Operations
 
 * [List](#list) - List Orders
-* [Export](#export) - Export Subscriptions
+* [Export](#export) - Export Orders
 * [Get](#get) - Get Order
 * [Update](#update) - Update Order
-* [GenerateInvoice](#generateinvoice) - Generate Order Invoice
 * [Invoice](#invoice) - Get Order Invoice
+* [GenerateInvoice](#generateinvoice) - Generate Order Invoice
 
 ## List
 
@@ -157,6 +156,7 @@ import(
 	"os"
 	polargo "github.com/polarsource/polar-go"
 	"log"
+	"github.com/polarsource/polar-go/models/components"
 )
 
 func main() {
@@ -171,7 +171,17 @@ func main() {
         log.Fatal(err)
     }
     if res.Order != nil {
-        // handle response
+        switch res.Order.Discount.Type {
+            case components.OrderDiscountTypeDiscountFixedOnceForeverDurationBase:
+                // res.Order.Discount.DiscountFixedOnceForeverDurationBase is populated
+            case components.OrderDiscountTypeDiscountFixedRepeatDurationBase:
+                // res.Order.Discount.DiscountFixedRepeatDurationBase is populated
+            case components.OrderDiscountTypeDiscountPercentageOnceForeverDurationBase:
+                // res.Order.Discount.DiscountPercentageOnceForeverDurationBase is populated
+            case components.OrderDiscountTypeDiscountPercentageRepeatDurationBase:
+                // res.Order.Discount.DiscountPercentageRepeatDurationBase is populated
+        }
+
     }
 }
 ```
@@ -224,7 +234,6 @@ func main() {
     )
 
     res, err := s.Orders.Update(ctx, "<value>", components.OrderUpdate{
-        BillingName: polargo.Pointer("<value>"),
         BillingAddress: &components.AddressInput{
             Country: components.CountryAlpha2InputUs,
         },
@@ -233,7 +242,17 @@ func main() {
         log.Fatal(err)
     }
     if res.Order != nil {
-        // handle response
+        switch res.Order.Discount.Type {
+            case components.OrderDiscountTypeDiscountFixedOnceForeverDurationBase:
+                // res.Order.Discount.DiscountFixedOnceForeverDurationBase is populated
+            case components.OrderDiscountTypeDiscountFixedRepeatDurationBase:
+                // res.Order.Discount.DiscountFixedRepeatDurationBase is populated
+            case components.OrderDiscountTypeDiscountPercentageOnceForeverDurationBase:
+                // res.Order.Discount.DiscountPercentageOnceForeverDurationBase is populated
+            case components.OrderDiscountTypeDiscountPercentageRepeatDurationBase:
+                // res.Order.Discount.DiscountPercentageRepeatDurationBase is populated
+        }
+
     }
 }
 ```
@@ -250,6 +269,62 @@ func main() {
 ### Response
 
 **[*operations.OrdersUpdateResponse](../../models/operations/ordersupdateresponse.md), error**
+
+### Errors
+
+| Error Type                    | Status Code                   | Content Type                  |
+| ----------------------------- | ----------------------------- | ----------------------------- |
+| apierrors.ResourceNotFound    | 404                           | application/json              |
+| apierrors.HTTPValidationError | 422                           | application/json              |
+| apierrors.APIError            | 4XX, 5XX                      | \*/\*                         |
+
+## Invoice
+
+Get an order's invoice data.
+
+**Scopes**: `orders:read`
+
+### Example Usage
+
+<!-- UsageSnippet language="go" operationID="orders:invoice" method="get" path="/v1/orders/{id}/invoice" -->
+```go
+package main
+
+import(
+	"context"
+	"os"
+	polargo "github.com/polarsource/polar-go"
+	"log"
+)
+
+func main() {
+    ctx := context.Background()
+
+    s := polargo.New(
+        polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
+    )
+
+    res, err := s.Orders.Invoice(ctx, "<value>")
+    if err != nil {
+        log.Fatal(err)
+    }
+    if res.OrderInvoice != nil {
+        // handle response
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                | Type                                                     | Required                                                 | Description                                              |
+| -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- |
+| `ctx`                                                    | [context.Context](https://pkg.go.dev/context#Context)    | :heavy_check_mark:                                       | The context to use for the request.                      |
+| `id`                                                     | *string*                                                 | :heavy_check_mark:                                       | The order ID.                                            |
+| `opts`                                                   | [][operations.Option](../../models/operations/option.md) | :heavy_minus_sign:                                       | The options for this request.                            |
+
+### Response
+
+**[*operations.OrdersInvoiceResponse](../../models/operations/ordersinvoiceresponse.md), error**
 
 ### Errors
 
@@ -313,59 +388,3 @@ func main() {
 | --------------------------------------------------------------- | --------------------------------------------------------------- | --------------------------------------------------------------- |
 | apierrors.OrdersGenerateInvoiceResponse422OrdersGenerateInvoice | 422                                                             | application/json                                                |
 | apierrors.APIError                                              | 4XX, 5XX                                                        | \*/\*                                                           |
-
-## Invoice
-
-Get an order's invoice data.
-
-**Scopes**: `orders:read`
-
-### Example Usage
-
-<!-- UsageSnippet language="go" operationID="orders:invoice" method="get" path="/v1/orders/{id}/invoice" -->
-```go
-package main
-
-import(
-	"context"
-	"os"
-	polargo "github.com/polarsource/polar-go"
-	"log"
-)
-
-func main() {
-    ctx := context.Background()
-
-    s := polargo.New(
-        polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
-    )
-
-    res, err := s.Orders.Invoice(ctx, "<value>")
-    if err != nil {
-        log.Fatal(err)
-    }
-    if res.OrderInvoice != nil {
-        // handle response
-    }
-}
-```
-
-### Parameters
-
-| Parameter                                                | Type                                                     | Required                                                 | Description                                              |
-| -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- |
-| `ctx`                                                    | [context.Context](https://pkg.go.dev/context#Context)    | :heavy_check_mark:                                       | The context to use for the request.                      |
-| `id`                                                     | *string*                                                 | :heavy_check_mark:                                       | The order ID.                                            |
-| `opts`                                                   | [][operations.Option](../../models/operations/option.md) | :heavy_minus_sign:                                       | The options for this request.                            |
-
-### Response
-
-**[*operations.OrdersInvoiceResponse](../../models/operations/ordersinvoiceresponse.md), error**
-
-### Errors
-
-| Error Type                    | Status Code                   | Content Type                  |
-| ----------------------------- | ----------------------------- | ----------------------------- |
-| apierrors.ResourceNotFound    | 404                           | application/json              |
-| apierrors.HTTPValidationError | 422                           | application/json              |
-| apierrors.APIError            | 4XX, 5XX                      | \*/\*                         |

@@ -21,6 +21,8 @@ type EventCreateCustomer struct {
 	Metadata map[string]EventMetadataInput `json:"metadata,omitempty"`
 	// ID of the customer in your Polar organization associated with the event.
 	CustomerID string `json:"customer_id"`
+	// ID of the member within the customer's organization who performed the action. Used for member-level attribution in B2B.
+	MemberID *string `json:"member_id,omitempty"`
 }
 
 func (e EventCreateCustomer) MarshalJSON() ([]byte, error) {
@@ -81,4 +83,11 @@ func (e *EventCreateCustomer) GetCustomerID() string {
 		return ""
 	}
 	return e.CustomerID
+}
+
+func (e *EventCreateCustomer) GetMemberID() *string {
+	if e == nil {
+		return nil
+	}
+	return e.MemberID
 }

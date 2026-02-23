@@ -39,3 +39,23 @@ benefitsUpdateBenefitUpdate := operations.CreateBenefitsUpdateBenefitUpdateBenef
 benefitsUpdateBenefitUpdate := operations.CreateBenefitsUpdateBenefitUpdateBenefitMeterCreditUpdate(components.BenefitMeterCreditUpdate{/* values here */})
 ```
 
+## Union Discrimination
+
+Use the `Type` field to determine which variant is active, then access the corresponding field:
+
+```go
+switch benefitsUpdateBenefitUpdate.Type {
+	case operations.BenefitsUpdateBenefitUpdateTypeBenefitCustomUpdate:
+		// benefitsUpdateBenefitUpdate.BenefitCustomUpdate is populated
+	case operations.BenefitsUpdateBenefitUpdateTypeBenefitDiscordUpdate:
+		// benefitsUpdateBenefitUpdate.BenefitDiscordUpdate is populated
+	case operations.BenefitsUpdateBenefitUpdateTypeBenefitGitHubRepositoryUpdate:
+		// benefitsUpdateBenefitUpdate.BenefitGitHubRepositoryUpdate is populated
+	case operations.BenefitsUpdateBenefitUpdateTypeBenefitDownloadablesUpdate:
+		// benefitsUpdateBenefitUpdate.BenefitDownloadablesUpdate is populated
+	case operations.BenefitsUpdateBenefitUpdateTypeBenefitLicenseKeysUpdate:
+		// benefitsUpdateBenefitUpdate.BenefitLicenseKeysUpdate is populated
+	case operations.BenefitsUpdateBenefitUpdateTypeBenefitMeterCreditUpdate:
+		// benefitsUpdateBenefitUpdate.BenefitMeterCreditUpdate is populated
+}
+```

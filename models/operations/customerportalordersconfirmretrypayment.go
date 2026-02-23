@@ -7,14 +7,22 @@ import (
 )
 
 type CustomerPortalOrdersConfirmRetryPaymentSecurity struct {
-	CustomerSession string `security:"scheme,type=http,subtype=bearer,name=Authorization,env=polar_customer_session"`
+	CustomerSession *string `security:"scheme,type=http,subtype=bearer,name=Authorization,env=polar_customer_session"`
+	MemberSession   *string `security:"scheme,type=http,subtype=bearer,name=Authorization,env=polar_member_session"`
 }
 
-func (c *CustomerPortalOrdersConfirmRetryPaymentSecurity) GetCustomerSession() string {
+func (c *CustomerPortalOrdersConfirmRetryPaymentSecurity) GetCustomerSession() *string {
 	if c == nil {
-		return ""
+		return nil
 	}
 	return c.CustomerSession
+}
+
+func (c *CustomerPortalOrdersConfirmRetryPaymentSecurity) GetMemberSession() *string {
+	if c == nil {
+		return nil
+	}
+	return c.MemberSession
 }
 
 type CustomerPortalOrdersConfirmRetryPaymentRequest struct {

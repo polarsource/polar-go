@@ -27,3 +27,19 @@ discountCreate := components.CreateDiscountCreateDiscountPercentageOnceForeverDu
 discountCreate := components.CreateDiscountCreateDiscountPercentageRepeatDurationCreate(components.DiscountPercentageRepeatDurationCreate{/* values here */})
 ```
 
+## Union Discrimination
+
+Use the `Type` field to determine which variant is active, then access the corresponding field:
+
+```go
+switch discountCreate.Type {
+	case components.DiscountCreateTypeDiscountFixedOnceForeverDurationCreate:
+		// discountCreate.DiscountFixedOnceForeverDurationCreate is populated
+	case components.DiscountCreateTypeDiscountFixedRepeatDurationCreate:
+		// discountCreate.DiscountFixedRepeatDurationCreate is populated
+	case components.DiscountCreateTypeDiscountPercentageOnceForeverDurationCreate:
+		// discountCreate.DiscountPercentageOnceForeverDurationCreate is populated
+	case components.DiscountCreateTypeDiscountPercentageRepeatDurationCreate:
+		// discountCreate.DiscountPercentageRepeatDurationCreate is populated
+}
+```

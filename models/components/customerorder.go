@@ -68,7 +68,7 @@ func (c CustomerOrder) MarshalJSON() ([]byte, error) {
 }
 
 func (c *CustomerOrder) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &c, "", false, []string{"id", "created_at", "status", "paid", "subtotal_amount", "discount_amount", "net_amount", "tax_amount", "total_amount", "applied_balance_amount", "due_amount", "refunded_amount", "refunded_tax_amount", "currency", "billing_reason", "invoice_number", "is_invoice_generated", "customer_id", "user_id", "items", "description"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &c, "", false, nil); err != nil {
 		return err
 	}
 	return nil

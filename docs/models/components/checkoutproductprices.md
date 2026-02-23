@@ -15,3 +15,15 @@ checkoutProductPrices := components.CreateCheckoutProductPricesLegacyRecurringPr
 checkoutProductPrices := components.CreateCheckoutProductPricesProductPrice(components.ProductPrice{/* values here */})
 ```
 
+## Union Discrimination
+
+Use the `Type` field to determine which variant is active, then access the corresponding field:
+
+```go
+switch checkoutProductPrices.Type {
+	case components.CheckoutProductPricesTypeLegacyRecurringProductPrice:
+		// checkoutProductPrices.LegacyRecurringProductPrice is populated
+	case components.CheckoutProductPricesTypeProductPrice:
+		// checkoutProductPrices.ProductPrice is populated
+}
+```

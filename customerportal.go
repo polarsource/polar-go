@@ -15,10 +15,11 @@ type CustomerPortal struct {
 	CustomerSession *CustomerSession
 	Downloadables   *Downloadables
 	LicenseKeys     *PolarLicenseKeys
+	Members         *PolarMembers
 	Orders          *PolarOrders
 	Organizations   *PolarOrganizations
 	Subscriptions   *PolarSubscriptions
-	Wallets         *PolarWallets
+	Wallets         *Wallets
 
 	rootSDK          *Polar
 	sdkConfiguration config.SDKConfiguration
@@ -37,9 +38,10 @@ func newCustomerPortal(rootSDK *Polar, sdkConfig config.SDKConfiguration, hooks 
 		CustomerSession:  newCustomerSession(rootSDK, sdkConfig, hooks),
 		Downloadables:    newDownloadables(rootSDK, sdkConfig, hooks),
 		LicenseKeys:      newPolarLicenseKeys(rootSDK, sdkConfig, hooks),
+		Members:          newPolarMembers(rootSDK, sdkConfig, hooks),
 		Orders:           newPolarOrders(rootSDK, sdkConfig, hooks),
 		Organizations:    newPolarOrganizations(rootSDK, sdkConfig, hooks),
 		Subscriptions:    newPolarSubscriptions(rootSDK, sdkConfig, hooks),
-		Wallets:          newPolarWallets(rootSDK, sdkConfig, hooks),
+		Wallets:          newWallets(rootSDK, sdkConfig, hooks),
 	}
 }

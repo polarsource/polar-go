@@ -1,0 +1,9 @@
+# OrganizationAccessTokensUpdateRequest
+
+
+## Fields
+
+| Field                                                                                                | Type                                                                                                 | Required                                                                                             | Description                                                                                          |
+| ---------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
+| `ID`                                                                                                 | *string*                                                                                             | :heavy_check_mark:                                                                                   | N/A                                                                                                  |
+| `OrganizationAccessTokenUpdate`                                                                      | [components.OrganizationAccessTokenUpdate](../../models/components/organizationaccesstokenupdate.md) | :heavy_check_mark:                                                                                   | N/A                                                                                                  |

@@ -17,3 +17,15 @@ externalCustomerIDFilter := operations.CreateExternalCustomerIDFilterStr(string{
 externalCustomerIDFilter := operations.CreateExternalCustomerIDFilterArrayOfStr([]string{/* values here */})
 ```
 
+## Union Discrimination
+
+Use the `Type` field to determine which variant is active, then access the corresponding field:
+
+```go
+switch externalCustomerIDFilter.Type {
+	case operations.ExternalCustomerIDFilterTypeStr:
+		// externalCustomerIDFilter.Str is populated
+	case operations.ExternalCustomerIDFilterTypeArrayOfStr:
+		// externalCustomerIDFilter.ArrayOfStr is populated
+}
+```

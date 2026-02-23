@@ -12,6 +12,7 @@ type WebhookEventType string
 const (
 	WebhookEventTypeCheckoutCreated        WebhookEventType = "checkout.created"
 	WebhookEventTypeCheckoutUpdated        WebhookEventType = "checkout.updated"
+	WebhookEventTypeCheckoutExpired        WebhookEventType = "checkout.expired"
 	WebhookEventTypeCustomerCreated        WebhookEventType = "customer.created"
 	WebhookEventTypeCustomerUpdated        WebhookEventType = "customer.updated"
 	WebhookEventTypeCustomerDeleted        WebhookEventType = "customer.deleted"
@@ -19,6 +20,9 @@ const (
 	WebhookEventTypeCustomerSeatAssigned   WebhookEventType = "customer_seat.assigned"
 	WebhookEventTypeCustomerSeatClaimed    WebhookEventType = "customer_seat.claimed"
 	WebhookEventTypeCustomerSeatRevoked    WebhookEventType = "customer_seat.revoked"
+	WebhookEventTypeMemberCreated          WebhookEventType = "member.created"
+	WebhookEventTypeMemberUpdated          WebhookEventType = "member.updated"
+	WebhookEventTypeMemberDeleted          WebhookEventType = "member.deleted"
 	WebhookEventTypeOrderCreated           WebhookEventType = "order.created"
 	WebhookEventTypeOrderUpdated           WebhookEventType = "order.updated"
 	WebhookEventTypeOrderPaid              WebhookEventType = "order.paid"
@@ -29,6 +33,7 @@ const (
 	WebhookEventTypeSubscriptionCanceled   WebhookEventType = "subscription.canceled"
 	WebhookEventTypeSubscriptionUncanceled WebhookEventType = "subscription.uncanceled"
 	WebhookEventTypeSubscriptionRevoked    WebhookEventType = "subscription.revoked"
+	WebhookEventTypeSubscriptionPastDue    WebhookEventType = "subscription.past_due"
 	WebhookEventTypeRefundCreated          WebhookEventType = "refund.created"
 	WebhookEventTypeRefundUpdated          WebhookEventType = "refund.updated"
 	WebhookEventTypeProductCreated         WebhookEventType = "product.created"
@@ -55,6 +60,8 @@ func (e *WebhookEventType) UnmarshalJSON(data []byte) error {
 		fallthrough
 	case "checkout.updated":
 		fallthrough
+	case "checkout.expired":
+		fallthrough
 	case "customer.created":
 		fallthrough
 	case "customer.updated":
@@ -68,6 +75,12 @@ func (e *WebhookEventType) UnmarshalJSON(data []byte) error {
 	case "customer_seat.claimed":
 		fallthrough
 	case "customer_seat.revoked":
+		fallthrough
+	case "member.created":
+		fallthrough
+	case "member.updated":
+		fallthrough
+	case "member.deleted":
 		fallthrough
 	case "order.created":
 		fallthrough
@@ -88,6 +101,8 @@ func (e *WebhookEventType) UnmarshalJSON(data []byte) error {
 	case "subscription.uncanceled":
 		fallthrough
 	case "subscription.revoked":
+		fallthrough
+	case "subscription.past_due":
 		fallthrough
 	case "refund.created":
 		fallthrough

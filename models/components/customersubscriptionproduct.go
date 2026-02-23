@@ -17,8 +17,8 @@ const (
 )
 
 type CustomerSubscriptionProductPrices struct {
-	LegacyRecurringProductPrice *LegacyRecurringProductPrice `queryParam:"inline,name=prices"`
-	ProductPrice                *ProductPrice                `queryParam:"inline,name=prices"`
+	LegacyRecurringProductPrice *LegacyRecurringProductPrice `queryParam:"inline" union:"member"`
+	ProductPrice                *ProductPrice                `queryParam:"inline" union:"member"`
 
 	Type CustomerSubscriptionProductPricesType
 }
@@ -86,7 +86,8 @@ type CustomerSubscriptionProduct struct {
 	// The name of the product.
 	Name string `json:"name"`
 	// The description of the product.
-	Description *string `json:"description"`
+	Description *string           `json:"description"`
+	Visibility  ProductVisibility `json:"visibility"`
 	// The recurring interval of the product. If `None`, the product is a one-time purchase.
 	RecurringInterval *SubscriptionRecurringInterval `json:"recurring_interval"`
 	// Number of interval units of the subscription. If this is set to 1 the charge will happen every interval (e.g. every month), if set to 2 it will be every other month, and so on. None for one-time products.
@@ -103,7 +104,7 @@ type CustomerSubscriptionProduct struct {
 	Benefits []BenefitPublic `json:"benefits"`
 	// List of medias associated to the product.
 	Medias       []ProductMediaFileRead `json:"medias"`
-	Organization Organization           `json:"organization"`
+	Organization CustomerOrganization   `json:"organization"`
 }
 
 func (c CustomerSubscriptionProduct) MarshalJSON() ([]byte, error) {
@@ -111,7 +112,7 @@ func (c CustomerSubscriptionProduct) MarshalJSON() ([]byte, error) {
 }
 
 func (c *CustomerSubscriptionProduct) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &c, "", false, []string{"id", "created_at", "name", "is_recurring", "is_archived", "organization_id", "prices", "benefits", "medias", "organization"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &c, "", false, nil); err != nil {
 		return err
 	}
 	return nil
@@ -164,6 +165,13 @@ func (c *CustomerSubscriptionProduct) GetDescription() *string {
 		return nil
 	}
 	return c.Description
+}
+
+func (c *CustomerSubscriptionProduct) GetVisibility() ProductVisibility {
+	if c == nil {
+		return ProductVisibility("")
+	}
+	return c.Visibility
 }
 
 func (c *CustomerSubscriptionProduct) GetRecurringInterval() *SubscriptionRecurringInterval {
@@ -222,9 +230,9 @@ func (c *CustomerSubscriptionProduct) GetMedias() []ProductMediaFileRead {
 	return c.Medias
 }
 
-func (c *CustomerSubscriptionProduct) GetOrganization() Organization {
+func (c *CustomerSubscriptionProduct) GetOrganization() CustomerOrganization {
 	if c == nil {
-		return Organization{}
+		return CustomerOrganization{}
 	}
 	return c.Organization
 }

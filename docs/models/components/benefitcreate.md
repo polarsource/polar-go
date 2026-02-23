@@ -39,3 +39,23 @@ benefitCreate := components.CreateBenefitCreateLicenseKeys(components.BenefitLic
 benefitCreate := components.CreateBenefitCreateMeterCredit(components.BenefitMeterCreditCreate{/* values here */})
 ```
 
+## Union Discrimination
+
+Use the `Type` field to determine which variant is active, then access the corresponding field:
+
+```go
+switch benefitCreate.Type {
+	case components.BenefitCreateTypeCustom:
+		// benefitCreate.BenefitCustomCreate is populated
+	case components.BenefitCreateTypeDiscord:
+		// benefitCreate.BenefitDiscordCreate is populated
+	case components.BenefitCreateTypeDownloadables:
+		// benefitCreate.BenefitDownloadablesCreate is populated
+	case components.BenefitCreateTypeGithubRepository:
+		// benefitCreate.BenefitGitHubRepositoryCreate is populated
+	case components.BenefitCreateTypeLicenseKeys:
+		// benefitCreate.BenefitLicenseKeysCreate is populated
+	case components.BenefitCreateTypeMeterCredit:
+		// benefitCreate.BenefitMeterCreditCreate is populated
+}
+```

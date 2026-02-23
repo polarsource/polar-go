@@ -7,10 +7,11 @@ import (
 )
 
 type AuthorizeResponseUser struct {
-	Client  OAuth2ClientPublic `json:"client"`
-	subType string             `const:"user" json:"sub_type"`
-	Sub     *AuthorizeUser     `json:"sub"`
-	Scopes  []Scope            `json:"scopes"`
+	Client            OAuth2ClientPublic `json:"client"`
+	subType           string             `const:"user" json:"sub_type"`
+	Sub               *AuthorizeUser     `json:"sub"`
+	Scopes            []Scope            `json:"scopes"`
+	ScopeDisplayNames map[string]string  `json:"scope_display_names,omitempty"`
 }
 
 func (a AuthorizeResponseUser) MarshalJSON() ([]byte, error) {
@@ -47,4 +48,11 @@ func (a *AuthorizeResponseUser) GetScopes() []Scope {
 		return []Scope{}
 	}
 	return a.Scopes
+}
+
+func (a *AuthorizeResponseUser) GetScopeDisplayNames() map[string]string {
+	if a == nil {
+		return nil
+	}
+	return a.ScopeDisplayNames
 }

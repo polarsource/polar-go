@@ -1,5 +1,4 @@
 # CustomerMeters
-(*CustomerMeters*)
 
 ## Overview
 

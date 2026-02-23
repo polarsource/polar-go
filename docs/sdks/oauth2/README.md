@@ -1,5 +1,4 @@
 # Oauth2
-(*Oauth2*)
 
 ## Overview
 
@@ -26,6 +25,7 @@ import(
 	"os"
 	polargo "github.com/polarsource/polar-go"
 	"log"
+	"github.com/polarsource/polar-go/models/operations"
 )
 
 func main() {
@@ -40,7 +40,13 @@ func main() {
         log.Fatal(err)
     }
     if res.ResponseOauth2Authorize != nil {
-        // handle response
+        switch res.ResponseOauth2Authorize.Type {
+            case operations.Oauth2AuthorizeResponseOauth2AuthorizeTypeUser:
+                // res.ResponseOauth2Authorize.AuthorizeResponseUser is populated
+            case operations.Oauth2AuthorizeResponseOauth2AuthorizeTypeOrganization:
+                // res.ResponseOauth2Authorize.AuthorizeResponseOrganization is populated
+        }
+
     }
 }
 ```
@@ -243,6 +249,7 @@ import(
 	"os"
 	polargo "github.com/polarsource/polar-go"
 	"log"
+	"github.com/polarsource/polar-go/models/operations"
 )
 
 func main() {
@@ -257,7 +264,13 @@ func main() {
         log.Fatal(err)
     }
     if res.ResponseOauth2Userinfo != nil {
-        // handle response
+        switch res.ResponseOauth2Userinfo.Type {
+            case operations.Oauth2UserinfoResponseOauth2UserinfoTypeUserInfoUser:
+                // res.ResponseOauth2Userinfo.UserInfoUser is populated
+            case operations.Oauth2UserinfoResponseOauth2UserinfoTypeUserInfoOrganization:
+                // res.ResponseOauth2Userinfo.UserInfoOrganization is populated
+        }
+
     }
 }
 ```

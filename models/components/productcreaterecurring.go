@@ -19,10 +19,10 @@ const (
 )
 
 type ProductCreateRecurringMetadata struct {
-	Str     *string  `queryParam:"inline,name=metadata"`
-	Integer *int64   `queryParam:"inline,name=metadata"`
-	Number  *float64 `queryParam:"inline,name=metadata"`
-	Boolean *bool    `queryParam:"inline,name=metadata"`
+	Str     *string  `queryParam:"inline" union:"member"`
+	Integer *int64   `queryParam:"inline" union:"member"`
+	Number  *float64 `queryParam:"inline" union:"member"`
+	Boolean *bool    `queryParam:"inline" union:"member"`
 
 	Type ProductCreateRecurringMetadataType
 }
@@ -127,11 +127,11 @@ const (
 )
 
 type ProductCreateRecurringPrices struct {
-	ProductPriceFixedCreate       *ProductPriceFixedCreate       `queryParam:"inline,name=prices"`
-	ProductPriceCustomCreate      *ProductPriceCustomCreate      `queryParam:"inline,name=prices"`
-	ProductPriceFreeCreate        *ProductPriceFreeCreate        `queryParam:"inline,name=prices"`
-	ProductPriceSeatBasedCreate   *ProductPriceSeatBasedCreate   `queryParam:"inline,name=prices"`
-	ProductPriceMeteredUnitCreate *ProductPriceMeteredUnitCreate `queryParam:"inline,name=prices"`
+	ProductPriceFixedCreate       *ProductPriceFixedCreate       `queryParam:"inline" union:"member"`
+	ProductPriceCustomCreate      *ProductPriceCustomCreate      `queryParam:"inline" union:"member"`
+	ProductPriceFreeCreate        *ProductPriceFreeCreate        `queryParam:"inline" union:"member"`
+	ProductPriceSeatBasedCreate   *ProductPriceSeatBasedCreate   `queryParam:"inline" union:"member"`
+	ProductPriceMeteredUnitCreate *ProductPriceMeteredUnitCreate `queryParam:"inline" union:"member"`
 
 	Type ProductCreateRecurringPricesType
 }
@@ -283,7 +283,8 @@ type ProductCreateRecurring struct {
 	// The name of the product.
 	Name string `json:"name"`
 	// The description of the product.
-	Description *string `json:"description,omitempty"`
+	Description *string            `json:"description,omitempty"`
+	Visibility  *ProductVisibility `json:"visibility,omitempty"`
 	// List of available prices for this product. It should contain at most one static price (fixed, custom or free), and any number of metered prices. Metered prices are not supported on one-time purchase products.
 	Prices []ProductCreateRecurringPrices `json:"prices"`
 	// List of file IDs. Each one must be on the same organization as the product, of type `product_media` and correctly uploaded.
@@ -331,6 +332,13 @@ func (p *ProductCreateRecurring) GetDescription() *string {
 		return nil
 	}
 	return p.Description
+}
+
+func (p *ProductCreateRecurring) GetVisibility() *ProductVisibility {
+	if p == nil {
+		return nil
+	}
+	return p.Visibility
 }
 
 func (p *ProductCreateRecurring) GetPrices() []ProductCreateRecurringPrices {

@@ -10,14 +10,22 @@ import (
 )
 
 type CustomerPortalBenefitGrantsListSecurity struct {
-	CustomerSession string `security:"scheme,type=http,subtype=bearer,name=Authorization,env=polar_customer_session"`
+	CustomerSession *string `security:"scheme,type=http,subtype=bearer,name=Authorization,env=polar_customer_session"`
+	MemberSession   *string `security:"scheme,type=http,subtype=bearer,name=Authorization,env=polar_member_session"`
 }
 
-func (c *CustomerPortalBenefitGrantsListSecurity) GetCustomerSession() string {
+func (c *CustomerPortalBenefitGrantsListSecurity) GetCustomerSession() *string {
 	if c == nil {
-		return ""
+		return nil
 	}
 	return c.CustomerSession
+}
+
+func (c *CustomerPortalBenefitGrantsListSecurity) GetMemberSession() *string {
+	if c == nil {
+		return nil
+	}
+	return c.MemberSession
 }
 
 type QueryParamBenefitTypeFilterType string
@@ -29,8 +37,8 @@ const (
 
 // QueryParamBenefitTypeFilter - Filter by benefit type.
 type QueryParamBenefitTypeFilter struct {
-	BenefitType        *components.BenefitType  `queryParam:"inline,name=BenefitType_Filter"`
-	ArrayOfBenefitType []components.BenefitType `queryParam:"inline,name=BenefitType_Filter"`
+	BenefitType        *components.BenefitType  `queryParam:"inline" union:"member"`
+	ArrayOfBenefitType []components.BenefitType `queryParam:"inline" union:"member"`
 
 	Type QueryParamBenefitTypeFilterType
 }
@@ -93,8 +101,8 @@ const (
 
 // CustomerPortalBenefitGrantsListQueryParamBenefitIDFilter - Filter by benefit ID.
 type CustomerPortalBenefitGrantsListQueryParamBenefitIDFilter struct {
-	Str        *string  `queryParam:"inline,name=BenefitID_Filter"`
-	ArrayOfStr []string `queryParam:"inline,name=BenefitID_Filter"`
+	Str        *string  `queryParam:"inline" union:"member"`
+	ArrayOfStr []string `queryParam:"inline" union:"member"`
 
 	Type CustomerPortalBenefitGrantsListQueryParamBenefitIDFilterType
 }
@@ -157,8 +165,8 @@ const (
 
 // QueryParamCheckoutIDFilter - Filter by checkout ID.
 type QueryParamCheckoutIDFilter struct {
-	Str        *string  `queryParam:"inline,name=CheckoutID_Filter"`
-	ArrayOfStr []string `queryParam:"inline,name=CheckoutID_Filter"`
+	Str        *string  `queryParam:"inline" union:"member"`
+	ArrayOfStr []string `queryParam:"inline" union:"member"`
 
 	Type QueryParamCheckoutIDFilterType
 }
@@ -212,59 +220,59 @@ func (u QueryParamCheckoutIDFilter) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type QueryParamCheckoutIDFilter: all fields are null")
 }
 
-type QueryParamOrderIDFilterType string
+type CustomerPortalBenefitGrantsListQueryParamOrderIDFilterType string
 
 const (
-	QueryParamOrderIDFilterTypeStr        QueryParamOrderIDFilterType = "str"
-	QueryParamOrderIDFilterTypeArrayOfStr QueryParamOrderIDFilterType = "arrayOfStr"
+	CustomerPortalBenefitGrantsListQueryParamOrderIDFilterTypeStr        CustomerPortalBenefitGrantsListQueryParamOrderIDFilterType = "str"
+	CustomerPortalBenefitGrantsListQueryParamOrderIDFilterTypeArrayOfStr CustomerPortalBenefitGrantsListQueryParamOrderIDFilterType = "arrayOfStr"
 )
 
-// QueryParamOrderIDFilter - Filter by order ID.
-type QueryParamOrderIDFilter struct {
-	Str        *string  `queryParam:"inline,name=OrderID_Filter"`
-	ArrayOfStr []string `queryParam:"inline,name=OrderID_Filter"`
+// CustomerPortalBenefitGrantsListQueryParamOrderIDFilter - Filter by order ID.
+type CustomerPortalBenefitGrantsListQueryParamOrderIDFilter struct {
+	Str        *string  `queryParam:"inline" union:"member"`
+	ArrayOfStr []string `queryParam:"inline" union:"member"`
 
-	Type QueryParamOrderIDFilterType
+	Type CustomerPortalBenefitGrantsListQueryParamOrderIDFilterType
 }
 
-func CreateQueryParamOrderIDFilterStr(str string) QueryParamOrderIDFilter {
-	typ := QueryParamOrderIDFilterTypeStr
+func CreateCustomerPortalBenefitGrantsListQueryParamOrderIDFilterStr(str string) CustomerPortalBenefitGrantsListQueryParamOrderIDFilter {
+	typ := CustomerPortalBenefitGrantsListQueryParamOrderIDFilterTypeStr
 
-	return QueryParamOrderIDFilter{
+	return CustomerPortalBenefitGrantsListQueryParamOrderIDFilter{
 		Str:  &str,
 		Type: typ,
 	}
 }
 
-func CreateQueryParamOrderIDFilterArrayOfStr(arrayOfStr []string) QueryParamOrderIDFilter {
-	typ := QueryParamOrderIDFilterTypeArrayOfStr
+func CreateCustomerPortalBenefitGrantsListQueryParamOrderIDFilterArrayOfStr(arrayOfStr []string) CustomerPortalBenefitGrantsListQueryParamOrderIDFilter {
+	typ := CustomerPortalBenefitGrantsListQueryParamOrderIDFilterTypeArrayOfStr
 
-	return QueryParamOrderIDFilter{
+	return CustomerPortalBenefitGrantsListQueryParamOrderIDFilter{
 		ArrayOfStr: arrayOfStr,
 		Type:       typ,
 	}
 }
 
-func (u *QueryParamOrderIDFilter) UnmarshalJSON(data []byte) error {
+func (u *CustomerPortalBenefitGrantsListQueryParamOrderIDFilter) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
 	if err := utils.UnmarshalJSON(data, &str, "", true, nil); err == nil {
 		u.Str = &str
-		u.Type = QueryParamOrderIDFilterTypeStr
+		u.Type = CustomerPortalBenefitGrantsListQueryParamOrderIDFilterTypeStr
 		return nil
 	}
 
 	var arrayOfStr []string = []string{}
 	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, nil); err == nil {
 		u.ArrayOfStr = arrayOfStr
-		u.Type = QueryParamOrderIDFilterTypeArrayOfStr
+		u.Type = CustomerPortalBenefitGrantsListQueryParamOrderIDFilterTypeArrayOfStr
 		return nil
 	}
 
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for QueryParamOrderIDFilter", string(data))
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for CustomerPortalBenefitGrantsListQueryParamOrderIDFilter", string(data))
 }
 
-func (u QueryParamOrderIDFilter) MarshalJSON() ([]byte, error) {
+func (u CustomerPortalBenefitGrantsListQueryParamOrderIDFilter) MarshalJSON() ([]byte, error) {
 	if u.Str != nil {
 		return utils.MarshalJSON(u.Str, "", true)
 	}
@@ -273,7 +281,7 @@ func (u QueryParamOrderIDFilter) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.ArrayOfStr, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type QueryParamOrderIDFilter: all fields are null")
+	return nil, errors.New("could not marshal union type CustomerPortalBenefitGrantsListQueryParamOrderIDFilter: all fields are null")
 }
 
 type QueryParamSubscriptionIDFilterType string
@@ -285,8 +293,8 @@ const (
 
 // QueryParamSubscriptionIDFilter - Filter by subscription ID.
 type QueryParamSubscriptionIDFilter struct {
-	Str        *string  `queryParam:"inline,name=SubscriptionID_Filter"`
-	ArrayOfStr []string `queryParam:"inline,name=SubscriptionID_Filter"`
+	Str        *string  `queryParam:"inline" union:"member"`
+	ArrayOfStr []string `queryParam:"inline" union:"member"`
 
 	Type QueryParamSubscriptionIDFilterType
 }
@@ -340,7 +348,73 @@ func (u QueryParamSubscriptionIDFilter) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type QueryParamSubscriptionIDFilter: all fields are null")
 }
 
+type QueryParamMemberIDFilterType string
+
+const (
+	QueryParamMemberIDFilterTypeStr        QueryParamMemberIDFilterType = "str"
+	QueryParamMemberIDFilterTypeArrayOfStr QueryParamMemberIDFilterType = "arrayOfStr"
+)
+
+// QueryParamMemberIDFilter - Filter by member ID.
+type QueryParamMemberIDFilter struct {
+	Str        *string  `queryParam:"inline" union:"member"`
+	ArrayOfStr []string `queryParam:"inline" union:"member"`
+
+	Type QueryParamMemberIDFilterType
+}
+
+func CreateQueryParamMemberIDFilterStr(str string) QueryParamMemberIDFilter {
+	typ := QueryParamMemberIDFilterTypeStr
+
+	return QueryParamMemberIDFilter{
+		Str:  &str,
+		Type: typ,
+	}
+}
+
+func CreateQueryParamMemberIDFilterArrayOfStr(arrayOfStr []string) QueryParamMemberIDFilter {
+	typ := QueryParamMemberIDFilterTypeArrayOfStr
+
+	return QueryParamMemberIDFilter{
+		ArrayOfStr: arrayOfStr,
+		Type:       typ,
+	}
+}
+
+func (u *QueryParamMemberIDFilter) UnmarshalJSON(data []byte) error {
+
+	var str string = ""
+	if err := utils.UnmarshalJSON(data, &str, "", true, nil); err == nil {
+		u.Str = &str
+		u.Type = QueryParamMemberIDFilterTypeStr
+		return nil
+	}
+
+	var arrayOfStr []string = []string{}
+	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, nil); err == nil {
+		u.ArrayOfStr = arrayOfStr
+		u.Type = QueryParamMemberIDFilterTypeArrayOfStr
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for QueryParamMemberIDFilter", string(data))
+}
+
+func (u QueryParamMemberIDFilter) MarshalJSON() ([]byte, error) {
+	if u.Str != nil {
+		return utils.MarshalJSON(u.Str, "", true)
+	}
+
+	if u.ArrayOfStr != nil {
+		return utils.MarshalJSON(u.ArrayOfStr, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type QueryParamMemberIDFilter: all fields are null")
+}
+
 type CustomerPortalBenefitGrantsListRequest struct {
+	// Filter by benefit description.
+	Query *string `queryParam:"style=form,explode=true,name=query"`
 	// Filter by benefit type.
 	TypeFilter *QueryParamBenefitTypeFilter `queryParam:"style=form,explode=true,name=type"`
 	// Filter by benefit ID.
@@ -348,9 +422,11 @@ type CustomerPortalBenefitGrantsListRequest struct {
 	// Filter by checkout ID.
 	CheckoutID *QueryParamCheckoutIDFilter `queryParam:"style=form,explode=true,name=checkout_id"`
 	// Filter by order ID.
-	OrderID *QueryParamOrderIDFilter `queryParam:"style=form,explode=true,name=order_id"`
+	OrderID *CustomerPortalBenefitGrantsListQueryParamOrderIDFilter `queryParam:"style=form,explode=true,name=order_id"`
 	// Filter by subscription ID.
 	SubscriptionID *QueryParamSubscriptionIDFilter `queryParam:"style=form,explode=true,name=subscription_id"`
+	// Filter by member ID.
+	MemberID *QueryParamMemberIDFilter `queryParam:"style=form,explode=true,name=member_id"`
 	// Page number, defaults to 1.
 	Page *int64 `default:"1" queryParam:"style=form,explode=true,name=page"`
 	// Size of a page, defaults to 10. Maximum is 100.
@@ -368,6 +444,13 @@ func (c *CustomerPortalBenefitGrantsListRequest) UnmarshalJSON(data []byte) erro
 		return err
 	}
 	return nil
+}
+
+func (c *CustomerPortalBenefitGrantsListRequest) GetQuery() *string {
+	if c == nil {
+		return nil
+	}
+	return c.Query
 }
 
 func (c *CustomerPortalBenefitGrantsListRequest) GetTypeFilter() *QueryParamBenefitTypeFilter {
@@ -391,7 +474,7 @@ func (c *CustomerPortalBenefitGrantsListRequest) GetCheckoutID() *QueryParamChec
 	return c.CheckoutID
 }
 
-func (c *CustomerPortalBenefitGrantsListRequest) GetOrderID() *QueryParamOrderIDFilter {
+func (c *CustomerPortalBenefitGrantsListRequest) GetOrderID() *CustomerPortalBenefitGrantsListQueryParamOrderIDFilter {
 	if c == nil {
 		return nil
 	}
@@ -403,6 +486,13 @@ func (c *CustomerPortalBenefitGrantsListRequest) GetSubscriptionID() *QueryParam
 		return nil
 	}
 	return c.SubscriptionID
+}
+
+func (c *CustomerPortalBenefitGrantsListRequest) GetMemberID() *QueryParamMemberIDFilter {
+	if c == nil {
+		return nil
+	}
+	return c.MemberID
 }
 
 func (c *CustomerPortalBenefitGrantsListRequest) GetPage() *int64 {

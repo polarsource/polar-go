@@ -21,8 +21,16 @@ type BenefitRevokedEvent struct {
 	Customer *Customer `json:"customer"`
 	// ID of the customer in your system associated with the event.
 	ExternalCustomerID *string `json:"external_customer_id"`
+	// ID of the member within the customer's organization who performed the action inside B2B.
+	MemberID *string `json:"member_id,omitempty"`
+	// ID of the member in your system within the customer's organization who performed the action inside B2B.
+	ExternalMemberID *string `json:"external_member_id,omitempty"`
 	// Number of direct child events linked to this event.
 	ChildCount *int64 `default:"0" json:"child_count"`
+	// The ID of the parent event.
+	ParentID *string `json:"parent_id,omitempty"`
+	// Human readable label of the event type.
+	Label string `json:"label"`
 	// The source of the event. `system` events are created by Polar. `user` events are the one you create through our ingestion API.
 	source string `const:"system" json:"source"`
 	// The name of the event.
@@ -35,7 +43,7 @@ func (b BenefitRevokedEvent) MarshalJSON() ([]byte, error) {
 }
 
 func (b *BenefitRevokedEvent) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &b, "", false, []string{"id", "timestamp", "organization_id", "source", "name", "metadata"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &b, "", false, []string{"id", "timestamp", "organization_id", "label", "source", "name", "metadata"}); err != nil {
 		return err
 	}
 	return nil
@@ -83,11 +91,39 @@ func (b *BenefitRevokedEvent) GetExternalCustomerID() *string {
 	return b.ExternalCustomerID
 }
 
+func (b *BenefitRevokedEvent) GetMemberID() *string {
+	if b == nil {
+		return nil
+	}
+	return b.MemberID
+}
+
+func (b *BenefitRevokedEvent) GetExternalMemberID() *string {
+	if b == nil {
+		return nil
+	}
+	return b.ExternalMemberID
+}
+
 func (b *BenefitRevokedEvent) GetChildCount() *int64 {
 	if b == nil {
 		return nil
 	}
 	return b.ChildCount
+}
+
+func (b *BenefitRevokedEvent) GetParentID() *string {
+	if b == nil {
+		return nil
+	}
+	return b.ParentID
+}
+
+func (b *BenefitRevokedEvent) GetLabel() string {
+	if b == nil {
+		return ""
+	}
+	return b.Label
 }
 
 func (b *BenefitRevokedEvent) GetSource() string {
