@@ -22,10 +22,7 @@ type ProductPriceMeteredUnit struct {
 	// Whether the price is archived and no longer available.
 	IsArchived bool `json:"is_archived"`
 	// The ID of the product owning the price.
-	ProductID string           `json:"product_id"`
-	Type      ProductPriceType `json:"type"`
-	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
-	RecurringInterval *SubscriptionRecurringInterval `json:"recurring_interval"`
+	ProductID string `json:"product_id"`
 	// The price per unit in cents.
 	UnitAmount string `json:"unit_amount"`
 	// The maximum amount in cents that can be charged, regardless of the number of units consumed.
@@ -41,7 +38,7 @@ func (p ProductPriceMeteredUnit) MarshalJSON() ([]byte, error) {
 }
 
 func (p *ProductPriceMeteredUnit) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &p, "", false, []string{"created_at", "id", "source", "amount_type", "price_currency", "is_archived", "product_id", "type", "unit_amount", "meter_id", "meter"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &p, "", false, []string{"created_at", "id", "source", "amount_type", "price_currency", "is_archived", "product_id", "unit_amount", "meter_id", "meter"}); err != nil {
 		return err
 	}
 	return nil
@@ -98,20 +95,6 @@ func (p *ProductPriceMeteredUnit) GetProductID() string {
 		return ""
 	}
 	return p.ProductID
-}
-
-func (p *ProductPriceMeteredUnit) GetType() ProductPriceType {
-	if p == nil {
-		return ProductPriceType("")
-	}
-	return p.Type
-}
-
-func (p *ProductPriceMeteredUnit) GetRecurringInterval() *SubscriptionRecurringInterval {
-	if p == nil {
-		return nil
-	}
-	return p.RecurringInterval
 }
 
 func (p *ProductPriceMeteredUnit) GetUnitAmount() string {

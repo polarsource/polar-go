@@ -4,9 +4,7 @@ package components
 
 // WebhookEndpointUpdate - Schema to update a webhook endpoint.
 type WebhookEndpointUpdate struct {
-	URL *string `json:"url,omitempty"`
-	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
-	Secret *string            `json:"secret,omitempty"`
+	URL    *string            `json:"url,omitempty"`
 	Format *WebhookFormat     `json:"format,omitempty"`
 	Events []WebhookEventType `json:"events,omitempty"`
 	// Whether the webhook endpoint is enabled.
@@ -18,13 +16,6 @@ func (w *WebhookEndpointUpdate) GetURL() *string {
 		return nil
 	}
 	return w.URL
-}
-
-func (w *WebhookEndpointUpdate) GetSecret() *string {
-	if w == nil {
-		return nil
-	}
-	return w.Secret
 }
 
 func (w *WebhookEndpointUpdate) GetFormat() *WebhookFormat {

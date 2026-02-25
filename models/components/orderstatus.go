@@ -14,6 +14,7 @@ const (
 	OrderStatusPaid              OrderStatus = "paid"
 	OrderStatusRefunded          OrderStatus = "refunded"
 	OrderStatusPartiallyRefunded OrderStatus = "partially_refunded"
+	OrderStatusVoid              OrderStatus = "void"
 )
 
 func (e OrderStatus) ToPointer() *OrderStatus {
@@ -32,6 +33,8 @@ func (e *OrderStatus) UnmarshalJSON(data []byte) error {
 	case "refunded":
 		fallthrough
 	case "partially_refunded":
+		fallthrough
+	case "void":
 		*e = OrderStatus(v)
 		return nil
 	default:

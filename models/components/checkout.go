@@ -116,69 +116,6 @@ func (u CheckoutCustomFieldData) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type CheckoutCustomFieldData: all fields are null")
 }
 
-type CheckoutProductPriceType string
-
-const (
-	CheckoutProductPriceTypeLegacyRecurringProductPrice CheckoutProductPriceType = "LegacyRecurringProductPrice"
-	CheckoutProductPriceTypeProductPrice                CheckoutProductPriceType = "ProductPrice"
-)
-
-type CheckoutProductPrice struct {
-	LegacyRecurringProductPrice *LegacyRecurringProductPrice `queryParam:"inline" union:"member"`
-	ProductPrice                *ProductPrice                `queryParam:"inline" union:"member"`
-
-	Type CheckoutProductPriceType
-}
-
-func CreateCheckoutProductPriceLegacyRecurringProductPrice(legacyRecurringProductPrice LegacyRecurringProductPrice) CheckoutProductPrice {
-	typ := CheckoutProductPriceTypeLegacyRecurringProductPrice
-
-	return CheckoutProductPrice{
-		LegacyRecurringProductPrice: &legacyRecurringProductPrice,
-		Type:                        typ,
-	}
-}
-
-func CreateCheckoutProductPriceProductPrice(productPrice ProductPrice) CheckoutProductPrice {
-	typ := CheckoutProductPriceTypeProductPrice
-
-	return CheckoutProductPrice{
-		ProductPrice: &productPrice,
-		Type:         typ,
-	}
-}
-
-func (u *CheckoutProductPrice) UnmarshalJSON(data []byte) error {
-
-	var legacyRecurringProductPrice LegacyRecurringProductPrice = LegacyRecurringProductPrice{}
-	if err := utils.UnmarshalJSON(data, &legacyRecurringProductPrice, "", true, nil); err == nil {
-		u.LegacyRecurringProductPrice = &legacyRecurringProductPrice
-		u.Type = CheckoutProductPriceTypeLegacyRecurringProductPrice
-		return nil
-	}
-
-	var productPrice ProductPrice = ProductPrice{}
-	if err := utils.UnmarshalJSON(data, &productPrice, "", true, nil); err == nil {
-		u.ProductPrice = &productPrice
-		u.Type = CheckoutProductPriceTypeProductPrice
-		return nil
-	}
-
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for CheckoutProductPrice", string(data))
-}
-
-func (u CheckoutProductPrice) MarshalJSON() ([]byte, error) {
-	if u.LegacyRecurringProductPrice != nil {
-		return utils.MarshalJSON(u.LegacyRecurringProductPrice, "", true)
-	}
-
-	if u.ProductPrice != nil {
-		return utils.MarshalJSON(u.ProductPrice, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type CheckoutProductPrice: all fields are null")
-}
-
 type CheckoutPricesType string
 
 const (
@@ -486,10 +423,6 @@ type Checkout struct {
 	OrganizationID string `json:"organization_id"`
 	// ID of the product to checkout.
 	ProductID *string `json:"product_id"`
-	// ID of the product price to checkout.
-	//
-	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
-	ProductPriceID *string `json:"product_price_id"`
 	// ID of the discount applied to the checkout.
 	DiscountID *string `json:"discount_id"`
 	// Whether to allow the customer to apply discount codes. If you apply a discount through `discount_id`, it'll still be applied, but the customer won't be able to change it.
@@ -527,16 +460,10 @@ type Checkout struct {
 	Metadata           map[string]MetadataOutputType `json:"metadata"`
 	// ID of the customer in your system. If a matching customer exists on Polar, the resulting order will be linked to this customer. Otherwise, a new customer will be created with this external ID set.
 	ExternalCustomerID *string `json:"external_customer_id"`
-	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
-	CustomerExternalID *string `json:"customer_external_id"`
 	// List of products available to select.
 	Products []CheckoutProduct `json:"products"`
 	// Product selected to checkout.
 	Product *CheckoutProduct `json:"product"`
-	// Price of the selected product.
-	//
-	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
-	ProductPrice *CheckoutProductPrice `json:"product_price"`
 	// Mapping of product IDs to their list of prices.
 	Prices               map[string][]CheckoutPrices `json:"prices"`
 	Discount             *CheckoutDiscount           `json:"discount"`
@@ -738,13 +665,6 @@ func (c *Checkout) GetProductID() *string {
 	return c.ProductID
 }
 
-func (c *Checkout) GetProductPriceID() *string {
-	if c == nil {
-		return nil
-	}
-	return c.ProductPriceID
-}
-
 func (c *Checkout) GetDiscountID() *string {
 	if c == nil {
 		return nil
@@ -906,13 +826,6 @@ func (c *Checkout) GetExternalCustomerID() *string {
 	return c.ExternalCustomerID
 }
 
-func (c *Checkout) GetCustomerExternalID() *string {
-	if c == nil {
-		return nil
-	}
-	return c.CustomerExternalID
-}
-
 func (c *Checkout) GetProducts() []CheckoutProduct {
 	if c == nil {
 		return []CheckoutProduct{}
@@ -925,13 +838,6 @@ func (c *Checkout) GetProduct() *CheckoutProduct {
 		return nil
 	}
 	return c.Product
-}
-
-func (c *Checkout) GetProductPrice() *CheckoutProductPrice {
-	if c == nil {
-		return nil
-	}
-	return c.ProductPrice
 }
 
 func (c *Checkout) GetPrices() map[string][]CheckoutPrices {

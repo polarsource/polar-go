@@ -5,9 +5,7 @@ package components
 // WebhookEndpointCreate - Schema to create a webhook endpoint.
 type WebhookEndpointCreate struct {
 	// The URL where the webhook events will be sent.
-	URL string `json:"url"`
-	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
-	Secret *string       `json:"secret,omitempty"`
+	URL    string        `json:"url"`
 	Format WebhookFormat `json:"format"`
 	// The events that will trigger the webhook.
 	Events []WebhookEventType `json:"events"`
@@ -20,13 +18,6 @@ func (w *WebhookEndpointCreate) GetURL() string {
 		return ""
 	}
 	return w.URL
-}
-
-func (w *WebhookEndpointCreate) GetSecret() *string {
-	if w == nil {
-		return nil
-	}
-	return w.Secret
 }
 
 func (w *WebhookEndpointCreate) GetFormat() WebhookFormat {

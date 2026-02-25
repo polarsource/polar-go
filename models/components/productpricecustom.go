@@ -22,10 +22,7 @@ type ProductPriceCustom struct {
 	// Whether the price is archived and no longer available.
 	IsArchived bool `json:"is_archived"`
 	// The ID of the product owning the price.
-	ProductID string           `json:"product_id"`
-	Type      ProductPriceType `json:"type"`
-	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
-	RecurringInterval *SubscriptionRecurringInterval `json:"recurring_interval"`
+	ProductID string `json:"product_id"`
 	// The minimum amount the customer can pay. If 0, the price is 'free or pay what you want'. Defaults to 50 cents.
 	MinimumAmount int64 `json:"minimum_amount"`
 	// The maximum amount the customer can pay.
@@ -39,7 +36,7 @@ func (p ProductPriceCustom) MarshalJSON() ([]byte, error) {
 }
 
 func (p *ProductPriceCustom) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &p, "", false, []string{"created_at", "id", "source", "amount_type", "price_currency", "is_archived", "product_id", "type", "minimum_amount"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &p, "", false, []string{"created_at", "id", "source", "amount_type", "price_currency", "is_archived", "product_id", "minimum_amount"}); err != nil {
 		return err
 	}
 	return nil
@@ -96,20 +93,6 @@ func (p *ProductPriceCustom) GetProductID() string {
 		return ""
 	}
 	return p.ProductID
-}
-
-func (p *ProductPriceCustom) GetType() ProductPriceType {
-	if p == nil {
-		return ProductPriceType("")
-	}
-	return p.Type
-}
-
-func (p *ProductPriceCustom) GetRecurringInterval() *SubscriptionRecurringInterval {
-	if p == nil {
-		return nil
-	}
-	return p.RecurringInterval
 }
 
 func (p *ProductPriceCustom) GetMinimumAmount() int64 {

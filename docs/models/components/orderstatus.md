@@ -9,3 +9,4 @@
 | `OrderStatusPaid`              | paid                           |
 | `OrderStatusRefunded`          | refunded                       |
 | `OrderStatusPartiallyRefunded` | partially_refunded             |
+| `OrderStatusVoid`              | void                           |

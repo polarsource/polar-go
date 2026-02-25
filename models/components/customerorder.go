@@ -45,16 +45,14 @@ type CustomerOrder struct {
 	// Whether an invoice has been generated for this order.
 	IsInvoiceGenerated bool `json:"is_invoice_generated"`
 	// Number of seats purchased (for seat-based one-time orders).
-	Seats          *int64  `json:"seats,omitempty"`
-	CustomerID     string  `json:"customer_id"`
-	ProductID      *string `json:"product_id"`
-	DiscountID     *string `json:"discount_id"`
-	SubscriptionID *string `json:"subscription_id"`
-	CheckoutID     *string `json:"checkout_id"`
-	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
-	UserID       string                     `json:"user_id"`
-	Product      *CustomerOrderProduct      `json:"product"`
-	Subscription *CustomerOrderSubscription `json:"subscription"`
+	Seats          *int64                     `json:"seats,omitempty"`
+	CustomerID     string                     `json:"customer_id"`
+	ProductID      *string                    `json:"product_id"`
+	DiscountID     *string                    `json:"discount_id"`
+	SubscriptionID *string                    `json:"subscription_id"`
+	CheckoutID     *string                    `json:"checkout_id"`
+	Product        *CustomerOrderProduct      `json:"product"`
+	Subscription   *CustomerOrderSubscription `json:"subscription"`
 	// Line items composing the order.
 	Items []OrderItemSchema `json:"items"`
 	// A summary description of the order.
@@ -254,13 +252,6 @@ func (c *CustomerOrder) GetCheckoutID() *string {
 		return nil
 	}
 	return c.CheckoutID
-}
-
-func (c *CustomerOrder) GetUserID() string {
-	if c == nil {
-		return ""
-	}
-	return c.UserID
 }
 
 func (c *CustomerOrder) GetProduct() *CustomerOrderProduct {

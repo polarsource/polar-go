@@ -22,10 +22,7 @@ type ProductPriceSeatBased struct {
 	// Whether the price is archived and no longer available.
 	IsArchived bool `json:"is_archived"`
 	// The ID of the product owning the price.
-	ProductID string           `json:"product_id"`
-	Type      ProductPriceType `json:"type"`
-	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
-	RecurringInterval *SubscriptionRecurringInterval `json:"recurring_interval"`
+	ProductID string `json:"product_id"`
 	// List of pricing tiers for seat-based pricing.
 	//
 	// The minimum and maximum seat limits are derived from the tiers:
@@ -39,7 +36,7 @@ func (p ProductPriceSeatBased) MarshalJSON() ([]byte, error) {
 }
 
 func (p *ProductPriceSeatBased) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &p, "", false, []string{"created_at", "id", "source", "amount_type", "price_currency", "is_archived", "product_id", "type", "seat_tiers"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &p, "", false, []string{"created_at", "id", "source", "amount_type", "price_currency", "is_archived", "product_id", "seat_tiers"}); err != nil {
 		return err
 	}
 	return nil
@@ -96,20 +93,6 @@ func (p *ProductPriceSeatBased) GetProductID() string {
 		return ""
 	}
 	return p.ProductID
-}
-
-func (p *ProductPriceSeatBased) GetType() ProductPriceType {
-	if p == nil {
-		return ProductPriceType("")
-	}
-	return p.Type
-}
-
-func (p *ProductPriceSeatBased) GetRecurringInterval() *SubscriptionRecurringInterval {
-	if p == nil {
-		return nil
-	}
-	return p.RecurringInterval
 }
 
 func (p *ProductPriceSeatBased) GetSeatTiers() ProductPriceSeatTiersOutput {
