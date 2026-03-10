@@ -25,7 +25,7 @@ type CardPayment struct {
 	method string `const:"card" json:"method"`
 	// Error code, if the payment was declined.
 	DeclineReason *string `json:"decline_reason"`
-	// Human-reasable error message, if the payment was declined.
+	// Human-readable error message, if the payment was declined.
 	DeclineMessage *string `json:"decline_message"`
 	// The ID of the organization that owns the payment.
 	OrganizationID string `json:"organization_id"`

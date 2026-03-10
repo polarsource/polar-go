@@ -138,14 +138,18 @@ type DiscountUpdate struct {
 	// Optional timestamp after which the discount is no longer redeemable.
 	EndsAt *time.Time `json:"ends_at,omitempty"`
 	// Optional maximum number of times the discount can be redeemed.
-	MaxRedemptions   *int64               `json:"max_redemptions,omitempty"`
-	Duration         *DiscountDuration    `json:"duration,omitempty"`
-	DurationInMonths *int64               `json:"duration_in_months,omitempty"`
-	Type             *DiscountType        `json:"type,omitempty"`
-	Amount           *int64               `json:"amount,omitempty"`
-	Currency         *PresentmentCurrency `json:"currency,omitempty"`
-	BasisPoints      *int64               `json:"basis_points,omitempty"`
-	Products         []string             `json:"products,omitempty"`
+	MaxRedemptions   *int64            `json:"max_redemptions,omitempty"`
+	Duration         *DiscountDuration `json:"duration,omitempty"`
+	DurationInMonths *int64            `json:"duration_in_months,omitempty"`
+	Type             *DiscountType     `json:"type,omitempty"`
+	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
+	Amount *int64 `json:"amount,omitempty"`
+	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
+	Currency *PresentmentCurrency `json:"currency,omitempty"`
+	// Map of currency to fixed amount to discount from the total. This allows specifying different discount amounts for different currencies.
+	Amounts     map[string]int64 `json:"amounts,omitempty"`
+	BasisPoints *int64           `json:"basis_points,omitempty"`
+	Products    []string         `json:"products,omitempty"`
 }
 
 func (d DiscountUpdate) MarshalJSON() ([]byte, error) {
@@ -234,6 +238,13 @@ func (d *DiscountUpdate) GetCurrency() *PresentmentCurrency {
 		return nil
 	}
 	return d.Currency
+}
+
+func (d *DiscountUpdate) GetAmounts() map[string]int64 {
+	if d == nil {
+		return nil
+	}
+	return d.Amounts
 }
 
 func (d *DiscountUpdate) GetBasisPoints() *int64 {

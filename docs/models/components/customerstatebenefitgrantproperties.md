@@ -33,6 +33,12 @@ customerStateBenefitGrantProperties := components.CreateCustomerStateBenefitGran
 customerStateBenefitGrantProperties := components.CreateCustomerStateBenefitGrantPropertiesBenefitGrantCustomProperties(components.BenefitGrantCustomProperties{/* values here */})
 ```
 
+### BenefitGrantFeatureFlagProperties
+
+```go
+customerStateBenefitGrantProperties := components.CreateCustomerStateBenefitGrantPropertiesBenefitGrantFeatureFlagProperties(components.BenefitGrantFeatureFlagProperties{/* values here */})
+```
+
 ## Union Discrimination
 
 Use the `Type` field to determine which variant is active, then access the corresponding field:
@@ -49,5 +55,7 @@ switch customerStateBenefitGrantProperties.Type {
 		// customerStateBenefitGrantProperties.BenefitGrantLicenseKeysProperties is populated
 	case components.CustomerStateBenefitGrantPropertiesTypeBenefitGrantCustomProperties:
 		// customerStateBenefitGrantProperties.BenefitGrantCustomProperties is populated
+	case components.CustomerStateBenefitGrantPropertiesTypeBenefitGrantFeatureFlagProperties:
+		// customerStateBenefitGrantProperties.BenefitGrantFeatureFlagProperties is populated
 }
 ```

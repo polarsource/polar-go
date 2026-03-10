@@ -18,6 +18,7 @@ const (
 	BenefitsUpdateBenefitUpdateTypeBenefitDownloadablesUpdate    BenefitsUpdateBenefitUpdateType = "BenefitDownloadablesUpdate"
 	BenefitsUpdateBenefitUpdateTypeBenefitLicenseKeysUpdate      BenefitsUpdateBenefitUpdateType = "BenefitLicenseKeysUpdate"
 	BenefitsUpdateBenefitUpdateTypeBenefitMeterCreditUpdate      BenefitsUpdateBenefitUpdateType = "BenefitMeterCreditUpdate"
+	BenefitsUpdateBenefitUpdateTypeBenefitFeatureFlagUpdate      BenefitsUpdateBenefitUpdateType = "BenefitFeatureFlagUpdate"
 )
 
 type BenefitsUpdateBenefitUpdate struct {
@@ -27,6 +28,7 @@ type BenefitsUpdateBenefitUpdate struct {
 	BenefitDownloadablesUpdate    *components.BenefitDownloadablesUpdate    `queryParam:"inline" union:"member"`
 	BenefitLicenseKeysUpdate      *components.BenefitLicenseKeysUpdate      `queryParam:"inline" union:"member"`
 	BenefitMeterCreditUpdate      *components.BenefitMeterCreditUpdate      `queryParam:"inline" union:"member"`
+	BenefitFeatureFlagUpdate      *components.BenefitFeatureFlagUpdate      `queryParam:"inline" union:"member"`
 
 	Type BenefitsUpdateBenefitUpdateType
 }
@@ -85,6 +87,15 @@ func CreateBenefitsUpdateBenefitUpdateBenefitMeterCreditUpdate(benefitMeterCredi
 	}
 }
 
+func CreateBenefitsUpdateBenefitUpdateBenefitFeatureFlagUpdate(benefitFeatureFlagUpdate components.BenefitFeatureFlagUpdate) BenefitsUpdateBenefitUpdate {
+	typ := BenefitsUpdateBenefitUpdateTypeBenefitFeatureFlagUpdate
+
+	return BenefitsUpdateBenefitUpdate{
+		BenefitFeatureFlagUpdate: &benefitFeatureFlagUpdate,
+		Type:                     typ,
+	}
+}
+
 func (u *BenefitsUpdateBenefitUpdate) UnmarshalJSON(data []byte) error {
 
 	var benefitCustomUpdate components.BenefitCustomUpdate = components.BenefitCustomUpdate{}
@@ -129,6 +140,13 @@ func (u *BenefitsUpdateBenefitUpdate) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
+	var benefitFeatureFlagUpdate components.BenefitFeatureFlagUpdate = components.BenefitFeatureFlagUpdate{}
+	if err := utils.UnmarshalJSON(data, &benefitFeatureFlagUpdate, "", true, nil); err == nil {
+		u.BenefitFeatureFlagUpdate = &benefitFeatureFlagUpdate
+		u.Type = BenefitsUpdateBenefitUpdateTypeBenefitFeatureFlagUpdate
+		return nil
+	}
+
 	return fmt.Errorf("could not unmarshal `%s` into any supported union types for BenefitsUpdateBenefitUpdate", string(data))
 }
 
@@ -155,6 +173,10 @@ func (u BenefitsUpdateBenefitUpdate) MarshalJSON() ([]byte, error) {
 
 	if u.BenefitMeterCreditUpdate != nil {
 		return utils.MarshalJSON(u.BenefitMeterCreditUpdate, "", true)
+	}
+
+	if u.BenefitFeatureFlagUpdate != nil {
+		return utils.MarshalJSON(u.BenefitFeatureFlagUpdate, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type BenefitsUpdateBenefitUpdate: all fields are null")
@@ -216,6 +238,13 @@ func (b *BenefitsUpdateResponse) GetBenefitDiscord() *components.BenefitDiscord 
 func (b *BenefitsUpdateResponse) GetBenefitDownloadables() *components.BenefitDownloadables {
 	if v := b.GetBenefit(); v != nil {
 		return v.BenefitDownloadables
+	}
+	return nil
+}
+
+func (b *BenefitsUpdateResponse) GetBenefitFeatureFlag() *components.BenefitFeatureFlag {
+	if v := b.GetBenefit(); v != nil {
+		return v.BenefitFeatureFlag
 	}
 	return nil
 }

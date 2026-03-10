@@ -25,7 +25,7 @@ type CustomerOrderSubscription struct {
 	// The start timestamp of the current billing period.
 	CurrentPeriodStart time.Time `json:"current_period_start"`
 	// The end timestamp of the current billing period.
-	CurrentPeriodEnd *time.Time `json:"current_period_end"`
+	CurrentPeriodEnd time.Time `json:"current_period_end"`
 	// The start timestamp of the trial period, if any.
 	TrialStart *time.Time `json:"trial_start"`
 	// The end timestamp of the trial period, if any.
@@ -127,9 +127,9 @@ func (c *CustomerOrderSubscription) GetCurrentPeriodStart() time.Time {
 	return c.CurrentPeriodStart
 }
 
-func (c *CustomerOrderSubscription) GetCurrentPeriodEnd() *time.Time {
+func (c *CustomerOrderSubscription) GetCurrentPeriodEnd() time.Time {
 	if c == nil {
-		return nil
+		return time.Time{}
 	}
 	return c.CurrentPeriodEnd
 }

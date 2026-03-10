@@ -1,5 +1,15 @@
 # EventNamesSortProperty
 
+## Example Usage
+
+```go
+import (
+	"github.com/polarsource/polar-go/models/components"
+)
+
+value := components.EventNamesSortPropertyName
+```
+
 
 ## Values
 

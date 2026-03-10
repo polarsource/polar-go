@@ -1,5 +1,15 @@
 # OrganizationSocialPlatforms
 
+## Example Usage
+
+```go
+import (
+	"github.com/polarsource/polar-go/models/components"
+)
+
+value := components.OrganizationSocialPlatformsX
+```
+
 
 ## Values
 
@@ -12,4 +22,6 @@
 | `OrganizationSocialPlatformsYoutube`   | youtube                                |
 | `OrganizationSocialPlatformsTiktok`    | tiktok                                 |
 | `OrganizationSocialPlatformsLinkedin`  | linkedin                               |
+| `OrganizationSocialPlatformsThreads`   | threads                                |
+| `OrganizationSocialPlatformsDiscord`   | discord                                |
 | `OrganizationSocialPlatformsOther`     | other                                  |

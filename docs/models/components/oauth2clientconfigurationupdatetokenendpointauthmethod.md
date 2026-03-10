@@ -1,5 +1,15 @@
 # OAuth2ClientConfigurationUpdateTokenEndpointAuthMethod
 
+## Example Usage
+
+```go
+import (
+	"github.com/polarsource/polar-go/models/components"
+)
+
+value := components.OAuth2ClientConfigurationUpdateTokenEndpointAuthMethodClientSecretBasic
+```
+
 
 ## Values
 

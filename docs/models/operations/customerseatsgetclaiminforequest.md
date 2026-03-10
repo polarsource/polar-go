@@ -5,4 +5,4 @@
 
 | Field              | Type               | Required           | Description        |
 | ------------------ | ------------------ | ------------------ | ------------------ |
-| `InvitationToken`  | *string*           | :heavy_check_mark: | N/A                |
+| `InvitationToken`  | `string`           | :heavy_check_mark: | N/A                |

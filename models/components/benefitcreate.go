@@ -15,6 +15,7 @@ const (
 	BenefitCreateTypeCustom           BenefitCreateType = "custom"
 	BenefitCreateTypeDiscord          BenefitCreateType = "discord"
 	BenefitCreateTypeDownloadables    BenefitCreateType = "downloadables"
+	BenefitCreateTypeFeatureFlag      BenefitCreateType = "feature_flag"
 	BenefitCreateTypeGithubRepository BenefitCreateType = "github_repository"
 	BenefitCreateTypeLicenseKeys      BenefitCreateType = "license_keys"
 	BenefitCreateTypeMeterCredit      BenefitCreateType = "meter_credit"
@@ -27,6 +28,7 @@ type BenefitCreate struct {
 	BenefitDownloadablesCreate    *BenefitDownloadablesCreate    `queryParam:"inline" union:"member"`
 	BenefitLicenseKeysCreate      *BenefitLicenseKeysCreate      `queryParam:"inline" union:"member"`
 	BenefitMeterCreditCreate      *BenefitMeterCreditCreate      `queryParam:"inline" union:"member"`
+	BenefitFeatureFlagCreate      *BenefitFeatureFlagCreate      `queryParam:"inline" union:"member"`
 
 	Type BenefitCreateType
 }
@@ -55,6 +57,15 @@ func CreateBenefitCreateDownloadables(downloadables BenefitDownloadablesCreate) 
 	return BenefitCreate{
 		BenefitDownloadablesCreate: &downloadables,
 		Type:                       typ,
+	}
+}
+
+func CreateBenefitCreateFeatureFlag(featureFlag BenefitFeatureFlagCreate) BenefitCreate {
+	typ := BenefitCreateTypeFeatureFlag
+
+	return BenefitCreate{
+		BenefitFeatureFlagCreate: &featureFlag,
+		Type:                     typ,
 	}
 }
 
@@ -124,6 +135,15 @@ func (u *BenefitCreate) UnmarshalJSON(data []byte) error {
 		u.BenefitDownloadablesCreate = benefitDownloadablesCreate
 		u.Type = BenefitCreateTypeDownloadables
 		return nil
+	case "feature_flag":
+		benefitFeatureFlagCreate := new(BenefitFeatureFlagCreate)
+		if err := utils.UnmarshalJSON(data, &benefitFeatureFlagCreate, "", true, nil); err != nil {
+			return fmt.Errorf("could not unmarshal `%s` into expected (Type == feature_flag) type BenefitFeatureFlagCreate within BenefitCreate: %w", string(data), err)
+		}
+
+		u.BenefitFeatureFlagCreate = benefitFeatureFlagCreate
+		u.Type = BenefitCreateTypeFeatureFlag
+		return nil
 	case "github_repository":
 		benefitGitHubRepositoryCreate := new(BenefitGitHubRepositoryCreate)
 		if err := utils.UnmarshalJSON(data, &benefitGitHubRepositoryCreate, "", true, nil); err != nil {
@@ -179,6 +199,10 @@ func (u BenefitCreate) MarshalJSON() ([]byte, error) {
 
 	if u.BenefitMeterCreditCreate != nil {
 		return utils.MarshalJSON(u.BenefitMeterCreditCreate, "", true)
+	}
+
+	if u.BenefitFeatureFlagCreate != nil {
+		return utils.MarshalJSON(u.BenefitFeatureFlagCreate, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type BenefitCreate: all fields are null")

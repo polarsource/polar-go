@@ -8,6 +8,10 @@ import (
 
 // CustomerSessionCustomerExternalIDCreate - Schema for creating a customer session using an external customer ID.
 type CustomerSessionCustomerExternalIDCreate struct {
+	// ID of the member to create a session for. When not provided and the organization has `member_model_enabled`, the owner member of the customer will be used for individual customers.
+	MemberID *string `json:"member_id,omitempty"`
+	// External ID of the member to create a session for. Alternative to `member_id`.
+	ExternalMemberID *string `json:"external_member_id,omitempty"`
 	// When set, a back button will be shown in the customer portal to return to this URL.
 	ReturnURL *string `json:"return_url,omitempty"`
 	// External ID of the customer to create a session for.
@@ -23,6 +27,20 @@ func (c *CustomerSessionCustomerExternalIDCreate) UnmarshalJSON(data []byte) err
 		return err
 	}
 	return nil
+}
+
+func (c *CustomerSessionCustomerExternalIDCreate) GetMemberID() *string {
+	if c == nil {
+		return nil
+	}
+	return c.MemberID
+}
+
+func (c *CustomerSessionCustomerExternalIDCreate) GetExternalMemberID() *string {
+	if c == nil {
+		return nil
+	}
+	return c.ExternalMemberID
 }
 
 func (c *CustomerSessionCustomerExternalIDCreate) GetReturnURL() *string {

@@ -17,6 +17,7 @@ const (
 	CustomerStateBenefitGrantPropertiesTypeBenefitGrantDownloadablesProperties    CustomerStateBenefitGrantPropertiesType = "BenefitGrantDownloadablesProperties"
 	CustomerStateBenefitGrantPropertiesTypeBenefitGrantLicenseKeysProperties      CustomerStateBenefitGrantPropertiesType = "BenefitGrantLicenseKeysProperties"
 	CustomerStateBenefitGrantPropertiesTypeBenefitGrantCustomProperties           CustomerStateBenefitGrantPropertiesType = "BenefitGrantCustomProperties"
+	CustomerStateBenefitGrantPropertiesTypeBenefitGrantFeatureFlagProperties      CustomerStateBenefitGrantPropertiesType = "BenefitGrantFeatureFlagProperties"
 )
 
 type CustomerStateBenefitGrantProperties struct {
@@ -25,6 +26,7 @@ type CustomerStateBenefitGrantProperties struct {
 	BenefitGrantDownloadablesProperties    *BenefitGrantDownloadablesProperties    `queryParam:"inline" union:"member"`
 	BenefitGrantLicenseKeysProperties      *BenefitGrantLicenseKeysProperties      `queryParam:"inline" union:"member"`
 	BenefitGrantCustomProperties           *BenefitGrantCustomProperties           `queryParam:"inline" union:"member"`
+	BenefitGrantFeatureFlagProperties      *BenefitGrantFeatureFlagProperties      `queryParam:"inline" union:"member"`
 
 	Type CustomerStateBenefitGrantPropertiesType
 }
@@ -74,6 +76,15 @@ func CreateCustomerStateBenefitGrantPropertiesBenefitGrantCustomProperties(benef
 	}
 }
 
+func CreateCustomerStateBenefitGrantPropertiesBenefitGrantFeatureFlagProperties(benefitGrantFeatureFlagProperties BenefitGrantFeatureFlagProperties) CustomerStateBenefitGrantProperties {
+	typ := CustomerStateBenefitGrantPropertiesTypeBenefitGrantFeatureFlagProperties
+
+	return CustomerStateBenefitGrantProperties{
+		BenefitGrantFeatureFlagProperties: &benefitGrantFeatureFlagProperties,
+		Type:                              typ,
+	}
+}
+
 func (u *CustomerStateBenefitGrantProperties) UnmarshalJSON(data []byte) error {
 
 	var benefitGrantDiscordProperties BenefitGrantDiscordProperties = BenefitGrantDiscordProperties{}
@@ -111,6 +122,13 @@ func (u *CustomerStateBenefitGrantProperties) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
+	var benefitGrantFeatureFlagProperties BenefitGrantFeatureFlagProperties = BenefitGrantFeatureFlagProperties{}
+	if err := utils.UnmarshalJSON(data, &benefitGrantFeatureFlagProperties, "", true, nil); err == nil {
+		u.BenefitGrantFeatureFlagProperties = &benefitGrantFeatureFlagProperties
+		u.Type = CustomerStateBenefitGrantPropertiesTypeBenefitGrantFeatureFlagProperties
+		return nil
+	}
+
 	return fmt.Errorf("could not unmarshal `%s` into any supported union types for CustomerStateBenefitGrantProperties", string(data))
 }
 
@@ -133,6 +151,10 @@ func (u CustomerStateBenefitGrantProperties) MarshalJSON() ([]byte, error) {
 
 	if u.BenefitGrantCustomProperties != nil {
 		return utils.MarshalJSON(u.BenefitGrantCustomProperties, "", true)
+	}
+
+	if u.BenefitGrantFeatureFlagProperties != nil {
+		return utils.MarshalJSON(u.BenefitGrantFeatureFlagProperties, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type CustomerStateBenefitGrantProperties: all fields are null")

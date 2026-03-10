@@ -5,7 +5,9 @@ package components
 // WebhookEndpointCreate - Schema to create a webhook endpoint.
 type WebhookEndpointCreate struct {
 	// The URL where the webhook events will be sent.
-	URL    string        `json:"url"`
+	URL string `json:"url"`
+	// An optional name for the webhook endpoint to help organize and identify it.
+	Name   *string       `json:"name,omitempty"`
 	Format WebhookFormat `json:"format"`
 	// The events that will trigger the webhook.
 	Events []WebhookEventType `json:"events"`
@@ -18,6 +20,13 @@ func (w *WebhookEndpointCreate) GetURL() string {
 		return ""
 	}
 	return w.URL
+}
+
+func (w *WebhookEndpointCreate) GetName() *string {
+	if w == nil {
+		return nil
+	}
+	return w.Name
 }
 
 func (w *WebhookEndpointCreate) GetFormat() WebhookFormat {

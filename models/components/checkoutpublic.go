@@ -116,6 +116,69 @@ func (u CheckoutPublicCustomFieldData) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type CheckoutPublicCustomFieldData: all fields are null")
 }
 
+type CheckoutPublicProductPriceType string
+
+const (
+	CheckoutPublicProductPriceTypeLegacyRecurringProductPrice CheckoutPublicProductPriceType = "LegacyRecurringProductPrice"
+	CheckoutPublicProductPriceTypeProductPrice                CheckoutPublicProductPriceType = "ProductPrice"
+)
+
+type CheckoutPublicProductPrice struct {
+	LegacyRecurringProductPrice *LegacyRecurringProductPrice `queryParam:"inline" union:"member"`
+	ProductPrice                *ProductPrice                `queryParam:"inline" union:"member"`
+
+	Type CheckoutPublicProductPriceType
+}
+
+func CreateCheckoutPublicProductPriceLegacyRecurringProductPrice(legacyRecurringProductPrice LegacyRecurringProductPrice) CheckoutPublicProductPrice {
+	typ := CheckoutPublicProductPriceTypeLegacyRecurringProductPrice
+
+	return CheckoutPublicProductPrice{
+		LegacyRecurringProductPrice: &legacyRecurringProductPrice,
+		Type:                        typ,
+	}
+}
+
+func CreateCheckoutPublicProductPriceProductPrice(productPrice ProductPrice) CheckoutPublicProductPrice {
+	typ := CheckoutPublicProductPriceTypeProductPrice
+
+	return CheckoutPublicProductPrice{
+		ProductPrice: &productPrice,
+		Type:         typ,
+	}
+}
+
+func (u *CheckoutPublicProductPrice) UnmarshalJSON(data []byte) error {
+
+	var legacyRecurringProductPrice LegacyRecurringProductPrice = LegacyRecurringProductPrice{}
+	if err := utils.UnmarshalJSON(data, &legacyRecurringProductPrice, "", true, nil); err == nil {
+		u.LegacyRecurringProductPrice = &legacyRecurringProductPrice
+		u.Type = CheckoutPublicProductPriceTypeLegacyRecurringProductPrice
+		return nil
+	}
+
+	var productPrice ProductPrice = ProductPrice{}
+	if err := utils.UnmarshalJSON(data, &productPrice, "", true, nil); err == nil {
+		u.ProductPrice = &productPrice
+		u.Type = CheckoutPublicProductPriceTypeProductPrice
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for CheckoutPublicProductPrice", string(data))
+}
+
+func (u CheckoutPublicProductPrice) MarshalJSON() ([]byte, error) {
+	if u.LegacyRecurringProductPrice != nil {
+		return utils.MarshalJSON(u.LegacyRecurringProductPrice, "", true)
+	}
+
+	if u.ProductPrice != nil {
+		return utils.MarshalJSON(u.ProductPrice, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type CheckoutPublicProductPrice: all fields are null")
+}
+
 type CheckoutPublicPricesType string
 
 const (
@@ -312,8 +375,12 @@ type CheckoutPublic struct {
 	EmbedOrigin *string `json:"embed_origin"`
 	// Amount in cents, before discounts and taxes.
 	Amount int64 `json:"amount"`
-	// Number of seats for seat-based pricing.
+	// Predefined number of seats (works with seat-based pricing only)
 	Seats *int64 `json:"seats,omitempty"`
+	// Minimum number of seats (works with seat-based pricing only)
+	MinSeats *int64 `json:"min_seats,omitempty"`
+	// Maximum number of seats (works with seat-based pricing only)
+	MaxSeats *int64 `json:"max_seats,omitempty"`
 	// Price per seat in cents for the current seat count, based on the applicable tier. Only relevant for seat-based pricing.
 	PricePerSeat *int64 `json:"price_per_seat,omitempty"`
 	// Discount amount in cents.
@@ -338,6 +405,10 @@ type CheckoutPublic struct {
 	OrganizationID string `json:"organization_id"`
 	// ID of the product to checkout.
 	ProductID *string `json:"product_id"`
+	// ID of the product price to checkout.
+	//
+	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
+	ProductPriceID *string `json:"product_price_id"`
 	// ID of the discount applied to the checkout.
 	DiscountID *string `json:"discount_id"`
 	// Whether to allow the customer to apply discount codes. If you apply a discount through `discount_id`, it'll still be applied, but the customer won't be able to change it.
@@ -372,6 +443,10 @@ type CheckoutPublic struct {
 	Products []CheckoutProduct `json:"products"`
 	// Product selected to checkout.
 	Product *CheckoutProduct `json:"product"`
+	// Price of the selected product.
+	//
+	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
+	ProductPrice *CheckoutPublicProductPrice `json:"product_price"`
 	// Mapping of product IDs to their list of prices.
 	Prices               map[string][]CheckoutPublicPrices `json:"prices"`
 	Discount             *CheckoutPublicDiscount           `json:"discount"`
@@ -488,6 +563,20 @@ func (c *CheckoutPublic) GetSeats() *int64 {
 	return c.Seats
 }
 
+func (c *CheckoutPublic) GetMinSeats() *int64 {
+	if c == nil {
+		return nil
+	}
+	return c.MinSeats
+}
+
+func (c *CheckoutPublic) GetMaxSeats() *int64 {
+	if c == nil {
+		return nil
+	}
+	return c.MaxSeats
+}
+
 func (c *CheckoutPublic) GetPricePerSeat() *int64 {
 	if c == nil {
 		return nil
@@ -570,6 +659,13 @@ func (c *CheckoutPublic) GetProductID() *string {
 		return nil
 	}
 	return c.ProductID
+}
+
+func (c *CheckoutPublic) GetProductPriceID() *string {
+	if c == nil {
+		return nil
+	}
+	return c.ProductPriceID
 }
 
 func (c *CheckoutPublic) GetDiscountID() *string {
@@ -717,6 +813,13 @@ func (c *CheckoutPublic) GetProduct() *CheckoutProduct {
 		return nil
 	}
 	return c.Product
+}
+
+func (c *CheckoutPublic) GetProductPrice() *CheckoutPublicProductPrice {
+	if c == nil {
+		return nil
+	}
+	return c.ProductPrice
 }
 
 func (c *CheckoutPublic) GetPrices() map[string][]CheckoutPublicPrices {

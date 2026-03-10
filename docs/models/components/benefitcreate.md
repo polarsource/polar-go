@@ -21,6 +21,12 @@ benefitCreate := components.CreateBenefitCreateDiscord(components.BenefitDiscord
 benefitCreate := components.CreateBenefitCreateDownloadables(components.BenefitDownloadablesCreate{/* values here */})
 ```
 
+### BenefitFeatureFlagCreate
+
+```go
+benefitCreate := components.CreateBenefitCreateFeatureFlag(components.BenefitFeatureFlagCreate{/* values here */})
+```
+
 ### BenefitGitHubRepositoryCreate
 
 ```go
@@ -51,6 +57,8 @@ switch benefitCreate.Type {
 		// benefitCreate.BenefitDiscordCreate is populated
 	case components.BenefitCreateTypeDownloadables:
 		// benefitCreate.BenefitDownloadablesCreate is populated
+	case components.BenefitCreateTypeFeatureFlag:
+		// benefitCreate.BenefitFeatureFlagCreate is populated
 	case components.BenefitCreateTypeGithubRepository:
 		// benefitCreate.BenefitGitHubRepositoryCreate is populated
 	case components.BenefitCreateTypeLicenseKeys:

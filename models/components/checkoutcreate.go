@@ -513,8 +513,12 @@ type CheckoutCreate struct {
 	// Whether to require the customer to fill their full billing address, instead of just the country. Customers in the US will always be required to fill their full address, regardless of this setting. If you preset the billing address, this setting will be automatically set to `true`.
 	RequireBillingAddress *bool  `default:"false" json:"require_billing_address"`
 	Amount                *int64 `json:"amount,omitempty"`
-	// Number of seats for seat-based pricing. Required for seat-based products.
+	// Predefined number of seats (works with seat-based pricing only)
 	Seats *int64 `json:"seats,omitempty"`
+	// Minimum number of seats (works with seat-based pricing only)
+	MinSeats *int64 `json:"min_seats,omitempty"`
+	// Maximum number of seats (works with seat-based pricing only)
+	MaxSeats *int64 `json:"max_seats,omitempty"`
 	// Whether to enable the trial period for the checkout session. If `false`, the trial period will be disabled, even if the selected product has a trial configured.
 	AllowTrial *bool `default:"true" json:"allow_trial"`
 	// ID of an existing customer in the organization. The customer data will be pre-filled in the checkout form. The resulting order will be linked to this customer.
@@ -629,6 +633,20 @@ func (c *CheckoutCreate) GetSeats() *int64 {
 		return nil
 	}
 	return c.Seats
+}
+
+func (c *CheckoutCreate) GetMinSeats() *int64 {
+	if c == nil {
+		return nil
+	}
+	return c.MinSeats
+}
+
+func (c *CheckoutCreate) GetMaxSeats() *int64 {
+	if c == nil {
+		return nil
+	}
+	return c.MaxSeats
 }
 
 func (c *CheckoutCreate) GetAllowTrial() *bool {

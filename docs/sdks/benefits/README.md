@@ -128,6 +128,8 @@ func main() {
                 // res.Benefit.BenefitDiscord is populated
             case components.BenefitUnionTypeDownloadables:
                 // res.Benefit.BenefitDownloadables is populated
+            case components.BenefitUnionTypeFeatureFlag:
+                // res.Benefit.BenefitFeatureFlag is populated
             case components.BenefitUnionTypeGithubRepository:
                 // res.Benefit.BenefitGitHubRepository is populated
             case components.BenefitUnionTypeLicenseKeys:
@@ -198,6 +200,8 @@ func main() {
                 // res.Benefit.BenefitDiscord is populated
             case components.BenefitUnionTypeDownloadables:
                 // res.Benefit.BenefitDownloadables is populated
+            case components.BenefitUnionTypeFeatureFlag:
+                // res.Benefit.BenefitFeatureFlag is populated
             case components.BenefitUnionTypeGithubRepository:
                 // res.Benefit.BenefitGitHubRepository is populated
             case components.BenefitUnionTypeLicenseKeys:
@@ -215,7 +219,7 @@ func main() {
 | Parameter                                                | Type                                                     | Required                                                 | Description                                              |
 | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- |
 | `ctx`                                                    | [context.Context](https://pkg.go.dev/context#Context)    | :heavy_check_mark:                                       | The context to use for the request.                      |
-| `id`                                                     | *string*                                                 | :heavy_check_mark:                                       | N/A                                                      |
+| `id`                                                     | `string`                                                 | :heavy_check_mark:                                       | N/A                                                      |
 | `opts`                                                   | [][operations.Option](../../models/operations/option.md) | :heavy_minus_sign:                                       | The options for this request.                            |
 
 ### Response
@@ -275,7 +279,7 @@ func main() {
 | Parameter                                                | Type                                                     | Required                                                 | Description                                              |
 | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- |
 | `ctx`                                                    | [context.Context](https://pkg.go.dev/context#Context)    | :heavy_check_mark:                                       | The context to use for the request.                      |
-| `id`                                                     | *string*                                                 | :heavy_check_mark:                                       | N/A                                                      |
+| `id`                                                     | `string`                                                 | :heavy_check_mark:                                       | N/A                                                      |
 | `opts`                                                   | [][operations.Option](../../models/operations/option.md) | :heavy_minus_sign:                                       | The options for this request.                            |
 
 ### Response
@@ -333,6 +337,8 @@ func main() {
                 // res.Benefit.BenefitDiscord is populated
             case components.BenefitUnionTypeDownloadables:
                 // res.Benefit.BenefitDownloadables is populated
+            case components.BenefitUnionTypeFeatureFlag:
+                // res.Benefit.BenefitFeatureFlag is populated
             case components.BenefitUnionTypeGithubRepository:
                 // res.Benefit.BenefitGitHubRepository is populated
             case components.BenefitUnionTypeLicenseKeys:
@@ -350,7 +356,7 @@ func main() {
 | Parameter                                                                                        | Type                                                                                             | Required                                                                                         | Description                                                                                      |
 | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------ |
 | `ctx`                                                                                            | [context.Context](https://pkg.go.dev/context#Context)                                            | :heavy_check_mark:                                                                               | The context to use for the request.                                                              |
-| `id`                                                                                             | *string*                                                                                         | :heavy_check_mark:                                                                               | N/A                                                                                              |
+| `id`                                                                                             | `string`                                                                                         | :heavy_check_mark:                                                                               | N/A                                                                                              |
 | `requestBody`                                                                                    | [operations.BenefitsUpdateBenefitUpdate](../../models/operations/benefitsupdatebenefitupdate.md) | :heavy_check_mark:                                                                               | N/A                                                                                              |
 | `opts`                                                                                           | [][operations.Option](../../models/operations/option.md)                                         | :heavy_minus_sign:                                                                               | The options for this request.                                                                    |
 

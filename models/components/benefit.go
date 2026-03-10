@@ -15,6 +15,7 @@ const (
 	BenefitUnionTypeCustom           BenefitUnionType = "custom"
 	BenefitUnionTypeDiscord          BenefitUnionType = "discord"
 	BenefitUnionTypeDownloadables    BenefitUnionType = "downloadables"
+	BenefitUnionTypeFeatureFlag      BenefitUnionType = "feature_flag"
 	BenefitUnionTypeGithubRepository BenefitUnionType = "github_repository"
 	BenefitUnionTypeLicenseKeys      BenefitUnionType = "license_keys"
 	BenefitUnionTypeMeterCredit      BenefitUnionType = "meter_credit"
@@ -27,6 +28,7 @@ type Benefit struct {
 	BenefitDownloadables    *BenefitDownloadables    `queryParam:"inline" union:"member"`
 	BenefitLicenseKeys      *BenefitLicenseKeys      `queryParam:"inline" union:"member"`
 	BenefitMeterCredit      *BenefitMeterCredit      `queryParam:"inline" union:"member"`
+	BenefitFeatureFlag      *BenefitFeatureFlag      `queryParam:"inline" union:"member"`
 
 	Type BenefitUnionType
 }
@@ -55,6 +57,15 @@ func CreateBenefitDownloadables(downloadables BenefitDownloadables) Benefit {
 	return Benefit{
 		BenefitDownloadables: &downloadables,
 		Type:                 typ,
+	}
+}
+
+func CreateBenefitFeatureFlag(featureFlag BenefitFeatureFlag) Benefit {
+	typ := BenefitUnionTypeFeatureFlag
+
+	return Benefit{
+		BenefitFeatureFlag: &featureFlag,
+		Type:               typ,
 	}
 }
 
@@ -124,6 +135,15 @@ func (u *Benefit) UnmarshalJSON(data []byte) error {
 		u.BenefitDownloadables = benefitDownloadables
 		u.Type = BenefitUnionTypeDownloadables
 		return nil
+	case "feature_flag":
+		benefitFeatureFlag := new(BenefitFeatureFlag)
+		if err := utils.UnmarshalJSON(data, &benefitFeatureFlag, "", true, nil); err != nil {
+			return fmt.Errorf("could not unmarshal `%s` into expected (Type == feature_flag) type BenefitFeatureFlag within Benefit: %w", string(data), err)
+		}
+
+		u.BenefitFeatureFlag = benefitFeatureFlag
+		u.Type = BenefitUnionTypeFeatureFlag
+		return nil
 	case "github_repository":
 		benefitGitHubRepository := new(BenefitGitHubRepository)
 		if err := utils.UnmarshalJSON(data, &benefitGitHubRepository, "", true, nil); err != nil {
@@ -179,6 +199,10 @@ func (u Benefit) MarshalJSON() ([]byte, error) {
 
 	if u.BenefitMeterCredit != nil {
 		return utils.MarshalJSON(u.BenefitMeterCredit, "", true)
+	}
+
+	if u.BenefitFeatureFlag != nil {
+		return utils.MarshalJSON(u.BenefitFeatureFlag, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type Benefit: all fields are null")

@@ -1,5 +1,15 @@
 # LicenseKeyStatus
 
+## Example Usage
+
+```go
+import (
+	"github.com/polarsource/polar-go/models/components"
+)
+
+value := components.LicenseKeyStatusGranted
+```
+
 
 ## Values
 

@@ -47,6 +47,13 @@ func (b *BenefitsCreateResponse) GetBenefitDownloadables() *components.BenefitDo
 	return nil
 }
 
+func (b *BenefitsCreateResponse) GetBenefitFeatureFlag() *components.BenefitFeatureFlag {
+	if v := b.GetBenefit(); v != nil {
+		return v.BenefitFeatureFlag
+	}
+	return nil
+}
+
 func (b *BenefitsCreateResponse) GetBenefitGithubRepository() *components.BenefitGitHubRepository {
 	if v := b.GetBenefit(); v != nil {
 		return v.BenefitGitHubRepository

@@ -115,69 +115,6 @@ func (u CustomerUpdateExternalIDMetadata) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type CustomerUpdateExternalIDMetadata: all fields are null")
 }
 
-type CustomerUpdateExternalIDTaxIDType string
-
-const (
-	CustomerUpdateExternalIDTaxIDTypeStr         CustomerUpdateExternalIDTaxIDType = "str"
-	CustomerUpdateExternalIDTaxIDTypeTaxIDFormat CustomerUpdateExternalIDTaxIDType = "TaxIDFormat"
-)
-
-type CustomerUpdateExternalIDTaxID struct {
-	Str         *string      `queryParam:"inline" union:"member"`
-	TaxIDFormat *TaxIDFormat `queryParam:"inline" union:"member"`
-
-	Type CustomerUpdateExternalIDTaxIDType
-}
-
-func CreateCustomerUpdateExternalIDTaxIDStr(str string) CustomerUpdateExternalIDTaxID {
-	typ := CustomerUpdateExternalIDTaxIDTypeStr
-
-	return CustomerUpdateExternalIDTaxID{
-		Str:  &str,
-		Type: typ,
-	}
-}
-
-func CreateCustomerUpdateExternalIDTaxIDTaxIDFormat(taxIDFormat TaxIDFormat) CustomerUpdateExternalIDTaxID {
-	typ := CustomerUpdateExternalIDTaxIDTypeTaxIDFormat
-
-	return CustomerUpdateExternalIDTaxID{
-		TaxIDFormat: &taxIDFormat,
-		Type:        typ,
-	}
-}
-
-func (u *CustomerUpdateExternalIDTaxID) UnmarshalJSON(data []byte) error {
-
-	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, nil); err == nil {
-		u.Str = &str
-		u.Type = CustomerUpdateExternalIDTaxIDTypeStr
-		return nil
-	}
-
-	var taxIDFormat TaxIDFormat = TaxIDFormat("")
-	if err := utils.UnmarshalJSON(data, &taxIDFormat, "", true, nil); err == nil {
-		u.TaxIDFormat = &taxIDFormat
-		u.Type = CustomerUpdateExternalIDTaxIDTypeTaxIDFormat
-		return nil
-	}
-
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for CustomerUpdateExternalIDTaxID", string(data))
-}
-
-func (u CustomerUpdateExternalIDTaxID) MarshalJSON() ([]byte, error) {
-	if u.Str != nil {
-		return utils.MarshalJSON(u.Str, "", true)
-	}
-
-	if u.TaxIDFormat != nil {
-		return utils.MarshalJSON(u.TaxIDFormat, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type CustomerUpdateExternalIDTaxID: all fields are null")
-}
-
 type CustomerUpdateExternalID struct {
 	// Key-value object allowing you to store additional information.
 	//
@@ -192,11 +129,11 @@ type CustomerUpdateExternalID struct {
 	// You can store up to **50 key-value pairs**.
 	Metadata map[string]CustomerUpdateExternalIDMetadata `json:"metadata,omitempty"`
 	// The email address of the customer. This must be unique within the organization.
-	Email          *string                          `json:"email,omitempty"`
-	Name           *string                          `json:"name,omitempty"`
-	BillingAddress *AddressInput                    `json:"billing_address,omitempty"`
-	TaxID          []*CustomerUpdateExternalIDTaxID `json:"tax_id,omitempty"`
-	Locale         *string                          `json:"locale,omitempty"`
+	Email          *string       `json:"email,omitempty"`
+	Name           *string       `json:"name,omitempty"`
+	BillingAddress *AddressInput `json:"billing_address,omitempty"`
+	TaxID          *string       `json:"tax_id,omitempty"`
+	Locale         *string       `json:"locale,omitempty"`
 }
 
 func (c *CustomerUpdateExternalID) GetMetadata() map[string]CustomerUpdateExternalIDMetadata {
@@ -227,7 +164,7 @@ func (c *CustomerUpdateExternalID) GetBillingAddress() *AddressInput {
 	return c.BillingAddress
 }
 
-func (c *CustomerUpdateExternalID) GetTaxID() []*CustomerUpdateExternalIDTaxID {
+func (c *CustomerUpdateExternalID) GetTaxID() *string {
 	if c == nil {
 		return nil
 	}

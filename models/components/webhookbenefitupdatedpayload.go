@@ -57,6 +57,10 @@ func (w *WebhookBenefitUpdatedPayload) GetDataDownloadables() *BenefitDownloadab
 	return w.GetData().BenefitDownloadables
 }
 
+func (w *WebhookBenefitUpdatedPayload) GetDataFeatureFlag() *BenefitFeatureFlag {
+	return w.GetData().BenefitFeatureFlag
+}
+
 func (w *WebhookBenefitUpdatedPayload) GetDataGithubRepository() *BenefitGitHubRepository {
 	return w.GetData().BenefitGitHubRepository
 }

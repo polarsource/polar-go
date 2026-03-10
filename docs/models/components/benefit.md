@@ -21,6 +21,12 @@ benefit := components.CreateBenefitDiscord(components.BenefitDiscord{/* values h
 benefit := components.CreateBenefitDownloadables(components.BenefitDownloadables{/* values here */})
 ```
 
+### BenefitFeatureFlag
+
+```go
+benefit := components.CreateBenefitFeatureFlag(components.BenefitFeatureFlag{/* values here */})
+```
+
 ### BenefitGitHubRepository
 
 ```go
@@ -51,6 +57,8 @@ switch benefit.Type {
 		// benefit.BenefitDiscord is populated
 	case components.BenefitUnionTypeDownloadables:
 		// benefit.BenefitDownloadables is populated
+	case components.BenefitUnionTypeFeatureFlag:
+		// benefit.BenefitFeatureFlag is populated
 	case components.BenefitUnionTypeGithubRepository:
 		// benefit.BenefitGitHubRepository is populated
 	case components.BenefitUnionTypeLicenseKeys:

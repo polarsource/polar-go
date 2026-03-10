@@ -21,7 +21,7 @@ func (c *CustomersGetRequest) GetID() string {
 type CustomersGetResponse struct {
 	HTTPMeta components.HTTPMetadata `json:"-"`
 	// Successful Response
-	CustomerWithMembers *components.CustomerWithMembers
+	Customer *components.Customer
 }
 
 func (c *CustomersGetResponse) GetHTTPMeta() components.HTTPMetadata {
@@ -31,9 +31,9 @@ func (c *CustomersGetResponse) GetHTTPMeta() components.HTTPMetadata {
 	return c.HTTPMeta
 }
 
-func (c *CustomersGetResponse) GetCustomerWithMembers() *components.CustomerWithMembers {
+func (c *CustomersGetResponse) GetCustomer() *components.Customer {
 	if c == nil {
 		return nil
 	}
-	return c.CustomerWithMembers
+	return c.Customer
 }

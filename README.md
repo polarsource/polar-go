@@ -384,10 +384,6 @@ func main() {
 * [Activate](docs/sdks/licensekeys/README.md#activate) - Activate License Key
 * [Deactivate](docs/sdks/licensekeys/README.md#deactivate) - Deactivate License Key
 
-### [MemberSessions](docs/sdks/membersessions/README.md)
-
-* [Create](docs/sdks/membersessions/README.md#create) - Create Member Session
-
 ### [Members](docs/sdks/members/README.md)
 
 * [ListMembers](docs/sdks/members/README.md#listmembers) - List Members

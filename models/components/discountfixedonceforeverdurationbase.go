@@ -10,8 +10,12 @@ import (
 type DiscountFixedOnceForeverDurationBase struct {
 	Duration DiscountDuration `json:"duration"`
 	Type     DiscountType     `json:"type"`
-	Amount   int64            `json:"amount"`
-	Currency string           `json:"currency"`
+	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
+	Amount int64 `json:"amount"`
+	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
+	Currency string `json:"currency"`
+	// Map of currency to fixed amount to discount from the total.
+	Amounts map[string]int64 `json:"amounts"`
 	// Creation timestamp of the object.
 	CreatedAt time.Time `json:"created_at"`
 	// Last modification timestamp of the object.
@@ -40,7 +44,7 @@ func (d DiscountFixedOnceForeverDurationBase) MarshalJSON() ([]byte, error) {
 }
 
 func (d *DiscountFixedOnceForeverDurationBase) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &d, "", false, []string{"duration", "type", "amount", "currency", "created_at", "id", "metadata", "name", "redemptions_count", "organization_id"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &d, "", false, []string{"duration", "type", "amount", "currency", "amounts", "created_at", "id", "metadata", "name", "redemptions_count", "organization_id"}); err != nil {
 		return err
 	}
 	return nil
@@ -72,6 +76,13 @@ func (d *DiscountFixedOnceForeverDurationBase) GetCurrency() string {
 		return ""
 	}
 	return d.Currency
+}
+
+func (d *DiscountFixedOnceForeverDurationBase) GetAmounts() map[string]int64 {
+	if d == nil {
+		return map[string]int64{}
+	}
+	return d.Amounts
 }
 
 func (d *DiscountFixedOnceForeverDurationBase) GetCreatedAt() time.Time {

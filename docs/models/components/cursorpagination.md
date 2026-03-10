@@ -5,4 +5,4 @@
 
 | Field              | Type               | Required           | Description        |
 | ------------------ | ------------------ | ------------------ | ------------------ |
-| `HasNextPage`      | *bool*             | :heavy_check_mark: | N/A                |
+| `HasNextPage`      | `bool`             | :heavy_check_mark: | N/A                |

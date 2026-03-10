@@ -4,7 +4,9 @@ package components
 
 // WebhookEndpointUpdate - Schema to update a webhook endpoint.
 type WebhookEndpointUpdate struct {
-	URL    *string            `json:"url,omitempty"`
+	URL *string `json:"url,omitempty"`
+	// An optional name for the webhook endpoint to help organize and identify it.
+	Name   *string            `json:"name,omitempty"`
 	Format *WebhookFormat     `json:"format,omitempty"`
 	Events []WebhookEventType `json:"events,omitempty"`
 	// Whether the webhook endpoint is enabled.
@@ -16,6 +18,13 @@ func (w *WebhookEndpointUpdate) GetURL() *string {
 		return nil
 	}
 	return w.URL
+}
+
+func (w *WebhookEndpointUpdate) GetName() *string {
+	if w == nil {
+		return nil
+	}
+	return w.Name
 }
 
 func (w *WebhookEndpointUpdate) GetFormat() *WebhookFormat {

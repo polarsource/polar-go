@@ -1,5 +1,15 @@
 # BenefitType
 
+## Example Usage
+
+```go
+import (
+	"github.com/polarsource/polar-go/models/components"
+)
+
+value := components.BenefitTypeCustom
+```
+
 
 ## Values
 
@@ -11,3 +21,4 @@
 | `BenefitTypeDownloadables`    | downloadables                 |
 | `BenefitTypeLicenseKeys`      | license_keys                  |
 | `BenefitTypeMeterCredit`      | meter_credit                  |
+| `BenefitTypeFeatureFlag`      | feature_flag                  |

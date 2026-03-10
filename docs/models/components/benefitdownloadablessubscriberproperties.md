@@ -5,4 +5,4 @@
 
 | Field              | Type               | Required           | Description        |
 | ------------------ | ------------------ | ------------------ | ------------------ |
-| `ActiveFiles`      | []*string*         | :heavy_check_mark: | N/A                |
+| `ActiveFiles`      | []`string`         | :heavy_check_mark: | N/A                |

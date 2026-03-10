@@ -5,5 +5,5 @@
 
 | Field              | Type               | Required           | Description        |
 | ------------------ | ------------------ | ------------------ | ------------------ |
-| `SubscriptionID`   | **string*          | :heavy_minus_sign: | N/A                |
-| `OrderID`          | **string*          | :heavy_minus_sign: | N/A                |
+| `SubscriptionID`   | `*string`          | :heavy_minus_sign: | N/A                |
+| `OrderID`          | `*string`          | :heavy_minus_sign: | N/A                |

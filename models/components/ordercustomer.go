@@ -81,7 +81,7 @@ type OrderCustomer struct {
 	ModifiedAt *time.Time                    `json:"modified_at"`
 	Metadata   map[string]MetadataOutputType `json:"metadata"`
 	// The ID of the customer in your system. This must be unique within the organization. Once set, it can't be updated.
-	ExternalID *string `json:"external_id"`
+	ExternalID *string `json:"external_id,omitempty"`
 	// The email address of the customer. This must be unique within the organization.
 	Email string `json:"email"`
 	// Whether the customer email address is verified. The address is automatically verified when the customer accesses the customer portal using their email address.

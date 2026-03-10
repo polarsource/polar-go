@@ -10,9 +10,9 @@ type TokenResponse struct {
 	AccessToken  string  `json:"access_token"`
 	tokenType    string  `const:"Bearer" json:"token_type"`
 	ExpiresIn    int64   `json:"expires_in"`
-	RefreshToken *string `json:"refresh_token"`
+	RefreshToken *string `json:"refresh_token,omitempty"`
 	Scope        string  `json:"scope"`
-	IDToken      string  `json:"id_token"`
+	IDToken      *string `json:"id_token,omitempty"`
 }
 
 func (t TokenResponse) MarshalJSON() ([]byte, error) {
@@ -58,9 +58,9 @@ func (t *TokenResponse) GetScope() string {
 	return t.Scope
 }
 
-func (t *TokenResponse) GetIDToken() string {
+func (t *TokenResponse) GetIDToken() *string {
 	if t == nil {
-		return ""
+		return nil
 	}
 	return t.IDToken
 }

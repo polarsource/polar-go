@@ -39,6 +39,12 @@ benefitGrantWebhook := components.CreateBenefitGrantWebhookBenefitGrantLicenseKe
 benefitGrantWebhook := components.CreateBenefitGrantWebhookBenefitGrantMeterCreditWebhook(components.BenefitGrantMeterCreditWebhook{/* values here */})
 ```
 
+### BenefitGrantFeatureFlagWebhook
+
+```go
+benefitGrantWebhook := components.CreateBenefitGrantWebhookBenefitGrantFeatureFlagWebhook(components.BenefitGrantFeatureFlagWebhook{/* values here */})
+```
+
 ## Union Discrimination
 
 Use the `Type` field to determine which variant is active, then access the corresponding field:
@@ -57,5 +63,7 @@ switch benefitGrantWebhook.Type {
 		// benefitGrantWebhook.BenefitGrantLicenseKeysWebhook is populated
 	case components.BenefitGrantWebhookTypeBenefitGrantMeterCreditWebhook:
 		// benefitGrantWebhook.BenefitGrantMeterCreditWebhook is populated
+	case components.BenefitGrantWebhookTypeBenefitGrantFeatureFlagWebhook:
+		// benefitGrantWebhook.BenefitGrantFeatureFlagWebhook is populated
 }
 ```

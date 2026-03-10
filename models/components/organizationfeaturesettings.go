@@ -21,10 +21,10 @@ type OrganizationFeatureSettings struct {
 	TinybirdRead *bool `default:"false" json:"tinybird_read"`
 	// If this organization compares Tinybird results with database
 	TinybirdCompare *bool `default:"false" json:"tinybird_compare"`
-	// If this organization has multiple presentment currencies enabled
-	PresentmentCurrenciesEnabled *bool `default:"false" json:"presentment_currencies_enabled"`
 	// If this organization has checkout localization enabled
 	CheckoutLocalizationEnabled *bool `default:"false" json:"checkout_localization_enabled"`
+	// Ordered list of metric slugs shown on the dashboard overview.
+	OverviewMetrics []string `json:"overview_metrics,omitempty"`
 }
 
 func (o OrganizationFeatureSettings) MarshalJSON() ([]byte, error) {
@@ -87,16 +87,16 @@ func (o *OrganizationFeatureSettings) GetTinybirdCompare() *bool {
 	return o.TinybirdCompare
 }
 
-func (o *OrganizationFeatureSettings) GetPresentmentCurrenciesEnabled() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.PresentmentCurrenciesEnabled
-}
-
 func (o *OrganizationFeatureSettings) GetCheckoutLocalizationEnabled() *bool {
 	if o == nil {
 		return nil
 	}
 	return o.CheckoutLocalizationEnabled
+}
+
+func (o *OrganizationFeatureSettings) GetOverviewMetrics() []string {
+	if o == nil {
+		return nil
+	}
+	return o.OverviewMetrics
 }

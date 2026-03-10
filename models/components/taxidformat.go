@@ -58,6 +58,7 @@ const (
 	TaxIDFormatKrBrn    TaxIDFormat = "kr_brn"
 	TaxIDFormatKzBin    TaxIDFormat = "kz_bin"
 	TaxIDFormatLiUID    TaxIDFormat = "li_uid"
+	TaxIDFormatMkVat    TaxIDFormat = "mk_vat"
 	TaxIDFormatMxRfc    TaxIDFormat = "mx_rfc"
 	TaxIDFormatMyFrp    TaxIDFormat = "my_frp"
 	TaxIDFormatMyItn    TaxIDFormat = "my_itn"
@@ -187,6 +188,8 @@ func (e *TaxIDFormat) UnmarshalJSON(data []byte) error {
 	case "kz_bin":
 		fallthrough
 	case "li_uid":
+		fallthrough
+	case "mk_vat":
 		fallthrough
 	case "mx_rfc":
 		fallthrough

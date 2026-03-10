@@ -11,8 +11,12 @@ type DiscountFixedRepeatDurationBase struct {
 	Duration         DiscountDuration `json:"duration"`
 	DurationInMonths int64            `json:"duration_in_months"`
 	Type             DiscountType     `json:"type"`
-	Amount           int64            `json:"amount"`
-	Currency         string           `json:"currency"`
+	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
+	Amount int64 `json:"amount"`
+	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
+	Currency string `json:"currency"`
+	// Map of currency to fixed amount to discount from the total.
+	Amounts map[string]int64 `json:"amounts"`
 	// Creation timestamp of the object.
 	CreatedAt time.Time `json:"created_at"`
 	// Last modification timestamp of the object.
@@ -41,7 +45,7 @@ func (d DiscountFixedRepeatDurationBase) MarshalJSON() ([]byte, error) {
 }
 
 func (d *DiscountFixedRepeatDurationBase) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &d, "", false, []string{"duration", "duration_in_months", "type", "amount", "currency", "created_at", "id", "metadata", "name", "redemptions_count", "organization_id"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &d, "", false, []string{"duration", "duration_in_months", "type", "amount", "currency", "amounts", "created_at", "id", "metadata", "name", "redemptions_count", "organization_id"}); err != nil {
 		return err
 	}
 	return nil
@@ -80,6 +84,13 @@ func (d *DiscountFixedRepeatDurationBase) GetCurrency() string {
 		return ""
 	}
 	return d.Currency
+}
+
+func (d *DiscountFixedRepeatDurationBase) GetAmounts() map[string]int64 {
+	if d == nil {
+		return map[string]int64{}
+	}
+	return d.Amounts
 }
 
 func (d *DiscountFixedRepeatDurationBase) GetCreatedAt() time.Time {

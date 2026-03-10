@@ -115,69 +115,6 @@ func (u CustomerCreateMetadata) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type CustomerCreateMetadata: all fields are null")
 }
 
-type CustomerCreateTaxIDType string
-
-const (
-	CustomerCreateTaxIDTypeStr         CustomerCreateTaxIDType = "str"
-	CustomerCreateTaxIDTypeTaxIDFormat CustomerCreateTaxIDType = "TaxIDFormat"
-)
-
-type CustomerCreateTaxID struct {
-	Str         *string      `queryParam:"inline" union:"member"`
-	TaxIDFormat *TaxIDFormat `queryParam:"inline" union:"member"`
-
-	Type CustomerCreateTaxIDType
-}
-
-func CreateCustomerCreateTaxIDStr(str string) CustomerCreateTaxID {
-	typ := CustomerCreateTaxIDTypeStr
-
-	return CustomerCreateTaxID{
-		Str:  &str,
-		Type: typ,
-	}
-}
-
-func CreateCustomerCreateTaxIDTaxIDFormat(taxIDFormat TaxIDFormat) CustomerCreateTaxID {
-	typ := CustomerCreateTaxIDTypeTaxIDFormat
-
-	return CustomerCreateTaxID{
-		TaxIDFormat: &taxIDFormat,
-		Type:        typ,
-	}
-}
-
-func (u *CustomerCreateTaxID) UnmarshalJSON(data []byte) error {
-
-	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, nil); err == nil {
-		u.Str = &str
-		u.Type = CustomerCreateTaxIDTypeStr
-		return nil
-	}
-
-	var taxIDFormat TaxIDFormat = TaxIDFormat("")
-	if err := utils.UnmarshalJSON(data, &taxIDFormat, "", true, nil); err == nil {
-		u.TaxIDFormat = &taxIDFormat
-		u.Type = CustomerCreateTaxIDTypeTaxIDFormat
-		return nil
-	}
-
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for CustomerCreateTaxID", string(data))
-}
-
-func (u CustomerCreateTaxID) MarshalJSON() ([]byte, error) {
-	if u.Str != nil {
-		return utils.MarshalJSON(u.Str, "", true)
-	}
-
-	if u.TaxIDFormat != nil {
-		return utils.MarshalJSON(u.TaxIDFormat, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type CustomerCreateTaxID: all fields are null")
-}
-
 type CustomerCreate struct {
 	// Key-value object allowing you to store additional information.
 	//
@@ -194,11 +131,11 @@ type CustomerCreate struct {
 	// The ID of the customer in your system. This must be unique within the organization. Once set, it can't be updated.
 	ExternalID *string `json:"external_id,omitempty"`
 	// The email address of the customer. This must be unique within the organization.
-	Email          string                 `json:"email"`
-	Name           *string                `json:"name,omitempty"`
-	BillingAddress *AddressInput          `json:"billing_address,omitempty"`
-	TaxID          []*CustomerCreateTaxID `json:"tax_id,omitempty"`
-	Locale         *string                `json:"locale,omitempty"`
+	Email          string        `json:"email"`
+	Name           *string       `json:"name,omitempty"`
+	BillingAddress *AddressInput `json:"billing_address,omitempty"`
+	TaxID          *string       `json:"tax_id,omitempty"`
+	Locale         *string       `json:"locale,omitempty"`
 	// The type of customer. Defaults to 'individual'. Set to 'team' for customers that can have multiple members.
 	Type *CustomerType `json:"type,omitempty"`
 	// The ID of the organization owning the customer. **Required unless you use an organization token.**
@@ -242,7 +179,7 @@ func (c *CustomerCreate) GetBillingAddress() *AddressInput {
 	return c.BillingAddress
 }
 
-func (c *CustomerCreate) GetTaxID() []*CustomerCreateTaxID {
+func (c *CustomerCreate) GetTaxID() *string {
 	if c == nil {
 		return nil
 	}

@@ -1,5 +1,15 @@
 # MetricType
 
+## Example Usage
+
+```go
+import (
+	"github.com/polarsource/polar-go/models/components"
+)
+
+value := components.MetricTypeScalar
+```
+
 
 ## Values
 

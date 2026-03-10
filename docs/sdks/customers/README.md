@@ -51,7 +51,7 @@ func main() {
     if err != nil {
         log.Fatal(err)
     }
-    if res.ListResourceCustomerWithMembers != nil {
+    if res.ListResourceCustomer != nil {
         for {
             // handle items
 
@@ -122,14 +122,6 @@ func main() {
         BillingAddress: &components.AddressInput{
             Country: components.CountryAlpha2InputUs,
         },
-        TaxID: []*components.CustomerCreateTaxID{
-            polargo.Pointer(components.CreateCustomerCreateTaxIDStr(
-                "911144442",
-            )),
-            polargo.Pointer(components.CreateCustomerCreateTaxIDStr(
-                "us_ein",
-            )),
-        },
         Locale: polargo.Pointer("en"),
         Type: components.CustomerTypeIndividual.ToPointer(),
         OrganizationID: polargo.Pointer("1dbfc517-0bbf-4301-9ba8-555ca42b9737"),
@@ -142,7 +134,7 @@ func main() {
     if err != nil {
         log.Fatal(err)
     }
-    if res.CustomerWithMembers != nil {
+    if res.Customer != nil {
         // handle response
     }
 }
@@ -255,7 +247,7 @@ func main() {
     if err != nil {
         log.Fatal(err)
     }
-    if res.CustomerWithMembers != nil {
+    if res.Customer != nil {
         // handle response
     }
 }
@@ -266,7 +258,7 @@ func main() {
 | Parameter                                                | Type                                                     | Required                                                 | Description                                              |
 | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- |
 | `ctx`                                                    | [context.Context](https://pkg.go.dev/context#Context)    | :heavy_check_mark:                                       | The context to use for the request.                      |
-| `id`                                                     | *string*                                                 | :heavy_check_mark:                                       | The customer ID.                                         |
+| `id`                                                     | `string`                                                 | :heavy_check_mark:                                       | The customer ID.                                         |
 | `opts`                                                   | [][operations.Option](../../models/operations/option.md) | :heavy_minus_sign:                                       | The options for this request.                            |
 
 ### Response
@@ -336,8 +328,8 @@ func main() {
 | Parameter                                                                                                                                                                                                                                              | Type                                                                                                                                                                                                                                                   | Required                                                                                                                                                                                                                                               | Description                                                                                                                                                                                                                                            |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `ctx`                                                                                                                                                                                                                                                  | [context.Context](https://pkg.go.dev/context#Context)                                                                                                                                                                                                  | :heavy_check_mark:                                                                                                                                                                                                                                     | The context to use for the request.                                                                                                                                                                                                                    |
-| `id`                                                                                                                                                                                                                                                   | *string*                                                                                                                                                                                                                                               | :heavy_check_mark:                                                                                                                                                                                                                                     | The customer ID.                                                                                                                                                                                                                                       |
-| `anonymize`                                                                                                                                                                                                                                            | **bool*                                                                                                                                                                                                                                                | :heavy_minus_sign:                                                                                                                                                                                                                                     | If true, also anonymize the customer's personal data for GDPR compliance. This replaces email with a hashed version, hashes name and billing name (name preserved for businesses with tax_id), clears billing address, and removes OAuth account data. |
+| `id`                                                                                                                                                                                                                                                   | `string`                                                                                                                                                                                                                                               | :heavy_check_mark:                                                                                                                                                                                                                                     | The customer ID.                                                                                                                                                                                                                                       |
+| `anonymize`                                                                                                                                                                                                                                            | `*bool`                                                                                                                                                                                                                                                | :heavy_minus_sign:                                                                                                                                                                                                                                     | If true, also anonymize the customer's personal data for GDPR compliance. This replaces email with a hashed version, hashes name and billing name (name preserved for businesses with tax_id), clears billing address, and removes OAuth account data. |
 | `opts`                                                                                                                                                                                                                                                 | [][operations.Option](../../models/operations/option.md)                                                                                                                                                                                               | :heavy_minus_sign:                                                                                                                                                                                                                                     | The options for this request.                                                                                                                                                                                                                          |
 
 ### Response
@@ -385,14 +377,6 @@ func main() {
         BillingAddress: &components.AddressInput{
             Country: components.CountryAlpha2InputUs,
         },
-        TaxID: []*components.CustomerUpdateTaxID{
-            polargo.Pointer(components.CreateCustomerUpdateTaxIDStr(
-                "911144442",
-            )),
-            polargo.Pointer(components.CreateCustomerUpdateTaxIDStr(
-                "us_ein",
-            )),
-        },
         Locale: polargo.Pointer("en"),
         ExternalID: polargo.Pointer("usr_1337"),
         Type: components.CustomerTypeIndividual.ToPointer(),
@@ -400,7 +384,7 @@ func main() {
     if err != nil {
         log.Fatal(err)
     }
-    if res.CustomerWithMembers != nil {
+    if res.Customer != nil {
         // handle response
     }
 }
@@ -411,7 +395,7 @@ func main() {
 | Parameter                                                              | Type                                                                   | Required                                                               | Description                                                            |
 | ---------------------------------------------------------------------- | ---------------------------------------------------------------------- | ---------------------------------------------------------------------- | ---------------------------------------------------------------------- |
 | `ctx`                                                                  | [context.Context](https://pkg.go.dev/context#Context)                  | :heavy_check_mark:                                                     | The context to use for the request.                                    |
-| `id`                                                                   | *string*                                                               | :heavy_check_mark:                                                     | The customer ID.                                                       |
+| `id`                                                                   | `string`                                                               | :heavy_check_mark:                                                     | The customer ID.                                                       |
 | `customerUpdate`                                                       | [components.CustomerUpdate](../../models/components/customerupdate.md) | :heavy_check_mark:                                                     | N/A                                                                    |
 | `opts`                                                                 | [][operations.Option](../../models/operations/option.md)               | :heavy_minus_sign:                                                     | The options for this request.                                          |
 
@@ -457,7 +441,7 @@ func main() {
     if err != nil {
         log.Fatal(err)
     }
-    if res.CustomerWithMembers != nil {
+    if res.Customer != nil {
         // handle response
     }
 }
@@ -468,7 +452,7 @@ func main() {
 | Parameter                                                | Type                                                     | Required                                                 | Description                                              |
 | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- |
 | `ctx`                                                    | [context.Context](https://pkg.go.dev/context#Context)    | :heavy_check_mark:                                       | The context to use for the request.                      |
-| `externalID`                                             | *string*                                                 | :heavy_check_mark:                                       | The customer external ID.                                |
+| `externalID`                                             | `string`                                                 | :heavy_check_mark:                                       | The customer external ID.                                |
 | `opts`                                                   | [][operations.Option](../../models/operations/option.md) | :heavy_minus_sign:                                       | The options for this request.                            |
 
 ### Response
@@ -528,8 +512,8 @@ func main() {
 | Parameter                                                                 | Type                                                                      | Required                                                                  | Description                                                               |
 | ------------------------------------------------------------------------- | ------------------------------------------------------------------------- | ------------------------------------------------------------------------- | ------------------------------------------------------------------------- |
 | `ctx`                                                                     | [context.Context](https://pkg.go.dev/context#Context)                     | :heavy_check_mark:                                                        | The context to use for the request.                                       |
-| `externalID`                                                              | *string*                                                                  | :heavy_check_mark:                                                        | The customer external ID.                                                 |
-| `anonymize`                                                               | **bool*                                                                   | :heavy_minus_sign:                                                        | If true, also anonymize the customer's personal data for GDPR compliance. |
+| `externalID`                                                              | `string`                                                                  | :heavy_check_mark:                                                        | The customer external ID.                                                 |
+| `anonymize`                                                               | `*bool`                                                                   | :heavy_minus_sign:                                                        | If true, also anonymize the customer's personal data for GDPR compliance. |
 | `opts`                                                                    | [][operations.Option](../../models/operations/option.md)                  | :heavy_minus_sign:                                                        | The options for this request.                                             |
 
 ### Response
@@ -577,20 +561,12 @@ func main() {
         BillingAddress: &components.AddressInput{
             Country: components.CountryAlpha2InputUs,
         },
-        TaxID: []*components.CustomerUpdateExternalIDTaxID{
-            polargo.Pointer(components.CreateCustomerUpdateExternalIDTaxIDStr(
-                "911144442",
-            )),
-            polargo.Pointer(components.CreateCustomerUpdateExternalIDTaxIDStr(
-                "us_ein",
-            )),
-        },
         Locale: polargo.Pointer("en"),
     })
     if err != nil {
         log.Fatal(err)
     }
-    if res.CustomerWithMembers != nil {
+    if res.Customer != nil {
         // handle response
     }
 }
@@ -601,7 +577,7 @@ func main() {
 | Parameter                                                                                  | Type                                                                                       | Required                                                                                   | Description                                                                                |
 | ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ |
 | `ctx`                                                                                      | [context.Context](https://pkg.go.dev/context#Context)                                      | :heavy_check_mark:                                                                         | The context to use for the request.                                                        |
-| `externalID`                                                                               | *string*                                                                                   | :heavy_check_mark:                                                                         | The customer external ID.                                                                  |
+| `externalID`                                                                               | `string`                                                                                   | :heavy_check_mark:                                                                         | The customer external ID.                                                                  |
 | `customerUpdateExternalID`                                                                 | [components.CustomerUpdateExternalID](../../models/components/customerupdateexternalid.md) | :heavy_check_mark:                                                                         | N/A                                                                                        |
 | `opts`                                                                                     | [][operations.Option](../../models/operations/option.md)                                   | :heavy_minus_sign:                                                                         | The options for this request.                                                              |
 
@@ -664,7 +640,7 @@ func main() {
 | Parameter                                                | Type                                                     | Required                                                 | Description                                              |
 | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- |
 | `ctx`                                                    | [context.Context](https://pkg.go.dev/context#Context)    | :heavy_check_mark:                                       | The context to use for the request.                      |
-| `id`                                                     | *string*                                                 | :heavy_check_mark:                                       | The customer ID.                                         |
+| `id`                                                     | `string`                                                 | :heavy_check_mark:                                       | The customer ID.                                         |
 | `opts`                                                   | [][operations.Option](../../models/operations/option.md) | :heavy_minus_sign:                                       | The options for this request.                            |
 
 ### Response
@@ -726,7 +702,7 @@ func main() {
 | Parameter                                                | Type                                                     | Required                                                 | Description                                              |
 | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- |
 | `ctx`                                                    | [context.Context](https://pkg.go.dev/context#Context)    | :heavy_check_mark:                                       | The context to use for the request.                      |
-| `externalID`                                             | *string*                                                 | :heavy_check_mark:                                       | The customer external ID.                                |
+| `externalID`                                             | `string`                                                 | :heavy_check_mark:                                       | The customer external ID.                                |
 | `opts`                                                   | [][operations.Option](../../models/operations/option.md) | :heavy_minus_sign:                                       | The options for this request.                            |
 
 ### Response

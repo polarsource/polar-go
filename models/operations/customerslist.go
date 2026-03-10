@@ -153,7 +153,7 @@ func (c *CustomersListRequest) GetMetadata() map[string]components.MetadataQuery
 type CustomersListResponse struct {
 	HTTPMeta components.HTTPMetadata `json:"-"`
 	// Successful Response
-	ListResourceCustomerWithMembers *components.ListResourceCustomerWithMembers
+	ListResourceCustomer *components.ListResourceCustomer
 
 	Next func() (*CustomersListResponse, error)
 }
@@ -165,9 +165,9 @@ func (c *CustomersListResponse) GetHTTPMeta() components.HTTPMetadata {
 	return c.HTTPMeta
 }
 
-func (c *CustomersListResponse) GetListResourceCustomerWithMembers() *components.ListResourceCustomerWithMembers {
+func (c *CustomersListResponse) GetListResourceCustomer() *components.ListResourceCustomer {
 	if c == nil {
 		return nil
 	}
-	return c.ListResourceCustomerWithMembers
+	return c.ListResourceCustomer
 }

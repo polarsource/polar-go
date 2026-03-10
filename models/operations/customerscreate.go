@@ -9,7 +9,7 @@ import (
 type CustomersCreateResponse struct {
 	HTTPMeta components.HTTPMetadata `json:"-"`
 	// Customer created.
-	CustomerWithMembers *components.CustomerWithMembers
+	Customer *components.Customer
 }
 
 func (c *CustomersCreateResponse) GetHTTPMeta() components.HTTPMetadata {
@@ -19,9 +19,9 @@ func (c *CustomersCreateResponse) GetHTTPMeta() components.HTTPMetadata {
 	return c.HTTPMeta
 }
 
-func (c *CustomersCreateResponse) GetCustomerWithMembers() *components.CustomerWithMembers {
+func (c *CustomersCreateResponse) GetCustomer() *components.Customer {
 	if c == nil {
 		return nil
 	}
-	return c.CustomerWithMembers
+	return c.Customer
 }

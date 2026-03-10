@@ -2,7 +2,7 @@
 
 package polargo
 
-// Generated from OpenAPI doc version 0.1.0 and generator version 2.839.0
+// Generated from OpenAPI doc version 0.1.0 and generator version 2.856.1
 
 import (
 	"context"
@@ -81,7 +81,6 @@ type Polar struct {
 	CustomerPortal           *CustomerPortal
 	CustomerSeats            *CustomerSeats
 	CustomerSessions         *CustomerSessions
-	MemberSessions           *MemberSessions
 	Events                   *Events
 	EventTypes               *EventTypes
 	Meters                   *Meters
@@ -95,7 +94,7 @@ type Polar struct {
 
 type SDKOption func(*Polar)
 
-// WithServerURL allows the overriding of the default server URL
+// WithServerURL allows providing an alternative server URL
 func WithServerURL(serverURL string) SDKOption {
 	return func(sdk *Polar) {
 		sdk.sdkConfiguration.ServerURL = serverURL
@@ -165,9 +164,9 @@ func WithTimeout(timeout time.Duration) SDKOption {
 // New creates a new instance of the SDK with the provided options
 func New(opts ...SDKOption) *Polar {
 	sdk := &Polar{
-		SDKVersion: "0.14.0",
+		SDKVersion: "0.15.0",
 		sdkConfiguration: config.SDKConfiguration{
-			UserAgent:  "speakeasy-sdk/go 0.14.0 2.839.0 0.1.0 github.com/polarsource/polar-go",
+			UserAgent:  "speakeasy-sdk/go 0.15.0 2.856.1 0.1.0 github.com/polarsource/polar-go",
 			ServerList: ServerList,
 		},
 		hooks: hooks.New(),
@@ -217,7 +216,6 @@ func New(opts ...SDKOption) *Polar {
 	sdk.CustomerPortal = newCustomerPortal(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.CustomerSeats = newCustomerSeats(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.CustomerSessions = newCustomerSessions(sdk, sdk.sdkConfiguration, sdk.hooks)
-	sdk.MemberSessions = newMemberSessions(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.Events = newEvents(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.EventTypes = newEventTypes(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.Meters = newMeters(sdk, sdk.sdkConfiguration, sdk.hooks)

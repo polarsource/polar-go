@@ -1,5 +1,15 @@
 # CountryAlpha2
 
+## Example Usage
+
+```go
+import (
+	"github.com/polarsource/polar-go/models/components"
+)
+
+value := components.CountryAlpha2Ad
+```
+
 
 ## Values
 

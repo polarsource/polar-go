@@ -1,5 +1,15 @@
 # CustomerOrderSortProperty
 
+## Example Usage
+
+```go
+import (
+	"github.com/polarsource/polar-go/models/components"
+)
+
+value := components.CustomerOrderSortPropertyCreatedAt
+```
+
 
 ## Values
 

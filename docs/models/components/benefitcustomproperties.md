@@ -7,4 +7,4 @@ Properties for a benefit of type `custom`.
 
 | Field              | Type               | Required           | Description        |
 | ------------------ | ------------------ | ------------------ | ------------------ |
-| `Note`             | *string*           | :heavy_check_mark: | N/A                |
+| `Note`             | `*string`          | :heavy_check_mark: | N/A                |

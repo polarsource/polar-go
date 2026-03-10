@@ -120,9 +120,12 @@ func (u DiscountFixedOnceForeverDurationCreateMetadata) MarshalJSON() ([]byte, e
 type DiscountFixedOnceForeverDurationCreate struct {
 	Duration DiscountDuration `json:"duration"`
 	Type     DiscountType     `json:"type"`
-	// Fixed amount to discount from the invoice total.
-	Amount   int64                `json:"amount"`
+	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
+	Amount *int64 `json:"amount,omitempty"`
+	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
 	Currency *PresentmentCurrency `json:"currency,omitempty"`
+	// Map of currency to fixed amount to discount from the total. This allows specifying different discount amounts for different currencies.
+	Amounts map[string]int64 `json:"amounts,omitempty"`
 	// Key-value object allowing you to store additional information.
 	//
 	// The key must be a string with a maximum length of **40 characters**.
@@ -155,7 +158,7 @@ func (d DiscountFixedOnceForeverDurationCreate) MarshalJSON() ([]byte, error) {
 }
 
 func (d *DiscountFixedOnceForeverDurationCreate) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &d, "", false, []string{"duration", "type", "amount", "name"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &d, "", false, []string{"duration", "type", "name"}); err != nil {
 		return err
 	}
 	return nil
@@ -175,9 +178,9 @@ func (d *DiscountFixedOnceForeverDurationCreate) GetType() DiscountType {
 	return d.Type
 }
 
-func (d *DiscountFixedOnceForeverDurationCreate) GetAmount() int64 {
+func (d *DiscountFixedOnceForeverDurationCreate) GetAmount() *int64 {
 	if d == nil {
-		return 0
+		return nil
 	}
 	return d.Amount
 }
@@ -187,6 +190,13 @@ func (d *DiscountFixedOnceForeverDurationCreate) GetCurrency() *PresentmentCurre
 		return nil
 	}
 	return d.Currency
+}
+
+func (d *DiscountFixedOnceForeverDurationCreate) GetAmounts() map[string]int64 {
+	if d == nil {
+		return nil
+	}
+	return d.Amounts
 }
 
 func (d *DiscountFixedOnceForeverDurationCreate) GetMetadata() map[string]DiscountFixedOnceForeverDurationCreateMetadata {

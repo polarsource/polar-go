@@ -127,15 +127,11 @@ func main() {
         log.Fatal(err)
     }
     if res.Checkout != nil {
-        switch res.Checkout.Discount.Type {
-            case components.CheckoutDiscountTypeCheckoutDiscountFixedOnceForeverDuration:
-                // res.Checkout.Discount.CheckoutDiscountFixedOnceForeverDuration is populated
-            case components.CheckoutDiscountTypeCheckoutDiscountFixedRepeatDuration:
-                // res.Checkout.Discount.CheckoutDiscountFixedRepeatDuration is populated
-            case components.CheckoutDiscountTypeCheckoutDiscountPercentageOnceForeverDuration:
-                // res.Checkout.Discount.CheckoutDiscountPercentageOnceForeverDuration is populated
-            case components.CheckoutDiscountTypeCheckoutDiscountPercentageRepeatDuration:
-                // res.Checkout.Discount.CheckoutDiscountPercentageRepeatDuration is populated
+        switch res.Checkout.ProductPrice.Type {
+            case components.CheckoutProductPriceTypeLegacyRecurringProductPrice:
+                // res.Checkout.ProductPrice.LegacyRecurringProductPrice is populated
+            case components.CheckoutProductPriceTypeProductPrice:
+                // res.Checkout.ProductPrice.ProductPrice is populated
         }
 
     }
@@ -193,15 +189,11 @@ func main() {
         log.Fatal(err)
     }
     if res.Checkout != nil {
-        switch res.Checkout.Discount.Type {
-            case components.CheckoutDiscountTypeCheckoutDiscountFixedOnceForeverDuration:
-                // res.Checkout.Discount.CheckoutDiscountFixedOnceForeverDuration is populated
-            case components.CheckoutDiscountTypeCheckoutDiscountFixedRepeatDuration:
-                // res.Checkout.Discount.CheckoutDiscountFixedRepeatDuration is populated
-            case components.CheckoutDiscountTypeCheckoutDiscountPercentageOnceForeverDuration:
-                // res.Checkout.Discount.CheckoutDiscountPercentageOnceForeverDuration is populated
-            case components.CheckoutDiscountTypeCheckoutDiscountPercentageRepeatDuration:
-                // res.Checkout.Discount.CheckoutDiscountPercentageRepeatDuration is populated
+        switch res.Checkout.ProductPrice.Type {
+            case components.CheckoutProductPriceTypeLegacyRecurringProductPrice:
+                // res.Checkout.ProductPrice.LegacyRecurringProductPrice is populated
+            case components.CheckoutProductPriceTypeProductPrice:
+                // res.Checkout.ProductPrice.ProductPrice is populated
         }
 
     }
@@ -213,7 +205,7 @@ func main() {
 | Parameter                                                | Type                                                     | Required                                                 | Description                                              |
 | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- |
 | `ctx`                                                    | [context.Context](https://pkg.go.dev/context#Context)    | :heavy_check_mark:                                       | The context to use for the request.                      |
-| `id`                                                     | *string*                                                 | :heavy_check_mark:                                       | The checkout session ID.                                 |
+| `id`                                                     | `string`                                                 | :heavy_check_mark:                                       | The checkout session ID.                                 |
 | `opts`                                                   | [][operations.Option](../../models/operations/option.md) | :heavy_minus_sign:                                       | The options for this request.                            |
 
 ### Response
@@ -266,15 +258,11 @@ func main() {
         log.Fatal(err)
     }
     if res.Checkout != nil {
-        switch res.Checkout.Discount.Type {
-            case components.CheckoutDiscountTypeCheckoutDiscountFixedOnceForeverDuration:
-                // res.Checkout.Discount.CheckoutDiscountFixedOnceForeverDuration is populated
-            case components.CheckoutDiscountTypeCheckoutDiscountFixedRepeatDuration:
-                // res.Checkout.Discount.CheckoutDiscountFixedRepeatDuration is populated
-            case components.CheckoutDiscountTypeCheckoutDiscountPercentageOnceForeverDuration:
-                // res.Checkout.Discount.CheckoutDiscountPercentageOnceForeverDuration is populated
-            case components.CheckoutDiscountTypeCheckoutDiscountPercentageRepeatDuration:
-                // res.Checkout.Discount.CheckoutDiscountPercentageRepeatDuration is populated
+        switch res.Checkout.ProductPrice.Type {
+            case components.CheckoutProductPriceTypeLegacyRecurringProductPrice:
+                // res.Checkout.ProductPrice.LegacyRecurringProductPrice is populated
+            case components.CheckoutProductPriceTypeProductPrice:
+                // res.Checkout.ProductPrice.ProductPrice is populated
         }
 
     }
@@ -286,7 +274,7 @@ func main() {
 | Parameter                                                              | Type                                                                   | Required                                                               | Description                                                            |
 | ---------------------------------------------------------------------- | ---------------------------------------------------------------------- | ---------------------------------------------------------------------- | ---------------------------------------------------------------------- |
 | `ctx`                                                                  | [context.Context](https://pkg.go.dev/context#Context)                  | :heavy_check_mark:                                                     | The context to use for the request.                                    |
-| `id`                                                                   | *string*                                                               | :heavy_check_mark:                                                     | The checkout session ID.                                               |
+| `id`                                                                   | `string`                                                               | :heavy_check_mark:                                                     | The checkout session ID.                                               |
 | `checkoutUpdate`                                                       | [components.CheckoutUpdate](../../models/components/checkoutupdate.md) | :heavy_check_mark:                                                     | N/A                                                                    |
 | `opts`                                                                 | [][operations.Option](../../models/operations/option.md)               | :heavy_minus_sign:                                                     | The options for this request.                                          |
 
@@ -330,15 +318,11 @@ func main() {
         log.Fatal(err)
     }
     if res.CheckoutPublic != nil {
-        switch res.CheckoutPublic.Discount.Type {
-            case components.CheckoutPublicDiscountTypeCheckoutDiscountFixedOnceForeverDuration:
-                // res.CheckoutPublic.Discount.CheckoutDiscountFixedOnceForeverDuration is populated
-            case components.CheckoutPublicDiscountTypeCheckoutDiscountFixedRepeatDuration:
-                // res.CheckoutPublic.Discount.CheckoutDiscountFixedRepeatDuration is populated
-            case components.CheckoutPublicDiscountTypeCheckoutDiscountPercentageOnceForeverDuration:
-                // res.CheckoutPublic.Discount.CheckoutDiscountPercentageOnceForeverDuration is populated
-            case components.CheckoutPublicDiscountTypeCheckoutDiscountPercentageRepeatDuration:
-                // res.CheckoutPublic.Discount.CheckoutDiscountPercentageRepeatDuration is populated
+        switch res.CheckoutPublic.ProductPrice.Type {
+            case components.CheckoutPublicProductPriceTypeLegacyRecurringProductPrice:
+                // res.CheckoutPublic.ProductPrice.LegacyRecurringProductPrice is populated
+            case components.CheckoutPublicProductPriceTypeProductPrice:
+                // res.CheckoutPublic.ProductPrice.ProductPrice is populated
         }
 
     }
@@ -350,7 +334,7 @@ func main() {
 | Parameter                                                | Type                                                     | Required                                                 | Description                                              |
 | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- |
 | `ctx`                                                    | [context.Context](https://pkg.go.dev/context#Context)    | :heavy_check_mark:                                       | The context to use for the request.                      |
-| `clientSecret`                                           | *string*                                                 | :heavy_check_mark:                                       | The checkout session client secret.                      |
+| `clientSecret`                                           | `string`                                                 | :heavy_check_mark:                                       | The checkout session client secret.                      |
 | `opts`                                                   | [][operations.Option](../../models/operations/option.md) | :heavy_minus_sign:                                       | The options for this request.                            |
 
 ### Response
@@ -399,15 +383,11 @@ func main() {
         log.Fatal(err)
     }
     if res.CheckoutPublic != nil {
-        switch res.CheckoutPublic.Discount.Type {
-            case components.CheckoutPublicDiscountTypeCheckoutDiscountFixedOnceForeverDuration:
-                // res.CheckoutPublic.Discount.CheckoutDiscountFixedOnceForeverDuration is populated
-            case components.CheckoutPublicDiscountTypeCheckoutDiscountFixedRepeatDuration:
-                // res.CheckoutPublic.Discount.CheckoutDiscountFixedRepeatDuration is populated
-            case components.CheckoutPublicDiscountTypeCheckoutDiscountPercentageOnceForeverDuration:
-                // res.CheckoutPublic.Discount.CheckoutDiscountPercentageOnceForeverDuration is populated
-            case components.CheckoutPublicDiscountTypeCheckoutDiscountPercentageRepeatDuration:
-                // res.CheckoutPublic.Discount.CheckoutDiscountPercentageRepeatDuration is populated
+        switch res.CheckoutPublic.ProductPrice.Type {
+            case components.CheckoutPublicProductPriceTypeLegacyRecurringProductPrice:
+                // res.CheckoutPublic.ProductPrice.LegacyRecurringProductPrice is populated
+            case components.CheckoutPublicProductPriceTypeProductPrice:
+                // res.CheckoutPublic.ProductPrice.ProductPrice is populated
         }
 
     }
@@ -419,7 +399,7 @@ func main() {
 | Parameter                                                                          | Type                                                                               | Required                                                                           | Description                                                                        |
 | ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
 | `ctx`                                                                              | [context.Context](https://pkg.go.dev/context#Context)                              | :heavy_check_mark:                                                                 | The context to use for the request.                                                |
-| `clientSecret`                                                                     | *string*                                                                           | :heavy_check_mark:                                                                 | The checkout session client secret.                                                |
+| `clientSecret`                                                                     | `string`                                                                           | :heavy_check_mark:                                                                 | The checkout session client secret.                                                |
 | `checkoutUpdatePublic`                                                             | [components.CheckoutUpdatePublic](../../models/components/checkoutupdatepublic.md) | :heavy_check_mark:                                                                 | N/A                                                                                |
 | `opts`                                                                             | [][operations.Option](../../models/operations/option.md)                           | :heavy_minus_sign:                                                                 | The options for this request.                                                      |
 
@@ -475,15 +455,11 @@ func main() {
         log.Fatal(err)
     }
     if res.CheckoutPublicConfirmed != nil {
-        switch res.CheckoutPublicConfirmed.Discount.Type {
-            case components.CheckoutPublicConfirmedDiscountTypeCheckoutDiscountFixedOnceForeverDuration:
-                // res.CheckoutPublicConfirmed.Discount.CheckoutDiscountFixedOnceForeverDuration is populated
-            case components.CheckoutPublicConfirmedDiscountTypeCheckoutDiscountFixedRepeatDuration:
-                // res.CheckoutPublicConfirmed.Discount.CheckoutDiscountFixedRepeatDuration is populated
-            case components.CheckoutPublicConfirmedDiscountTypeCheckoutDiscountPercentageOnceForeverDuration:
-                // res.CheckoutPublicConfirmed.Discount.CheckoutDiscountPercentageOnceForeverDuration is populated
-            case components.CheckoutPublicConfirmedDiscountTypeCheckoutDiscountPercentageRepeatDuration:
-                // res.CheckoutPublicConfirmed.Discount.CheckoutDiscountPercentageRepeatDuration is populated
+        switch res.CheckoutPublicConfirmed.ProductPrice.Type {
+            case components.CheckoutPublicConfirmedProductPriceTypeLegacyRecurringProductPrice:
+                // res.CheckoutPublicConfirmed.ProductPrice.LegacyRecurringProductPrice is populated
+            case components.CheckoutPublicConfirmedProductPriceTypeProductPrice:
+                // res.CheckoutPublicConfirmed.ProductPrice.ProductPrice is populated
         }
 
     }
@@ -495,7 +471,7 @@ func main() {
 | Parameter                                                                            | Type                                                                                 | Required                                                                             | Description                                                                          |
 | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------ |
 | `ctx`                                                                                | [context.Context](https://pkg.go.dev/context#Context)                                | :heavy_check_mark:                                                                   | The context to use for the request.                                                  |
-| `clientSecret`                                                                       | *string*                                                                             | :heavy_check_mark:                                                                   | The checkout session client secret.                                                  |
+| `clientSecret`                                                                       | `string`                                                                             | :heavy_check_mark:                                                                   | The checkout session client secret.                                                  |
 | `checkoutConfirmStripe`                                                              | [components.CheckoutConfirmStripe](../../models/components/checkoutconfirmstripe.md) | :heavy_check_mark:                                                                   | N/A                                                                                  |
 | `opts`                                                                               | [][operations.Option](../../models/operations/option.md)                             | :heavy_minus_sign:                                                                   | The options for this request.                                                        |
 

@@ -275,12 +275,12 @@ func (s *Customers) List(ctx context.Context, request operations.CustomersListRe
 				return nil, err
 			}
 
-			var out components.ListResourceCustomerWithMembers
+			var out components.ListResourceCustomer
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.ListResourceCustomerWithMembers = &out
+			res.ListResourceCustomer = &out
 		default:
 			rawBody, err := utils.ConsumeRawBody(httpRes)
 			if err != nil {
@@ -511,12 +511,12 @@ func (s *Customers) Create(ctx context.Context, request components.CustomerCreat
 				return nil, err
 			}
 
-			var out components.CustomerWithMembers
+			var out components.Customer
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.CustomerWithMembers = &out
+			res.Customer = &out
 		default:
 			rawBody, err := utils.ConsumeRawBody(httpRes)
 			if err != nil {
@@ -995,12 +995,12 @@ func (s *Customers) Get(ctx context.Context, id string, opts ...operations.Optio
 				return nil, err
 			}
 
-			var out components.CustomerWithMembers
+			var out components.Customer
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.CustomerWithMembers = &out
+			res.Customer = &out
 		default:
 			rawBody, err := utils.ConsumeRawBody(httpRes)
 			if err != nil {
@@ -1511,12 +1511,12 @@ func (s *Customers) Update(ctx context.Context, id string, customerUpdate compon
 				return nil, err
 			}
 
-			var out components.CustomerWithMembers
+			var out components.Customer
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.CustomerWithMembers = &out
+			res.Customer = &out
 		default:
 			rawBody, err := utils.ConsumeRawBody(httpRes)
 			if err != nil {
@@ -1765,12 +1765,12 @@ func (s *Customers) GetExternal(ctx context.Context, externalID string, opts ...
 				return nil, err
 			}
 
-			var out components.CustomerWithMembers
+			var out components.Customer
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.CustomerWithMembers = &out
+			res.Customer = &out
 		default:
 			rawBody, err := utils.ConsumeRawBody(httpRes)
 			if err != nil {
@@ -2271,12 +2271,12 @@ func (s *Customers) UpdateExternal(ctx context.Context, externalID string, custo
 				return nil, err
 			}
 
-			var out components.CustomerWithMembers
+			var out components.Customer
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.CustomerWithMembers = &out
+			res.Customer = &out
 		default:
 			rawBody, err := utils.ConsumeRawBody(httpRes)
 			if err != nil {

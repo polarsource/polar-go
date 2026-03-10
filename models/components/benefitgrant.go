@@ -17,6 +17,7 @@ const (
 	PropertiesTypeBenefitGrantDownloadablesProperties    PropertiesType = "BenefitGrantDownloadablesProperties"
 	PropertiesTypeBenefitGrantLicenseKeysProperties      PropertiesType = "BenefitGrantLicenseKeysProperties"
 	PropertiesTypeBenefitGrantCustomProperties           PropertiesType = "BenefitGrantCustomProperties"
+	PropertiesTypeBenefitGrantFeatureFlagProperties      PropertiesType = "BenefitGrantFeatureFlagProperties"
 )
 
 type Properties struct {
@@ -25,6 +26,7 @@ type Properties struct {
 	BenefitGrantDownloadablesProperties    *BenefitGrantDownloadablesProperties    `queryParam:"inline" union:"member"`
 	BenefitGrantLicenseKeysProperties      *BenefitGrantLicenseKeysProperties      `queryParam:"inline" union:"member"`
 	BenefitGrantCustomProperties           *BenefitGrantCustomProperties           `queryParam:"inline" union:"member"`
+	BenefitGrantFeatureFlagProperties      *BenefitGrantFeatureFlagProperties      `queryParam:"inline" union:"member"`
 
 	Type PropertiesType
 }
@@ -74,6 +76,15 @@ func CreatePropertiesBenefitGrantCustomProperties(benefitGrantCustomProperties B
 	}
 }
 
+func CreatePropertiesBenefitGrantFeatureFlagProperties(benefitGrantFeatureFlagProperties BenefitGrantFeatureFlagProperties) Properties {
+	typ := PropertiesTypeBenefitGrantFeatureFlagProperties
+
+	return Properties{
+		BenefitGrantFeatureFlagProperties: &benefitGrantFeatureFlagProperties,
+		Type:                              typ,
+	}
+}
+
 func (u *Properties) UnmarshalJSON(data []byte) error {
 
 	var benefitGrantDiscordProperties BenefitGrantDiscordProperties = BenefitGrantDiscordProperties{}
@@ -111,6 +122,13 @@ func (u *Properties) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
+	var benefitGrantFeatureFlagProperties BenefitGrantFeatureFlagProperties = BenefitGrantFeatureFlagProperties{}
+	if err := utils.UnmarshalJSON(data, &benefitGrantFeatureFlagProperties, "", true, nil); err == nil {
+		u.BenefitGrantFeatureFlagProperties = &benefitGrantFeatureFlagProperties
+		u.Type = PropertiesTypeBenefitGrantFeatureFlagProperties
+		return nil
+	}
+
 	return fmt.Errorf("could not unmarshal `%s` into any supported union types for Properties", string(data))
 }
 
@@ -133,6 +151,10 @@ func (u Properties) MarshalJSON() ([]byte, error) {
 
 	if u.BenefitGrantCustomProperties != nil {
 		return utils.MarshalJSON(u.BenefitGrantCustomProperties, "", true)
+	}
+
+	if u.BenefitGrantFeatureFlagProperties != nil {
+		return utils.MarshalJSON(u.BenefitGrantFeatureFlagProperties, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type Properties: all fields are null")
@@ -305,6 +327,10 @@ func (b *BenefitGrant) GetBenefitDiscord() *BenefitDiscord {
 
 func (b *BenefitGrant) GetBenefitDownloadables() *BenefitDownloadables {
 	return b.GetBenefit().BenefitDownloadables
+}
+
+func (b *BenefitGrant) GetBenefitFeatureFlag() *BenefitFeatureFlag {
+	return b.GetBenefit().BenefitFeatureFlag
 }
 
 func (b *BenefitGrant) GetBenefitGithubRepository() *BenefitGitHubRepository {

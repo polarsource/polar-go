@@ -2,6 +2,16 @@
 
 Filter by HTTP response code class (2xx, 3xx, 4xx, 5xx).
 
+## Example Usage
+
+```go
+import (
+	"github.com/polarsource/polar-go/models/operations"
+)
+
+value := operations.HTTPCodeClassTwoxx
+```
+
 
 ## Values
 

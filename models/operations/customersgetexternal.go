@@ -21,7 +21,7 @@ func (c *CustomersGetExternalRequest) GetExternalID() string {
 type CustomersGetExternalResponse struct {
 	HTTPMeta components.HTTPMetadata `json:"-"`
 	// Successful Response
-	CustomerWithMembers *components.CustomerWithMembers
+	Customer *components.Customer
 }
 
 func (c *CustomersGetExternalResponse) GetHTTPMeta() components.HTTPMetadata {
@@ -31,9 +31,9 @@ func (c *CustomersGetExternalResponse) GetHTTPMeta() components.HTTPMetadata {
 	return c.HTTPMeta
 }
 
-func (c *CustomersGetExternalResponse) GetCustomerWithMembers() *components.CustomerWithMembers {
+func (c *CustomersGetExternalResponse) GetCustomer() *components.Customer {
 	if c == nil {
 		return nil
 	}
-	return c.CustomerWithMembers
+	return c.Customer
 }

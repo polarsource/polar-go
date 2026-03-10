@@ -4,6 +4,16 @@ List of supported tax ID formats.
 
 Ref: https://docs.stripe.com/billing/customer/tax-ids#supported-tax-id
 
+## Example Usage
+
+```go
+import (
+	"github.com/polarsource/polar-go/models/components"
+)
+
+value := components.TaxIDFormatAdNrt
+```
+
 
 ## Values
 
@@ -54,6 +64,7 @@ Ref: https://docs.stripe.com/billing/customer/tax-ids#supported-tax-id
 | `TaxIDFormatKrBrn`    | kr_brn                |
 | `TaxIDFormatKzBin`    | kz_bin                |
 | `TaxIDFormatLiUID`    | li_uid                |
+| `TaxIDFormatMkVat`    | mk_vat                |
 | `TaxIDFormatMxRfc`    | mx_rfc                |
 | `TaxIDFormatMyFrp`    | my_frp                |
 | `TaxIDFormatMyItn`    | my_itn                |

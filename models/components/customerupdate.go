@@ -115,69 +115,6 @@ func (u CustomerUpdateMetadata) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type CustomerUpdateMetadata: all fields are null")
 }
 
-type CustomerUpdateTaxIDType string
-
-const (
-	CustomerUpdateTaxIDTypeStr         CustomerUpdateTaxIDType = "str"
-	CustomerUpdateTaxIDTypeTaxIDFormat CustomerUpdateTaxIDType = "TaxIDFormat"
-)
-
-type CustomerUpdateTaxID struct {
-	Str         *string      `queryParam:"inline" union:"member"`
-	TaxIDFormat *TaxIDFormat `queryParam:"inline" union:"member"`
-
-	Type CustomerUpdateTaxIDType
-}
-
-func CreateCustomerUpdateTaxIDStr(str string) CustomerUpdateTaxID {
-	typ := CustomerUpdateTaxIDTypeStr
-
-	return CustomerUpdateTaxID{
-		Str:  &str,
-		Type: typ,
-	}
-}
-
-func CreateCustomerUpdateTaxIDTaxIDFormat(taxIDFormat TaxIDFormat) CustomerUpdateTaxID {
-	typ := CustomerUpdateTaxIDTypeTaxIDFormat
-
-	return CustomerUpdateTaxID{
-		TaxIDFormat: &taxIDFormat,
-		Type:        typ,
-	}
-}
-
-func (u *CustomerUpdateTaxID) UnmarshalJSON(data []byte) error {
-
-	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, nil); err == nil {
-		u.Str = &str
-		u.Type = CustomerUpdateTaxIDTypeStr
-		return nil
-	}
-
-	var taxIDFormat TaxIDFormat = TaxIDFormat("")
-	if err := utils.UnmarshalJSON(data, &taxIDFormat, "", true, nil); err == nil {
-		u.TaxIDFormat = &taxIDFormat
-		u.Type = CustomerUpdateTaxIDTypeTaxIDFormat
-		return nil
-	}
-
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for CustomerUpdateTaxID", string(data))
-}
-
-func (u CustomerUpdateTaxID) MarshalJSON() ([]byte, error) {
-	if u.Str != nil {
-		return utils.MarshalJSON(u.Str, "", true)
-	}
-
-	if u.TaxIDFormat != nil {
-		return utils.MarshalJSON(u.TaxIDFormat, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type CustomerUpdateTaxID: all fields are null")
-}
-
 type CustomerUpdate struct {
 	// Key-value object allowing you to store additional information.
 	//
@@ -192,11 +129,11 @@ type CustomerUpdate struct {
 	// You can store up to **50 key-value pairs**.
 	Metadata map[string]CustomerUpdateMetadata `json:"metadata,omitempty"`
 	// The email address of the customer. This must be unique within the organization.
-	Email          *string                `json:"email,omitempty"`
-	Name           *string                `json:"name,omitempty"`
-	BillingAddress *AddressInput          `json:"billing_address,omitempty"`
-	TaxID          []*CustomerUpdateTaxID `json:"tax_id,omitempty"`
-	Locale         *string                `json:"locale,omitempty"`
+	Email          *string       `json:"email,omitempty"`
+	Name           *string       `json:"name,omitempty"`
+	BillingAddress *AddressInput `json:"billing_address,omitempty"`
+	TaxID          *string       `json:"tax_id,omitempty"`
+	Locale         *string       `json:"locale,omitempty"`
 	// The ID of the customer in your system. This must be unique within the organization. Once set, it can't be updated.
 	ExternalID *string `json:"external_id,omitempty"`
 	// The customer type. Can only be upgraded from 'individual' to 'team', never downgraded.
@@ -231,7 +168,7 @@ func (c *CustomerUpdate) GetBillingAddress() *AddressInput {
 	return c.BillingAddress
 }
 
-func (c *CustomerUpdate) GetTaxID() []*CustomerUpdateTaxID {
+func (c *CustomerUpdate) GetTaxID() *string {
 	if c == nil {
 		return nil
 	}

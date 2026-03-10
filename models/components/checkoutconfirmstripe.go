@@ -123,7 +123,11 @@ type CheckoutConfirmStripe struct {
 	CustomFieldData map[string]*CheckoutConfirmStripeCustomFieldData `json:"custom_field_data,omitempty"`
 	// ID of the product to checkout. Must be present in the checkout's product list.
 	ProductID *string `json:"product_id,omitempty"`
-	Amount    *int64  `json:"amount,omitempty"`
+	// ID of the product price to checkout. Must correspond to a price present in the checkout's product list.
+	//
+	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
+	ProductPriceID *string `json:"product_price_id,omitempty"`
+	Amount         *int64  `json:"amount,omitempty"`
 	// Number of seats for seat-based pricing.
 	Seats                  *int64        `json:"seats,omitempty"`
 	IsBusinessCustomer     *bool         `json:"is_business_customer,omitempty"`
@@ -164,6 +168,13 @@ func (c *CheckoutConfirmStripe) GetProductID() *string {
 		return nil
 	}
 	return c.ProductID
+}
+
+func (c *CheckoutConfirmStripe) GetProductPriceID() *string {
+	if c == nil {
+		return nil
+	}
+	return c.ProductPriceID
 }
 
 func (c *CheckoutConfirmStripe) GetAmount() *int64 {

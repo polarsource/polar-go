@@ -3,6 +3,15 @@
 package components
 
 type Metrics struct {
+	ActiveSubscriptions                  *Metric `json:"active_subscriptions,omitempty"`
+	CommittedSubscriptions               *Metric `json:"committed_subscriptions,omitempty"`
+	MonthlyRecurringRevenue              *Metric `json:"monthly_recurring_revenue,omitempty"`
+	CommittedMonthlyRecurringRevenue     *Metric `json:"committed_monthly_recurring_revenue,omitempty"`
+	AverageRevenuePerUser                *Metric `json:"average_revenue_per_user,omitempty"`
+	Checkouts                            *Metric `json:"checkouts,omitempty"`
+	SucceededCheckouts                   *Metric `json:"succeeded_checkouts,omitempty"`
+	CheckoutsConversion                  *Metric `json:"checkouts_conversion,omitempty"`
+	ChurnedSubscriptions                 *Metric `json:"churned_subscriptions,omitempty"`
 	Orders                               *Metric `json:"orders,omitempty"`
 	Revenue                              *Metric `json:"revenue,omitempty"`
 	NetRevenue                           *Metric `json:"net_revenue,omitempty"`
@@ -12,7 +21,6 @@ type Metrics struct {
 	CumulativeCosts                      *Metric `json:"cumulative_costs,omitempty"`
 	AverageOrderValue                    *Metric `json:"average_order_value,omitempty"`
 	NetAverageOrderValue                 *Metric `json:"net_average_order_value,omitempty"`
-	AverageRevenuePerUser                *Metric `json:"average_revenue_per_user,omitempty"`
 	CostPerUser                          *Metric `json:"cost_per_user,omitempty"`
 	ActiveUserByEvent                    *Metric `json:"active_user_by_event,omitempty"`
 	OneTimeProducts                      *Metric `json:"one_time_products,omitempty"`
@@ -24,13 +32,6 @@ type Metrics struct {
 	RenewedSubscriptions                 *Metric `json:"renewed_subscriptions,omitempty"`
 	RenewedSubscriptionsRevenue          *Metric `json:"renewed_subscriptions_revenue,omitempty"`
 	RenewedSubscriptionsNetRevenue       *Metric `json:"renewed_subscriptions_net_revenue,omitempty"`
-	ActiveSubscriptions                  *Metric `json:"active_subscriptions,omitempty"`
-	CommittedSubscriptions               *Metric `json:"committed_subscriptions,omitempty"`
-	MonthlyRecurringRevenue              *Metric `json:"monthly_recurring_revenue,omitempty"`
-	CommittedMonthlyRecurringRevenue     *Metric `json:"committed_monthly_recurring_revenue,omitempty"`
-	Checkouts                            *Metric `json:"checkouts,omitempty"`
-	SucceededCheckouts                   *Metric `json:"succeeded_checkouts,omitempty"`
-	CheckoutsConversion                  *Metric `json:"checkouts_conversion,omitempty"`
 	CanceledSubscriptions                *Metric `json:"canceled_subscriptions,omitempty"`
 	CanceledSubscriptionsCustomerService *Metric `json:"canceled_subscriptions_customer_service,omitempty"`
 	CanceledSubscriptionsLowQuality      *Metric `json:"canceled_subscriptions_low_quality,omitempty"`
@@ -40,12 +41,74 @@ type Metrics struct {
 	CanceledSubscriptionsTooExpensive    *Metric `json:"canceled_subscriptions_too_expensive,omitempty"`
 	CanceledSubscriptionsUnused          *Metric `json:"canceled_subscriptions_unused,omitempty"`
 	CanceledSubscriptionsOther           *Metric `json:"canceled_subscriptions_other,omitempty"`
-	ChurnedSubscriptions                 *Metric `json:"churned_subscriptions,omitempty"`
 	ChurnRate                            *Metric `json:"churn_rate,omitempty"`
 	Ltv                                  *Metric `json:"ltv,omitempty"`
 	GrossMargin                          *Metric `json:"gross_margin,omitempty"`
 	GrossMarginPercentage                *Metric `json:"gross_margin_percentage,omitempty"`
 	Cashflow                             *Metric `json:"cashflow,omitempty"`
+}
+
+func (m *Metrics) GetActiveSubscriptions() *Metric {
+	if m == nil {
+		return nil
+	}
+	return m.ActiveSubscriptions
+}
+
+func (m *Metrics) GetCommittedSubscriptions() *Metric {
+	if m == nil {
+		return nil
+	}
+	return m.CommittedSubscriptions
+}
+
+func (m *Metrics) GetMonthlyRecurringRevenue() *Metric {
+	if m == nil {
+		return nil
+	}
+	return m.MonthlyRecurringRevenue
+}
+
+func (m *Metrics) GetCommittedMonthlyRecurringRevenue() *Metric {
+	if m == nil {
+		return nil
+	}
+	return m.CommittedMonthlyRecurringRevenue
+}
+
+func (m *Metrics) GetAverageRevenuePerUser() *Metric {
+	if m == nil {
+		return nil
+	}
+	return m.AverageRevenuePerUser
+}
+
+func (m *Metrics) GetCheckouts() *Metric {
+	if m == nil {
+		return nil
+	}
+	return m.Checkouts
+}
+
+func (m *Metrics) GetSucceededCheckouts() *Metric {
+	if m == nil {
+		return nil
+	}
+	return m.SucceededCheckouts
+}
+
+func (m *Metrics) GetCheckoutsConversion() *Metric {
+	if m == nil {
+		return nil
+	}
+	return m.CheckoutsConversion
+}
+
+func (m *Metrics) GetChurnedSubscriptions() *Metric {
+	if m == nil {
+		return nil
+	}
+	return m.ChurnedSubscriptions
 }
 
 func (m *Metrics) GetOrders() *Metric {
@@ -109,13 +172,6 @@ func (m *Metrics) GetNetAverageOrderValue() *Metric {
 		return nil
 	}
 	return m.NetAverageOrderValue
-}
-
-func (m *Metrics) GetAverageRevenuePerUser() *Metric {
-	if m == nil {
-		return nil
-	}
-	return m.AverageRevenuePerUser
 }
 
 func (m *Metrics) GetCostPerUser() *Metric {
@@ -195,55 +251,6 @@ func (m *Metrics) GetRenewedSubscriptionsNetRevenue() *Metric {
 	return m.RenewedSubscriptionsNetRevenue
 }
 
-func (m *Metrics) GetActiveSubscriptions() *Metric {
-	if m == nil {
-		return nil
-	}
-	return m.ActiveSubscriptions
-}
-
-func (m *Metrics) GetCommittedSubscriptions() *Metric {
-	if m == nil {
-		return nil
-	}
-	return m.CommittedSubscriptions
-}
-
-func (m *Metrics) GetMonthlyRecurringRevenue() *Metric {
-	if m == nil {
-		return nil
-	}
-	return m.MonthlyRecurringRevenue
-}
-
-func (m *Metrics) GetCommittedMonthlyRecurringRevenue() *Metric {
-	if m == nil {
-		return nil
-	}
-	return m.CommittedMonthlyRecurringRevenue
-}
-
-func (m *Metrics) GetCheckouts() *Metric {
-	if m == nil {
-		return nil
-	}
-	return m.Checkouts
-}
-
-func (m *Metrics) GetSucceededCheckouts() *Metric {
-	if m == nil {
-		return nil
-	}
-	return m.SucceededCheckouts
-}
-
-func (m *Metrics) GetCheckoutsConversion() *Metric {
-	if m == nil {
-		return nil
-	}
-	return m.CheckoutsConversion
-}
-
 func (m *Metrics) GetCanceledSubscriptions() *Metric {
 	if m == nil {
 		return nil
@@ -305,13 +312,6 @@ func (m *Metrics) GetCanceledSubscriptionsOther() *Metric {
 		return nil
 	}
 	return m.CanceledSubscriptionsOther
-}
-
-func (m *Metrics) GetChurnedSubscriptions() *Metric {
-	if m == nil {
-		return nil
-	}
-	return m.ChurnedSubscriptions
 }
 
 func (m *Metrics) GetChurnRate() *Metric {

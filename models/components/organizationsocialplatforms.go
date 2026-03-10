@@ -17,6 +17,8 @@ const (
 	OrganizationSocialPlatformsYoutube   OrganizationSocialPlatforms = "youtube"
 	OrganizationSocialPlatformsTiktok    OrganizationSocialPlatforms = "tiktok"
 	OrganizationSocialPlatformsLinkedin  OrganizationSocialPlatforms = "linkedin"
+	OrganizationSocialPlatformsThreads   OrganizationSocialPlatforms = "threads"
+	OrganizationSocialPlatformsDiscord   OrganizationSocialPlatforms = "discord"
 	OrganizationSocialPlatformsOther     OrganizationSocialPlatforms = "other"
 )
 
@@ -42,6 +44,10 @@ func (e *OrganizationSocialPlatforms) UnmarshalJSON(data []byte) error {
 	case "tiktok":
 		fallthrough
 	case "linkedin":
+		fallthrough
+	case "threads":
+		fallthrough
+	case "discord":
 		fallthrough
 	case "other":
 		*e = OrganizationSocialPlatforms(v)

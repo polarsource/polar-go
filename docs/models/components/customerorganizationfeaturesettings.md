@@ -7,4 +7,4 @@ Feature flags exposed to the customer portal.
 
 | Field                                                      | Type                                                       | Required                                                   | Description                                                |
 | ---------------------------------------------------------- | ---------------------------------------------------------- | ---------------------------------------------------------- | ---------------------------------------------------------- |
-| `MemberModelEnabled`                                       | **bool*                                                    | :heavy_minus_sign:                                         | Whether the member model is enabled for this organization. |
+| `MemberModelEnabled`                                       | `*bool`                                                    | :heavy_minus_sign:                                         | Whether the member model is enabled for this organization. |

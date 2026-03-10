@@ -5,4 +5,4 @@
 
 | Field              | Type               | Required           | Description        |
 | ------------------ | ------------------ | ------------------ | ------------------ |
-| `MeterID`          | *string*           | :heavy_check_mark: | N/A                |
+| `MeterID`          | `string`           | :heavy_check_mark: | N/A                |
