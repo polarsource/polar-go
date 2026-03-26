@@ -11,6 +11,7 @@ import (
 //
 // **Discord & Slack support:** Basic
 type WebhookProductCreatedPayload struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	type_     string    `const:"product.created" json:"type"`
 	Timestamp time.Time `json:"timestamp"`
 	// A product.

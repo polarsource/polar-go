@@ -16,6 +16,7 @@ import (
 //
 // **Discord & Slack support:** Full
 type WebhookOrderUpdatedPayload struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	type_     string    `const:"order.updated" json:"type"`
 	Timestamp time.Time `json:"timestamp"`
 	Data      Order     `json:"data"`

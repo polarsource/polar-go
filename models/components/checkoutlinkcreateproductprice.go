@@ -136,6 +136,7 @@ type CheckoutLinkCreateProductPrice struct {
 	// The number of interval units for the trial period.
 	TrialIntervalCount *int64 `json:"trial_interval_count,omitempty"`
 	// Payment processor to use. Currently only Stripe is supported.
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	paymentProcessor string `const:"stripe" json:"payment_processor"`
 	// Optional label to distinguish links internally
 	Label *string `json:"label,omitempty"`

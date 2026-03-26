@@ -11,6 +11,7 @@ import (
 //
 // This event is triggered when access to a seat is revoked, either manually by the organization or automatically when a subscription is canceled.
 type WebhookCustomerSeatRevokedPayload struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	type_     string       `const:"customer_seat.revoked" json:"type"`
 	Timestamp time.Time    `json:"timestamp"`
 	Data      CustomerSeat `json:"data"`

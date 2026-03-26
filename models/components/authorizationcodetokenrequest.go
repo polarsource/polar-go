@@ -7,6 +7,7 @@ import (
 )
 
 type AuthorizationCodeTokenRequest struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	grantType    string `const:"authorization_code" form:"name=grant_type"`
 	ClientID     string `form:"name=client_id"`
 	ClientSecret string `form:"name=client_secret"`

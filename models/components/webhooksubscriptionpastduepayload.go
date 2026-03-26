@@ -16,6 +16,7 @@ import (
 //
 // **Discord & Slack support:** Full
 type WebhookSubscriptionPastDuePayload struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	type_     string       `const:"subscription.past_due" json:"type"`
 	Timestamp time.Time    `json:"timestamp"`
 	Data      Subscription `json:"data"`

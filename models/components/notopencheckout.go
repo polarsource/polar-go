@@ -7,6 +7,7 @@ import (
 )
 
 type NotOpenCheckout struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	error_ string `const:"NotOpenCheckout" json:"error"`
 	Detail string `json:"detail"`
 }

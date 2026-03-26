@@ -250,17 +250,11 @@ func (s *CustomFields) List(ctx context.Context, request operations.CustomFields
 		if len(arr) < l {
 			return nil, nil
 		}
+		request.Page = &nP
 
 		return s.List(
 			ctx,
-			operations.CustomFieldsListRequest{
-				OrganizationID: request.OrganizationID,
-				Query:          request.Query,
-				TypeFilter:     request.TypeFilter,
-				Page:           &nP,
-				Limit:          request.Limit,
-				Sorting:        request.Sorting,
-			},
+			request,
 			opts...,
 		)
 	}

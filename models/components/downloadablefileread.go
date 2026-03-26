@@ -22,10 +22,11 @@ type DownloadableFileRead struct {
 	ChecksumSha256Hex    *string    `json:"checksum_sha256_hex"`
 	LastModifiedAt       *time.Time `json:"last_modified_at"`
 	Version              *string    `json:"version"`
-	service              string     `const:"downloadable" json:"service"`
-	IsUploaded           bool       `json:"is_uploaded"`
-	CreatedAt            time.Time  `json:"created_at"`
-	SizeReadable         string     `json:"size_readable"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	service      string    `const:"downloadable" json:"service"`
+	IsUploaded   bool      `json:"is_uploaded"`
+	CreatedAt    time.Time `json:"created_at"`
+	SizeReadable string    `json:"size_readable"`
 }
 
 func (d DownloadableFileRead) MarshalJSON() ([]byte, error) {

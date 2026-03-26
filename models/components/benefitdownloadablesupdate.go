@@ -129,9 +129,10 @@ type BenefitDownloadablesUpdate struct {
 	// You can store up to **50 key-value pairs**.
 	Metadata map[string]BenefitDownloadablesUpdateMetadata `json:"metadata,omitempty"`
 	// The description of the benefit. Will be displayed on products having this benefit.
-	Description *string                               `json:"description,omitempty"`
-	type_       string                                `const:"downloadables" json:"type"`
-	Properties  *BenefitDownloadablesCreateProperties `json:"properties,omitempty"`
+	Description *string `json:"description,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	type_      string                                `const:"downloadables" json:"type"`
+	Properties *BenefitDownloadablesCreateProperties `json:"properties,omitempty"`
 }
 
 func (b BenefitDownloadablesUpdate) MarshalJSON() ([]byte, error) {

@@ -129,7 +129,8 @@ type BenefitCustomCreate struct {
 	//
 	// You can store up to **50 key-value pairs**.
 	Metadata map[string]BenefitCustomCreateMetadata `json:"metadata,omitempty"`
-	type_    string                                 `const:"custom" json:"type"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	type_ string `const:"custom" json:"type"`
 	// The description of the benefit. Will be displayed on products having this benefit.
 	Description string `json:"description"`
 	// The ID of the organization owning the benefit. **Required unless you use an organization token.**

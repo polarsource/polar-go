@@ -159,6 +159,12 @@ systemEvent := components.CreateSystemEventSubscriptionSeatsUpdated(components.S
 systemEvent := components.CreateSystemEventSubscriptionUncanceled(components.SubscriptionUncanceledEvent{/* values here */})
 ```
 
+### SubscriptionUpdatedEvent
+
+```go
+systemEvent := components.CreateSystemEventSubscriptionUpdated(components.SubscriptionUpdatedEvent{/* values here */})
+```
+
 ## Union Discrimination
 
 Use the `Type` field to determine which variant is active, then access the corresponding field:
@@ -217,5 +223,7 @@ switch systemEvent.Type {
 		// systemEvent.SubscriptionSeatsUpdatedEvent is populated
 	case components.SystemEventTypeSubscriptionUncanceled:
 		// systemEvent.SubscriptionUncanceledEvent is populated
+	case components.SystemEventTypeSubscriptionUpdated:
+		// systemEvent.SubscriptionUpdatedEvent is populated
 }
 ```

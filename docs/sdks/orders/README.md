@@ -235,7 +235,7 @@ func main() {
 
     res, err := s.Orders.Update(ctx, "<value>", components.OrderUpdate{
         BillingAddress: &components.AddressInput{
-            Country: components.CountryAlpha2InputUs,
+            Country: components.AddressInputCountryAlpha2InputUs,
         },
     })
     if err != nil {

@@ -7,6 +7,7 @@ import (
 )
 
 type CustomerPaymentMethodCreateRequiresActionResponse struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	status       string `const:"requires_action" json:"status"`
 	ClientSecret string `json:"client_secret"`
 }

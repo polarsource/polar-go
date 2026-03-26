@@ -11,6 +11,7 @@ import (
 //
 // **Discord & Slack support:** Basic
 type WebhookBenefitGrantRevokedPayload struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	type_     string              `const:"benefit_grant.revoked" json:"type"`
 	Timestamp time.Time           `json:"timestamp"`
 	Data      BenefitGrantWebhook `json:"data"`

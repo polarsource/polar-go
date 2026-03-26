@@ -32,12 +32,14 @@ generation:
     generateNewTests: false
     skipResponseBodyAssertions: false
 go:
-  version: 0.15.0
+  version: 0.15.1
   additionalDependencies: {}
   allowUnknownFieldsInWeakUnions: true
   baseErrorName: PolarError
   clientServerStatusCodesAsErrors: true
   defaultErrorName: APIError
+  enableCustomCodeRegions: false
+  enableSkipDeserialization: false
   envVarPrefix: POLAR
   flattenGlobalSecurity: true
   forwardCompatibleEnumsByDefault: false

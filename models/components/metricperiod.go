@@ -450,69 +450,6 @@ func (u SucceededCheckouts) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type SucceededCheckouts: all fields are null")
 }
 
-type CheckoutsConversionType string
-
-const (
-	CheckoutsConversionTypeInteger CheckoutsConversionType = "integer"
-	CheckoutsConversionTypeNumber  CheckoutsConversionType = "number"
-)
-
-type CheckoutsConversion struct {
-	Integer *int64   `queryParam:"inline" union:"member"`
-	Number  *float64 `queryParam:"inline" union:"member"`
-
-	Type CheckoutsConversionType
-}
-
-func CreateCheckoutsConversionInteger(integer int64) CheckoutsConversion {
-	typ := CheckoutsConversionTypeInteger
-
-	return CheckoutsConversion{
-		Integer: &integer,
-		Type:    typ,
-	}
-}
-
-func CreateCheckoutsConversionNumber(number float64) CheckoutsConversion {
-	typ := CheckoutsConversionTypeNumber
-
-	return CheckoutsConversion{
-		Number: &number,
-		Type:   typ,
-	}
-}
-
-func (u *CheckoutsConversion) UnmarshalJSON(data []byte) error {
-
-	var integer int64 = int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
-		u.Integer = &integer
-		u.Type = CheckoutsConversionTypeInteger
-		return nil
-	}
-
-	var number float64 = float64(0)
-	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
-		u.Number = &number
-		u.Type = CheckoutsConversionTypeNumber
-		return nil
-	}
-
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for CheckoutsConversion", string(data))
-}
-
-func (u CheckoutsConversion) MarshalJSON() ([]byte, error) {
-	if u.Integer != nil {
-		return utils.MarshalJSON(u.Integer, "", true)
-	}
-
-	if u.Number != nil {
-		return utils.MarshalJSON(u.Number, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type CheckoutsConversion: all fields are null")
-}
-
 type ChurnedSubscriptionsType string
 
 const (
@@ -574,6 +511,69 @@ func (u ChurnedSubscriptions) MarshalJSON() ([]byte, error) {
 	}
 
 	return nil, errors.New("could not marshal union type ChurnedSubscriptions: all fields are null")
+}
+
+type ChurnRateType string
+
+const (
+	ChurnRateTypeInteger ChurnRateType = "integer"
+	ChurnRateTypeNumber  ChurnRateType = "number"
+)
+
+type ChurnRate struct {
+	Integer *int64   `queryParam:"inline" union:"member"`
+	Number  *float64 `queryParam:"inline" union:"member"`
+
+	Type ChurnRateType
+}
+
+func CreateChurnRateInteger(integer int64) ChurnRate {
+	typ := ChurnRateTypeInteger
+
+	return ChurnRate{
+		Integer: &integer,
+		Type:    typ,
+	}
+}
+
+func CreateChurnRateNumber(number float64) ChurnRate {
+	typ := ChurnRateTypeNumber
+
+	return ChurnRate{
+		Number: &number,
+		Type:   typ,
+	}
+}
+
+func (u *ChurnRate) UnmarshalJSON(data []byte) error {
+
+	var integer int64 = int64(0)
+	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
+		u.Integer = &integer
+		u.Type = ChurnRateTypeInteger
+		return nil
+	}
+
+	var number float64 = float64(0)
+	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
+		u.Number = &number
+		u.Type = ChurnRateTypeNumber
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for ChurnRate", string(data))
+}
+
+func (u ChurnRate) MarshalJSON() ([]byte, error) {
+	if u.Integer != nil {
+		return utils.MarshalJSON(u.Integer, "", true)
+	}
+
+	if u.Number != nil {
+		return utils.MarshalJSON(u.Number, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type ChurnRate: all fields are null")
 }
 
 type OrdersType string
@@ -2403,58 +2403,58 @@ func (u CanceledSubscriptionsOther) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type CanceledSubscriptionsOther: all fields are null")
 }
 
-type ChurnRateType string
+type CheckoutsConversionType string
 
 const (
-	ChurnRateTypeInteger ChurnRateType = "integer"
-	ChurnRateTypeNumber  ChurnRateType = "number"
+	CheckoutsConversionTypeInteger CheckoutsConversionType = "integer"
+	CheckoutsConversionTypeNumber  CheckoutsConversionType = "number"
 )
 
-type ChurnRate struct {
+type CheckoutsConversion struct {
 	Integer *int64   `queryParam:"inline" union:"member"`
 	Number  *float64 `queryParam:"inline" union:"member"`
 
-	Type ChurnRateType
+	Type CheckoutsConversionType
 }
 
-func CreateChurnRateInteger(integer int64) ChurnRate {
-	typ := ChurnRateTypeInteger
+func CreateCheckoutsConversionInteger(integer int64) CheckoutsConversion {
+	typ := CheckoutsConversionTypeInteger
 
-	return ChurnRate{
+	return CheckoutsConversion{
 		Integer: &integer,
 		Type:    typ,
 	}
 }
 
-func CreateChurnRateNumber(number float64) ChurnRate {
-	typ := ChurnRateTypeNumber
+func CreateCheckoutsConversionNumber(number float64) CheckoutsConversion {
+	typ := CheckoutsConversionTypeNumber
 
-	return ChurnRate{
+	return CheckoutsConversion{
 		Number: &number,
 		Type:   typ,
 	}
 }
 
-func (u *ChurnRate) UnmarshalJSON(data []byte) error {
+func (u *CheckoutsConversion) UnmarshalJSON(data []byte) error {
 
 	var integer int64 = int64(0)
 	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
 		u.Integer = &integer
-		u.Type = ChurnRateTypeInteger
+		u.Type = CheckoutsConversionTypeInteger
 		return nil
 	}
 
 	var number float64 = float64(0)
 	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
 		u.Number = &number
-		u.Type = ChurnRateTypeNumber
+		u.Type = CheckoutsConversionTypeNumber
 		return nil
 	}
 
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for ChurnRate", string(data))
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for CheckoutsConversion", string(data))
 }
 
-func (u ChurnRate) MarshalJSON() ([]byte, error) {
+func (u CheckoutsConversion) MarshalJSON() ([]byte, error) {
 	if u.Integer != nil {
 		return utils.MarshalJSON(u.Integer, "", true)
 	}
@@ -2463,7 +2463,7 @@ func (u ChurnRate) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.Number, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type ChurnRate: all fields are null")
+	return nil, errors.New("could not marshal union type CheckoutsConversion: all fields are null")
 }
 
 type LtvType string
@@ -2728,8 +2728,8 @@ type MetricPeriod struct {
 	AverageRevenuePerUser                *AverageRevenuePerUser                `json:"average_revenue_per_user,omitempty"`
 	Checkouts                            *Checkouts                            `json:"checkouts,omitempty"`
 	SucceededCheckouts                   *SucceededCheckouts                   `json:"succeeded_checkouts,omitempty"`
-	CheckoutsConversion                  *CheckoutsConversion                  `json:"checkouts_conversion,omitempty"`
 	ChurnedSubscriptions                 *ChurnedSubscriptions                 `json:"churned_subscriptions,omitempty"`
+	ChurnRate                            *ChurnRate                            `json:"churn_rate,omitempty"`
 	Orders                               *Orders                               `json:"orders,omitempty"`
 	Revenue                              *Revenue                              `json:"revenue,omitempty"`
 	NetRevenue                           *NetRevenue                           `json:"net_revenue,omitempty"`
@@ -2759,7 +2759,7 @@ type MetricPeriod struct {
 	CanceledSubscriptionsTooExpensive    *CanceledSubscriptionsTooExpensive    `json:"canceled_subscriptions_too_expensive,omitempty"`
 	CanceledSubscriptionsUnused          *CanceledSubscriptionsUnused          `json:"canceled_subscriptions_unused,omitempty"`
 	CanceledSubscriptionsOther           *CanceledSubscriptionsOther           `json:"canceled_subscriptions_other,omitempty"`
-	ChurnRate                            *ChurnRate                            `json:"churn_rate,omitempty"`
+	CheckoutsConversion                  *CheckoutsConversion                  `json:"checkouts_conversion,omitempty"`
 	Ltv                                  *Ltv                                  `json:"ltv,omitempty"`
 	GrossMargin                          *GrossMargin                          `json:"gross_margin,omitempty"`
 	GrossMarginPercentage                *GrossMarginPercentage                `json:"gross_margin_percentage,omitempty"`
@@ -2833,18 +2833,18 @@ func (m *MetricPeriod) GetSucceededCheckouts() *SucceededCheckouts {
 	return m.SucceededCheckouts
 }
 
-func (m *MetricPeriod) GetCheckoutsConversion() *CheckoutsConversion {
-	if m == nil {
-		return nil
-	}
-	return m.CheckoutsConversion
-}
-
 func (m *MetricPeriod) GetChurnedSubscriptions() *ChurnedSubscriptions {
 	if m == nil {
 		return nil
 	}
 	return m.ChurnedSubscriptions
+}
+
+func (m *MetricPeriod) GetChurnRate() *ChurnRate {
+	if m == nil {
+		return nil
+	}
+	return m.ChurnRate
 }
 
 func (m *MetricPeriod) GetOrders() *Orders {
@@ -3050,11 +3050,11 @@ func (m *MetricPeriod) GetCanceledSubscriptionsOther() *CanceledSubscriptionsOth
 	return m.CanceledSubscriptionsOther
 }
 
-func (m *MetricPeriod) GetChurnRate() *ChurnRate {
+func (m *MetricPeriod) GetCheckoutsConversion() *CheckoutsConversion {
 	if m == nil {
 		return nil
 	}
-	return m.ChurnRate
+	return m.CheckoutsConversion
 }
 
 func (m *MetricPeriod) GetLtv() *Ltv {

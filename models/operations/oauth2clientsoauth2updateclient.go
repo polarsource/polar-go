@@ -25,6 +25,9 @@ func (o *Oauth2ClientsOauth2UpdateClientRequest) GetOAuth2ClientConfigurationUpd
 	return o.OAuth2ClientConfigurationUpdate
 }
 
+// #region class-body-oauth2clientsoauth2updateclientrequest
+// #endregion class-body-oauth2clientsoauth2updateclientrequest
+
 type Oauth2ClientsOauth2UpdateClientResponse struct {
 	HTTPMeta components.HTTPMetadata `json:"-"`
 	// Successful Response
@@ -44,3 +47,6 @@ func (o *Oauth2ClientsOauth2UpdateClientResponse) GetAny() any {
 	}
 	return o.Any
 }
+
+// #region class-body-oauth2clientsoauth2updateclientresponse
+// #endregion class-body-oauth2clientsoauth2updateclientresponse

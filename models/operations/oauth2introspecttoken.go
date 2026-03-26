@@ -25,3 +25,6 @@ func (o *Oauth2IntrospectTokenResponse) GetIntrospectTokenResponse() *components
 	}
 	return o.IntrospectTokenResponse
 }
+
+// #region class-body-oauth2introspecttokenresponse
+// #endregion class-body-oauth2introspecttokenresponse

@@ -7,6 +7,7 @@ import (
 )
 
 type NotPaidOrder struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	error_ string `const:"NotPaidOrder" json:"error"`
 	Detail string `json:"detail"`
 }

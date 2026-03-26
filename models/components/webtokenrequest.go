@@ -35,6 +35,7 @@ func (e *WebTokenRequestSubType) UnmarshalJSON(data []byte) error {
 }
 
 type WebTokenRequest struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	grantType    string                  `const:"web" form:"name=grant_type"`
 	ClientID     string                  `form:"name=client_id"`
 	ClientSecret string                  `form:"name=client_secret"`

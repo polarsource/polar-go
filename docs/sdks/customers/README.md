@@ -120,7 +120,7 @@ func main() {
         Email: "customer@example.com",
         Name: polargo.Pointer("John Doe"),
         BillingAddress: &components.AddressInput{
-            Country: components.CountryAlpha2InputUs,
+            Country: components.AddressInputCountryAlpha2InputUs,
         },
         Locale: polargo.Pointer("en"),
         Type: components.CustomerTypeIndividual.ToPointer(),
@@ -375,7 +375,7 @@ func main() {
         Email: polargo.Pointer("customer@example.com"),
         Name: polargo.Pointer("John Doe"),
         BillingAddress: &components.AddressInput{
-            Country: components.CountryAlpha2InputUs,
+            Country: components.AddressInputCountryAlpha2InputUs,
         },
         Locale: polargo.Pointer("en"),
         ExternalID: polargo.Pointer("usr_1337"),
@@ -559,7 +559,7 @@ func main() {
         Email: polargo.Pointer("customer@example.com"),
         Name: polargo.Pointer("John Doe"),
         BillingAddress: &components.AddressInput{
-            Country: components.CountryAlpha2InputUs,
+            Country: components.AddressInputCountryAlpha2InputUs,
         },
         Locale: polargo.Pointer("en"),
     })

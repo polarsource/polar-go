@@ -250,21 +250,11 @@ func (s *Refunds) List(ctx context.Context, request operations.RefundsListReques
 		if len(arr) < l {
 			return nil, nil
 		}
+		request.Page = &nP
 
 		return s.List(
 			ctx,
-			operations.RefundsListRequest{
-				ID:                 request.ID,
-				OrganizationID:     request.OrganizationID,
-				OrderID:            request.OrderID,
-				SubscriptionID:     request.SubscriptionID,
-				CustomerID:         request.CustomerID,
-				ExternalCustomerID: request.ExternalCustomerID,
-				Succeeded:          request.Succeeded,
-				Page:               &nP,
-				Limit:              request.Limit,
-				Sorting:            request.Sorting,
-			},
+			request,
 			opts...,
 		)
 	}

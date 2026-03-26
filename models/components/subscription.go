@@ -341,6 +341,8 @@ type Subscription struct {
 	Prices []SubscriptionPrices `json:"prices"`
 	// List of meters associated with the subscription.
 	Meters []SubscriptionMeter `json:"meters"`
+	// Pending subscription update that will be applied at the beginning of the next period. If `null`, there is no pending update.
+	PendingUpdate *PendingSubscriptionUpdate `json:"pending_update"`
 }
 
 func (s Subscription) MarshalJSON() ([]byte, error) {
@@ -569,4 +571,11 @@ func (s *Subscription) GetMeters() []SubscriptionMeter {
 		return []SubscriptionMeter{}
 	}
 	return s.Meters
+}
+
+func (s *Subscription) GetPendingUpdate() *PendingSubscriptionUpdate {
+	if s == nil {
+		return nil
+	}
+	return s.PendingUpdate
 }

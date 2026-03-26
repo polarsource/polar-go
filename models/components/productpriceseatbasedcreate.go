@@ -8,8 +8,11 @@ import (
 
 // ProductPriceSeatBasedCreate - Schema to create a seat-based price with volume-based tiers.
 type ProductPriceSeatBasedCreate struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	amountType    string               `const:"seat_based" json:"amount_type"`
 	PriceCurrency *PresentmentCurrency `json:"price_currency,omitempty"`
+	// The tax behavior of the price. If not set, it will default to the organization's default tax behavior.
+	TaxBehavior *TaxBehaviorOption `json:"tax_behavior,omitempty"`
 	// List of pricing tiers for seat-based pricing.
 	//
 	// The minimum and maximum seat limits are derived from the tiers:
@@ -38,6 +41,13 @@ func (p *ProductPriceSeatBasedCreate) GetPriceCurrency() *PresentmentCurrency {
 		return nil
 	}
 	return p.PriceCurrency
+}
+
+func (p *ProductPriceSeatBasedCreate) GetTaxBehavior() *TaxBehaviorOption {
+	if p == nil {
+		return nil
+	}
+	return p.TaxBehavior
 }
 
 func (p *ProductPriceSeatBasedCreate) GetSeatTiers() ProductPriceSeatTiersInput {

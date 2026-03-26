@@ -250,18 +250,11 @@ func (s *BenefitGrants) List(ctx context.Context, request operations.BenefitGran
 		if len(arr) < l {
 			return nil, nil
 		}
+		request.Page = &nP
 
 		return s.List(
 			ctx,
-			operations.BenefitGrantsListRequest{
-				OrganizationID:     request.OrganizationID,
-				CustomerID:         request.CustomerID,
-				ExternalCustomerID: request.ExternalCustomerID,
-				IsGranted:          request.IsGranted,
-				Page:               &nP,
-				Limit:              request.Limit,
-				Sorting:            request.Sorting,
-			},
+			request,
 			opts...,
 		)
 	}

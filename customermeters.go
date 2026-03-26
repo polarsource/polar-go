@@ -250,18 +250,11 @@ func (s *CustomerMeters) List(ctx context.Context, request operations.CustomerMe
 		if len(arr) < l {
 			return nil, nil
 		}
+		request.Page = &nP
 
 		return s.List(
 			ctx,
-			operations.CustomerMetersListRequest{
-				OrganizationID:     request.OrganizationID,
-				CustomerID:         request.CustomerID,
-				ExternalCustomerID: request.ExternalCustomerID,
-				MeterID:            request.MeterID,
-				Page:               &nP,
-				Limit:              request.Limit,
-				Sorting:            request.Sorting,
-			},
+			request,
 			opts...,
 		)
 	}

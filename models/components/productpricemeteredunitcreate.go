@@ -74,8 +74,11 @@ func (u UnitAmount) MarshalJSON() ([]byte, error) {
 
 // ProductPriceMeteredUnitCreate - Schema to create a metered price with a fixed unit price.
 type ProductPriceMeteredUnitCreate struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	amountType    string               `const:"metered_unit" json:"amount_type"`
 	PriceCurrency *PresentmentCurrency `json:"price_currency,omitempty"`
+	// The tax behavior of the price. If not set, it will default to the organization's default tax behavior.
+	TaxBehavior *TaxBehaviorOption `json:"tax_behavior,omitempty"`
 	// The ID of the meter associated to the price.
 	MeterID string `json:"meter_id"`
 	// The price per unit in cents. Supports up to 12 decimal places.
@@ -104,6 +107,13 @@ func (p *ProductPriceMeteredUnitCreate) GetPriceCurrency() *PresentmentCurrency 
 		return nil
 	}
 	return p.PriceCurrency
+}
+
+func (p *ProductPriceMeteredUnitCreate) GetTaxBehavior() *TaxBehaviorOption {
+	if p == nil {
+		return nil
+	}
+	return p.TaxBehavior
 }
 
 func (p *ProductPriceMeteredUnitCreate) GetMeterID() string {

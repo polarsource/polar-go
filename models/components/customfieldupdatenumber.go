@@ -128,11 +128,12 @@ type CustomFieldUpdateNumber struct {
 	// * A boolean
 	//
 	// You can store up to **50 key-value pairs**.
-	Metadata   map[string]CustomFieldUpdateNumberMetadata `json:"metadata,omitempty"`
-	Name       *string                                    `json:"name,omitempty"`
-	Slug       *string                                    `json:"slug,omitempty"`
-	type_      string                                     `const:"number" json:"type"`
-	Properties *CustomFieldNumberProperties               `json:"properties,omitempty"`
+	Metadata map[string]CustomFieldUpdateNumberMetadata `json:"metadata,omitempty"`
+	Name     *string                                    `json:"name,omitempty"`
+	Slug     *string                                    `json:"slug,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	type_      string                       `const:"number" json:"type"`
+	Properties *CustomFieldNumberProperties `json:"properties,omitempty"`
 }
 
 func (c CustomFieldUpdateNumber) MarshalJSON() ([]byte, error) {

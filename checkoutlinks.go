@@ -250,16 +250,11 @@ func (s *CheckoutLinks) List(ctx context.Context, request operations.CheckoutLin
 		if len(arr) < l {
 			return nil, nil
 		}
+		request.Page = &nP
 
 		return s.List(
 			ctx,
-			operations.CheckoutLinksListRequest{
-				OrganizationID: request.OrganizationID,
-				ProductID:      request.ProductID,
-				Page:           &nP,
-				Limit:          request.Limit,
-				Sorting:        request.Sorting,
-			},
+			request,
 			opts...,
 		)
 	}

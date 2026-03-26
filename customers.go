@@ -250,18 +250,11 @@ func (s *Customers) List(ctx context.Context, request operations.CustomersListRe
 		if len(arr) < l {
 			return nil, nil
 		}
+		request.Page = &nP
 
 		return s.List(
 			ctx,
-			operations.CustomersListRequest{
-				OrganizationID: request.OrganizationID,
-				Email:          request.Email,
-				Query:          request.Query,
-				Page:           &nP,
-				Limit:          request.Limit,
-				Sorting:        request.Sorting,
-				Metadata:       request.Metadata,
-			},
+			request,
 			opts...,
 		)
 	}

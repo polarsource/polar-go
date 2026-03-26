@@ -3,15 +3,17 @@
 package components
 
 type OrganizationCustomerEmailSettings struct {
-	OrderConfirmation            bool `json:"order_confirmation"`
-	SubscriptionCancellation     bool `json:"subscription_cancellation"`
-	SubscriptionConfirmation     bool `json:"subscription_confirmation"`
-	SubscriptionCycled           bool `json:"subscription_cycled"`
-	SubscriptionCycledAfterTrial bool `json:"subscription_cycled_after_trial"`
-	SubscriptionPastDue          bool `json:"subscription_past_due"`
-	SubscriptionRevoked          bool `json:"subscription_revoked"`
-	SubscriptionUncanceled       bool `json:"subscription_uncanceled"`
-	SubscriptionUpdated          bool `json:"subscription_updated"`
+	OrderConfirmation                   bool `json:"order_confirmation"`
+	SubscriptionCancellation            bool `json:"subscription_cancellation"`
+	SubscriptionConfirmation            bool `json:"subscription_confirmation"`
+	SubscriptionCycled                  bool `json:"subscription_cycled"`
+	SubscriptionCycledAfterTrial        bool `json:"subscription_cycled_after_trial"`
+	SubscriptionPastDue                 bool `json:"subscription_past_due"`
+	SubscriptionRenewalReminder         bool `json:"subscription_renewal_reminder"`
+	SubscriptionRevoked                 bool `json:"subscription_revoked"`
+	SubscriptionTrialConversionReminder bool `json:"subscription_trial_conversion_reminder"`
+	SubscriptionUncanceled              bool `json:"subscription_uncanceled"`
+	SubscriptionUpdated                 bool `json:"subscription_updated"`
 }
 
 func (o *OrganizationCustomerEmailSettings) GetOrderConfirmation() bool {
@@ -56,11 +58,25 @@ func (o *OrganizationCustomerEmailSettings) GetSubscriptionPastDue() bool {
 	return o.SubscriptionPastDue
 }
 
+func (o *OrganizationCustomerEmailSettings) GetSubscriptionRenewalReminder() bool {
+	if o == nil {
+		return false
+	}
+	return o.SubscriptionRenewalReminder
+}
+
 func (o *OrganizationCustomerEmailSettings) GetSubscriptionRevoked() bool {
 	if o == nil {
 		return false
 	}
 	return o.SubscriptionRevoked
+}
+
+func (o *OrganizationCustomerEmailSettings) GetSubscriptionTrialConversionReminder() bool {
+	if o == nil {
+		return false
+	}
+	return o.SubscriptionTrialConversionReminder
 }
 
 func (o *OrganizationCustomerEmailSettings) GetSubscriptionUncanceled() bool {

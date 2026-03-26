@@ -363,7 +363,8 @@ type CheckoutPublicConfirmed struct {
 	// Key-value object storing custom field values.
 	CustomFieldData  map[string]*CheckoutPublicConfirmedCustomFieldData `json:"custom_field_data,omitempty"`
 	PaymentProcessor PaymentProcessor                                   `json:"payment_processor"`
-	status           string                                             `const:"confirmed" json:"status"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	status string `const:"confirmed" json:"status"`
 	// Client secret used to update and complete the checkout session from the client.
 	ClientSecret string `json:"client_secret"`
 	// URL where the customer can access the checkout session.
@@ -384,8 +385,6 @@ type CheckoutPublicConfirmed struct {
 	MinSeats *int64 `json:"min_seats,omitempty"`
 	// Maximum number of seats (works with seat-based pricing only)
 	MaxSeats *int64 `json:"max_seats,omitempty"`
-	// Price per seat in cents for the current seat count, based on the applicable tier. Only relevant for seat-based pricing.
-	PricePerSeat *int64 `json:"price_per_seat,omitempty"`
 	// Discount amount in cents.
 	DiscountAmount int64 `json:"discount_amount"`
 	// Amount in cents, after discounts but before taxes.
@@ -576,13 +575,6 @@ func (c *CheckoutPublicConfirmed) GetMaxSeats() *int64 {
 		return nil
 	}
 	return c.MaxSeats
-}
-
-func (c *CheckoutPublicConfirmed) GetPricePerSeat() *int64 {
-	if c == nil {
-		return nil
-	}
-	return c.PricePerSeat
 }
 
 func (c *CheckoutPublicConfirmed) GetDiscountAmount() int64 {

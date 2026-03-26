@@ -7,6 +7,7 @@ import (
 )
 
 type PaymentNotReady struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	error_ string `const:"PaymentNotReady" json:"error"`
 	Detail string `json:"detail"`
 }

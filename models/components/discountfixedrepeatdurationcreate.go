@@ -130,8 +130,7 @@ type DiscountFixedRepeatDurationCreate struct {
 	Amount *int64 `json:"amount,omitempty"`
 	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
 	Currency *PresentmentCurrency `json:"currency,omitempty"`
-	// Map of currency to fixed amount to discount from the total. This allows specifying different discount amounts for different currencies.
-	Amounts map[string]int64 `json:"amounts,omitempty"`
+	Amounts  map[string]int64     `json:"amounts,omitempty"`
 	// Key-value object allowing you to store additional information.
 	//
 	// The key must be a string with a maximum length of **40 characters**.

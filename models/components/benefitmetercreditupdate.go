@@ -129,9 +129,10 @@ type BenefitMeterCreditUpdate struct {
 	// You can store up to **50 key-value pairs**.
 	Metadata map[string]BenefitMeterCreditUpdateMetadata `json:"metadata,omitempty"`
 	// The description of the benefit. Will be displayed on products having this benefit.
-	Description *string                             `json:"description,omitempty"`
-	type_       string                              `const:"meter_credit" json:"type"`
-	Properties  *BenefitMeterCreditCreateProperties `json:"properties,omitempty"`
+	Description *string `json:"description,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	type_      string                              `const:"meter_credit" json:"type"`
+	Properties *BenefitMeterCreditCreateProperties `json:"properties,omitempty"`
 }
 
 func (b BenefitMeterCreditUpdate) MarshalJSON() ([]byte, error) {

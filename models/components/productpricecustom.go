@@ -14,11 +14,14 @@ type ProductPriceCustom struct {
 	// Last modification timestamp of the object.
 	ModifiedAt *time.Time `json:"modified_at"`
 	// The ID of the price.
-	ID         string             `json:"id"`
-	Source     ProductPriceSource `json:"source"`
-	amountType string             `const:"custom" json:"amount_type"`
+	ID     string             `json:"id"`
+	Source ProductPriceSource `json:"source"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	amountType string `const:"custom" json:"amount_type"`
 	// The currency in which the customer will be charged.
 	PriceCurrency string `json:"price_currency"`
+	// The tax behavior of the price. If null, it defaults to the organization's default tax behavior.
+	TaxBehavior *TaxBehaviorOption `json:"tax_behavior"`
 	// Whether the price is archived and no longer available.
 	IsArchived bool `json:"is_archived"`
 	// The ID of the product owning the price.
@@ -79,6 +82,13 @@ func (p *ProductPriceCustom) GetPriceCurrency() string {
 		return ""
 	}
 	return p.PriceCurrency
+}
+
+func (p *ProductPriceCustom) GetTaxBehavior() *TaxBehaviorOption {
+	if p == nil {
+		return nil
+	}
+	return p.TaxBehavior
 }
 
 func (p *ProductPriceCustom) GetIsArchived() bool {

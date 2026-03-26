@@ -250,21 +250,11 @@ func (s *PolarBenefitGrants) List(ctx context.Context, request operations.Custom
 		if len(arr) < l {
 			return nil, nil
 		}
+		request.Page = &nP
 
 		return s.List(
 			ctx,
-			operations.CustomerPortalBenefitGrantsListRequest{
-				Query:          request.Query,
-				TypeFilter:     request.TypeFilter,
-				BenefitID:      request.BenefitID,
-				CheckoutID:     request.CheckoutID,
-				OrderID:        request.OrderID,
-				SubscriptionID: request.SubscriptionID,
-				MemberID:       request.MemberID,
-				Page:           &nP,
-				Limit:          request.Limit,
-				Sorting:        request.Sorting,
-			},
+			request,
 			security,
 			opts...,
 		)

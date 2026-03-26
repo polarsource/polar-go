@@ -483,19 +483,11 @@ func (s *Events) ListNames(ctx context.Context, request operations.EventsListNam
 		if len(arr) < l {
 			return nil, nil
 		}
+		request.Page = &nP
 
 		return s.ListNames(
 			ctx,
-			operations.EventsListNamesRequest{
-				OrganizationID:     request.OrganizationID,
-				CustomerID:         request.CustomerID,
-				ExternalCustomerID: request.ExternalCustomerID,
-				Source:             request.Source,
-				Query:              request.Query,
-				Page:               &nP,
-				Limit:              request.Limit,
-				Sorting:            request.Sorting,
-			},
+			request,
 			opts...,
 		)
 	}

@@ -12,6 +12,7 @@ import (
 // - minimum_seats = first tier's min_seats
 // - maximum_seats = last tier's max_seats (None for unlimited)
 type ProductPriceSeatTiersInput struct {
+	SeatTierType *SeatTierType `json:"seat_tier_type,omitempty"`
 	// List of pricing tiers
 	Tiers []ProductPriceSeatTier `json:"tiers"`
 }
@@ -25,6 +26,13 @@ func (p *ProductPriceSeatTiersInput) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	return nil
+}
+
+func (p *ProductPriceSeatTiersInput) GetSeatTierType() *SeatTierType {
+	if p == nil {
+		return nil
+	}
+	return p.SeatTierType
 }
 
 func (p *ProductPriceSeatTiersInput) GetTiers() []ProductPriceSeatTier {

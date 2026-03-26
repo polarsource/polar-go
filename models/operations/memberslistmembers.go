@@ -12,6 +12,8 @@ type MembersListMembersRequest struct {
 	CustomerID *string `queryParam:"style=form,explode=true,name=customer_id"`
 	// Filter by customer external ID.
 	ExternalCustomerID *string `queryParam:"style=form,explode=true,name=external_customer_id"`
+	// Filter by member role.
+	Role *components.MemberRole `queryParam:"style=form,explode=true,name=role"`
 	// Page number, defaults to 1.
 	Page *int64 `default:"1" queryParam:"style=form,explode=true,name=page"`
 	// Size of a page, defaults to 10. Maximum is 100.
@@ -43,6 +45,13 @@ func (m *MembersListMembersRequest) GetExternalCustomerID() *string {
 		return nil
 	}
 	return m.ExternalCustomerID
+}
+
+func (m *MembersListMembersRequest) GetRole() *components.MemberRole {
+	if m == nil {
+		return nil
+	}
+	return m.Role
 }
 
 func (m *MembersListMembersRequest) GetPage() *int64 {

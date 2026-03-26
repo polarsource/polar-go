@@ -16,8 +16,9 @@ type ProductMediaFileCreate struct {
 	Size                 int64                 `json:"size"`
 	ChecksumSha256Base64 *string               `json:"checksum_sha256_base64,omitempty"`
 	Upload               S3FileCreateMultipart `json:"upload"`
-	service              string                `const:"product_media" json:"service"`
-	Version              *string               `json:"version,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	service string  `const:"product_media" json:"service"`
+	Version *string `json:"version,omitempty"`
 }
 
 func (p ProductMediaFileCreate) MarshalJSON() ([]byte, error) {

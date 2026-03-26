@@ -45,21 +45,35 @@ func (e *SwitchingFrom) UnmarshalJSON(data []byte) error {
 
 type OrganizationDetails struct {
 	// Brief information about you and your business.
-	About string `json:"about"`
+	//
+	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
+	About *string `json:"about,omitempty"`
 	// Description of digital products being sold.
-	ProductDescription string `json:"product_description"`
+	ProductDescription *string `json:"product_description,omitempty"`
+	// Categories of products being sold.
+	SellingCategories []string `json:"selling_categories,omitempty"`
+	// Pricing models used by the organization.
+	PricingModels []string `json:"pricing_models,omitempty"`
 	// How the organization will integrate and use Polar.
-	IntendedUse string `json:"intended_use"`
+	//
+	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
+	IntendedUse *string `json:"intended_use,omitempty"`
 	// Main customer acquisition channels.
-	CustomerAcquisition []string `json:"customer_acquisition"`
+	//
+	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
+	CustomerAcquisition []string `json:"customer_acquisition,omitempty"`
 	// Estimated revenue in the next 12 months
-	FutureAnnualRevenue int64 `json:"future_annual_revenue"`
+	//
+	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
+	FutureAnnualRevenue *int64 `json:"future_annual_revenue,omitempty"`
 	// Switching from another platform?
-	Switching *bool `default:"true" json:"switching"`
+	Switching *bool `default:"false" json:"switching"`
 	// Which platform the organization is migrating from.
 	SwitchingFrom *SwitchingFrom `json:"switching_from,omitempty"`
 	// Revenue from last year if applicable.
-	PreviousAnnualRevenue *int64 `default:"0" json:"previous_annual_revenue"`
+	//
+	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
+	PreviousAnnualRevenue *int64 `json:"previous_annual_revenue,omitempty"`
 }
 
 func (o OrganizationDetails) MarshalJSON() ([]byte, error) {
@@ -73,37 +87,51 @@ func (o *OrganizationDetails) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (o *OrganizationDetails) GetAbout() string {
+func (o *OrganizationDetails) GetAbout() *string {
 	if o == nil {
-		return ""
+		return nil
 	}
 	return o.About
 }
 
-func (o *OrganizationDetails) GetProductDescription() string {
+func (o *OrganizationDetails) GetProductDescription() *string {
 	if o == nil {
-		return ""
+		return nil
 	}
 	return o.ProductDescription
 }
 
-func (o *OrganizationDetails) GetIntendedUse() string {
+func (o *OrganizationDetails) GetSellingCategories() []string {
 	if o == nil {
-		return ""
+		return nil
+	}
+	return o.SellingCategories
+}
+
+func (o *OrganizationDetails) GetPricingModels() []string {
+	if o == nil {
+		return nil
+	}
+	return o.PricingModels
+}
+
+func (o *OrganizationDetails) GetIntendedUse() *string {
+	if o == nil {
+		return nil
 	}
 	return o.IntendedUse
 }
 
 func (o *OrganizationDetails) GetCustomerAcquisition() []string {
 	if o == nil {
-		return []string{}
+		return nil
 	}
 	return o.CustomerAcquisition
 }
 
-func (o *OrganizationDetails) GetFutureAnnualRevenue() int64 {
+func (o *OrganizationDetails) GetFutureAnnualRevenue() *int64 {
 	if o == nil {
-		return 0
+		return nil
 	}
 	return o.FutureAnnualRevenue
 }

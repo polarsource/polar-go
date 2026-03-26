@@ -250,21 +250,11 @@ func (s *EventTypes) List(ctx context.Context, request operations.EventTypesList
 		if len(arr) < l {
 			return nil, nil
 		}
+		request.Page = &nP
 
 		return s.List(
 			ctx,
-			operations.EventTypesListRequest{
-				OrganizationID:     request.OrganizationID,
-				CustomerID:         request.CustomerID,
-				ExternalCustomerID: request.ExternalCustomerID,
-				Query:              request.Query,
-				RootEvents:         request.RootEvents,
-				ParentID:           request.ParentID,
-				Source:             request.Source,
-				Page:               &nP,
-				Limit:              request.Limit,
-				Sorting:            request.Sorting,
-			},
+			request,
 			opts...,
 		)
 	}

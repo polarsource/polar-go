@@ -13,9 +13,10 @@ type PaymentMethodCard struct {
 	// Creation timestamp of the object.
 	CreatedAt time.Time `json:"created_at"`
 	// Last modification timestamp of the object.
-	ModifiedAt     *time.Time                `json:"modified_at"`
-	Processor      PaymentProcessor          `json:"processor"`
-	CustomerID     string                    `json:"customer_id"`
+	ModifiedAt *time.Time       `json:"modified_at"`
+	Processor  PaymentProcessor `json:"processor"`
+	CustomerID string           `json:"customer_id"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	type_          string                    `const:"card" json:"type"`
 	MethodMetadata PaymentMethodCardMetadata `json:"method_metadata"`
 }

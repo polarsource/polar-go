@@ -1,0 +1,10 @@
+# SubscriptionUpdatedProductMetadata
+
+
+## Fields
+
+| Field                                                                                                | Type                                                                                                 | Required                                                                                             | Description                                                                                          |
+| ---------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
+| `SubscriptionID`                                                                                     | `string`                                                                                             | :heavy_check_mark:                                                                                   | N/A                                                                                                  |
+| `ProductID`                                                                                          | `string`                                                                                             | :heavy_check_mark:                                                                                   | N/A                                                                                                  |
+| `ProrationBehavior`                                                                                  | [components.SubscriptionProrationBehavior](../../models/components/subscriptionprorationbehavior.md) | :heavy_check_mark:                                                                                   | N/A                                                                                                  |

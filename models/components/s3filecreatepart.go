@@ -51,3 +51,6 @@ func (s *S3FileCreatePart) GetChecksumSha256Base64() *string {
 	}
 	return s.ChecksumSha256Base64
 }
+
+// #region class-body-s3filecreatepart
+// #endregion class-body-s3filecreatepart

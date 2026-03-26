@@ -17,6 +17,9 @@ func (o *Oauth2ClientsOauth2GetClientRequest) GetClientID() string {
 	return o.ClientID
 }
 
+// #region class-body-oauth2clientsoauth2getclientrequest
+// #endregion class-body-oauth2clientsoauth2getclientrequest
+
 type Oauth2ClientsOauth2GetClientResponse struct {
 	HTTPMeta components.HTTPMetadata `json:"-"`
 	// Successful Response
@@ -36,3 +39,6 @@ func (o *Oauth2ClientsOauth2GetClientResponse) GetAny() any {
 	}
 	return o.Any
 }
+
+// #region class-body-oauth2clientsoauth2getclientresponse
+// #endregion class-body-oauth2clientsoauth2getclientresponse

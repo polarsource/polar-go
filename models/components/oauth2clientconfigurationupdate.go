@@ -172,3 +172,6 @@ func (o *OAuth2ClientConfigurationUpdate) GetClientID() string {
 	}
 	return o.ClientID
 }
+
+// #region class-body-oauth2clientconfigurationupdate
+// #endregion class-body-oauth2clientconfigurationupdate

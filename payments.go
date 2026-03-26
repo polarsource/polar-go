@@ -250,20 +250,11 @@ func (s *Payments) List(ctx context.Context, request operations.PaymentsListRequ
 		if len(arr) < l {
 			return nil, nil
 		}
+		request.Page = &nP
 
 		return s.List(
 			ctx,
-			operations.PaymentsListRequest{
-				OrganizationID: request.OrganizationID,
-				CheckoutID:     request.CheckoutID,
-				OrderID:        request.OrderID,
-				Status:         request.Status,
-				Method:         request.Method,
-				CustomerEmail:  request.CustomerEmail,
-				Page:           &nP,
-				Limit:          request.Limit,
-				Sorting:        request.Sorting,
-			},
+			request,
 			opts...,
 		)
 	}

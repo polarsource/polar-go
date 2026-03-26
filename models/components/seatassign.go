@@ -19,9 +19,9 @@ type SeatAssign struct {
 	ExternalCustomerID *string `json:"external_customer_id,omitempty"`
 	// Customer ID for the seat assignment
 	CustomerID *string `json:"customer_id,omitempty"`
-	// External member ID for the seat assignment. Only supported when member_model_enabled is true. Can be used alone (lookup existing member) or with email (create/validate member).
+	// External member ID for the seat assignment. Can be used alone (lookup existing member) or with email (create/validate member).
 	ExternalMemberID *string `json:"external_member_id,omitempty"`
-	// Member ID for the seat assignment. Only supported when member_model_enabled is true.
+	// Member ID for the seat assignment.
 	MemberID *string `json:"member_id,omitempty"`
 	// Additional metadata for the seat (max 10 keys, 1KB total)
 	Metadata map[string]any `json:"metadata,omitempty"`

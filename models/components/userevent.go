@@ -34,6 +34,7 @@ type UserEvent struct {
 	// The name of the event.
 	Name string `json:"name"`
 	// The source of the event. `system` events are created by Polar. `user` events are the one you create through our ingestion API.
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	source   string                         `const:"user" json:"source"`
 	Metadata map[string]EventMetadataOutput `json:"metadata"`
 }

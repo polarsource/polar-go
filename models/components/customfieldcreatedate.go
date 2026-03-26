@@ -129,7 +129,8 @@ type CustomFieldCreateDate struct {
 	//
 	// You can store up to **50 key-value pairs**.
 	Metadata map[string]CustomFieldCreateDateMetadata `json:"metadata,omitempty"`
-	type_    string                                   `const:"date" json:"type"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	type_ string `const:"date" json:"type"`
 	// Identifier of the custom field. It'll be used as key when storing the value. Must be unique across the organization.It can only contain ASCII letters, numbers and hyphens.
 	Slug string `json:"slug"`
 	// Name of the custom field.
