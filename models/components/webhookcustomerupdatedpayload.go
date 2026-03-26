@@ -15,6 +15,7 @@ import (
 //
 // **Discord & Slack support:** Basic
 type WebhookCustomerUpdatedPayload struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	type_     string    `const:"customer.updated" json:"type"`
 	Timestamp time.Time `json:"timestamp"`
 	// A customer in an organization.

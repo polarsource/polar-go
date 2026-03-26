@@ -123,3 +123,6 @@ func (o *Oauth2AuthorizeResponse) GetResponseOauth2AuthorizeOrganization() *comp
 	}
 	return nil
 }
+
+// #region class-body-oauth2authorizeresponse
+// #endregion class-body-oauth2authorizeresponse

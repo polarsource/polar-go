@@ -10,8 +10,9 @@ import (
 type SubscriptionProrationBehavior string
 
 const (
-	SubscriptionProrationBehaviorInvoice SubscriptionProrationBehavior = "invoice"
-	SubscriptionProrationBehaviorProrate SubscriptionProrationBehavior = "prorate"
+	SubscriptionProrationBehaviorInvoice    SubscriptionProrationBehavior = "invoice"
+	SubscriptionProrationBehaviorProrate    SubscriptionProrationBehavior = "prorate"
+	SubscriptionProrationBehaviorNextPeriod SubscriptionProrationBehavior = "next_period"
 )
 
 func (e SubscriptionProrationBehavior) ToPointer() *SubscriptionProrationBehavior {
@@ -26,6 +27,8 @@ func (e *SubscriptionProrationBehavior) UnmarshalJSON(data []byte) error {
 	case "invoice":
 		fallthrough
 	case "prorate":
+		fallthrough
+	case "next_period":
 		*e = SubscriptionProrationBehavior(v)
 		return nil
 	default:

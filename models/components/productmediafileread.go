@@ -22,11 +22,12 @@ type ProductMediaFileRead struct {
 	ChecksumSha256Hex    *string    `json:"checksum_sha256_hex"`
 	LastModifiedAt       *time.Time `json:"last_modified_at"`
 	Version              *string    `json:"version"`
-	service              string     `const:"product_media" json:"service"`
-	IsUploaded           bool       `json:"is_uploaded"`
-	CreatedAt            time.Time  `json:"created_at"`
-	SizeReadable         string     `json:"size_readable"`
-	PublicURL            string     `json:"public_url"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	service      string    `const:"product_media" json:"service"`
+	IsUploaded   bool      `json:"is_uploaded"`
+	CreatedAt    time.Time `json:"created_at"`
+	SizeReadable string    `json:"size_readable"`
+	PublicURL    string    `json:"public_url"`
 }
 
 func (p ProductMediaFileRead) MarshalJSON() ([]byte, error) {

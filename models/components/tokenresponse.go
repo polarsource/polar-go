@@ -7,7 +7,8 @@ import (
 )
 
 type TokenResponse struct {
-	AccessToken  string  `json:"access_token"`
+	AccessToken string `json:"access_token"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	tokenType    string  `const:"Bearer" json:"token_type"`
 	ExpiresIn    int64   `json:"expires_in"`
 	RefreshToken *string `json:"refresh_token,omitempty"`

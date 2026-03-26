@@ -10,16 +10,42 @@ import (
 type PresentmentCurrency string
 
 const (
+	PresentmentCurrencyAed PresentmentCurrency = "aed"
+	PresentmentCurrencyArs PresentmentCurrency = "ars"
 	PresentmentCurrencyAud PresentmentCurrency = "aud"
 	PresentmentCurrencyBrl PresentmentCurrency = "brl"
 	PresentmentCurrencyCad PresentmentCurrency = "cad"
 	PresentmentCurrencyChf PresentmentCurrency = "chf"
+	PresentmentCurrencyClp PresentmentCurrency = "clp"
+	PresentmentCurrencyCny PresentmentCurrency = "cny"
+	PresentmentCurrencyCop PresentmentCurrency = "cop"
+	PresentmentCurrencyCzk PresentmentCurrency = "czk"
+	PresentmentCurrencyDkk PresentmentCurrency = "dkk"
 	PresentmentCurrencyEur PresentmentCurrency = "eur"
-	PresentmentCurrencyInr PresentmentCurrency = "inr"
 	PresentmentCurrencyGbp PresentmentCurrency = "gbp"
+	PresentmentCurrencyHkd PresentmentCurrency = "hkd"
+	PresentmentCurrencyHuf PresentmentCurrency = "huf"
+	PresentmentCurrencyIdr PresentmentCurrency = "idr"
+	PresentmentCurrencyIls PresentmentCurrency = "ils"
+	PresentmentCurrencyInr PresentmentCurrency = "inr"
 	PresentmentCurrencyJpy PresentmentCurrency = "jpy"
+	PresentmentCurrencyKrw PresentmentCurrency = "krw"
+	PresentmentCurrencyMxn PresentmentCurrency = "mxn"
+	PresentmentCurrencyMyr PresentmentCurrency = "myr"
+	PresentmentCurrencyNok PresentmentCurrency = "nok"
+	PresentmentCurrencyNzd PresentmentCurrency = "nzd"
+	PresentmentCurrencyPen PresentmentCurrency = "pen"
+	PresentmentCurrencyPhp PresentmentCurrency = "php"
+	PresentmentCurrencyPln PresentmentCurrency = "pln"
+	PresentmentCurrencyRon PresentmentCurrency = "ron"
+	PresentmentCurrencySar PresentmentCurrency = "sar"
 	PresentmentCurrencySek PresentmentCurrency = "sek"
+	PresentmentCurrencySgd PresentmentCurrency = "sgd"
+	PresentmentCurrencyThb PresentmentCurrency = "thb"
+	PresentmentCurrencyTry PresentmentCurrency = "try"
+	PresentmentCurrencyTwd PresentmentCurrency = "twd"
 	PresentmentCurrencyUsd PresentmentCurrency = "usd"
+	PresentmentCurrencyZar PresentmentCurrency = "zar"
 )
 
 func (e PresentmentCurrency) ToPointer() *PresentmentCurrency {
@@ -31,6 +57,10 @@ func (e *PresentmentCurrency) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	switch v {
+	case "aed":
+		fallthrough
+	case "ars":
+		fallthrough
 	case "aud":
 		fallthrough
 	case "brl":
@@ -39,17 +69,65 @@ func (e *PresentmentCurrency) UnmarshalJSON(data []byte) error {
 		fallthrough
 	case "chf":
 		fallthrough
-	case "eur":
+	case "clp":
 		fallthrough
-	case "inr":
+	case "cny":
+		fallthrough
+	case "cop":
+		fallthrough
+	case "czk":
+		fallthrough
+	case "dkk":
+		fallthrough
+	case "eur":
 		fallthrough
 	case "gbp":
 		fallthrough
+	case "hkd":
+		fallthrough
+	case "huf":
+		fallthrough
+	case "idr":
+		fallthrough
+	case "ils":
+		fallthrough
+	case "inr":
+		fallthrough
 	case "jpy":
+		fallthrough
+	case "krw":
+		fallthrough
+	case "mxn":
+		fallthrough
+	case "myr":
+		fallthrough
+	case "nok":
+		fallthrough
+	case "nzd":
+		fallthrough
+	case "pen":
+		fallthrough
+	case "php":
+		fallthrough
+	case "pln":
+		fallthrough
+	case "ron":
+		fallthrough
+	case "sar":
 		fallthrough
 	case "sek":
 		fallthrough
+	case "sgd":
+		fallthrough
+	case "thb":
+		fallthrough
+	case "try":
+		fallthrough
+	case "twd":
+		fallthrough
 	case "usd":
+		fallthrough
+	case "zar":
 		*e = PresentmentCurrency(v)
 		return nil
 	default:

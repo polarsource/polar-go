@@ -76,3 +76,6 @@ func (s *S3FileUploadPart) GetHeaders() map[string]string {
 	}
 	return s.Headers
 }
+
+// #region class-body-s3fileuploadpart
+// #endregion class-body-s3fileuploadpart

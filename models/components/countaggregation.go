@@ -8,6 +8,7 @@ import (
 )
 
 type CountAggregation struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	func_ *string `const:"count" json:"func"`
 }
 

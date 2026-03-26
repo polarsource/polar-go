@@ -92,3 +92,6 @@ func (o *Oauth2UserinfoResponse) GetResponseOauth2Userinfo() *Oauth2UserinfoResp
 	}
 	return o.ResponseOauth2Userinfo
 }
+
+// #region class-body-oauth2userinforesponse
+// #endregion class-body-oauth2userinforesponse

@@ -17,6 +17,9 @@ func (o *Oauth2ClientsOauth2DeleteClientRequest) GetClientID() string {
 	return o.ClientID
 }
 
+// #region class-body-oauth2clientsoauth2deleteclientrequest
+// #endregion class-body-oauth2clientsoauth2deleteclientrequest
+
 type Oauth2ClientsOauth2DeleteClientResponse struct {
 	HTTPMeta components.HTTPMetadata `json:"-"`
 	// Successful Response
@@ -36,3 +39,6 @@ func (o *Oauth2ClientsOauth2DeleteClientResponse) GetAny() any {
 	}
 	return o.Any
 }
+
+// #region class-body-oauth2clientsoauth2deleteclientresponse
+// #endregion class-body-oauth2clientsoauth2deleteclientresponse

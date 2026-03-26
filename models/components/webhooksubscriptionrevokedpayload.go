@@ -14,6 +14,7 @@ import (
 //
 // **Discord & Slack support:** Full
 type WebhookSubscriptionRevokedPayload struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	type_     string       `const:"subscription.revoked" json:"type"`
 	Timestamp time.Time    `json:"timestamp"`
 	Data      Subscription `json:"data"`

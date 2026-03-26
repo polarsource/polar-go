@@ -164,3 +164,6 @@ func (o *OAuth2ClientConfiguration) GetDefaultSubType() *SubType {
 	}
 	return o.DefaultSubType
 }
+
+// #region class-body-oauth2clientconfiguration
+// #endregion class-body-oauth2clientconfiguration

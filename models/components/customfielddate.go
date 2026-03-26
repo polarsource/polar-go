@@ -16,7 +16,8 @@ type CustomFieldDate struct {
 	// The ID of the object.
 	ID       string                        `json:"id"`
 	Metadata map[string]MetadataOutputType `json:"metadata"`
-	type_    string                        `const:"date" json:"type"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	type_ string `const:"date" json:"type"`
 	// Identifier of the custom field. It'll be used as key when storing the value.
 	Slug string `json:"slug"`
 	// Name of the custom field.

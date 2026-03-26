@@ -114,7 +114,7 @@ func main() {
     res, err := s.Checkouts.Create(ctx, components.CheckoutCreate{
         CustomerName: polargo.Pointer("John Doe"),
         CustomerBillingAddress: &components.AddressInput{
-            Country: components.CountryAlpha2InputUs,
+            Country: components.AddressInputCountryAlpha2InputUs,
         },
         Locale: polargo.Pointer("en"),
         Products: []string{
@@ -250,7 +250,7 @@ func main() {
     res, err := s.Checkouts.Update(ctx, "<value>", components.CheckoutUpdate{
         CustomerName: polargo.Pointer("John Doe"),
         CustomerBillingAddress: &components.AddressInput{
-            Country: components.CountryAlpha2InputUs,
+            Country: components.AddressInputCountryAlpha2InputUs,
         },
         Locale: polargo.Pointer("en"),
     })
@@ -375,7 +375,7 @@ func main() {
     res, err := s.Checkouts.ClientUpdate(ctx, "<value>", components.CheckoutUpdatePublic{
         CustomerName: polargo.Pointer("John Doe"),
         CustomerBillingAddress: &components.AddressInput{
-            Country: components.CountryAlpha2InputUs,
+            Country: components.AddressInputCountryAlpha2InputUs,
         },
         Locale: polargo.Pointer("en"),
     })
@@ -447,7 +447,7 @@ func main() {
     res, err := s.Checkouts.ClientConfirm(ctx, "<value>", components.CheckoutConfirmStripe{
         CustomerName: polargo.Pointer("John Doe"),
         CustomerBillingAddress: &components.AddressInput{
-            Country: components.CountryAlpha2InputUs,
+            Country: components.AddressInputCountryAlpha2InputUs,
         },
         Locale: polargo.Pointer("en"),
     })

@@ -27,3 +27,6 @@ func (s *S3FileCreateMultipart) GetParts() []S3FileCreatePart {
 	}
 	return s.Parts
 }
+
+// #region class-body-s3filecreatemultipart
+// #endregion class-body-s3filecreatemultipart

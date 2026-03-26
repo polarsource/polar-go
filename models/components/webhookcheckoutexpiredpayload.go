@@ -14,6 +14,7 @@ import (
 //
 // **Discord & Slack support:** Basic
 type WebhookCheckoutExpiredPayload struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	type_     string    `const:"checkout.expired" json:"type"`
 	Timestamp time.Time `json:"timestamp"`
 	// Checkout session data retrieved using an access token.

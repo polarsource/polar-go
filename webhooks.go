@@ -1794,20 +1794,11 @@ func (s *Webhooks) ListWebhookDeliveries(ctx context.Context, request operations
 		if len(arr) < l {
 			return nil, nil
 		}
+		request.Page = &nP
 
 		return s.ListWebhookDeliveries(
 			ctx,
-			operations.WebhooksListWebhookDeliveriesRequest{
-				EndpointID:     request.EndpointID,
-				StartTimestamp: request.StartTimestamp,
-				EndTimestamp:   request.EndTimestamp,
-				Succeeded:      request.Succeeded,
-				Query:          request.Query,
-				HTTPCodeClass:  request.HTTPCodeClass,
-				EventType:      request.EventType,
-				Page:           &nP,
-				Limit:          request.Limit,
-			},
+			request,
 			opts...,
 		)
 	}

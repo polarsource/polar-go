@@ -28,3 +28,6 @@ func (s *S3FileUploadCompletedPart) GetChecksumSha256Base64() *string {
 	}
 	return s.ChecksumSha256Base64
 }
+
+// #region class-body-s3fileuploadcompletedpart
+// #endregion class-body-s3fileuploadcompletedpart

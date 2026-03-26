@@ -8,6 +8,7 @@ import (
 )
 
 type UniqueAggregation struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	func_    *string `const:"unique" json:"func"`
 	Property string  `json:"property"`
 }

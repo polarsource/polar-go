@@ -250,16 +250,11 @@ func (s *PolarCustomerMeters) List(ctx context.Context, request operations.Custo
 		if len(arr) < l {
 			return nil, nil
 		}
+		request.Page = &nP
 
 		return s.List(
 			ctx,
-			operations.CustomerPortalCustomerMetersListRequest{
-				MeterID: request.MeterID,
-				Query:   request.Query,
-				Page:    &nP,
-				Limit:   request.Limit,
-				Sorting: request.Sorting,
-			},
+			request,
 			security,
 			opts...,
 		)

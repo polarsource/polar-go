@@ -28,3 +28,6 @@ func (s *S3FileUploadMultipart) GetParts() []S3FileUploadPart {
 	}
 	return s.Parts
 }
+
+// #region class-body-s3fileuploadmultipart
+// #endregion class-body-s3fileuploadmultipart

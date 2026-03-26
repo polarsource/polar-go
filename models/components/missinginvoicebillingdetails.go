@@ -7,6 +7,7 @@ import (
 )
 
 type MissingInvoiceBillingDetails struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	error_ string `const:"MissingInvoiceBillingDetails" json:"error"`
 	Detail string `json:"detail"`
 }

@@ -10,8 +10,8 @@ type Metrics struct {
 	AverageRevenuePerUser                *Metric `json:"average_revenue_per_user,omitempty"`
 	Checkouts                            *Metric `json:"checkouts,omitempty"`
 	SucceededCheckouts                   *Metric `json:"succeeded_checkouts,omitempty"`
-	CheckoutsConversion                  *Metric `json:"checkouts_conversion,omitempty"`
 	ChurnedSubscriptions                 *Metric `json:"churned_subscriptions,omitempty"`
+	ChurnRate                            *Metric `json:"churn_rate,omitempty"`
 	Orders                               *Metric `json:"orders,omitempty"`
 	Revenue                              *Metric `json:"revenue,omitempty"`
 	NetRevenue                           *Metric `json:"net_revenue,omitempty"`
@@ -41,7 +41,7 @@ type Metrics struct {
 	CanceledSubscriptionsTooExpensive    *Metric `json:"canceled_subscriptions_too_expensive,omitempty"`
 	CanceledSubscriptionsUnused          *Metric `json:"canceled_subscriptions_unused,omitempty"`
 	CanceledSubscriptionsOther           *Metric `json:"canceled_subscriptions_other,omitempty"`
-	ChurnRate                            *Metric `json:"churn_rate,omitempty"`
+	CheckoutsConversion                  *Metric `json:"checkouts_conversion,omitempty"`
 	Ltv                                  *Metric `json:"ltv,omitempty"`
 	GrossMargin                          *Metric `json:"gross_margin,omitempty"`
 	GrossMarginPercentage                *Metric `json:"gross_margin_percentage,omitempty"`
@@ -97,18 +97,18 @@ func (m *Metrics) GetSucceededCheckouts() *Metric {
 	return m.SucceededCheckouts
 }
 
-func (m *Metrics) GetCheckoutsConversion() *Metric {
-	if m == nil {
-		return nil
-	}
-	return m.CheckoutsConversion
-}
-
 func (m *Metrics) GetChurnedSubscriptions() *Metric {
 	if m == nil {
 		return nil
 	}
 	return m.ChurnedSubscriptions
+}
+
+func (m *Metrics) GetChurnRate() *Metric {
+	if m == nil {
+		return nil
+	}
+	return m.ChurnRate
 }
 
 func (m *Metrics) GetOrders() *Metric {
@@ -314,11 +314,11 @@ func (m *Metrics) GetCanceledSubscriptionsOther() *Metric {
 	return m.CanceledSubscriptionsOther
 }
 
-func (m *Metrics) GetChurnRate() *Metric {
+func (m *Metrics) GetCheckoutsConversion() *Metric {
 	if m == nil {
 		return nil
 	}
-	return m.ChurnRate
+	return m.CheckoutsConversion
 }
 
 func (m *Metrics) GetLtv() *Metric {

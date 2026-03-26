@@ -15,6 +15,7 @@ import (
 //
 // **Discord & Slack support:** On cancellation, past due, and revocation. Renewals are skipped.
 type WebhookSubscriptionUpdatedPayload struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	type_     string       `const:"subscription.updated" json:"type"`
 	Timestamp time.Time    `json:"timestamp"`
 	Data      Subscription `json:"data"`

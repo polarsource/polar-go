@@ -86,3 +86,6 @@ func (o *OAuth2ClientPublic) GetPolicyURI() *string {
 	}
 	return o.PolicyURI
 }
+
+// #region class-body-oauth2clientpublic
+// #endregion class-body-oauth2clientpublic

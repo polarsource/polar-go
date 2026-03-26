@@ -12,6 +12,7 @@ import (
 // This event is triggered when a seat is assigned to a customer by the organization.
 // The customer will receive an invitation email to claim the seat.
 type WebhookCustomerSeatAssignedPayload struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	type_     string       `const:"customer_seat.assigned" json:"type"`
 	Timestamp time.Time    `json:"timestamp"`
 	Data      CustomerSeat `json:"data"`

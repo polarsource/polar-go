@@ -113,3 +113,6 @@ func (o *Oauth2RequestTokenResponse) GetTokenResponse() *components.TokenRespons
 	}
 	return o.TokenResponse
 }
+
+// #region class-body-oauth2requesttokenresponse
+// #endregion class-body-oauth2requesttokenresponse

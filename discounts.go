@@ -250,16 +250,11 @@ func (s *Discounts) List(ctx context.Context, request operations.DiscountsListRe
 		if len(arr) < l {
 			return nil, nil
 		}
+		request.Page = &nP
 
 		return s.List(
 			ctx,
-			operations.DiscountsListRequest{
-				OrganizationID: request.OrganizationID,
-				Query:          request.Query,
-				Page:           &nP,
-				Limit:          request.Limit,
-				Sorting:        request.Sorting,
-			},
+			request,
 			opts...,
 		)
 	}

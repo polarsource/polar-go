@@ -92,7 +92,7 @@ func main() {
 
     res, err := s.CustomerPortal.Customers.Update(ctx, components.CustomerPortalCustomerUpdate{
         BillingAddress: &components.AddressInput{
-            Country: components.CountryAlpha2InputUs,
+            Country: components.AddressInputCountryAlpha2InputUs,
         },
     }, operations.CustomerPortalCustomersUpdateSecurity{
         CustomerSession: polargo.Pointer(os.Getenv("POLAR_CUSTOMER_SESSION")),

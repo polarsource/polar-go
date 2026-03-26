@@ -32,8 +32,10 @@ type BalanceOrderEvent struct {
 	// Human readable label of the event type.
 	Label string `json:"label"`
 	// The source of the event. `system` events are created by Polar. `user` events are the one you create through our ingestion API.
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	source string `const:"system" json:"source"`
 	// The name of the event.
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	name     string               `const:"balance.order" json:"name"`
 	Metadata BalanceOrderMetadata `json:"metadata"`
 }

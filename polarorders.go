@@ -248,18 +248,11 @@ func (s *PolarOrders) List(ctx context.Context, request operations.CustomerPorta
 		if len(arr) < l {
 			return nil, nil
 		}
+		request.Page = &nP
 
 		return s.List(
 			ctx,
-			operations.CustomerPortalOrdersListRequest{
-				ProductID:          request.ProductID,
-				ProductBillingType: request.ProductBillingType,
-				SubscriptionID:     request.SubscriptionID,
-				Query:              request.Query,
-				Page:               &nP,
-				Limit:              request.Limit,
-				Sorting:            request.Sorting,
-			},
+			request,
 			security,
 			opts...,
 		)

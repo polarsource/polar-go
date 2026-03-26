@@ -11,6 +11,7 @@ import (
 //
 // **Discord & Slack support:** Basic
 type WebhookCheckoutCreatedPayload struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	type_     string    `const:"checkout.created" json:"type"`
 	Timestamp time.Time `json:"timestamp"`
 	// Checkout session data retrieved using an access token.

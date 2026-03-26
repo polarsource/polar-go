@@ -466,8 +466,6 @@ type Checkout struct {
 	MinSeats *int64 `json:"min_seats,omitempty"`
 	// Maximum number of seats (works with seat-based pricing only)
 	MaxSeats *int64 `json:"max_seats,omitempty"`
-	// Price per seat in cents for the current seat count, based on the applicable tier. Only relevant for seat-based pricing.
-	PricePerSeat *int64 `json:"price_per_seat,omitempty"`
 	// Discount amount in cents.
 	DiscountAmount int64 `json:"discount_amount"`
 	// Amount in cents, after discounts but before taxes.
@@ -668,13 +666,6 @@ func (c *Checkout) GetMaxSeats() *int64 {
 		return nil
 	}
 	return c.MaxSeats
-}
-
-func (c *Checkout) GetPricePerSeat() *int64 {
-	if c == nil {
-		return nil
-	}
-	return c.PricePerSeat
 }
 
 func (c *Checkout) GetDiscountAmount() int64 {

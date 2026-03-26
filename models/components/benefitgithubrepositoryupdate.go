@@ -129,9 +129,10 @@ type BenefitGitHubRepositoryUpdate struct {
 	// You can store up to **50 key-value pairs**.
 	Metadata map[string]BenefitGitHubRepositoryUpdateMetadata `json:"metadata,omitempty"`
 	// The description of the benefit. Will be displayed on products having this benefit.
-	Description *string                                  `json:"description,omitempty"`
-	type_       string                                   `const:"github_repository" json:"type"`
-	Properties  *BenefitGitHubRepositoryCreateProperties `json:"properties,omitempty"`
+	Description *string `json:"description,omitempty"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	type_      string                                   `const:"github_repository" json:"type"`
+	Properties *BenefitGitHubRepositoryCreateProperties `json:"properties,omitempty"`
 }
 
 func (b BenefitGitHubRepositoryUpdate) MarshalJSON() ([]byte, error) {

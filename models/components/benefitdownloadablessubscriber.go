@@ -14,7 +14,8 @@ type BenefitDownloadablesSubscriber struct {
 	CreatedAt time.Time `json:"created_at"`
 	// Last modification timestamp of the object.
 	ModifiedAt *time.Time `json:"modified_at"`
-	type_      string     `const:"downloadables" json:"type"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
+	type_ string `const:"downloadables" json:"type"`
 	// The description of the benefit.
 	Description string `json:"description"`
 	// Whether the benefit is selectable when creating a product.

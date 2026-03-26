@@ -250,22 +250,11 @@ func (s *Orders) List(ctx context.Context, request operations.OrdersListRequest,
 		if len(arr) < l {
 			return nil, nil
 		}
+		request.Page = &nP
 
 		return s.List(
 			ctx,
-			operations.OrdersListRequest{
-				OrganizationID:     request.OrganizationID,
-				ProductID:          request.ProductID,
-				ProductBillingType: request.ProductBillingType,
-				DiscountID:         request.DiscountID,
-				CustomerID:         request.CustomerID,
-				ExternalCustomerID: request.ExternalCustomerID,
-				CheckoutID:         request.CheckoutID,
-				Page:               &nP,
-				Limit:              request.Limit,
-				Sorting:            request.Sorting,
-				Metadata:           request.Metadata,
-			},
+			request,
 			opts...,
 		)
 	}

@@ -22,6 +22,7 @@ type CardPayment struct {
 	// The payment currency. Currently, only `usd` is supported.
 	Currency string `json:"currency"`
 	// The payment method used.
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	method string `const:"card" json:"method"`
 	// Error code, if the payment was declined.
 	DeclineReason *string `json:"decline_reason"`

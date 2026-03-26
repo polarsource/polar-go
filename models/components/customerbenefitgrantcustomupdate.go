@@ -7,6 +7,7 @@ import (
 )
 
 type CustomerBenefitGrantCustomUpdate struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	benefitType string `const:"custom" json:"benefit_type"`
 }
 

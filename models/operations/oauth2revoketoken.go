@@ -25,3 +25,6 @@ func (o *Oauth2RevokeTokenResponse) GetRevokeTokenResponse() *components.RevokeT
 	}
 	return o.RevokeTokenResponse
 }
+
+// #region class-body-oauth2revoketokenresponse
+// #endregion class-body-oauth2revoketokenresponse

@@ -2,10 +2,849 @@
 
 package components
 
+import (
+	"encoding/json"
+	"errors"
+	"fmt"
+	"github.com/polarsource/polar-go/internal/utils"
+)
+
+type LegalEntityType string
+
+const (
+	LegalEntityTypeCompany    LegalEntityType = "company"
+	LegalEntityTypeIndividual LegalEntityType = "individual"
+)
+
+type LegalEntity struct {
+	OrganizationIndividualLegalEntitySchema *OrganizationIndividualLegalEntitySchema `queryParam:"inline" union:"member"`
+	OrganizationCompanyLegalEntitySchema    *OrganizationCompanyLegalEntitySchema    `queryParam:"inline" union:"member"`
+
+	Type LegalEntityType
+}
+
+func CreateLegalEntityCompany(company OrganizationCompanyLegalEntitySchema) LegalEntity {
+	typ := LegalEntityTypeCompany
+
+	return LegalEntity{
+		OrganizationCompanyLegalEntitySchema: &company,
+		Type:                                 typ,
+	}
+}
+
+func CreateLegalEntityIndividual(individual OrganizationIndividualLegalEntitySchema) LegalEntity {
+	typ := LegalEntityTypeIndividual
+
+	return LegalEntity{
+		OrganizationIndividualLegalEntitySchema: &individual,
+		Type:                                    typ,
+	}
+}
+
+func (u *LegalEntity) UnmarshalJSON(data []byte) error {
+
+	type discriminator struct {
+		Type string `json:"type"`
+	}
+
+	dis := new(discriminator)
+	if err := json.Unmarshal(data, &dis); err != nil {
+		return fmt.Errorf("could not unmarshal discriminator: %w", err)
+	}
+
+	switch dis.Type {
+	case "company":
+		organizationCompanyLegalEntitySchema := new(OrganizationCompanyLegalEntitySchema)
+		if err := utils.UnmarshalJSON(data, &organizationCompanyLegalEntitySchema, "", true, nil); err != nil {
+			return fmt.Errorf("could not unmarshal `%s` into expected (Type == company) type OrganizationCompanyLegalEntitySchema within LegalEntity: %w", string(data), err)
+		}
+
+		u.OrganizationCompanyLegalEntitySchema = organizationCompanyLegalEntitySchema
+		u.Type = LegalEntityTypeCompany
+		return nil
+	case "individual":
+		organizationIndividualLegalEntitySchema := new(OrganizationIndividualLegalEntitySchema)
+		if err := utils.UnmarshalJSON(data, &organizationIndividualLegalEntitySchema, "", true, nil); err != nil {
+			return fmt.Errorf("could not unmarshal `%s` into expected (Type == individual) type OrganizationIndividualLegalEntitySchema within LegalEntity: %w", string(data), err)
+		}
+
+		u.OrganizationIndividualLegalEntitySchema = organizationIndividualLegalEntitySchema
+		u.Type = LegalEntityTypeIndividual
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for LegalEntity", string(data))
+}
+
+func (u LegalEntity) MarshalJSON() ([]byte, error) {
+	if u.OrganizationIndividualLegalEntitySchema != nil {
+		return utils.MarshalJSON(u.OrganizationIndividualLegalEntitySchema, "", true)
+	}
+
+	if u.OrganizationCompanyLegalEntitySchema != nil {
+		return utils.MarshalJSON(u.OrganizationCompanyLegalEntitySchema, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type LegalEntity: all fields are null")
+}
+
+type CountryAlpha2Input string
+
+const (
+	CountryAlpha2InputAd CountryAlpha2Input = "AD"
+	CountryAlpha2InputAe CountryAlpha2Input = "AE"
+	CountryAlpha2InputAf CountryAlpha2Input = "AF"
+	CountryAlpha2InputAg CountryAlpha2Input = "AG"
+	CountryAlpha2InputAi CountryAlpha2Input = "AI"
+	CountryAlpha2InputAl CountryAlpha2Input = "AL"
+	CountryAlpha2InputAm CountryAlpha2Input = "AM"
+	CountryAlpha2InputAo CountryAlpha2Input = "AO"
+	CountryAlpha2InputAq CountryAlpha2Input = "AQ"
+	CountryAlpha2InputAr CountryAlpha2Input = "AR"
+	CountryAlpha2InputAs CountryAlpha2Input = "AS"
+	CountryAlpha2InputAt CountryAlpha2Input = "AT"
+	CountryAlpha2InputAu CountryAlpha2Input = "AU"
+	CountryAlpha2InputAw CountryAlpha2Input = "AW"
+	CountryAlpha2InputAx CountryAlpha2Input = "AX"
+	CountryAlpha2InputAz CountryAlpha2Input = "AZ"
+	CountryAlpha2InputBa CountryAlpha2Input = "BA"
+	CountryAlpha2InputBb CountryAlpha2Input = "BB"
+	CountryAlpha2InputBd CountryAlpha2Input = "BD"
+	CountryAlpha2InputBe CountryAlpha2Input = "BE"
+	CountryAlpha2InputBf CountryAlpha2Input = "BF"
+	CountryAlpha2InputBg CountryAlpha2Input = "BG"
+	CountryAlpha2InputBh CountryAlpha2Input = "BH"
+	CountryAlpha2InputBi CountryAlpha2Input = "BI"
+	CountryAlpha2InputBj CountryAlpha2Input = "BJ"
+	CountryAlpha2InputBl CountryAlpha2Input = "BL"
+	CountryAlpha2InputBm CountryAlpha2Input = "BM"
+	CountryAlpha2InputBn CountryAlpha2Input = "BN"
+	CountryAlpha2InputBo CountryAlpha2Input = "BO"
+	CountryAlpha2InputBq CountryAlpha2Input = "BQ"
+	CountryAlpha2InputBr CountryAlpha2Input = "BR"
+	CountryAlpha2InputBs CountryAlpha2Input = "BS"
+	CountryAlpha2InputBt CountryAlpha2Input = "BT"
+	CountryAlpha2InputBv CountryAlpha2Input = "BV"
+	CountryAlpha2InputBw CountryAlpha2Input = "BW"
+	CountryAlpha2InputBy CountryAlpha2Input = "BY"
+	CountryAlpha2InputBz CountryAlpha2Input = "BZ"
+	CountryAlpha2InputCa CountryAlpha2Input = "CA"
+	CountryAlpha2InputCc CountryAlpha2Input = "CC"
+	CountryAlpha2InputCd CountryAlpha2Input = "CD"
+	CountryAlpha2InputCf CountryAlpha2Input = "CF"
+	CountryAlpha2InputCg CountryAlpha2Input = "CG"
+	CountryAlpha2InputCh CountryAlpha2Input = "CH"
+	CountryAlpha2InputCi CountryAlpha2Input = "CI"
+	CountryAlpha2InputCk CountryAlpha2Input = "CK"
+	CountryAlpha2InputCl CountryAlpha2Input = "CL"
+	CountryAlpha2InputCm CountryAlpha2Input = "CM"
+	CountryAlpha2InputCn CountryAlpha2Input = "CN"
+	CountryAlpha2InputCo CountryAlpha2Input = "CO"
+	CountryAlpha2InputCr CountryAlpha2Input = "CR"
+	CountryAlpha2InputCv CountryAlpha2Input = "CV"
+	CountryAlpha2InputCw CountryAlpha2Input = "CW"
+	CountryAlpha2InputCx CountryAlpha2Input = "CX"
+	CountryAlpha2InputCy CountryAlpha2Input = "CY"
+	CountryAlpha2InputCz CountryAlpha2Input = "CZ"
+	CountryAlpha2InputDe CountryAlpha2Input = "DE"
+	CountryAlpha2InputDj CountryAlpha2Input = "DJ"
+	CountryAlpha2InputDk CountryAlpha2Input = "DK"
+	CountryAlpha2InputDm CountryAlpha2Input = "DM"
+	CountryAlpha2InputDo CountryAlpha2Input = "DO"
+	CountryAlpha2InputDz CountryAlpha2Input = "DZ"
+	CountryAlpha2InputEc CountryAlpha2Input = "EC"
+	CountryAlpha2InputEe CountryAlpha2Input = "EE"
+	CountryAlpha2InputEg CountryAlpha2Input = "EG"
+	CountryAlpha2InputEh CountryAlpha2Input = "EH"
+	CountryAlpha2InputEr CountryAlpha2Input = "ER"
+	CountryAlpha2InputEs CountryAlpha2Input = "ES"
+	CountryAlpha2InputEt CountryAlpha2Input = "ET"
+	CountryAlpha2InputFi CountryAlpha2Input = "FI"
+	CountryAlpha2InputFj CountryAlpha2Input = "FJ"
+	CountryAlpha2InputFk CountryAlpha2Input = "FK"
+	CountryAlpha2InputFm CountryAlpha2Input = "FM"
+	CountryAlpha2InputFo CountryAlpha2Input = "FO"
+	CountryAlpha2InputFr CountryAlpha2Input = "FR"
+	CountryAlpha2InputGa CountryAlpha2Input = "GA"
+	CountryAlpha2InputGb CountryAlpha2Input = "GB"
+	CountryAlpha2InputGd CountryAlpha2Input = "GD"
+	CountryAlpha2InputGe CountryAlpha2Input = "GE"
+	CountryAlpha2InputGf CountryAlpha2Input = "GF"
+	CountryAlpha2InputGg CountryAlpha2Input = "GG"
+	CountryAlpha2InputGh CountryAlpha2Input = "GH"
+	CountryAlpha2InputGi CountryAlpha2Input = "GI"
+	CountryAlpha2InputGl CountryAlpha2Input = "GL"
+	CountryAlpha2InputGm CountryAlpha2Input = "GM"
+	CountryAlpha2InputGn CountryAlpha2Input = "GN"
+	CountryAlpha2InputGp CountryAlpha2Input = "GP"
+	CountryAlpha2InputGq CountryAlpha2Input = "GQ"
+	CountryAlpha2InputGr CountryAlpha2Input = "GR"
+	CountryAlpha2InputGs CountryAlpha2Input = "GS"
+	CountryAlpha2InputGt CountryAlpha2Input = "GT"
+	CountryAlpha2InputGu CountryAlpha2Input = "GU"
+	CountryAlpha2InputGw CountryAlpha2Input = "GW"
+	CountryAlpha2InputGy CountryAlpha2Input = "GY"
+	CountryAlpha2InputHk CountryAlpha2Input = "HK"
+	CountryAlpha2InputHm CountryAlpha2Input = "HM"
+	CountryAlpha2InputHn CountryAlpha2Input = "HN"
+	CountryAlpha2InputHr CountryAlpha2Input = "HR"
+	CountryAlpha2InputHt CountryAlpha2Input = "HT"
+	CountryAlpha2InputHu CountryAlpha2Input = "HU"
+	CountryAlpha2InputId CountryAlpha2Input = "ID"
+	CountryAlpha2InputIe CountryAlpha2Input = "IE"
+	CountryAlpha2InputIl CountryAlpha2Input = "IL"
+	CountryAlpha2InputIm CountryAlpha2Input = "IM"
+	CountryAlpha2InputIn CountryAlpha2Input = "IN"
+	CountryAlpha2InputIo CountryAlpha2Input = "IO"
+	CountryAlpha2InputIq CountryAlpha2Input = "IQ"
+	CountryAlpha2InputIs CountryAlpha2Input = "IS"
+	CountryAlpha2InputIt CountryAlpha2Input = "IT"
+	CountryAlpha2InputJe CountryAlpha2Input = "JE"
+	CountryAlpha2InputJm CountryAlpha2Input = "JM"
+	CountryAlpha2InputJo CountryAlpha2Input = "JO"
+	CountryAlpha2InputJp CountryAlpha2Input = "JP"
+	CountryAlpha2InputKe CountryAlpha2Input = "KE"
+	CountryAlpha2InputKg CountryAlpha2Input = "KG"
+	CountryAlpha2InputKh CountryAlpha2Input = "KH"
+	CountryAlpha2InputKi CountryAlpha2Input = "KI"
+	CountryAlpha2InputKm CountryAlpha2Input = "KM"
+	CountryAlpha2InputKn CountryAlpha2Input = "KN"
+	CountryAlpha2InputKr CountryAlpha2Input = "KR"
+	CountryAlpha2InputKw CountryAlpha2Input = "KW"
+	CountryAlpha2InputKy CountryAlpha2Input = "KY"
+	CountryAlpha2InputKz CountryAlpha2Input = "KZ"
+	CountryAlpha2InputLa CountryAlpha2Input = "LA"
+	CountryAlpha2InputLb CountryAlpha2Input = "LB"
+	CountryAlpha2InputLc CountryAlpha2Input = "LC"
+	CountryAlpha2InputLi CountryAlpha2Input = "LI"
+	CountryAlpha2InputLk CountryAlpha2Input = "LK"
+	CountryAlpha2InputLr CountryAlpha2Input = "LR"
+	CountryAlpha2InputLs CountryAlpha2Input = "LS"
+	CountryAlpha2InputLt CountryAlpha2Input = "LT"
+	CountryAlpha2InputLu CountryAlpha2Input = "LU"
+	CountryAlpha2InputLv CountryAlpha2Input = "LV"
+	CountryAlpha2InputLy CountryAlpha2Input = "LY"
+	CountryAlpha2InputMa CountryAlpha2Input = "MA"
+	CountryAlpha2InputMc CountryAlpha2Input = "MC"
+	CountryAlpha2InputMd CountryAlpha2Input = "MD"
+	CountryAlpha2InputMe CountryAlpha2Input = "ME"
+	CountryAlpha2InputMf CountryAlpha2Input = "MF"
+	CountryAlpha2InputMg CountryAlpha2Input = "MG"
+	CountryAlpha2InputMh CountryAlpha2Input = "MH"
+	CountryAlpha2InputMk CountryAlpha2Input = "MK"
+	CountryAlpha2InputMl CountryAlpha2Input = "ML"
+	CountryAlpha2InputMm CountryAlpha2Input = "MM"
+	CountryAlpha2InputMn CountryAlpha2Input = "MN"
+	CountryAlpha2InputMo CountryAlpha2Input = "MO"
+	CountryAlpha2InputMp CountryAlpha2Input = "MP"
+	CountryAlpha2InputMq CountryAlpha2Input = "MQ"
+	CountryAlpha2InputMr CountryAlpha2Input = "MR"
+	CountryAlpha2InputMs CountryAlpha2Input = "MS"
+	CountryAlpha2InputMt CountryAlpha2Input = "MT"
+	CountryAlpha2InputMu CountryAlpha2Input = "MU"
+	CountryAlpha2InputMv CountryAlpha2Input = "MV"
+	CountryAlpha2InputMw CountryAlpha2Input = "MW"
+	CountryAlpha2InputMx CountryAlpha2Input = "MX"
+	CountryAlpha2InputMy CountryAlpha2Input = "MY"
+	CountryAlpha2InputMz CountryAlpha2Input = "MZ"
+	CountryAlpha2InputNa CountryAlpha2Input = "NA"
+	CountryAlpha2InputNc CountryAlpha2Input = "NC"
+	CountryAlpha2InputNe CountryAlpha2Input = "NE"
+	CountryAlpha2InputNf CountryAlpha2Input = "NF"
+	CountryAlpha2InputNg CountryAlpha2Input = "NG"
+	CountryAlpha2InputNi CountryAlpha2Input = "NI"
+	CountryAlpha2InputNl CountryAlpha2Input = "NL"
+	CountryAlpha2InputNo CountryAlpha2Input = "NO"
+	CountryAlpha2InputNp CountryAlpha2Input = "NP"
+	CountryAlpha2InputNr CountryAlpha2Input = "NR"
+	CountryAlpha2InputNu CountryAlpha2Input = "NU"
+	CountryAlpha2InputNz CountryAlpha2Input = "NZ"
+	CountryAlpha2InputOm CountryAlpha2Input = "OM"
+	CountryAlpha2InputPa CountryAlpha2Input = "PA"
+	CountryAlpha2InputPe CountryAlpha2Input = "PE"
+	CountryAlpha2InputPf CountryAlpha2Input = "PF"
+	CountryAlpha2InputPg CountryAlpha2Input = "PG"
+	CountryAlpha2InputPh CountryAlpha2Input = "PH"
+	CountryAlpha2InputPk CountryAlpha2Input = "PK"
+	CountryAlpha2InputPl CountryAlpha2Input = "PL"
+	CountryAlpha2InputPm CountryAlpha2Input = "PM"
+	CountryAlpha2InputPn CountryAlpha2Input = "PN"
+	CountryAlpha2InputPr CountryAlpha2Input = "PR"
+	CountryAlpha2InputPs CountryAlpha2Input = "PS"
+	CountryAlpha2InputPt CountryAlpha2Input = "PT"
+	CountryAlpha2InputPw CountryAlpha2Input = "PW"
+	CountryAlpha2InputPy CountryAlpha2Input = "PY"
+	CountryAlpha2InputQa CountryAlpha2Input = "QA"
+	CountryAlpha2InputRe CountryAlpha2Input = "RE"
+	CountryAlpha2InputRo CountryAlpha2Input = "RO"
+	CountryAlpha2InputRs CountryAlpha2Input = "RS"
+	CountryAlpha2InputRw CountryAlpha2Input = "RW"
+	CountryAlpha2InputSa CountryAlpha2Input = "SA"
+	CountryAlpha2InputSb CountryAlpha2Input = "SB"
+	CountryAlpha2InputSc CountryAlpha2Input = "SC"
+	CountryAlpha2InputSd CountryAlpha2Input = "SD"
+	CountryAlpha2InputSe CountryAlpha2Input = "SE"
+	CountryAlpha2InputSg CountryAlpha2Input = "SG"
+	CountryAlpha2InputSh CountryAlpha2Input = "SH"
+	CountryAlpha2InputSi CountryAlpha2Input = "SI"
+	CountryAlpha2InputSj CountryAlpha2Input = "SJ"
+	CountryAlpha2InputSk CountryAlpha2Input = "SK"
+	CountryAlpha2InputSl CountryAlpha2Input = "SL"
+	CountryAlpha2InputSm CountryAlpha2Input = "SM"
+	CountryAlpha2InputSn CountryAlpha2Input = "SN"
+	CountryAlpha2InputSo CountryAlpha2Input = "SO"
+	CountryAlpha2InputSr CountryAlpha2Input = "SR"
+	CountryAlpha2InputSs CountryAlpha2Input = "SS"
+	CountryAlpha2InputSt CountryAlpha2Input = "ST"
+	CountryAlpha2InputSv CountryAlpha2Input = "SV"
+	CountryAlpha2InputSx CountryAlpha2Input = "SX"
+	CountryAlpha2InputSz CountryAlpha2Input = "SZ"
+	CountryAlpha2InputTc CountryAlpha2Input = "TC"
+	CountryAlpha2InputTd CountryAlpha2Input = "TD"
+	CountryAlpha2InputTf CountryAlpha2Input = "TF"
+	CountryAlpha2InputTg CountryAlpha2Input = "TG"
+	CountryAlpha2InputTh CountryAlpha2Input = "TH"
+	CountryAlpha2InputTj CountryAlpha2Input = "TJ"
+	CountryAlpha2InputTk CountryAlpha2Input = "TK"
+	CountryAlpha2InputTl CountryAlpha2Input = "TL"
+	CountryAlpha2InputTm CountryAlpha2Input = "TM"
+	CountryAlpha2InputTn CountryAlpha2Input = "TN"
+	CountryAlpha2InputTo CountryAlpha2Input = "TO"
+	CountryAlpha2InputTr CountryAlpha2Input = "TR"
+	CountryAlpha2InputTt CountryAlpha2Input = "TT"
+	CountryAlpha2InputTv CountryAlpha2Input = "TV"
+	CountryAlpha2InputTw CountryAlpha2Input = "TW"
+	CountryAlpha2InputTz CountryAlpha2Input = "TZ"
+	CountryAlpha2InputUa CountryAlpha2Input = "UA"
+	CountryAlpha2InputUg CountryAlpha2Input = "UG"
+	CountryAlpha2InputUm CountryAlpha2Input = "UM"
+	CountryAlpha2InputUs CountryAlpha2Input = "US"
+	CountryAlpha2InputUy CountryAlpha2Input = "UY"
+	CountryAlpha2InputUz CountryAlpha2Input = "UZ"
+	CountryAlpha2InputVa CountryAlpha2Input = "VA"
+	CountryAlpha2InputVc CountryAlpha2Input = "VC"
+	CountryAlpha2InputVe CountryAlpha2Input = "VE"
+	CountryAlpha2InputVg CountryAlpha2Input = "VG"
+	CountryAlpha2InputVi CountryAlpha2Input = "VI"
+	CountryAlpha2InputVn CountryAlpha2Input = "VN"
+	CountryAlpha2InputVu CountryAlpha2Input = "VU"
+	CountryAlpha2InputWf CountryAlpha2Input = "WF"
+	CountryAlpha2InputWs CountryAlpha2Input = "WS"
+	CountryAlpha2InputYe CountryAlpha2Input = "YE"
+	CountryAlpha2InputYt CountryAlpha2Input = "YT"
+	CountryAlpha2InputZa CountryAlpha2Input = "ZA"
+	CountryAlpha2InputZm CountryAlpha2Input = "ZM"
+	CountryAlpha2InputZw CountryAlpha2Input = "ZW"
+)
+
+func (e CountryAlpha2Input) ToPointer() *CountryAlpha2Input {
+	return &e
+}
+func (e *CountryAlpha2Input) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "AD":
+		fallthrough
+	case "AE":
+		fallthrough
+	case "AF":
+		fallthrough
+	case "AG":
+		fallthrough
+	case "AI":
+		fallthrough
+	case "AL":
+		fallthrough
+	case "AM":
+		fallthrough
+	case "AO":
+		fallthrough
+	case "AQ":
+		fallthrough
+	case "AR":
+		fallthrough
+	case "AS":
+		fallthrough
+	case "AT":
+		fallthrough
+	case "AU":
+		fallthrough
+	case "AW":
+		fallthrough
+	case "AX":
+		fallthrough
+	case "AZ":
+		fallthrough
+	case "BA":
+		fallthrough
+	case "BB":
+		fallthrough
+	case "BD":
+		fallthrough
+	case "BE":
+		fallthrough
+	case "BF":
+		fallthrough
+	case "BG":
+		fallthrough
+	case "BH":
+		fallthrough
+	case "BI":
+		fallthrough
+	case "BJ":
+		fallthrough
+	case "BL":
+		fallthrough
+	case "BM":
+		fallthrough
+	case "BN":
+		fallthrough
+	case "BO":
+		fallthrough
+	case "BQ":
+		fallthrough
+	case "BR":
+		fallthrough
+	case "BS":
+		fallthrough
+	case "BT":
+		fallthrough
+	case "BV":
+		fallthrough
+	case "BW":
+		fallthrough
+	case "BY":
+		fallthrough
+	case "BZ":
+		fallthrough
+	case "CA":
+		fallthrough
+	case "CC":
+		fallthrough
+	case "CD":
+		fallthrough
+	case "CF":
+		fallthrough
+	case "CG":
+		fallthrough
+	case "CH":
+		fallthrough
+	case "CI":
+		fallthrough
+	case "CK":
+		fallthrough
+	case "CL":
+		fallthrough
+	case "CM":
+		fallthrough
+	case "CN":
+		fallthrough
+	case "CO":
+		fallthrough
+	case "CR":
+		fallthrough
+	case "CV":
+		fallthrough
+	case "CW":
+		fallthrough
+	case "CX":
+		fallthrough
+	case "CY":
+		fallthrough
+	case "CZ":
+		fallthrough
+	case "DE":
+		fallthrough
+	case "DJ":
+		fallthrough
+	case "DK":
+		fallthrough
+	case "DM":
+		fallthrough
+	case "DO":
+		fallthrough
+	case "DZ":
+		fallthrough
+	case "EC":
+		fallthrough
+	case "EE":
+		fallthrough
+	case "EG":
+		fallthrough
+	case "EH":
+		fallthrough
+	case "ER":
+		fallthrough
+	case "ES":
+		fallthrough
+	case "ET":
+		fallthrough
+	case "FI":
+		fallthrough
+	case "FJ":
+		fallthrough
+	case "FK":
+		fallthrough
+	case "FM":
+		fallthrough
+	case "FO":
+		fallthrough
+	case "FR":
+		fallthrough
+	case "GA":
+		fallthrough
+	case "GB":
+		fallthrough
+	case "GD":
+		fallthrough
+	case "GE":
+		fallthrough
+	case "GF":
+		fallthrough
+	case "GG":
+		fallthrough
+	case "GH":
+		fallthrough
+	case "GI":
+		fallthrough
+	case "GL":
+		fallthrough
+	case "GM":
+		fallthrough
+	case "GN":
+		fallthrough
+	case "GP":
+		fallthrough
+	case "GQ":
+		fallthrough
+	case "GR":
+		fallthrough
+	case "GS":
+		fallthrough
+	case "GT":
+		fallthrough
+	case "GU":
+		fallthrough
+	case "GW":
+		fallthrough
+	case "GY":
+		fallthrough
+	case "HK":
+		fallthrough
+	case "HM":
+		fallthrough
+	case "HN":
+		fallthrough
+	case "HR":
+		fallthrough
+	case "HT":
+		fallthrough
+	case "HU":
+		fallthrough
+	case "ID":
+		fallthrough
+	case "IE":
+		fallthrough
+	case "IL":
+		fallthrough
+	case "IM":
+		fallthrough
+	case "IN":
+		fallthrough
+	case "IO":
+		fallthrough
+	case "IQ":
+		fallthrough
+	case "IS":
+		fallthrough
+	case "IT":
+		fallthrough
+	case "JE":
+		fallthrough
+	case "JM":
+		fallthrough
+	case "JO":
+		fallthrough
+	case "JP":
+		fallthrough
+	case "KE":
+		fallthrough
+	case "KG":
+		fallthrough
+	case "KH":
+		fallthrough
+	case "KI":
+		fallthrough
+	case "KM":
+		fallthrough
+	case "KN":
+		fallthrough
+	case "KR":
+		fallthrough
+	case "KW":
+		fallthrough
+	case "KY":
+		fallthrough
+	case "KZ":
+		fallthrough
+	case "LA":
+		fallthrough
+	case "LB":
+		fallthrough
+	case "LC":
+		fallthrough
+	case "LI":
+		fallthrough
+	case "LK":
+		fallthrough
+	case "LR":
+		fallthrough
+	case "LS":
+		fallthrough
+	case "LT":
+		fallthrough
+	case "LU":
+		fallthrough
+	case "LV":
+		fallthrough
+	case "LY":
+		fallthrough
+	case "MA":
+		fallthrough
+	case "MC":
+		fallthrough
+	case "MD":
+		fallthrough
+	case "ME":
+		fallthrough
+	case "MF":
+		fallthrough
+	case "MG":
+		fallthrough
+	case "MH":
+		fallthrough
+	case "MK":
+		fallthrough
+	case "ML":
+		fallthrough
+	case "MM":
+		fallthrough
+	case "MN":
+		fallthrough
+	case "MO":
+		fallthrough
+	case "MP":
+		fallthrough
+	case "MQ":
+		fallthrough
+	case "MR":
+		fallthrough
+	case "MS":
+		fallthrough
+	case "MT":
+		fallthrough
+	case "MU":
+		fallthrough
+	case "MV":
+		fallthrough
+	case "MW":
+		fallthrough
+	case "MX":
+		fallthrough
+	case "MY":
+		fallthrough
+	case "MZ":
+		fallthrough
+	case "NA":
+		fallthrough
+	case "NC":
+		fallthrough
+	case "NE":
+		fallthrough
+	case "NF":
+		fallthrough
+	case "NG":
+		fallthrough
+	case "NI":
+		fallthrough
+	case "NL":
+		fallthrough
+	case "NO":
+		fallthrough
+	case "NP":
+		fallthrough
+	case "NR":
+		fallthrough
+	case "NU":
+		fallthrough
+	case "NZ":
+		fallthrough
+	case "OM":
+		fallthrough
+	case "PA":
+		fallthrough
+	case "PE":
+		fallthrough
+	case "PF":
+		fallthrough
+	case "PG":
+		fallthrough
+	case "PH":
+		fallthrough
+	case "PK":
+		fallthrough
+	case "PL":
+		fallthrough
+	case "PM":
+		fallthrough
+	case "PN":
+		fallthrough
+	case "PR":
+		fallthrough
+	case "PS":
+		fallthrough
+	case "PT":
+		fallthrough
+	case "PW":
+		fallthrough
+	case "PY":
+		fallthrough
+	case "QA":
+		fallthrough
+	case "RE":
+		fallthrough
+	case "RO":
+		fallthrough
+	case "RS":
+		fallthrough
+	case "RW":
+		fallthrough
+	case "SA":
+		fallthrough
+	case "SB":
+		fallthrough
+	case "SC":
+		fallthrough
+	case "SD":
+		fallthrough
+	case "SE":
+		fallthrough
+	case "SG":
+		fallthrough
+	case "SH":
+		fallthrough
+	case "SI":
+		fallthrough
+	case "SJ":
+		fallthrough
+	case "SK":
+		fallthrough
+	case "SL":
+		fallthrough
+	case "SM":
+		fallthrough
+	case "SN":
+		fallthrough
+	case "SO":
+		fallthrough
+	case "SR":
+		fallthrough
+	case "SS":
+		fallthrough
+	case "ST":
+		fallthrough
+	case "SV":
+		fallthrough
+	case "SX":
+		fallthrough
+	case "SZ":
+		fallthrough
+	case "TC":
+		fallthrough
+	case "TD":
+		fallthrough
+	case "TF":
+		fallthrough
+	case "TG":
+		fallthrough
+	case "TH":
+		fallthrough
+	case "TJ":
+		fallthrough
+	case "TK":
+		fallthrough
+	case "TL":
+		fallthrough
+	case "TM":
+		fallthrough
+	case "TN":
+		fallthrough
+	case "TO":
+		fallthrough
+	case "TR":
+		fallthrough
+	case "TT":
+		fallthrough
+	case "TV":
+		fallthrough
+	case "TW":
+		fallthrough
+	case "TZ":
+		fallthrough
+	case "UA":
+		fallthrough
+	case "UG":
+		fallthrough
+	case "UM":
+		fallthrough
+	case "US":
+		fallthrough
+	case "UY":
+		fallthrough
+	case "UZ":
+		fallthrough
+	case "VA":
+		fallthrough
+	case "VC":
+		fallthrough
+	case "VE":
+		fallthrough
+	case "VG":
+		fallthrough
+	case "VI":
+		fallthrough
+	case "VN":
+		fallthrough
+	case "VU":
+		fallthrough
+	case "WF":
+		fallthrough
+	case "WS":
+		fallthrough
+	case "YE":
+		fallthrough
+	case "YT":
+		fallthrough
+	case "ZA":
+		fallthrough
+	case "ZM":
+		fallthrough
+	case "ZW":
+		*e = CountryAlpha2Input(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for CountryAlpha2Input: %v", v)
+	}
+}
+
 type OrganizationCreate struct {
-	Name      string  `json:"name"`
-	Slug      string  `json:"slug"`
-	AvatarURL *string `json:"avatar_url,omitempty"`
+	Name        string       `json:"name"`
+	Slug        string       `json:"slug"`
+	AvatarURL   *string      `json:"avatar_url,omitempty"`
+	LegalEntity *LegalEntity `json:"legal_entity,omitempty"`
 	// Public support email.
 	Email *string `json:"email,omitempty"`
 	// Official website of the organization.
@@ -13,13 +852,16 @@ type OrganizationCreate struct {
 	// Link to social profiles.
 	Socials []OrganizationSocialLink `json:"socials,omitempty"`
 	// Additional, private, business details Polar needs about active organizations for compliance (KYC).
-	Details                    *OrganizationDetails                `json:"details,omitempty"`
+	Details *OrganizationDetails `json:"details,omitempty"`
+	// Two-letter country code (ISO 3166-1 alpha-2).
+	Country                    *CountryAlpha2Input                 `json:"country,omitempty"`
 	FeatureSettings            *OrganizationFeatureSettings        `json:"feature_settings,omitempty"`
 	SubscriptionSettings       *OrganizationSubscriptionSettings   `json:"subscription_settings,omitempty"`
 	NotificationSettings       *OrganizationNotificationSettings   `json:"notification_settings,omitempty"`
 	CustomerEmailSettings      *OrganizationCustomerEmailSettings  `json:"customer_email_settings,omitempty"`
 	CustomerPortalSettings     *OrganizationCustomerPortalSettings `json:"customer_portal_settings,omitempty"`
 	DefaultPresentmentCurrency *PresentmentCurrency                `json:"default_presentment_currency,omitempty"`
+	DefaultTaxBehavior         *TaxBehaviorOption                  `json:"default_tax_behavior,omitempty"`
 }
 
 func (o *OrganizationCreate) GetName() string {
@@ -41,6 +883,27 @@ func (o *OrganizationCreate) GetAvatarURL() *string {
 		return nil
 	}
 	return o.AvatarURL
+}
+
+func (o *OrganizationCreate) GetLegalEntity() *LegalEntity {
+	if o == nil {
+		return nil
+	}
+	return o.LegalEntity
+}
+
+func (o *OrganizationCreate) GetLegalEntityCompany() *OrganizationCompanyLegalEntitySchema {
+	if v := o.GetLegalEntity(); v != nil {
+		return v.OrganizationCompanyLegalEntitySchema
+	}
+	return nil
+}
+
+func (o *OrganizationCreate) GetLegalEntityIndividual() *OrganizationIndividualLegalEntitySchema {
+	if v := o.GetLegalEntity(); v != nil {
+		return v.OrganizationIndividualLegalEntitySchema
+	}
+	return nil
 }
 
 func (o *OrganizationCreate) GetEmail() *string {
@@ -69,6 +932,13 @@ func (o *OrganizationCreate) GetDetails() *OrganizationDetails {
 		return nil
 	}
 	return o.Details
+}
+
+func (o *OrganizationCreate) GetCountry() *CountryAlpha2Input {
+	if o == nil {
+		return nil
+	}
+	return o.Country
 }
 
 func (o *OrganizationCreate) GetFeatureSettings() *OrganizationFeatureSettings {
@@ -111,4 +981,11 @@ func (o *OrganizationCreate) GetDefaultPresentmentCurrency() *PresentmentCurrenc
 		return nil
 	}
 	return o.DefaultPresentmentCurrency
+}
+
+func (o *OrganizationCreate) GetDefaultTaxBehavior() *TaxBehaviorOption {
+	if o == nil {
+		return nil
+	}
+	return o.DefaultTaxBehavior
 }

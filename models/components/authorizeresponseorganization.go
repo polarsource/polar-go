@@ -7,7 +7,8 @@ import (
 )
 
 type AuthorizeResponseOrganization struct {
-	Client            OAuth2ClientPublic      `json:"client"`
+	Client OAuth2ClientPublic `json:"client"`
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	subType           string                  `const:"organization" json:"sub_type"`
 	Sub               *AuthorizeOrganization  `json:"sub"`
 	Scopes            []Scope                 `json:"scopes"`

@@ -163,7 +163,7 @@ func main() {
         CustomerSession: polargo.Pointer(os.Getenv("POLAR_CUSTOMER_SESSION")),
     }, "<value>", components.CustomerOrderUpdate{
         BillingAddress: &components.AddressInput{
-            Country: components.CountryAlpha2InputUs,
+            Country: components.AddressInputCountryAlpha2InputUs,
         },
     })
     if err != nil {

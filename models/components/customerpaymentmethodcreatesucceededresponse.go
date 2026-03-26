@@ -7,6 +7,7 @@ import (
 )
 
 type CustomerPaymentMethodCreateSucceededResponse struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	status        string                `const:"succeeded" json:"status"`
 	PaymentMethod CustomerPaymentMethod `json:"payment_method"`
 }

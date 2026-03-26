@@ -250,20 +250,11 @@ func (s *Benefits) List(ctx context.Context, request operations.BenefitsListRequ
 		if len(arr) < l {
 			return nil, nil
 		}
+		request.Page = &nP
 
 		return s.List(
 			ctx,
-			operations.BenefitsListRequest{
-				OrganizationID: request.OrganizationID,
-				TypeFilter:     request.TypeFilter,
-				ID:             request.ID,
-				ExcludeID:      request.ExcludeID,
-				Query:          request.Query,
-				Page:           &nP,
-				Limit:          request.Limit,
-				Sorting:        request.Sorting,
-				Metadata:       request.Metadata,
-			},
+			request,
 			opts...,
 		)
 	}
@@ -1567,17 +1558,11 @@ func (s *Benefits) Grants(ctx context.Context, request operations.BenefitsGrants
 		if len(arr) < l {
 			return nil, nil
 		}
+		request.Page = &nP
 
 		return s.Grants(
 			ctx,
-			operations.BenefitsGrantsRequest{
-				ID:         request.ID,
-				IsGranted:  request.IsGranted,
-				CustomerID: request.CustomerID,
-				MemberID:   request.MemberID,
-				Page:       &nP,
-				Limit:      request.Limit,
-			},
+			request,
 			opts...,
 		)
 	}

@@ -44,3 +44,6 @@ func (s *S3DownloadURL) GetExpiresAt() time.Time {
 	}
 	return s.ExpiresAt
 }
+
+// #region class-body-s3downloadurl
+// #endregion class-body-s3downloadurl

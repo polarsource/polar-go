@@ -36,6 +36,7 @@ type SubscriptionRevoke struct {
 	// conversation, i.e support.
 	CustomerCancellationComment *string `json:"customer_cancellation_comment,omitempty"`
 	// Cancel and revoke an active subscription immediately
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	revoke bool `const:"true" json:"revoke"`
 }
 

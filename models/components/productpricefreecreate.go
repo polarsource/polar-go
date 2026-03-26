@@ -8,8 +8,11 @@ import (
 
 // ProductPriceFreeCreate - Schema to create a free price.
 type ProductPriceFreeCreate struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	amountType    string               `const:"free" json:"amount_type"`
 	PriceCurrency *PresentmentCurrency `json:"price_currency,omitempty"`
+	// The tax behavior of the price. If not set, it will default to the organization's default tax behavior.
+	TaxBehavior *TaxBehaviorOption `json:"tax_behavior,omitempty"`
 }
 
 func (p ProductPriceFreeCreate) MarshalJSON() ([]byte, error) {
@@ -32,4 +35,11 @@ func (p *ProductPriceFreeCreate) GetPriceCurrency() *PresentmentCurrency {
 		return nil
 	}
 	return p.PriceCurrency
+}
+
+func (p *ProductPriceFreeCreate) GetTaxBehavior() *TaxBehaviorOption {
+	if p == nil {
+		return nil
+	}
+	return p.TaxBehavior
 }

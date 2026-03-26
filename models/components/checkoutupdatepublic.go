@@ -140,6 +140,7 @@ type CheckoutUpdatePublic struct {
 	// Discount code to apply to the checkout.
 	DiscountCode *string `json:"discount_code,omitempty"`
 	// Disable the trial period for the checkout session. It's mainly useful when the trial is blocked because the customer already redeemed one.
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	allowTrial *bool `const:"false" json:"allow_trial,omitempty"`
 }
 

@@ -12,6 +12,7 @@ import (
 //
 // **Discord & Slack support:** Full
 type WebhookSubscriptionActivePayload struct {
+	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	type_     string       `const:"subscription.active" json:"type"`
 	Timestamp time.Time    `json:"timestamp"`
 	Data      Subscription `json:"data"`

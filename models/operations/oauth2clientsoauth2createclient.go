@@ -25,3 +25,6 @@ func (o *Oauth2ClientsOauth2CreateClientResponse) GetAny() any {
 	}
 	return o.Any
 }
+
+// #region class-body-oauth2clientsoauth2createclientresponse
+// #endregion class-body-oauth2clientsoauth2createclientresponse

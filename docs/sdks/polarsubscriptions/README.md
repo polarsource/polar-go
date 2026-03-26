@@ -249,6 +249,7 @@ func main() {
 
 | Error Type                            | Status Code                           | Content Type                          |
 | ------------------------------------- | ------------------------------------- | ------------------------------------- |
+| apierrors.PaymentFailed               | 402                                   | application/json                      |
 | apierrors.AlreadyCanceledSubscription | 403                                   | application/json                      |
 | apierrors.ResourceNotFound            | 404                                   | application/json                      |
 | apierrors.HTTPValidationError         | 422                                   | application/json                      |

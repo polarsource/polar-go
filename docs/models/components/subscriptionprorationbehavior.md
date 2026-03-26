@@ -13,7 +13,8 @@ value := components.SubscriptionProrationBehaviorInvoice
 
 ## Values
 
-| Name                                   | Value                                  |
-| -------------------------------------- | -------------------------------------- |
-| `SubscriptionProrationBehaviorInvoice` | invoice                                |
-| `SubscriptionProrationBehaviorProrate` | prorate                                |
+| Name                                      | Value                                     |
+| ----------------------------------------- | ----------------------------------------- |
+| `SubscriptionProrationBehaviorInvoice`    | invoice                                   |
+| `SubscriptionProrationBehaviorProrate`    | prorate                                   |
+| `SubscriptionProrationBehaviorNextPeriod` | next_period                               |
