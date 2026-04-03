@@ -86,6 +86,20 @@ func (b *BenefitGrantedEvent) GetCustomer() *Customer {
 	return b.Customer
 }
 
+func (b *BenefitGrantedEvent) GetCustomerIndividual() *CustomerIndividual {
+	if v := b.GetCustomer(); v != nil {
+		return v.CustomerIndividual
+	}
+	return nil
+}
+
+func (b *BenefitGrantedEvent) GetCustomerTeam() *CustomerTeam {
+	if v := b.GetCustomer(); v != nil {
+		return v.CustomerTeam
+	}
+	return nil
+}
+
 func (b *BenefitGrantedEvent) GetExternalCustomerID() *string {
 	if b == nil {
 		return nil

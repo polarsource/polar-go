@@ -491,7 +491,7 @@ func (p *PaymentsListRequest) GetSorting() []components.PaymentSortProperty {
 type PaymentsListResponse struct {
 	HTTPMeta components.HTTPMetadata `json:"-"`
 	// Successful Response
-	ListResource *components.ListResource
+	ListResourcePayment *components.ListResourcePayment
 
 	Next func() (*PaymentsListResponse, error)
 }
@@ -503,9 +503,9 @@ func (p *PaymentsListResponse) GetHTTPMeta() components.HTTPMetadata {
 	return p.HTTPMeta
 }
 
-func (p *PaymentsListResponse) GetListResource() *components.ListResource {
+func (p *PaymentsListResponse) GetListResourcePayment() *components.ListResourcePayment {
 	if p == nil {
 		return nil
 	}
-	return p.ListResource
+	return p.ListResourcePayment
 }

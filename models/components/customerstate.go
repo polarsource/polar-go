@@ -3,247 +3,87 @@
 package components
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
-	"time"
 )
 
-type CustomerStateTaxIDType string
+type CustomerStateType string
 
 const (
-	CustomerStateTaxIDTypeStr         CustomerStateTaxIDType = "str"
-	CustomerStateTaxIDTypeTaxIDFormat CustomerStateTaxIDType = "TaxIDFormat"
+	CustomerStateTypeIndividual CustomerStateType = "individual"
+	CustomerStateTypeTeam       CustomerStateType = "team"
 )
 
-type CustomerStateTaxID struct {
-	Str         *string      `queryParam:"inline" union:"member"`
-	TaxIDFormat *TaxIDFormat `queryParam:"inline" union:"member"`
-
-	Type CustomerStateTaxIDType
-}
-
-func CreateCustomerStateTaxIDStr(str string) CustomerStateTaxID {
-	typ := CustomerStateTaxIDTypeStr
-
-	return CustomerStateTaxID{
-		Str:  &str,
-		Type: typ,
-	}
-}
-
-func CreateCustomerStateTaxIDTaxIDFormat(taxIDFormat TaxIDFormat) CustomerStateTaxID {
-	typ := CustomerStateTaxIDTypeTaxIDFormat
-
-	return CustomerStateTaxID{
-		TaxIDFormat: &taxIDFormat,
-		Type:        typ,
-	}
-}
-
-func (u *CustomerStateTaxID) UnmarshalJSON(data []byte) error {
-
-	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, nil); err == nil {
-		u.Str = &str
-		u.Type = CustomerStateTaxIDTypeStr
-		return nil
-	}
-
-	var taxIDFormat TaxIDFormat = TaxIDFormat("")
-	if err := utils.UnmarshalJSON(data, &taxIDFormat, "", true, nil); err == nil {
-		u.TaxIDFormat = &taxIDFormat
-		u.Type = CustomerStateTaxIDTypeTaxIDFormat
-		return nil
-	}
-
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for CustomerStateTaxID", string(data))
-}
-
-func (u CustomerStateTaxID) MarshalJSON() ([]byte, error) {
-	if u.Str != nil {
-		return utils.MarshalJSON(u.Str, "", true)
-	}
-
-	if u.TaxIDFormat != nil {
-		return utils.MarshalJSON(u.TaxIDFormat, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type CustomerStateTaxID: all fields are null")
-}
-
-// CustomerState - A customer along with additional state information:
-//
-// * Active subscriptions
-// * Granted benefits
-// * Active meters
 type CustomerState struct {
-	// The ID of the customer.
-	ID string `json:"id"`
-	// Creation timestamp of the object.
-	CreatedAt time.Time `json:"created_at"`
-	// Last modification timestamp of the object.
-	ModifiedAt *time.Time                    `json:"modified_at"`
-	Metadata   map[string]MetadataOutputType `json:"metadata"`
-	// The ID of the customer in your system. This must be unique within the organization. Once set, it can't be updated.
-	ExternalID *string `json:"external_id,omitempty"`
-	// The email address of the customer. This must be unique within the organization.
-	Email string `json:"email"`
-	// Whether the customer email address is verified. The address is automatically verified when the customer accesses the customer portal using their email address.
-	EmailVerified bool `json:"email_verified"`
-	// The type of customer: 'individual' for single users, 'team' for customers with multiple members. Legacy customers may have NULL type which is treated as 'individual'.
-	Type *CustomerType `json:"type,omitempty"`
-	// The name of the customer.
-	Name           *string               `json:"name"`
-	BillingAddress *Address              `json:"billing_address"`
-	TaxID          []*CustomerStateTaxID `json:"tax_id"`
-	Locale         *string               `json:"locale,omitempty"`
-	// The ID of the organization owning the customer.
-	OrganizationID string `json:"organization_id"`
-	// Timestamp for when the customer was soft deleted.
-	DeletedAt *time.Time `json:"deleted_at"`
-	// The customer's active subscriptions.
-	ActiveSubscriptions []CustomerStateSubscription `json:"active_subscriptions"`
-	// The customer's active benefit grants.
-	GrantedBenefits []CustomerStateBenefitGrant `json:"granted_benefits"`
-	// The customer's active meters.
-	ActiveMeters []CustomerStateMeter `json:"active_meters"`
-	AvatarURL    string               `json:"avatar_url"`
+	CustomerStateIndividual *CustomerStateIndividual `queryParam:"inline" union:"member"`
+	CustomerStateTeam       *CustomerStateTeam       `queryParam:"inline" union:"member"`
+
+	Type CustomerStateType
 }
 
-func (c CustomerState) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(c, "", false)
-}
+func CreateCustomerStateIndividual(individual CustomerStateIndividual) CustomerState {
+	typ := CustomerStateTypeIndividual
 
-func (c *CustomerState) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &c, "", false, nil); err != nil {
-		return err
+	return CustomerState{
+		CustomerStateIndividual: &individual,
+		Type:                    typ,
 	}
-	return nil
 }
 
-func (c *CustomerState) GetID() string {
-	if c == nil {
-		return ""
+func CreateCustomerStateTeam(team CustomerStateTeam) CustomerState {
+	typ := CustomerStateTypeTeam
+
+	return CustomerState{
+		CustomerStateTeam: &team,
+		Type:              typ,
 	}
-	return c.ID
 }
 
-func (c *CustomerState) GetCreatedAt() time.Time {
-	if c == nil {
-		return time.Time{}
+func (u *CustomerState) UnmarshalJSON(data []byte) error {
+
+	type discriminator struct {
+		Type string `json:"type"`
 	}
-	return c.CreatedAt
-}
 
-func (c *CustomerState) GetModifiedAt() *time.Time {
-	if c == nil {
+	dis := new(discriminator)
+	if err := json.Unmarshal(data, &dis); err != nil {
+		return fmt.Errorf("could not unmarshal discriminator: %w", err)
+	}
+
+	switch dis.Type {
+	case "individual":
+		customerStateIndividual := new(CustomerStateIndividual)
+		if err := utils.UnmarshalJSON(data, &customerStateIndividual, "", true, nil); err != nil {
+			return fmt.Errorf("could not unmarshal `%s` into expected (Type == individual) type CustomerStateIndividual within CustomerState: %w", string(data), err)
+		}
+
+		u.CustomerStateIndividual = customerStateIndividual
+		u.Type = CustomerStateTypeIndividual
+		return nil
+	case "team":
+		customerStateTeam := new(CustomerStateTeam)
+		if err := utils.UnmarshalJSON(data, &customerStateTeam, "", true, nil); err != nil {
+			return fmt.Errorf("could not unmarshal `%s` into expected (Type == team) type CustomerStateTeam within CustomerState: %w", string(data), err)
+		}
+
+		u.CustomerStateTeam = customerStateTeam
+		u.Type = CustomerStateTypeTeam
 		return nil
 	}
-	return c.ModifiedAt
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for CustomerState", string(data))
 }
 
-func (c *CustomerState) GetMetadata() map[string]MetadataOutputType {
-	if c == nil {
-		return map[string]MetadataOutputType{}
+func (u CustomerState) MarshalJSON() ([]byte, error) {
+	if u.CustomerStateIndividual != nil {
+		return utils.MarshalJSON(u.CustomerStateIndividual, "", true)
 	}
-	return c.Metadata
-}
 
-func (c *CustomerState) GetExternalID() *string {
-	if c == nil {
-		return nil
+	if u.CustomerStateTeam != nil {
+		return utils.MarshalJSON(u.CustomerStateTeam, "", true)
 	}
-	return c.ExternalID
-}
 
-func (c *CustomerState) GetEmail() string {
-	if c == nil {
-		return ""
-	}
-	return c.Email
-}
-
-func (c *CustomerState) GetEmailVerified() bool {
-	if c == nil {
-		return false
-	}
-	return c.EmailVerified
-}
-
-func (c *CustomerState) GetType() *CustomerType {
-	if c == nil {
-		return nil
-	}
-	return c.Type
-}
-
-func (c *CustomerState) GetName() *string {
-	if c == nil {
-		return nil
-	}
-	return c.Name
-}
-
-func (c *CustomerState) GetBillingAddress() *Address {
-	if c == nil {
-		return nil
-	}
-	return c.BillingAddress
-}
-
-func (c *CustomerState) GetTaxID() []*CustomerStateTaxID {
-	if c == nil {
-		return nil
-	}
-	return c.TaxID
-}
-
-func (c *CustomerState) GetLocale() *string {
-	if c == nil {
-		return nil
-	}
-	return c.Locale
-}
-
-func (c *CustomerState) GetOrganizationID() string {
-	if c == nil {
-		return ""
-	}
-	return c.OrganizationID
-}
-
-func (c *CustomerState) GetDeletedAt() *time.Time {
-	if c == nil {
-		return nil
-	}
-	return c.DeletedAt
-}
-
-func (c *CustomerState) GetActiveSubscriptions() []CustomerStateSubscription {
-	if c == nil {
-		return []CustomerStateSubscription{}
-	}
-	return c.ActiveSubscriptions
-}
-
-func (c *CustomerState) GetGrantedBenefits() []CustomerStateBenefitGrant {
-	if c == nil {
-		return []CustomerStateBenefitGrant{}
-	}
-	return c.GrantedBenefits
-}
-
-func (c *CustomerState) GetActiveMeters() []CustomerStateMeter {
-	if c == nil {
-		return []CustomerStateMeter{}
-	}
-	return c.ActiveMeters
-}
-
-func (c *CustomerState) GetAvatarURL() string {
-	if c == nil {
-		return ""
-	}
-	return c.AvatarURL
+	return nil, errors.New("could not marshal union type CustomerState: all fields are null")
 }

@@ -25,3 +25,17 @@ func (c *CustomersCreateResponse) GetCustomer() *components.Customer {
 	}
 	return c.Customer
 }
+
+func (c *CustomersCreateResponse) GetCustomerIndividual() *components.CustomerIndividual {
+	if v := c.GetCustomer(); v != nil {
+		return v.CustomerIndividual
+	}
+	return nil
+}
+
+func (c *CustomersCreateResponse) GetCustomerTeam() *components.CustomerTeam {
+	if v := c.GetCustomer(); v != nil {
+		return v.CustomerTeam
+	}
+	return nil
+}

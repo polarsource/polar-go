@@ -2,19 +2,19 @@
 
 package components
 
-type ListResource struct {
+type ListResourcePayment struct {
 	Items      []Payment  `json:"items"`
 	Pagination Pagination `json:"pagination"`
 }
 
-func (l *ListResource) GetItems() []Payment {
+func (l *ListResourcePayment) GetItems() []Payment {
 	if l == nil {
 		return []Payment{}
 	}
 	return l.Items
 }
 
-func (l *ListResource) GetPagination() Pagination {
+func (l *ListResourcePayment) GetPagination() Pagination {
 	if l == nil {
 		return Pagination{}
 	}

@@ -86,6 +86,20 @@ func (m *MeterCreditEvent) GetCustomer() *Customer {
 	return m.Customer
 }
 
+func (m *MeterCreditEvent) GetCustomerIndividual() *CustomerIndividual {
+	if v := m.GetCustomer(); v != nil {
+		return v.CustomerIndividual
+	}
+	return nil
+}
+
+func (m *MeterCreditEvent) GetCustomerTeam() *CustomerTeam {
+	if v := m.GetCustomer(); v != nil {
+		return v.CustomerTeam
+	}
+	return nil
+}
+
 func (m *MeterCreditEvent) GetExternalCustomerID() *string {
 	if m == nil {
 		return nil

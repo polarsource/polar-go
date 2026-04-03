@@ -46,7 +46,13 @@ func main() {
         log.Fatal(err)
     }
     if res.CustomerSession != nil {
-        // handle response
+        switch res.CustomerSession.Customer.Type {
+            case components.CustomerUnionTypeIndividual:
+                // res.CustomerSession.Customer.CustomerIndividual is populated
+            case components.CustomerUnionTypeTeam:
+                // res.CustomerSession.Customer.CustomerTeam is populated
+        }
+
     }
 }
 ```

@@ -8,7 +8,7 @@ import (
 
 type CustomerUpdatedMetadata struct {
 	CustomerID         string                `json:"customer_id"`
-	CustomerEmail      string                `json:"customer_email"`
+	CustomerEmail      *string               `json:"customer_email"`
 	CustomerName       *string               `json:"customer_name"`
 	CustomerExternalID *string               `json:"customer_external_id"`
 	UpdatedFields      CustomerUpdatedFields `json:"updated_fields"`
@@ -19,7 +19,7 @@ func (c CustomerUpdatedMetadata) MarshalJSON() ([]byte, error) {
 }
 
 func (c *CustomerUpdatedMetadata) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &c, "", false, []string{"customer_id", "customer_email", "updated_fields"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &c, "", false, []string{"customer_id", "updated_fields"}); err != nil {
 		return err
 	}
 	return nil
@@ -32,9 +32,9 @@ func (c *CustomerUpdatedMetadata) GetCustomerID() string {
 	return c.CustomerID
 }
 
-func (c *CustomerUpdatedMetadata) GetCustomerEmail() string {
+func (c *CustomerUpdatedMetadata) GetCustomerEmail() *string {
 	if c == nil {
-		return ""
+		return nil
 	}
 	return c.CustomerEmail
 }

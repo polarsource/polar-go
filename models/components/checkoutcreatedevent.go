@@ -86,6 +86,20 @@ func (c *CheckoutCreatedEvent) GetCustomer() *Customer {
 	return c.Customer
 }
 
+func (c *CheckoutCreatedEvent) GetCustomerIndividual() *CustomerIndividual {
+	if v := c.GetCustomer(); v != nil {
+		return v.CustomerIndividual
+	}
+	return nil
+}
+
+func (c *CheckoutCreatedEvent) GetCustomerTeam() *CustomerTeam {
+	if v := c.GetCustomer(); v != nil {
+		return v.CustomerTeam
+	}
+	return nil
+}
+
 func (c *CheckoutCreatedEvent) GetExternalCustomerID() *string {
 	if c == nil {
 		return nil

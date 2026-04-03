@@ -24,8 +24,7 @@ type CustomerMeter struct {
 	// The number of credited units.
 	CreditedUnits int64 `json:"credited_units"`
 	// The balance of the meter, i.e. the difference between credited and consumed units.
-	Balance float64 `json:"balance"`
-	// A customer in an organization.
+	Balance  float64  `json:"balance"`
 	Customer Customer `json:"customer"`
 	Meter    Meter    `json:"meter"`
 }
@@ -102,6 +101,14 @@ func (c *CustomerMeter) GetCustomer() Customer {
 		return Customer{}
 	}
 	return c.Customer
+}
+
+func (c *CustomerMeter) GetCustomerIndividual() *CustomerIndividual {
+	return c.GetCustomer().CustomerIndividual
+}
+
+func (c *CustomerMeter) GetCustomerTeam() *CustomerTeam {
+	return c.GetCustomer().CustomerTeam
 }
 
 func (c *CustomerMeter) GetMeter() Meter {

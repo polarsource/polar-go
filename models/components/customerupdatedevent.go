@@ -86,6 +86,20 @@ func (c *CustomerUpdatedEvent) GetCustomer() *Customer {
 	return c.Customer
 }
 
+func (c *CustomerUpdatedEvent) GetCustomerIndividual() *CustomerIndividual {
+	if v := c.GetCustomer(); v != nil {
+		return v.CustomerIndividual
+	}
+	return nil
+}
+
+func (c *CustomerUpdatedEvent) GetCustomerTeam() *CustomerTeam {
+	if v := c.GetCustomer(); v != nil {
+		return v.CustomerTeam
+	}
+	return nil
+}
+
 func (c *CustomerUpdatedEvent) GetExternalCustomerID() *string {
 	if c == nil {
 		return nil
