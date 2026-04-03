@@ -158,7 +158,7 @@ actions:
       "x-codeSamples":
         - "lang": "go"
           "label": "Go (SDK)"
-          "source": "package main\n\nimport(\n\t\"context\"\n\t\"os\"\n\tpolargo \"github.com/polarsource/polar-go\"\n\t\"log\"\n)\n\nfunc main() {\n    ctx := context.Background()\n\n    s := polargo.New(\n        polargo.WithSecurity(os.Getenv(\"POLAR_ACCESS_TOKEN\")),\n    )\n\n    res, err := s.CustomerMeters.Get(ctx, \"<value>\")\n    if err != nil {\n        log.Fatal(err)\n    }\n    if res.CustomerMeter != nil {\n        // handle response\n    }\n}"
+          "source": "package main\n\nimport(\n\t\"context\"\n\t\"os\"\n\tpolargo \"github.com/polarsource/polar-go\"\n\t\"log\"\n\t\"github.com/polarsource/polar-go/models/components\"\n)\n\nfunc main() {\n    ctx := context.Background()\n\n    s := polargo.New(\n        polargo.WithSecurity(os.Getenv(\"POLAR_ACCESS_TOKEN\")),\n    )\n\n    res, err := s.CustomerMeters.Get(ctx, \"<value>\")\n    if err != nil {\n        log.Fatal(err)\n    }\n    if res.CustomerMeter != nil {\n        switch res.CustomerMeter.Customer.Type {\n            case components.CustomerUnionTypeIndividual:\n                // res.CustomerMeter.Customer.CustomerIndividual is populated\n            case components.CustomerUnionTypeTeam:\n                // res.CustomerMeter.Customer.CustomerTeam is populated\n        }\n\n    }\n}"
   - target: $["paths"]["/v1/customer-portal/benefit-grants/"]["get"]
     update:
       "x-codeSamples":
@@ -452,7 +452,7 @@ actions:
       "x-codeSamples":
         - "lang": "go"
           "label": "Go (SDK)"
-          "source": "package main\n\nimport(\n\t\"context\"\n\t\"os\"\n\tpolargo \"github.com/polarsource/polar-go\"\n\t\"github.com/polarsource/polar-go/models/components\"\n\t\"github.com/polarsource/polar-go/models/operations\"\n\t\"log\"\n)\n\nfunc main() {\n    ctx := context.Background()\n\n    s := polargo.New(\n        polargo.WithSecurity(os.Getenv(\"POLAR_ACCESS_TOKEN\")),\n    )\n\n    res, err := s.CustomerSessions.Create(ctx, operations.CreateCustomerSessionsCreateCustomerSessionCreateCustomerSessionCustomerExternalIDCreate(\n        components.CustomerSessionCustomerExternalIDCreate{\n            ExternalCustomerID: \"<id>\",\n        },\n    ))\n    if err != nil {\n        log.Fatal(err)\n    }\n    if res.CustomerSession != nil {\n        // handle response\n    }\n}"
+          "source": "package main\n\nimport(\n\t\"context\"\n\t\"os\"\n\tpolargo \"github.com/polarsource/polar-go\"\n\t\"github.com/polarsource/polar-go/models/components\"\n\t\"github.com/polarsource/polar-go/models/operations\"\n\t\"log\"\n)\n\nfunc main() {\n    ctx := context.Background()\n\n    s := polargo.New(\n        polargo.WithSecurity(os.Getenv(\"POLAR_ACCESS_TOKEN\")),\n    )\n\n    res, err := s.CustomerSessions.Create(ctx, operations.CreateCustomerSessionsCreateCustomerSessionCreateCustomerSessionCustomerExternalIDCreate(\n        components.CustomerSessionCustomerExternalIDCreate{\n            ExternalCustomerID: \"<id>\",\n        },\n    ))\n    if err != nil {\n        log.Fatal(err)\n    }\n    if res.CustomerSession != nil {\n        switch res.CustomerSession.Customer.Type {\n            case components.CustomerUnionTypeIndividual:\n                // res.CustomerSession.Customer.CustomerIndividual is populated\n            case components.CustomerUnionTypeTeam:\n                // res.CustomerSession.Customer.CustomerTeam is populated\n        }\n\n    }\n}"
   - target: $["paths"]["/v1/customers/"]["get"]
     update:
       "x-codeSamples":
@@ -464,7 +464,7 @@ actions:
       "x-codeSamples":
         - "lang": "go"
           "label": "Go (SDK)"
-          "source": "package main\n\nimport(\n\t\"context\"\n\t\"os\"\n\tpolargo \"github.com/polarsource/polar-go\"\n\t\"github.com/polarsource/polar-go/models/components\"\n\t\"log\"\n)\n\nfunc main() {\n    ctx := context.Background()\n\n    s := polargo.New(\n        polargo.WithSecurity(os.Getenv(\"POLAR_ACCESS_TOKEN\")),\n    )\n\n    res, err := s.Customers.Create(ctx, components.CustomerCreate{\n        ExternalID: polargo.Pointer(\"usr_1337\"),\n        Email: \"customer@example.com\",\n        Name: polargo.Pointer(\"John Doe\"),\n        BillingAddress: &components.AddressInput{\n            Country: components.AddressInputCountryAlpha2InputUs,\n        },\n        Locale: polargo.Pointer(\"en\"),\n        Type: components.CustomerTypeIndividual.ToPointer(),\n        OrganizationID: polargo.Pointer(\"1dbfc517-0bbf-4301-9ba8-555ca42b9737\"),\n        Owner: &components.OwnerCreate{\n            Email: polargo.Pointer(\"member@example.com\"),\n            Name: polargo.Pointer(\"Jane Doe\"),\n            ExternalID: polargo.Pointer(\"usr_1337\"),\n        },\n    })\n    if err != nil {\n        log.Fatal(err)\n    }\n    if res.Customer != nil {\n        // handle response\n    }\n}"
+          "source": "package main\n\nimport(\n\t\"context\"\n\t\"os\"\n\tpolargo \"github.com/polarsource/polar-go\"\n\t\"github.com/polarsource/polar-go/models/components\"\n\t\"log\"\n)\n\nfunc main() {\n    ctx := context.Background()\n\n    s := polargo.New(\n        polargo.WithSecurity(os.Getenv(\"POLAR_ACCESS_TOKEN\")),\n    )\n\n    res, err := s.Customers.Create(ctx, components.CreateCustomerCreateCustomerIndividualCreate(\n        components.CustomerIndividualCreate{\n            ExternalID: polargo.Pointer(\"usr_1337\"),\n            Name: polargo.Pointer(\"John Doe\"),\n            BillingAddress: &components.AddressInput{\n                Country: components.AddressInputCountryAlpha2InputUs,\n            },\n            Locale: polargo.Pointer(\"en\"),\n            OrganizationID: polargo.Pointer(\"1dbfc517-0bbf-4301-9ba8-555ca42b9737\"),\n            Owner: &components.MemberOwnerCreate{\n                Email: \"member@example.com\",\n                Name: polargo.Pointer(\"Jane Doe\"),\n                ExternalID: polargo.Pointer(\"usr_1337\"),\n            },\n            Email: \"customer@example.com\",\n        },\n    ))\n    if err != nil {\n        log.Fatal(err)\n    }\n    if res.Customer != nil {\n        switch res.Customer.Type {\n            case components.CustomerUnionTypeIndividual:\n                // res.Customer.CustomerIndividual is populated\n            case components.CustomerUnionTypeTeam:\n                // res.Customer.CustomerTeam is populated\n        }\n\n    }\n}"
   - target: $["paths"]["/v1/customers/export"]["get"]
     update:
       "x-codeSamples":
@@ -482,19 +482,19 @@ actions:
       "x-codeSamples":
         - "lang": "go"
           "label": "Go (SDK)"
-          "source": "package main\n\nimport(\n\t\"context\"\n\t\"os\"\n\tpolargo \"github.com/polarsource/polar-go\"\n\t\"log\"\n)\n\nfunc main() {\n    ctx := context.Background()\n\n    s := polargo.New(\n        polargo.WithSecurity(os.Getenv(\"POLAR_ACCESS_TOKEN\")),\n    )\n\n    res, err := s.Customers.GetExternal(ctx, \"<id>\")\n    if err != nil {\n        log.Fatal(err)\n    }\n    if res.Customer != nil {\n        // handle response\n    }\n}"
+          "source": "package main\n\nimport(\n\t\"context\"\n\t\"os\"\n\tpolargo \"github.com/polarsource/polar-go\"\n\t\"log\"\n\t\"github.com/polarsource/polar-go/models/components\"\n)\n\nfunc main() {\n    ctx := context.Background()\n\n    s := polargo.New(\n        polargo.WithSecurity(os.Getenv(\"POLAR_ACCESS_TOKEN\")),\n    )\n\n    res, err := s.Customers.GetExternal(ctx, \"<id>\")\n    if err != nil {\n        log.Fatal(err)\n    }\n    if res.Customer != nil {\n        switch res.Customer.Type {\n            case components.CustomerUnionTypeIndividual:\n                // res.Customer.CustomerIndividual is populated\n            case components.CustomerUnionTypeTeam:\n                // res.Customer.CustomerTeam is populated\n        }\n\n    }\n}"
   - target: $["paths"]["/v1/customers/external/{external_id}"]["patch"]
     update:
       "x-codeSamples":
         - "lang": "go"
           "label": "Go (SDK)"
-          "source": "package main\n\nimport(\n\t\"context\"\n\t\"os\"\n\tpolargo \"github.com/polarsource/polar-go\"\n\t\"github.com/polarsource/polar-go/models/components\"\n\t\"log\"\n)\n\nfunc main() {\n    ctx := context.Background()\n\n    s := polargo.New(\n        polargo.WithSecurity(os.Getenv(\"POLAR_ACCESS_TOKEN\")),\n    )\n\n    res, err := s.Customers.UpdateExternal(ctx, \"<id>\", components.CustomerUpdateExternalID{\n        Email: polargo.Pointer(\"customer@example.com\"),\n        Name: polargo.Pointer(\"John Doe\"),\n        BillingAddress: &components.AddressInput{\n            Country: components.AddressInputCountryAlpha2InputUs,\n        },\n        Locale: polargo.Pointer(\"en\"),\n    })\n    if err != nil {\n        log.Fatal(err)\n    }\n    if res.Customer != nil {\n        // handle response\n    }\n}"
+          "source": "package main\n\nimport(\n\t\"context\"\n\t\"os\"\n\tpolargo \"github.com/polarsource/polar-go\"\n\t\"github.com/polarsource/polar-go/models/components\"\n\t\"log\"\n)\n\nfunc main() {\n    ctx := context.Background()\n\n    s := polargo.New(\n        polargo.WithSecurity(os.Getenv(\"POLAR_ACCESS_TOKEN\")),\n    )\n\n    res, err := s.Customers.UpdateExternal(ctx, \"<id>\", components.CustomerUpdateExternalID{\n        Email: polargo.Pointer(\"customer@example.com\"),\n        Name: polargo.Pointer(\"John Doe\"),\n        BillingAddress: &components.AddressInput{\n            Country: components.AddressInputCountryAlpha2InputUs,\n        },\n        Locale: polargo.Pointer(\"en\"),\n    })\n    if err != nil {\n        log.Fatal(err)\n    }\n    if res.Customer != nil {\n        switch res.Customer.Type {\n            case components.CustomerUnionTypeIndividual:\n                // res.Customer.CustomerIndividual is populated\n            case components.CustomerUnionTypeTeam:\n                // res.Customer.CustomerTeam is populated\n        }\n\n    }\n}"
   - target: $["paths"]["/v1/customers/external/{external_id}/state"]["get"]
     update:
       "x-codeSamples":
         - "lang": "go"
           "label": "Go (SDK)"
-          "source": "package main\n\nimport(\n\t\"context\"\n\t\"os\"\n\tpolargo \"github.com/polarsource/polar-go\"\n\t\"log\"\n)\n\nfunc main() {\n    ctx := context.Background()\n\n    s := polargo.New(\n        polargo.WithSecurity(os.Getenv(\"POLAR_ACCESS_TOKEN\")),\n    )\n\n    res, err := s.Customers.GetStateExternal(ctx, \"<id>\")\n    if err != nil {\n        log.Fatal(err)\n    }\n    if res.CustomerState != nil {\n        // handle response\n    }\n}"
+          "source": "package main\n\nimport(\n\t\"context\"\n\t\"os\"\n\tpolargo \"github.com/polarsource/polar-go\"\n\t\"log\"\n\t\"github.com/polarsource/polar-go/models/components\"\n)\n\nfunc main() {\n    ctx := context.Background()\n\n    s := polargo.New(\n        polargo.WithSecurity(os.Getenv(\"POLAR_ACCESS_TOKEN\")),\n    )\n\n    res, err := s.Customers.GetStateExternal(ctx, \"<id>\")\n    if err != nil {\n        log.Fatal(err)\n    }\n    if res.CustomerState != nil {\n        switch res.CustomerState.Type {\n            case components.CustomerStateTypeIndividual:\n                // res.CustomerState.CustomerStateIndividual is populated\n            case components.CustomerStateTypeTeam:\n                // res.CustomerState.CustomerStateTeam is populated\n        }\n\n    }\n}"
   - target: $["paths"]["/v1/customers/{id}"]["delete"]
     update:
       "x-codeSamples":
@@ -506,19 +506,19 @@ actions:
       "x-codeSamples":
         - "lang": "go"
           "label": "Go (SDK)"
-          "source": "package main\n\nimport(\n\t\"context\"\n\t\"os\"\n\tpolargo \"github.com/polarsource/polar-go\"\n\t\"log\"\n)\n\nfunc main() {\n    ctx := context.Background()\n\n    s := polargo.New(\n        polargo.WithSecurity(os.Getenv(\"POLAR_ACCESS_TOKEN\")),\n    )\n\n    res, err := s.Customers.Get(ctx, \"<value>\")\n    if err != nil {\n        log.Fatal(err)\n    }\n    if res.Customer != nil {\n        // handle response\n    }\n}"
+          "source": "package main\n\nimport(\n\t\"context\"\n\t\"os\"\n\tpolargo \"github.com/polarsource/polar-go\"\n\t\"log\"\n\t\"github.com/polarsource/polar-go/models/components\"\n)\n\nfunc main() {\n    ctx := context.Background()\n\n    s := polargo.New(\n        polargo.WithSecurity(os.Getenv(\"POLAR_ACCESS_TOKEN\")),\n    )\n\n    res, err := s.Customers.Get(ctx, \"<value>\")\n    if err != nil {\n        log.Fatal(err)\n    }\n    if res.Customer != nil {\n        switch res.Customer.Type {\n            case components.CustomerUnionTypeIndividual:\n                // res.Customer.CustomerIndividual is populated\n            case components.CustomerUnionTypeTeam:\n                // res.Customer.CustomerTeam is populated\n        }\n\n    }\n}"
   - target: $["paths"]["/v1/customers/{id}"]["patch"]
     update:
       "x-codeSamples":
         - "lang": "go"
           "label": "Go (SDK)"
-          "source": "package main\n\nimport(\n\t\"context\"\n\t\"os\"\n\tpolargo \"github.com/polarsource/polar-go\"\n\t\"github.com/polarsource/polar-go/models/components\"\n\t\"log\"\n)\n\nfunc main() {\n    ctx := context.Background()\n\n    s := polargo.New(\n        polargo.WithSecurity(os.Getenv(\"POLAR_ACCESS_TOKEN\")),\n    )\n\n    res, err := s.Customers.Update(ctx, \"<value>\", components.CustomerUpdate{\n        Email: polargo.Pointer(\"customer@example.com\"),\n        Name: polargo.Pointer(\"John Doe\"),\n        BillingAddress: &components.AddressInput{\n            Country: components.AddressInputCountryAlpha2InputUs,\n        },\n        Locale: polargo.Pointer(\"en\"),\n        ExternalID: polargo.Pointer(\"usr_1337\"),\n        Type: components.CustomerTypeIndividual.ToPointer(),\n    })\n    if err != nil {\n        log.Fatal(err)\n    }\n    if res.Customer != nil {\n        // handle response\n    }\n}"
+          "source": "package main\n\nimport(\n\t\"context\"\n\t\"os\"\n\tpolargo \"github.com/polarsource/polar-go\"\n\t\"github.com/polarsource/polar-go/models/components\"\n\t\"log\"\n)\n\nfunc main() {\n    ctx := context.Background()\n\n    s := polargo.New(\n        polargo.WithSecurity(os.Getenv(\"POLAR_ACCESS_TOKEN\")),\n    )\n\n    res, err := s.Customers.Update(ctx, \"<value>\", components.CustomerUpdate{\n        Email: polargo.Pointer(\"customer@example.com\"),\n        Name: polargo.Pointer(\"John Doe\"),\n        BillingAddress: &components.AddressInput{\n            Country: components.AddressInputCountryAlpha2InputUs,\n        },\n        Locale: polargo.Pointer(\"en\"),\n        ExternalID: polargo.Pointer(\"usr_1337\"),\n    })\n    if err != nil {\n        log.Fatal(err)\n    }\n    if res.Customer != nil {\n        switch res.Customer.Type {\n            case components.CustomerUnionTypeIndividual:\n                // res.Customer.CustomerIndividual is populated\n            case components.CustomerUnionTypeTeam:\n                // res.Customer.CustomerTeam is populated\n        }\n\n    }\n}"
   - target: $["paths"]["/v1/customers/{id}/state"]["get"]
     update:
       "x-codeSamples":
         - "lang": "go"
           "label": "Go (SDK)"
-          "source": "package main\n\nimport(\n\t\"context\"\n\t\"os\"\n\tpolargo \"github.com/polarsource/polar-go\"\n\t\"log\"\n)\n\nfunc main() {\n    ctx := context.Background()\n\n    s := polargo.New(\n        polargo.WithSecurity(os.Getenv(\"POLAR_ACCESS_TOKEN\")),\n    )\n\n    res, err := s.Customers.GetState(ctx, \"<value>\")\n    if err != nil {\n        log.Fatal(err)\n    }\n    if res.CustomerState != nil {\n        // handle response\n    }\n}"
+          "source": "package main\n\nimport(\n\t\"context\"\n\t\"os\"\n\tpolargo \"github.com/polarsource/polar-go\"\n\t\"log\"\n\t\"github.com/polarsource/polar-go/models/components\"\n)\n\nfunc main() {\n    ctx := context.Background()\n\n    s := polargo.New(\n        polargo.WithSecurity(os.Getenv(\"POLAR_ACCESS_TOKEN\")),\n    )\n\n    res, err := s.Customers.GetState(ctx, \"<value>\")\n    if err != nil {\n        log.Fatal(err)\n    }\n    if res.CustomerState != nil {\n        switch res.CustomerState.Type {\n            case components.CustomerStateTypeIndividual:\n                // res.CustomerState.CustomerStateIndividual is populated\n            case components.CustomerStateTypeTeam:\n                // res.CustomerState.CustomerStateTeam is populated\n        }\n\n    }\n}"
   - target: $["paths"]["/v1/discounts/"]["get"]
     update:
       "x-codeSamples":
@@ -735,6 +735,36 @@ actions:
         - "lang": "go"
           "label": "Go (SDK)"
           "source": "package main\n\nimport(\n\t\"context\"\n\t\"os\"\n\tpolargo \"github.com/polarsource/polar-go\"\n\t\"github.com/polarsource/polar-go/types\"\n\t\"github.com/polarsource/polar-go/models/components\"\n\t\"github.com/polarsource/polar-go/models/operations\"\n\t\"log\"\n)\n\nfunc main() {\n    ctx := context.Background()\n\n    s := polargo.New(\n        polargo.WithSecurity(os.Getenv(\"POLAR_ACCESS_TOKEN\")),\n    )\n\n    res, err := s.Metrics.Get(ctx, operations.MetricsGetRequest{\n        StartDate: types.MustDateFromString(\"2025-03-14\"),\n        EndDate: types.MustDateFromString(\"2025-03-18\"),\n        Interval: components.TimeIntervalHour,\n        OrganizationID: polargo.Pointer(operations.CreateMetricsGetQueryParamOrganizationIDFilterStr(\n            \"1dbfc517-0bbf-4301-9ba8-555ca42b9737\",\n        )),\n    })\n    if err != nil {\n        log.Fatal(err)\n    }\n    if res.MetricsResponse != nil {\n        // handle response\n    }\n}"
+  - target: $["paths"]["/v1/metrics/dashboards"]["get"]
+    update:
+      "x-codeSamples":
+        - "lang": "go"
+          "label": "Go (SDK)"
+          "source": "package main\n\nimport(\n\t\"context\"\n\t\"os\"\n\tpolargo \"github.com/polarsource/polar-go\"\n\t\"github.com/polarsource/polar-go/models/operations\"\n\t\"log\"\n)\n\nfunc main() {\n    ctx := context.Background()\n\n    s := polargo.New(\n        polargo.WithSecurity(os.Getenv(\"POLAR_ACCESS_TOKEN\")),\n    )\n\n    res, err := s.Metrics.ListDashboards(ctx, polargo.Pointer(operations.CreateMetricsListDashboardsQueryParamOrganizationIDFilterStr(\n        \"1dbfc517-0bbf-4301-9ba8-555ca42b9737\",\n    )))\n    if err != nil {\n        log.Fatal(err)\n    }\n    if res.ResponseMetricsListDashboards != nil {\n        // handle response\n    }\n}"
+  - target: $["paths"]["/v1/metrics/dashboards"]["post"]
+    update:
+      "x-codeSamples":
+        - "lang": "go"
+          "label": "Go (SDK)"
+          "source": "package main\n\nimport(\n\t\"context\"\n\t\"os\"\n\tpolargo \"github.com/polarsource/polar-go\"\n\t\"github.com/polarsource/polar-go/models/components\"\n\t\"log\"\n)\n\nfunc main() {\n    ctx := context.Background()\n\n    s := polargo.New(\n        polargo.WithSecurity(os.Getenv(\"POLAR_ACCESS_TOKEN\")),\n    )\n\n    res, err := s.Metrics.CreateDashboard(ctx, components.MetricDashboardCreate{\n        Name: \"<value>\",\n        OrganizationID: polargo.Pointer(\"1dbfc517-0bbf-4301-9ba8-555ca42b9737\"),\n    })\n    if err != nil {\n        log.Fatal(err)\n    }\n    if res.MetricDashboardSchema != nil {\n        // handle response\n    }\n}"
+  - target: $["paths"]["/v1/metrics/dashboards/{id}"]["delete"]
+    update:
+      "x-codeSamples":
+        - "lang": "go"
+          "label": "Go (SDK)"
+          "source": "package main\n\nimport(\n\t\"context\"\n\t\"os\"\n\tpolargo \"github.com/polarsource/polar-go\"\n\t\"log\"\n)\n\nfunc main() {\n    ctx := context.Background()\n\n    s := polargo.New(\n        polargo.WithSecurity(os.Getenv(\"POLAR_ACCESS_TOKEN\")),\n    )\n\n    res, err := s.Metrics.DeleteDashboard(ctx, \"<value>\")\n    if err != nil {\n        log.Fatal(err)\n    }\n    if res != nil {\n        // handle response\n    }\n}"
+  - target: $["paths"]["/v1/metrics/dashboards/{id}"]["get"]
+    update:
+      "x-codeSamples":
+        - "lang": "go"
+          "label": "Go (SDK)"
+          "source": "package main\n\nimport(\n\t\"context\"\n\t\"os\"\n\tpolargo \"github.com/polarsource/polar-go\"\n\t\"log\"\n)\n\nfunc main() {\n    ctx := context.Background()\n\n    s := polargo.New(\n        polargo.WithSecurity(os.Getenv(\"POLAR_ACCESS_TOKEN\")),\n    )\n\n    res, err := s.Metrics.GetDashboard(ctx, \"<value>\")\n    if err != nil {\n        log.Fatal(err)\n    }\n    if res.MetricDashboardSchema != nil {\n        // handle response\n    }\n}"
+  - target: $["paths"]["/v1/metrics/dashboards/{id}"]["patch"]
+    update:
+      "x-codeSamples":
+        - "lang": "go"
+          "label": "Go (SDK)"
+          "source": "package main\n\nimport(\n\t\"context\"\n\t\"os\"\n\tpolargo \"github.com/polarsource/polar-go\"\n\t\"github.com/polarsource/polar-go/models/components\"\n\t\"log\"\n)\n\nfunc main() {\n    ctx := context.Background()\n\n    s := polargo.New(\n        polargo.WithSecurity(os.Getenv(\"POLAR_ACCESS_TOKEN\")),\n    )\n\n    res, err := s.Metrics.UpdateDashboard(ctx, \"<value>\", components.MetricDashboardUpdate{})\n    if err != nil {\n        log.Fatal(err)\n    }\n    if res.MetricDashboardSchema != nil {\n        // handle response\n    }\n}"
   - target: $["paths"]["/v1/metrics/limits"]["get"]
     update:
       "x-codeSamples":
@@ -884,7 +914,7 @@ actions:
       "x-codeSamples":
         - "lang": "go"
           "label": "Go (SDK)"
-          "source": "package main\n\nimport(\n\t\"context\"\n\t\"os\"\n\tpolargo \"github.com/polarsource/polar-go\"\n\t\"github.com/polarsource/polar-go/models/operations\"\n\t\"log\"\n)\n\nfunc main() {\n    ctx := context.Background()\n\n    s := polargo.New(\n        polargo.WithSecurity(os.Getenv(\"POLAR_ACCESS_TOKEN\")),\n    )\n\n    res, err := s.Payments.List(ctx, operations.PaymentsListRequest{\n        OrganizationID: polargo.Pointer(operations.CreatePaymentsListQueryParamOrganizationIDFilterStr(\n            \"1dbfc517-0bbf-4301-9ba8-555ca42b9737\",\n        )),\n    })\n    if err != nil {\n        log.Fatal(err)\n    }\n    if res.ListResource != nil {\n        for {\n            // handle items\n\n            res, err = res.Next()\n\n            if err != nil {\n                // handle error\n            }\n\n            if res == nil {\n                break\n            }\n        }\n    }\n}"
+          "source": "package main\n\nimport(\n\t\"context\"\n\t\"os\"\n\tpolargo \"github.com/polarsource/polar-go\"\n\t\"github.com/polarsource/polar-go/models/operations\"\n\t\"log\"\n)\n\nfunc main() {\n    ctx := context.Background()\n\n    s := polargo.New(\n        polargo.WithSecurity(os.Getenv(\"POLAR_ACCESS_TOKEN\")),\n    )\n\n    res, err := s.Payments.List(ctx, operations.PaymentsListRequest{\n        OrganizationID: polargo.Pointer(operations.CreatePaymentsListQueryParamOrganizationIDFilterStr(\n            \"1dbfc517-0bbf-4301-9ba8-555ca42b9737\",\n        )),\n    })\n    if err != nil {\n        log.Fatal(err)\n    }\n    if res.ListResourcePayment != nil {\n        for {\n            // handle items\n\n            res, err = res.Next()\n\n            if err != nil {\n                // handle error\n            }\n\n            if res == nil {\n                break\n            }\n        }\n    }\n}"
   - target: $["paths"]["/v1/payments/{id}"]["get"]
     update:
       "x-codeSamples":

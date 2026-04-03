@@ -86,6 +86,20 @@ func (b *BalanceDisputeReversalEvent) GetCustomer() *Customer {
 	return b.Customer
 }
 
+func (b *BalanceDisputeReversalEvent) GetCustomerIndividual() *CustomerIndividual {
+	if v := b.GetCustomer(); v != nil {
+		return v.CustomerIndividual
+	}
+	return nil
+}
+
+func (b *BalanceDisputeReversalEvent) GetCustomerTeam() *CustomerTeam {
+	if v := b.GetCustomer(); v != nil {
+		return v.CustomerTeam
+	}
+	return nil
+}
+
 func (b *BalanceDisputeReversalEvent) GetExternalCustomerID() *string {
 	if b == nil {
 		return nil

@@ -45,3 +45,17 @@ func (c *CustomersUpdateExternalResponse) GetCustomer() *components.Customer {
 	}
 	return c.Customer
 }
+
+func (c *CustomersUpdateExternalResponse) GetCustomerIndividual() *components.CustomerIndividual {
+	if v := c.GetCustomer(); v != nil {
+		return v.CustomerIndividual
+	}
+	return nil
+}
+
+func (c *CustomersUpdateExternalResponse) GetCustomerTeam() *components.CustomerTeam {
+	if v := c.GetCustomer(); v != nil {
+		return v.CustomerTeam
+	}
+	return nil
+}

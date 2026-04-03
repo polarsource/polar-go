@@ -8,7 +8,7 @@ import (
 
 type CustomerCreatedMetadata struct {
 	CustomerID         string  `json:"customer_id"`
-	CustomerEmail      string  `json:"customer_email"`
+	CustomerEmail      *string `json:"customer_email"`
 	CustomerName       *string `json:"customer_name"`
 	CustomerExternalID *string `json:"customer_external_id"`
 }
@@ -18,7 +18,7 @@ func (c CustomerCreatedMetadata) MarshalJSON() ([]byte, error) {
 }
 
 func (c *CustomerCreatedMetadata) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &c, "", false, []string{"customer_id", "customer_email"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &c, "", false, []string{"customer_id"}); err != nil {
 		return err
 	}
 	return nil
@@ -31,9 +31,9 @@ func (c *CustomerCreatedMetadata) GetCustomerID() string {
 	return c.CustomerID
 }
 
-func (c *CustomerCreatedMetadata) GetCustomerEmail() string {
+func (c *CustomerCreatedMetadata) GetCustomerEmail() *string {
 	if c == nil {
-		return ""
+		return nil
 	}
 	return c.CustomerEmail
 }

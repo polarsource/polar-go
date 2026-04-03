@@ -115,27 +115,34 @@ func main() {
         polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )
 
-    res, err := s.Customers.Create(ctx, components.CustomerCreate{
-        ExternalID: polargo.Pointer("usr_1337"),
-        Email: "customer@example.com",
-        Name: polargo.Pointer("John Doe"),
-        BillingAddress: &components.AddressInput{
-            Country: components.AddressInputCountryAlpha2InputUs,
-        },
-        Locale: polargo.Pointer("en"),
-        Type: components.CustomerTypeIndividual.ToPointer(),
-        OrganizationID: polargo.Pointer("1dbfc517-0bbf-4301-9ba8-555ca42b9737"),
-        Owner: &components.OwnerCreate{
-            Email: polargo.Pointer("member@example.com"),
-            Name: polargo.Pointer("Jane Doe"),
+    res, err := s.Customers.Create(ctx, components.CreateCustomerCreateCustomerIndividualCreate(
+        components.CustomerIndividualCreate{
             ExternalID: polargo.Pointer("usr_1337"),
+            Name: polargo.Pointer("John Doe"),
+            BillingAddress: &components.AddressInput{
+                Country: components.AddressInputCountryAlpha2InputUs,
+            },
+            Locale: polargo.Pointer("en"),
+            OrganizationID: polargo.Pointer("1dbfc517-0bbf-4301-9ba8-555ca42b9737"),
+            Owner: &components.MemberOwnerCreate{
+                Email: "member@example.com",
+                Name: polargo.Pointer("Jane Doe"),
+                ExternalID: polargo.Pointer("usr_1337"),
+            },
+            Email: "customer@example.com",
         },
-    })
+    ))
     if err != nil {
         log.Fatal(err)
     }
     if res.Customer != nil {
-        // handle response
+        switch res.Customer.Type {
+            case components.CustomerUnionTypeIndividual:
+                // res.Customer.CustomerIndividual is populated
+            case components.CustomerUnionTypeTeam:
+                // res.Customer.CustomerTeam is populated
+        }
+
     }
 }
 ```
@@ -234,6 +241,7 @@ import(
 	"os"
 	polargo "github.com/polarsource/polar-go"
 	"log"
+	"github.com/polarsource/polar-go/models/components"
 )
 
 func main() {
@@ -248,7 +256,13 @@ func main() {
         log.Fatal(err)
     }
     if res.Customer != nil {
-        // handle response
+        switch res.Customer.Type {
+            case components.CustomerUnionTypeIndividual:
+                // res.Customer.CustomerIndividual is populated
+            case components.CustomerUnionTypeTeam:
+                // res.Customer.CustomerTeam is populated
+        }
+
     }
 }
 ```
@@ -379,13 +393,18 @@ func main() {
         },
         Locale: polargo.Pointer("en"),
         ExternalID: polargo.Pointer("usr_1337"),
-        Type: components.CustomerTypeIndividual.ToPointer(),
     })
     if err != nil {
         log.Fatal(err)
     }
     if res.Customer != nil {
-        // handle response
+        switch res.Customer.Type {
+            case components.CustomerUnionTypeIndividual:
+                // res.Customer.CustomerIndividual is populated
+            case components.CustomerUnionTypeTeam:
+                // res.Customer.CustomerTeam is populated
+        }
+
     }
 }
 ```
@@ -428,6 +447,7 @@ import(
 	"os"
 	polargo "github.com/polarsource/polar-go"
 	"log"
+	"github.com/polarsource/polar-go/models/components"
 )
 
 func main() {
@@ -442,7 +462,13 @@ func main() {
         log.Fatal(err)
     }
     if res.Customer != nil {
-        // handle response
+        switch res.Customer.Type {
+            case components.CustomerUnionTypeIndividual:
+                // res.Customer.CustomerIndividual is populated
+            case components.CustomerUnionTypeTeam:
+                // res.Customer.CustomerTeam is populated
+        }
+
     }
 }
 ```
@@ -567,7 +593,13 @@ func main() {
         log.Fatal(err)
     }
     if res.Customer != nil {
-        // handle response
+        switch res.Customer.Type {
+            case components.CustomerUnionTypeIndividual:
+                // res.Customer.CustomerIndividual is populated
+            case components.CustomerUnionTypeTeam:
+                // res.Customer.CustomerTeam is populated
+        }
+
     }
 }
 ```
@@ -616,6 +648,7 @@ import(
 	"os"
 	polargo "github.com/polarsource/polar-go"
 	"log"
+	"github.com/polarsource/polar-go/models/components"
 )
 
 func main() {
@@ -630,7 +663,13 @@ func main() {
         log.Fatal(err)
     }
     if res.CustomerState != nil {
-        // handle response
+        switch res.CustomerState.Type {
+            case components.CustomerStateTypeIndividual:
+                // res.CustomerState.CustomerStateIndividual is populated
+            case components.CustomerStateTypeTeam:
+                // res.CustomerState.CustomerStateTeam is populated
+        }
+
     }
 }
 ```
@@ -678,6 +717,7 @@ import(
 	"os"
 	polargo "github.com/polarsource/polar-go"
 	"log"
+	"github.com/polarsource/polar-go/models/components"
 )
 
 func main() {
@@ -692,7 +732,13 @@ func main() {
         log.Fatal(err)
     }
     if res.CustomerState != nil {
-        // handle response
+        switch res.CustomerState.Type {
+            case components.CustomerStateTypeIndividual:
+                // res.CustomerState.CustomerStateIndividual is populated
+            case components.CustomerStateTypeTeam:
+                // res.CustomerState.CustomerStateTeam is populated
+        }
+
     }
 }
 ```

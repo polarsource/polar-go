@@ -79,7 +79,7 @@ type CustomerPortalCustomer struct {
 	ModifiedAt *time.Time `json:"modified_at"`
 	// The ID of the object.
 	ID                     string                                `json:"id"`
-	Email                  string                                `json:"email"`
+	Email                  *string                               `json:"email"`
 	EmailVerified          bool                                  `json:"email_verified"`
 	Name                   *string                               `json:"name"`
 	BillingName            *string                               `json:"billing_name"`
@@ -95,7 +95,7 @@ func (c CustomerPortalCustomer) MarshalJSON() ([]byte, error) {
 }
 
 func (c *CustomerPortalCustomer) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &c, "", false, []string{"created_at", "id", "email", "email_verified", "oauth_accounts"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &c, "", false, []string{"created_at", "id", "email_verified", "oauth_accounts"}); err != nil {
 		return err
 	}
 	return nil
@@ -122,9 +122,9 @@ func (c *CustomerPortalCustomer) GetID() string {
 	return c.ID
 }
 
-func (c *CustomerPortalCustomer) GetEmail() string {
+func (c *CustomerPortalCustomer) GetEmail() *string {
 	if c == nil {
-		return ""
+		return nil
 	}
 	return c.Email
 }

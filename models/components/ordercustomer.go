@@ -83,11 +83,10 @@ type OrderCustomer struct {
 	// The ID of the customer in your system. This must be unique within the organization. Once set, it can't be updated.
 	ExternalID *string `json:"external_id,omitempty"`
 	// The email address of the customer. This must be unique within the organization.
-	Email string `json:"email"`
+	Email *string `json:"email,omitempty"`
 	// Whether the customer email address is verified. The address is automatically verified when the customer accesses the customer portal using their email address.
-	EmailVerified bool `json:"email_verified"`
-	// The type of customer: 'individual' for single users, 'team' for customers with multiple members. Legacy customers may have NULL type which is treated as 'individual'.
-	Type *CustomerType `json:"type,omitempty"`
+	EmailVerified bool         `json:"email_verified"`
+	Type          CustomerType `json:"type"`
 	// The name of the customer.
 	Name           *string               `json:"name"`
 	BillingAddress *Address              `json:"billing_address"`
@@ -146,9 +145,9 @@ func (o *OrderCustomer) GetExternalID() *string {
 	return o.ExternalID
 }
 
-func (o *OrderCustomer) GetEmail() string {
+func (o *OrderCustomer) GetEmail() *string {
 	if o == nil {
-		return ""
+		return nil
 	}
 	return o.Email
 }
@@ -160,9 +159,9 @@ func (o *OrderCustomer) GetEmailVerified() bool {
 	return o.EmailVerified
 }
 
-func (o *OrderCustomer) GetType() *CustomerType {
+func (o *OrderCustomer) GetType() CustomerType {
 	if o == nil {
-		return nil
+		return CustomerType("")
 	}
 	return o.Type
 }

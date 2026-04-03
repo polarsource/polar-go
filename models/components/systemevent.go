@@ -30,6 +30,7 @@ const (
 	SystemEventTypeMeterReset                       SystemEventType = "meter.reset"
 	SystemEventTypeOrderPaid                        SystemEventType = "order.paid"
 	SystemEventTypeOrderRefunded                    SystemEventType = "order.refunded"
+	SystemEventTypeOrderVoided                      SystemEventType = "order.voided"
 	SystemEventTypeSubscriptionBillingPeriodUpdated SystemEventType = "subscription.billing_period_updated"
 	SystemEventTypeSubscriptionCanceled             SystemEventType = "subscription.canceled"
 	SystemEventTypeSubscriptionCreated              SystemEventType = "subscription.created"
@@ -59,6 +60,7 @@ type SystemEvent struct {
 	SubscriptionBillingPeriodUpdatedEvent *SubscriptionBillingPeriodUpdatedEvent `queryParam:"inline" union:"member"`
 	OrderPaidEvent                        *OrderPaidEvent                        `queryParam:"inline" union:"member"`
 	OrderRefundedEvent                    *OrderRefundedEvent                    `queryParam:"inline" union:"member"`
+	OrderVoidedEvent                      *OrderVoidedEvent                      `queryParam:"inline" union:"member"`
 	CheckoutCreatedEvent                  *CheckoutCreatedEvent                  `queryParam:"inline" union:"member"`
 	CustomerCreatedEvent                  *CustomerCreatedEvent                  `queryParam:"inline" union:"member"`
 	CustomerUpdatedEvent                  *CustomerUpdatedEvent                  `queryParam:"inline" union:"member"`
@@ -232,6 +234,15 @@ func CreateSystemEventOrderRefunded(orderRefunded OrderRefundedEvent) SystemEven
 	return SystemEvent{
 		OrderRefundedEvent: &orderRefunded,
 		Type:               typ,
+	}
+}
+
+func CreateSystemEventOrderVoided(orderVoided OrderVoidedEvent) SystemEvent {
+	typ := SystemEventTypeOrderVoided
+
+	return SystemEvent{
+		OrderVoidedEvent: &orderVoided,
+		Type:             typ,
 	}
 }
 
@@ -490,6 +501,15 @@ func (u *SystemEvent) UnmarshalJSON(data []byte) error {
 		u.OrderRefundedEvent = orderRefundedEvent
 		u.Type = SystemEventTypeOrderRefunded
 		return nil
+	case "order.voided":
+		orderVoidedEvent := new(OrderVoidedEvent)
+		if err := utils.UnmarshalJSON(data, &orderVoidedEvent, "", true, nil); err != nil {
+			return fmt.Errorf("could not unmarshal `%s` into expected (Name == order.voided) type OrderVoidedEvent within SystemEvent: %w", string(data), err)
+		}
+
+		u.OrderVoidedEvent = orderVoidedEvent
+		u.Type = SystemEventTypeOrderVoided
+		return nil
 	case "subscription.billing_period_updated":
 		subscriptionBillingPeriodUpdatedEvent := new(SubscriptionBillingPeriodUpdatedEvent)
 		if err := utils.UnmarshalJSON(data, &subscriptionBillingPeriodUpdatedEvent, "", true, nil); err != nil {
@@ -643,6 +663,10 @@ func (u SystemEvent) MarshalJSON() ([]byte, error) {
 
 	if u.OrderRefundedEvent != nil {
 		return utils.MarshalJSON(u.OrderRefundedEvent, "", true)
+	}
+
+	if u.OrderVoidedEvent != nil {
+		return utils.MarshalJSON(u.OrderVoidedEvent, "", true)
 	}
 
 	if u.CheckoutCreatedEvent != nil {

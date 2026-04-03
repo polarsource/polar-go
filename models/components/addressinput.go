@@ -5,6 +5,7 @@ package components
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/polarsource/polar-go/internal/utils"
 )
 
 type AddressInputCountryAlpha2Input string
@@ -766,6 +767,17 @@ type AddressInput struct {
 	City       *string                        `json:"city,omitempty"`
 	State      *string                        `json:"state,omitempty"`
 	Country    AddressInputCountryAlpha2Input `json:"country"`
+}
+
+func (a AddressInput) MarshalJSON() ([]byte, error) {
+	return utils.MarshalJSON(a, "", false)
+}
+
+func (a *AddressInput) UnmarshalJSON(data []byte) error {
+	if err := utils.UnmarshalJSON(data, &a, "", false, []string{"country"}); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (a *AddressInput) GetLine1() *string {

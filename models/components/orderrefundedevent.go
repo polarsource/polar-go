@@ -86,6 +86,20 @@ func (o *OrderRefundedEvent) GetCustomer() *Customer {
 	return o.Customer
 }
 
+func (o *OrderRefundedEvent) GetCustomerIndividual() *CustomerIndividual {
+	if v := o.GetCustomer(); v != nil {
+		return v.CustomerIndividual
+	}
+	return nil
+}
+
+func (o *OrderRefundedEvent) GetCustomerTeam() *CustomerTeam {
+	if v := o.GetCustomer(); v != nil {
+		return v.CustomerTeam
+	}
+	return nil
+}
+
 func (o *OrderRefundedEvent) GetExternalCustomerID() *string {
 	if o == nil {
 		return nil

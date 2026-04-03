@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
 	"github.com/polarsource/polar-go/models/components"
+	"time"
 )
 
 type OrganizationIDFilterType string
@@ -329,6 +330,70 @@ func (u DiscountIDFilter) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type DiscountIDFilter: all fields are null")
 }
 
+type CustomerCancellationReasonFilterType string
+
+const (
+	CustomerCancellationReasonFilterTypeCustomerCancellationReason        CustomerCancellationReasonFilterType = "CustomerCancellationReason"
+	CustomerCancellationReasonFilterTypeArrayOfCustomerCancellationReason CustomerCancellationReasonFilterType = "arrayOfCustomerCancellationReason"
+)
+
+// CustomerCancellationReasonFilter - Filter by customer cancellation reason.
+type CustomerCancellationReasonFilter struct {
+	CustomerCancellationReason        *components.CustomerCancellationReason  `queryParam:"inline" union:"member"`
+	ArrayOfCustomerCancellationReason []components.CustomerCancellationReason `queryParam:"inline" union:"member"`
+
+	Type CustomerCancellationReasonFilterType
+}
+
+func CreateCustomerCancellationReasonFilterCustomerCancellationReason(customerCancellationReason components.CustomerCancellationReason) CustomerCancellationReasonFilter {
+	typ := CustomerCancellationReasonFilterTypeCustomerCancellationReason
+
+	return CustomerCancellationReasonFilter{
+		CustomerCancellationReason: &customerCancellationReason,
+		Type:                       typ,
+	}
+}
+
+func CreateCustomerCancellationReasonFilterArrayOfCustomerCancellationReason(arrayOfCustomerCancellationReason []components.CustomerCancellationReason) CustomerCancellationReasonFilter {
+	typ := CustomerCancellationReasonFilterTypeArrayOfCustomerCancellationReason
+
+	return CustomerCancellationReasonFilter{
+		ArrayOfCustomerCancellationReason: arrayOfCustomerCancellationReason,
+		Type:                              typ,
+	}
+}
+
+func (u *CustomerCancellationReasonFilter) UnmarshalJSON(data []byte) error {
+
+	var customerCancellationReason components.CustomerCancellationReason = components.CustomerCancellationReason("")
+	if err := utils.UnmarshalJSON(data, &customerCancellationReason, "", true, nil); err == nil {
+		u.CustomerCancellationReason = &customerCancellationReason
+		u.Type = CustomerCancellationReasonFilterTypeCustomerCancellationReason
+		return nil
+	}
+
+	var arrayOfCustomerCancellationReason []components.CustomerCancellationReason = []components.CustomerCancellationReason{}
+	if err := utils.UnmarshalJSON(data, &arrayOfCustomerCancellationReason, "", true, nil); err == nil {
+		u.ArrayOfCustomerCancellationReason = arrayOfCustomerCancellationReason
+		u.Type = CustomerCancellationReasonFilterTypeArrayOfCustomerCancellationReason
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for CustomerCancellationReasonFilter", string(data))
+}
+
+func (u CustomerCancellationReasonFilter) MarshalJSON() ([]byte, error) {
+	if u.CustomerCancellationReason != nil {
+		return utils.MarshalJSON(u.CustomerCancellationReason, "", true)
+	}
+
+	if u.ArrayOfCustomerCancellationReason != nil {
+		return utils.MarshalJSON(u.ArrayOfCustomerCancellationReason, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type CustomerCancellationReasonFilter: all fields are null")
+}
+
 type SubscriptionsListRequest struct {
 	// Filter by organization ID.
 	OrganizationID *OrganizationIDFilter `queryParam:"style=form,explode=true,name=organization_id"`
@@ -344,6 +409,12 @@ type SubscriptionsListRequest struct {
 	Active *bool `queryParam:"style=form,explode=true,name=active"`
 	// Filter by subscriptions that are set to cancel at period end.
 	CancelAtPeriodEnd *bool `queryParam:"style=form,explode=true,name=cancel_at_period_end"`
+	// Filter by customer cancellation reason.
+	CustomerCancellationReason *CustomerCancellationReasonFilter `queryParam:"style=form,explode=true,name=customer_cancellation_reason"`
+	// Filter by cancellation date (after or equal to).
+	CanceledAtAfter *time.Time `queryParam:"style=form,explode=true,name=canceled_at_after"`
+	// Filter by cancellation date (before or equal to).
+	CanceledAtBefore *time.Time `queryParam:"style=form,explode=true,name=canceled_at_before"`
 	// Page number, defaults to 1.
 	Page *int64 `default:"1" queryParam:"style=form,explode=true,name=page"`
 	// Size of a page, defaults to 10. Maximum is 100.
@@ -412,6 +483,27 @@ func (s *SubscriptionsListRequest) GetCancelAtPeriodEnd() *bool {
 		return nil
 	}
 	return s.CancelAtPeriodEnd
+}
+
+func (s *SubscriptionsListRequest) GetCustomerCancellationReason() *CustomerCancellationReasonFilter {
+	if s == nil {
+		return nil
+	}
+	return s.CustomerCancellationReason
+}
+
+func (s *SubscriptionsListRequest) GetCanceledAtAfter() *time.Time {
+	if s == nil {
+		return nil
+	}
+	return s.CanceledAtAfter
+}
+
+func (s *SubscriptionsListRequest) GetCanceledAtBefore() *time.Time {
+	if s == nil {
+		return nil
+	}
+	return s.CanceledAtBefore
 }
 
 func (s *SubscriptionsListRequest) GetPage() *int64 {

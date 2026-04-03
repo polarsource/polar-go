@@ -111,6 +111,12 @@ systemEvent := components.CreateSystemEventOrderPaid(components.OrderPaidEvent{/
 systemEvent := components.CreateSystemEventOrderRefunded(components.OrderRefundedEvent{/* values here */})
 ```
 
+### OrderVoidedEvent
+
+```go
+systemEvent := components.CreateSystemEventOrderVoided(components.OrderVoidedEvent{/* values here */})
+```
+
 ### SubscriptionBillingPeriodUpdatedEvent
 
 ```go
@@ -207,6 +213,8 @@ switch systemEvent.Type {
 		// systemEvent.OrderPaidEvent is populated
 	case components.SystemEventTypeOrderRefunded:
 		// systemEvent.OrderRefundedEvent is populated
+	case components.SystemEventTypeOrderVoided:
+		// systemEvent.OrderVoidedEvent is populated
 	case components.SystemEventTypeSubscriptionBillingPeriodUpdated:
 		// systemEvent.SubscriptionBillingPeriodUpdatedEvent is populated
 	case components.SystemEventTypeSubscriptionCanceled:

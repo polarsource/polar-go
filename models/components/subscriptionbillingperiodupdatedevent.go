@@ -86,6 +86,20 @@ func (s *SubscriptionBillingPeriodUpdatedEvent) GetCustomer() *Customer {
 	return s.Customer
 }
 
+func (s *SubscriptionBillingPeriodUpdatedEvent) GetCustomerIndividual() *CustomerIndividual {
+	if v := s.GetCustomer(); v != nil {
+		return v.CustomerIndividual
+	}
+	return nil
+}
+
+func (s *SubscriptionBillingPeriodUpdatedEvent) GetCustomerTeam() *CustomerTeam {
+	if v := s.GetCustomer(); v != nil {
+		return v.CustomerTeam
+	}
+	return nil
+}
+
 func (s *SubscriptionBillingPeriodUpdatedEvent) GetExternalCustomerID() *string {
 	if s == nil {
 		return nil

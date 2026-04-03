@@ -96,6 +96,7 @@ import(
 	"os"
 	polargo "github.com/polarsource/polar-go"
 	"log"
+	"github.com/polarsource/polar-go/models/components"
 )
 
 func main() {
@@ -110,7 +111,13 @@ func main() {
         log.Fatal(err)
     }
     if res.CustomerMeter != nil {
-        // handle response
+        switch res.CustomerMeter.Customer.Type {
+            case components.CustomerUnionTypeIndividual:
+                // res.CustomerMeter.Customer.CustomerIndividual is populated
+            case components.CustomerUnionTypeTeam:
+                // res.CustomerMeter.Customer.CustomerTeam is populated
+        }
+
     }
 }
 ```

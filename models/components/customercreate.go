@@ -8,208 +8,65 @@ import (
 	"github.com/polarsource/polar-go/internal/utils"
 )
 
-type CustomerCreateMetadataType string
+type CustomerCreateType string
 
 const (
-	CustomerCreateMetadataTypeStr     CustomerCreateMetadataType = "str"
-	CustomerCreateMetadataTypeInteger CustomerCreateMetadataType = "integer"
-	CustomerCreateMetadataTypeNumber  CustomerCreateMetadataType = "number"
-	CustomerCreateMetadataTypeBoolean CustomerCreateMetadataType = "boolean"
+	CustomerCreateTypeCustomerIndividualCreate CustomerCreateType = "CustomerIndividualCreate"
+	CustomerCreateTypeCustomerTeamCreate       CustomerCreateType = "CustomerTeamCreate"
 )
 
-type CustomerCreateMetadata struct {
-	Str     *string  `queryParam:"inline" union:"member"`
-	Integer *int64   `queryParam:"inline" union:"member"`
-	Number  *float64 `queryParam:"inline" union:"member"`
-	Boolean *bool    `queryParam:"inline" union:"member"`
-
-	Type CustomerCreateMetadataType
-}
-
-func CreateCustomerCreateMetadataStr(str string) CustomerCreateMetadata {
-	typ := CustomerCreateMetadataTypeStr
-
-	return CustomerCreateMetadata{
-		Str:  &str,
-		Type: typ,
-	}
-}
-
-func CreateCustomerCreateMetadataInteger(integer int64) CustomerCreateMetadata {
-	typ := CustomerCreateMetadataTypeInteger
-
-	return CustomerCreateMetadata{
-		Integer: &integer,
-		Type:    typ,
-	}
-}
-
-func CreateCustomerCreateMetadataNumber(number float64) CustomerCreateMetadata {
-	typ := CustomerCreateMetadataTypeNumber
-
-	return CustomerCreateMetadata{
-		Number: &number,
-		Type:   typ,
-	}
-}
-
-func CreateCustomerCreateMetadataBoolean(boolean bool) CustomerCreateMetadata {
-	typ := CustomerCreateMetadataTypeBoolean
-
-	return CustomerCreateMetadata{
-		Boolean: &boolean,
-		Type:    typ,
-	}
-}
-
-func (u *CustomerCreateMetadata) UnmarshalJSON(data []byte) error {
-
-	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, nil); err == nil {
-		u.Str = &str
-		u.Type = CustomerCreateMetadataTypeStr
-		return nil
-	}
-
-	var integer int64 = int64(0)
-	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
-		u.Integer = &integer
-		u.Type = CustomerCreateMetadataTypeInteger
-		return nil
-	}
-
-	var number float64 = float64(0)
-	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
-		u.Number = &number
-		u.Type = CustomerCreateMetadataTypeNumber
-		return nil
-	}
-
-	var boolean bool = false
-	if err := utils.UnmarshalJSON(data, &boolean, "", true, nil); err == nil {
-		u.Boolean = &boolean
-		u.Type = CustomerCreateMetadataTypeBoolean
-		return nil
-	}
-
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for CustomerCreateMetadata", string(data))
-}
-
-func (u CustomerCreateMetadata) MarshalJSON() ([]byte, error) {
-	if u.Str != nil {
-		return utils.MarshalJSON(u.Str, "", true)
-	}
-
-	if u.Integer != nil {
-		return utils.MarshalJSON(u.Integer, "", true)
-	}
-
-	if u.Number != nil {
-		return utils.MarshalJSON(u.Number, "", true)
-	}
-
-	if u.Boolean != nil {
-		return utils.MarshalJSON(u.Boolean, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type CustomerCreateMetadata: all fields are null")
-}
-
 type CustomerCreate struct {
-	// Key-value object allowing you to store additional information.
-	//
-	// The key must be a string with a maximum length of **40 characters**.
-	// The value must be either:
-	//
-	// * A string with a maximum length of **500 characters**
-	// * An integer
-	// * A floating-point number
-	// * A boolean
-	//
-	// You can store up to **50 key-value pairs**.
-	Metadata map[string]CustomerCreateMetadata `json:"metadata,omitempty"`
-	// The ID of the customer in your system. This must be unique within the organization. Once set, it can't be updated.
-	ExternalID *string `json:"external_id,omitempty"`
-	// The email address of the customer. This must be unique within the organization.
-	Email          string        `json:"email"`
-	Name           *string       `json:"name,omitempty"`
-	BillingAddress *AddressInput `json:"billing_address,omitempty"`
-	TaxID          *string       `json:"tax_id,omitempty"`
-	Locale         *string       `json:"locale,omitempty"`
-	// The type of customer. Defaults to 'individual'. Set to 'team' for customers that can have multiple members.
-	Type *CustomerType `json:"type,omitempty"`
-	// The ID of the organization owning the customer. **Required unless you use an organization token.**
-	OrganizationID *string `json:"organization_id,omitempty"`
-	// Optional owner member to create with the customer. If not provided, an owner member will be automatically created using the customer's email and name.
-	Owner *OwnerCreate `json:"owner,omitempty"`
+	CustomerIndividualCreate *CustomerIndividualCreate `queryParam:"inline" union:"member"`
+	CustomerTeamCreate       *CustomerTeamCreate       `queryParam:"inline" union:"member"`
+
+	Type CustomerCreateType
 }
 
-func (c *CustomerCreate) GetMetadata() map[string]CustomerCreateMetadata {
-	if c == nil {
+func CreateCustomerCreateCustomerIndividualCreate(customerIndividualCreate CustomerIndividualCreate) CustomerCreate {
+	typ := CustomerCreateTypeCustomerIndividualCreate
+
+	return CustomerCreate{
+		CustomerIndividualCreate: &customerIndividualCreate,
+		Type:                     typ,
+	}
+}
+
+func CreateCustomerCreateCustomerTeamCreate(customerTeamCreate CustomerTeamCreate) CustomerCreate {
+	typ := CustomerCreateTypeCustomerTeamCreate
+
+	return CustomerCreate{
+		CustomerTeamCreate: &customerTeamCreate,
+		Type:               typ,
+	}
+}
+
+func (u *CustomerCreate) UnmarshalJSON(data []byte) error {
+
+	var customerIndividualCreate CustomerIndividualCreate = CustomerIndividualCreate{}
+	if err := utils.UnmarshalJSON(data, &customerIndividualCreate, "", true, nil); err == nil {
+		u.CustomerIndividualCreate = &customerIndividualCreate
+		u.Type = CustomerCreateTypeCustomerIndividualCreate
 		return nil
 	}
-	return c.Metadata
-}
 
-func (c *CustomerCreate) GetExternalID() *string {
-	if c == nil {
+	var customerTeamCreate CustomerTeamCreate = CustomerTeamCreate{}
+	if err := utils.UnmarshalJSON(data, &customerTeamCreate, "", true, nil); err == nil {
+		u.CustomerTeamCreate = &customerTeamCreate
+		u.Type = CustomerCreateTypeCustomerTeamCreate
 		return nil
 	}
-	return c.ExternalID
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for CustomerCreate", string(data))
 }
 
-func (c *CustomerCreate) GetEmail() string {
-	if c == nil {
-		return ""
+func (u CustomerCreate) MarshalJSON() ([]byte, error) {
+	if u.CustomerIndividualCreate != nil {
+		return utils.MarshalJSON(u.CustomerIndividualCreate, "", true)
 	}
-	return c.Email
-}
 
-func (c *CustomerCreate) GetName() *string {
-	if c == nil {
-		return nil
+	if u.CustomerTeamCreate != nil {
+		return utils.MarshalJSON(u.CustomerTeamCreate, "", true)
 	}
-	return c.Name
-}
 
-func (c *CustomerCreate) GetBillingAddress() *AddressInput {
-	if c == nil {
-		return nil
-	}
-	return c.BillingAddress
-}
-
-func (c *CustomerCreate) GetTaxID() *string {
-	if c == nil {
-		return nil
-	}
-	return c.TaxID
-}
-
-func (c *CustomerCreate) GetLocale() *string {
-	if c == nil {
-		return nil
-	}
-	return c.Locale
-}
-
-func (c *CustomerCreate) GetType() *CustomerType {
-	if c == nil {
-		return nil
-	}
-	return c.Type
-}
-
-func (c *CustomerCreate) GetOrganizationID() *string {
-	if c == nil {
-		return nil
-	}
-	return c.OrganizationID
-}
-
-func (c *CustomerCreate) GetOwner() *OwnerCreate {
-	if c == nil {
-		return nil
-	}
-	return c.Owner
+	return nil, errors.New("could not marshal union type CustomerCreate: all fields are null")
 }

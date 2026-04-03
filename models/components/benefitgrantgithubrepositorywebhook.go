@@ -33,10 +33,9 @@ type BenefitGrantGitHubRepositoryWebhook struct {
 	// The ID of the benefit concerned by this grant.
 	BenefitID string `json:"benefit_id"`
 	// The error information if the benefit grant failed with an unrecoverable error.
-	Error *BenefitGrantError `json:"error,omitempty"`
-	// A customer in an organization.
-	Customer Customer `json:"customer"`
-	Member   *Member  `json:"member,omitempty"`
+	Error    *BenefitGrantError `json:"error,omitempty"`
+	Customer Customer           `json:"customer"`
+	Member   *Member            `json:"member,omitempty"`
 	// A benefit of type `github_repository`.
 	//
 	// Use it to automatically invite your backers to a private GitHub repository.
@@ -152,6 +151,14 @@ func (b *BenefitGrantGitHubRepositoryWebhook) GetCustomer() Customer {
 		return Customer{}
 	}
 	return b.Customer
+}
+
+func (b *BenefitGrantGitHubRepositoryWebhook) GetCustomerIndividual() *CustomerIndividual {
+	return b.GetCustomer().CustomerIndividual
+}
+
+func (b *BenefitGrantGitHubRepositoryWebhook) GetCustomerTeam() *CustomerTeam {
+	return b.GetCustomer().CustomerTeam
 }
 
 func (b *BenefitGrantGitHubRepositoryWebhook) GetMember() *Member {
