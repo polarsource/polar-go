@@ -268,12 +268,12 @@ func (s *Payments) List(ctx context.Context, request operations.PaymentsListRequ
 				return nil, err
 			}
 
-			var out components.ListResource
+			var out components.ListResourcePayment
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out, ""); err != nil {
 				return nil, err
 			}
 
-			res.ListResource = &out
+			res.ListResourcePayment = &out
 		default:
 			rawBody, err := utils.ConsumeRawBody(httpRes)
 			if err != nil {

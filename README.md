@@ -404,6 +404,11 @@ func main() {
 
 * [Get](docs/sdks/metrics/README.md#get) - Get Metrics
 * [Limits](docs/sdks/metrics/README.md#limits) - Get Metrics Limits
+* [ListDashboards](docs/sdks/metrics/README.md#listdashboards) - List Metric Dashboards
+* [CreateDashboard](docs/sdks/metrics/README.md#createdashboard) - Create Metric Dashboard
+* [GetDashboard](docs/sdks/metrics/README.md#getdashboard) - Get Metric Dashboard
+* [DeleteDashboard](docs/sdks/metrics/README.md#deletedashboard) - Delete Metric Dashboard
+* [UpdateDashboard](docs/sdks/metrics/README.md#updatedashboard) - Update Metric Dashboard
 
 ### [Oauth2](docs/sdks/oauth2/README.md)
 

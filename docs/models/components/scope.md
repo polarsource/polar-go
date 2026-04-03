@@ -66,6 +66,7 @@ value := components.ScopeOpenid
 | `ScopeRefundsWrite`                  | refunds:write                        |
 | `ScopePaymentsRead`                  | payments:read                        |
 | `ScopeMetricsRead`                   | metrics:read                         |
+| `ScopeMetricsWrite`                  | metrics:write                        |
 | `ScopeWebhooksRead`                  | webhooks:read                        |
 | `ScopeWebhooksWrite`                 | webhooks:write                       |
 | `ScopeLicenseKeysRead`               | license_keys:read                    |

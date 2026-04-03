@@ -3,216 +3,87 @@
 package components
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
-	"time"
 )
 
-type CustomerTaxIDType string
+type CustomerUnionType string
 
 const (
-	CustomerTaxIDTypeStr         CustomerTaxIDType = "str"
-	CustomerTaxIDTypeTaxIDFormat CustomerTaxIDType = "TaxIDFormat"
+	CustomerUnionTypeIndividual CustomerUnionType = "individual"
+	CustomerUnionTypeTeam       CustomerUnionType = "team"
 )
 
-type CustomerTaxID struct {
-	Str         *string      `queryParam:"inline" union:"member"`
-	TaxIDFormat *TaxIDFormat `queryParam:"inline" union:"member"`
-
-	Type CustomerTaxIDType
-}
-
-func CreateCustomerTaxIDStr(str string) CustomerTaxID {
-	typ := CustomerTaxIDTypeStr
-
-	return CustomerTaxID{
-		Str:  &str,
-		Type: typ,
-	}
-}
-
-func CreateCustomerTaxIDTaxIDFormat(taxIDFormat TaxIDFormat) CustomerTaxID {
-	typ := CustomerTaxIDTypeTaxIDFormat
-
-	return CustomerTaxID{
-		TaxIDFormat: &taxIDFormat,
-		Type:        typ,
-	}
-}
-
-func (u *CustomerTaxID) UnmarshalJSON(data []byte) error {
-
-	var str string = ""
-	if err := utils.UnmarshalJSON(data, &str, "", true, nil); err == nil {
-		u.Str = &str
-		u.Type = CustomerTaxIDTypeStr
-		return nil
-	}
-
-	var taxIDFormat TaxIDFormat = TaxIDFormat("")
-	if err := utils.UnmarshalJSON(data, &taxIDFormat, "", true, nil); err == nil {
-		u.TaxIDFormat = &taxIDFormat
-		u.Type = CustomerTaxIDTypeTaxIDFormat
-		return nil
-	}
-
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for CustomerTaxID", string(data))
-}
-
-func (u CustomerTaxID) MarshalJSON() ([]byte, error) {
-	if u.Str != nil {
-		return utils.MarshalJSON(u.Str, "", true)
-	}
-
-	if u.TaxIDFormat != nil {
-		return utils.MarshalJSON(u.TaxIDFormat, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type CustomerTaxID: all fields are null")
-}
-
-// Customer - A customer in an organization.
 type Customer struct {
-	// The ID of the customer.
-	ID string `json:"id"`
-	// Creation timestamp of the object.
-	CreatedAt time.Time `json:"created_at"`
-	// Last modification timestamp of the object.
-	ModifiedAt *time.Time                    `json:"modified_at"`
-	Metadata   map[string]MetadataOutputType `json:"metadata"`
-	// The ID of the customer in your system. This must be unique within the organization. Once set, it can't be updated.
-	ExternalID *string `json:"external_id,omitempty"`
-	// The email address of the customer. This must be unique within the organization.
-	Email string `json:"email"`
-	// Whether the customer email address is verified. The address is automatically verified when the customer accesses the customer portal using their email address.
-	EmailVerified bool `json:"email_verified"`
-	// The type of customer: 'individual' for single users, 'team' for customers with multiple members. Legacy customers may have NULL type which is treated as 'individual'.
-	Type *CustomerType `json:"type,omitempty"`
-	// The name of the customer.
-	Name           *string          `json:"name"`
-	BillingAddress *Address         `json:"billing_address"`
-	TaxID          []*CustomerTaxID `json:"tax_id"`
-	Locale         *string          `json:"locale,omitempty"`
-	// The ID of the organization owning the customer.
-	OrganizationID string `json:"organization_id"`
-	// Timestamp for when the customer was soft deleted.
-	DeletedAt *time.Time `json:"deleted_at"`
-	AvatarURL string     `json:"avatar_url"`
+	CustomerIndividual *CustomerIndividual `queryParam:"inline" union:"member"`
+	CustomerTeam       *CustomerTeam       `queryParam:"inline" union:"member"`
+
+	Type CustomerUnionType
 }
 
-func (c Customer) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(c, "", false)
-}
+func CreateCustomerIndividual(individual CustomerIndividual) Customer {
+	typ := CustomerUnionTypeIndividual
 
-func (c *Customer) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &c, "", false, []string{"id", "created_at", "metadata", "email", "email_verified", "organization_id", "avatar_url"}); err != nil {
-		return err
+	return Customer{
+		CustomerIndividual: &individual,
+		Type:               typ,
 	}
-	return nil
 }
 
-func (c *Customer) GetID() string {
-	if c == nil {
-		return ""
+func CreateCustomerTeam(team CustomerTeam) Customer {
+	typ := CustomerUnionTypeTeam
+
+	return Customer{
+		CustomerTeam: &team,
+		Type:         typ,
 	}
-	return c.ID
 }
 
-func (c *Customer) GetCreatedAt() time.Time {
-	if c == nil {
-		return time.Time{}
+func (u *Customer) UnmarshalJSON(data []byte) error {
+
+	type discriminator struct {
+		Type string `json:"type"`
 	}
-	return c.CreatedAt
-}
 
-func (c *Customer) GetModifiedAt() *time.Time {
-	if c == nil {
+	dis := new(discriminator)
+	if err := json.Unmarshal(data, &dis); err != nil {
+		return fmt.Errorf("could not unmarshal discriminator: %w", err)
+	}
+
+	switch dis.Type {
+	case "individual":
+		customerIndividual := new(CustomerIndividual)
+		if err := utils.UnmarshalJSON(data, &customerIndividual, "", true, nil); err != nil {
+			return fmt.Errorf("could not unmarshal `%s` into expected (Type == individual) type CustomerIndividual within Customer: %w", string(data), err)
+		}
+
+		u.CustomerIndividual = customerIndividual
+		u.Type = CustomerUnionTypeIndividual
+		return nil
+	case "team":
+		customerTeam := new(CustomerTeam)
+		if err := utils.UnmarshalJSON(data, &customerTeam, "", true, nil); err != nil {
+			return fmt.Errorf("could not unmarshal `%s` into expected (Type == team) type CustomerTeam within Customer: %w", string(data), err)
+		}
+
+		u.CustomerTeam = customerTeam
+		u.Type = CustomerUnionTypeTeam
 		return nil
 	}
-	return c.ModifiedAt
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for Customer", string(data))
 }
 
-func (c *Customer) GetMetadata() map[string]MetadataOutputType {
-	if c == nil {
-		return map[string]MetadataOutputType{}
+func (u Customer) MarshalJSON() ([]byte, error) {
+	if u.CustomerIndividual != nil {
+		return utils.MarshalJSON(u.CustomerIndividual, "", true)
 	}
-	return c.Metadata
-}
 
-func (c *Customer) GetExternalID() *string {
-	if c == nil {
-		return nil
+	if u.CustomerTeam != nil {
+		return utils.MarshalJSON(u.CustomerTeam, "", true)
 	}
-	return c.ExternalID
-}
 
-func (c *Customer) GetEmail() string {
-	if c == nil {
-		return ""
-	}
-	return c.Email
-}
-
-func (c *Customer) GetEmailVerified() bool {
-	if c == nil {
-		return false
-	}
-	return c.EmailVerified
-}
-
-func (c *Customer) GetType() *CustomerType {
-	if c == nil {
-		return nil
-	}
-	return c.Type
-}
-
-func (c *Customer) GetName() *string {
-	if c == nil {
-		return nil
-	}
-	return c.Name
-}
-
-func (c *Customer) GetBillingAddress() *Address {
-	if c == nil {
-		return nil
-	}
-	return c.BillingAddress
-}
-
-func (c *Customer) GetTaxID() []*CustomerTaxID {
-	if c == nil {
-		return nil
-	}
-	return c.TaxID
-}
-
-func (c *Customer) GetLocale() *string {
-	if c == nil {
-		return nil
-	}
-	return c.Locale
-}
-
-func (c *Customer) GetOrganizationID() string {
-	if c == nil {
-		return ""
-	}
-	return c.OrganizationID
-}
-
-func (c *Customer) GetDeletedAt() *time.Time {
-	if c == nil {
-		return nil
-	}
-	return c.DeletedAt
-}
-
-func (c *Customer) GetAvatarURL() string {
-	if c == nil {
-		return ""
-	}
-	return c.AvatarURL
+	return nil, errors.New("could not marshal union type Customer: all fields are null")
 }

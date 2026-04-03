@@ -20,8 +20,7 @@ type CustomerSession struct {
 	ReturnURL         *string   `json:"return_url"`
 	CustomerPortalURL string    `json:"customer_portal_url"`
 	CustomerID        string    `json:"customer_id"`
-	// A customer in an organization.
-	Customer Customer `json:"customer"`
+	Customer          Customer  `json:"customer"`
 }
 
 func (c CustomerSession) MarshalJSON() ([]byte, error) {
@@ -96,4 +95,12 @@ func (c *CustomerSession) GetCustomer() Customer {
 		return Customer{}
 	}
 	return c.Customer
+}
+
+func (c *CustomerSession) GetCustomerIndividual() *CustomerIndividual {
+	return c.GetCustomer().CustomerIndividual
+}
+
+func (c *CustomerSession) GetCustomerTeam() *CustomerTeam {
+	return c.GetCustomer().CustomerTeam
 }

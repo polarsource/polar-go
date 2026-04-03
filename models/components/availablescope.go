@@ -59,6 +59,7 @@ const (
 	AvailableScopeRefundsWrite                  AvailableScope = "refunds:write"
 	AvailableScopePaymentsRead                  AvailableScope = "payments:read"
 	AvailableScopeMetricsRead                   AvailableScope = "metrics:read"
+	AvailableScopeMetricsWrite                  AvailableScope = "metrics:write"
 	AvailableScopeWebhooksRead                  AvailableScope = "webhooks:read"
 	AvailableScopeWebhooksWrite                 AvailableScope = "webhooks:write"
 	AvailableScopeLicenseKeysRead               AvailableScope = "license_keys:read"
@@ -179,6 +180,8 @@ func (e *AvailableScope) UnmarshalJSON(data []byte) error {
 	case "payments:read":
 		fallthrough
 	case "metrics:read":
+		fallthrough
+	case "metrics:write":
 		fallthrough
 	case "webhooks:read":
 		fallthrough

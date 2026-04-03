@@ -33,8 +33,7 @@ type BenefitGrantLicenseKeysWebhook struct {
 	// The ID of the benefit concerned by this grant.
 	BenefitID string `json:"benefit_id"`
 	// The error information if the benefit grant failed with an unrecoverable error.
-	Error *BenefitGrantError `json:"error,omitempty"`
-	// A customer in an organization.
+	Error              *BenefitGrantError                 `json:"error,omitempty"`
 	Customer           Customer                           `json:"customer"`
 	Member             *Member                            `json:"member,omitempty"`
 	Benefit            BenefitLicenseKeys                 `json:"benefit"`
@@ -149,6 +148,14 @@ func (b *BenefitGrantLicenseKeysWebhook) GetCustomer() Customer {
 		return Customer{}
 	}
 	return b.Customer
+}
+
+func (b *BenefitGrantLicenseKeysWebhook) GetCustomerIndividual() *CustomerIndividual {
+	return b.GetCustomer().CustomerIndividual
+}
+
+func (b *BenefitGrantLicenseKeysWebhook) GetCustomerTeam() *CustomerTeam {
+	return b.GetCustomer().CustomerTeam
 }
 
 func (b *BenefitGrantLicenseKeysWebhook) GetMember() *Member {

@@ -86,6 +86,20 @@ func (s *SubscriptionCreatedEvent) GetCustomer() *Customer {
 	return s.Customer
 }
 
+func (s *SubscriptionCreatedEvent) GetCustomerIndividual() *CustomerIndividual {
+	if v := s.GetCustomer(); v != nil {
+		return v.CustomerIndividual
+	}
+	return nil
+}
+
+func (s *SubscriptionCreatedEvent) GetCustomerTeam() *CustomerTeam {
+	if v := s.GetCustomer(); v != nil {
+		return v.CustomerTeam
+	}
+	return nil
+}
+
 func (s *SubscriptionCreatedEvent) GetExternalCustomerID() *string {
 	if s == nil {
 		return nil

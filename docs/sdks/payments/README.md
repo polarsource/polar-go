@@ -42,7 +42,7 @@ func main() {
     if err != nil {
         log.Fatal(err)
     }
-    if res.ListResource != nil {
+    if res.ListResourcePayment != nil {
         for {
             // handle items
 

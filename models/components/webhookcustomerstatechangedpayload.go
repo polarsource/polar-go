@@ -18,14 +18,9 @@ import (
 // **Discord & Slack support:** Basic
 type WebhookCustomerStateChangedPayload struct {
 	//lint:ignore U1000 accessed via reflection for JSON marshaling
-	type_     string    `const:"customer.state_changed" json:"type"`
-	Timestamp time.Time `json:"timestamp"`
-	// A customer along with additional state information:
-	//
-	// * Active subscriptions
-	// * Granted benefits
-	// * Active meters
-	Data CustomerState `json:"data"`
+	type_     string        `const:"customer.state_changed" json:"type"`
+	Timestamp time.Time     `json:"timestamp"`
+	Data      CustomerState `json:"data"`
 }
 
 func (w WebhookCustomerStateChangedPayload) MarshalJSON() ([]byte, error) {
@@ -55,4 +50,12 @@ func (w *WebhookCustomerStateChangedPayload) GetData() CustomerState {
 		return CustomerState{}
 	}
 	return w.Data
+}
+
+func (w *WebhookCustomerStateChangedPayload) GetDataIndividual() *CustomerStateIndividual {
+	return w.GetData().CustomerStateIndividual
+}
+
+func (w *WebhookCustomerStateChangedPayload) GetDataTeam() *CustomerStateTeam {
+	return w.GetData().CustomerStateTeam
 }

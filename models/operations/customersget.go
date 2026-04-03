@@ -37,3 +37,17 @@ func (c *CustomersGetResponse) GetCustomer() *components.Customer {
 	}
 	return c.Customer
 }
+
+func (c *CustomersGetResponse) GetCustomerIndividual() *components.CustomerIndividual {
+	if v := c.GetCustomer(); v != nil {
+		return v.CustomerIndividual
+	}
+	return nil
+}
+
+func (c *CustomersGetResponse) GetCustomerTeam() *components.CustomerTeam {
+	if v := c.GetCustomer(); v != nil {
+		return v.CustomerTeam
+	}
+	return nil
+}

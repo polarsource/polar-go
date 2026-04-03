@@ -33,10 +33,9 @@ type BenefitGrantFeatureFlagWebhook struct {
 	// The ID of the benefit concerned by this grant.
 	BenefitID string `json:"benefit_id"`
 	// The error information if the benefit grant failed with an unrecoverable error.
-	Error *BenefitGrantError `json:"error,omitempty"`
-	// A customer in an organization.
-	Customer Customer `json:"customer"`
-	Member   *Member  `json:"member,omitempty"`
+	Error    *BenefitGrantError `json:"error,omitempty"`
+	Customer Customer           `json:"customer"`
+	Member   *Member            `json:"member,omitempty"`
 	// A benefit of type `feature_flag`.
 	//
 	// Use it to grant feature flags with key-value metadata
@@ -153,6 +152,14 @@ func (b *BenefitGrantFeatureFlagWebhook) GetCustomer() Customer {
 		return Customer{}
 	}
 	return b.Customer
+}
+
+func (b *BenefitGrantFeatureFlagWebhook) GetCustomerIndividual() *CustomerIndividual {
+	return b.GetCustomer().CustomerIndividual
+}
+
+func (b *BenefitGrantFeatureFlagWebhook) GetCustomerTeam() *CustomerTeam {
+	return b.GetCustomer().CustomerTeam
 }
 
 func (b *BenefitGrantFeatureFlagWebhook) GetMember() *Member {

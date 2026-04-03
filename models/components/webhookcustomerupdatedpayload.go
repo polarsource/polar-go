@@ -18,8 +18,7 @@ type WebhookCustomerUpdatedPayload struct {
 	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	type_     string    `const:"customer.updated" json:"type"`
 	Timestamp time.Time `json:"timestamp"`
-	// A customer in an organization.
-	Data Customer `json:"data"`
+	Data      Customer  `json:"data"`
 }
 
 func (w WebhookCustomerUpdatedPayload) MarshalJSON() ([]byte, error) {
@@ -49,4 +48,12 @@ func (w *WebhookCustomerUpdatedPayload) GetData() Customer {
 		return Customer{}
 	}
 	return w.Data
+}
+
+func (w *WebhookCustomerUpdatedPayload) GetDataIndividual() *CustomerIndividual {
+	return w.GetData().CustomerIndividual
+}
+
+func (w *WebhookCustomerUpdatedPayload) GetDataTeam() *CustomerTeam {
+	return w.GetData().CustomerTeam
 }
