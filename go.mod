@@ -4,6 +4,7 @@ go 1.22
 
 require (
 	github.com/spyzhov/ajson v0.8.0
+	github.com/standard-webhooks/standard-webhooks/libraries v0.0.0-20250711233419-a173a6c0125c
 	github.com/stretchr/testify v1.11.1
 )
 
