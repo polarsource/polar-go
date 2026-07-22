@@ -108,7 +108,7 @@ func main() {
 
     res, err := s.Refunds.Create(ctx, components.RefundCreate{
         OrderID: "<value>",
-        Reason: components.RefundReasonCustomerRequest,
+        Reason: components.ReasonCustomerRequest,
         Amount: 90,
     })
     if err != nil {

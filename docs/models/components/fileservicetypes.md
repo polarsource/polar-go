@@ -13,8 +13,9 @@ value := components.FileServiceTypesDownloadable
 
 ## Values
 
-| Name                                 | Value                                |
-| ------------------------------------ | ------------------------------------ |
-| `FileServiceTypesDownloadable`       | downloadable                         |
-| `FileServiceTypesProductMedia`       | product_media                        |
-| `FileServiceTypesOrganizationAvatar` | organization_avatar                  |
+| Name                                    | Value                                   |
+| --------------------------------------- | --------------------------------------- |
+| `FileServiceTypesDownloadable`          | downloadable                            |
+| `FileServiceTypesProductMedia`          | product_media                           |
+| `FileServiceTypesOrganizationAvatar`    | organization_avatar                     |
+| `FileServiceTypesSupportCaseAttachment` | support_case_attachment                 |

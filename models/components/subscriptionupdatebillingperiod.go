@@ -8,7 +8,7 @@ import (
 )
 
 type SubscriptionUpdateBillingPeriod struct {
-	// Set a new date for the end of the current billing period. The subscription will renew on this date. Needs to be later than the current value.
+	// Set a new date for the end of the current billing period. The subscription will renew on this date. The new date can be earlier or later than the current period end, as long as it's in the future.
 	//
 	// It is not possible to update the current billing period on a canceled subscription.
 	CurrentBillingPeriodEnd time.Time `json:"current_billing_period_end"`

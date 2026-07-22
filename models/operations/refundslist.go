@@ -201,59 +201,59 @@ func (u OrderIDFilter) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type OrderIDFilter: all fields are null")
 }
 
-type SubscriptionIDFilterType string
+type QueryParamSubscriptionIDFilterType string
 
 const (
-	SubscriptionIDFilterTypeStr        SubscriptionIDFilterType = "str"
-	SubscriptionIDFilterTypeArrayOfStr SubscriptionIDFilterType = "arrayOfStr"
+	QueryParamSubscriptionIDFilterTypeStr        QueryParamSubscriptionIDFilterType = "str"
+	QueryParamSubscriptionIDFilterTypeArrayOfStr QueryParamSubscriptionIDFilterType = "arrayOfStr"
 )
 
-// SubscriptionIDFilter - Filter by subscription ID.
-type SubscriptionIDFilter struct {
+// QueryParamSubscriptionIDFilter - Filter by subscription ID.
+type QueryParamSubscriptionIDFilter struct {
 	Str        *string  `queryParam:"inline" union:"member"`
 	ArrayOfStr []string `queryParam:"inline" union:"member"`
 
-	Type SubscriptionIDFilterType
+	Type QueryParamSubscriptionIDFilterType
 }
 
-func CreateSubscriptionIDFilterStr(str string) SubscriptionIDFilter {
-	typ := SubscriptionIDFilterTypeStr
+func CreateQueryParamSubscriptionIDFilterStr(str string) QueryParamSubscriptionIDFilter {
+	typ := QueryParamSubscriptionIDFilterTypeStr
 
-	return SubscriptionIDFilter{
+	return QueryParamSubscriptionIDFilter{
 		Str:  &str,
 		Type: typ,
 	}
 }
 
-func CreateSubscriptionIDFilterArrayOfStr(arrayOfStr []string) SubscriptionIDFilter {
-	typ := SubscriptionIDFilterTypeArrayOfStr
+func CreateQueryParamSubscriptionIDFilterArrayOfStr(arrayOfStr []string) QueryParamSubscriptionIDFilter {
+	typ := QueryParamSubscriptionIDFilterTypeArrayOfStr
 
-	return SubscriptionIDFilter{
+	return QueryParamSubscriptionIDFilter{
 		ArrayOfStr: arrayOfStr,
 		Type:       typ,
 	}
 }
 
-func (u *SubscriptionIDFilter) UnmarshalJSON(data []byte) error {
+func (u *QueryParamSubscriptionIDFilter) UnmarshalJSON(data []byte) error {
 
 	var str string = ""
 	if err := utils.UnmarshalJSON(data, &str, "", true, nil); err == nil {
 		u.Str = &str
-		u.Type = SubscriptionIDFilterTypeStr
+		u.Type = QueryParamSubscriptionIDFilterTypeStr
 		return nil
 	}
 
 	var arrayOfStr []string = []string{}
 	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, nil); err == nil {
 		u.ArrayOfStr = arrayOfStr
-		u.Type = SubscriptionIDFilterTypeArrayOfStr
+		u.Type = QueryParamSubscriptionIDFilterTypeArrayOfStr
 		return nil
 	}
 
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SubscriptionIDFilter", string(data))
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for QueryParamSubscriptionIDFilter", string(data))
 }
 
-func (u SubscriptionIDFilter) MarshalJSON() ([]byte, error) {
+func (u QueryParamSubscriptionIDFilter) MarshalJSON() ([]byte, error) {
 	if u.Str != nil {
 		return utils.MarshalJSON(u.Str, "", true)
 	}
@@ -262,7 +262,7 @@ func (u SubscriptionIDFilter) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.ArrayOfStr, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type SubscriptionIDFilter: all fields are null")
+	return nil, errors.New("could not marshal union type QueryParamSubscriptionIDFilter: all fields are null")
 }
 
 type RefundsListQueryParamCustomerIDFilterType string
@@ -401,7 +401,7 @@ type RefundsListRequest struct {
 	// Filter by order ID.
 	OrderID *OrderIDFilter `queryParam:"style=form,explode=true,name=order_id"`
 	// Filter by subscription ID.
-	SubscriptionID *SubscriptionIDFilter `queryParam:"style=form,explode=true,name=subscription_id"`
+	SubscriptionID *QueryParamSubscriptionIDFilter `queryParam:"style=form,explode=true,name=subscription_id"`
 	// Filter by customer ID.
 	CustomerID *RefundsListQueryParamCustomerIDFilter `queryParam:"style=form,explode=true,name=customer_id"`
 	// Filter by customer external ID.
@@ -448,7 +448,7 @@ func (r *RefundsListRequest) GetOrderID() *OrderIDFilter {
 	return r.OrderID
 }
 
-func (r *RefundsListRequest) GetSubscriptionID() *SubscriptionIDFilter {
+func (r *RefundsListRequest) GetSubscriptionID() *QueryParamSubscriptionIDFilter {
 	if r == nil {
 		return nil
 	}

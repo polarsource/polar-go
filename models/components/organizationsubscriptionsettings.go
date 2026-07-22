@@ -2,12 +2,46 @@
 
 package components
 
+import (
+	"encoding/json"
+	"fmt"
+)
+
+type PublicSubscriptionProrationBehavior string
+
+const (
+	PublicSubscriptionProrationBehaviorInvoice    PublicSubscriptionProrationBehavior = "invoice"
+	PublicSubscriptionProrationBehaviorProrate    PublicSubscriptionProrationBehavior = "prorate"
+	PublicSubscriptionProrationBehaviorNextPeriod PublicSubscriptionProrationBehavior = "next_period"
+)
+
+func (e PublicSubscriptionProrationBehavior) ToPointer() *PublicSubscriptionProrationBehavior {
+	return &e
+}
+func (e *PublicSubscriptionProrationBehavior) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "invoice":
+		fallthrough
+	case "prorate":
+		fallthrough
+	case "next_period":
+		*e = PublicSubscriptionProrationBehavior(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for PublicSubscriptionProrationBehavior: %v", v)
+	}
+}
+
 type OrganizationSubscriptionSettings struct {
-	AllowMultipleSubscriptions   bool                          `json:"allow_multiple_subscriptions"`
-	AllowCustomerUpdates         bool                          `json:"allow_customer_updates"`
-	ProrationBehavior            SubscriptionProrationBehavior `json:"proration_behavior"`
-	BenefitRevocationGracePeriod int64                         `json:"benefit_revocation_grace_period"`
-	PreventTrialAbuse            bool                          `json:"prevent_trial_abuse"`
+	AllowMultipleSubscriptions   bool                                `json:"allow_multiple_subscriptions"`
+	ProrationBehavior            PublicSubscriptionProrationBehavior `json:"proration_behavior"`
+	BenefitRevocationGracePeriod int64                               `json:"benefit_revocation_grace_period"`
+	PreventTrialAbuse            bool                                `json:"prevent_trial_abuse"`
+	AllowCustomerUpdates         bool                                `json:"allow_customer_updates"`
 }
 
 func (o *OrganizationSubscriptionSettings) GetAllowMultipleSubscriptions() bool {
@@ -17,16 +51,9 @@ func (o *OrganizationSubscriptionSettings) GetAllowMultipleSubscriptions() bool 
 	return o.AllowMultipleSubscriptions
 }
 
-func (o *OrganizationSubscriptionSettings) GetAllowCustomerUpdates() bool {
+func (o *OrganizationSubscriptionSettings) GetProrationBehavior() PublicSubscriptionProrationBehavior {
 	if o == nil {
-		return false
-	}
-	return o.AllowCustomerUpdates
-}
-
-func (o *OrganizationSubscriptionSettings) GetProrationBehavior() SubscriptionProrationBehavior {
-	if o == nil {
-		return SubscriptionProrationBehavior("")
+		return PublicSubscriptionProrationBehavior("")
 	}
 	return o.ProrationBehavior
 }
@@ -43,4 +70,11 @@ func (o *OrganizationSubscriptionSettings) GetPreventTrialAbuse() bool {
 		return false
 	}
 	return o.PreventTrialAbuse
+}
+
+func (o *OrganizationSubscriptionSettings) GetAllowCustomerUpdates() bool {
+	if o == nil {
+		return false
+	}
+	return o.AllowCustomerUpdates
 }

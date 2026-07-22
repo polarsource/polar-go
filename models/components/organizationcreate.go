@@ -855,9 +855,8 @@ type OrganizationCreate struct {
 	Details *OrganizationDetails `json:"details,omitempty"`
 	// Two-letter country code (ISO 3166-1 alpha-2).
 	Country                    *CountryAlpha2Input                 `json:"country,omitempty"`
-	FeatureSettings            *OrganizationFeatureSettings        `json:"feature_settings,omitempty"`
+	FeatureSettings            *OrganizationFeatureSettingsUpdate  `json:"feature_settings,omitempty"`
 	SubscriptionSettings       *OrganizationSubscriptionSettings   `json:"subscription_settings,omitempty"`
-	NotificationSettings       *OrganizationNotificationSettings   `json:"notification_settings,omitempty"`
 	CustomerEmailSettings      *OrganizationCustomerEmailSettings  `json:"customer_email_settings,omitempty"`
 	CustomerPortalSettings     *OrganizationCustomerPortalSettings `json:"customer_portal_settings,omitempty"`
 	DefaultPresentmentCurrency *PresentmentCurrency                `json:"default_presentment_currency,omitempty"`
@@ -941,7 +940,7 @@ func (o *OrganizationCreate) GetCountry() *CountryAlpha2Input {
 	return o.Country
 }
 
-func (o *OrganizationCreate) GetFeatureSettings() *OrganizationFeatureSettings {
+func (o *OrganizationCreate) GetFeatureSettings() *OrganizationFeatureSettingsUpdate {
 	if o == nil {
 		return nil
 	}
@@ -953,13 +952,6 @@ func (o *OrganizationCreate) GetSubscriptionSettings() *OrganizationSubscription
 		return nil
 	}
 	return o.SubscriptionSettings
-}
-
-func (o *OrganizationCreate) GetNotificationSettings() *OrganizationNotificationSettings {
-	if o == nil {
-		return nil
-	}
-	return o.NotificationSettings
 }
 
 func (o *OrganizationCreate) GetCustomerEmailSettings() *OrganizationCustomerEmailSettings {

@@ -15,8 +15,6 @@ const (
 	ScopeEmail                         Scope = "email"
 	ScopeUserRead                      Scope = "user:read"
 	ScopeUserWrite                     Scope = "user:write"
-	ScopeWebRead                       Scope = "web:read"
-	ScopeWebWrite                      Scope = "web:write"
 	ScopeOrganizationsRead             Scope = "organizations:read"
 	ScopeOrganizationsWrite            Scope = "organizations:write"
 	ScopeCustomFieldsRead              Scope = "custom_fields:read"
@@ -50,6 +48,7 @@ const (
 	ScopeWalletsRead                   Scope = "wallets:read"
 	ScopeWalletsWrite                  Scope = "wallets:write"
 	ScopeDisputesRead                  Scope = "disputes:read"
+	ScopeDisputesWrite                 Scope = "disputes:write"
 	ScopeCustomerMetersRead            Scope = "customer_meters:read"
 	ScopeCustomerSessionsWrite         Scope = "customer_sessions:write"
 	ScopeMemberSessionsWrite           Scope = "member_sessions:write"
@@ -94,10 +93,6 @@ func (e *Scope) UnmarshalJSON(data []byte) error {
 	case "user:read":
 		fallthrough
 	case "user:write":
-		fallthrough
-	case "web:read":
-		fallthrough
-	case "web:write":
 		fallthrough
 	case "organizations:read":
 		fallthrough
@@ -164,6 +159,8 @@ func (e *Scope) UnmarshalJSON(data []byte) error {
 	case "wallets:write":
 		fallthrough
 	case "disputes:read":
+		fallthrough
+	case "disputes:write":
 		fallthrough
 	case "customer_meters:read":
 		fallthrough

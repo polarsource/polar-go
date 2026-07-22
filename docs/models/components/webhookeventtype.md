@@ -39,6 +39,8 @@ value := components.WebhookEventTypeCheckoutCreated
 | `WebhookEventTypeSubscriptionUncanceled` | subscription.uncanceled                  |
 | `WebhookEventTypeSubscriptionRevoked`    | subscription.revoked                     |
 | `WebhookEventTypeSubscriptionPastDue`    | subscription.past_due                    |
+| `WebhookEventTypeSubscriptionPaused`     | subscription.paused                      |
+| `WebhookEventTypeSubscriptionResumed`    | subscription.resumed                     |
 | `WebhookEventTypeRefundCreated`          | refund.created                           |
 | `WebhookEventTypeRefundUpdated`          | refund.updated                           |
 | `WebhookEventTypeProductCreated`         | product.created                          |

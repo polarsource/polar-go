@@ -27,6 +27,12 @@ type RefundDispute struct {
 	TaxAmount int64 `json:"tax_amount"`
 	// Currency code of the dispute.
 	Currency string `json:"currency"`
+	// The reason for the dispute as reported by the card network (e.g. `fraudulent`, `product_not_received`). `None` until the processor reports it.
+	Reason *string `json:"reason"`
+	// Deadline to submit evidence in response to the dispute. `None` when no response is required.
+	EvidenceDueBy *time.Time `json:"evidence_due_by"`
+	// Whether the evidence submission deadline has passed.
+	PastDue bool `json:"past_due"`
 	// The ID of the order associated with the dispute.
 	OrderID string `json:"order_id"`
 	// The ID of the payment associated with the dispute.
@@ -105,6 +111,27 @@ func (r *RefundDispute) GetCurrency() string {
 		return ""
 	}
 	return r.Currency
+}
+
+func (r *RefundDispute) GetReason() *string {
+	if r == nil {
+		return nil
+	}
+	return r.Reason
+}
+
+func (r *RefundDispute) GetEvidenceDueBy() *time.Time {
+	if r == nil {
+		return nil
+	}
+	return r.EvidenceDueBy
+}
+
+func (r *RefundDispute) GetPastDue() bool {
+	if r == nil {
+		return false
+	}
+	return r.PastDue
 }
 
 func (r *RefundDispute) GetOrderID() string {

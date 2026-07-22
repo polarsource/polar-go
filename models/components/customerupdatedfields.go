@@ -95,6 +95,7 @@ func (u CustomerUpdatedFieldsMetadata) MarshalJSON() ([]byte, error) {
 
 type CustomerUpdatedFields struct {
 	Name           *string                                  `json:"name,omitempty"`
+	BillingName    *string                                  `json:"billing_name,omitempty"`
 	Email          *string                                  `json:"email,omitempty"`
 	BillingAddress *AddressDict                             `json:"billing_address,omitempty"`
 	TaxID          *string                                  `json:"tax_id,omitempty"`
@@ -117,6 +118,13 @@ func (c *CustomerUpdatedFields) GetName() *string {
 		return nil
 	}
 	return c.Name
+}
+
+func (c *CustomerUpdatedFields) GetBillingName() *string {
+	if c == nil {
+		return nil
+	}
+	return c.BillingName
 }
 
 func (c *CustomerUpdatedFields) GetEmail() *string {

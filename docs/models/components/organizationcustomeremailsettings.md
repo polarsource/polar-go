@@ -11,6 +11,8 @@
 | `SubscriptionCycled`                  | `bool`                                | :heavy_check_mark:                    | N/A                                   |
 | `SubscriptionCycledAfterTrial`        | `bool`                                | :heavy_check_mark:                    | N/A                                   |
 | `SubscriptionPastDue`                 | `bool`                                | :heavy_check_mark:                    | N/A                                   |
+| `SubscriptionPaused`                  | `bool`                                | :heavy_check_mark:                    | N/A                                   |
+| `SubscriptionResumed`                 | `bool`                                | :heavy_check_mark:                    | N/A                                   |
 | `SubscriptionRenewalReminder`         | `bool`                                | :heavy_check_mark:                    | N/A                                   |
 | `SubscriptionRevoked`                 | `bool`                                | :heavy_check_mark:                    | N/A                                   |
 | `SubscriptionTrialConversionReminder` | `bool`                                | :heavy_check_mark:                    | N/A                                   |

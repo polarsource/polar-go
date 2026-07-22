@@ -1,95 +1,30 @@
-# CustomerPortal.Members
+# Customers.Members
 
 ## Overview
 
 ### Available Operations
 
-* [ListMembers](#listmembers) - List Members
-* [AddMember](#addmember) - Add Member
-* [RemoveMember](#removemember) - Remove Member
-* [UpdateMember](#updatemember) - Update Member
+* [Create](#create) - Create Member
+* [CreateExternal](#createexternal) - Create Member by Customer External ID
+* [Get](#get) - Get Member
+* [Delete](#delete) - Delete Member
+* [Update](#update) - Update Member
+* [GetExternal](#getexternal) - Get Member by External ID
+* [DeleteExternal](#deleteexternal) - Delete Member by External ID
+* [UpdateExternal](#updateexternal) - Update Member by External ID
 
-## ListMembers
+## Create
 
-List all members of the customer's team.
+Create a new member for a customer.
 
-Only available to owners and billing managers of team customers.
+Only B2B customers with the member management feature enabled can add members.
+The authenticated user or organization must have access to the customer's organization.
 
-### Example Usage
-
-<!-- UsageSnippet language="go" operationID="customer_portal:members:list_members" method="get" path="/v1/customer-portal/members" -->
-```go
-package main
-
-import(
-	"context"
-	"os"
-	polargo "github.com/polarsource/polar-go"
-	"log"
-)
-
-func main() {
-    ctx := context.Background()
-
-    s := polargo.New(
-        polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
-    )
-
-    res, err := s.CustomerPortal.Members.ListMembers(ctx, polargo.Pointer[int64](1), polargo.Pointer[int64](10))
-    if err != nil {
-        log.Fatal(err)
-    }
-    if res.ListResourceCustomerPortalMember != nil {
-        for {
-            // handle items
-
-            res, err = res.Next()
-
-            if err != nil {
-                // handle error
-            }
-
-            if res == nil {
-                break
-            }
-        }
-    }
-}
-```
-
-### Parameters
-
-| Parameter                                                | Type                                                     | Required                                                 | Description                                              |
-| -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- |
-| `ctx`                                                    | [context.Context](https://pkg.go.dev/context#Context)    | :heavy_check_mark:                                       | The context to use for the request.                      |
-| `page`                                                   | `*int64`                                                 | :heavy_minus_sign:                                       | Page number, defaults to 1.                              |
-| `limit`                                                  | `*int64`                                                 | :heavy_minus_sign:                                       | Size of a page, defaults to 10. Maximum is 100.          |
-| `opts`                                                   | [][operations.Option](../../models/operations/option.md) | :heavy_minus_sign:                                       | The options for this request.                            |
-
-### Response
-
-**[*operations.CustomerPortalMembersListMembersResponse](../../models/operations/customerportalmemberslistmembersresponse.md), error**
-
-### Errors
-
-| Error Type                    | Status Code                   | Content Type                  |
-| ----------------------------- | ----------------------------- | ----------------------------- |
-| apierrors.HTTPValidationError | 422                           | application/json              |
-| apierrors.APIError            | 4XX, 5XX                      | \*/\*                         |
-
-## AddMember
-
-Add a new member to the customer's team.
-
-Only available to owners and billing managers of team customers.
-
-Rules:
-- Cannot add a member with the owner role (there must be exactly one owner)
-- If a member with this email already exists, the existing member is returned
+**Scopes**: `members:write`
 
 ### Example Usage
 
-<!-- UsageSnippet language="go" operationID="customer_portal:members:add_member" method="post" path="/v1/customer-portal/members" -->
+<!-- UsageSnippet language="go" operationID="customers:members:create" method="post" path="/v1/customers/{id}/members" -->
 ```go
 package main
 
@@ -108,13 +43,15 @@ func main() {
         polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )
 
-    res, err := s.CustomerPortal.Members.AddMember(ctx, components.CustomerPortalMemberCreate{
-        Email: "Domenica.Schamberger@yahoo.com",
+    res, err := s.Customers.Members.Create(ctx, "<value>", components.MemberCreateFromCustomer{
+        Email: "member@example.com",
+        Name: polargo.Pointer("Jane Doe"),
+        ExternalID: polargo.Pointer("usr_1337"),
     })
     if err != nil {
         log.Fatal(err)
     }
-    if res.CustomerPortalMember != nil {
+    if res.Member != nil {
         // handle response
     }
 }
@@ -122,36 +59,99 @@ func main() {
 
 ### Parameters
 
-| Parameter                                                                                      | Type                                                                                           | Required                                                                                       | Description                                                                                    |
-| ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
-| `ctx`                                                                                          | [context.Context](https://pkg.go.dev/context#Context)                                          | :heavy_check_mark:                                                                             | The context to use for the request.                                                            |
-| `request`                                                                                      | [components.CustomerPortalMemberCreate](../../models/components/customerportalmembercreate.md) | :heavy_check_mark:                                                                             | The request object to use for the request.                                                     |
-| `opts`                                                                                         | [][operations.Option](../../models/operations/option.md)                                       | :heavy_minus_sign:                                                                             | The options for this request.                                                                  |
+| Parameter                                                                                  | Type                                                                                       | Required                                                                                   | Description                                                                                |
+| ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ |
+| `ctx`                                                                                      | [context.Context](https://pkg.go.dev/context#Context)                                      | :heavy_check_mark:                                                                         | The context to use for the request.                                                        |
+| `id`                                                                                       | `string`                                                                                   | :heavy_check_mark:                                                                         | The customer ID.                                                                           |
+| `memberCreateFromCustomer`                                                                 | [components.MemberCreateFromCustomer](../../models/components/membercreatefromcustomer.md) | :heavy_check_mark:                                                                         | N/A                                                                                        |
+| `opts`                                                                                     | [][operations.Option](../../models/operations/option.md)                                   | :heavy_minus_sign:                                                                         | The options for this request.                                                              |
 
 ### Response
 
-**[*operations.CustomerPortalMembersAddMemberResponse](../../models/operations/customerportalmembersaddmemberresponse.md), error**
+**[*operations.CustomersMembersCreateResponse](../../models/operations/customersmemberscreateresponse.md), error**
 
 ### Errors
 
 | Error Type                    | Status Code                   | Content Type                  |
 | ----------------------------- | ----------------------------- | ----------------------------- |
+| apierrors.NotPermitted        | 403                           | application/json              |
+| apierrors.ResourceNotFound    | 404                           | application/json              |
 | apierrors.HTTPValidationError | 422                           | application/json              |
 | apierrors.APIError            | 4XX, 5XX                      | \*/\*                         |
 
-## RemoveMember
+## CreateExternal
 
-Remove a member from the team.
+Create a new member for a customer identified by its external ID.
 
-Only available to owners and billing managers of team customers.
-
-Rules:
-- Cannot remove yourself
-- Cannot remove the only owner
+**Scopes**: `members:write`
 
 ### Example Usage
 
-<!-- UsageSnippet language="go" operationID="customer_portal:members:remove_member" method="delete" path="/v1/customer-portal/members/{id}" -->
+<!-- UsageSnippet language="go" operationID="customers:members:create_external" method="post" path="/v1/customers/external/{external_id}/members" -->
+```go
+package main
+
+import(
+	"context"
+	"os"
+	polargo "github.com/polarsource/polar-go"
+	"github.com/polarsource/polar-go/models/components"
+	"log"
+)
+
+func main() {
+    ctx := context.Background()
+
+    s := polargo.New(
+        polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
+    )
+
+    res, err := s.Customers.Members.CreateExternal(ctx, "<id>", components.MemberCreateFromCustomer{
+        Email: "member@example.com",
+        Name: polargo.Pointer("Jane Doe"),
+        ExternalID: polargo.Pointer("usr_1337"),
+    })
+    if err != nil {
+        log.Fatal(err)
+    }
+    if res.Member != nil {
+        // handle response
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                                                  | Type                                                                                       | Required                                                                                   | Description                                                                                |
+| ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ |
+| `ctx`                                                                                      | [context.Context](https://pkg.go.dev/context#Context)                                      | :heavy_check_mark:                                                                         | The context to use for the request.                                                        |
+| `externalID`                                                                               | `string`                                                                                   | :heavy_check_mark:                                                                         | The customer external ID.                                                                  |
+| `memberCreateFromCustomer`                                                                 | [components.MemberCreateFromCustomer](../../models/components/membercreatefromcustomer.md) | :heavy_check_mark:                                                                         | N/A                                                                                        |
+| `opts`                                                                                     | [][operations.Option](../../models/operations/option.md)                                   | :heavy_minus_sign:                                                                         | The options for this request.                                                              |
+
+### Response
+
+**[*operations.CustomersMembersCreateExternalResponse](../../models/operations/customersmemberscreateexternalresponse.md), error**
+
+### Errors
+
+| Error Type                            | Status Code                           | Content Type                          |
+| ------------------------------------- | ------------------------------------- | ------------------------------------- |
+| apierrors.NotPermitted                | 403                                   | application/json                      |
+| apierrors.ResourceNotFound            | 404                                   | application/json                      |
+| apierrors.AmbiguousExternalCustomerID | 409                                   | application/json                      |
+| apierrors.HTTPValidationError         | 422                                   | application/json                      |
+| apierrors.APIError                    | 4XX, 5XX                              | \*/\*                                 |
+
+## Get
+
+Get a member of a customer by its ID.
+
+**Scopes**: `members:read` `members:write`
+
+### Example Usage
+
+<!-- UsageSnippet language="go" operationID="customers:members:get" method="get" path="/v1/customers/{id}/members/{member_id}" -->
 ```go
 package main
 
@@ -169,7 +169,64 @@ func main() {
         polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )
 
-    res, err := s.CustomerPortal.Members.RemoveMember(ctx, "b61c5e87-cda5-4b14-93ee-71a695f42d9d")
+    res, err := s.Customers.Members.Get(ctx, "<value>", "a794a9c8-dc43-40b4-b2f5-ed16145e28ac")
+    if err != nil {
+        log.Fatal(err)
+    }
+    if res.Member != nil {
+        // handle response
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                | Type                                                     | Required                                                 | Description                                              |
+| -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- |
+| `ctx`                                                    | [context.Context](https://pkg.go.dev/context#Context)    | :heavy_check_mark:                                       | The context to use for the request.                      |
+| `id`                                                     | `string`                                                 | :heavy_check_mark:                                       | The customer ID.                                         |
+| `memberID`                                               | `string`                                                 | :heavy_check_mark:                                       | N/A                                                      |
+| `opts`                                                   | [][operations.Option](../../models/operations/option.md) | :heavy_minus_sign:                                       | The options for this request.                            |
+
+### Response
+
+**[*operations.CustomersMembersGetResponse](../../models/operations/customersmembersgetresponse.md), error**
+
+### Errors
+
+| Error Type                    | Status Code                   | Content Type                  |
+| ----------------------------- | ----------------------------- | ----------------------------- |
+| apierrors.ResourceNotFound    | 404                           | application/json              |
+| apierrors.HTTPValidationError | 422                           | application/json              |
+| apierrors.APIError            | 4XX, 5XX                      | \*/\*                         |
+
+## Delete
+
+Delete a member of a customer.
+
+**Scopes**: `members:write`
+
+### Example Usage
+
+<!-- UsageSnippet language="go" operationID="customers:members:delete" method="delete" path="/v1/customers/{id}/members/{member_id}" -->
+```go
+package main
+
+import(
+	"context"
+	"os"
+	polargo "github.com/polarsource/polar-go"
+	"log"
+)
+
+func main() {
+    ctx := context.Background()
+
+    s := polargo.New(
+        polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
+    )
+
+    res, err := s.Customers.Members.Delete(ctx, "<value>", "a6d6f519-f76e-49a0-9868-b346c98100a6")
     if err != nil {
         log.Fatal(err)
     }
@@ -184,33 +241,33 @@ func main() {
 | Parameter                                                | Type                                                     | Required                                                 | Description                                              |
 | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- |
 | `ctx`                                                    | [context.Context](https://pkg.go.dev/context#Context)    | :heavy_check_mark:                                       | The context to use for the request.                      |
-| `id`                                                     | `string`                                                 | :heavy_check_mark:                                       | N/A                                                      |
+| `id`                                                     | `string`                                                 | :heavy_check_mark:                                       | The customer ID.                                         |
+| `memberID`                                               | `string`                                                 | :heavy_check_mark:                                       | N/A                                                      |
 | `opts`                                                   | [][operations.Option](../../models/operations/option.md) | :heavy_minus_sign:                                       | The options for this request.                            |
 
 ### Response
 
-**[*operations.CustomerPortalMembersRemoveMemberResponse](../../models/operations/customerportalmembersremovememberresponse.md), error**
+**[*operations.CustomersMembersDeleteResponse](../../models/operations/customersmembersdeleteresponse.md), error**
 
 ### Errors
 
 | Error Type                    | Status Code                   | Content Type                  |
 | ----------------------------- | ----------------------------- | ----------------------------- |
+| apierrors.ResourceNotFound    | 404                           | application/json              |
 | apierrors.HTTPValidationError | 422                           | application/json              |
 | apierrors.APIError            | 4XX, 5XX                      | \*/\*                         |
 
-## UpdateMember
+## Update
 
-Update a member's role.
+Update a member of a customer.
 
-Only available to owners and billing managers of team customers.
+Only name, email and role can be updated.
 
-Rules:
-- Cannot modify your own role (to prevent self-demotion)
-- Customer must have exactly one owner at all times
+**Scopes**: `members:write`
 
 ### Example Usage
 
-<!-- UsageSnippet language="go" operationID="customer_portal:members:update_member" method="patch" path="/v1/customer-portal/members/{id}" -->
+<!-- UsageSnippet language="go" operationID="customers:members:update" method="patch" path="/v1/customers/{id}/members/{member_id}" -->
 ```go
 package main
 
@@ -229,11 +286,13 @@ func main() {
         polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )
 
-    res, err := s.CustomerPortal.Members.UpdateMember(ctx, "8319ae11-ed5f-4642-81e4-4b40731df195", components.CustomerPortalMemberUpdate{})
+    res, err := s.Customers.Members.Update(ctx, "<value>", "f48ea05d-6a60-4bb1-b3d9-4b3cd7194f3a", components.MemberUpdate{
+        Name: polargo.Pointer("Jane Doe"),
+    })
     if err != nil {
         log.Fatal(err)
     }
-    if res.CustomerPortalMember != nil {
+    if res.Member != nil {
         // handle response
     }
 }
@@ -241,20 +300,200 @@ func main() {
 
 ### Parameters
 
-| Parameter                                                                                      | Type                                                                                           | Required                                                                                       | Description                                                                                    |
-| ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
-| `ctx`                                                                                          | [context.Context](https://pkg.go.dev/context#Context)                                          | :heavy_check_mark:                                                                             | The context to use for the request.                                                            |
-| `id`                                                                                           | `string`                                                                                       | :heavy_check_mark:                                                                             | N/A                                                                                            |
-| `customerPortalMemberUpdate`                                                                   | [components.CustomerPortalMemberUpdate](../../models/components/customerportalmemberupdate.md) | :heavy_check_mark:                                                                             | N/A                                                                                            |
-| `opts`                                                                                         | [][operations.Option](../../models/operations/option.md)                                       | :heavy_minus_sign:                                                                             | The options for this request.                                                                  |
+| Parameter                                                          | Type                                                               | Required                                                           | Description                                                        |
+| ------------------------------------------------------------------ | ------------------------------------------------------------------ | ------------------------------------------------------------------ | ------------------------------------------------------------------ |
+| `ctx`                                                              | [context.Context](https://pkg.go.dev/context#Context)              | :heavy_check_mark:                                                 | The context to use for the request.                                |
+| `id`                                                               | `string`                                                           | :heavy_check_mark:                                                 | The customer ID.                                                   |
+| `memberID`                                                         | `string`                                                           | :heavy_check_mark:                                                 | N/A                                                                |
+| `memberUpdate`                                                     | [components.MemberUpdate](../../models/components/memberupdate.md) | :heavy_check_mark:                                                 | N/A                                                                |
+| `opts`                                                             | [][operations.Option](../../models/operations/option.md)           | :heavy_minus_sign:                                                 | The options for this request.                                      |
 
 ### Response
 
-**[*operations.CustomerPortalMembersUpdateMemberResponse](../../models/operations/customerportalmembersupdatememberresponse.md), error**
+**[*operations.CustomersMembersUpdateResponse](../../models/operations/customersmembersupdateresponse.md), error**
 
 ### Errors
 
 | Error Type                    | Status Code                   | Content Type                  |
 | ----------------------------- | ----------------------------- | ----------------------------- |
+| apierrors.ResourceNotFound    | 404                           | application/json              |
 | apierrors.HTTPValidationError | 422                           | application/json              |
 | apierrors.APIError            | 4XX, 5XX                      | \*/\*                         |
+
+## GetExternal
+
+Get a member by external ID for a customer identified by its external ID.
+
+**Scopes**: `members:read` `members:write`
+
+### Example Usage
+
+<!-- UsageSnippet language="go" operationID="customers:members:get_external" method="get" path="/v1/customers/external/{external_id}/members/{member_external_id}" -->
+```go
+package main
+
+import(
+	"context"
+	"os"
+	polargo "github.com/polarsource/polar-go"
+	"log"
+)
+
+func main() {
+    ctx := context.Background()
+
+    s := polargo.New(
+        polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
+    )
+
+    res, err := s.Customers.Members.GetExternal(ctx, "<id>", "<id>")
+    if err != nil {
+        log.Fatal(err)
+    }
+    if res.Member != nil {
+        // handle response
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                | Type                                                     | Required                                                 | Description                                              |
+| -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- |
+| `ctx`                                                    | [context.Context](https://pkg.go.dev/context#Context)    | :heavy_check_mark:                                       | The context to use for the request.                      |
+| `externalID`                                             | `string`                                                 | :heavy_check_mark:                                       | The customer external ID.                                |
+| `memberExternalID`                                       | `string`                                                 | :heavy_check_mark:                                       | The member external ID.                                  |
+| `opts`                                                   | [][operations.Option](../../models/operations/option.md) | :heavy_minus_sign:                                       | The options for this request.                            |
+
+### Response
+
+**[*operations.CustomersMembersGetExternalResponse](../../models/operations/customersmembersgetexternalresponse.md), error**
+
+### Errors
+
+| Error Type                            | Status Code                           | Content Type                          |
+| ------------------------------------- | ------------------------------------- | ------------------------------------- |
+| apierrors.ResourceNotFound            | 404                                   | application/json                      |
+| apierrors.AmbiguousExternalCustomerID | 409                                   | application/json                      |
+| apierrors.HTTPValidationError         | 422                                   | application/json                      |
+| apierrors.APIError                    | 4XX, 5XX                              | \*/\*                                 |
+
+## DeleteExternal
+
+Delete a member by external ID for a customer identified by its external ID.
+
+**Scopes**: `members:write`
+
+### Example Usage
+
+<!-- UsageSnippet language="go" operationID="customers:members:delete_external" method="delete" path="/v1/customers/external/{external_id}/members/{member_external_id}" -->
+```go
+package main
+
+import(
+	"context"
+	"os"
+	polargo "github.com/polarsource/polar-go"
+	"log"
+)
+
+func main() {
+    ctx := context.Background()
+
+    s := polargo.New(
+        polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
+    )
+
+    res, err := s.Customers.Members.DeleteExternal(ctx, "<id>", "<id>")
+    if err != nil {
+        log.Fatal(err)
+    }
+    if res != nil {
+        // handle response
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                | Type                                                     | Required                                                 | Description                                              |
+| -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- |
+| `ctx`                                                    | [context.Context](https://pkg.go.dev/context#Context)    | :heavy_check_mark:                                       | The context to use for the request.                      |
+| `externalID`                                             | `string`                                                 | :heavy_check_mark:                                       | The customer external ID.                                |
+| `memberExternalID`                                       | `string`                                                 | :heavy_check_mark:                                       | The member external ID.                                  |
+| `opts`                                                   | [][operations.Option](../../models/operations/option.md) | :heavy_minus_sign:                                       | The options for this request.                            |
+
+### Response
+
+**[*operations.CustomersMembersDeleteExternalResponse](../../models/operations/customersmembersdeleteexternalresponse.md), error**
+
+### Errors
+
+| Error Type                            | Status Code                           | Content Type                          |
+| ------------------------------------- | ------------------------------------- | ------------------------------------- |
+| apierrors.ResourceNotFound            | 404                                   | application/json                      |
+| apierrors.AmbiguousExternalCustomerID | 409                                   | application/json                      |
+| apierrors.HTTPValidationError         | 422                                   | application/json                      |
+| apierrors.APIError                    | 4XX, 5XX                              | \*/\*                                 |
+
+## UpdateExternal
+
+Update a member by external ID for a customer identified by its external ID.
+
+**Scopes**: `members:write`
+
+### Example Usage
+
+<!-- UsageSnippet language="go" operationID="customers:members:update_external" method="patch" path="/v1/customers/external/{external_id}/members/{member_external_id}" -->
+```go
+package main
+
+import(
+	"context"
+	"os"
+	polargo "github.com/polarsource/polar-go"
+	"github.com/polarsource/polar-go/models/components"
+	"log"
+)
+
+func main() {
+    ctx := context.Background()
+
+    s := polargo.New(
+        polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
+    )
+
+    res, err := s.Customers.Members.UpdateExternal(ctx, "<id>", "<id>", components.MemberUpdate{
+        Name: polargo.Pointer("Jane Doe"),
+    })
+    if err != nil {
+        log.Fatal(err)
+    }
+    if res.Member != nil {
+        // handle response
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                          | Type                                                               | Required                                                           | Description                                                        |
+| ------------------------------------------------------------------ | ------------------------------------------------------------------ | ------------------------------------------------------------------ | ------------------------------------------------------------------ |
+| `ctx`                                                              | [context.Context](https://pkg.go.dev/context#Context)              | :heavy_check_mark:                                                 | The context to use for the request.                                |
+| `externalID`                                                       | `string`                                                           | :heavy_check_mark:                                                 | The customer external ID.                                          |
+| `memberExternalID`                                                 | `string`                                                           | :heavy_check_mark:                                                 | The member external ID.                                            |
+| `memberUpdate`                                                     | [components.MemberUpdate](../../models/components/memberupdate.md) | :heavy_check_mark:                                                 | N/A                                                                |
+| `opts`                                                             | [][operations.Option](../../models/operations/option.md)           | :heavy_minus_sign:                                                 | The options for this request.                                      |
+
+### Response
+
+**[*operations.CustomersMembersUpdateExternalResponse](../../models/operations/customersmembersupdateexternalresponse.md), error**
+
+### Errors
+
+| Error Type                            | Status Code                           | Content Type                          |
+| ------------------------------------- | ------------------------------------- | ------------------------------------- |
+| apierrors.ResourceNotFound            | 404                                   | application/json                      |
+| apierrors.AmbiguousExternalCustomerID | 409                                   | application/json                      |
+| apierrors.HTTPValidationError         | 422                                   | application/json                      |
+| apierrors.APIError                    | 4XX, 5XX                              | \*/\*                                 |

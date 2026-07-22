@@ -801,17 +801,23 @@ type Organization struct {
 	Status  OrganizationStatus       `json:"status"`
 	// When the business details were submitted for review.
 	DetailsSubmittedAt *time.Time `json:"details_submitted_at"`
+	// Whether members must access this organization through its SSO connection.
+	SsoEnforced bool `json:"sso_enforced"`
 	// Default presentment currency. Used as fallback in checkout and customer portal, if the customer's local currency is not available.
 	DefaultPresentmentCurrency string            `json:"default_presentment_currency"`
 	DefaultTaxBehavior         TaxBehaviorOption `json:"default_tax_behavior"`
 	// Organization feature settings
 	FeatureSettings        *OrganizationFeatureSettings       `json:"feature_settings"`
 	SubscriptionSettings   OrganizationSubscriptionSettings   `json:"subscription_settings"`
-	NotificationSettings   OrganizationNotificationSettings   `json:"notification_settings"`
 	CustomerEmailSettings  OrganizationCustomerEmailSettings  `json:"customer_email_settings"`
 	CustomerPortalSettings OrganizationCustomerPortalSettings `json:"customer_portal_settings"`
 	// Two-letter country code (ISO 3166-1 alpha-2).
 	Country *CountryAlpha2 `json:"country,omitempty"`
+	// ID of the transactions account.
+	AccountID *string `json:"account_id"`
+	// ID of the payout account.
+	PayoutAccountID *string                  `json:"payout_account_id"`
+	Capabilities    OrganizationCapabilities `json:"capabilities"`
 }
 
 func (o Organization) MarshalJSON() ([]byte, error) {
@@ -916,6 +922,13 @@ func (o *Organization) GetDetailsSubmittedAt() *time.Time {
 	return o.DetailsSubmittedAt
 }
 
+func (o *Organization) GetSsoEnforced() bool {
+	if o == nil {
+		return false
+	}
+	return o.SsoEnforced
+}
+
 func (o *Organization) GetDefaultPresentmentCurrency() string {
 	if o == nil {
 		return ""
@@ -944,13 +957,6 @@ func (o *Organization) GetSubscriptionSettings() OrganizationSubscriptionSetting
 	return o.SubscriptionSettings
 }
 
-func (o *Organization) GetNotificationSettings() OrganizationNotificationSettings {
-	if o == nil {
-		return OrganizationNotificationSettings{}
-	}
-	return o.NotificationSettings
-}
-
 func (o *Organization) GetCustomerEmailSettings() OrganizationCustomerEmailSettings {
 	if o == nil {
 		return OrganizationCustomerEmailSettings{}
@@ -970,4 +976,25 @@ func (o *Organization) GetCountry() *CountryAlpha2 {
 		return nil
 	}
 	return o.Country
+}
+
+func (o *Organization) GetAccountID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.AccountID
+}
+
+func (o *Organization) GetPayoutAccountID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.PayoutAccountID
+}
+
+func (o *Organization) GetCapabilities() OrganizationCapabilities {
+	if o == nil {
+		return OrganizationCapabilities{}
+	}
+	return o.Capabilities
 }

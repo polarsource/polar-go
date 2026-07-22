@@ -21,6 +21,24 @@ customerSubscriptionUpdate := components.CreateCustomerSubscriptionUpdateCustome
 customerSubscriptionUpdate := components.CreateCustomerSubscriptionUpdateCustomerSubscriptionCancel(components.CustomerSubscriptionCancel{/* values here */})
 ```
 
+### CustomerSubscriptionPause
+
+```go
+customerSubscriptionUpdate := components.CreateCustomerSubscriptionUpdateCustomerSubscriptionPause(components.CustomerSubscriptionPause{/* values here */})
+```
+
+### CustomerSubscriptionResume
+
+```go
+customerSubscriptionUpdate := components.CreateCustomerSubscriptionUpdateCustomerSubscriptionResume(components.CustomerSubscriptionResume{/* values here */})
+```
+
+### CustomerSubscriptionUpdateClear
+
+```go
+customerSubscriptionUpdate := components.CreateCustomerSubscriptionUpdateCustomerSubscriptionUpdateClear(components.CustomerSubscriptionUpdateClear{/* values here */})
+```
+
 ## Union Discrimination
 
 Use the `Type` field to determine which variant is active, then access the corresponding field:
@@ -33,5 +51,11 @@ switch customerSubscriptionUpdate.Type {
 		// customerSubscriptionUpdate.CustomerSubscriptionUpdateSeats is populated
 	case components.CustomerSubscriptionUpdateTypeCustomerSubscriptionCancel:
 		// customerSubscriptionUpdate.CustomerSubscriptionCancel is populated
+	case components.CustomerSubscriptionUpdateTypeCustomerSubscriptionPause:
+		// customerSubscriptionUpdate.CustomerSubscriptionPause is populated
+	case components.CustomerSubscriptionUpdateTypeCustomerSubscriptionResume:
+		// customerSubscriptionUpdate.CustomerSubscriptionResume is populated
+	case components.CustomerSubscriptionUpdateTypeCustomerSubscriptionUpdateClear:
+		// customerSubscriptionUpdate.CustomerSubscriptionUpdateClear is populated
 }
 ```

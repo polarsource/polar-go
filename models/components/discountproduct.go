@@ -26,9 +26,13 @@ type DiscountProduct struct {
 	Description *string           `json:"description"`
 	Visibility  ProductVisibility `json:"visibility"`
 	// The recurring interval of the product. If `None`, the product is a one-time purchase.
-	RecurringInterval *SubscriptionRecurringInterval `json:"recurring_interval"`
+	RecurringInterval *RecurringInterval `json:"recurring_interval"`
 	// Number of interval units of the subscription. If this is set to 1 the charge will happen every interval (e.g. every month), if set to 2 it will be every other month, and so on. None for one-time products.
 	RecurringIntervalCount *int64 `json:"recurring_interval_count"`
+	// The meter cycle of the product, independent of the billing interval. If `None`, metered concerns follow the billing interval.
+	MeterInterval *RecurringInterval `json:"meter_interval"`
+	// Number of meter interval units. None when no meter cycle is set.
+	MeterIntervalCount *int64 `json:"meter_interval_count"`
 	// Whether the product is a subscription.
 	IsRecurring bool `json:"is_recurring"`
 	// Whether the product is archived and no longer available.
@@ -111,7 +115,7 @@ func (d *DiscountProduct) GetVisibility() ProductVisibility {
 	return d.Visibility
 }
 
-func (d *DiscountProduct) GetRecurringInterval() *SubscriptionRecurringInterval {
+func (d *DiscountProduct) GetRecurringInterval() *RecurringInterval {
 	if d == nil {
 		return nil
 	}
@@ -123,6 +127,20 @@ func (d *DiscountProduct) GetRecurringIntervalCount() *int64 {
 		return nil
 	}
 	return d.RecurringIntervalCount
+}
+
+func (d *DiscountProduct) GetMeterInterval() *RecurringInterval {
+	if d == nil {
+		return nil
+	}
+	return d.MeterInterval
+}
+
+func (d *DiscountProduct) GetMeterIntervalCount() *int64 {
+	if d == nil {
+		return nil
+	}
+	return d.MeterIntervalCount
 }
 
 func (d *DiscountProduct) GetIsRecurring() bool {

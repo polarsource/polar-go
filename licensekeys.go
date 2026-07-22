@@ -36,14 +36,7 @@ func newLicenseKeys(rootSDK *Polar, sdkConfig config.SDKConfiguration, hooks *ho
 // Get license keys connected to the given organization & filters.
 //
 // **Scopes**: `license_keys:read` `license_keys:write`
-func (s *LicenseKeys) List(ctx context.Context, organizationID *operations.LicenseKeysListQueryParamOrganizationIDFilter, benefitID *operations.QueryParamBenefitIDFilter, page *int64, limit *int64, opts ...operations.Option) (*operations.LicenseKeysListResponse, error) {
-	request := operations.LicenseKeysListRequest{
-		OrganizationID: organizationID,
-		BenefitID:      benefitID,
-		Page:           page,
-		Limit:          limit,
-	}
-
+func (s *LicenseKeys) List(ctx context.Context, request operations.LicenseKeysListRequest, opts ...operations.Option) (*operations.LicenseKeysListResponse, error) {
 	o := operations.Options{}
 	supportedOptions := []string{
 		operations.SupportedOptionRetries,
@@ -183,7 +176,7 @@ func (s *LicenseKeys) List(ctx context.Context, organizationID *operations.Licen
 
 			_, err = s.hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
 			return nil, err
-		} else if utils.MatchStatusCodes([]string{"401", "404", "422", "4XX", "5XX"}, httpRes.StatusCode) {
+		} else if utils.MatchStatusCodes([]string{"4XX", "5XX"}, httpRes.StatusCode) {
 			_httpRes, err := s.hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
 			if err != nil {
 				return nil, err
@@ -215,8 +208,8 @@ func (s *LicenseKeys) List(ctx context.Context, organizationID *operations.Licen
 			return nil, err
 		}
 		var p int64 = 1
-		if page != nil {
-			p = *page
+		if request.Page != nil {
+			p = *request.Page
 		}
 		nP := int64(p + 1)
 		nPs, err := ajson.Eval(b, "$.pagination.max_page")
@@ -251,19 +244,17 @@ func (s *LicenseKeys) List(ctx context.Context, organizationID *operations.Licen
 		}
 
 		l := 0
-		if limit != nil {
-			l = int(*limit)
+		if request.Limit != nil {
+			l = int(*request.Limit)
 		}
 		if len(arr) < l {
 			return nil, nil
 		}
+		request.Page = &nP
 
 		return s.List(
 			ctx,
-			organizationID,
-			benefitID,
-			&nP,
-			limit,
+			request,
 			opts...,
 		)
 	}
@@ -521,7 +512,7 @@ func (s *LicenseKeys) Get(ctx context.Context, id string, opts ...operations.Opt
 
 			_, err = s.hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
 			return nil, err
-		} else if utils.MatchStatusCodes([]string{"401", "404", "422", "4XX", "5XX"}, httpRes.StatusCode) {
+		} else if utils.MatchStatusCodes([]string{"4XX", "5XX"}, httpRes.StatusCode) {
 			_httpRes, err := s.hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
 			if err != nil {
 				return nil, err
@@ -804,7 +795,7 @@ func (s *LicenseKeys) Update(ctx context.Context, id string, licenseKeyUpdate co
 
 			_, err = s.hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
 			return nil, err
-		} else if utils.MatchStatusCodes([]string{"401", "404", "422", "4XX", "5XX"}, httpRes.StatusCode) {
+		} else if utils.MatchStatusCodes([]string{"4XX", "5XX"}, httpRes.StatusCode) {
 			_httpRes, err := s.hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
 			if err != nil {
 				return nil, err
@@ -1080,7 +1071,7 @@ func (s *LicenseKeys) GetActivation(ctx context.Context, id string, activationID
 
 			_, err = s.hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
 			return nil, err
-		} else if utils.MatchStatusCodes([]string{"401", "404", "422", "4XX", "5XX"}, httpRes.StatusCode) {
+		} else if utils.MatchStatusCodes([]string{"4XX", "5XX"}, httpRes.StatusCode) {
 			_httpRes, err := s.hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
 			if err != nil {
 				return nil, err
@@ -1358,7 +1349,7 @@ func (s *LicenseKeys) Validate(ctx context.Context, request components.LicenseKe
 
 			_, err = s.hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
 			return nil, err
-		} else if utils.MatchStatusCodes([]string{"404", "422", "4XX", "5XX"}, httpRes.StatusCode) {
+		} else if utils.MatchStatusCodes([]string{"4XX", "5XX"}, httpRes.StatusCode) {
 			_httpRes, err := s.hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
 			if err != nil {
 				return nil, err
@@ -1615,7 +1606,7 @@ func (s *LicenseKeys) Activate(ctx context.Context, request components.LicenseKe
 
 			_, err = s.hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
 			return nil, err
-		} else if utils.MatchStatusCodes([]string{"403", "404", "422", "4XX", "5XX"}, httpRes.StatusCode) {
+		} else if utils.MatchStatusCodes([]string{"4XX", "5XX"}, httpRes.StatusCode) {
 			_httpRes, err := s.hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
 			if err != nil {
 				return nil, err
@@ -1893,7 +1884,7 @@ func (s *LicenseKeys) Deactivate(ctx context.Context, request components.License
 
 			_, err = s.hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
 			return nil, err
-		} else if utils.MatchStatusCodes([]string{"404", "422", "4XX", "5XX"}, httpRes.StatusCode) {
+		} else if utils.MatchStatusCodes([]string{"4XX", "5XX"}, httpRes.StatusCode) {
 			_httpRes, err := s.hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
 			if err != nil {
 				return nil, err

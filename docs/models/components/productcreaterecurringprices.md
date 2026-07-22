@@ -15,12 +15,6 @@ productCreateRecurringPrices := components.CreateProductCreateRecurringPricesCus
 productCreateRecurringPrices := components.CreateProductCreateRecurringPricesFixed(components.ProductPriceFixedCreate{/* values here */})
 ```
 
-### ProductPriceFreeCreate
-
-```go
-productCreateRecurringPrices := components.CreateProductCreateRecurringPricesFree(components.ProductPriceFreeCreate{/* values here */})
-```
-
 ### ProductPriceMeteredUnitCreate
 
 ```go
@@ -43,8 +37,6 @@ switch productCreateRecurringPrices.Type {
 		// productCreateRecurringPrices.ProductPriceCustomCreate is populated
 	case components.ProductCreateRecurringPricesTypeFixed:
 		// productCreateRecurringPrices.ProductPriceFixedCreate is populated
-	case components.ProductCreateRecurringPricesTypeFree:
-		// productCreateRecurringPrices.ProductPriceFreeCreate is populated
 	case components.ProductCreateRecurringPricesTypeMeteredUnit:
 		// productCreateRecurringPrices.ProductPriceMeteredUnitCreate is populated
 	case components.ProductCreateRecurringPricesTypeSeatBased:

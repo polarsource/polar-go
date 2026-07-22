@@ -18,3 +18,4 @@ value := components.SubscriptionProrationBehaviorInvoice
 | `SubscriptionProrationBehaviorInvoice`    | invoice                                   |
 | `SubscriptionProrationBehaviorProrate`    | prorate                                   |
 | `SubscriptionProrationBehaviorNextPeriod` | next_period                               |
+| `SubscriptionProrationBehaviorReset`      | reset                                     |

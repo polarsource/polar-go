@@ -85,3 +85,10 @@ func (b *BenefitsGetResponse) GetBenefitMeterCredit() *components.BenefitMeterCr
 	}
 	return nil
 }
+
+func (b *BenefitsGetResponse) GetBenefitSlackSharedChannel() *components.BenefitSlackSharedChannel {
+	if v := b.GetBenefit(); v != nil {
+		return v.BenefitSlackSharedChannel
+	}
+	return nil
+}

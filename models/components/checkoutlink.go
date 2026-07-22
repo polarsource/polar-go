@@ -144,6 +144,8 @@ type CheckoutLink struct {
 	RequireBillingAddress bool `json:"require_billing_address"`
 	// ID of the discount to apply to the checkout. If the discount is not applicable anymore when opening the checkout link, it'll be ignored.
 	DiscountID *string `json:"discount_id"`
+	// Preconfigured number of seats for seat-based pricing. When set, checkout sessions created from this link are locked to this number of seats and the customer won't be able to change it. All products on the link must use seat-based pricing and allow this number of seats. If the products no longer accommodate this value when the link is opened, it'll be ignored.
+	Seats *int64 `json:"seats"`
 	// The organization ID.
 	OrganizationID string                `json:"organization_id"`
 	Products       []CheckoutLinkProduct `json:"products"`
@@ -258,6 +260,13 @@ func (c *CheckoutLink) GetDiscountID() *string {
 		return nil
 	}
 	return c.DiscountID
+}
+
+func (c *CheckoutLink) GetSeats() *int64 {
+	if c == nil {
+		return nil
+	}
+	return c.Seats
 }
 
 func (c *CheckoutLink) GetOrganizationID() string {

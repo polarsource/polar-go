@@ -26,7 +26,7 @@ type ProductPriceCustom struct {
 	IsArchived bool `json:"is_archived"`
 	// The ID of the product owning the price.
 	ProductID string `json:"product_id"`
-	// The minimum amount the customer can pay. If 0, the price is 'free or pay what you want'. Defaults to 50 cents.
+	// The minimum amount the customer can pay. If 0, the price is 'free or pay what you want'.
 	MinimumAmount int64 `json:"minimum_amount"`
 	// The maximum amount the customer can pay.
 	MaximumAmount *int64 `json:"maximum_amount"`

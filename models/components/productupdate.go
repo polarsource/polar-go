@@ -121,7 +121,6 @@ type TwoType string
 const (
 	TwoTypeCustom      TwoType = "custom"
 	TwoTypeFixed       TwoType = "fixed"
-	TwoTypeFree        TwoType = "free"
 	TwoTypeMeteredUnit TwoType = "metered_unit"
 	TwoTypeSeatBased   TwoType = "seat_based"
 )
@@ -129,7 +128,6 @@ const (
 type Two struct {
 	ProductPriceFixedCreate       *ProductPriceFixedCreate       `queryParam:"inline" union:"member"`
 	ProductPriceCustomCreate      *ProductPriceCustomCreate      `queryParam:"inline" union:"member"`
-	ProductPriceFreeCreate        *ProductPriceFreeCreate        `queryParam:"inline" union:"member"`
 	ProductPriceSeatBasedCreate   *ProductPriceSeatBasedCreate   `queryParam:"inline" union:"member"`
 	ProductPriceMeteredUnitCreate *ProductPriceMeteredUnitCreate `queryParam:"inline" union:"member"`
 
@@ -151,15 +149,6 @@ func CreateTwoFixed(fixed ProductPriceFixedCreate) Two {
 	return Two{
 		ProductPriceFixedCreate: &fixed,
 		Type:                    typ,
-	}
-}
-
-func CreateTwoFree(free ProductPriceFreeCreate) Two {
-	typ := TwoTypeFree
-
-	return Two{
-		ProductPriceFreeCreate: &free,
-		Type:                   typ,
 	}
 }
 
@@ -211,15 +200,6 @@ func (u *Two) UnmarshalJSON(data []byte) error {
 		u.ProductPriceFixedCreate = productPriceFixedCreate
 		u.Type = TwoTypeFixed
 		return nil
-	case "free":
-		productPriceFreeCreate := new(ProductPriceFreeCreate)
-		if err := utils.UnmarshalJSON(data, &productPriceFreeCreate, "", true, nil); err != nil {
-			return fmt.Errorf("could not unmarshal `%s` into expected (AmountType == free) type ProductPriceFreeCreate within Two: %w", string(data), err)
-		}
-
-		u.ProductPriceFreeCreate = productPriceFreeCreate
-		u.Type = TwoTypeFree
-		return nil
 	case "metered_unit":
 		productPriceMeteredUnitCreate := new(ProductPriceMeteredUnitCreate)
 		if err := utils.UnmarshalJSON(data, &productPriceMeteredUnitCreate, "", true, nil); err != nil {
@@ -250,10 +230,6 @@ func (u Two) MarshalJSON() ([]byte, error) {
 
 	if u.ProductPriceCustomCreate != nil {
 		return utils.MarshalJSON(u.ProductPriceCustomCreate, "", true)
-	}
-
-	if u.ProductPriceFreeCreate != nil {
-		return utils.MarshalJSON(u.ProductPriceFreeCreate, "", true)
 	}
 
 	if u.ProductPriceSeatBasedCreate != nil {
@@ -352,7 +328,7 @@ type ProductUpdate struct {
 	// The description of the product.
 	Description *string `json:"description,omitempty"`
 	// The recurring interval of the product. If `None`, the product is a one-time purchase. **Can only be set on legacy recurring products. Once set, it can't be changed.**
-	RecurringInterval *SubscriptionRecurringInterval `json:"recurring_interval,omitempty"`
+	RecurringInterval *RecurringInterval `json:"recurring_interval,omitempty"`
 	// Number of interval units of the subscription. If this is set to 1 the charge will happen every interval (e.g. every month), if set to 2 it will be every other month, and so on. Once set, it can't be changed.**
 	RecurringIntervalCount *int64 `json:"recurring_interval_count,omitempty"`
 	// Whether the product is archived. If `true`, the product won't be available for purchase anymore. Existing customers will still have access to their benefits, and subscriptions will continue normally.
@@ -401,7 +377,7 @@ func (p *ProductUpdate) GetDescription() *string {
 	return p.Description
 }
 
-func (p *ProductUpdate) GetRecurringInterval() *SubscriptionRecurringInterval {
+func (p *ProductUpdate) GetRecurringInterval() *RecurringInterval {
 	if p == nil {
 		return nil
 	}

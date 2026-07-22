@@ -121,7 +121,6 @@ type ProductCreateOneTimePricesType string
 const (
 	ProductCreateOneTimePricesTypeCustom      ProductCreateOneTimePricesType = "custom"
 	ProductCreateOneTimePricesTypeFixed       ProductCreateOneTimePricesType = "fixed"
-	ProductCreateOneTimePricesTypeFree        ProductCreateOneTimePricesType = "free"
 	ProductCreateOneTimePricesTypeMeteredUnit ProductCreateOneTimePricesType = "metered_unit"
 	ProductCreateOneTimePricesTypeSeatBased   ProductCreateOneTimePricesType = "seat_based"
 )
@@ -129,7 +128,6 @@ const (
 type ProductCreateOneTimePrices struct {
 	ProductPriceFixedCreate       *ProductPriceFixedCreate       `queryParam:"inline" union:"member"`
 	ProductPriceCustomCreate      *ProductPriceCustomCreate      `queryParam:"inline" union:"member"`
-	ProductPriceFreeCreate        *ProductPriceFreeCreate        `queryParam:"inline" union:"member"`
 	ProductPriceSeatBasedCreate   *ProductPriceSeatBasedCreate   `queryParam:"inline" union:"member"`
 	ProductPriceMeteredUnitCreate *ProductPriceMeteredUnitCreate `queryParam:"inline" union:"member"`
 
@@ -151,15 +149,6 @@ func CreateProductCreateOneTimePricesFixed(fixed ProductPriceFixedCreate) Produc
 	return ProductCreateOneTimePrices{
 		ProductPriceFixedCreate: &fixed,
 		Type:                    typ,
-	}
-}
-
-func CreateProductCreateOneTimePricesFree(free ProductPriceFreeCreate) ProductCreateOneTimePrices {
-	typ := ProductCreateOneTimePricesTypeFree
-
-	return ProductCreateOneTimePrices{
-		ProductPriceFreeCreate: &free,
-		Type:                   typ,
 	}
 }
 
@@ -211,15 +200,6 @@ func (u *ProductCreateOneTimePrices) UnmarshalJSON(data []byte) error {
 		u.ProductPriceFixedCreate = productPriceFixedCreate
 		u.Type = ProductCreateOneTimePricesTypeFixed
 		return nil
-	case "free":
-		productPriceFreeCreate := new(ProductPriceFreeCreate)
-		if err := utils.UnmarshalJSON(data, &productPriceFreeCreate, "", true, nil); err != nil {
-			return fmt.Errorf("could not unmarshal `%s` into expected (AmountType == free) type ProductPriceFreeCreate within ProductCreateOneTimePrices: %w", string(data), err)
-		}
-
-		u.ProductPriceFreeCreate = productPriceFreeCreate
-		u.Type = ProductCreateOneTimePricesTypeFree
-		return nil
 	case "metered_unit":
 		productPriceMeteredUnitCreate := new(ProductPriceMeteredUnitCreate)
 		if err := utils.UnmarshalJSON(data, &productPriceMeteredUnitCreate, "", true, nil); err != nil {
@@ -252,10 +232,6 @@ func (u ProductCreateOneTimePrices) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.ProductPriceCustomCreate, "", true)
 	}
 
-	if u.ProductPriceFreeCreate != nil {
-		return utils.MarshalJSON(u.ProductPriceFreeCreate, "", true)
-	}
-
 	if u.ProductPriceSeatBasedCreate != nil {
 		return utils.MarshalJSON(u.ProductPriceSeatBasedCreate, "", true)
 	}
@@ -285,7 +261,7 @@ type ProductCreateOneTime struct {
 	// The description of the product.
 	Description *string            `json:"description,omitempty"`
 	Visibility  *ProductVisibility `json:"visibility,omitempty"`
-	// List of available prices for this product. It should contain at most one static price (fixed, custom or free), and any number of metered prices. Metered prices are not supported on one-time purchase products.
+	// List of available prices for this product. It may combine at most one fixed price with one seat-based price (billed as `fixed + seat_charge`), or contain a single custom or free price, plus any number of metered prices. A free price cannot be combined with other prices, and a custom price cannot be combined with a fixed or seat-based price. Metered prices are not supported on one-time purchase products.
 	Prices []ProductCreateOneTimePrices `json:"prices"`
 	// List of file IDs. Each one must be on the same organization as the product, of type `product_media` and correctly uploaded.
 	Medias []string `json:"medias,omitempty"`

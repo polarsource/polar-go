@@ -135,6 +135,8 @@ type BenefitCustomCreate struct {
 	Description string `json:"description"`
 	// The ID of the organization owning the benefit. **Required unless you use an organization token.**
 	OrganizationID *string `json:"organization_id,omitempty"`
+	// The visibility of the benefit in the customer portal.
+	Visibility *BenefitVisibility `json:"visibility,omitempty"`
 	// Properties for creating a benefit of type `custom`.
 	Properties BenefitCustomCreateProperties `json:"properties"`
 }
@@ -173,6 +175,13 @@ func (b *BenefitCustomCreate) GetOrganizationID() *string {
 		return nil
 	}
 	return b.OrganizationID
+}
+
+func (b *BenefitCustomCreate) GetVisibility() *BenefitVisibility {
+	if b == nil {
+		return nil
+	}
+	return b.Visibility
 }
 
 func (b *BenefitCustomCreate) GetProperties() BenefitCustomCreateProperties {

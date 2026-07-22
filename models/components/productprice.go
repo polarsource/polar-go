@@ -14,7 +14,6 @@ type ProductPriceType string
 const (
 	ProductPriceTypeCustom      ProductPriceType = "custom"
 	ProductPriceTypeFixed       ProductPriceType = "fixed"
-	ProductPriceTypeFree        ProductPriceType = "free"
 	ProductPriceTypeMeteredUnit ProductPriceType = "metered_unit"
 	ProductPriceTypeSeatBased   ProductPriceType = "seat_based"
 )
@@ -22,7 +21,6 @@ const (
 type ProductPrice struct {
 	ProductPriceFixed       *ProductPriceFixed       `queryParam:"inline" union:"member"`
 	ProductPriceCustom      *ProductPriceCustom      `queryParam:"inline" union:"member"`
-	ProductPriceFree        *ProductPriceFree        `queryParam:"inline" union:"member"`
 	ProductPriceSeatBased   *ProductPriceSeatBased   `queryParam:"inline" union:"member"`
 	ProductPriceMeteredUnit *ProductPriceMeteredUnit `queryParam:"inline" union:"member"`
 
@@ -44,15 +42,6 @@ func CreateProductPriceFixed(fixed ProductPriceFixed) ProductPrice {
 	return ProductPrice{
 		ProductPriceFixed: &fixed,
 		Type:              typ,
-	}
-}
-
-func CreateProductPriceFree(free ProductPriceFree) ProductPrice {
-	typ := ProductPriceTypeFree
-
-	return ProductPrice{
-		ProductPriceFree: &free,
-		Type:             typ,
 	}
 }
 
@@ -104,15 +93,6 @@ func (u *ProductPrice) UnmarshalJSON(data []byte) error {
 		u.ProductPriceFixed = productPriceFixed
 		u.Type = ProductPriceTypeFixed
 		return nil
-	case "free":
-		productPriceFree := new(ProductPriceFree)
-		if err := utils.UnmarshalJSON(data, &productPriceFree, "", true, nil); err != nil {
-			return fmt.Errorf("could not unmarshal `%s` into expected (AmountType == free) type ProductPriceFree within ProductPrice: %w", string(data), err)
-		}
-
-		u.ProductPriceFree = productPriceFree
-		u.Type = ProductPriceTypeFree
-		return nil
 	case "metered_unit":
 		productPriceMeteredUnit := new(ProductPriceMeteredUnit)
 		if err := utils.UnmarshalJSON(data, &productPriceMeteredUnit, "", true, nil); err != nil {
@@ -143,10 +123,6 @@ func (u ProductPrice) MarshalJSON() ([]byte, error) {
 
 	if u.ProductPriceCustom != nil {
 		return utils.MarshalJSON(u.ProductPriceCustom, "", true)
-	}
-
-	if u.ProductPriceFree != nil {
-		return utils.MarshalJSON(u.ProductPriceFree, "", true)
 	}
 
 	if u.ProductPriceSeatBased != nil {

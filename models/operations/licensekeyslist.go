@@ -137,11 +137,77 @@ func (u QueryParamBenefitIDFilter) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type QueryParamBenefitIDFilter: all fields are null")
 }
 
+type LicenseKeyStatusFilterType string
+
+const (
+	LicenseKeyStatusFilterTypeLicenseKeyStatus        LicenseKeyStatusFilterType = "LicenseKeyStatus"
+	LicenseKeyStatusFilterTypeArrayOfLicenseKeyStatus LicenseKeyStatusFilterType = "arrayOfLicenseKeyStatus"
+)
+
+// LicenseKeyStatusFilter - Filter by license key status.
+type LicenseKeyStatusFilter struct {
+	LicenseKeyStatus        *components.LicenseKeyStatus  `queryParam:"inline" union:"member"`
+	ArrayOfLicenseKeyStatus []components.LicenseKeyStatus `queryParam:"inline" union:"member"`
+
+	Type LicenseKeyStatusFilterType
+}
+
+func CreateLicenseKeyStatusFilterLicenseKeyStatus(licenseKeyStatus components.LicenseKeyStatus) LicenseKeyStatusFilter {
+	typ := LicenseKeyStatusFilterTypeLicenseKeyStatus
+
+	return LicenseKeyStatusFilter{
+		LicenseKeyStatus: &licenseKeyStatus,
+		Type:             typ,
+	}
+}
+
+func CreateLicenseKeyStatusFilterArrayOfLicenseKeyStatus(arrayOfLicenseKeyStatus []components.LicenseKeyStatus) LicenseKeyStatusFilter {
+	typ := LicenseKeyStatusFilterTypeArrayOfLicenseKeyStatus
+
+	return LicenseKeyStatusFilter{
+		ArrayOfLicenseKeyStatus: arrayOfLicenseKeyStatus,
+		Type:                    typ,
+	}
+}
+
+func (u *LicenseKeyStatusFilter) UnmarshalJSON(data []byte) error {
+
+	var licenseKeyStatus components.LicenseKeyStatus = components.LicenseKeyStatus("")
+	if err := utils.UnmarshalJSON(data, &licenseKeyStatus, "", true, nil); err == nil {
+		u.LicenseKeyStatus = &licenseKeyStatus
+		u.Type = LicenseKeyStatusFilterTypeLicenseKeyStatus
+		return nil
+	}
+
+	var arrayOfLicenseKeyStatus []components.LicenseKeyStatus = []components.LicenseKeyStatus{}
+	if err := utils.UnmarshalJSON(data, &arrayOfLicenseKeyStatus, "", true, nil); err == nil {
+		u.ArrayOfLicenseKeyStatus = arrayOfLicenseKeyStatus
+		u.Type = LicenseKeyStatusFilterTypeArrayOfLicenseKeyStatus
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for LicenseKeyStatusFilter", string(data))
+}
+
+func (u LicenseKeyStatusFilter) MarshalJSON() ([]byte, error) {
+	if u.LicenseKeyStatus != nil {
+		return utils.MarshalJSON(u.LicenseKeyStatus, "", true)
+	}
+
+	if u.ArrayOfLicenseKeyStatus != nil {
+		return utils.MarshalJSON(u.ArrayOfLicenseKeyStatus, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type LicenseKeyStatusFilter: all fields are null")
+}
+
 type LicenseKeysListRequest struct {
 	// Filter by organization ID.
 	OrganizationID *LicenseKeysListQueryParamOrganizationIDFilter `queryParam:"style=form,explode=true,name=organization_id"`
 	// Filter by benefit ID.
 	BenefitID *QueryParamBenefitIDFilter `queryParam:"style=form,explode=true,name=benefit_id"`
+	// Filter by license key status.
+	Status *LicenseKeyStatusFilter `queryParam:"style=form,explode=true,name=status"`
 	// Page number, defaults to 1.
 	Page *int64 `default:"1" queryParam:"style=form,explode=true,name=page"`
 	// Size of a page, defaults to 10. Maximum is 100.
@@ -171,6 +237,13 @@ func (l *LicenseKeysListRequest) GetBenefitID() *QueryParamBenefitIDFilter {
 		return nil
 	}
 	return l.BenefitID
+}
+
+func (l *LicenseKeysListRequest) GetStatus() *LicenseKeyStatusFilter {
+	if l == nil {
+		return nil
+	}
+	return l.Status
 }
 
 func (l *LicenseKeysListRequest) GetPage() *int64 {

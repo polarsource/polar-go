@@ -158,8 +158,8 @@ type CustomerStateSubscription struct {
 	// The amount of the subscription.
 	Amount int64 `json:"amount"`
 	// The currency of the subscription.
-	Currency          string                        `json:"currency"`
-	RecurringInterval SubscriptionRecurringInterval `json:"recurring_interval"`
+	Currency          string            `json:"currency"`
+	RecurringInterval RecurringInterval `json:"recurring_interval"`
 	// The start timestamp of the current billing period.
 	CurrentPeriodStart time.Time `json:"current_period_start"`
 	// The end timestamp of the current billing period.
@@ -251,9 +251,9 @@ func (c *CustomerStateSubscription) GetCurrency() string {
 	return c.Currency
 }
 
-func (c *CustomerStateSubscription) GetRecurringInterval() SubscriptionRecurringInterval {
+func (c *CustomerStateSubscription) GetRecurringInterval() RecurringInterval {
 	if c == nil {
-		return SubscriptionRecurringInterval("")
+		return RecurringInterval("")
 	}
 	return c.RecurringInterval
 }

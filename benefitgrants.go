@@ -33,7 +33,7 @@ func newBenefitGrants(rootSDK *Polar, sdkConfig config.SDKConfiguration, hooks *
 }
 
 // List Benefit Grants
-// List benefit grants across all benefits for the authenticated organization.
+// List benefit grants across all benefits accessible to the authenticated subject.
 //
 // **Scopes**: `benefits:read` `benefits:write`
 func (s *BenefitGrants) List(ctx context.Context, request operations.BenefitGrantsListRequest, opts ...operations.Option) (*operations.BenefitGrantsListResponse, error) {
@@ -176,7 +176,7 @@ func (s *BenefitGrants) List(ctx context.Context, request operations.BenefitGran
 
 			_, err = s.hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
 			return nil, err
-		} else if utils.MatchStatusCodes([]string{"422", "4XX", "5XX"}, httpRes.StatusCode) {
+		} else if utils.MatchStatusCodes([]string{"4XX", "5XX"}, httpRes.StatusCode) {
 			_httpRes, err := s.hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
 			if err != nil {
 				return nil, err

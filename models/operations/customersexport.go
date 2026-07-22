@@ -88,8 +88,6 @@ func (c *CustomersExportRequest) GetOrganizationID() *CustomersExportQueryParamO
 type CustomersExportResponse struct {
 	HTTPMeta components.HTTPMetadata `json:"-"`
 	// Successful Response
-	Any any
-	// Successful Response
 	Res *string
 }
 
@@ -98,13 +96,6 @@ func (c *CustomersExportResponse) GetHTTPMeta() components.HTTPMetadata {
 		return components.HTTPMetadata{}
 	}
 	return c.HTTPMeta
-}
-
-func (c *CustomersExportResponse) GetAny() any {
-	if c == nil {
-		return nil
-	}
-	return c.Any
 }
 
 func (c *CustomersExportResponse) GetRes() *string {

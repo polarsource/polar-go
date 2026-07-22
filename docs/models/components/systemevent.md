@@ -141,10 +141,34 @@ systemEvent := components.CreateSystemEventSubscriptionCreated(components.Subscr
 systemEvent := components.CreateSystemEventSubscriptionCycled(components.SubscriptionCycledEvent{/* values here */})
 ```
 
+### SubscriptionPastDueEvent
+
+```go
+systemEvent := components.CreateSystemEventSubscriptionPastDue(components.SubscriptionPastDueEvent{/* values here */})
+```
+
+### SubscriptionPausedEvent
+
+```go
+systemEvent := components.CreateSystemEventSubscriptionPaused(components.SubscriptionPausedEvent{/* values here */})
+```
+
 ### SubscriptionProductUpdatedEvent
 
 ```go
 systemEvent := components.CreateSystemEventSubscriptionProductUpdated(components.SubscriptionProductUpdatedEvent{/* values here */})
+```
+
+### SubscriptionReactivatedEvent
+
+```go
+systemEvent := components.CreateSystemEventSubscriptionReactivated(components.SubscriptionReactivatedEvent{/* values here */})
+```
+
+### SubscriptionResumedEvent
+
+```go
+systemEvent := components.CreateSystemEventSubscriptionResumed(components.SubscriptionResumedEvent{/* values here */})
 ```
 
 ### SubscriptionRevokedEvent
@@ -163,6 +187,12 @@ systemEvent := components.CreateSystemEventSubscriptionSeatsUpdated(components.S
 
 ```go
 systemEvent := components.CreateSystemEventSubscriptionUncanceled(components.SubscriptionUncanceledEvent{/* values here */})
+```
+
+### SubscriptionUpdateClearedEvent
+
+```go
+systemEvent := components.CreateSystemEventSubscriptionUpdateCleared(components.SubscriptionUpdateClearedEvent{/* values here */})
 ```
 
 ### SubscriptionUpdatedEvent
@@ -223,14 +253,24 @@ switch systemEvent.Type {
 		// systemEvent.SubscriptionCreatedEvent is populated
 	case components.SystemEventTypeSubscriptionCycled:
 		// systemEvent.SubscriptionCycledEvent is populated
+	case components.SystemEventTypeSubscriptionPastDue:
+		// systemEvent.SubscriptionPastDueEvent is populated
+	case components.SystemEventTypeSubscriptionPaused:
+		// systemEvent.SubscriptionPausedEvent is populated
 	case components.SystemEventTypeSubscriptionProductUpdated:
 		// systemEvent.SubscriptionProductUpdatedEvent is populated
+	case components.SystemEventTypeSubscriptionReactivated:
+		// systemEvent.SubscriptionReactivatedEvent is populated
+	case components.SystemEventTypeSubscriptionResumed:
+		// systemEvent.SubscriptionResumedEvent is populated
 	case components.SystemEventTypeSubscriptionRevoked:
 		// systemEvent.SubscriptionRevokedEvent is populated
 	case components.SystemEventTypeSubscriptionSeatsUpdated:
 		// systemEvent.SubscriptionSeatsUpdatedEvent is populated
 	case components.SystemEventTypeSubscriptionUncanceled:
 		// systemEvent.SubscriptionUncanceledEvent is populated
+	case components.SystemEventTypeSubscriptionUpdateCleared:
+		// systemEvent.SubscriptionUpdateClearedEvent is populated
 	case components.SystemEventTypeSubscriptionUpdated:
 		// systemEvent.SubscriptionUpdatedEvent is populated
 }

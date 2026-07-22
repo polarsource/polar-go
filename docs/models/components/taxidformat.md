@@ -94,3 +94,4 @@ value := components.TaxIDFormatAdNrt
 | `TaxIDFormatVeRif`    | ve_rif                |
 | `TaxIDFormatVnTin`    | vn_tin                |
 | `TaxIDFormatZaVat`    | za_vat                |
+| `TaxIDFormatMuTan`    | mu_tan                |

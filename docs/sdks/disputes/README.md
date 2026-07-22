@@ -6,12 +6,13 @@
 
 * [List](#list) - List Disputes
 * [Get](#get) - Get Dispute
+* [Accept](#accept) - Accept Dispute
 
 ## List
 
 List disputes.
 
-**Scopes**: `disputes:read`
+**Scopes**: `disputes:read` `disputes:write`
 
 ### Example Usage
 
@@ -83,7 +84,7 @@ func main() {
 
 Get a dispute by ID.
 
-**Scopes**: `disputes:read`
+**Scopes**: `disputes:read` `disputes:write`
 
 ### Example Usage
 
@@ -132,5 +133,65 @@ func main() {
 | Error Type                    | Status Code                   | Content Type                  |
 | ----------------------------- | ----------------------------- | ----------------------------- |
 | apierrors.ResourceNotFound    | 404                           | application/json              |
+| apierrors.HTTPValidationError | 422                           | application/json              |
+| apierrors.APIError            | 4XX, 5XX                      | \*/\*                         |
+
+## Accept
+
+Accept a dispute, conceding the chargeback.
+
+Closes the dispute with the processor (settling it as `lost`) and records
+the merchant's decision on the dispute's support case.
+
+**Scopes**: `disputes:write`
+
+### Example Usage
+
+<!-- UsageSnippet language="go" operationID="disputes:accept" method="post" path="/v1/disputes/{id}/accept" -->
+```go
+package main
+
+import(
+	"context"
+	"os"
+	polargo "github.com/polarsource/polar-go"
+	"log"
+)
+
+func main() {
+    ctx := context.Background()
+
+    s := polargo.New(
+        polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
+    )
+
+    res, err := s.Disputes.Accept(ctx, "<value>")
+    if err != nil {
+        log.Fatal(err)
+    }
+    if res.Dispute != nil {
+        // handle response
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                | Type                                                     | Required                                                 | Description                                              |
+| -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- |
+| `ctx`                                                    | [context.Context](https://pkg.go.dev/context#Context)    | :heavy_check_mark:                                       | The context to use for the request.                      |
+| `id`                                                     | `string`                                                 | :heavy_check_mark:                                       | The dispute ID.                                          |
+| `opts`                                                   | [][operations.Option](../../models/operations/option.md) | :heavy_minus_sign:                                       | The options for this request.                            |
+
+### Response
+
+**[*operations.DisputesAcceptResponse](../../models/operations/disputesacceptresponse.md), error**
+
+### Errors
+
+| Error Type                    | Status Code                   | Content Type                  |
+| ----------------------------- | ----------------------------- | ----------------------------- |
+| apierrors.ResourceNotFound    | 404                           | application/json              |
+| apierrors.DisputeNotOpenError | 409                           | application/json              |
 | apierrors.HTTPValidationError | 422                           | application/json              |
 | apierrors.APIError            | 4XX, 5XX                      | \*/\*                         |

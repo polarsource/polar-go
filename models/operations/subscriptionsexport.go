@@ -88,8 +88,6 @@ func (s *SubscriptionsExportRequest) GetOrganizationID() *OrganizationID {
 type SubscriptionsExportResponse struct {
 	HTTPMeta components.HTTPMetadata `json:"-"`
 	// Successful Response
-	Any any
-	// Successful Response
 	Res *string
 }
 
@@ -98,13 +96,6 @@ func (s *SubscriptionsExportResponse) GetHTTPMeta() components.HTTPMetadata {
 		return components.HTTPMetadata{}
 	}
 	return s.HTTPMeta
-}
-
-func (s *SubscriptionsExportResponse) GetAny() any {
-	if s == nil {
-		return nil
-	}
-	return s.Any
 }
 
 func (s *SubscriptionsExportResponse) GetRes() *string {

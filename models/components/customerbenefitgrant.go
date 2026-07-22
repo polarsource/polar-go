@@ -11,23 +11,25 @@ import (
 type CustomerBenefitGrantType string
 
 const (
-	CustomerBenefitGrantTypeCustomerBenefitGrantDiscord          CustomerBenefitGrantType = "CustomerBenefitGrantDiscord"
-	CustomerBenefitGrantTypeCustomerBenefitGrantGitHubRepository CustomerBenefitGrantType = "CustomerBenefitGrantGitHubRepository"
-	CustomerBenefitGrantTypeCustomerBenefitGrantDownloadables    CustomerBenefitGrantType = "CustomerBenefitGrantDownloadables"
-	CustomerBenefitGrantTypeCustomerBenefitGrantLicenseKeys      CustomerBenefitGrantType = "CustomerBenefitGrantLicenseKeys"
-	CustomerBenefitGrantTypeCustomerBenefitGrantCustom           CustomerBenefitGrantType = "CustomerBenefitGrantCustom"
-	CustomerBenefitGrantTypeCustomerBenefitGrantMeterCredit      CustomerBenefitGrantType = "CustomerBenefitGrantMeterCredit"
-	CustomerBenefitGrantTypeCustomerBenefitGrantFeatureFlag      CustomerBenefitGrantType = "CustomerBenefitGrantFeatureFlag"
+	CustomerBenefitGrantTypeCustomerBenefitGrantDiscord            CustomerBenefitGrantType = "CustomerBenefitGrantDiscord"
+	CustomerBenefitGrantTypeCustomerBenefitGrantGitHubRepository   CustomerBenefitGrantType = "CustomerBenefitGrantGitHubRepository"
+	CustomerBenefitGrantTypeCustomerBenefitGrantDownloadables      CustomerBenefitGrantType = "CustomerBenefitGrantDownloadables"
+	CustomerBenefitGrantTypeCustomerBenefitGrantLicenseKeys        CustomerBenefitGrantType = "CustomerBenefitGrantLicenseKeys"
+	CustomerBenefitGrantTypeCustomerBenefitGrantCustom             CustomerBenefitGrantType = "CustomerBenefitGrantCustom"
+	CustomerBenefitGrantTypeCustomerBenefitGrantMeterCredit        CustomerBenefitGrantType = "CustomerBenefitGrantMeterCredit"
+	CustomerBenefitGrantTypeCustomerBenefitGrantFeatureFlag        CustomerBenefitGrantType = "CustomerBenefitGrantFeatureFlag"
+	CustomerBenefitGrantTypeCustomerBenefitGrantSlackSharedChannel CustomerBenefitGrantType = "CustomerBenefitGrantSlackSharedChannel"
 )
 
 type CustomerBenefitGrant struct {
-	CustomerBenefitGrantDiscord          *CustomerBenefitGrantDiscord          `queryParam:"inline" union:"member"`
-	CustomerBenefitGrantGitHubRepository *CustomerBenefitGrantGitHubRepository `queryParam:"inline" union:"member"`
-	CustomerBenefitGrantDownloadables    *CustomerBenefitGrantDownloadables    `queryParam:"inline" union:"member"`
-	CustomerBenefitGrantLicenseKeys      *CustomerBenefitGrantLicenseKeys      `queryParam:"inline" union:"member"`
-	CustomerBenefitGrantCustom           *CustomerBenefitGrantCustom           `queryParam:"inline" union:"member"`
-	CustomerBenefitGrantMeterCredit      *CustomerBenefitGrantMeterCredit      `queryParam:"inline" union:"member"`
-	CustomerBenefitGrantFeatureFlag      *CustomerBenefitGrantFeatureFlag      `queryParam:"inline" union:"member"`
+	CustomerBenefitGrantDiscord            *CustomerBenefitGrantDiscord            `queryParam:"inline" union:"member"`
+	CustomerBenefitGrantGitHubRepository   *CustomerBenefitGrantGitHubRepository   `queryParam:"inline" union:"member"`
+	CustomerBenefitGrantDownloadables      *CustomerBenefitGrantDownloadables      `queryParam:"inline" union:"member"`
+	CustomerBenefitGrantLicenseKeys        *CustomerBenefitGrantLicenseKeys        `queryParam:"inline" union:"member"`
+	CustomerBenefitGrantCustom             *CustomerBenefitGrantCustom             `queryParam:"inline" union:"member"`
+	CustomerBenefitGrantMeterCredit        *CustomerBenefitGrantMeterCredit        `queryParam:"inline" union:"member"`
+	CustomerBenefitGrantFeatureFlag        *CustomerBenefitGrantFeatureFlag        `queryParam:"inline" union:"member"`
+	CustomerBenefitGrantSlackSharedChannel *CustomerBenefitGrantSlackSharedChannel `queryParam:"inline" union:"member"`
 
 	Type CustomerBenefitGrantType
 }
@@ -95,6 +97,15 @@ func CreateCustomerBenefitGrantCustomerBenefitGrantFeatureFlag(customerBenefitGr
 	}
 }
 
+func CreateCustomerBenefitGrantCustomerBenefitGrantSlackSharedChannel(customerBenefitGrantSlackSharedChannel CustomerBenefitGrantSlackSharedChannel) CustomerBenefitGrant {
+	typ := CustomerBenefitGrantTypeCustomerBenefitGrantSlackSharedChannel
+
+	return CustomerBenefitGrant{
+		CustomerBenefitGrantSlackSharedChannel: &customerBenefitGrantSlackSharedChannel,
+		Type:                                   typ,
+	}
+}
+
 func (u *CustomerBenefitGrant) UnmarshalJSON(data []byte) error {
 
 	var customerBenefitGrantDiscord CustomerBenefitGrantDiscord = CustomerBenefitGrantDiscord{}
@@ -146,6 +157,13 @@ func (u *CustomerBenefitGrant) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
+	var customerBenefitGrantSlackSharedChannel CustomerBenefitGrantSlackSharedChannel = CustomerBenefitGrantSlackSharedChannel{}
+	if err := utils.UnmarshalJSON(data, &customerBenefitGrantSlackSharedChannel, "", true, nil); err == nil {
+		u.CustomerBenefitGrantSlackSharedChannel = &customerBenefitGrantSlackSharedChannel
+		u.Type = CustomerBenefitGrantTypeCustomerBenefitGrantSlackSharedChannel
+		return nil
+	}
+
 	return fmt.Errorf("could not unmarshal `%s` into any supported union types for CustomerBenefitGrant", string(data))
 }
 
@@ -176,6 +194,10 @@ func (u CustomerBenefitGrant) MarshalJSON() ([]byte, error) {
 
 	if u.CustomerBenefitGrantFeatureFlag != nil {
 		return utils.MarshalJSON(u.CustomerBenefitGrantFeatureFlag, "", true)
+	}
+
+	if u.CustomerBenefitGrantSlackSharedChannel != nil {
+		return utils.MarshalJSON(u.CustomerBenefitGrantSlackSharedChannel, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type CustomerBenefitGrant: all fields are null")

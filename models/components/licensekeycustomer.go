@@ -88,15 +88,19 @@ type LicenseKeyCustomer struct {
 	EmailVerified bool         `json:"email_verified"`
 	Type          CustomerType `json:"type"`
 	// The name of the customer.
-	Name           *string                    `json:"name"`
+	Name *string `json:"name"`
+	// The name that should appear on the customer's invoices. Falls back to the customer name when not explicitly set.
+	BillingName    *string                    `json:"billing_name"`
 	BillingAddress *Address                   `json:"billing_address"`
 	TaxID          []*LicenseKeyCustomerTaxID `json:"tax_id"`
 	Locale         *string                    `json:"locale,omitempty"`
 	// The ID of the organization owning the customer.
 	OrganizationID string `json:"organization_id"`
+	// The ID of the customer's default payment method, if any. Use the payment methods endpoint to retrieve its details.
+	DefaultPaymentMethodID *string `json:"default_payment_method_id,omitempty"`
 	// Timestamp for when the customer was soft deleted.
 	DeletedAt *time.Time `json:"deleted_at"`
-	AvatarURL string     `json:"avatar_url"`
+	AvatarURL *string    `json:"avatar_url"`
 }
 
 func (l LicenseKeyCustomer) MarshalJSON() ([]byte, error) {
@@ -173,6 +177,13 @@ func (l *LicenseKeyCustomer) GetName() *string {
 	return l.Name
 }
 
+func (l *LicenseKeyCustomer) GetBillingName() *string {
+	if l == nil {
+		return nil
+	}
+	return l.BillingName
+}
+
 func (l *LicenseKeyCustomer) GetBillingAddress() *Address {
 	if l == nil {
 		return nil
@@ -201,6 +212,13 @@ func (l *LicenseKeyCustomer) GetOrganizationID() string {
 	return l.OrganizationID
 }
 
+func (l *LicenseKeyCustomer) GetDefaultPaymentMethodID() *string {
+	if l == nil {
+		return nil
+	}
+	return l.DefaultPaymentMethodID
+}
+
 func (l *LicenseKeyCustomer) GetDeletedAt() *time.Time {
 	if l == nil {
 		return nil
@@ -208,9 +226,9 @@ func (l *LicenseKeyCustomer) GetDeletedAt() *time.Time {
 	return l.DeletedAt
 }
 
-func (l *LicenseKeyCustomer) GetAvatarURL() string {
+func (l *LicenseKeyCustomer) GetAvatarURL() *string {
 	if l == nil {
-		return ""
+		return nil
 	}
 	return l.AvatarURL
 }

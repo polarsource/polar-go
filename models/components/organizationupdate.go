@@ -772,15 +772,16 @@ type OrganizationUpdate struct {
 	Details *OrganizationDetails `json:"details,omitempty"`
 	// Two-letter country code (ISO 3166-1 alpha-2).
 	Country                *CountryCountryAlpha2Input          `json:"country,omitempty"`
-	FeatureSettings        *OrganizationFeatureSettings        `json:"feature_settings,omitempty"`
+	FeatureSettings        *OrganizationFeatureSettingsUpdate  `json:"feature_settings,omitempty"`
 	SubscriptionSettings   *OrganizationSubscriptionSettings   `json:"subscription_settings,omitempty"`
-	NotificationSettings   *OrganizationNotificationSettings   `json:"notification_settings,omitempty"`
 	CustomerEmailSettings  *OrganizationCustomerEmailSettings  `json:"customer_email_settings,omitempty"`
 	CustomerPortalSettings *OrganizationCustomerPortalSettings `json:"customer_portal_settings,omitempty"`
 	// Default presentment currency for the organization
 	DefaultPresentmentCurrency *PresentmentCurrency `json:"default_presentment_currency,omitempty"`
 	// Default tax behavior applied on products.
 	DefaultTaxBehavior *TaxBehaviorOption `json:"default_tax_behavior,omitempty"`
+	// Whether members must access this organization through its SSO connection. Turning this on requires an active SSO session for this organization and at least one enabled SSO connection.
+	SsoEnforced *bool `json:"sso_enforced,omitempty"`
 }
 
 func (o *OrganizationUpdate) GetName() *string {
@@ -832,7 +833,7 @@ func (o *OrganizationUpdate) GetCountry() *CountryCountryAlpha2Input {
 	return o.Country
 }
 
-func (o *OrganizationUpdate) GetFeatureSettings() *OrganizationFeatureSettings {
+func (o *OrganizationUpdate) GetFeatureSettings() *OrganizationFeatureSettingsUpdate {
 	if o == nil {
 		return nil
 	}
@@ -844,13 +845,6 @@ func (o *OrganizationUpdate) GetSubscriptionSettings() *OrganizationSubscription
 		return nil
 	}
 	return o.SubscriptionSettings
-}
-
-func (o *OrganizationUpdate) GetNotificationSettings() *OrganizationNotificationSettings {
-	if o == nil {
-		return nil
-	}
-	return o.NotificationSettings
 }
 
 func (o *OrganizationUpdate) GetCustomerEmailSettings() *OrganizationCustomerEmailSettings {
@@ -879,4 +873,11 @@ func (o *OrganizationUpdate) GetDefaultTaxBehavior() *TaxBehaviorOption {
 		return nil
 	}
 	return o.DefaultTaxBehavior
+}
+
+func (o *OrganizationUpdate) GetSsoEnforced() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.SsoEnforced
 }

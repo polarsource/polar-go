@@ -109,13 +109,11 @@ func main() {
         polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )
 
-    res, err := s.Discounts.Create(ctx, components.CreateDiscountCreateDiscountPercentageOnceForeverDurationCreate(
-        components.DiscountPercentageOnceForeverDurationCreate{
-            Duration: components.DiscountDurationOnce,
-            Type: components.DiscountTypeFixed,
-            BasisPoints: 449604,
+    res, err := s.Discounts.Create(ctx, components.CreateDiscountCreateFixed(
+        components.DiscountFixedCreate{
             Name: "<value>",
             OrganizationID: polargo.Pointer("1dbfc517-0bbf-4301-9ba8-555ca42b9737"),
+            Duration: components.DiscountDurationOnce,
         },
     ))
     if err != nil {

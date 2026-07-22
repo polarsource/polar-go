@@ -24,6 +24,8 @@ type CardPayment struct {
 	// The payment method used.
 	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	method string `const:"card" json:"method"`
+	// What initiated this payment attempt, e.g. initial purchase, subscription renewal, or an automated dunning retry.
+	Trigger *PaymentTrigger `json:"trigger"`
 	// Error code, if the payment was declined.
 	DeclineReason *string `json:"decline_reason"`
 	// Human-readable error message, if the payment was declined.
@@ -102,6 +104,13 @@ func (c *CardPayment) GetCurrency() string {
 
 func (c *CardPayment) GetMethod() string {
 	return "card"
+}
+
+func (c *CardPayment) GetTrigger() *PaymentTrigger {
+	if c == nil {
+		return nil
+	}
+	return c.Trigger
 }
 
 func (c *CardPayment) GetDeclineReason() *string {

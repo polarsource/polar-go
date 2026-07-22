@@ -130,6 +130,8 @@ type BenefitMeterCreditUpdate struct {
 	Metadata map[string]BenefitMeterCreditUpdateMetadata `json:"metadata,omitempty"`
 	// The description of the benefit. Will be displayed on products having this benefit.
 	Description *string `json:"description,omitempty"`
+	// The visibility of the benefit in the customer portal.
+	Visibility *BenefitVisibility `json:"visibility,omitempty"`
 	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	type_      string                              `const:"meter_credit" json:"type"`
 	Properties *BenefitMeterCreditCreateProperties `json:"properties,omitempty"`
@@ -158,6 +160,13 @@ func (b *BenefitMeterCreditUpdate) GetDescription() *string {
 		return nil
 	}
 	return b.Description
+}
+
+func (b *BenefitMeterCreditUpdate) GetVisibility() *BenefitVisibility {
+	if b == nil {
+		return nil
+	}
+	return b.Visibility
 }
 
 func (b *BenefitMeterCreditUpdate) GetType() string {

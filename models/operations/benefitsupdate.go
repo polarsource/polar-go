@@ -12,23 +12,25 @@ import (
 type BenefitsUpdateBenefitUpdateType string
 
 const (
-	BenefitsUpdateBenefitUpdateTypeBenefitCustomUpdate           BenefitsUpdateBenefitUpdateType = "BenefitCustomUpdate"
-	BenefitsUpdateBenefitUpdateTypeBenefitDiscordUpdate          BenefitsUpdateBenefitUpdateType = "BenefitDiscordUpdate"
-	BenefitsUpdateBenefitUpdateTypeBenefitGitHubRepositoryUpdate BenefitsUpdateBenefitUpdateType = "BenefitGitHubRepositoryUpdate"
-	BenefitsUpdateBenefitUpdateTypeBenefitDownloadablesUpdate    BenefitsUpdateBenefitUpdateType = "BenefitDownloadablesUpdate"
-	BenefitsUpdateBenefitUpdateTypeBenefitLicenseKeysUpdate      BenefitsUpdateBenefitUpdateType = "BenefitLicenseKeysUpdate"
-	BenefitsUpdateBenefitUpdateTypeBenefitMeterCreditUpdate      BenefitsUpdateBenefitUpdateType = "BenefitMeterCreditUpdate"
-	BenefitsUpdateBenefitUpdateTypeBenefitFeatureFlagUpdate      BenefitsUpdateBenefitUpdateType = "BenefitFeatureFlagUpdate"
+	BenefitsUpdateBenefitUpdateTypeBenefitCustomUpdate             BenefitsUpdateBenefitUpdateType = "BenefitCustomUpdate"
+	BenefitsUpdateBenefitUpdateTypeBenefitDiscordUpdate            BenefitsUpdateBenefitUpdateType = "BenefitDiscordUpdate"
+	BenefitsUpdateBenefitUpdateTypeBenefitGitHubRepositoryUpdate   BenefitsUpdateBenefitUpdateType = "BenefitGitHubRepositoryUpdate"
+	BenefitsUpdateBenefitUpdateTypeBenefitDownloadablesUpdate      BenefitsUpdateBenefitUpdateType = "BenefitDownloadablesUpdate"
+	BenefitsUpdateBenefitUpdateTypeBenefitLicenseKeysUpdate        BenefitsUpdateBenefitUpdateType = "BenefitLicenseKeysUpdate"
+	BenefitsUpdateBenefitUpdateTypeBenefitMeterCreditUpdate        BenefitsUpdateBenefitUpdateType = "BenefitMeterCreditUpdate"
+	BenefitsUpdateBenefitUpdateTypeBenefitFeatureFlagUpdate        BenefitsUpdateBenefitUpdateType = "BenefitFeatureFlagUpdate"
+	BenefitsUpdateBenefitUpdateTypeBenefitSlackSharedChannelUpdate BenefitsUpdateBenefitUpdateType = "BenefitSlackSharedChannelUpdate"
 )
 
 type BenefitsUpdateBenefitUpdate struct {
-	BenefitCustomUpdate           *components.BenefitCustomUpdate           `queryParam:"inline" union:"member"`
-	BenefitDiscordUpdate          *components.BenefitDiscordUpdate          `queryParam:"inline" union:"member"`
-	BenefitGitHubRepositoryUpdate *components.BenefitGitHubRepositoryUpdate `queryParam:"inline" union:"member"`
-	BenefitDownloadablesUpdate    *components.BenefitDownloadablesUpdate    `queryParam:"inline" union:"member"`
-	BenefitLicenseKeysUpdate      *components.BenefitLicenseKeysUpdate      `queryParam:"inline" union:"member"`
-	BenefitMeterCreditUpdate      *components.BenefitMeterCreditUpdate      `queryParam:"inline" union:"member"`
-	BenefitFeatureFlagUpdate      *components.BenefitFeatureFlagUpdate      `queryParam:"inline" union:"member"`
+	BenefitCustomUpdate             *components.BenefitCustomUpdate             `queryParam:"inline" union:"member"`
+	BenefitDiscordUpdate            *components.BenefitDiscordUpdate            `queryParam:"inline" union:"member"`
+	BenefitGitHubRepositoryUpdate   *components.BenefitGitHubRepositoryUpdate   `queryParam:"inline" union:"member"`
+	BenefitDownloadablesUpdate      *components.BenefitDownloadablesUpdate      `queryParam:"inline" union:"member"`
+	BenefitLicenseKeysUpdate        *components.BenefitLicenseKeysUpdate        `queryParam:"inline" union:"member"`
+	BenefitMeterCreditUpdate        *components.BenefitMeterCreditUpdate        `queryParam:"inline" union:"member"`
+	BenefitFeatureFlagUpdate        *components.BenefitFeatureFlagUpdate        `queryParam:"inline" union:"member"`
+	BenefitSlackSharedChannelUpdate *components.BenefitSlackSharedChannelUpdate `queryParam:"inline" union:"member"`
 
 	Type BenefitsUpdateBenefitUpdateType
 }
@@ -96,6 +98,15 @@ func CreateBenefitsUpdateBenefitUpdateBenefitFeatureFlagUpdate(benefitFeatureFla
 	}
 }
 
+func CreateBenefitsUpdateBenefitUpdateBenefitSlackSharedChannelUpdate(benefitSlackSharedChannelUpdate components.BenefitSlackSharedChannelUpdate) BenefitsUpdateBenefitUpdate {
+	typ := BenefitsUpdateBenefitUpdateTypeBenefitSlackSharedChannelUpdate
+
+	return BenefitsUpdateBenefitUpdate{
+		BenefitSlackSharedChannelUpdate: &benefitSlackSharedChannelUpdate,
+		Type:                            typ,
+	}
+}
+
 func (u *BenefitsUpdateBenefitUpdate) UnmarshalJSON(data []byte) error {
 
 	var benefitCustomUpdate components.BenefitCustomUpdate = components.BenefitCustomUpdate{}
@@ -147,6 +158,13 @@ func (u *BenefitsUpdateBenefitUpdate) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
+	var benefitSlackSharedChannelUpdate components.BenefitSlackSharedChannelUpdate = components.BenefitSlackSharedChannelUpdate{}
+	if err := utils.UnmarshalJSON(data, &benefitSlackSharedChannelUpdate, "", true, nil); err == nil {
+		u.BenefitSlackSharedChannelUpdate = &benefitSlackSharedChannelUpdate
+		u.Type = BenefitsUpdateBenefitUpdateTypeBenefitSlackSharedChannelUpdate
+		return nil
+	}
+
 	return fmt.Errorf("could not unmarshal `%s` into any supported union types for BenefitsUpdateBenefitUpdate", string(data))
 }
 
@@ -177,6 +195,10 @@ func (u BenefitsUpdateBenefitUpdate) MarshalJSON() ([]byte, error) {
 
 	if u.BenefitFeatureFlagUpdate != nil {
 		return utils.MarshalJSON(u.BenefitFeatureFlagUpdate, "", true)
+	}
+
+	if u.BenefitSlackSharedChannelUpdate != nil {
+		return utils.MarshalJSON(u.BenefitSlackSharedChannelUpdate, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type BenefitsUpdateBenefitUpdate: all fields are null")
@@ -266,6 +288,13 @@ func (b *BenefitsUpdateResponse) GetBenefitLicenseKeys() *components.BenefitLice
 func (b *BenefitsUpdateResponse) GetBenefitMeterCredit() *components.BenefitMeterCredit {
 	if v := b.GetBenefit(); v != nil {
 		return v.BenefitMeterCredit
+	}
+	return nil
+}
+
+func (b *BenefitsUpdateResponse) GetBenefitSlackSharedChannel() *components.BenefitSlackSharedChannel {
+	if v := b.GetBenefit(); v != nil {
+		return v.BenefitSlackSharedChannel
 	}
 	return nil
 }

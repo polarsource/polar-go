@@ -7,11 +7,9 @@ import (
 )
 
 type SeatAssign struct {
-	// Subscription ID. Required if checkout_id and order_id are not provided.
+	// Subscription ID. Required if neither order_id nor checkout_id is provided.
 	SubscriptionID *string `json:"subscription_id,omitempty"`
-	// Checkout ID. Used to look up subscription or order from the checkout page.
-	CheckoutID *string `json:"checkout_id,omitempty"`
-	// Order ID for one-time purchases. Required if subscription_id and checkout_id are not provided.
+	// Order ID for one-time purchases. Required if subscription_id is not provided.
 	OrderID *string `json:"order_id,omitempty"`
 	// Email of the customer to assign the seat to
 	Email *string `json:"email,omitempty"`
@@ -45,13 +43,6 @@ func (s *SeatAssign) GetSubscriptionID() *string {
 		return nil
 	}
 	return s.SubscriptionID
-}
-
-func (s *SeatAssign) GetCheckoutID() *string {
-	if s == nil {
-		return nil
-	}
-	return s.CheckoutID
 }
 
 func (s *SeatAssign) GetOrderID() *string {

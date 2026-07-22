@@ -10,12 +10,14 @@ import (
 type OrganizationStatus string
 
 const (
-	OrganizationStatusCreated           OrganizationStatus = "created"
-	OrganizationStatusOnboardingStarted OrganizationStatus = "onboarding_started"
-	OrganizationStatusInitialReview     OrganizationStatus = "initial_review"
-	OrganizationStatusOngoingReview     OrganizationStatus = "ongoing_review"
-	OrganizationStatusDenied            OrganizationStatus = "denied"
-	OrganizationStatusActive            OrganizationStatus = "active"
+	OrganizationStatusCreated     OrganizationStatus = "created"
+	OrganizationStatusReview      OrganizationStatus = "review"
+	OrganizationStatusSnoozed     OrganizationStatus = "snoozed"
+	OrganizationStatusDenied      OrganizationStatus = "denied"
+	OrganizationStatusActive      OrganizationStatus = "active"
+	OrganizationStatusBlocked     OrganizationStatus = "blocked"
+	OrganizationStatusOffboarding OrganizationStatus = "offboarding"
+	OrganizationStatusOffboarded  OrganizationStatus = "offboarded"
 )
 
 func (e OrganizationStatus) ToPointer() *OrganizationStatus {
@@ -29,15 +31,19 @@ func (e *OrganizationStatus) UnmarshalJSON(data []byte) error {
 	switch v {
 	case "created":
 		fallthrough
-	case "onboarding_started":
+	case "review":
 		fallthrough
-	case "initial_review":
-		fallthrough
-	case "ongoing_review":
+	case "snoozed":
 		fallthrough
 	case "denied":
 		fallthrough
 	case "active":
+		fallthrough
+	case "blocked":
+		fallthrough
+	case "offboarding":
+		fallthrough
+	case "offboarded":
 		*e = OrganizationStatus(v)
 		return nil
 	default:

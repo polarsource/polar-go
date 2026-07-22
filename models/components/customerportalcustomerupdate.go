@@ -3,9 +3,10 @@
 package components
 
 type CustomerPortalCustomerUpdate struct {
-	BillingName    *string       `json:"billing_name,omitempty"`
-	BillingAddress *AddressInput `json:"billing_address,omitempty"`
-	TaxID          *string       `json:"tax_id,omitempty"`
+	BillingName            *string       `json:"billing_name,omitempty"`
+	BillingAddress         *AddressInput `json:"billing_address,omitempty"`
+	TaxID                  *string       `json:"tax_id,omitempty"`
+	DefaultPaymentMethodID *string       `json:"default_payment_method_id,omitempty"`
 }
 
 func (c *CustomerPortalCustomerUpdate) GetBillingName() *string {
@@ -27,4 +28,11 @@ func (c *CustomerPortalCustomerUpdate) GetTaxID() *string {
 		return nil
 	}
 	return c.TaxID
+}
+
+func (c *CustomerPortalCustomerUpdate) GetDefaultPaymentMethodID() *string {
+	if c == nil {
+		return nil
+	}
+	return c.DefaultPaymentMethodID
 }

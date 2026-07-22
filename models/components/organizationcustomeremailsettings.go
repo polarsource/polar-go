@@ -9,6 +9,8 @@ type OrganizationCustomerEmailSettings struct {
 	SubscriptionCycled                  bool `json:"subscription_cycled"`
 	SubscriptionCycledAfterTrial        bool `json:"subscription_cycled_after_trial"`
 	SubscriptionPastDue                 bool `json:"subscription_past_due"`
+	SubscriptionPaused                  bool `json:"subscription_paused"`
+	SubscriptionResumed                 bool `json:"subscription_resumed"`
 	SubscriptionRenewalReminder         bool `json:"subscription_renewal_reminder"`
 	SubscriptionRevoked                 bool `json:"subscription_revoked"`
 	SubscriptionTrialConversionReminder bool `json:"subscription_trial_conversion_reminder"`
@@ -56,6 +58,20 @@ func (o *OrganizationCustomerEmailSettings) GetSubscriptionPastDue() bool {
 		return false
 	}
 	return o.SubscriptionPastDue
+}
+
+func (o *OrganizationCustomerEmailSettings) GetSubscriptionPaused() bool {
+	if o == nil {
+		return false
+	}
+	return o.SubscriptionPaused
+}
+
+func (o *OrganizationCustomerEmailSettings) GetSubscriptionResumed() bool {
+	if o == nil {
+		return false
+	}
+	return o.SubscriptionResumed
 }
 
 func (o *OrganizationCustomerEmailSettings) GetSubscriptionRenewalReminder() bool {

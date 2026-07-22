@@ -15,12 +15,6 @@ productPrice := components.CreateProductPriceCustom(components.ProductPriceCusto
 productPrice := components.CreateProductPriceFixed(components.ProductPriceFixed{/* values here */})
 ```
 
-### ProductPriceFree
-
-```go
-productPrice := components.CreateProductPriceFree(components.ProductPriceFree{/* values here */})
-```
-
 ### ProductPriceMeteredUnit
 
 ```go
@@ -43,8 +37,6 @@ switch productPrice.Type {
 		// productPrice.ProductPriceCustom is populated
 	case components.ProductPriceTypeFixed:
 		// productPrice.ProductPriceFixed is populated
-	case components.ProductPriceTypeFree:
-		// productPrice.ProductPriceFree is populated
 	case components.ProductPriceTypeMeteredUnit:
 		// productPrice.ProductPriceMeteredUnit is populated
 	case components.ProductPriceTypeSeatBased:

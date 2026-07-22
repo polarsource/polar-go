@@ -12,23 +12,25 @@ import (
 type BenefitCreateType string
 
 const (
-	BenefitCreateTypeCustom           BenefitCreateType = "custom"
-	BenefitCreateTypeDiscord          BenefitCreateType = "discord"
-	BenefitCreateTypeDownloadables    BenefitCreateType = "downloadables"
-	BenefitCreateTypeFeatureFlag      BenefitCreateType = "feature_flag"
-	BenefitCreateTypeGithubRepository BenefitCreateType = "github_repository"
-	BenefitCreateTypeLicenseKeys      BenefitCreateType = "license_keys"
-	BenefitCreateTypeMeterCredit      BenefitCreateType = "meter_credit"
+	BenefitCreateTypeCustom             BenefitCreateType = "custom"
+	BenefitCreateTypeDiscord            BenefitCreateType = "discord"
+	BenefitCreateTypeDownloadables      BenefitCreateType = "downloadables"
+	BenefitCreateTypeFeatureFlag        BenefitCreateType = "feature_flag"
+	BenefitCreateTypeGithubRepository   BenefitCreateType = "github_repository"
+	BenefitCreateTypeLicenseKeys        BenefitCreateType = "license_keys"
+	BenefitCreateTypeMeterCredit        BenefitCreateType = "meter_credit"
+	BenefitCreateTypeSlackSharedChannel BenefitCreateType = "slack_shared_channel"
 )
 
 type BenefitCreate struct {
-	BenefitCustomCreate           *BenefitCustomCreate           `queryParam:"inline" union:"member"`
-	BenefitDiscordCreate          *BenefitDiscordCreate          `queryParam:"inline" union:"member"`
-	BenefitGitHubRepositoryCreate *BenefitGitHubRepositoryCreate `queryParam:"inline" union:"member"`
-	BenefitDownloadablesCreate    *BenefitDownloadablesCreate    `queryParam:"inline" union:"member"`
-	BenefitLicenseKeysCreate      *BenefitLicenseKeysCreate      `queryParam:"inline" union:"member"`
-	BenefitMeterCreditCreate      *BenefitMeterCreditCreate      `queryParam:"inline" union:"member"`
-	BenefitFeatureFlagCreate      *BenefitFeatureFlagCreate      `queryParam:"inline" union:"member"`
+	BenefitCustomCreate             *BenefitCustomCreate             `queryParam:"inline" union:"member"`
+	BenefitDiscordCreate            *BenefitDiscordCreate            `queryParam:"inline" union:"member"`
+	BenefitGitHubRepositoryCreate   *BenefitGitHubRepositoryCreate   `queryParam:"inline" union:"member"`
+	BenefitDownloadablesCreate      *BenefitDownloadablesCreate      `queryParam:"inline" union:"member"`
+	BenefitLicenseKeysCreate        *BenefitLicenseKeysCreate        `queryParam:"inline" union:"member"`
+	BenefitMeterCreditCreate        *BenefitMeterCreditCreate        `queryParam:"inline" union:"member"`
+	BenefitFeatureFlagCreate        *BenefitFeatureFlagCreate        `queryParam:"inline" union:"member"`
+	BenefitSlackSharedChannelCreate *BenefitSlackSharedChannelCreate `queryParam:"inline" union:"member"`
 
 	Type BenefitCreateType
 }
@@ -93,6 +95,15 @@ func CreateBenefitCreateMeterCredit(meterCredit BenefitMeterCreditCreate) Benefi
 	return BenefitCreate{
 		BenefitMeterCreditCreate: &meterCredit,
 		Type:                     typ,
+	}
+}
+
+func CreateBenefitCreateSlackSharedChannel(slackSharedChannel BenefitSlackSharedChannelCreate) BenefitCreate {
+	typ := BenefitCreateTypeSlackSharedChannel
+
+	return BenefitCreate{
+		BenefitSlackSharedChannelCreate: &slackSharedChannel,
+		Type:                            typ,
 	}
 }
 
@@ -171,6 +182,15 @@ func (u *BenefitCreate) UnmarshalJSON(data []byte) error {
 		u.BenefitMeterCreditCreate = benefitMeterCreditCreate
 		u.Type = BenefitCreateTypeMeterCredit
 		return nil
+	case "slack_shared_channel":
+		benefitSlackSharedChannelCreate := new(BenefitSlackSharedChannelCreate)
+		if err := utils.UnmarshalJSON(data, &benefitSlackSharedChannelCreate, "", true, nil); err != nil {
+			return fmt.Errorf("could not unmarshal `%s` into expected (Type == slack_shared_channel) type BenefitSlackSharedChannelCreate within BenefitCreate: %w", string(data), err)
+		}
+
+		u.BenefitSlackSharedChannelCreate = benefitSlackSharedChannelCreate
+		u.Type = BenefitCreateTypeSlackSharedChannel
+		return nil
 	}
 
 	return fmt.Errorf("could not unmarshal `%s` into any supported union types for BenefitCreate", string(data))
@@ -203,6 +223,10 @@ func (u BenefitCreate) MarshalJSON() ([]byte, error) {
 
 	if u.BenefitFeatureFlagCreate != nil {
 		return utils.MarshalJSON(u.BenefitFeatureFlagCreate, "", true)
+	}
+
+	if u.BenefitSlackSharedChannelCreate != nil {
+		return utils.MarshalJSON(u.BenefitSlackSharedChannelCreate, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type BenefitCreate: all fields are null")

@@ -22,3 +22,4 @@ value := components.SubscriptionStatusIncomplete
 | `SubscriptionStatusPastDue`           | past_due                              |
 | `SubscriptionStatusCanceled`          | canceled                              |
 | `SubscriptionStatusUnpaid`            | unpaid                                |
+| `SubscriptionStatusPaused`            | paused                                |

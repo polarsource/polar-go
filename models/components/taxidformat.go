@@ -88,6 +88,7 @@ const (
 	TaxIDFormatVeRif    TaxIDFormat = "ve_rif"
 	TaxIDFormatVnTin    TaxIDFormat = "vn_tin"
 	TaxIDFormatZaVat    TaxIDFormat = "za_vat"
+	TaxIDFormatMuTan    TaxIDFormat = "mu_tan"
 )
 
 func (e TaxIDFormat) ToPointer() *TaxIDFormat {
@@ -248,6 +249,8 @@ func (e *TaxIDFormat) UnmarshalJSON(data []byte) error {
 	case "vn_tin":
 		fallthrough
 	case "za_vat":
+		fallthrough
+	case "mu_tan":
 		*e = TaxIDFormat(v)
 		return nil
 	default:

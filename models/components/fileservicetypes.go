@@ -10,9 +10,10 @@ import (
 type FileServiceTypes string
 
 const (
-	FileServiceTypesDownloadable       FileServiceTypes = "downloadable"
-	FileServiceTypesProductMedia       FileServiceTypes = "product_media"
-	FileServiceTypesOrganizationAvatar FileServiceTypes = "organization_avatar"
+	FileServiceTypesDownloadable          FileServiceTypes = "downloadable"
+	FileServiceTypesProductMedia          FileServiceTypes = "product_media"
+	FileServiceTypesOrganizationAvatar    FileServiceTypes = "organization_avatar"
+	FileServiceTypesSupportCaseAttachment FileServiceTypes = "support_case_attachment"
 )
 
 func (e FileServiceTypes) ToPointer() *FileServiceTypes {
@@ -29,6 +30,8 @@ func (e *FileServiceTypes) UnmarshalJSON(data []byte) error {
 	case "product_media":
 		fallthrough
 	case "organization_avatar":
+		fallthrough
+	case "support_case_attachment":
 		*e = FileServiceTypes(v)
 		return nil
 	default:

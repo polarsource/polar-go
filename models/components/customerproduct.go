@@ -90,9 +90,13 @@ type CustomerProduct struct {
 	Description *string           `json:"description"`
 	Visibility  ProductVisibility `json:"visibility"`
 	// The recurring interval of the product. If `None`, the product is a one-time purchase.
-	RecurringInterval *SubscriptionRecurringInterval `json:"recurring_interval"`
+	RecurringInterval *RecurringInterval `json:"recurring_interval"`
 	// Number of interval units of the subscription. If this is set to 1 the charge will happen every interval (e.g. every month), if set to 2 it will be every other month, and so on. None for one-time products.
 	RecurringIntervalCount *int64 `json:"recurring_interval_count"`
+	// The meter cycle of the product, independent of the billing interval. If `None`, metered concerns follow the billing interval.
+	MeterInterval *RecurringInterval `json:"meter_interval"`
+	// Number of meter interval units. None when no meter cycle is set.
+	MeterIntervalCount *int64 `json:"meter_interval_count"`
 	// Whether the product is a subscription.
 	IsRecurring bool `json:"is_recurring"`
 	// Whether the product is archived and no longer available.
@@ -101,7 +105,7 @@ type CustomerProduct struct {
 	OrganizationID string `json:"organization_id"`
 	// List of available prices for this product.
 	Prices []CustomerProductPrices `json:"prices"`
-	// The benefits granted by the product.
+	// List of benefits granted by the product.
 	Benefits []BenefitPublic `json:"benefits"`
 	// The medias associated to the product.
 	Medias []ProductMediaFileRead `json:"medias"`
@@ -174,7 +178,7 @@ func (c *CustomerProduct) GetVisibility() ProductVisibility {
 	return c.Visibility
 }
 
-func (c *CustomerProduct) GetRecurringInterval() *SubscriptionRecurringInterval {
+func (c *CustomerProduct) GetRecurringInterval() *RecurringInterval {
 	if c == nil {
 		return nil
 	}
@@ -186,6 +190,20 @@ func (c *CustomerProduct) GetRecurringIntervalCount() *int64 {
 		return nil
 	}
 	return c.RecurringIntervalCount
+}
+
+func (c *CustomerProduct) GetMeterInterval() *RecurringInterval {
+	if c == nil {
+		return nil
+	}
+	return c.MeterInterval
+}
+
+func (c *CustomerProduct) GetMeterIntervalCount() *int64 {
+	if c == nil {
+		return nil
+	}
+	return c.MeterIntervalCount
 }
 
 func (c *CustomerProduct) GetIsRecurring() bool {

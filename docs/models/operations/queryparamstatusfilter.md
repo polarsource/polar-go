@@ -1,20 +1,20 @@
 # QueryParamStatusFilter
 
-Filter by checkout session status.
+Filter by dispute status.
 
 
 ## Supported Types
 
-### CheckoutStatus
+### DisputeStatus
 
 ```go
-queryParamStatusFilter := operations.CreateQueryParamStatusFilterCheckoutStatus(components.CheckoutStatus{/* values here */})
+queryParamStatusFilter := operations.CreateQueryParamStatusFilterDisputeStatus(components.DisputeStatus{/* values here */})
 ```
 
 ### 
 
 ```go
-queryParamStatusFilter := operations.CreateQueryParamStatusFilterArrayOfCheckoutStatus([]components.CheckoutStatus{/* values here */})
+queryParamStatusFilter := operations.CreateQueryParamStatusFilterArrayOfDisputeStatus([]components.DisputeStatus{/* values here */})
 ```
 
 ## Union Discrimination
@@ -23,9 +23,9 @@ Use the `Type` field to determine which variant is active, then access the corre
 
 ```go
 switch queryParamStatusFilter.Type {
-	case operations.QueryParamStatusFilterTypeCheckoutStatus:
-		// queryParamStatusFilter.CheckoutStatus is populated
-	case operations.QueryParamStatusFilterTypeArrayOfCheckoutStatus:
-		// queryParamStatusFilter.ArrayOfCheckoutStatus is populated
+	case operations.QueryParamStatusFilterTypeDisputeStatus:
+		// queryParamStatusFilter.DisputeStatus is populated
+	case operations.QueryParamStatusFilterTypeArrayOfDisputeStatus:
+		// queryParamStatusFilter.ArrayOfDisputeStatus is populated
 }
 ```

@@ -12,23 +12,25 @@ import (
 type BenefitUnionType string
 
 const (
-	BenefitUnionTypeCustom           BenefitUnionType = "custom"
-	BenefitUnionTypeDiscord          BenefitUnionType = "discord"
-	BenefitUnionTypeDownloadables    BenefitUnionType = "downloadables"
-	BenefitUnionTypeFeatureFlag      BenefitUnionType = "feature_flag"
-	BenefitUnionTypeGithubRepository BenefitUnionType = "github_repository"
-	BenefitUnionTypeLicenseKeys      BenefitUnionType = "license_keys"
-	BenefitUnionTypeMeterCredit      BenefitUnionType = "meter_credit"
+	BenefitUnionTypeCustom             BenefitUnionType = "custom"
+	BenefitUnionTypeDiscord            BenefitUnionType = "discord"
+	BenefitUnionTypeDownloadables      BenefitUnionType = "downloadables"
+	BenefitUnionTypeFeatureFlag        BenefitUnionType = "feature_flag"
+	BenefitUnionTypeGithubRepository   BenefitUnionType = "github_repository"
+	BenefitUnionTypeLicenseKeys        BenefitUnionType = "license_keys"
+	BenefitUnionTypeMeterCredit        BenefitUnionType = "meter_credit"
+	BenefitUnionTypeSlackSharedChannel BenefitUnionType = "slack_shared_channel"
 )
 
 type Benefit struct {
-	BenefitCustom           *BenefitCustom           `queryParam:"inline" union:"member"`
-	BenefitDiscord          *BenefitDiscord          `queryParam:"inline" union:"member"`
-	BenefitGitHubRepository *BenefitGitHubRepository `queryParam:"inline" union:"member"`
-	BenefitDownloadables    *BenefitDownloadables    `queryParam:"inline" union:"member"`
-	BenefitLicenseKeys      *BenefitLicenseKeys      `queryParam:"inline" union:"member"`
-	BenefitMeterCredit      *BenefitMeterCredit      `queryParam:"inline" union:"member"`
-	BenefitFeatureFlag      *BenefitFeatureFlag      `queryParam:"inline" union:"member"`
+	BenefitCustom             *BenefitCustom             `queryParam:"inline" union:"member"`
+	BenefitDiscord            *BenefitDiscord            `queryParam:"inline" union:"member"`
+	BenefitGitHubRepository   *BenefitGitHubRepository   `queryParam:"inline" union:"member"`
+	BenefitDownloadables      *BenefitDownloadables      `queryParam:"inline" union:"member"`
+	BenefitLicenseKeys        *BenefitLicenseKeys        `queryParam:"inline" union:"member"`
+	BenefitMeterCredit        *BenefitMeterCredit        `queryParam:"inline" union:"member"`
+	BenefitFeatureFlag        *BenefitFeatureFlag        `queryParam:"inline" union:"member"`
+	BenefitSlackSharedChannel *BenefitSlackSharedChannel `queryParam:"inline" union:"member"`
 
 	Type BenefitUnionType
 }
@@ -93,6 +95,15 @@ func CreateBenefitMeterCredit(meterCredit BenefitMeterCredit) Benefit {
 	return Benefit{
 		BenefitMeterCredit: &meterCredit,
 		Type:               typ,
+	}
+}
+
+func CreateBenefitSlackSharedChannel(slackSharedChannel BenefitSlackSharedChannel) Benefit {
+	typ := BenefitUnionTypeSlackSharedChannel
+
+	return Benefit{
+		BenefitSlackSharedChannel: &slackSharedChannel,
+		Type:                      typ,
 	}
 }
 
@@ -171,6 +182,15 @@ func (u *Benefit) UnmarshalJSON(data []byte) error {
 		u.BenefitMeterCredit = benefitMeterCredit
 		u.Type = BenefitUnionTypeMeterCredit
 		return nil
+	case "slack_shared_channel":
+		benefitSlackSharedChannel := new(BenefitSlackSharedChannel)
+		if err := utils.UnmarshalJSON(data, &benefitSlackSharedChannel, "", true, nil); err != nil {
+			return fmt.Errorf("could not unmarshal `%s` into expected (Type == slack_shared_channel) type BenefitSlackSharedChannel within Benefit: %w", string(data), err)
+		}
+
+		u.BenefitSlackSharedChannel = benefitSlackSharedChannel
+		u.Type = BenefitUnionTypeSlackSharedChannel
+		return nil
 	}
 
 	return fmt.Errorf("could not unmarshal `%s` into any supported union types for Benefit", string(data))
@@ -203,6 +223,10 @@ func (u Benefit) MarshalJSON() ([]byte, error) {
 
 	if u.BenefitFeatureFlag != nil {
 		return utils.MarshalJSON(u.BenefitFeatureFlag, "", true)
+	}
+
+	if u.BenefitSlackSharedChannel != nil {
+		return utils.MarshalJSON(u.BenefitSlackSharedChannel, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type Benefit: all fields are null")

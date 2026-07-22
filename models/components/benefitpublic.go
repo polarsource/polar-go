@@ -21,6 +21,8 @@ type BenefitPublic struct {
 	Selectable bool `json:"selectable"`
 	// Whether the benefit is deletable.
 	Deletable bool `json:"deletable"`
+	// Whether the benefit is deleted.
+	IsDeleted bool `json:"is_deleted"`
 	// The ID of the organization owning the benefit.
 	OrganizationID string `json:"organization_id"`
 }
@@ -83,6 +85,13 @@ func (b *BenefitPublic) GetDeletable() bool {
 		return false
 	}
 	return b.Deletable
+}
+
+func (b *BenefitPublic) GetIsDeleted() bool {
+	if b == nil {
+		return false
+	}
+	return b.IsDeleted
 }
 
 func (b *BenefitPublic) GetOrganizationID() string {

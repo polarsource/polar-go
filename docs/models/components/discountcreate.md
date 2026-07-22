@@ -3,28 +3,16 @@
 
 ## Supported Types
 
-### DiscountFixedOnceForeverDurationCreate
+### DiscountFixedCreate
 
 ```go
-discountCreate := components.CreateDiscountCreateDiscountFixedOnceForeverDurationCreate(components.DiscountFixedOnceForeverDurationCreate{/* values here */})
+discountCreate := components.CreateDiscountCreateFixed(components.DiscountFixedCreate{/* values here */})
 ```
 
-### DiscountFixedRepeatDurationCreate
+### DiscountPercentageCreate
 
 ```go
-discountCreate := components.CreateDiscountCreateDiscountFixedRepeatDurationCreate(components.DiscountFixedRepeatDurationCreate{/* values here */})
-```
-
-### DiscountPercentageOnceForeverDurationCreate
-
-```go
-discountCreate := components.CreateDiscountCreateDiscountPercentageOnceForeverDurationCreate(components.DiscountPercentageOnceForeverDurationCreate{/* values here */})
-```
-
-### DiscountPercentageRepeatDurationCreate
-
-```go
-discountCreate := components.CreateDiscountCreateDiscountPercentageRepeatDurationCreate(components.DiscountPercentageRepeatDurationCreate{/* values here */})
+discountCreate := components.CreateDiscountCreatePercentage(components.DiscountPercentageCreate{/* values here */})
 ```
 
 ## Union Discrimination
@@ -33,13 +21,9 @@ Use the `Type` field to determine which variant is active, then access the corre
 
 ```go
 switch discountCreate.Type {
-	case components.DiscountCreateTypeDiscountFixedOnceForeverDurationCreate:
-		// discountCreate.DiscountFixedOnceForeverDurationCreate is populated
-	case components.DiscountCreateTypeDiscountFixedRepeatDurationCreate:
-		// discountCreate.DiscountFixedRepeatDurationCreate is populated
-	case components.DiscountCreateTypeDiscountPercentageOnceForeverDurationCreate:
-		// discountCreate.DiscountPercentageOnceForeverDurationCreate is populated
-	case components.DiscountCreateTypeDiscountPercentageRepeatDurationCreate:
-		// discountCreate.DiscountPercentageRepeatDurationCreate is populated
+	case components.DiscountCreateTypeFixed:
+		// discountCreate.DiscountFixedCreate is populated
+	case components.DiscountCreateTypePercentage:
+		// discountCreate.DiscountPercentageCreate is populated
 }
 ```

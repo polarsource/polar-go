@@ -45,6 +45,12 @@ customerBenefitGrantUpdate := components.CreateCustomerBenefitGrantUpdateLicense
 customerBenefitGrantUpdate := components.CreateCustomerBenefitGrantUpdateMeterCredit(components.CustomerBenefitGrantMeterCreditUpdate{/* values here */})
 ```
 
+### CustomerBenefitGrantSlackSharedChannelUpdate
+
+```go
+customerBenefitGrantUpdate := components.CreateCustomerBenefitGrantUpdateSlackSharedChannel(components.CustomerBenefitGrantSlackSharedChannelUpdate{/* values here */})
+```
+
 ## Union Discrimination
 
 Use the `Type` field to determine which variant is active, then access the corresponding field:
@@ -65,5 +71,7 @@ switch customerBenefitGrantUpdate.Type {
 		// customerBenefitGrantUpdate.CustomerBenefitGrantLicenseKeysUpdate is populated
 	case components.CustomerBenefitGrantUpdateTypeMeterCredit:
 		// customerBenefitGrantUpdate.CustomerBenefitGrantMeterCreditUpdate is populated
+	case components.CustomerBenefitGrantUpdateTypeSlackSharedChannel:
+		// customerBenefitGrantUpdate.CustomerBenefitGrantSlackSharedChannelUpdate is populated
 }
 ```

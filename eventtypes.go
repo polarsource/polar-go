@@ -176,7 +176,7 @@ func (s *EventTypes) List(ctx context.Context, request operations.EventTypesList
 
 			_, err = s.hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
 			return nil, err
-		} else if utils.MatchStatusCodes([]string{"422", "4XX", "5XX"}, httpRes.StatusCode) {
+		} else if utils.MatchStatusCodes([]string{"4XX", "5XX"}, httpRes.StatusCode) {
 			_httpRes, err := s.hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
 			if err != nil {
 				return nil, err
@@ -328,6 +328,8 @@ func (s *EventTypes) List(ctx context.Context, request operations.EventTypesList
 
 // Update Event Type
 // Update an event type's label.
+//
+// **Scopes**: `events:write`
 func (s *EventTypes) Update(ctx context.Context, id string, eventTypeUpdate components.EventTypeUpdate, opts ...operations.Option) (*operations.EventTypesUpdateResponse, error) {
 	request := operations.EventTypesUpdateRequest{
 		ID:              id,
@@ -476,7 +478,7 @@ func (s *EventTypes) Update(ctx context.Context, id string, eventTypeUpdate comp
 
 			_, err = s.hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, nil, err)
 			return nil, err
-		} else if utils.MatchStatusCodes([]string{"404", "422", "4XX", "5XX"}, httpRes.StatusCode) {
+		} else if utils.MatchStatusCodes([]string{"4XX", "5XX"}, httpRes.StatusCode) {
 			_httpRes, err := s.hooks.AfterError(hooks.AfterErrorContext{HookContext: hookCtx}, httpRes, nil)
 			if err != nil {
 				return nil, err

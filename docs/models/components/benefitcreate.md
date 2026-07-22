@@ -45,6 +45,12 @@ benefitCreate := components.CreateBenefitCreateLicenseKeys(components.BenefitLic
 benefitCreate := components.CreateBenefitCreateMeterCredit(components.BenefitMeterCreditCreate{/* values here */})
 ```
 
+### BenefitSlackSharedChannelCreate
+
+```go
+benefitCreate := components.CreateBenefitCreateSlackSharedChannel(components.BenefitSlackSharedChannelCreate{/* values here */})
+```
+
 ## Union Discrimination
 
 Use the `Type` field to determine which variant is active, then access the corresponding field:
@@ -65,5 +71,7 @@ switch benefitCreate.Type {
 		// benefitCreate.BenefitLicenseKeysCreate is populated
 	case components.BenefitCreateTypeMeterCredit:
 		// benefitCreate.BenefitMeterCreditCreate is populated
+	case components.BenefitCreateTypeSlackSharedChannel:
+		// benefitCreate.BenefitSlackSharedChannelCreate is populated
 }
 ```

@@ -10,6 +10,9 @@
 * [AddPaymentMethod](#addpaymentmethod) - Add Customer Payment Method
 * [ConfirmPaymentMethod](#confirmpaymentmethod) - Confirm Customer Payment Method
 * [DeletePaymentMethod](#deletepaymentmethod) - Delete Customer Payment Method
+* [RequestEmailUpdate](#requestemailupdate) - Request Email Change
+* [CheckEmailUpdate](#checkemailupdate) - Check Email Change Token
+* [VerifyEmailUpdate](#verifyemailupdate) - Verify Email Change
 
 ## Get
 
@@ -255,10 +258,11 @@ func main() {
 
 ### Errors
 
-| Error Type                    | Status Code                   | Content Type                  |
-| ----------------------------- | ----------------------------- | ----------------------------- |
-| apierrors.HTTPValidationError | 422                           | application/json              |
-| apierrors.APIError            | 4XX, 5XX                      | \*/\*                         |
+| Error Type                         | Status Code                        | Content Type                       |
+| ---------------------------------- | ---------------------------------- | ---------------------------------- |
+| apierrors.PaymentMethodSetupFailed | 400                                | application/json                   |
+| apierrors.HTTPValidationError      | 422                                | application/json                   |
+| apierrors.APIError                 | 4XX, 5XX                           | \*/\*                              |
 
 ## ConfirmPaymentMethod
 
@@ -382,3 +386,163 @@ func main() {
 | apierrors.ResourceNotFound                       | 404                                              | application/json                                 |
 | apierrors.HTTPValidationError                    | 422                                              | application/json                                 |
 | apierrors.APIError                               | 4XX, 5XX                                         | \*/\*                                            |
+
+## RequestEmailUpdate
+
+Request an email change for the authenticated customer.
+
+### Example Usage
+
+<!-- UsageSnippet language="go" operationID="customer_portal:customers:request_email_update" method="post" path="/v1/customer-portal/customers/me/email-update/request" -->
+```go
+package main
+
+import(
+	"context"
+	polargo "github.com/polarsource/polar-go"
+	"github.com/polarsource/polar-go/models/components"
+	"os"
+	"github.com/polarsource/polar-go/models/operations"
+	"log"
+)
+
+func main() {
+    ctx := context.Background()
+
+    s := polargo.New()
+
+    res, err := s.CustomerPortal.Customers.RequestEmailUpdate(ctx, components.CustomerEmailUpdateRequest{
+        Email: "Tommie_Larkin78@gmail.com",
+    }, operations.CustomerPortalCustomersRequestEmailUpdateSecurity{
+        CustomerSession: polargo.Pointer(os.Getenv("POLAR_CUSTOMER_SESSION")),
+    })
+    if err != nil {
+        log.Fatal(err)
+    }
+    if res.Any != nil {
+        // handle response
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                                                                                                    | Type                                                                                                                                         | Required                                                                                                                                     | Description                                                                                                                                  |
+| -------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
+| `ctx`                                                                                                                                        | [context.Context](https://pkg.go.dev/context#Context)                                                                                        | :heavy_check_mark:                                                                                                                           | The context to use for the request.                                                                                                          |
+| `request`                                                                                                                                    | [components.CustomerEmailUpdateRequest](../../models/components/customeremailupdaterequest.md)                                               | :heavy_check_mark:                                                                                                                           | The request object to use for the request.                                                                                                   |
+| `security`                                                                                                                                   | [operations.CustomerPortalCustomersRequestEmailUpdateSecurity](../../models/operations/customerportalcustomersrequestemailupdatesecurity.md) | :heavy_check_mark:                                                                                                                           | The security requirements to use for the request.                                                                                            |
+| `opts`                                                                                                                                       | [][operations.Option](../../models/operations/option.md)                                                                                     | :heavy_minus_sign:                                                                                                                           | The options for this request.                                                                                                                |
+
+### Response
+
+**[*operations.CustomerPortalCustomersRequestEmailUpdateResponse](../../models/operations/customerportalcustomersrequestemailupdateresponse.md), error**
+
+### Errors
+
+| Error Type                    | Status Code                   | Content Type                  |
+| ----------------------------- | ----------------------------- | ----------------------------- |
+| apierrors.HTTPValidationError | 422                           | application/json              |
+| apierrors.APIError            | 4XX, 5XX                      | \*/\*                         |
+
+## CheckEmailUpdate
+
+Check if an email change verification token is still valid.
+
+### Example Usage
+
+<!-- UsageSnippet language="go" operationID="customer_portal:customers:check_email_update" method="get" path="/v1/customer-portal/customers/me/email-update/check" -->
+```go
+package main
+
+import(
+	"context"
+	polargo "github.com/polarsource/polar-go"
+	"log"
+)
+
+func main() {
+    ctx := context.Background()
+
+    s := polargo.New()
+
+    res, err := s.CustomerPortal.Customers.CheckEmailUpdate(ctx, "<value>")
+    if err != nil {
+        log.Fatal(err)
+    }
+    if res != nil {
+        // handle response
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                | Type                                                     | Required                                                 | Description                                              |
+| -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- |
+| `ctx`                                                    | [context.Context](https://pkg.go.dev/context#Context)    | :heavy_check_mark:                                       | The context to use for the request.                      |
+| `token`                                                  | `string`                                                 | :heavy_check_mark:                                       | N/A                                                      |
+| `opts`                                                   | [][operations.Option](../../models/operations/option.md) | :heavy_minus_sign:                                       | The options for this request.                            |
+
+### Response
+
+**[*operations.CustomerPortalCustomersCheckEmailUpdateResponse](../../models/operations/customerportalcustomerscheckemailupdateresponse.md), error**
+
+### Errors
+
+| Error Type                    | Status Code                   | Content Type                  |
+| ----------------------------- | ----------------------------- | ----------------------------- |
+| apierrors.HTTPValidationError | 422                           | application/json              |
+| apierrors.APIError            | 4XX, 5XX                      | \*/\*                         |
+
+## VerifyEmailUpdate
+
+Verify an email change using the token from the verification email.
+
+### Example Usage
+
+<!-- UsageSnippet language="go" operationID="customer_portal:customers:verify_email_update" method="post" path="/v1/customer-portal/customers/me/email-update/verify" -->
+```go
+package main
+
+import(
+	"context"
+	polargo "github.com/polarsource/polar-go"
+	"github.com/polarsource/polar-go/models/components"
+	"log"
+)
+
+func main() {
+    ctx := context.Background()
+
+    s := polargo.New()
+
+    res, err := s.CustomerPortal.Customers.VerifyEmailUpdate(ctx, components.CustomerEmailUpdateVerifyRequest{
+        Token: "<value>",
+    })
+    if err != nil {
+        log.Fatal(err)
+    }
+    if res.CustomerEmailUpdateVerifyResponse != nil {
+        // handle response
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                                                                  | Type                                                                                                       | Required                                                                                                   | Description                                                                                                |
+| ---------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| `ctx`                                                                                                      | [context.Context](https://pkg.go.dev/context#Context)                                                      | :heavy_check_mark:                                                                                         | The context to use for the request.                                                                        |
+| `request`                                                                                                  | [components.CustomerEmailUpdateVerifyRequest](../../models/components/customeremailupdateverifyrequest.md) | :heavy_check_mark:                                                                                         | The request object to use for the request.                                                                 |
+| `opts`                                                                                                     | [][operations.Option](../../models/operations/option.md)                                                   | :heavy_minus_sign:                                                                                         | The options for this request.                                                                              |
+
+### Response
+
+**[*operations.CustomerPortalCustomersVerifyEmailUpdateResponse](../../models/operations/customerportalcustomersverifyemailupdateresponse.md), error**
+
+### Errors
+
+| Error Type         | Status Code        | Content Type       |
+| ------------------ | ------------------ | ------------------ |
+| apierrors.APIError | 4XX, 5XX           | \*/\*              |

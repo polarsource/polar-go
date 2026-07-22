@@ -28,10 +28,19 @@ type Dispute struct {
 	TaxAmount int64 `json:"tax_amount"`
 	// Currency code of the dispute.
 	Currency string `json:"currency"`
+	// The reason for the dispute as reported by the card network (e.g. `fraudulent`, `product_not_received`). `None` until the processor reports it.
+	Reason *string `json:"reason"`
+	// Deadline to submit evidence in response to the dispute. `None` when no response is required.
+	EvidenceDueBy *time.Time `json:"evidence_due_by"`
+	// Whether the evidence submission deadline has passed.
+	PastDue bool `json:"past_due"`
 	// The ID of the order associated with the dispute.
 	OrderID string `json:"order_id"`
 	// The ID of the payment associated with the dispute.
-	PaymentID string `json:"payment_id"`
+	PaymentID string          `json:"payment_id"`
+	Customer  DisputeCustomer `json:"customer"`
+	// The ID of the support case for this dispute, if one was opened.
+	CaseID *string `json:"case_id"`
 }
 
 func (d Dispute) MarshalJSON() ([]byte, error) {
@@ -108,6 +117,27 @@ func (d *Dispute) GetCurrency() string {
 	return d.Currency
 }
 
+func (d *Dispute) GetReason() *string {
+	if d == nil {
+		return nil
+	}
+	return d.Reason
+}
+
+func (d *Dispute) GetEvidenceDueBy() *time.Time {
+	if d == nil {
+		return nil
+	}
+	return d.EvidenceDueBy
+}
+
+func (d *Dispute) GetPastDue() bool {
+	if d == nil {
+		return false
+	}
+	return d.PastDue
+}
+
 func (d *Dispute) GetOrderID() string {
 	if d == nil {
 		return ""
@@ -120,4 +150,18 @@ func (d *Dispute) GetPaymentID() string {
 		return ""
 	}
 	return d.PaymentID
+}
+
+func (d *Dispute) GetCustomer() DisputeCustomer {
+	if d == nil {
+		return DisputeCustomer{}
+	}
+	return d.Customer
+}
+
+func (d *Dispute) GetCaseID() *string {
+	if d == nil {
+		return nil
+	}
+	return d.CaseID
 }

@@ -30,9 +30,9 @@ type LegacyRecurringProductPriceCustom struct {
 	ProductID string `json:"product_id"`
 	// The type of the price.
 	//lint:ignore U1000 accessed via reflection for JSON marshaling
-	type_             string                        `const:"recurring" json:"type"`
-	RecurringInterval SubscriptionRecurringInterval `json:"recurring_interval"`
-	// The minimum amount the customer can pay. If 0, the price is 'free or pay what you want'. Defaults to 50 cents.
+	type_             string            `const:"recurring" json:"type"`
+	RecurringInterval RecurringInterval `json:"recurring_interval"`
+	// The minimum amount the customer can pay. If 0, the price is 'free or pay what you want'.
 	MinimumAmount int64 `json:"minimum_amount"`
 	// The maximum amount the customer can pay.
 	MaximumAmount *int64 `json:"maximum_amount"`
@@ -117,9 +117,9 @@ func (l *LegacyRecurringProductPriceCustom) GetType() string {
 	return "recurring"
 }
 
-func (l *LegacyRecurringProductPriceCustom) GetRecurringInterval() SubscriptionRecurringInterval {
+func (l *LegacyRecurringProductPriceCustom) GetRecurringInterval() RecurringInterval {
 	if l == nil {
-		return SubscriptionRecurringInterval("")
+		return RecurringInterval("")
 	}
 	return l.RecurringInterval
 }

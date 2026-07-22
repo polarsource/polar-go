@@ -15,12 +15,6 @@ productCreateOneTimePrices := components.CreateProductCreateOneTimePricesCustom(
 productCreateOneTimePrices := components.CreateProductCreateOneTimePricesFixed(components.ProductPriceFixedCreate{/* values here */})
 ```
 
-### ProductPriceFreeCreate
-
-```go
-productCreateOneTimePrices := components.CreateProductCreateOneTimePricesFree(components.ProductPriceFreeCreate{/* values here */})
-```
-
 ### ProductPriceMeteredUnitCreate
 
 ```go
@@ -43,8 +37,6 @@ switch productCreateOneTimePrices.Type {
 		// productCreateOneTimePrices.ProductPriceCustomCreate is populated
 	case components.ProductCreateOneTimePricesTypeFixed:
 		// productCreateOneTimePrices.ProductPriceFixedCreate is populated
-	case components.ProductCreateOneTimePricesTypeFree:
-		// productCreateOneTimePrices.ProductPriceFreeCreate is populated
 	case components.ProductCreateOneTimePricesTypeMeteredUnit:
 		// productCreateOneTimePrices.ProductPriceMeteredUnitCreate is populated
 	case components.ProductCreateOneTimePricesTypeSeatBased:

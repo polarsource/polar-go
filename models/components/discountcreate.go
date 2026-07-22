@@ -3,6 +3,7 @@
 package components
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
@@ -11,84 +12,64 @@ import (
 type DiscountCreateType string
 
 const (
-	DiscountCreateTypeDiscountFixedOnceForeverDurationCreate      DiscountCreateType = "DiscountFixedOnceForeverDurationCreate"
-	DiscountCreateTypeDiscountFixedRepeatDurationCreate           DiscountCreateType = "DiscountFixedRepeatDurationCreate"
-	DiscountCreateTypeDiscountPercentageOnceForeverDurationCreate DiscountCreateType = "DiscountPercentageOnceForeverDurationCreate"
-	DiscountCreateTypeDiscountPercentageRepeatDurationCreate      DiscountCreateType = "DiscountPercentageRepeatDurationCreate"
+	DiscountCreateTypeFixed      DiscountCreateType = "fixed"
+	DiscountCreateTypePercentage DiscountCreateType = "percentage"
 )
 
 type DiscountCreate struct {
-	DiscountFixedOnceForeverDurationCreate      *DiscountFixedOnceForeverDurationCreate      `queryParam:"inline" union:"member"`
-	DiscountFixedRepeatDurationCreate           *DiscountFixedRepeatDurationCreate           `queryParam:"inline" union:"member"`
-	DiscountPercentageOnceForeverDurationCreate *DiscountPercentageOnceForeverDurationCreate `queryParam:"inline" union:"member"`
-	DiscountPercentageRepeatDurationCreate      *DiscountPercentageRepeatDurationCreate      `queryParam:"inline" union:"member"`
+	DiscountFixedCreate      *DiscountFixedCreate      `queryParam:"inline" union:"member"`
+	DiscountPercentageCreate *DiscountPercentageCreate `queryParam:"inline" union:"member"`
 
 	Type DiscountCreateType
 }
 
-func CreateDiscountCreateDiscountFixedOnceForeverDurationCreate(discountFixedOnceForeverDurationCreate DiscountFixedOnceForeverDurationCreate) DiscountCreate {
-	typ := DiscountCreateTypeDiscountFixedOnceForeverDurationCreate
+func CreateDiscountCreateFixed(fixed DiscountFixedCreate) DiscountCreate {
+	typ := DiscountCreateTypeFixed
 
 	return DiscountCreate{
-		DiscountFixedOnceForeverDurationCreate: &discountFixedOnceForeverDurationCreate,
-		Type:                                   typ,
+		DiscountFixedCreate: &fixed,
+		Type:                typ,
 	}
 }
 
-func CreateDiscountCreateDiscountFixedRepeatDurationCreate(discountFixedRepeatDurationCreate DiscountFixedRepeatDurationCreate) DiscountCreate {
-	typ := DiscountCreateTypeDiscountFixedRepeatDurationCreate
+func CreateDiscountCreatePercentage(percentage DiscountPercentageCreate) DiscountCreate {
+	typ := DiscountCreateTypePercentage
 
 	return DiscountCreate{
-		DiscountFixedRepeatDurationCreate: &discountFixedRepeatDurationCreate,
-		Type:                              typ,
-	}
-}
-
-func CreateDiscountCreateDiscountPercentageOnceForeverDurationCreate(discountPercentageOnceForeverDurationCreate DiscountPercentageOnceForeverDurationCreate) DiscountCreate {
-	typ := DiscountCreateTypeDiscountPercentageOnceForeverDurationCreate
-
-	return DiscountCreate{
-		DiscountPercentageOnceForeverDurationCreate: &discountPercentageOnceForeverDurationCreate,
-		Type: typ,
-	}
-}
-
-func CreateDiscountCreateDiscountPercentageRepeatDurationCreate(discountPercentageRepeatDurationCreate DiscountPercentageRepeatDurationCreate) DiscountCreate {
-	typ := DiscountCreateTypeDiscountPercentageRepeatDurationCreate
-
-	return DiscountCreate{
-		DiscountPercentageRepeatDurationCreate: &discountPercentageRepeatDurationCreate,
-		Type:                                   typ,
+		DiscountPercentageCreate: &percentage,
+		Type:                     typ,
 	}
 }
 
 func (u *DiscountCreate) UnmarshalJSON(data []byte) error {
 
-	var discountPercentageRepeatDurationCreate DiscountPercentageRepeatDurationCreate = DiscountPercentageRepeatDurationCreate{}
-	if err := utils.UnmarshalJSON(data, &discountPercentageRepeatDurationCreate, "", true, nil); err == nil {
-		u.DiscountPercentageRepeatDurationCreate = &discountPercentageRepeatDurationCreate
-		u.Type = DiscountCreateTypeDiscountPercentageRepeatDurationCreate
-		return nil
+	type discriminator struct {
+		Type string `json:"type"`
 	}
 
-	var discountFixedRepeatDurationCreate DiscountFixedRepeatDurationCreate = DiscountFixedRepeatDurationCreate{}
-	if err := utils.UnmarshalJSON(data, &discountFixedRepeatDurationCreate, "", true, nil); err == nil {
-		u.DiscountFixedRepeatDurationCreate = &discountFixedRepeatDurationCreate
-		u.Type = DiscountCreateTypeDiscountFixedRepeatDurationCreate
-		return nil
+	dis := new(discriminator)
+	if err := json.Unmarshal(data, &dis); err != nil {
+		return fmt.Errorf("could not unmarshal discriminator: %w", err)
 	}
 
-	var discountPercentageOnceForeverDurationCreate DiscountPercentageOnceForeverDurationCreate = DiscountPercentageOnceForeverDurationCreate{}
-	if err := utils.UnmarshalJSON(data, &discountPercentageOnceForeverDurationCreate, "", true, nil); err == nil {
-		u.DiscountPercentageOnceForeverDurationCreate = &discountPercentageOnceForeverDurationCreate
-		u.Type = DiscountCreateTypeDiscountPercentageOnceForeverDurationCreate
-		return nil
-	}
+	switch dis.Type {
+	case "fixed":
+		discountFixedCreate := new(DiscountFixedCreate)
+		if err := utils.UnmarshalJSON(data, &discountFixedCreate, "", true, nil); err != nil {
+			return fmt.Errorf("could not unmarshal `%s` into expected (Type == fixed) type DiscountFixedCreate within DiscountCreate: %w", string(data), err)
+		}
 
-	var discountFixedOnceForeverDurationCreate DiscountFixedOnceForeverDurationCreate = DiscountFixedOnceForeverDurationCreate{}
-	if err := utils.UnmarshalJSON(data, &discountFixedOnceForeverDurationCreate, "", true, nil); err == nil {
-		u.DiscountFixedOnceForeverDurationCreate = &discountFixedOnceForeverDurationCreate
-		u.Type = DiscountCreateTypeDiscountFixedOnceForeverDurationCreate
+		u.DiscountFixedCreate = discountFixedCreate
+		u.Type = DiscountCreateTypeFixed
+		return nil
+	case "percentage":
+		discountPercentageCreate := new(DiscountPercentageCreate)
+		if err := utils.UnmarshalJSON(data, &discountPercentageCreate, "", true, nil); err != nil {
+			return fmt.Errorf("could not unmarshal `%s` into expected (Type == percentage) type DiscountPercentageCreate within DiscountCreate: %w", string(data), err)
+		}
+
+		u.DiscountPercentageCreate = discountPercentageCreate
+		u.Type = DiscountCreateTypePercentage
 		return nil
 	}
 
@@ -96,20 +77,12 @@ func (u *DiscountCreate) UnmarshalJSON(data []byte) error {
 }
 
 func (u DiscountCreate) MarshalJSON() ([]byte, error) {
-	if u.DiscountFixedOnceForeverDurationCreate != nil {
-		return utils.MarshalJSON(u.DiscountFixedOnceForeverDurationCreate, "", true)
+	if u.DiscountFixedCreate != nil {
+		return utils.MarshalJSON(u.DiscountFixedCreate, "", true)
 	}
 
-	if u.DiscountFixedRepeatDurationCreate != nil {
-		return utils.MarshalJSON(u.DiscountFixedRepeatDurationCreate, "", true)
-	}
-
-	if u.DiscountPercentageOnceForeverDurationCreate != nil {
-		return utils.MarshalJSON(u.DiscountPercentageOnceForeverDurationCreate, "", true)
-	}
-
-	if u.DiscountPercentageRepeatDurationCreate != nil {
-		return utils.MarshalJSON(u.DiscountPercentageRepeatDurationCreate, "", true)
+	if u.DiscountPercentageCreate != nil {
+		return utils.MarshalJSON(u.DiscountPercentageCreate, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type DiscountCreate: all fields are null")

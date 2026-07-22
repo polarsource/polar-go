@@ -296,8 +296,8 @@ type Subscription struct {
 	// The amount of the subscription.
 	Amount int64 `json:"amount"`
 	// The currency of the subscription.
-	Currency          string                        `json:"currency"`
-	RecurringInterval SubscriptionRecurringInterval `json:"recurring_interval"`
+	Currency          string            `json:"currency"`
+	RecurringInterval RecurringInterval `json:"recurring_interval"`
 	// Number of interval units of the subscription. If this is set to 1 the charge will happen every interval (e.g. every month), if set to 2 it will be every other month, and so on.
 	RecurringIntervalCount int64              `json:"recurring_interval_count"`
 	Status                 SubscriptionStatus `json:"status"`
@@ -305,6 +305,10 @@ type Subscription struct {
 	CurrentPeriodStart time.Time `json:"current_period_start"`
 	// The end timestamp of the current billing period.
 	CurrentPeriodEnd time.Time `json:"current_period_end"`
+	// The start timestamp of the current meter period, if the product has a meter cycle set. Metered credits are granted and overage is settled on this cadence.
+	CurrentMeterPeriodStart *time.Time `json:"current_meter_period_start"`
+	// The end timestamp of the current meter period, if the product has a meter cycle set. This is when credits next renew.
+	CurrentMeterPeriodEnd *time.Time `json:"current_meter_period_end"`
 	// The start timestamp of the trial period, if any.
 	TrialStart *time.Time `json:"trial_start"`
 	// The end timestamp of the trial period, if any.
@@ -319,6 +323,14 @@ type Subscription struct {
 	EndsAt *time.Time `json:"ends_at"`
 	// The timestamp when the subscription ended.
 	EndedAt *time.Time `json:"ended_at"`
+	// The timestamp when the subscription entered `past_due` status.
+	PastDueAt *time.Time `json:"past_due_at,omitempty"`
+	// Whether the subscription will be paused at the end of the current period.
+	PauseAtPeriodEnd bool `json:"pause_at_period_end"`
+	// The timestamp when the subscription was paused.
+	PausedAt *time.Time `json:"paused_at"`
+	// The timestamp when a paused subscription is scheduled to automatically resume, if set.
+	ResumesAt *time.Time `json:"resumes_at"`
 	// The ID of the subscribed customer.
 	CustomerID string `json:"customer_id"`
 	// The ID of the subscribed product.
@@ -391,9 +403,9 @@ func (s *Subscription) GetCurrency() string {
 	return s.Currency
 }
 
-func (s *Subscription) GetRecurringInterval() SubscriptionRecurringInterval {
+func (s *Subscription) GetRecurringInterval() RecurringInterval {
 	if s == nil {
-		return SubscriptionRecurringInterval("")
+		return RecurringInterval("")
 	}
 	return s.RecurringInterval
 }
@@ -424,6 +436,20 @@ func (s *Subscription) GetCurrentPeriodEnd() time.Time {
 		return time.Time{}
 	}
 	return s.CurrentPeriodEnd
+}
+
+func (s *Subscription) GetCurrentMeterPeriodStart() *time.Time {
+	if s == nil {
+		return nil
+	}
+	return s.CurrentMeterPeriodStart
+}
+
+func (s *Subscription) GetCurrentMeterPeriodEnd() *time.Time {
+	if s == nil {
+		return nil
+	}
+	return s.CurrentMeterPeriodEnd
 }
 
 func (s *Subscription) GetTrialStart() *time.Time {
@@ -473,6 +499,34 @@ func (s *Subscription) GetEndedAt() *time.Time {
 		return nil
 	}
 	return s.EndedAt
+}
+
+func (s *Subscription) GetPastDueAt() *time.Time {
+	if s == nil {
+		return nil
+	}
+	return s.PastDueAt
+}
+
+func (s *Subscription) GetPauseAtPeriodEnd() bool {
+	if s == nil {
+		return false
+	}
+	return s.PauseAtPeriodEnd
+}
+
+func (s *Subscription) GetPausedAt() *time.Time {
+	if s == nil {
+		return nil
+	}
+	return s.PausedAt
+}
+
+func (s *Subscription) GetResumesAt() *time.Time {
+	if s == nil {
+		return nil
+	}
+	return s.ResumesAt
 }
 
 func (s *Subscription) GetCustomerID() string {

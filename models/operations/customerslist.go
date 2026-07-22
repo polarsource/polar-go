@@ -80,6 +80,8 @@ type CustomersListRequest struct {
 	Email *string `queryParam:"style=form,explode=true,name=email"`
 	// Filter by name, email, or external ID.
 	Query *string `queryParam:"style=form,explode=true,name=query"`
+	// Filter by active customers, i.e. customers with at least one trialing, active or past_due subscription.
+	Active *bool `queryParam:"style=form,explode=true,name=active"`
 	// Page number, defaults to 1.
 	Page *int64 `default:"1" queryParam:"style=form,explode=true,name=page"`
 	// Size of a page, defaults to 10. Maximum is 100.
@@ -120,6 +122,13 @@ func (c *CustomersListRequest) GetQuery() *string {
 		return nil
 	}
 	return c.Query
+}
+
+func (c *CustomersListRequest) GetActive() *bool {
+	if c == nil {
+		return nil
+	}
+	return c.Active
 }
 
 func (c *CustomersListRequest) GetPage() *int64 {

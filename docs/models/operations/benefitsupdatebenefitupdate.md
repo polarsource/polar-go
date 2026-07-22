@@ -45,6 +45,12 @@ benefitsUpdateBenefitUpdate := operations.CreateBenefitsUpdateBenefitUpdateBenef
 benefitsUpdateBenefitUpdate := operations.CreateBenefitsUpdateBenefitUpdateBenefitFeatureFlagUpdate(components.BenefitFeatureFlagUpdate{/* values here */})
 ```
 
+### BenefitSlackSharedChannelUpdate
+
+```go
+benefitsUpdateBenefitUpdate := operations.CreateBenefitsUpdateBenefitUpdateBenefitSlackSharedChannelUpdate(components.BenefitSlackSharedChannelUpdate{/* values here */})
+```
+
 ## Union Discrimination
 
 Use the `Type` field to determine which variant is active, then access the corresponding field:
@@ -65,5 +71,7 @@ switch benefitsUpdateBenefitUpdate.Type {
 		// benefitsUpdateBenefitUpdate.BenefitMeterCreditUpdate is populated
 	case operations.BenefitsUpdateBenefitUpdateTypeBenefitFeatureFlagUpdate:
 		// benefitsUpdateBenefitUpdate.BenefitFeatureFlagUpdate is populated
+	case operations.BenefitsUpdateBenefitUpdateTypeBenefitSlackSharedChannelUpdate:
+		// benefitsUpdateBenefitUpdate.BenefitSlackSharedChannelUpdate is populated
 }
 ```

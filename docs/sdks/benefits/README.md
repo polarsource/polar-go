@@ -136,6 +136,8 @@ func main() {
                 // res.Benefit.BenefitLicenseKeys is populated
             case components.BenefitUnionTypeMeterCredit:
                 // res.Benefit.BenefitMeterCredit is populated
+            case components.BenefitUnionTypeSlackSharedChannel:
+                // res.Benefit.BenefitSlackSharedChannel is populated
         }
 
     }
@@ -208,6 +210,8 @@ func main() {
                 // res.Benefit.BenefitLicenseKeys is populated
             case components.BenefitUnionTypeMeterCredit:
                 // res.Benefit.BenefitMeterCredit is populated
+            case components.BenefitUnionTypeSlackSharedChannel:
+                // res.Benefit.BenefitSlackSharedChannel is populated
         }
 
     }
@@ -323,8 +327,8 @@ func main() {
         polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )
 
-    res, err := s.Benefits.Update(ctx, "<value>", operations.CreateBenefitsUpdateBenefitUpdateBenefitCustomUpdate(
-        components.BenefitCustomUpdate{},
+    res, err := s.Benefits.Update(ctx, "<value>", operations.CreateBenefitsUpdateBenefitUpdateBenefitDiscordUpdate(
+        components.BenefitDiscordUpdate{},
     ))
     if err != nil {
         log.Fatal(err)
@@ -345,6 +349,8 @@ func main() {
                 // res.Benefit.BenefitLicenseKeys is populated
             case components.BenefitUnionTypeMeterCredit:
                 // res.Benefit.BenefitMeterCredit is populated
+            case components.BenefitUnionTypeSlackSharedChannel:
+                // res.Benefit.BenefitSlackSharedChannel is populated
         }
 
     }

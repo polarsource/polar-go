@@ -10,6 +10,7 @@ import (
 type OrderStatus string
 
 const (
+	OrderStatusDraft             OrderStatus = "draft"
 	OrderStatusPending           OrderStatus = "pending"
 	OrderStatusPaid              OrderStatus = "paid"
 	OrderStatusRefunded          OrderStatus = "refunded"
@@ -26,6 +27,8 @@ func (e *OrderStatus) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	switch v {
+	case "draft":
+		fallthrough
 	case "pending":
 		fallthrough
 	case "paid":

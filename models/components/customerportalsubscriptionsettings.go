@@ -3,8 +3,9 @@
 package components
 
 type CustomerPortalSubscriptionSettings struct {
-	UpdateSeats bool `json:"update_seats"`
-	UpdatePlan  bool `json:"update_plan"`
+	UpdateSeats bool  `json:"update_seats"`
+	UpdatePlan  bool  `json:"update_plan"`
+	Pause       *bool `json:"pause,omitempty"`
 }
 
 func (c *CustomerPortalSubscriptionSettings) GetUpdateSeats() bool {
@@ -19,4 +20,11 @@ func (c *CustomerPortalSubscriptionSettings) GetUpdatePlan() bool {
 		return false
 	}
 	return c.UpdatePlan
+}
+
+func (c *CustomerPortalSubscriptionSettings) GetPause() *bool {
+	if c == nil {
+		return nil
+	}
+	return c.Pause
 }

@@ -303,6 +303,12 @@ type MeterUpdate struct {
 	Metadata map[string]MeterUpdateMetadata `json:"metadata,omitempty"`
 	// The name of the meter. Will be shown on customer's invoices and usage.
 	Name *string `json:"name,omitempty"`
+	// The unit of the meter.
+	Unit *MeterUnit `json:"unit,omitempty"`
+	// The label for the custom unit. Required when unit is 'custom'.
+	CustomLabel *string `json:"custom_label,omitempty"`
+	// The multiplier to convert from base unit to display scale. Required when unit is 'custom'.
+	CustomMultiplier *int64 `json:"custom_multiplier,omitempty"`
 	// The filter to apply on events that'll be used to calculate the meter.
 	Filter *Filter `json:"filter,omitempty"`
 	// The aggregation to apply on the filtered events to calculate the meter.
@@ -323,6 +329,27 @@ func (m *MeterUpdate) GetName() *string {
 		return nil
 	}
 	return m.Name
+}
+
+func (m *MeterUpdate) GetUnit() *MeterUnit {
+	if m == nil {
+		return nil
+	}
+	return m.Unit
+}
+
+func (m *MeterUpdate) GetCustomLabel() *string {
+	if m == nil {
+		return nil
+	}
+	return m.CustomLabel
+}
+
+func (m *MeterUpdate) GetCustomMultiplier() *int64 {
+	if m == nil {
+		return nil
+	}
+	return m.CustomMultiplier
 }
 
 func (m *MeterUpdate) GetFilter() *Filter {

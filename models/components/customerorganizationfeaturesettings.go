@@ -10,6 +10,8 @@ import (
 type CustomerOrganizationFeatureSettings struct {
 	// Whether the member model is enabled for this organization.
 	MemberModelEnabled *bool `default:"false" json:"member_model_enabled"`
+	// Whether localization is enabled for this organization.
+	CheckoutLocalizationEnabled *bool `default:"false" json:"checkout_localization_enabled"`
 }
 
 func (c CustomerOrganizationFeatureSettings) MarshalJSON() ([]byte, error) {
@@ -28,4 +30,11 @@ func (c *CustomerOrganizationFeatureSettings) GetMemberModelEnabled() *bool {
 		return nil
 	}
 	return c.MemberModelEnabled
+}
+
+func (c *CustomerOrganizationFeatureSettings) GetCheckoutLocalizationEnabled() *bool {
+	if c == nil {
+		return nil
+	}
+	return c.CheckoutLocalizationEnabled
 }

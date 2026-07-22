@@ -4,7 +4,8 @@ package components
 
 // MemberUpdate - Schema for updating a member.
 type MemberUpdate struct {
-	Name *string `json:"name,omitempty"`
+	Name  *string `json:"name,omitempty"`
+	Email *string `json:"email,omitempty"`
 	// The role of the member within the customer.
 	Role *MemberRole `json:"role,omitempty"`
 }
@@ -14,6 +15,13 @@ func (m *MemberUpdate) GetName() *string {
 		return nil
 	}
 	return m.Name
+}
+
+func (m *MemberUpdate) GetEmail() *string {
+	if m == nil {
+		return nil
+	}
+	return m.Email
 }
 
 func (m *MemberUpdate) GetRole() *MemberRole {

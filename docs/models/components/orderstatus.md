@@ -7,7 +7,7 @@ import (
 	"github.com/polarsource/polar-go/models/components"
 )
 
-value := components.OrderStatusPending
+value := components.OrderStatusDraft
 ```
 
 
@@ -15,6 +15,7 @@ value := components.OrderStatusPending
 
 | Name                           | Value                          |
 | ------------------------------ | ------------------------------ |
+| `OrderStatusDraft`             | draft                          |
 | `OrderStatusPending`           | pending                        |
 | `OrderStatusPaid`              | paid                           |
 | `OrderStatusRefunded`          | refunded                       |
