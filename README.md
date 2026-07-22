@@ -1,3 +1,8 @@
+> [!WARNING]
+> **This package is no longer maintained.**
+>
+> We recommend migrating away from this SDK and instead interacting with the Polar API directly via raw HTTP requests. This will ensure you always have access to the latest features and fixes. See the [Polar API reference](https://polar.sh/docs/api-reference) for details on making direct requests.
+
 # github.com/polarsource/polar-go
 
 Developer-friendly & type-safe Go SDK specifically catered to leverage *github.com/polarsource/polar-go* API.
