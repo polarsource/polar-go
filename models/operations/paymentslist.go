@@ -201,6 +201,70 @@ func (u PaymentsListQueryParamOrderIDFilter) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type PaymentsListQueryParamOrderIDFilter: all fields are null")
 }
 
+type PaymentsListQueryParamCustomerIDFilterType string
+
+const (
+	PaymentsListQueryParamCustomerIDFilterTypeStr        PaymentsListQueryParamCustomerIDFilterType = "str"
+	PaymentsListQueryParamCustomerIDFilterTypeArrayOfStr PaymentsListQueryParamCustomerIDFilterType = "arrayOfStr"
+)
+
+// PaymentsListQueryParamCustomerIDFilter - Filter by customer ID.
+type PaymentsListQueryParamCustomerIDFilter struct {
+	Str        *string  `queryParam:"inline" union:"member"`
+	ArrayOfStr []string `queryParam:"inline" union:"member"`
+
+	Type PaymentsListQueryParamCustomerIDFilterType
+}
+
+func CreatePaymentsListQueryParamCustomerIDFilterStr(str string) PaymentsListQueryParamCustomerIDFilter {
+	typ := PaymentsListQueryParamCustomerIDFilterTypeStr
+
+	return PaymentsListQueryParamCustomerIDFilter{
+		Str:  &str,
+		Type: typ,
+	}
+}
+
+func CreatePaymentsListQueryParamCustomerIDFilterArrayOfStr(arrayOfStr []string) PaymentsListQueryParamCustomerIDFilter {
+	typ := PaymentsListQueryParamCustomerIDFilterTypeArrayOfStr
+
+	return PaymentsListQueryParamCustomerIDFilter{
+		ArrayOfStr: arrayOfStr,
+		Type:       typ,
+	}
+}
+
+func (u *PaymentsListQueryParamCustomerIDFilter) UnmarshalJSON(data []byte) error {
+
+	var str string = ""
+	if err := utils.UnmarshalJSON(data, &str, "", true, nil); err == nil {
+		u.Str = &str
+		u.Type = PaymentsListQueryParamCustomerIDFilterTypeStr
+		return nil
+	}
+
+	var arrayOfStr []string = []string{}
+	if err := utils.UnmarshalJSON(data, &arrayOfStr, "", true, nil); err == nil {
+		u.ArrayOfStr = arrayOfStr
+		u.Type = PaymentsListQueryParamCustomerIDFilterTypeArrayOfStr
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for PaymentsListQueryParamCustomerIDFilter", string(data))
+}
+
+func (u PaymentsListQueryParamCustomerIDFilter) MarshalJSON() ([]byte, error) {
+	if u.Str != nil {
+		return utils.MarshalJSON(u.Str, "", true)
+	}
+
+	if u.ArrayOfStr != nil {
+		return utils.MarshalJSON(u.ArrayOfStr, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type PaymentsListQueryParamCustomerIDFilter: all fields are null")
+}
+
 type PaymentsListQueryParamStatusFilterType string
 
 const (
@@ -400,6 +464,8 @@ type PaymentsListRequest struct {
 	CheckoutID *PaymentsListQueryParamCheckoutIDFilter `queryParam:"style=form,explode=true,name=checkout_id"`
 	// Filter by order ID.
 	OrderID *PaymentsListQueryParamOrderIDFilter `queryParam:"style=form,explode=true,name=order_id"`
+	// Filter by customer ID.
+	CustomerID *PaymentsListQueryParamCustomerIDFilter `queryParam:"style=form,explode=true,name=customer_id"`
 	// Filter by payment status.
 	Status *PaymentsListQueryParamStatusFilter `queryParam:"style=form,explode=true,name=status"`
 	// Filter by payment method.
@@ -444,6 +510,13 @@ func (p *PaymentsListRequest) GetOrderID() *PaymentsListQueryParamOrderIDFilter 
 		return nil
 	}
 	return p.OrderID
+}
+
+func (p *PaymentsListRequest) GetCustomerID() *PaymentsListQueryParamCustomerIDFilter {
+	if p == nil {
+		return nil
+	}
+	return p.CustomerID
 }
 
 func (p *PaymentsListRequest) GetStatus() *PaymentsListQueryParamStatusFilter {

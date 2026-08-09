@@ -193,7 +193,7 @@ func main() {
     if err != nil {
         log.Fatal(err)
     }
-    if res.Any != nil {
+    if res.Res != nil {
         // handle response
     }
 }
@@ -381,9 +381,9 @@ func main() {
         polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )
 
-    res, err := s.Subscriptions.Update(ctx, "<value>", components.CreateSubscriptionUpdateSubscriptionUpdateProduct(
-        components.SubscriptionUpdateProduct{
-            ProductID: "<value>",
+    res, err := s.Subscriptions.Update(ctx, "<value>", components.CreateSubscriptionUpdateSubscriptionUpdateBase(
+        components.SubscriptionUpdateBase{
+            ProductID: polargo.Pointer("<value>"),
         },
     ))
     if err != nil {

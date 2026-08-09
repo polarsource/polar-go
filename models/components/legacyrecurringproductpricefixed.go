@@ -30,8 +30,8 @@ type LegacyRecurringProductPriceFixed struct {
 	ProductID string `json:"product_id"`
 	// The type of the price.
 	//lint:ignore U1000 accessed via reflection for JSON marshaling
-	type_             string                        `const:"recurring" json:"type"`
-	RecurringInterval SubscriptionRecurringInterval `json:"recurring_interval"`
+	type_             string            `const:"recurring" json:"type"`
+	RecurringInterval RecurringInterval `json:"recurring_interval"`
 	// The price in cents.
 	PriceAmount int64 `json:"price_amount"`
 	//lint:ignore U1000 accessed via reflection for JSON marshaling
@@ -113,9 +113,9 @@ func (l *LegacyRecurringProductPriceFixed) GetType() string {
 	return "recurring"
 }
 
-func (l *LegacyRecurringProductPriceFixed) GetRecurringInterval() SubscriptionRecurringInterval {
+func (l *LegacyRecurringProductPriceFixed) GetRecurringInterval() RecurringInterval {
 	if l == nil {
-		return SubscriptionRecurringInterval("")
+		return RecurringInterval("")
 	}
 	return l.RecurringInterval
 }

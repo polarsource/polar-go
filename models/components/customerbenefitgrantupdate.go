@@ -12,23 +12,25 @@ import (
 type CustomerBenefitGrantUpdateType string
 
 const (
-	CustomerBenefitGrantUpdateTypeCustom           CustomerBenefitGrantUpdateType = "custom"
-	CustomerBenefitGrantUpdateTypeDiscord          CustomerBenefitGrantUpdateType = "discord"
-	CustomerBenefitGrantUpdateTypeDownloadables    CustomerBenefitGrantUpdateType = "downloadables"
-	CustomerBenefitGrantUpdateTypeFeatureFlag      CustomerBenefitGrantUpdateType = "feature_flag"
-	CustomerBenefitGrantUpdateTypeGithubRepository CustomerBenefitGrantUpdateType = "github_repository"
-	CustomerBenefitGrantUpdateTypeLicenseKeys      CustomerBenefitGrantUpdateType = "license_keys"
-	CustomerBenefitGrantUpdateTypeMeterCredit      CustomerBenefitGrantUpdateType = "meter_credit"
+	CustomerBenefitGrantUpdateTypeCustom             CustomerBenefitGrantUpdateType = "custom"
+	CustomerBenefitGrantUpdateTypeDiscord            CustomerBenefitGrantUpdateType = "discord"
+	CustomerBenefitGrantUpdateTypeDownloadables      CustomerBenefitGrantUpdateType = "downloadables"
+	CustomerBenefitGrantUpdateTypeFeatureFlag        CustomerBenefitGrantUpdateType = "feature_flag"
+	CustomerBenefitGrantUpdateTypeGithubRepository   CustomerBenefitGrantUpdateType = "github_repository"
+	CustomerBenefitGrantUpdateTypeLicenseKeys        CustomerBenefitGrantUpdateType = "license_keys"
+	CustomerBenefitGrantUpdateTypeMeterCredit        CustomerBenefitGrantUpdateType = "meter_credit"
+	CustomerBenefitGrantUpdateTypeSlackSharedChannel CustomerBenefitGrantUpdateType = "slack_shared_channel"
 )
 
 type CustomerBenefitGrantUpdate struct {
-	CustomerBenefitGrantDiscordUpdate          *CustomerBenefitGrantDiscordUpdate          `queryParam:"inline" union:"member"`
-	CustomerBenefitGrantGitHubRepositoryUpdate *CustomerBenefitGrantGitHubRepositoryUpdate `queryParam:"inline" union:"member"`
-	CustomerBenefitGrantDownloadablesUpdate    *CustomerBenefitGrantDownloadablesUpdate    `queryParam:"inline" union:"member"`
-	CustomerBenefitGrantLicenseKeysUpdate      *CustomerBenefitGrantLicenseKeysUpdate      `queryParam:"inline" union:"member"`
-	CustomerBenefitGrantCustomUpdate           *CustomerBenefitGrantCustomUpdate           `queryParam:"inline" union:"member"`
-	CustomerBenefitGrantMeterCreditUpdate      *CustomerBenefitGrantMeterCreditUpdate      `queryParam:"inline" union:"member"`
-	CustomerBenefitGrantFeatureFlagUpdate      *CustomerBenefitGrantFeatureFlagUpdate      `queryParam:"inline" union:"member"`
+	CustomerBenefitGrantDiscordUpdate            *CustomerBenefitGrantDiscordUpdate            `queryParam:"inline" union:"member"`
+	CustomerBenefitGrantGitHubRepositoryUpdate   *CustomerBenefitGrantGitHubRepositoryUpdate   `queryParam:"inline" union:"member"`
+	CustomerBenefitGrantDownloadablesUpdate      *CustomerBenefitGrantDownloadablesUpdate      `queryParam:"inline" union:"member"`
+	CustomerBenefitGrantLicenseKeysUpdate        *CustomerBenefitGrantLicenseKeysUpdate        `queryParam:"inline" union:"member"`
+	CustomerBenefitGrantCustomUpdate             *CustomerBenefitGrantCustomUpdate             `queryParam:"inline" union:"member"`
+	CustomerBenefitGrantMeterCreditUpdate        *CustomerBenefitGrantMeterCreditUpdate        `queryParam:"inline" union:"member"`
+	CustomerBenefitGrantFeatureFlagUpdate        *CustomerBenefitGrantFeatureFlagUpdate        `queryParam:"inline" union:"member"`
+	CustomerBenefitGrantSlackSharedChannelUpdate *CustomerBenefitGrantSlackSharedChannelUpdate `queryParam:"inline" union:"member"`
 
 	Type CustomerBenefitGrantUpdateType
 }
@@ -93,6 +95,15 @@ func CreateCustomerBenefitGrantUpdateMeterCredit(meterCredit CustomerBenefitGran
 	return CustomerBenefitGrantUpdate{
 		CustomerBenefitGrantMeterCreditUpdate: &meterCredit,
 		Type:                                  typ,
+	}
+}
+
+func CreateCustomerBenefitGrantUpdateSlackSharedChannel(slackSharedChannel CustomerBenefitGrantSlackSharedChannelUpdate) CustomerBenefitGrantUpdate {
+	typ := CustomerBenefitGrantUpdateTypeSlackSharedChannel
+
+	return CustomerBenefitGrantUpdate{
+		CustomerBenefitGrantSlackSharedChannelUpdate: &slackSharedChannel,
+		Type: typ,
 	}
 }
 
@@ -171,6 +182,15 @@ func (u *CustomerBenefitGrantUpdate) UnmarshalJSON(data []byte) error {
 		u.CustomerBenefitGrantMeterCreditUpdate = customerBenefitGrantMeterCreditUpdate
 		u.Type = CustomerBenefitGrantUpdateTypeMeterCredit
 		return nil
+	case "slack_shared_channel":
+		customerBenefitGrantSlackSharedChannelUpdate := new(CustomerBenefitGrantSlackSharedChannelUpdate)
+		if err := utils.UnmarshalJSON(data, &customerBenefitGrantSlackSharedChannelUpdate, "", true, nil); err != nil {
+			return fmt.Errorf("could not unmarshal `%s` into expected (BenefitType == slack_shared_channel) type CustomerBenefitGrantSlackSharedChannelUpdate within CustomerBenefitGrantUpdate: %w", string(data), err)
+		}
+
+		u.CustomerBenefitGrantSlackSharedChannelUpdate = customerBenefitGrantSlackSharedChannelUpdate
+		u.Type = CustomerBenefitGrantUpdateTypeSlackSharedChannel
+		return nil
 	}
 
 	return fmt.Errorf("could not unmarshal `%s` into any supported union types for CustomerBenefitGrantUpdate", string(data))
@@ -203,6 +223,10 @@ func (u CustomerBenefitGrantUpdate) MarshalJSON() ([]byte, error) {
 
 	if u.CustomerBenefitGrantFeatureFlagUpdate != nil {
 		return utils.MarshalJSON(u.CustomerBenefitGrantFeatureFlagUpdate, "", true)
+	}
+
+	if u.CustomerBenefitGrantSlackSharedChannelUpdate != nil {
+		return utils.MarshalJSON(u.CustomerBenefitGrantSlackSharedChannelUpdate, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type CustomerBenefitGrantUpdate: all fields are null")

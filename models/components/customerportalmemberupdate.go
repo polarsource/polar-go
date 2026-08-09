@@ -2,10 +2,19 @@
 
 package components
 
-// CustomerPortalMemberUpdate - Schema for updating a member's role in the customer portal.
+// CustomerPortalMemberUpdate - Schema for updating a member in the customer portal.
 type CustomerPortalMemberUpdate struct {
+	// The new name for the member.
+	Name *string `json:"name,omitempty"`
 	// The new role for the member.
 	Role *MemberRole `json:"role,omitempty"`
+}
+
+func (c *CustomerPortalMemberUpdate) GetName() *string {
+	if c == nil {
+		return nil
+	}
+	return c.Name
 }
 
 func (c *CustomerPortalMemberUpdate) GetRole() *MemberRole {

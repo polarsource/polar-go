@@ -161,8 +161,6 @@ func (o *OrdersExportRequest) GetProductID() *OrdersExportQueryParamProductIDFil
 type OrdersExportResponse struct {
 	HTTPMeta components.HTTPMetadata `json:"-"`
 	// Successful Response
-	Any any
-	// Successful Response
 	Res *string
 }
 
@@ -171,13 +169,6 @@ func (o *OrdersExportResponse) GetHTTPMeta() components.HTTPMetadata {
 		return components.HTTPMetadata{}
 	}
 	return o.HTTPMeta
-}
-
-func (o *OrdersExportResponse) GetAny() any {
-	if o == nil {
-		return nil
-	}
-	return o.Any
 }
 
 func (o *OrdersExportResponse) GetRes() *string {

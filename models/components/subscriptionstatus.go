@@ -17,6 +17,7 @@ const (
 	SubscriptionStatusPastDue           SubscriptionStatus = "past_due"
 	SubscriptionStatusCanceled          SubscriptionStatus = "canceled"
 	SubscriptionStatusUnpaid            SubscriptionStatus = "unpaid"
+	SubscriptionStatusPaused            SubscriptionStatus = "paused"
 )
 
 func (e SubscriptionStatus) ToPointer() *SubscriptionStatus {
@@ -41,6 +42,8 @@ func (e *SubscriptionStatus) UnmarshalJSON(data []byte) error {
 	case "canceled":
 		fallthrough
 	case "unpaid":
+		fallthrough
+	case "paused":
 		*e = SubscriptionStatus(v)
 		return nil
 	default:

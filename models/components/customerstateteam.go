@@ -95,21 +95,25 @@ type CustomerStateTeam struct {
 	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	type_ string `const:"team" json:"type"`
 	// The name of the customer.
-	Name           *string                   `json:"name"`
+	Name *string `json:"name"`
+	// The name that should appear on the customer's invoices. Falls back to the customer name when not explicitly set.
+	BillingName    *string                   `json:"billing_name"`
 	BillingAddress *Address                  `json:"billing_address"`
 	TaxID          []*CustomerStateTeamTaxID `json:"tax_id"`
 	Locale         *string                   `json:"locale,omitempty"`
 	// The ID of the organization owning the customer.
 	OrganizationID string `json:"organization_id"`
+	// The ID of the customer's default payment method, if any. Use the payment methods endpoint to retrieve its details.
+	DefaultPaymentMethodID *string `json:"default_payment_method_id,omitempty"`
 	// Timestamp for when the customer was soft deleted.
 	DeletedAt *time.Time `json:"deleted_at"`
+	AvatarURL *string    `json:"avatar_url"`
 	// The customer's active subscriptions.
 	ActiveSubscriptions []CustomerStateSubscription `json:"active_subscriptions"`
 	// The customer's active benefit grants.
 	GrantedBenefits []CustomerStateBenefitGrant `json:"granted_benefits"`
 	// The customer's active meters.
 	ActiveMeters []CustomerStateMeter `json:"active_meters"`
-	AvatarURL    string               `json:"avatar_url"`
 }
 
 func (c CustomerStateTeam) MarshalJSON() ([]byte, error) {
@@ -117,7 +121,7 @@ func (c CustomerStateTeam) MarshalJSON() ([]byte, error) {
 }
 
 func (c *CustomerStateTeam) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &c, "", false, []string{"id", "created_at", "metadata", "email_verified", "type", "organization_id", "active_subscriptions", "granted_benefits", "active_meters", "avatar_url"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &c, "", false, []string{"id", "created_at", "metadata", "email_verified", "type", "organization_id", "active_subscriptions", "granted_benefits", "active_meters"}); err != nil {
 		return err
 	}
 	return nil
@@ -183,6 +187,13 @@ func (c *CustomerStateTeam) GetName() *string {
 	return c.Name
 }
 
+func (c *CustomerStateTeam) GetBillingName() *string {
+	if c == nil {
+		return nil
+	}
+	return c.BillingName
+}
+
 func (c *CustomerStateTeam) GetBillingAddress() *Address {
 	if c == nil {
 		return nil
@@ -211,11 +222,25 @@ func (c *CustomerStateTeam) GetOrganizationID() string {
 	return c.OrganizationID
 }
 
+func (c *CustomerStateTeam) GetDefaultPaymentMethodID() *string {
+	if c == nil {
+		return nil
+	}
+	return c.DefaultPaymentMethodID
+}
+
 func (c *CustomerStateTeam) GetDeletedAt() *time.Time {
 	if c == nil {
 		return nil
 	}
 	return c.DeletedAt
+}
+
+func (c *CustomerStateTeam) GetAvatarURL() *string {
+	if c == nil {
+		return nil
+	}
+	return c.AvatarURL
 }
 
 func (c *CustomerStateTeam) GetActiveSubscriptions() []CustomerStateSubscription {
@@ -237,11 +262,4 @@ func (c *CustomerStateTeam) GetActiveMeters() []CustomerStateMeter {
 		return []CustomerStateMeter{}
 	}
 	return c.ActiveMeters
-}
-
-func (c *CustomerStateTeam) GetAvatarURL() string {
-	if c == nil {
-		return ""
-	}
-	return c.AvatarURL
 }

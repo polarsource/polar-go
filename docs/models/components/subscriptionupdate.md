@@ -3,22 +3,10 @@
 
 ## Supported Types
 
-### SubscriptionUpdateProduct
+### SubscriptionUpdateBase
 
 ```go
-subscriptionUpdate := components.CreateSubscriptionUpdateSubscriptionUpdateProduct(components.SubscriptionUpdateProduct{/* values here */})
-```
-
-### SubscriptionUpdateDiscount
-
-```go
-subscriptionUpdate := components.CreateSubscriptionUpdateSubscriptionUpdateDiscount(components.SubscriptionUpdateDiscount{/* values here */})
-```
-
-### SubscriptionUpdateTrial
-
-```go
-subscriptionUpdate := components.CreateSubscriptionUpdateSubscriptionUpdateTrial(components.SubscriptionUpdateTrial{/* values here */})
+subscriptionUpdate := components.CreateSubscriptionUpdateSubscriptionUpdateBase(components.SubscriptionUpdateBase{/* values here */})
 ```
 
 ### SubscriptionUpdateSeats
@@ -45,18 +33,32 @@ subscriptionUpdate := components.CreateSubscriptionUpdateSubscriptionCancel(comp
 subscriptionUpdate := components.CreateSubscriptionUpdateSubscriptionRevoke(components.SubscriptionRevoke{/* values here */})
 ```
 
+### SubscriptionPause
+
+```go
+subscriptionUpdate := components.CreateSubscriptionUpdateSubscriptionPause(components.SubscriptionPause{/* values here */})
+```
+
+### SubscriptionResume
+
+```go
+subscriptionUpdate := components.CreateSubscriptionUpdateSubscriptionResume(components.SubscriptionResume{/* values here */})
+```
+
+### SubscriptionUpdateClear
+
+```go
+subscriptionUpdate := components.CreateSubscriptionUpdateSubscriptionUpdateClear(components.SubscriptionUpdateClear{/* values here */})
+```
+
 ## Union Discrimination
 
 Use the `Type` field to determine which variant is active, then access the corresponding field:
 
 ```go
 switch subscriptionUpdate.Type {
-	case components.SubscriptionUpdateTypeSubscriptionUpdateProduct:
-		// subscriptionUpdate.SubscriptionUpdateProduct is populated
-	case components.SubscriptionUpdateTypeSubscriptionUpdateDiscount:
-		// subscriptionUpdate.SubscriptionUpdateDiscount is populated
-	case components.SubscriptionUpdateTypeSubscriptionUpdateTrial:
-		// subscriptionUpdate.SubscriptionUpdateTrial is populated
+	case components.SubscriptionUpdateTypeSubscriptionUpdateBase:
+		// subscriptionUpdate.SubscriptionUpdateBase is populated
 	case components.SubscriptionUpdateTypeSubscriptionUpdateSeats:
 		// subscriptionUpdate.SubscriptionUpdateSeats is populated
 	case components.SubscriptionUpdateTypeSubscriptionUpdateBillingPeriod:
@@ -65,5 +67,11 @@ switch subscriptionUpdate.Type {
 		// subscriptionUpdate.SubscriptionCancel is populated
 	case components.SubscriptionUpdateTypeSubscriptionRevoke:
 		// subscriptionUpdate.SubscriptionRevoke is populated
+	case components.SubscriptionUpdateTypeSubscriptionPause:
+		// subscriptionUpdate.SubscriptionPause is populated
+	case components.SubscriptionUpdateTypeSubscriptionResume:
+		// subscriptionUpdate.SubscriptionResume is populated
+	case components.SubscriptionUpdateTypeSubscriptionUpdateClear:
+		// subscriptionUpdate.SubscriptionUpdateClear is populated
 }
 ```

@@ -192,8 +192,13 @@ type Meter struct {
 	// The ID of the object.
 	ID string `json:"id"`
 	// The name of the meter. Will be shown on customer's invoices and usage.
-	Name   string `json:"name"`
-	Filter Filter `json:"filter"`
+	Name string    `json:"name"`
+	Unit MeterUnit `json:"unit"`
+	// The label for the custom unit.
+	CustomLabel *string `json:"custom_label,omitempty"`
+	// The multiplier to convert from base unit to display scale.
+	CustomMultiplier *int64 `json:"custom_multiplier,omitempty"`
+	Filter           Filter `json:"filter"`
 	// The aggregation to apply on the filtered events to calculate the meter.
 	Aggregation MeterAggregation `json:"aggregation"`
 	// The ID of the organization owning the meter.
@@ -246,6 +251,27 @@ func (m *Meter) GetName() string {
 		return ""
 	}
 	return m.Name
+}
+
+func (m *Meter) GetUnit() MeterUnit {
+	if m == nil {
+		return MeterUnit("")
+	}
+	return m.Unit
+}
+
+func (m *Meter) GetCustomLabel() *string {
+	if m == nil {
+		return nil
+	}
+	return m.CustomLabel
+}
+
+func (m *Meter) GetCustomMultiplier() *int64 {
+	if m == nil {
+		return nil
+	}
+	return m.CustomMultiplier
 }
 
 func (m *Meter) GetFilter() Filter {

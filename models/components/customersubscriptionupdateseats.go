@@ -9,8 +9,6 @@ import (
 type CustomerSubscriptionUpdateSeats struct {
 	// Update the number of seats for this subscription.
 	Seats int64 `json:"seats"`
-	// Determine how to handle the proration billing. If not provided, will use the default organization setting.
-	ProrationBehavior *SubscriptionProrationBehavior `json:"proration_behavior,omitempty"`
 }
 
 func (c CustomerSubscriptionUpdateSeats) MarshalJSON() ([]byte, error) {
@@ -29,11 +27,4 @@ func (c *CustomerSubscriptionUpdateSeats) GetSeats() int64 {
 		return 0
 	}
 	return c.Seats
-}
-
-func (c *CustomerSubscriptionUpdateSeats) GetProrationBehavior() *SubscriptionProrationBehavior {
-	if c == nil {
-		return nil
-	}
-	return c.ProrationBehavior
 }

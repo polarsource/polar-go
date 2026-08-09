@@ -130,6 +130,8 @@ type BenefitFeatureFlagUpdate struct {
 	Metadata map[string]BenefitFeatureFlagUpdateMetadata `json:"metadata,omitempty"`
 	// The description of the benefit. Will be displayed on products having this benefit.
 	Description *string `json:"description,omitempty"`
+	// The visibility of the benefit in the customer portal.
+	Visibility *BenefitVisibility `json:"visibility,omitempty"`
 	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	type_      string                        `const:"feature_flag" json:"type"`
 	Properties *BenefitFeatureFlagProperties `json:"properties,omitempty"`
@@ -158,6 +160,13 @@ func (b *BenefitFeatureFlagUpdate) GetDescription() *string {
 		return nil
 	}
 	return b.Description
+}
+
+func (b *BenefitFeatureFlagUpdate) GetVisibility() *BenefitVisibility {
+	if b == nil {
+		return nil
+	}
+	return b.Visibility
 }
 
 func (b *BenefitFeatureFlagUpdate) GetType() string {

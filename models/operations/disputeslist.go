@@ -137,59 +137,59 @@ func (u QueryParamOrderIDFilter) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type QueryParamOrderIDFilter: all fields are null")
 }
 
-type StatusFilterType string
+type QueryParamStatusFilterType string
 
 const (
-	StatusFilterTypeDisputeStatus        StatusFilterType = "DisputeStatus"
-	StatusFilterTypeArrayOfDisputeStatus StatusFilterType = "arrayOfDisputeStatus"
+	QueryParamStatusFilterTypeDisputeStatus        QueryParamStatusFilterType = "DisputeStatus"
+	QueryParamStatusFilterTypeArrayOfDisputeStatus QueryParamStatusFilterType = "arrayOfDisputeStatus"
 )
 
-// StatusFilter - Filter by dispute status.
-type StatusFilter struct {
+// QueryParamStatusFilter - Filter by dispute status.
+type QueryParamStatusFilter struct {
 	DisputeStatus        *components.DisputeStatus  `queryParam:"inline" union:"member"`
 	ArrayOfDisputeStatus []components.DisputeStatus `queryParam:"inline" union:"member"`
 
-	Type StatusFilterType
+	Type QueryParamStatusFilterType
 }
 
-func CreateStatusFilterDisputeStatus(disputeStatus components.DisputeStatus) StatusFilter {
-	typ := StatusFilterTypeDisputeStatus
+func CreateQueryParamStatusFilterDisputeStatus(disputeStatus components.DisputeStatus) QueryParamStatusFilter {
+	typ := QueryParamStatusFilterTypeDisputeStatus
 
-	return StatusFilter{
+	return QueryParamStatusFilter{
 		DisputeStatus: &disputeStatus,
 		Type:          typ,
 	}
 }
 
-func CreateStatusFilterArrayOfDisputeStatus(arrayOfDisputeStatus []components.DisputeStatus) StatusFilter {
-	typ := StatusFilterTypeArrayOfDisputeStatus
+func CreateQueryParamStatusFilterArrayOfDisputeStatus(arrayOfDisputeStatus []components.DisputeStatus) QueryParamStatusFilter {
+	typ := QueryParamStatusFilterTypeArrayOfDisputeStatus
 
-	return StatusFilter{
+	return QueryParamStatusFilter{
 		ArrayOfDisputeStatus: arrayOfDisputeStatus,
 		Type:                 typ,
 	}
 }
 
-func (u *StatusFilter) UnmarshalJSON(data []byte) error {
+func (u *QueryParamStatusFilter) UnmarshalJSON(data []byte) error {
 
 	var disputeStatus components.DisputeStatus = components.DisputeStatus("")
 	if err := utils.UnmarshalJSON(data, &disputeStatus, "", true, nil); err == nil {
 		u.DisputeStatus = &disputeStatus
-		u.Type = StatusFilterTypeDisputeStatus
+		u.Type = QueryParamStatusFilterTypeDisputeStatus
 		return nil
 	}
 
 	var arrayOfDisputeStatus []components.DisputeStatus = []components.DisputeStatus{}
 	if err := utils.UnmarshalJSON(data, &arrayOfDisputeStatus, "", true, nil); err == nil {
 		u.ArrayOfDisputeStatus = arrayOfDisputeStatus
-		u.Type = StatusFilterTypeArrayOfDisputeStatus
+		u.Type = QueryParamStatusFilterTypeArrayOfDisputeStatus
 		return nil
 	}
 
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for StatusFilter", string(data))
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for QueryParamStatusFilter", string(data))
 }
 
-func (u StatusFilter) MarshalJSON() ([]byte, error) {
+func (u QueryParamStatusFilter) MarshalJSON() ([]byte, error) {
 	if u.DisputeStatus != nil {
 		return utils.MarshalJSON(u.DisputeStatus, "", true)
 	}
@@ -198,7 +198,7 @@ func (u StatusFilter) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.ArrayOfDisputeStatus, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type StatusFilter: all fields are null")
+	return nil, errors.New("could not marshal union type QueryParamStatusFilter: all fields are null")
 }
 
 type DisputesListRequest struct {
@@ -207,7 +207,7 @@ type DisputesListRequest struct {
 	// Filter by order ID.
 	OrderID *QueryParamOrderIDFilter `queryParam:"style=form,explode=true,name=order_id"`
 	// Filter by dispute status.
-	Status *StatusFilter `queryParam:"style=form,explode=true,name=status"`
+	Status *QueryParamStatusFilter `queryParam:"style=form,explode=true,name=status"`
 	// Page number, defaults to 1.
 	Page *int64 `default:"1" queryParam:"style=form,explode=true,name=page"`
 	// Size of a page, defaults to 10. Maximum is 100.
@@ -241,7 +241,7 @@ func (d *DisputesListRequest) GetOrderID() *QueryParamOrderIDFilter {
 	return d.OrderID
 }
 
-func (d *DisputesListRequest) GetStatus() *StatusFilter {
+func (d *DisputesListRequest) GetStatus() *QueryParamStatusFilter {
 	if d == nil {
 		return nil
 	}

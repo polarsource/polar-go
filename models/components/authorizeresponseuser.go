@@ -9,10 +9,12 @@ import (
 type AuthorizeResponseUser struct {
 	Client OAuth2ClientPublic `json:"client"`
 	//lint:ignore U1000 accessed via reflection for JSON marshaling
-	subType           string            `const:"user" json:"sub_type"`
-	Sub               *AuthorizeUser    `json:"sub"`
-	Scopes            []Scope           `json:"scopes"`
-	ScopeDisplayNames map[string]string `json:"scope_display_names,omitempty"`
+	subType                    string                  `const:"user" json:"sub_type"`
+	Sub                        *AuthorizeUser          `json:"sub"`
+	Scopes                     []Scope                 `json:"scopes"`
+	Organizations              []AuthorizeOrganization `json:"organizations"`
+	RequiresSingleOrganization *bool                   `default:"false" json:"requires_single_organization"`
+	ScopeDisplayNames          map[string]string       `json:"scope_display_names,omitempty"`
 }
 
 func (a AuthorizeResponseUser) MarshalJSON() ([]byte, error) {
@@ -20,7 +22,7 @@ func (a AuthorizeResponseUser) MarshalJSON() ([]byte, error) {
 }
 
 func (a *AuthorizeResponseUser) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &a, "", false, []string{"client", "sub_type", "scopes"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &a, "", false, []string{"client", "sub_type", "scopes", "organizations"}); err != nil {
 		return err
 	}
 	return nil
@@ -49,6 +51,20 @@ func (a *AuthorizeResponseUser) GetScopes() []Scope {
 		return []Scope{}
 	}
 	return a.Scopes
+}
+
+func (a *AuthorizeResponseUser) GetOrganizations() []AuthorizeOrganization {
+	if a == nil {
+		return []AuthorizeOrganization{}
+	}
+	return a.Organizations
+}
+
+func (a *AuthorizeResponseUser) GetRequiresSingleOrganization() *bool {
+	if a == nil {
+		return nil
+	}
+	return a.RequiresSingleOrganization
 }
 
 func (a *AuthorizeResponseUser) GetScopeDisplayNames() map[string]string {

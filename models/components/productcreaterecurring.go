@@ -121,7 +121,6 @@ type ProductCreateRecurringPricesType string
 const (
 	ProductCreateRecurringPricesTypeCustom      ProductCreateRecurringPricesType = "custom"
 	ProductCreateRecurringPricesTypeFixed       ProductCreateRecurringPricesType = "fixed"
-	ProductCreateRecurringPricesTypeFree        ProductCreateRecurringPricesType = "free"
 	ProductCreateRecurringPricesTypeMeteredUnit ProductCreateRecurringPricesType = "metered_unit"
 	ProductCreateRecurringPricesTypeSeatBased   ProductCreateRecurringPricesType = "seat_based"
 )
@@ -129,7 +128,6 @@ const (
 type ProductCreateRecurringPrices struct {
 	ProductPriceFixedCreate       *ProductPriceFixedCreate       `queryParam:"inline" union:"member"`
 	ProductPriceCustomCreate      *ProductPriceCustomCreate      `queryParam:"inline" union:"member"`
-	ProductPriceFreeCreate        *ProductPriceFreeCreate        `queryParam:"inline" union:"member"`
 	ProductPriceSeatBasedCreate   *ProductPriceSeatBasedCreate   `queryParam:"inline" union:"member"`
 	ProductPriceMeteredUnitCreate *ProductPriceMeteredUnitCreate `queryParam:"inline" union:"member"`
 
@@ -151,15 +149,6 @@ func CreateProductCreateRecurringPricesFixed(fixed ProductPriceFixedCreate) Prod
 	return ProductCreateRecurringPrices{
 		ProductPriceFixedCreate: &fixed,
 		Type:                    typ,
-	}
-}
-
-func CreateProductCreateRecurringPricesFree(free ProductPriceFreeCreate) ProductCreateRecurringPrices {
-	typ := ProductCreateRecurringPricesTypeFree
-
-	return ProductCreateRecurringPrices{
-		ProductPriceFreeCreate: &free,
-		Type:                   typ,
 	}
 }
 
@@ -211,15 +200,6 @@ func (u *ProductCreateRecurringPrices) UnmarshalJSON(data []byte) error {
 		u.ProductPriceFixedCreate = productPriceFixedCreate
 		u.Type = ProductCreateRecurringPricesTypeFixed
 		return nil
-	case "free":
-		productPriceFreeCreate := new(ProductPriceFreeCreate)
-		if err := utils.UnmarshalJSON(data, &productPriceFreeCreate, "", true, nil); err != nil {
-			return fmt.Errorf("could not unmarshal `%s` into expected (AmountType == free) type ProductPriceFreeCreate within ProductCreateRecurringPrices: %w", string(data), err)
-		}
-
-		u.ProductPriceFreeCreate = productPriceFreeCreate
-		u.Type = ProductCreateRecurringPricesTypeFree
-		return nil
 	case "metered_unit":
 		productPriceMeteredUnitCreate := new(ProductPriceMeteredUnitCreate)
 		if err := utils.UnmarshalJSON(data, &productPriceMeteredUnitCreate, "", true, nil); err != nil {
@@ -252,10 +232,6 @@ func (u ProductCreateRecurringPrices) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.ProductPriceCustomCreate, "", true)
 	}
 
-	if u.ProductPriceFreeCreate != nil {
-		return utils.MarshalJSON(u.ProductPriceFreeCreate, "", true)
-	}
-
 	if u.ProductPriceSeatBasedCreate != nil {
 		return utils.MarshalJSON(u.ProductPriceSeatBasedCreate, "", true)
 	}
@@ -285,7 +261,7 @@ type ProductCreateRecurring struct {
 	// The description of the product.
 	Description *string            `json:"description,omitempty"`
 	Visibility  *ProductVisibility `json:"visibility,omitempty"`
-	// List of available prices for this product. It should contain at most one static price (fixed, custom or free), and any number of metered prices. Metered prices are not supported on one-time purchase products.
+	// List of available prices for this product. It may combine at most one fixed price with one seat-based price (billed as `fixed + seat_charge`), or contain a single custom or free price, plus any number of metered prices. A free price cannot be combined with other prices, and a custom price cannot be combined with a fixed or seat-based price. Metered prices are not supported on one-time purchase products.
 	Prices []ProductCreateRecurringPrices `json:"prices"`
 	// List of file IDs. Each one must be on the same organization as the product, of type `product_media` and correctly uploaded.
 	Medias []string `json:"medias,omitempty"`
@@ -296,10 +272,14 @@ type ProductCreateRecurring struct {
 	// The interval unit for the trial period.
 	TrialInterval *TrialInterval `json:"trial_interval,omitempty"`
 	// The number of interval units for the trial period.
-	TrialIntervalCount *int64                        `json:"trial_interval_count,omitempty"`
-	RecurringInterval  SubscriptionRecurringInterval `json:"recurring_interval"`
+	TrialIntervalCount *int64            `json:"trial_interval_count,omitempty"`
+	RecurringInterval  RecurringInterval `json:"recurring_interval"`
 	// Number of interval units of the subscription. If this is set to 1 the charge will happen every interval (e.g. every month), if set to 2 it will be every other month, and so on.
 	RecurringIntervalCount *int64 `default:"1" json:"recurring_interval_count"`
+	// Optional meter cycle, independent of the billing interval. When set, overage settlement, meter resets and meter-credit grants run on this cadence rather than the billing interval — e.g. yearly billing with monthly credits. It must evenly divide the billing interval. If `None`, metered concerns follow the billing interval. **Once set, it can't be changed.**
+	MeterInterval *RecurringInterval `json:"meter_interval,omitempty"`
+	// Number of meter interval units. Defaults to 1 when `meter_interval` is set. Ignored when `meter_interval` is `None`.
+	MeterIntervalCount *int64 `json:"meter_interval_count,omitempty"`
 }
 
 func (p ProductCreateRecurring) MarshalJSON() ([]byte, error) {
@@ -383,9 +363,9 @@ func (p *ProductCreateRecurring) GetTrialIntervalCount() *int64 {
 	return p.TrialIntervalCount
 }
 
-func (p *ProductCreateRecurring) GetRecurringInterval() SubscriptionRecurringInterval {
+func (p *ProductCreateRecurring) GetRecurringInterval() RecurringInterval {
 	if p == nil {
-		return SubscriptionRecurringInterval("")
+		return RecurringInterval("")
 	}
 	return p.RecurringInterval
 }
@@ -395,4 +375,18 @@ func (p *ProductCreateRecurring) GetRecurringIntervalCount() *int64 {
 		return nil
 	}
 	return p.RecurringIntervalCount
+}
+
+func (p *ProductCreateRecurring) GetMeterInterval() *RecurringInterval {
+	if p == nil {
+		return nil
+	}
+	return p.MeterInterval
+}
+
+func (p *ProductCreateRecurring) GetMeterIntervalCount() *int64 {
+	if p == nil {
+		return nil
+	}
+	return p.MeterIntervalCount
 }

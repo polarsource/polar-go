@@ -265,59 +265,59 @@ func (u CheckoutsListQueryParamExternalCustomerIDFilter) MarshalJSON() ([]byte, 
 	return nil, errors.New("could not marshal union type CheckoutsListQueryParamExternalCustomerIDFilter: all fields are null")
 }
 
-type QueryParamStatusFilterType string
+type CheckoutsListQueryParamStatusFilterType string
 
 const (
-	QueryParamStatusFilterTypeCheckoutStatus        QueryParamStatusFilterType = "CheckoutStatus"
-	QueryParamStatusFilterTypeArrayOfCheckoutStatus QueryParamStatusFilterType = "arrayOfCheckoutStatus"
+	CheckoutsListQueryParamStatusFilterTypeCheckoutStatus        CheckoutsListQueryParamStatusFilterType = "CheckoutStatus"
+	CheckoutsListQueryParamStatusFilterTypeArrayOfCheckoutStatus CheckoutsListQueryParamStatusFilterType = "arrayOfCheckoutStatus"
 )
 
-// QueryParamStatusFilter - Filter by checkout session status.
-type QueryParamStatusFilter struct {
+// CheckoutsListQueryParamStatusFilter - Filter by checkout session status.
+type CheckoutsListQueryParamStatusFilter struct {
 	CheckoutStatus        *components.CheckoutStatus  `queryParam:"inline" union:"member"`
 	ArrayOfCheckoutStatus []components.CheckoutStatus `queryParam:"inline" union:"member"`
 
-	Type QueryParamStatusFilterType
+	Type CheckoutsListQueryParamStatusFilterType
 }
 
-func CreateQueryParamStatusFilterCheckoutStatus(checkoutStatus components.CheckoutStatus) QueryParamStatusFilter {
-	typ := QueryParamStatusFilterTypeCheckoutStatus
+func CreateCheckoutsListQueryParamStatusFilterCheckoutStatus(checkoutStatus components.CheckoutStatus) CheckoutsListQueryParamStatusFilter {
+	typ := CheckoutsListQueryParamStatusFilterTypeCheckoutStatus
 
-	return QueryParamStatusFilter{
+	return CheckoutsListQueryParamStatusFilter{
 		CheckoutStatus: &checkoutStatus,
 		Type:           typ,
 	}
 }
 
-func CreateQueryParamStatusFilterArrayOfCheckoutStatus(arrayOfCheckoutStatus []components.CheckoutStatus) QueryParamStatusFilter {
-	typ := QueryParamStatusFilterTypeArrayOfCheckoutStatus
+func CreateCheckoutsListQueryParamStatusFilterArrayOfCheckoutStatus(arrayOfCheckoutStatus []components.CheckoutStatus) CheckoutsListQueryParamStatusFilter {
+	typ := CheckoutsListQueryParamStatusFilterTypeArrayOfCheckoutStatus
 
-	return QueryParamStatusFilter{
+	return CheckoutsListQueryParamStatusFilter{
 		ArrayOfCheckoutStatus: arrayOfCheckoutStatus,
 		Type:                  typ,
 	}
 }
 
-func (u *QueryParamStatusFilter) UnmarshalJSON(data []byte) error {
+func (u *CheckoutsListQueryParamStatusFilter) UnmarshalJSON(data []byte) error {
 
 	var checkoutStatus components.CheckoutStatus = components.CheckoutStatus("")
 	if err := utils.UnmarshalJSON(data, &checkoutStatus, "", true, nil); err == nil {
 		u.CheckoutStatus = &checkoutStatus
-		u.Type = QueryParamStatusFilterTypeCheckoutStatus
+		u.Type = CheckoutsListQueryParamStatusFilterTypeCheckoutStatus
 		return nil
 	}
 
 	var arrayOfCheckoutStatus []components.CheckoutStatus = []components.CheckoutStatus{}
 	if err := utils.UnmarshalJSON(data, &arrayOfCheckoutStatus, "", true, nil); err == nil {
 		u.ArrayOfCheckoutStatus = arrayOfCheckoutStatus
-		u.Type = QueryParamStatusFilterTypeArrayOfCheckoutStatus
+		u.Type = CheckoutsListQueryParamStatusFilterTypeArrayOfCheckoutStatus
 		return nil
 	}
 
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for QueryParamStatusFilter", string(data))
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for CheckoutsListQueryParamStatusFilter", string(data))
 }
 
-func (u QueryParamStatusFilter) MarshalJSON() ([]byte, error) {
+func (u CheckoutsListQueryParamStatusFilter) MarshalJSON() ([]byte, error) {
 	if u.CheckoutStatus != nil {
 		return utils.MarshalJSON(u.CheckoutStatus, "", true)
 	}
@@ -326,7 +326,7 @@ func (u QueryParamStatusFilter) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.ArrayOfCheckoutStatus, "", true)
 	}
 
-	return nil, errors.New("could not marshal union type QueryParamStatusFilter: all fields are null")
+	return nil, errors.New("could not marshal union type CheckoutsListQueryParamStatusFilter: all fields are null")
 }
 
 type CheckoutsListRequest struct {
@@ -339,7 +339,7 @@ type CheckoutsListRequest struct {
 	// Filter by customer external ID.
 	ExternalCustomerID *CheckoutsListQueryParamExternalCustomerIDFilter `queryParam:"style=form,explode=true,name=external_customer_id"`
 	// Filter by checkout session status.
-	Status *QueryParamStatusFilter `queryParam:"style=form,explode=true,name=status"`
+	Status *CheckoutsListQueryParamStatusFilter `queryParam:"style=form,explode=true,name=status"`
 	// Filter by customer email.
 	Query *string `queryParam:"style=form,explode=true,name=query"`
 	// Page number, defaults to 1.
@@ -389,7 +389,7 @@ func (c *CheckoutsListRequest) GetExternalCustomerID() *CheckoutsListQueryParamE
 	return c.ExternalCustomerID
 }
 
-func (c *CheckoutsListRequest) GetStatus() *QueryParamStatusFilter {
+func (c *CheckoutsListRequest) GetStatus() *CheckoutsListQueryParamStatusFilter {
 	if c == nil {
 		return nil
 	}

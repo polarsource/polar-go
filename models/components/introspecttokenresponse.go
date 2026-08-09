@@ -34,16 +34,17 @@ func (e *TokenType) UnmarshalJSON(data []byte) error {
 }
 
 type IntrospectTokenResponse struct {
-	Active    bool      `json:"active"`
-	ClientID  string    `json:"client_id"`
-	TokenType TokenType `json:"token_type"`
-	Scope     string    `json:"scope"`
-	SubType   SubType   `json:"sub_type"`
-	Sub       string    `json:"sub"`
-	Aud       string    `json:"aud"`
-	Iss       string    `json:"iss"`
-	Exp       int64     `json:"exp"`
-	Iat       int64     `json:"iat"`
+	Active        bool      `json:"active"`
+	ClientID      string    `json:"client_id"`
+	TokenType     TokenType `json:"token_type"`
+	Scope         string    `json:"scope"`
+	SubType       SubType   `json:"sub_type"`
+	Sub           string    `json:"sub"`
+	Organizations []string  `json:"organizations"`
+	Aud           string    `json:"aud"`
+	Iss           string    `json:"iss"`
+	Exp           int64     `json:"exp"`
+	Iat           int64     `json:"iat"`
 }
 
 func (i *IntrospectTokenResponse) GetActive() bool {
@@ -86,6 +87,13 @@ func (i *IntrospectTokenResponse) GetSub() string {
 		return ""
 	}
 	return i.Sub
+}
+
+func (i *IntrospectTokenResponse) GetOrganizations() []string {
+	if i == nil {
+		return []string{}
+	}
+	return i.Organizations
 }
 
 func (i *IntrospectTokenResponse) GetAud() string {

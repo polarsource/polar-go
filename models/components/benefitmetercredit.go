@@ -25,11 +25,15 @@ type BenefitMeterCredit struct {
 	Selectable bool `json:"selectable"`
 	// Whether the benefit is deletable.
 	Deletable bool `json:"deletable"`
+	// Whether the benefit is deleted.
+	IsDeleted bool `json:"is_deleted"`
 	// The ID of the organization owning the benefit.
 	OrganizationID string                        `json:"organization_id"`
 	Metadata       map[string]MetadataOutputType `json:"metadata"`
+	Visibility     BenefitVisibility             `json:"visibility"`
 	// Properties for a benefit of type `meter_unit`.
-	Properties BenefitMeterCreditProperties `json:"properties"`
+	Properties             BenefitMeterCreditProperties `json:"properties"`
+	VisibilityConfigurable bool                         `json:"visibility_configurable"`
 }
 
 func (b BenefitMeterCredit) MarshalJSON() ([]byte, error) {
@@ -37,7 +41,7 @@ func (b BenefitMeterCredit) MarshalJSON() ([]byte, error) {
 }
 
 func (b *BenefitMeterCredit) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &b, "", false, []string{"id", "created_at", "type", "description", "selectable", "deletable", "organization_id", "metadata", "properties"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &b, "", false, []string{"id", "created_at", "type", "description", "selectable", "deletable", "is_deleted", "organization_id", "metadata", "visibility", "properties", "visibility_configurable"}); err != nil {
 		return err
 	}
 	return nil
@@ -89,6 +93,13 @@ func (b *BenefitMeterCredit) GetDeletable() bool {
 	return b.Deletable
 }
 
+func (b *BenefitMeterCredit) GetIsDeleted() bool {
+	if b == nil {
+		return false
+	}
+	return b.IsDeleted
+}
+
 func (b *BenefitMeterCredit) GetOrganizationID() string {
 	if b == nil {
 		return ""
@@ -103,9 +114,23 @@ func (b *BenefitMeterCredit) GetMetadata() map[string]MetadataOutputType {
 	return b.Metadata
 }
 
+func (b *BenefitMeterCredit) GetVisibility() BenefitVisibility {
+	if b == nil {
+		return BenefitVisibility("")
+	}
+	return b.Visibility
+}
+
 func (b *BenefitMeterCredit) GetProperties() BenefitMeterCreditProperties {
 	if b == nil {
 		return BenefitMeterCreditProperties{}
 	}
 	return b.Properties
+}
+
+func (b *BenefitMeterCredit) GetVisibilityConfigurable() bool {
+	if b == nil {
+		return false
+	}
+	return b.VisibilityConfigurable
 }

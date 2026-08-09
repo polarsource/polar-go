@@ -88,15 +88,19 @@ type OrderCustomer struct {
 	EmailVerified bool         `json:"email_verified"`
 	Type          CustomerType `json:"type"`
 	// The name of the customer.
-	Name           *string               `json:"name"`
+	Name *string `json:"name"`
+	// The name that should appear on the customer's invoices. Falls back to the customer name when not explicitly set.
+	BillingName    *string               `json:"billing_name"`
 	BillingAddress *Address              `json:"billing_address"`
 	TaxID          []*OrderCustomerTaxID `json:"tax_id"`
 	Locale         *string               `json:"locale,omitempty"`
 	// The ID of the organization owning the customer.
 	OrganizationID string `json:"organization_id"`
+	// The ID of the customer's default payment method, if any. Use the payment methods endpoint to retrieve its details.
+	DefaultPaymentMethodID *string `json:"default_payment_method_id,omitempty"`
 	// Timestamp for when the customer was soft deleted.
 	DeletedAt *time.Time `json:"deleted_at"`
-	AvatarURL string     `json:"avatar_url"`
+	AvatarURL *string    `json:"avatar_url"`
 }
 
 func (o OrderCustomer) MarshalJSON() ([]byte, error) {
@@ -173,6 +177,13 @@ func (o *OrderCustomer) GetName() *string {
 	return o.Name
 }
 
+func (o *OrderCustomer) GetBillingName() *string {
+	if o == nil {
+		return nil
+	}
+	return o.BillingName
+}
+
 func (o *OrderCustomer) GetBillingAddress() *Address {
 	if o == nil {
 		return nil
@@ -201,6 +212,13 @@ func (o *OrderCustomer) GetOrganizationID() string {
 	return o.OrganizationID
 }
 
+func (o *OrderCustomer) GetDefaultPaymentMethodID() *string {
+	if o == nil {
+		return nil
+	}
+	return o.DefaultPaymentMethodID
+}
+
 func (o *OrderCustomer) GetDeletedAt() *time.Time {
 	if o == nil {
 		return nil
@@ -208,9 +226,9 @@ func (o *OrderCustomer) GetDeletedAt() *time.Time {
 	return o.DeletedAt
 }
 
-func (o *OrderCustomer) GetAvatarURL() string {
+func (o *OrderCustomer) GetAvatarURL() *string {
 	if o == nil {
-		return ""
+		return nil
 	}
 	return o.AvatarURL
 }

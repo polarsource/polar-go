@@ -14,12 +14,18 @@ const (
 	CustomerSubscriptionUpdateTypeCustomerSubscriptionUpdateProduct CustomerSubscriptionUpdateType = "CustomerSubscriptionUpdateProduct"
 	CustomerSubscriptionUpdateTypeCustomerSubscriptionUpdateSeats   CustomerSubscriptionUpdateType = "CustomerSubscriptionUpdateSeats"
 	CustomerSubscriptionUpdateTypeCustomerSubscriptionCancel        CustomerSubscriptionUpdateType = "CustomerSubscriptionCancel"
+	CustomerSubscriptionUpdateTypeCustomerSubscriptionPause         CustomerSubscriptionUpdateType = "CustomerSubscriptionPause"
+	CustomerSubscriptionUpdateTypeCustomerSubscriptionResume        CustomerSubscriptionUpdateType = "CustomerSubscriptionResume"
+	CustomerSubscriptionUpdateTypeCustomerSubscriptionUpdateClear   CustomerSubscriptionUpdateType = "CustomerSubscriptionUpdateClear"
 )
 
 type CustomerSubscriptionUpdate struct {
 	CustomerSubscriptionUpdateProduct *CustomerSubscriptionUpdateProduct `queryParam:"inline" union:"member"`
 	CustomerSubscriptionUpdateSeats   *CustomerSubscriptionUpdateSeats   `queryParam:"inline" union:"member"`
 	CustomerSubscriptionCancel        *CustomerSubscriptionCancel        `queryParam:"inline" union:"member"`
+	CustomerSubscriptionPause         *CustomerSubscriptionPause         `queryParam:"inline" union:"member"`
+	CustomerSubscriptionResume        *CustomerSubscriptionResume        `queryParam:"inline" union:"member"`
+	CustomerSubscriptionUpdateClear   *CustomerSubscriptionUpdateClear   `queryParam:"inline" union:"member"`
 
 	Type CustomerSubscriptionUpdateType
 }
@@ -51,6 +57,33 @@ func CreateCustomerSubscriptionUpdateCustomerSubscriptionCancel(customerSubscrip
 	}
 }
 
+func CreateCustomerSubscriptionUpdateCustomerSubscriptionPause(customerSubscriptionPause CustomerSubscriptionPause) CustomerSubscriptionUpdate {
+	typ := CustomerSubscriptionUpdateTypeCustomerSubscriptionPause
+
+	return CustomerSubscriptionUpdate{
+		CustomerSubscriptionPause: &customerSubscriptionPause,
+		Type:                      typ,
+	}
+}
+
+func CreateCustomerSubscriptionUpdateCustomerSubscriptionResume(customerSubscriptionResume CustomerSubscriptionResume) CustomerSubscriptionUpdate {
+	typ := CustomerSubscriptionUpdateTypeCustomerSubscriptionResume
+
+	return CustomerSubscriptionUpdate{
+		CustomerSubscriptionResume: &customerSubscriptionResume,
+		Type:                       typ,
+	}
+}
+
+func CreateCustomerSubscriptionUpdateCustomerSubscriptionUpdateClear(customerSubscriptionUpdateClear CustomerSubscriptionUpdateClear) CustomerSubscriptionUpdate {
+	typ := CustomerSubscriptionUpdateTypeCustomerSubscriptionUpdateClear
+
+	return CustomerSubscriptionUpdate{
+		CustomerSubscriptionUpdateClear: &customerSubscriptionUpdateClear,
+		Type:                            typ,
+	}
+}
+
 func (u *CustomerSubscriptionUpdate) UnmarshalJSON(data []byte) error {
 
 	var customerSubscriptionUpdateProduct CustomerSubscriptionUpdateProduct = CustomerSubscriptionUpdateProduct{}
@@ -64,6 +97,27 @@ func (u *CustomerSubscriptionUpdate) UnmarshalJSON(data []byte) error {
 	if err := utils.UnmarshalJSON(data, &customerSubscriptionUpdateSeats, "", true, nil); err == nil {
 		u.CustomerSubscriptionUpdateSeats = &customerSubscriptionUpdateSeats
 		u.Type = CustomerSubscriptionUpdateTypeCustomerSubscriptionUpdateSeats
+		return nil
+	}
+
+	var customerSubscriptionPause CustomerSubscriptionPause = CustomerSubscriptionPause{}
+	if err := utils.UnmarshalJSON(data, &customerSubscriptionPause, "", true, nil); err == nil {
+		u.CustomerSubscriptionPause = &customerSubscriptionPause
+		u.Type = CustomerSubscriptionUpdateTypeCustomerSubscriptionPause
+		return nil
+	}
+
+	var customerSubscriptionResume CustomerSubscriptionResume = CustomerSubscriptionResume{}
+	if err := utils.UnmarshalJSON(data, &customerSubscriptionResume, "", true, nil); err == nil {
+		u.CustomerSubscriptionResume = &customerSubscriptionResume
+		u.Type = CustomerSubscriptionUpdateTypeCustomerSubscriptionResume
+		return nil
+	}
+
+	var customerSubscriptionUpdateClear CustomerSubscriptionUpdateClear = CustomerSubscriptionUpdateClear{}
+	if err := utils.UnmarshalJSON(data, &customerSubscriptionUpdateClear, "", true, nil); err == nil {
+		u.CustomerSubscriptionUpdateClear = &customerSubscriptionUpdateClear
+		u.Type = CustomerSubscriptionUpdateTypeCustomerSubscriptionUpdateClear
 		return nil
 	}
 
@@ -88,6 +142,18 @@ func (u CustomerSubscriptionUpdate) MarshalJSON() ([]byte, error) {
 
 	if u.CustomerSubscriptionCancel != nil {
 		return utils.MarshalJSON(u.CustomerSubscriptionCancel, "", true)
+	}
+
+	if u.CustomerSubscriptionPause != nil {
+		return utils.MarshalJSON(u.CustomerSubscriptionPause, "", true)
+	}
+
+	if u.CustomerSubscriptionResume != nil {
+		return utils.MarshalJSON(u.CustomerSubscriptionResume, "", true)
+	}
+
+	if u.CustomerSubscriptionUpdateClear != nil {
+		return utils.MarshalJSON(u.CustomerSubscriptionUpdateClear, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type CustomerSubscriptionUpdate: all fields are null")

@@ -12,15 +12,17 @@ import (
 type FileCreateType string
 
 const (
-	FileCreateTypeDownloadable       FileCreateType = "downloadable"
-	FileCreateTypeOrganizationAvatar FileCreateType = "organization_avatar"
-	FileCreateTypeProductMedia       FileCreateType = "product_media"
+	FileCreateTypeDownloadable          FileCreateType = "downloadable"
+	FileCreateTypeOrganizationAvatar    FileCreateType = "organization_avatar"
+	FileCreateTypeProductMedia          FileCreateType = "product_media"
+	FileCreateTypeSupportCaseAttachment FileCreateType = "support_case_attachment"
 )
 
 type FileCreate struct {
-	DownloadableFileCreate       *DownloadableFileCreate       `queryParam:"inline" union:"member"`
-	ProductMediaFileCreate       *ProductMediaFileCreate       `queryParam:"inline" union:"member"`
-	OrganizationAvatarFileCreate *OrganizationAvatarFileCreate `queryParam:"inline" union:"member"`
+	DownloadableFileCreate          *DownloadableFileCreate          `queryParam:"inline" union:"member"`
+	ProductMediaFileCreate          *ProductMediaFileCreate          `queryParam:"inline" union:"member"`
+	OrganizationAvatarFileCreate    *OrganizationAvatarFileCreate    `queryParam:"inline" union:"member"`
+	SupportCaseAttachmentFileCreate *SupportCaseAttachmentFileCreate `queryParam:"inline" union:"member"`
 
 	Type FileCreateType
 }
@@ -49,6 +51,15 @@ func CreateFileCreateProductMedia(productMedia ProductMediaFileCreate) FileCreat
 	return FileCreate{
 		ProductMediaFileCreate: &productMedia,
 		Type:                   typ,
+	}
+}
+
+func CreateFileCreateSupportCaseAttachment(supportCaseAttachment SupportCaseAttachmentFileCreate) FileCreate {
+	typ := FileCreateTypeSupportCaseAttachment
+
+	return FileCreate{
+		SupportCaseAttachmentFileCreate: &supportCaseAttachment,
+		Type:                            typ,
 	}
 }
 
@@ -91,6 +102,15 @@ func (u *FileCreate) UnmarshalJSON(data []byte) error {
 		u.ProductMediaFileCreate = productMediaFileCreate
 		u.Type = FileCreateTypeProductMedia
 		return nil
+	case "support_case_attachment":
+		supportCaseAttachmentFileCreate := new(SupportCaseAttachmentFileCreate)
+		if err := utils.UnmarshalJSON(data, &supportCaseAttachmentFileCreate, "", true, nil); err != nil {
+			return fmt.Errorf("could not unmarshal `%s` into expected (Service == support_case_attachment) type SupportCaseAttachmentFileCreate within FileCreate: %w", string(data), err)
+		}
+
+		u.SupportCaseAttachmentFileCreate = supportCaseAttachmentFileCreate
+		u.Type = FileCreateTypeSupportCaseAttachment
+		return nil
 	}
 
 	return fmt.Errorf("could not unmarshal `%s` into any supported union types for FileCreate", string(data))
@@ -107,6 +127,10 @@ func (u FileCreate) MarshalJSON() ([]byte, error) {
 
 	if u.OrganizationAvatarFileCreate != nil {
 		return utils.MarshalJSON(u.OrganizationAvatarFileCreate, "", true)
+	}
+
+	if u.SupportCaseAttachmentFileCreate != nil {
+		return utils.MarshalJSON(u.SupportCaseAttachmentFileCreate, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type FileCreate: all fields are null")

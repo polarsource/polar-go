@@ -15,12 +15,6 @@ two := components.CreateTwoCustom(components.ProductPriceCustomCreate{/* values 
 two := components.CreateTwoFixed(components.ProductPriceFixedCreate{/* values here */})
 ```
 
-### ProductPriceFreeCreate
-
-```go
-two := components.CreateTwoFree(components.ProductPriceFreeCreate{/* values here */})
-```
-
 ### ProductPriceMeteredUnitCreate
 
 ```go
@@ -43,8 +37,6 @@ switch two.Type {
 		// two.ProductPriceCustomCreate is populated
 	case components.TwoTypeFixed:
 		// two.ProductPriceFixedCreate is populated
-	case components.TwoTypeFree:
-		// two.ProductPriceFreeCreate is populated
 	case components.TwoTypeMeteredUnit:
 		// two.ProductPriceMeteredUnitCreate is populated
 	case components.TwoTypeSeatBased:

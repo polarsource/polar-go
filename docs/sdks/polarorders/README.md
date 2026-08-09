@@ -9,6 +9,7 @@
 * [Update](#update) - Update Order
 * [Invoice](#invoice) - Get Order Invoice
 * [GenerateInvoice](#generateinvoice) - Generate Order Invoice
+* [Receipt](#receipt) - Get Order Receipt
 * [GetPaymentStatus](#getpaymentstatus) - Get Order Payment Status
 * [ConfirmRetryPayment](#confirmretrypayment) - Confirm Retry Payment
 
@@ -303,10 +304,68 @@ func main() {
 
 ### Errors
 
-| Error Type                                                                                  | Status Code                                                                                 | Content Type                                                                                |
-| ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- |
-| apierrors.CustomerPortalOrdersGenerateInvoiceResponse422CustomerPortalOrdersGenerateInvoice | 422                                                                                         | application/json                                                                            |
-| apierrors.APIError                                                                          | 4XX, 5XX                                                                                    | \*/\*                                                                                       |
+| Error Type                             | Status Code                            | Content Type                           |
+| -------------------------------------- | -------------------------------------- | -------------------------------------- |
+| apierrors.ResourceNotFound             | 404                                    | application/json                       |
+| apierrors.OrderNotEligibleForInvoice   | 409                                    | application/json                       |
+| apierrors.MissingInvoiceBillingDetails | 422                                    | application/json                       |
+| apierrors.APIError                     | 4XX, 5XX                               | \*/\*                                  |
+
+## Receipt
+
+Get a presigned URL to download an order's receipt PDF.
+
+### Example Usage
+
+<!-- UsageSnippet language="go" operationID="customer_portal:orders:receipt" method="get" path="/v1/customer-portal/orders/{id}/receipt" -->
+```go
+package main
+
+import(
+	"context"
+	polargo "github.com/polarsource/polar-go"
+	"os"
+	"github.com/polarsource/polar-go/models/operations"
+	"log"
+)
+
+func main() {
+    ctx := context.Background()
+
+    s := polargo.New()
+
+    res, err := s.CustomerPortal.Orders.Receipt(ctx, operations.CustomerPortalOrdersReceiptSecurity{
+        CustomerSession: polargo.Pointer(os.Getenv("POLAR_CUSTOMER_SESSION")),
+    }, "<value>")
+    if err != nil {
+        log.Fatal(err)
+    }
+    if res.CustomerOrderReceipt != nil {
+        // handle response
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                                                                        | Type                                                                                                             | Required                                                                                                         | Description                                                                                                      |
+| ---------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| `ctx`                                                                                                            | [context.Context](https://pkg.go.dev/context#Context)                                                            | :heavy_check_mark:                                                                                               | The context to use for the request.                                                                              |
+| `security`                                                                                                       | [operations.CustomerPortalOrdersReceiptSecurity](../../models/operations/customerportalordersreceiptsecurity.md) | :heavy_check_mark:                                                                                               | The security requirements to use for the request.                                                                |
+| `id`                                                                                                             | `string`                                                                                                         | :heavy_check_mark:                                                                                               | The order ID.                                                                                                    |
+| `opts`                                                                                                           | [][operations.Option](../../models/operations/option.md)                                                         | :heavy_minus_sign:                                                                                               | The options for this request.                                                                                    |
+
+### Response
+
+**[*operations.CustomerPortalOrdersReceiptResponse](../../models/operations/customerportalordersreceiptresponse.md), error**
+
+### Errors
+
+| Error Type                    | Status Code                   | Content Type                  |
+| ----------------------------- | ----------------------------- | ----------------------------- |
+| apierrors.ResourceNotFound    | 404                           | application/json              |
+| apierrors.HTTPValidationError | 422                           | application/json              |
+| apierrors.APIError            | 4XX, 5XX                      | \*/\*                         |
 
 ## GetPaymentStatus
 
@@ -421,4 +480,5 @@ func main() {
 | apierrors.ResourceNotFound         | 404                                | application/json                   |
 | apierrors.PaymentAlreadyInProgress | 409                                | application/json                   |
 | apierrors.OrderNotEligibleForRetry | 422                                | application/json                   |
+| apierrors.ManualRetryLimitExceeded | 429                                | application/json                   |
 | apierrors.APIError                 | 4XX, 5XX                           | \*/\*                              |

@@ -3,49 +3,61 @@
 package components
 
 type Metrics struct {
-	ActiveSubscriptions                  *Metric `json:"active_subscriptions,omitempty"`
-	CommittedSubscriptions               *Metric `json:"committed_subscriptions,omitempty"`
-	MonthlyRecurringRevenue              *Metric `json:"monthly_recurring_revenue,omitempty"`
-	CommittedMonthlyRecurringRevenue     *Metric `json:"committed_monthly_recurring_revenue,omitempty"`
-	AverageRevenuePerUser                *Metric `json:"average_revenue_per_user,omitempty"`
-	Checkouts                            *Metric `json:"checkouts,omitempty"`
-	SucceededCheckouts                   *Metric `json:"succeeded_checkouts,omitempty"`
-	ChurnedSubscriptions                 *Metric `json:"churned_subscriptions,omitempty"`
-	ChurnRate                            *Metric `json:"churn_rate,omitempty"`
-	Orders                               *Metric `json:"orders,omitempty"`
-	Revenue                              *Metric `json:"revenue,omitempty"`
-	NetRevenue                           *Metric `json:"net_revenue,omitempty"`
-	CumulativeRevenue                    *Metric `json:"cumulative_revenue,omitempty"`
-	NetCumulativeRevenue                 *Metric `json:"net_cumulative_revenue,omitempty"`
-	Costs                                *Metric `json:"costs,omitempty"`
-	CumulativeCosts                      *Metric `json:"cumulative_costs,omitempty"`
-	AverageOrderValue                    *Metric `json:"average_order_value,omitempty"`
-	NetAverageOrderValue                 *Metric `json:"net_average_order_value,omitempty"`
-	CostPerUser                          *Metric `json:"cost_per_user,omitempty"`
-	ActiveUserByEvent                    *Metric `json:"active_user_by_event,omitempty"`
-	OneTimeProducts                      *Metric `json:"one_time_products,omitempty"`
-	OneTimeProductsRevenue               *Metric `json:"one_time_products_revenue,omitempty"`
-	OneTimeProductsNetRevenue            *Metric `json:"one_time_products_net_revenue,omitempty"`
-	NewSubscriptions                     *Metric `json:"new_subscriptions,omitempty"`
-	NewSubscriptionsRevenue              *Metric `json:"new_subscriptions_revenue,omitempty"`
-	NewSubscriptionsNetRevenue           *Metric `json:"new_subscriptions_net_revenue,omitempty"`
-	RenewedSubscriptions                 *Metric `json:"renewed_subscriptions,omitempty"`
-	RenewedSubscriptionsRevenue          *Metric `json:"renewed_subscriptions_revenue,omitempty"`
-	RenewedSubscriptionsNetRevenue       *Metric `json:"renewed_subscriptions_net_revenue,omitempty"`
-	CanceledSubscriptions                *Metric `json:"canceled_subscriptions,omitempty"`
-	CanceledSubscriptionsCustomerService *Metric `json:"canceled_subscriptions_customer_service,omitempty"`
-	CanceledSubscriptionsLowQuality      *Metric `json:"canceled_subscriptions_low_quality,omitempty"`
-	CanceledSubscriptionsMissingFeatures *Metric `json:"canceled_subscriptions_missing_features,omitempty"`
-	CanceledSubscriptionsSwitchedService *Metric `json:"canceled_subscriptions_switched_service,omitempty"`
-	CanceledSubscriptionsTooComplex      *Metric `json:"canceled_subscriptions_too_complex,omitempty"`
-	CanceledSubscriptionsTooExpensive    *Metric `json:"canceled_subscriptions_too_expensive,omitempty"`
-	CanceledSubscriptionsUnused          *Metric `json:"canceled_subscriptions_unused,omitempty"`
-	CanceledSubscriptionsOther           *Metric `json:"canceled_subscriptions_other,omitempty"`
-	CheckoutsConversion                  *Metric `json:"checkouts_conversion,omitempty"`
-	Ltv                                  *Metric `json:"ltv,omitempty"`
-	GrossMargin                          *Metric `json:"gross_margin,omitempty"`
-	GrossMarginPercentage                *Metric `json:"gross_margin_percentage,omitempty"`
-	Cashflow                             *Metric `json:"cashflow,omitempty"`
+	ActiveSubscriptions                   *Metric `json:"active_subscriptions,omitempty"`
+	CommittedSubscriptions                *Metric `json:"committed_subscriptions,omitempty"`
+	MonthlyRecurringRevenue               *Metric `json:"monthly_recurring_revenue,omitempty"`
+	TrialMonthlyRecurringRevenue          *Metric `json:"trial_monthly_recurring_revenue,omitempty"`
+	CommittedMonthlyRecurringRevenue      *Metric `json:"committed_monthly_recurring_revenue,omitempty"`
+	TrialCommittedMonthlyRecurringRevenue *Metric `json:"trial_committed_monthly_recurring_revenue,omitempty"`
+	AverageRevenuePerUser                 *Metric `json:"average_revenue_per_user,omitempty"`
+	Checkouts                             *Metric `json:"checkouts,omitempty"`
+	SucceededCheckouts                    *Metric `json:"succeeded_checkouts,omitempty"`
+	ChurnedSubscriptions                  *Metric `json:"churned_subscriptions,omitempty"`
+	ChurnRate                             *Metric `json:"churn_rate,omitempty"`
+	SeatsTotal                            *Metric `json:"seats_total,omitempty"`
+	SeatsClaimed                          *Metric `json:"seats_claimed,omitempty"`
+	SeatsPending                          *Metric `json:"seats_pending,omitempty"`
+	SeatCustomers                         *Metric `json:"seat_customers,omitempty"`
+	NewSeatCustomers                      *Metric `json:"new_seat_customers,omitempty"`
+	ChurnedSeatCustomers                  *Metric `json:"churned_seat_customers,omitempty"`
+	Orders                                *Metric `json:"orders,omitempty"`
+	Revenue                               *Metric `json:"revenue,omitempty"`
+	NetRevenue                            *Metric `json:"net_revenue,omitempty"`
+	CumulativeRevenue                     *Metric `json:"cumulative_revenue,omitempty"`
+	NetCumulativeRevenue                  *Metric `json:"net_cumulative_revenue,omitempty"`
+	Costs                                 *Metric `json:"costs,omitempty"`
+	CumulativeCosts                       *Metric `json:"cumulative_costs,omitempty"`
+	AverageOrderValue                     *Metric `json:"average_order_value,omitempty"`
+	NetAverageOrderValue                  *Metric `json:"net_average_order_value,omitempty"`
+	CostPerUser                           *Metric `json:"cost_per_user,omitempty"`
+	ActiveUserByEvent                     *Metric `json:"active_user_by_event,omitempty"`
+	OneTimeProducts                       *Metric `json:"one_time_products,omitempty"`
+	OneTimeProductsRevenue                *Metric `json:"one_time_products_revenue,omitempty"`
+	OneTimeProductsNetRevenue             *Metric `json:"one_time_products_net_revenue,omitempty"`
+	NewSubscriptions                      *Metric `json:"new_subscriptions,omitempty"`
+	NewSubscriptionsRevenue               *Metric `json:"new_subscriptions_revenue,omitempty"`
+	NewSubscriptionsNetRevenue            *Metric `json:"new_subscriptions_net_revenue,omitempty"`
+	RenewedSubscriptions                  *Metric `json:"renewed_subscriptions,omitempty"`
+	RenewedSubscriptionsRevenue           *Metric `json:"renewed_subscriptions_revenue,omitempty"`
+	RenewedSubscriptionsNetRevenue        *Metric `json:"renewed_subscriptions_net_revenue,omitempty"`
+	CanceledSubscriptions                 *Metric `json:"canceled_subscriptions,omitempty"`
+	CanceledSubscriptionsCustomerService  *Metric `json:"canceled_subscriptions_customer_service,omitempty"`
+	CanceledSubscriptionsLowQuality       *Metric `json:"canceled_subscriptions_low_quality,omitempty"`
+	CanceledSubscriptionsMissingFeatures  *Metric `json:"canceled_subscriptions_missing_features,omitempty"`
+	CanceledSubscriptionsSwitchedService  *Metric `json:"canceled_subscriptions_switched_service,omitempty"`
+	CanceledSubscriptionsTooComplex       *Metric `json:"canceled_subscriptions_too_complex,omitempty"`
+	CanceledSubscriptionsTooExpensive     *Metric `json:"canceled_subscriptions_too_expensive,omitempty"`
+	CanceledSubscriptionsUnused           *Metric `json:"canceled_subscriptions_unused,omitempty"`
+	CanceledSubscriptionsOther            *Metric `json:"canceled_subscriptions_other,omitempty"`
+	AnnualRecurringRevenue                *Metric `json:"annual_recurring_revenue,omitempty"`
+	CommittedAnnualRecurringRevenue       *Metric `json:"committed_annual_recurring_revenue,omitempty"`
+	CheckoutsConversion                   *Metric `json:"checkouts_conversion,omitempty"`
+	Ltv                                   *Metric `json:"ltv,omitempty"`
+	GrossMargin                           *Metric `json:"gross_margin,omitempty"`
+	GrossMarginPercentage                 *Metric `json:"gross_margin_percentage,omitempty"`
+	Cashflow                              *Metric `json:"cashflow,omitempty"`
+	AverageSeatsPerCustomer               *Metric `json:"average_seats_per_customer,omitempty"`
+	SeatUtilizationRate                   *Metric `json:"seat_utilization_rate,omitempty"`
 }
 
 func (m *Metrics) GetActiveSubscriptions() *Metric {
@@ -69,11 +81,25 @@ func (m *Metrics) GetMonthlyRecurringRevenue() *Metric {
 	return m.MonthlyRecurringRevenue
 }
 
+func (m *Metrics) GetTrialMonthlyRecurringRevenue() *Metric {
+	if m == nil {
+		return nil
+	}
+	return m.TrialMonthlyRecurringRevenue
+}
+
 func (m *Metrics) GetCommittedMonthlyRecurringRevenue() *Metric {
 	if m == nil {
 		return nil
 	}
 	return m.CommittedMonthlyRecurringRevenue
+}
+
+func (m *Metrics) GetTrialCommittedMonthlyRecurringRevenue() *Metric {
+	if m == nil {
+		return nil
+	}
+	return m.TrialCommittedMonthlyRecurringRevenue
 }
 
 func (m *Metrics) GetAverageRevenuePerUser() *Metric {
@@ -109,6 +135,48 @@ func (m *Metrics) GetChurnRate() *Metric {
 		return nil
 	}
 	return m.ChurnRate
+}
+
+func (m *Metrics) GetSeatsTotal() *Metric {
+	if m == nil {
+		return nil
+	}
+	return m.SeatsTotal
+}
+
+func (m *Metrics) GetSeatsClaimed() *Metric {
+	if m == nil {
+		return nil
+	}
+	return m.SeatsClaimed
+}
+
+func (m *Metrics) GetSeatsPending() *Metric {
+	if m == nil {
+		return nil
+	}
+	return m.SeatsPending
+}
+
+func (m *Metrics) GetSeatCustomers() *Metric {
+	if m == nil {
+		return nil
+	}
+	return m.SeatCustomers
+}
+
+func (m *Metrics) GetNewSeatCustomers() *Metric {
+	if m == nil {
+		return nil
+	}
+	return m.NewSeatCustomers
+}
+
+func (m *Metrics) GetChurnedSeatCustomers() *Metric {
+	if m == nil {
+		return nil
+	}
+	return m.ChurnedSeatCustomers
 }
 
 func (m *Metrics) GetOrders() *Metric {
@@ -314,6 +382,20 @@ func (m *Metrics) GetCanceledSubscriptionsOther() *Metric {
 	return m.CanceledSubscriptionsOther
 }
 
+func (m *Metrics) GetAnnualRecurringRevenue() *Metric {
+	if m == nil {
+		return nil
+	}
+	return m.AnnualRecurringRevenue
+}
+
+func (m *Metrics) GetCommittedAnnualRecurringRevenue() *Metric {
+	if m == nil {
+		return nil
+	}
+	return m.CommittedAnnualRecurringRevenue
+}
+
 func (m *Metrics) GetCheckoutsConversion() *Metric {
 	if m == nil {
 		return nil
@@ -347,4 +429,18 @@ func (m *Metrics) GetCashflow() *Metric {
 		return nil
 	}
 	return m.Cashflow
+}
+
+func (m *Metrics) GetAverageSeatsPerCustomer() *Metric {
+	if m == nil {
+		return nil
+	}
+	return m.AverageSeatsPerCustomer
+}
+
+func (m *Metrics) GetSeatUtilizationRate() *Metric {
+	if m == nil {
+		return nil
+	}
+	return m.SeatUtilizationRate
 }

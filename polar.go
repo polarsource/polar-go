@@ -2,7 +2,7 @@
 
 package polargo
 
-// Generated from OpenAPI doc version 0.1.0 and generator version 2.879.6
+// Generated from OpenAPI doc version 2026-04 and generator version 2.918.4
 
 import (
 	"context"
@@ -58,35 +58,34 @@ func Pointer[T any](v T) *T { return &v }
 // Polar API: Polar HTTP and Webhooks API
 // Read the docs at https://polar.sh/docs/api-reference
 type Polar struct {
-	SDKVersion               string
-	Organizations            *Organizations
-	Subscriptions            *Subscriptions
-	Oauth2                   *Oauth2
-	Benefits                 *Benefits
-	BenefitGrants            *BenefitGrants
-	Webhooks                 *Webhooks
-	Products                 *Products
-	Orders                   *Orders
-	Refunds                  *Refunds
-	Disputes                 *Disputes
-	Checkouts                *Checkouts
-	Files                    *Files
-	Metrics                  *Metrics
-	LicenseKeys              *LicenseKeys
-	CheckoutLinks            *CheckoutLinks
-	CustomFields             *CustomFields
-	Discounts                *Discounts
-	Customers                *Customers
-	Members                  *Members
-	CustomerPortal           *CustomerPortal
-	CustomerSeats            *CustomerSeats
-	CustomerSessions         *CustomerSessions
-	Events                   *Events
-	EventTypes               *EventTypes
-	Meters                   *Meters
-	OrganizationAccessTokens *OrganizationAccessTokens
-	CustomerMeters           *CustomerMeters
-	Payments                 *Payments
+	SDKVersion       string
+	Organizations    *Organizations
+	Subscriptions    *Subscriptions
+	Oauth2           *Oauth2
+	Benefits         *Benefits
+	BenefitGrants    *BenefitGrants
+	Webhooks         *Webhooks
+	Products         *Products
+	Orders           *Orders
+	Refunds          *Refunds
+	Disputes         *Disputes
+	Checkouts        *Checkouts
+	Files            *Files
+	Metrics          *Metrics
+	LicenseKeys      *LicenseKeys
+	CheckoutLinks    *CheckoutLinks
+	CustomFields     *CustomFields
+	Discounts        *Discounts
+	Customers        *Customers
+	Members          *Members
+	CustomerPortal   *CustomerPortal
+	CustomerSeats    *CustomerSeats
+	CustomerSessions *CustomerSessions
+	Events           *Events
+	EventTypes       *EventTypes
+	Meters           *Meters
+	CustomerMeters   *CustomerMeters
+	Payments         *Payments
 
 	sdkConfiguration config.SDKConfiguration
 	hooks            *hooks.Hooks
@@ -164,9 +163,9 @@ func WithTimeout(timeout time.Duration) SDKOption {
 // New creates a new instance of the SDK with the provided options
 func New(opts ...SDKOption) *Polar {
 	sdk := &Polar{
-		SDKVersion: "0.16.0",
+		SDKVersion: "0.17.0",
 		sdkConfiguration: config.SDKConfiguration{
-			UserAgent:  "speakeasy-sdk/go 0.16.0 2.879.6 0.1.0 github.com/polarsource/polar-go",
+			UserAgent:  "speakeasy-sdk/go 0.17.0 2.918.4 2026-04 github.com/polarsource/polar-go",
 			ServerList: ServerList,
 		},
 		hooks: hooks.New(),
@@ -219,7 +218,6 @@ func New(opts ...SDKOption) *Polar {
 	sdk.Events = newEvents(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.EventTypes = newEventTypes(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.Meters = newMeters(sdk, sdk.sdkConfiguration, sdk.hooks)
-	sdk.OrganizationAccessTokens = newOrganizationAccessTokens(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.CustomerMeters = newCustomerMeters(sdk, sdk.sdkConfiguration, sdk.hooks)
 	sdk.Payments = newPayments(sdk, sdk.sdkConfiguration, sdk.hooks)
 

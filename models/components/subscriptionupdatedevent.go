@@ -3,140 +3,9 @@
 package components
 
 import (
-	"errors"
-	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
 	"time"
 )
-
-type SubscriptionUpdatedEventMetadataType string
-
-const (
-	SubscriptionUpdatedEventMetadataTypeSubscriptionUpdatedProductMetadata       SubscriptionUpdatedEventMetadataType = "SubscriptionUpdatedProductMetadata"
-	SubscriptionUpdatedEventMetadataTypeSubscriptionUpdatedDiscountMetadata      SubscriptionUpdatedEventMetadataType = "SubscriptionUpdatedDiscountMetadata"
-	SubscriptionUpdatedEventMetadataTypeSubscriptionUpdatedTrialMetadata         SubscriptionUpdatedEventMetadataType = "SubscriptionUpdatedTrialMetadata"
-	SubscriptionUpdatedEventMetadataTypeSubscriptionUpdatedSeatsMetadata         SubscriptionUpdatedEventMetadataType = "SubscriptionUpdatedSeatsMetadata"
-	SubscriptionUpdatedEventMetadataTypeSubscriptionUpdatedBillingPeriodMetadata SubscriptionUpdatedEventMetadataType = "SubscriptionUpdatedBillingPeriodMetadata"
-)
-
-type SubscriptionUpdatedEventMetadata struct {
-	SubscriptionUpdatedProductMetadata       *SubscriptionUpdatedProductMetadata       `queryParam:"inline" union:"member"`
-	SubscriptionUpdatedDiscountMetadata      *SubscriptionUpdatedDiscountMetadata      `queryParam:"inline" union:"member"`
-	SubscriptionUpdatedTrialMetadata         *SubscriptionUpdatedTrialMetadata         `queryParam:"inline" union:"member"`
-	SubscriptionUpdatedSeatsMetadata         *SubscriptionUpdatedSeatsMetadata         `queryParam:"inline" union:"member"`
-	SubscriptionUpdatedBillingPeriodMetadata *SubscriptionUpdatedBillingPeriodMetadata `queryParam:"inline" union:"member"`
-
-	Type SubscriptionUpdatedEventMetadataType
-}
-
-func CreateSubscriptionUpdatedEventMetadataSubscriptionUpdatedProductMetadata(subscriptionUpdatedProductMetadata SubscriptionUpdatedProductMetadata) SubscriptionUpdatedEventMetadata {
-	typ := SubscriptionUpdatedEventMetadataTypeSubscriptionUpdatedProductMetadata
-
-	return SubscriptionUpdatedEventMetadata{
-		SubscriptionUpdatedProductMetadata: &subscriptionUpdatedProductMetadata,
-		Type:                               typ,
-	}
-}
-
-func CreateSubscriptionUpdatedEventMetadataSubscriptionUpdatedDiscountMetadata(subscriptionUpdatedDiscountMetadata SubscriptionUpdatedDiscountMetadata) SubscriptionUpdatedEventMetadata {
-	typ := SubscriptionUpdatedEventMetadataTypeSubscriptionUpdatedDiscountMetadata
-
-	return SubscriptionUpdatedEventMetadata{
-		SubscriptionUpdatedDiscountMetadata: &subscriptionUpdatedDiscountMetadata,
-		Type:                                typ,
-	}
-}
-
-func CreateSubscriptionUpdatedEventMetadataSubscriptionUpdatedTrialMetadata(subscriptionUpdatedTrialMetadata SubscriptionUpdatedTrialMetadata) SubscriptionUpdatedEventMetadata {
-	typ := SubscriptionUpdatedEventMetadataTypeSubscriptionUpdatedTrialMetadata
-
-	return SubscriptionUpdatedEventMetadata{
-		SubscriptionUpdatedTrialMetadata: &subscriptionUpdatedTrialMetadata,
-		Type:                             typ,
-	}
-}
-
-func CreateSubscriptionUpdatedEventMetadataSubscriptionUpdatedSeatsMetadata(subscriptionUpdatedSeatsMetadata SubscriptionUpdatedSeatsMetadata) SubscriptionUpdatedEventMetadata {
-	typ := SubscriptionUpdatedEventMetadataTypeSubscriptionUpdatedSeatsMetadata
-
-	return SubscriptionUpdatedEventMetadata{
-		SubscriptionUpdatedSeatsMetadata: &subscriptionUpdatedSeatsMetadata,
-		Type:                             typ,
-	}
-}
-
-func CreateSubscriptionUpdatedEventMetadataSubscriptionUpdatedBillingPeriodMetadata(subscriptionUpdatedBillingPeriodMetadata SubscriptionUpdatedBillingPeriodMetadata) SubscriptionUpdatedEventMetadata {
-	typ := SubscriptionUpdatedEventMetadataTypeSubscriptionUpdatedBillingPeriodMetadata
-
-	return SubscriptionUpdatedEventMetadata{
-		SubscriptionUpdatedBillingPeriodMetadata: &subscriptionUpdatedBillingPeriodMetadata,
-		Type:                                     typ,
-	}
-}
-
-func (u *SubscriptionUpdatedEventMetadata) UnmarshalJSON(data []byte) error {
-
-	var subscriptionUpdatedProductMetadata SubscriptionUpdatedProductMetadata = SubscriptionUpdatedProductMetadata{}
-	if err := utils.UnmarshalJSON(data, &subscriptionUpdatedProductMetadata, "", true, nil); err == nil {
-		u.SubscriptionUpdatedProductMetadata = &subscriptionUpdatedProductMetadata
-		u.Type = SubscriptionUpdatedEventMetadataTypeSubscriptionUpdatedProductMetadata
-		return nil
-	}
-
-	var subscriptionUpdatedSeatsMetadata SubscriptionUpdatedSeatsMetadata = SubscriptionUpdatedSeatsMetadata{}
-	if err := utils.UnmarshalJSON(data, &subscriptionUpdatedSeatsMetadata, "", true, nil); err == nil {
-		u.SubscriptionUpdatedSeatsMetadata = &subscriptionUpdatedSeatsMetadata
-		u.Type = SubscriptionUpdatedEventMetadataTypeSubscriptionUpdatedSeatsMetadata
-		return nil
-	}
-
-	var subscriptionUpdatedDiscountMetadata SubscriptionUpdatedDiscountMetadata = SubscriptionUpdatedDiscountMetadata{}
-	if err := utils.UnmarshalJSON(data, &subscriptionUpdatedDiscountMetadata, "", true, nil); err == nil {
-		u.SubscriptionUpdatedDiscountMetadata = &subscriptionUpdatedDiscountMetadata
-		u.Type = SubscriptionUpdatedEventMetadataTypeSubscriptionUpdatedDiscountMetadata
-		return nil
-	}
-
-	var subscriptionUpdatedTrialMetadata SubscriptionUpdatedTrialMetadata = SubscriptionUpdatedTrialMetadata{}
-	if err := utils.UnmarshalJSON(data, &subscriptionUpdatedTrialMetadata, "", true, nil); err == nil {
-		u.SubscriptionUpdatedTrialMetadata = &subscriptionUpdatedTrialMetadata
-		u.Type = SubscriptionUpdatedEventMetadataTypeSubscriptionUpdatedTrialMetadata
-		return nil
-	}
-
-	var subscriptionUpdatedBillingPeriodMetadata SubscriptionUpdatedBillingPeriodMetadata = SubscriptionUpdatedBillingPeriodMetadata{}
-	if err := utils.UnmarshalJSON(data, &subscriptionUpdatedBillingPeriodMetadata, "", true, nil); err == nil {
-		u.SubscriptionUpdatedBillingPeriodMetadata = &subscriptionUpdatedBillingPeriodMetadata
-		u.Type = SubscriptionUpdatedEventMetadataTypeSubscriptionUpdatedBillingPeriodMetadata
-		return nil
-	}
-
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for SubscriptionUpdatedEventMetadata", string(data))
-}
-
-func (u SubscriptionUpdatedEventMetadata) MarshalJSON() ([]byte, error) {
-	if u.SubscriptionUpdatedProductMetadata != nil {
-		return utils.MarshalJSON(u.SubscriptionUpdatedProductMetadata, "", true)
-	}
-
-	if u.SubscriptionUpdatedDiscountMetadata != nil {
-		return utils.MarshalJSON(u.SubscriptionUpdatedDiscountMetadata, "", true)
-	}
-
-	if u.SubscriptionUpdatedTrialMetadata != nil {
-		return utils.MarshalJSON(u.SubscriptionUpdatedTrialMetadata, "", true)
-	}
-
-	if u.SubscriptionUpdatedSeatsMetadata != nil {
-		return utils.MarshalJSON(u.SubscriptionUpdatedSeatsMetadata, "", true)
-	}
-
-	if u.SubscriptionUpdatedBillingPeriodMetadata != nil {
-		return utils.MarshalJSON(u.SubscriptionUpdatedBillingPeriodMetadata, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type SubscriptionUpdatedEventMetadata: all fields are null")
-}
 
 // SubscriptionUpdatedEvent - An event created by Polar when a subscription is updated.
 type SubscriptionUpdatedEvent struct {
@@ -167,8 +36,8 @@ type SubscriptionUpdatedEvent struct {
 	source string `const:"system" json:"source"`
 	// The name of the event.
 	//lint:ignore U1000 accessed via reflection for JSON marshaling
-	name     string                           `const:"subscription.updated" json:"name"`
-	Metadata SubscriptionUpdatedEventMetadata `json:"metadata"`
+	name     string                      `const:"subscription.updated" json:"name"`
+	Metadata SubscriptionUpdatedMetadata `json:"metadata"`
 }
 
 func (s SubscriptionUpdatedEvent) MarshalJSON() ([]byte, error) {
@@ -281,9 +150,9 @@ func (s *SubscriptionUpdatedEvent) GetName() string {
 	return "subscription.updated"
 }
 
-func (s *SubscriptionUpdatedEvent) GetMetadata() SubscriptionUpdatedEventMetadata {
+func (s *SubscriptionUpdatedEvent) GetMetadata() SubscriptionUpdatedMetadata {
 	if s == nil {
-		return SubscriptionUpdatedEventMetadata{}
+		return SubscriptionUpdatedMetadata{}
 	}
 	return s.Metadata
 }

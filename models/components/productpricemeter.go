@@ -11,7 +11,12 @@ type ProductPriceMeter struct {
 	// The ID of the object.
 	ID string `json:"id"`
 	// The name of the meter.
-	Name string `json:"name"`
+	Name string    `json:"name"`
+	Unit MeterUnit `json:"unit"`
+	// The label for the custom unit.
+	CustomLabel *string `json:"custom_label"`
+	// The multiplier to convert from base unit to display scale.
+	CustomMultiplier *int64 `json:"custom_multiplier"`
 }
 
 func (p ProductPriceMeter) MarshalJSON() ([]byte, error) {
@@ -19,7 +24,7 @@ func (p ProductPriceMeter) MarshalJSON() ([]byte, error) {
 }
 
 func (p *ProductPriceMeter) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &p, "", false, []string{"id", "name"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &p, "", false, []string{"id", "name", "unit"}); err != nil {
 		return err
 	}
 	return nil
@@ -37,4 +42,25 @@ func (p *ProductPriceMeter) GetName() string {
 		return ""
 	}
 	return p.Name
+}
+
+func (p *ProductPriceMeter) GetUnit() MeterUnit {
+	if p == nil {
+		return MeterUnit("")
+	}
+	return p.Unit
+}
+
+func (p *ProductPriceMeter) GetCustomLabel() *string {
+	if p == nil {
+		return nil
+	}
+	return p.CustomLabel
+}
+
+func (p *ProductPriceMeter) GetCustomMultiplier() *int64 {
+	if p == nil {
+		return nil
+	}
+	return p.CustomMultiplier
 }

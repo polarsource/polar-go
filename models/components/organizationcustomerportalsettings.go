@@ -5,6 +5,7 @@ package components
 type OrganizationCustomerPortalSettings struct {
 	Usage        CustomerPortalUsageSettings        `json:"usage"`
 	Subscription CustomerPortalSubscriptionSettings `json:"subscription"`
+	Customer     *CustomerPortalCustomerSettings    `json:"customer,omitempty"`
 }
 
 func (o *OrganizationCustomerPortalSettings) GetUsage() CustomerPortalUsageSettings {
@@ -19,4 +20,11 @@ func (o *OrganizationCustomerPortalSettings) GetSubscription() CustomerPortalSub
 		return CustomerPortalSubscriptionSettings{}
 	}
 	return o.Subscription
+}
+
+func (o *OrganizationCustomerPortalSettings) GetCustomer() *CustomerPortalCustomerSettings {
+	if o == nil {
+		return nil
+	}
+	return o.Customer
 }

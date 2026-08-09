@@ -11,20 +11,30 @@ type OrganizationFeatureSettings struct {
 	IssueFundingEnabled *bool `default:"false" json:"issue_funding_enabled"`
 	// If this organization has seat-based pricing enabled
 	SeatBasedPricingEnabled *bool `default:"false" json:"seat_based_pricing_enabled"`
-	// If this organization has RevOps enabled
-	RevopsEnabled *bool `default:"false" json:"revops_enabled"`
 	// If this organization has Wallets enabled
 	WalletsEnabled *bool `default:"false" json:"wallets_enabled"`
 	// If this organization has the Member model enabled
 	MemberModelEnabled *bool `default:"false" json:"member_model_enabled"`
-	// If this organization reads from Tinybird
-	TinybirdRead *bool `default:"false" json:"tinybird_read"`
-	// If this organization compares Tinybird results with database
-	TinybirdCompare *bool `default:"false" json:"tinybird_compare"`
 	// If this organization has checkout localization enabled
 	CheckoutLocalizationEnabled *bool `default:"false" json:"checkout_localization_enabled"`
 	// Ordered list of metric slugs shown on the dashboard overview.
 	OverviewMetrics []string `json:"overview_metrics,omitempty"`
+	// If this organization has access to reset proration behavior.
+	ResetProrationBehaviorEnabled *bool `default:"false" json:"reset_proration_behavior_enabled"`
+	// If this organization can create and finalize draft orders via the API (off-session charges against a saved payment method).
+	OffSessionChargesEnabled *bool `default:"false" json:"off_session_charges_enabled"`
+	// Enables the slack shared channel benefit
+	SlackBenefitEnabled *bool `default:"false" json:"slack_benefit_enabled"`
+	// If this organization has preview access to new features enabled
+	PreviewAccessEnabled *bool `default:"false" json:"preview_access_enabled"`
+	// If this organization has the disputes dashboard enabled
+	DisputesEnabled *bool `default:"false" json:"disputes_enabled"`
+	// If this organization has single sign-on configuration enabled
+	SsoEnabled *bool `default:"false" json:"sso_enabled"`
+	// If this organization has the split product navigation (Billing / Compass / Customers) enabled in the dashboard
+	CompassEnabled *bool `default:"false" json:"compass_enabled"`
+	// If this organization can migrate its billing from another provider (e.g. Stripe) to Polar.
+	MerchantMigrationEnabled *bool `default:"false" json:"merchant_migration_enabled"`
 }
 
 func (o OrganizationFeatureSettings) MarshalJSON() ([]byte, error) {
@@ -52,13 +62,6 @@ func (o *OrganizationFeatureSettings) GetSeatBasedPricingEnabled() *bool {
 	return o.SeatBasedPricingEnabled
 }
 
-func (o *OrganizationFeatureSettings) GetRevopsEnabled() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.RevopsEnabled
-}
-
 func (o *OrganizationFeatureSettings) GetWalletsEnabled() *bool {
 	if o == nil {
 		return nil
@@ -73,20 +76,6 @@ func (o *OrganizationFeatureSettings) GetMemberModelEnabled() *bool {
 	return o.MemberModelEnabled
 }
 
-func (o *OrganizationFeatureSettings) GetTinybirdRead() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.TinybirdRead
-}
-
-func (o *OrganizationFeatureSettings) GetTinybirdCompare() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.TinybirdCompare
-}
-
 func (o *OrganizationFeatureSettings) GetCheckoutLocalizationEnabled() *bool {
 	if o == nil {
 		return nil
@@ -99,4 +88,60 @@ func (o *OrganizationFeatureSettings) GetOverviewMetrics() []string {
 		return nil
 	}
 	return o.OverviewMetrics
+}
+
+func (o *OrganizationFeatureSettings) GetResetProrationBehaviorEnabled() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.ResetProrationBehaviorEnabled
+}
+
+func (o *OrganizationFeatureSettings) GetOffSessionChargesEnabled() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.OffSessionChargesEnabled
+}
+
+func (o *OrganizationFeatureSettings) GetSlackBenefitEnabled() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.SlackBenefitEnabled
+}
+
+func (o *OrganizationFeatureSettings) GetPreviewAccessEnabled() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.PreviewAccessEnabled
+}
+
+func (o *OrganizationFeatureSettings) GetDisputesEnabled() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.DisputesEnabled
+}
+
+func (o *OrganizationFeatureSettings) GetSsoEnabled() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.SsoEnabled
+}
+
+func (o *OrganizationFeatureSettings) GetCompassEnabled() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.CompassEnabled
+}
+
+func (o *OrganizationFeatureSettings) GetMerchantMigrationEnabled() *bool {
+	if o == nil {
+		return nil
+	}
+	return o.MerchantMigrationEnabled
 }

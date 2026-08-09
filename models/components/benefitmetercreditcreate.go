@@ -135,6 +135,8 @@ type BenefitMeterCreditCreate struct {
 	Description string `json:"description"`
 	// The ID of the organization owning the benefit. **Required unless you use an organization token.**
 	OrganizationID *string `json:"organization_id,omitempty"`
+	// The visibility of the benefit in the customer portal.
+	Visibility *BenefitVisibility `json:"visibility,omitempty"`
 	// Properties for creating a benefit of type `meter_unit`.
 	Properties BenefitMeterCreditCreateProperties `json:"properties"`
 }
@@ -173,6 +175,13 @@ func (b *BenefitMeterCreditCreate) GetOrganizationID() *string {
 		return nil
 	}
 	return b.OrganizationID
+}
+
+func (b *BenefitMeterCreditCreate) GetVisibility() *BenefitVisibility {
+	if b == nil {
+		return nil
+	}
+	return b.Visibility
 }
 
 func (b *BenefitMeterCreditCreate) GetProperties() BenefitMeterCreditCreateProperties {

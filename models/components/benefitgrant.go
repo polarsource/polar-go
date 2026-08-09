@@ -12,21 +12,23 @@ import (
 type PropertiesType string
 
 const (
-	PropertiesTypeBenefitGrantDiscordProperties          PropertiesType = "BenefitGrantDiscordProperties"
-	PropertiesTypeBenefitGrantGitHubRepositoryProperties PropertiesType = "BenefitGrantGitHubRepositoryProperties"
-	PropertiesTypeBenefitGrantDownloadablesProperties    PropertiesType = "BenefitGrantDownloadablesProperties"
-	PropertiesTypeBenefitGrantLicenseKeysProperties      PropertiesType = "BenefitGrantLicenseKeysProperties"
-	PropertiesTypeBenefitGrantCustomProperties           PropertiesType = "BenefitGrantCustomProperties"
-	PropertiesTypeBenefitGrantFeatureFlagProperties      PropertiesType = "BenefitGrantFeatureFlagProperties"
+	PropertiesTypeBenefitGrantDiscordProperties            PropertiesType = "BenefitGrantDiscordProperties"
+	PropertiesTypeBenefitGrantGitHubRepositoryProperties   PropertiesType = "BenefitGrantGitHubRepositoryProperties"
+	PropertiesTypeBenefitGrantDownloadablesProperties      PropertiesType = "BenefitGrantDownloadablesProperties"
+	PropertiesTypeBenefitGrantLicenseKeysProperties        PropertiesType = "BenefitGrantLicenseKeysProperties"
+	PropertiesTypeBenefitGrantCustomProperties             PropertiesType = "BenefitGrantCustomProperties"
+	PropertiesTypeBenefitGrantFeatureFlagProperties        PropertiesType = "BenefitGrantFeatureFlagProperties"
+	PropertiesTypeBenefitGrantSlackSharedChannelProperties PropertiesType = "BenefitGrantSlackSharedChannelProperties"
 )
 
 type Properties struct {
-	BenefitGrantDiscordProperties          *BenefitGrantDiscordProperties          `queryParam:"inline" union:"member"`
-	BenefitGrantGitHubRepositoryProperties *BenefitGrantGitHubRepositoryProperties `queryParam:"inline" union:"member"`
-	BenefitGrantDownloadablesProperties    *BenefitGrantDownloadablesProperties    `queryParam:"inline" union:"member"`
-	BenefitGrantLicenseKeysProperties      *BenefitGrantLicenseKeysProperties      `queryParam:"inline" union:"member"`
-	BenefitGrantCustomProperties           *BenefitGrantCustomProperties           `queryParam:"inline" union:"member"`
-	BenefitGrantFeatureFlagProperties      *BenefitGrantFeatureFlagProperties      `queryParam:"inline" union:"member"`
+	BenefitGrantDiscordProperties            *BenefitGrantDiscordProperties            `queryParam:"inline" union:"member"`
+	BenefitGrantGitHubRepositoryProperties   *BenefitGrantGitHubRepositoryProperties   `queryParam:"inline" union:"member"`
+	BenefitGrantDownloadablesProperties      *BenefitGrantDownloadablesProperties      `queryParam:"inline" union:"member"`
+	BenefitGrantLicenseKeysProperties        *BenefitGrantLicenseKeysProperties        `queryParam:"inline" union:"member"`
+	BenefitGrantCustomProperties             *BenefitGrantCustomProperties             `queryParam:"inline" union:"member"`
+	BenefitGrantFeatureFlagProperties        *BenefitGrantFeatureFlagProperties        `queryParam:"inline" union:"member"`
+	BenefitGrantSlackSharedChannelProperties *BenefitGrantSlackSharedChannelProperties `queryParam:"inline" union:"member"`
 
 	Type PropertiesType
 }
@@ -85,6 +87,15 @@ func CreatePropertiesBenefitGrantFeatureFlagProperties(benefitGrantFeatureFlagPr
 	}
 }
 
+func CreatePropertiesBenefitGrantSlackSharedChannelProperties(benefitGrantSlackSharedChannelProperties BenefitGrantSlackSharedChannelProperties) Properties {
+	typ := PropertiesTypeBenefitGrantSlackSharedChannelProperties
+
+	return Properties{
+		BenefitGrantSlackSharedChannelProperties: &benefitGrantSlackSharedChannelProperties,
+		Type:                                     typ,
+	}
+}
+
 func (u *Properties) UnmarshalJSON(data []byte) error {
 
 	var benefitGrantDiscordProperties BenefitGrantDiscordProperties = BenefitGrantDiscordProperties{}
@@ -129,6 +140,13 @@ func (u *Properties) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
+	var benefitGrantSlackSharedChannelProperties BenefitGrantSlackSharedChannelProperties = BenefitGrantSlackSharedChannelProperties{}
+	if err := utils.UnmarshalJSON(data, &benefitGrantSlackSharedChannelProperties, "", true, nil); err == nil {
+		u.BenefitGrantSlackSharedChannelProperties = &benefitGrantSlackSharedChannelProperties
+		u.Type = PropertiesTypeBenefitGrantSlackSharedChannelProperties
+		return nil
+	}
+
 	return fmt.Errorf("could not unmarshal `%s` into any supported union types for Properties", string(data))
 }
 
@@ -155,6 +173,10 @@ func (u Properties) MarshalJSON() ([]byte, error) {
 
 	if u.BenefitGrantFeatureFlagProperties != nil {
 		return utils.MarshalJSON(u.BenefitGrantFeatureFlagProperties, "", true)
+	}
+
+	if u.BenefitGrantSlackSharedChannelProperties != nil {
+		return utils.MarshalJSON(u.BenefitGrantSlackSharedChannelProperties, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type Properties: all fields are null")
@@ -350,6 +372,10 @@ func (b *BenefitGrant) GetBenefitLicenseKeys() *BenefitLicenseKeys {
 
 func (b *BenefitGrant) GetBenefitMeterCredit() *BenefitMeterCredit {
 	return b.GetBenefit().BenefitMeterCredit
+}
+
+func (b *BenefitGrant) GetBenefitSlackSharedChannel() *BenefitSlackSharedChannel {
+	return b.GetBenefit().BenefitSlackSharedChannel
 }
 
 func (b *BenefitGrant) GetProperties() Properties {

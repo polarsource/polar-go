@@ -73,6 +73,10 @@ func (c *CustomerPortalBenefitGrantsUpdateRequest) GetCustomerBenefitGrantUpdate
 	return c.GetCustomerBenefitGrantUpdate().CustomerBenefitGrantMeterCreditUpdate
 }
 
+func (c *CustomerPortalBenefitGrantsUpdateRequest) GetCustomerBenefitGrantUpdateSlackSharedChannel() *components.CustomerBenefitGrantSlackSharedChannelUpdate {
+	return c.GetCustomerBenefitGrantUpdate().CustomerBenefitGrantSlackSharedChannelUpdate
+}
+
 type CustomerPortalBenefitGrantsUpdateResponse struct {
 	HTTPMeta components.HTTPMetadata `json:"-"`
 	// Benefit grant updated.

@@ -303,8 +303,13 @@ type MeterCreate struct {
 	// You can store up to **50 key-value pairs**.
 	Metadata map[string]MeterCreateMetadata `json:"metadata,omitempty"`
 	// The name of the meter. Will be shown on customer's invoices and usage.
-	Name   string `json:"name"`
-	Filter Filter `json:"filter"`
+	Name string     `json:"name"`
+	Unit *MeterUnit `json:"unit,omitempty"`
+	// The label for the custom unit, e.g. 'request'. Required when unit is 'custom'.
+	CustomLabel *string `json:"custom_label,omitempty"`
+	// The multiplier to convert from the base unit to display scale, e.g. 1000 to display per 1000 units. Defaults to 1 when not provided.
+	CustomMultiplier *int64 `json:"custom_multiplier,omitempty"`
+	Filter           Filter `json:"filter"`
 	// The aggregation to apply on the filtered events to calculate the meter.
 	Aggregation MeterCreateAggregation `json:"aggregation"`
 	// The ID of the organization owning the meter. **Required unless you use an organization token.**
@@ -323,6 +328,27 @@ func (m *MeterCreate) GetName() string {
 		return ""
 	}
 	return m.Name
+}
+
+func (m *MeterCreate) GetUnit() *MeterUnit {
+	if m == nil {
+		return nil
+	}
+	return m.Unit
+}
+
+func (m *MeterCreate) GetCustomLabel() *string {
+	if m == nil {
+		return nil
+	}
+	return m.CustomLabel
+}
+
+func (m *MeterCreate) GetCustomMultiplier() *int64 {
+	if m == nil {
+		return nil
+	}
+	return m.CustomMultiplier
 }
 
 func (m *MeterCreate) GetFilter() Filter {

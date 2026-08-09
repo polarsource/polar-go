@@ -73,7 +73,7 @@ func main() {
 		polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
 	)
 
-	res, err := s.Organizations.List(ctx, nil, polargo.Pointer[int64](1), polargo.Pointer[int64](10), nil)
+	res, err := s.Organizations.ListOrganizations(ctx, nil, polargo.Pointer[int64](1), polargo.Pointer[int64](10), nil)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -126,7 +126,7 @@ func main() {
 		polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
 	)
 
-	res, err := s.Organizations.List(ctx, nil, polargo.Pointer[int64](1), polargo.Pointer[int64](10), nil)
+	res, err := s.Organizations.ListOrganizations(ctx, nil, polargo.Pointer[int64](1), polargo.Pointer[int64](10), nil)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -265,6 +265,9 @@ func main() {
 * [AddPaymentMethod](docs/sdks/polarcustomers/README.md#addpaymentmethod) - Add Customer Payment Method
 * [ConfirmPaymentMethod](docs/sdks/polarcustomers/README.md#confirmpaymentmethod) - Confirm Customer Payment Method
 * [DeletePaymentMethod](docs/sdks/polarcustomers/README.md#deletepaymentmethod) - Delete Customer Payment Method
+* [RequestEmailUpdate](docs/sdks/polarcustomers/README.md#requestemailupdate) - Request Email Change
+* [CheckEmailUpdate](docs/sdks/polarcustomers/README.md#checkemailupdate) - Check Email Change Token
+* [VerifyEmailUpdate](docs/sdks/polarcustomers/README.md#verifyemailupdate) - Verify Email Change
 
 ### [CustomerPortal.Downloadables](docs/sdks/downloadables/README.md)
 
@@ -278,12 +281,12 @@ func main() {
 * [Activate](docs/sdks/polarlicensekeys/README.md#activate) - Activate License Key
 * [Deactivate](docs/sdks/polarlicensekeys/README.md#deactivate) - Deactivate License Key
 
-### [CustomerPortal.Members](docs/sdks/polarmembers/README.md)
+### [CustomerPortal.Members](docs/sdks/polarcustomerportalmembers/README.md)
 
-* [ListMembers](docs/sdks/polarmembers/README.md#listmembers) - List Members
-* [AddMember](docs/sdks/polarmembers/README.md#addmember) - Add Member
-* [RemoveMember](docs/sdks/polarmembers/README.md#removemember) - Remove Member
-* [UpdateMember](docs/sdks/polarmembers/README.md#updatemember) - Update Member
+* [ListMembers](docs/sdks/polarcustomerportalmembers/README.md#listmembers) - List Members
+* [AddMember](docs/sdks/polarcustomerportalmembers/README.md#addmember) - Add Member
+* [RemoveMember](docs/sdks/polarcustomerportalmembers/README.md#removemember) - Remove Member
+* [UpdateMember](docs/sdks/polarcustomerportalmembers/README.md#updatemember) - Update Member
 
 ### [CustomerPortal.Orders](docs/sdks/polarorders/README.md)
 
@@ -292,6 +295,7 @@ func main() {
 * [Update](docs/sdks/polarorders/README.md#update) - Update Order
 * [Invoice](docs/sdks/polarorders/README.md#invoice) - Get Order Invoice
 * [GenerateInvoice](docs/sdks/polarorders/README.md#generateinvoice) - Generate Order Invoice
+* [Receipt](docs/sdks/polarorders/README.md#receipt) - Get Order Receipt
 * [GetPaymentStatus](docs/sdks/polarorders/README.md#getpaymentstatus) - Get Order Payment Status
 * [ConfirmRetryPayment](docs/sdks/polarorders/README.md#confirmretrypayment) - Confirm Retry Payment
 
@@ -345,6 +349,19 @@ func main() {
 * [UpdateExternal](docs/sdks/customers/README.md#updateexternal) - Update Customer by External ID
 * [GetState](docs/sdks/customers/README.md#getstate) - Get Customer State
 * [GetStateExternal](docs/sdks/customers/README.md#getstateexternal) - Get Customer State by External ID
+* [ListPaymentMethods](docs/sdks/customers/README.md#listpaymentmethods) - List Customer Payment Methods
+* [ListPaymentMethodsExternal](docs/sdks/customers/README.md#listpaymentmethodsexternal) - List Customer Payment Methods by External ID
+
+#### [Customers.Members](docs/sdks/polarmembers/README.md)
+
+* [Create](docs/sdks/polarmembers/README.md#create) - Create Member
+* [CreateExternal](docs/sdks/polarmembers/README.md#createexternal) - Create Member by Customer External ID
+* [Get](docs/sdks/polarmembers/README.md#get) - Get Member
+* [Delete](docs/sdks/polarmembers/README.md#delete) - Delete Member
+* [Update](docs/sdks/polarmembers/README.md#update) - Update Member
+* [GetExternal](docs/sdks/polarmembers/README.md#getexternal) - Get Member by External ID
+* [DeleteExternal](docs/sdks/polarmembers/README.md#deleteexternal) - Delete Member by External ID
+* [UpdateExternal](docs/sdks/polarmembers/README.md#updateexternal) - Update Member by External ID
 
 ### [Discounts](docs/sdks/discounts/README.md)
 
@@ -358,6 +375,7 @@ func main() {
 
 * [List](docs/sdks/disputes/README.md#list) - List Disputes
 * [Get](docs/sdks/disputes/README.md#get) - Get Dispute
+* [Accept](docs/sdks/disputes/README.md#accept) - Accept Dispute
 
 ### [EventTypes](docs/sdks/eventtypes/README.md)
 
@@ -392,10 +410,6 @@ func main() {
 ### [Members](docs/sdks/members/README.md)
 
 * [ListMembers](docs/sdks/members/README.md#listmembers) - List Members
-* [CreateMember](docs/sdks/members/README.md#createmember) - Create Member
-* [GetMember](docs/sdks/members/README.md#getmember) - Get Member
-* [DeleteMember](docs/sdks/members/README.md#deletemember) - Delete Member
-* [UpdateMember](docs/sdks/members/README.md#updatemember) - Update Member
 
 ### [Meters](docs/sdks/meters/README.md)
 
@@ -408,6 +422,7 @@ func main() {
 ### [Metrics](docs/sdks/metrics/README.md)
 
 * [Get](docs/sdks/metrics/README.md#get) - Get Metrics
+* [Export](docs/sdks/metrics/README.md#export) - Export Metrics
 * [Limits](docs/sdks/metrics/README.md#limits) - Get Metrics Limits
 * [ListDashboards](docs/sdks/metrics/README.md#listdashboards) - List Metric Dashboards
 * [CreateDashboard](docs/sdks/metrics/README.md#createdashboard) - Create Metric Dashboard
@@ -433,22 +448,18 @@ func main() {
 ### [Orders](docs/sdks/orders/README.md)
 
 * [List](docs/sdks/orders/README.md#list) - List Orders
+* [Create](docs/sdks/orders/README.md#create) - Create Order
 * [Export](docs/sdks/orders/README.md#export) - Export Orders
 * [Get](docs/sdks/orders/README.md#get) - Get Order
 * [Update](docs/sdks/orders/README.md#update) - Update Order
+* [Finalize](docs/sdks/orders/README.md#finalize) - Finalize Order
 * [Invoice](docs/sdks/orders/README.md#invoice) - Get Order Invoice
 * [GenerateInvoice](docs/sdks/orders/README.md#generateinvoice) - Generate Order Invoice
-
-### [OrganizationAccessTokens](docs/sdks/organizationaccesstokens/README.md)
-
-* [List](docs/sdks/organizationaccesstokens/README.md#list) - List
-* [Create](docs/sdks/organizationaccesstokens/README.md#create) - Create
-* [Delete](docs/sdks/organizationaccesstokens/README.md#delete) - Delete
-* [Update](docs/sdks/organizationaccesstokens/README.md#update) - Update
+* [Receipt](docs/sdks/orders/README.md#receipt) - Get Order Receipt
 
 ### [Organizations](docs/sdks/organizations/README.md)
 
-* [List](docs/sdks/organizations/README.md#list) - List Organizations
+* [ListOrganizations](docs/sdks/organizations/README.md#listorganizations) - List Organizations
 * [Create](docs/sdks/organizations/README.md#create) - Create Organization
 * [Get](docs/sdks/organizations/README.md#get) - Get Organization
 * [Update](docs/sdks/organizations/README.md#update) - Update Organization
@@ -519,7 +530,7 @@ func main() {
 		polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
 	)
 
-	res, err := s.Organizations.List(ctx, nil, polargo.Pointer[int64](1), polargo.Pointer[int64](10), nil)
+	res, err := s.Organizations.ListOrganizations(ctx, nil, polargo.Pointer[int64](1), polargo.Pointer[int64](10), nil)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -568,7 +579,7 @@ func main() {
 		polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
 	)
 
-	res, err := s.Organizations.List(ctx, nil, polargo.Pointer[int64](1), polargo.Pointer[int64](10), nil, operations.WithRetries(
+	res, err := s.Organizations.ListOrganizations(ctx, nil, polargo.Pointer[int64](1), polargo.Pointer[int64](10), nil, operations.WithRetries(
 		retry.Config{
 			Strategy: "backoff",
 			Backoff: &retry.BackoffStrategy{
@@ -631,7 +642,7 @@ func main() {
 		polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
 	)
 
-	res, err := s.Organizations.List(ctx, nil, polargo.Pointer[int64](1), polargo.Pointer[int64](10), nil)
+	res, err := s.Organizations.ListOrganizations(ctx, nil, polargo.Pointer[int64](1), polargo.Pointer[int64](10), nil)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -662,7 +673,7 @@ Handling errors in this SDK should largely match your expectations. All operatio
 
 By Default, an API error will return `apierrors.APIError`. When custom error responses are specified for an operation, the SDK may also return their associated error. You can refer to respective *Errors* tables in SDK docs for more details on possible error types for each operation.
 
-For example, the `List` function may return the following errors:
+For example, the `ListOrganizations` function may return the following errors:
 
 | Error Type                    | Status Code | Content Type     |
 | ----------------------------- | ----------- | ---------------- |
@@ -690,7 +701,7 @@ func main() {
 		polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
 	)
 
-	res, err := s.Organizations.List(ctx, nil, polargo.Pointer[int64](1), polargo.Pointer[int64](10), nil)
+	res, err := s.Organizations.ListOrganizations(ctx, nil, polargo.Pointer[int64](1), polargo.Pointer[int64](10), nil)
 	if err != nil {
 
 		var e *apierrors.HTTPValidationError
@@ -742,7 +753,7 @@ func main() {
 		polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
 	)
 
-	res, err := s.Organizations.List(ctx, nil, polargo.Pointer[int64](1), polargo.Pointer[int64](10), nil)
+	res, err := s.Organizations.ListOrganizations(ctx, nil, polargo.Pointer[int64](1), polargo.Pointer[int64](10), nil)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -786,7 +797,7 @@ func main() {
 		polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
 	)
 
-	res, err := s.Organizations.List(ctx, nil, polargo.Pointer[int64](1), polargo.Pointer[int64](10), nil)
+	res, err := s.Organizations.ListOrganizations(ctx, nil, polargo.Pointer[int64](1), polargo.Pointer[int64](10), nil)
 	if err != nil {
 		log.Fatal(err)
 	}

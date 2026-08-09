@@ -134,6 +134,8 @@ type BenefitGitHubRepositoryCreate struct {
 	Description string `json:"description"`
 	// The ID of the organization owning the benefit. **Required unless you use an organization token.**
 	OrganizationID *string `json:"organization_id,omitempty"`
+	// The visibility of the benefit in the customer portal.
+	Visibility *BenefitVisibility `json:"visibility,omitempty"`
 	// Properties to create a benefit of type `github_repository`.
 	Properties BenefitGitHubRepositoryCreateProperties `json:"properties"`
 }
@@ -172,6 +174,13 @@ func (b *BenefitGitHubRepositoryCreate) GetOrganizationID() *string {
 		return nil
 	}
 	return b.OrganizationID
+}
+
+func (b *BenefitGitHubRepositoryCreate) GetVisibility() *BenefitVisibility {
+	if b == nil {
+		return nil
+	}
+	return b.Visibility
 }
 
 func (b *BenefitGitHubRepositoryCreate) GetProperties() BenefitGitHubRepositoryCreateProperties {

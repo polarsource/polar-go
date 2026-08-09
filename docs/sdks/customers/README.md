@@ -15,6 +15,8 @@
 * [UpdateExternal](#updateexternal) - Update Customer by External ID
 * [GetState](#getstate) - Get Customer State
 * [GetStateExternal](#getstateexternal) - Get Customer State by External ID
+* [ListPaymentMethods](#listpaymentmethods) - List Customer Payment Methods
+* [ListPaymentMethodsExternal](#listpaymentmethodsexternal) - List Customer Payment Methods by External ID
 
 ## List
 
@@ -199,7 +201,7 @@ func main() {
     if err != nil {
         log.Fatal(err)
     }
-    if res.Any != nil {
+    if res.Res != nil {
         // handle response
     }
 }
@@ -754,6 +756,146 @@ func main() {
 ### Response
 
 **[*operations.CustomersGetStateExternalResponse](../../models/operations/customersgetstateexternalresponse.md), error**
+
+### Errors
+
+| Error Type                    | Status Code                   | Content Type                  |
+| ----------------------------- | ----------------------------- | ----------------------------- |
+| apierrors.ResourceNotFound    | 404                           | application/json              |
+| apierrors.HTTPValidationError | 422                           | application/json              |
+| apierrors.APIError            | 4XX, 5XX                      | \*/\*                         |
+
+## ListPaymentMethods
+
+Get saved payment methods of a customer.
+
+**Scopes**: `customers:read` `customers:write`
+
+### Example Usage
+
+<!-- UsageSnippet language="go" operationID="customers:list_payment_methods" method="get" path="/v1/customers/{id}/payment-methods" -->
+```go
+package main
+
+import(
+	"context"
+	"os"
+	polargo "github.com/polarsource/polar-go"
+	"log"
+)
+
+func main() {
+    ctx := context.Background()
+
+    s := polargo.New(
+        polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
+    )
+
+    res, err := s.Customers.ListPaymentMethods(ctx, "<value>", polargo.Pointer[int64](1), polargo.Pointer[int64](10))
+    if err != nil {
+        log.Fatal(err)
+    }
+    if res.ListResourcePaymentMethod != nil {
+        for {
+            // handle items
+
+            res, err = res.Next()
+
+            if err != nil {
+                // handle error
+            }
+
+            if res == nil {
+                break
+            }
+        }
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                | Type                                                     | Required                                                 | Description                                              |
+| -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- |
+| `ctx`                                                    | [context.Context](https://pkg.go.dev/context#Context)    | :heavy_check_mark:                                       | The context to use for the request.                      |
+| `id`                                                     | `string`                                                 | :heavy_check_mark:                                       | The customer ID.                                         |
+| `page`                                                   | `*int64`                                                 | :heavy_minus_sign:                                       | Page number, defaults to 1.                              |
+| `limit`                                                  | `*int64`                                                 | :heavy_minus_sign:                                       | Size of a page, defaults to 10. Maximum is 100.          |
+| `opts`                                                   | [][operations.Option](../../models/operations/option.md) | :heavy_minus_sign:                                       | The options for this request.                            |
+
+### Response
+
+**[*operations.CustomersListPaymentMethodsResponse](../../models/operations/customerslistpaymentmethodsresponse.md), error**
+
+### Errors
+
+| Error Type                    | Status Code                   | Content Type                  |
+| ----------------------------- | ----------------------------- | ----------------------------- |
+| apierrors.ResourceNotFound    | 404                           | application/json              |
+| apierrors.HTTPValidationError | 422                           | application/json              |
+| apierrors.APIError            | 4XX, 5XX                      | \*/\*                         |
+
+## ListPaymentMethodsExternal
+
+Get saved payment methods of a customer by external ID.
+
+**Scopes**: `customers:read` `customers:write`
+
+### Example Usage
+
+<!-- UsageSnippet language="go" operationID="customers:list_payment_methods_external" method="get" path="/v1/customers/external/{external_id}/payment-methods" -->
+```go
+package main
+
+import(
+	"context"
+	"os"
+	polargo "github.com/polarsource/polar-go"
+	"log"
+)
+
+func main() {
+    ctx := context.Background()
+
+    s := polargo.New(
+        polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
+    )
+
+    res, err := s.Customers.ListPaymentMethodsExternal(ctx, "<id>", polargo.Pointer[int64](1), polargo.Pointer[int64](10))
+    if err != nil {
+        log.Fatal(err)
+    }
+    if res.ListResourcePaymentMethod != nil {
+        for {
+            // handle items
+
+            res, err = res.Next()
+
+            if err != nil {
+                // handle error
+            }
+
+            if res == nil {
+                break
+            }
+        }
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                | Type                                                     | Required                                                 | Description                                              |
+| -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- |
+| `ctx`                                                    | [context.Context](https://pkg.go.dev/context#Context)    | :heavy_check_mark:                                       | The context to use for the request.                      |
+| `externalID`                                             | `string`                                                 | :heavy_check_mark:                                       | The customer external ID.                                |
+| `page`                                                   | `*int64`                                                 | :heavy_minus_sign:                                       | Page number, defaults to 1.                              |
+| `limit`                                                  | `*int64`                                                 | :heavy_minus_sign:                                       | Size of a page, defaults to 10. Maximum is 100.          |
+| `opts`                                                   | [][operations.Option](../../models/operations/option.md) | :heavy_minus_sign:                                       | The options for this request.                            |
+
+### Response
+
+**[*operations.CustomersListPaymentMethodsExternalResponse](../../models/operations/customerslistpaymentmethodsexternalresponse.md), error**
 
 ### Errors
 

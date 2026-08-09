@@ -23,6 +23,8 @@ type GenericPayment struct {
 	Currency string `json:"currency"`
 	// The payment method used.
 	Method string `json:"method"`
+	// What initiated this payment attempt, e.g. initial purchase, subscription renewal, or an automated dunning retry.
+	Trigger *PaymentTrigger `json:"trigger"`
 	// Error code, if the payment was declined.
 	DeclineReason *string `json:"decline_reason"`
 	// Human-readable error message, if the payment was declined.
@@ -102,6 +104,13 @@ func (g *GenericPayment) GetMethod() string {
 		return ""
 	}
 	return g.Method
+}
+
+func (g *GenericPayment) GetTrigger() *PaymentTrigger {
+	if g == nil {
+		return nil
+	}
+	return g.Trigger
 }
 
 func (g *GenericPayment) GetDeclineReason() *string {

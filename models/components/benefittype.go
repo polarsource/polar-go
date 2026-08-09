@@ -10,13 +10,14 @@ import (
 type BenefitType string
 
 const (
-	BenefitTypeCustom           BenefitType = "custom"
-	BenefitTypeDiscord          BenefitType = "discord"
-	BenefitTypeGithubRepository BenefitType = "github_repository"
-	BenefitTypeDownloadables    BenefitType = "downloadables"
-	BenefitTypeLicenseKeys      BenefitType = "license_keys"
-	BenefitTypeMeterCredit      BenefitType = "meter_credit"
-	BenefitTypeFeatureFlag      BenefitType = "feature_flag"
+	BenefitTypeCustom             BenefitType = "custom"
+	BenefitTypeDiscord            BenefitType = "discord"
+	BenefitTypeGithubRepository   BenefitType = "github_repository"
+	BenefitTypeDownloadables      BenefitType = "downloadables"
+	BenefitTypeLicenseKeys        BenefitType = "license_keys"
+	BenefitTypeMeterCredit        BenefitType = "meter_credit"
+	BenefitTypeFeatureFlag        BenefitType = "feature_flag"
+	BenefitTypeSlackSharedChannel BenefitType = "slack_shared_channel"
 )
 
 func (e BenefitType) ToPointer() *BenefitType {
@@ -41,6 +42,8 @@ func (e *BenefitType) UnmarshalJSON(data []byte) error {
 	case "meter_credit":
 		fallthrough
 	case "feature_flag":
+		fallthrough
+	case "slack_shared_channel":
 		*e = BenefitType(v)
 		return nil
 	default:

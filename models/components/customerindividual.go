@@ -91,15 +91,19 @@ type CustomerIndividual struct {
 	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	type_ string `const:"individual" json:"type"`
 	// The name of the customer.
-	Name           *string                    `json:"name"`
+	Name *string `json:"name"`
+	// The name that should appear on the customer's invoices. Falls back to the customer name when not explicitly set.
+	BillingName    *string                    `json:"billing_name"`
 	BillingAddress *Address                   `json:"billing_address"`
 	TaxID          []*CustomerIndividualTaxID `json:"tax_id"`
 	Locale         *string                    `json:"locale,omitempty"`
 	// The ID of the organization owning the customer.
 	OrganizationID string `json:"organization_id"`
+	// The ID of the customer's default payment method, if any. Use the payment methods endpoint to retrieve its details.
+	DefaultPaymentMethodID *string `json:"default_payment_method_id,omitempty"`
 	// Timestamp for when the customer was soft deleted.
 	DeletedAt *time.Time `json:"deleted_at"`
-	AvatarURL string     `json:"avatar_url"`
+	AvatarURL *string    `json:"avatar_url"`
 }
 
 func (c CustomerIndividual) MarshalJSON() ([]byte, error) {
@@ -107,7 +111,7 @@ func (c CustomerIndividual) MarshalJSON() ([]byte, error) {
 }
 
 func (c *CustomerIndividual) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &c, "", false, []string{"id", "created_at", "metadata", "email", "email_verified", "type", "organization_id", "avatar_url"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &c, "", false, []string{"id", "created_at", "metadata", "email", "email_verified", "type", "organization_id"}); err != nil {
 		return err
 	}
 	return nil
@@ -173,6 +177,13 @@ func (c *CustomerIndividual) GetName() *string {
 	return c.Name
 }
 
+func (c *CustomerIndividual) GetBillingName() *string {
+	if c == nil {
+		return nil
+	}
+	return c.BillingName
+}
+
 func (c *CustomerIndividual) GetBillingAddress() *Address {
 	if c == nil {
 		return nil
@@ -201,6 +212,13 @@ func (c *CustomerIndividual) GetOrganizationID() string {
 	return c.OrganizationID
 }
 
+func (c *CustomerIndividual) GetDefaultPaymentMethodID() *string {
+	if c == nil {
+		return nil
+	}
+	return c.DefaultPaymentMethodID
+}
+
 func (c *CustomerIndividual) GetDeletedAt() *time.Time {
 	if c == nil {
 		return nil
@@ -208,9 +226,9 @@ func (c *CustomerIndividual) GetDeletedAt() *time.Time {
 	return c.DeletedAt
 }
 
-func (c *CustomerIndividual) GetAvatarURL() string {
+func (c *CustomerIndividual) GetAvatarURL() *string {
 	if c == nil {
-		return ""
+		return nil
 	}
 	return c.AvatarURL
 }

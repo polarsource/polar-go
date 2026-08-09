@@ -88,6 +88,7 @@ type CustomerPortalCustomer struct {
 	OauthAccounts          map[string]CustomerPortalOAuthAccount `json:"oauth_accounts"`
 	DefaultPaymentMethodID *string                               `json:"default_payment_method_id,omitempty"`
 	Type                   *CustomerType                         `json:"type,omitempty"`
+	Locale                 *string                               `json:"locale,omitempty"`
 }
 
 func (c CustomerPortalCustomer) MarshalJSON() ([]byte, error) {
@@ -183,4 +184,11 @@ func (c *CustomerPortalCustomer) GetType() *CustomerType {
 		return nil
 	}
 	return c.Type
+}
+
+func (c *CustomerPortalCustomer) GetLocale() *string {
+	if c == nil {
+		return nil
+	}
+	return c.Locale
 }

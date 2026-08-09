@@ -83,6 +83,8 @@ func main() {
 
 Update an event type's label.
 
+**Scopes**: `events:write`
+
 ### Example Usage
 
 <!-- UsageSnippet language="go" operationID="event-types:update" method="patch" path="/v1/event-types/{id}" -->

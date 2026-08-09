@@ -3,10 +3,6 @@
 package operations
 
 import (
-	"encoding/json"
-	"errors"
-	"fmt"
-	"github.com/polarsource/polar-go/internal/utils"
 	"github.com/polarsource/polar-go/models/components"
 )
 
@@ -30,114 +26,10 @@ func (f *FilesUploadedRequest) GetFileUploadCompleted() components.FileUploadCom
 	return f.FileUploadCompleted
 }
 
-type FilesUploadedResponseFilesUploadedType string
-
-const (
-	FilesUploadedResponseFilesUploadedTypeDownloadable       FilesUploadedResponseFilesUploadedType = "downloadable"
-	FilesUploadedResponseFilesUploadedTypeProductMedia       FilesUploadedResponseFilesUploadedType = "product_media"
-	FilesUploadedResponseFilesUploadedTypeOrganizationAvatar FilesUploadedResponseFilesUploadedType = "organization_avatar"
-)
-
-// FilesUploadedResponseFilesUploaded - File upload completed.
-type FilesUploadedResponseFilesUploaded struct {
-	DownloadableFileRead       *components.DownloadableFileRead       `queryParam:"inline" union:"member"`
-	ProductMediaFileRead       *components.ProductMediaFileRead       `queryParam:"inline" union:"member"`
-	OrganizationAvatarFileRead *components.OrganizationAvatarFileRead `queryParam:"inline" union:"member"`
-
-	Type FilesUploadedResponseFilesUploadedType
-}
-
-func CreateFilesUploadedResponseFilesUploadedDownloadable(downloadable components.DownloadableFileRead) FilesUploadedResponseFilesUploaded {
-	typ := FilesUploadedResponseFilesUploadedTypeDownloadable
-
-	return FilesUploadedResponseFilesUploaded{
-		DownloadableFileRead: &downloadable,
-		Type:                 typ,
-	}
-}
-
-func CreateFilesUploadedResponseFilesUploadedProductMedia(productMedia components.ProductMediaFileRead) FilesUploadedResponseFilesUploaded {
-	typ := FilesUploadedResponseFilesUploadedTypeProductMedia
-
-	return FilesUploadedResponseFilesUploaded{
-		ProductMediaFileRead: &productMedia,
-		Type:                 typ,
-	}
-}
-
-func CreateFilesUploadedResponseFilesUploadedOrganizationAvatar(organizationAvatar components.OrganizationAvatarFileRead) FilesUploadedResponseFilesUploaded {
-	typ := FilesUploadedResponseFilesUploadedTypeOrganizationAvatar
-
-	return FilesUploadedResponseFilesUploaded{
-		OrganizationAvatarFileRead: &organizationAvatar,
-		Type:                       typ,
-	}
-}
-
-func (u *FilesUploadedResponseFilesUploaded) UnmarshalJSON(data []byte) error {
-
-	type discriminator struct {
-		Service string `json:"service"`
-	}
-
-	dis := new(discriminator)
-	if err := json.Unmarshal(data, &dis); err != nil {
-		return fmt.Errorf("could not unmarshal discriminator: %w", err)
-	}
-
-	switch dis.Service {
-	case "downloadable":
-		downloadableFileRead := new(components.DownloadableFileRead)
-		if err := utils.UnmarshalJSON(data, &downloadableFileRead, "", true, nil); err != nil {
-			return fmt.Errorf("could not unmarshal `%s` into expected (Service == downloadable) type components.DownloadableFileRead within FilesUploadedResponseFilesUploaded: %w", string(data), err)
-		}
-
-		u.DownloadableFileRead = downloadableFileRead
-		u.Type = FilesUploadedResponseFilesUploadedTypeDownloadable
-		return nil
-	case "product_media":
-		productMediaFileRead := new(components.ProductMediaFileRead)
-		if err := utils.UnmarshalJSON(data, &productMediaFileRead, "", true, nil); err != nil {
-			return fmt.Errorf("could not unmarshal `%s` into expected (Service == product_media) type components.ProductMediaFileRead within FilesUploadedResponseFilesUploaded: %w", string(data), err)
-		}
-
-		u.ProductMediaFileRead = productMediaFileRead
-		u.Type = FilesUploadedResponseFilesUploadedTypeProductMedia
-		return nil
-	case "organization_avatar":
-		organizationAvatarFileRead := new(components.OrganizationAvatarFileRead)
-		if err := utils.UnmarshalJSON(data, &organizationAvatarFileRead, "", true, nil); err != nil {
-			return fmt.Errorf("could not unmarshal `%s` into expected (Service == organization_avatar) type components.OrganizationAvatarFileRead within FilesUploadedResponseFilesUploaded: %w", string(data), err)
-		}
-
-		u.OrganizationAvatarFileRead = organizationAvatarFileRead
-		u.Type = FilesUploadedResponseFilesUploadedTypeOrganizationAvatar
-		return nil
-	}
-
-	return fmt.Errorf("could not unmarshal `%s` into any supported union types for FilesUploadedResponseFilesUploaded", string(data))
-}
-
-func (u FilesUploadedResponseFilesUploaded) MarshalJSON() ([]byte, error) {
-	if u.DownloadableFileRead != nil {
-		return utils.MarshalJSON(u.DownloadableFileRead, "", true)
-	}
-
-	if u.ProductMediaFileRead != nil {
-		return utils.MarshalJSON(u.ProductMediaFileRead, "", true)
-	}
-
-	if u.OrganizationAvatarFileRead != nil {
-		return utils.MarshalJSON(u.OrganizationAvatarFileRead, "", true)
-	}
-
-	return nil, errors.New("could not marshal union type FilesUploadedResponseFilesUploaded: all fields are null")
-}
-
 type FilesUploadedResponse struct {
 	HTTPMeta components.HTTPMetadata `json:"-"`
 	// File upload completed.
-	ResponseFilesUploaded *FilesUploadedResponseFilesUploaded
+	FileRead *components.FileRead
 }
 
 func (f *FilesUploadedResponse) GetHTTPMeta() components.HTTPMetadata {
@@ -147,30 +39,37 @@ func (f *FilesUploadedResponse) GetHTTPMeta() components.HTTPMetadata {
 	return f.HTTPMeta
 }
 
-func (f *FilesUploadedResponse) GetResponseFilesUploaded() *FilesUploadedResponseFilesUploaded {
+func (f *FilesUploadedResponse) GetFileRead() *components.FileRead {
 	if f == nil {
 		return nil
 	}
-	return f.ResponseFilesUploaded
+	return f.FileRead
 }
 
-func (f *FilesUploadedResponse) GetResponseFilesUploadedDownloadable() *components.DownloadableFileRead {
-	if v := f.GetResponseFilesUploaded(); v != nil {
+func (f *FilesUploadedResponse) GetFileReadDownloadable() *components.DownloadableFileRead {
+	if v := f.GetFileRead(); v != nil {
 		return v.DownloadableFileRead
 	}
 	return nil
 }
 
-func (f *FilesUploadedResponse) GetResponseFilesUploadedProductMedia() *components.ProductMediaFileRead {
-	if v := f.GetResponseFilesUploaded(); v != nil {
+func (f *FilesUploadedResponse) GetFileReadOrganizationAvatar() *components.OrganizationAvatarFileRead {
+	if v := f.GetFileRead(); v != nil {
+		return v.OrganizationAvatarFileRead
+	}
+	return nil
+}
+
+func (f *FilesUploadedResponse) GetFileReadProductMedia() *components.ProductMediaFileRead {
+	if v := f.GetFileRead(); v != nil {
 		return v.ProductMediaFileRead
 	}
 	return nil
 }
 
-func (f *FilesUploadedResponse) GetResponseFilesUploadedOrganizationAvatar() *components.OrganizationAvatarFileRead {
-	if v := f.GetResponseFilesUploaded(); v != nil {
-		return v.OrganizationAvatarFileRead
+func (f *FilesUploadedResponse) GetFileReadSupportCaseAttachment() *components.SupportCaseAttachmentFileRead {
+	if v := f.GetFileRead(); v != nil {
+		return v.SupportCaseAttachmentFileRead
 	}
 	return nil
 }

@@ -20,8 +20,6 @@ value := components.ScopeOpenid
 | `ScopeEmail`                         | email                                |
 | `ScopeUserRead`                      | user:read                            |
 | `ScopeUserWrite`                     | user:write                           |
-| `ScopeWebRead`                       | web:read                             |
-| `ScopeWebWrite`                      | web:write                            |
 | `ScopeOrganizationsRead`             | organizations:read                   |
 | `ScopeOrganizationsWrite`            | organizations:write                  |
 | `ScopeCustomFieldsRead`              | custom_fields:read                   |
@@ -55,6 +53,7 @@ value := components.ScopeOpenid
 | `ScopeWalletsRead`                   | wallets:read                         |
 | `ScopeWalletsWrite`                  | wallets:write                        |
 | `ScopeDisputesRead`                  | disputes:read                        |
+| `ScopeDisputesWrite`                 | disputes:write                       |
 | `ScopeCustomerMetersRead`            | customer_meters:read                 |
 | `ScopeCustomerSessionsWrite`         | customer_sessions:write              |
 | `ScopeMemberSessionsWrite`           | member_sessions:write                |

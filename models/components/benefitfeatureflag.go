@@ -26,11 +26,15 @@ type BenefitFeatureFlag struct {
 	Selectable bool `json:"selectable"`
 	// Whether the benefit is deletable.
 	Deletable bool `json:"deletable"`
+	// Whether the benefit is deleted.
+	IsDeleted bool `json:"is_deleted"`
 	// The ID of the organization owning the benefit.
 	OrganizationID string                        `json:"organization_id"`
 	Metadata       map[string]MetadataOutputType `json:"metadata"`
+	Visibility     BenefitVisibility             `json:"visibility"`
 	// Properties for a benefit of type `feature_flag`.
-	Properties BenefitFeatureFlagProperties `json:"properties"`
+	Properties             BenefitFeatureFlagProperties `json:"properties"`
+	VisibilityConfigurable bool                         `json:"visibility_configurable"`
 }
 
 func (b BenefitFeatureFlag) MarshalJSON() ([]byte, error) {
@@ -38,7 +42,7 @@ func (b BenefitFeatureFlag) MarshalJSON() ([]byte, error) {
 }
 
 func (b *BenefitFeatureFlag) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &b, "", false, []string{"id", "created_at", "type", "description", "selectable", "deletable", "organization_id", "metadata", "properties"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &b, "", false, []string{"id", "created_at", "type", "description", "selectable", "deletable", "is_deleted", "organization_id", "metadata", "visibility", "properties", "visibility_configurable"}); err != nil {
 		return err
 	}
 	return nil
@@ -90,6 +94,13 @@ func (b *BenefitFeatureFlag) GetDeletable() bool {
 	return b.Deletable
 }
 
+func (b *BenefitFeatureFlag) GetIsDeleted() bool {
+	if b == nil {
+		return false
+	}
+	return b.IsDeleted
+}
+
 func (b *BenefitFeatureFlag) GetOrganizationID() string {
 	if b == nil {
 		return ""
@@ -104,9 +115,23 @@ func (b *BenefitFeatureFlag) GetMetadata() map[string]MetadataOutputType {
 	return b.Metadata
 }
 
+func (b *BenefitFeatureFlag) GetVisibility() BenefitVisibility {
+	if b == nil {
+		return BenefitVisibility("")
+	}
+	return b.Visibility
+}
+
 func (b *BenefitFeatureFlag) GetProperties() BenefitFeatureFlagProperties {
 	if b == nil {
 		return BenefitFeatureFlagProperties{}
 	}
 	return b.Properties
+}
+
+func (b *BenefitFeatureFlag) GetVisibilityConfigurable() bool {
+	if b == nil {
+		return false
+	}
+	return b.VisibilityConfigurable
 }

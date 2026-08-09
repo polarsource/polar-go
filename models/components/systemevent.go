@@ -35,10 +35,15 @@ const (
 	SystemEventTypeSubscriptionCanceled             SystemEventType = "subscription.canceled"
 	SystemEventTypeSubscriptionCreated              SystemEventType = "subscription.created"
 	SystemEventTypeSubscriptionCycled               SystemEventType = "subscription.cycled"
+	SystemEventTypeSubscriptionPastDue              SystemEventType = "subscription.past_due"
+	SystemEventTypeSubscriptionPaused               SystemEventType = "subscription.paused"
 	SystemEventTypeSubscriptionProductUpdated       SystemEventType = "subscription.product_updated"
+	SystemEventTypeSubscriptionReactivated          SystemEventType = "subscription.reactivated"
+	SystemEventTypeSubscriptionResumed              SystemEventType = "subscription.resumed"
 	SystemEventTypeSubscriptionRevoked              SystemEventType = "subscription.revoked"
 	SystemEventTypeSubscriptionSeatsUpdated         SystemEventType = "subscription.seats_updated"
 	SystemEventTypeSubscriptionUncanceled           SystemEventType = "subscription.uncanceled"
+	SystemEventTypeSubscriptionUpdateCleared        SystemEventType = "subscription.update_cleared"
 	SystemEventTypeSubscriptionUpdated              SystemEventType = "subscription.updated"
 )
 
@@ -54,10 +59,15 @@ type SystemEvent struct {
 	SubscriptionCycledEvent               *SubscriptionCycledEvent               `queryParam:"inline" union:"member"`
 	SubscriptionCanceledEvent             *SubscriptionCanceledEvent             `queryParam:"inline" union:"member"`
 	SubscriptionRevokedEvent              *SubscriptionRevokedEvent              `queryParam:"inline" union:"member"`
+	SubscriptionPastDueEvent              *SubscriptionPastDueEvent              `queryParam:"inline" union:"member"`
+	SubscriptionReactivatedEvent          *SubscriptionReactivatedEvent          `queryParam:"inline" union:"member"`
+	SubscriptionPausedEvent               *SubscriptionPausedEvent               `queryParam:"inline" union:"member"`
+	SubscriptionResumedEvent              *SubscriptionResumedEvent              `queryParam:"inline" union:"member"`
 	SubscriptionUncanceledEvent           *SubscriptionUncanceledEvent           `queryParam:"inline" union:"member"`
 	SubscriptionProductUpdatedEvent       *SubscriptionProductUpdatedEvent       `queryParam:"inline" union:"member"`
 	SubscriptionSeatsUpdatedEvent         *SubscriptionSeatsUpdatedEvent         `queryParam:"inline" union:"member"`
 	SubscriptionBillingPeriodUpdatedEvent *SubscriptionBillingPeriodUpdatedEvent `queryParam:"inline" union:"member"`
+	SubscriptionUpdateClearedEvent        *SubscriptionUpdateClearedEvent        `queryParam:"inline" union:"member"`
 	OrderPaidEvent                        *OrderPaidEvent                        `queryParam:"inline" union:"member"`
 	OrderRefundedEvent                    *OrderRefundedEvent                    `queryParam:"inline" union:"member"`
 	OrderVoidedEvent                      *OrderVoidedEvent                      `queryParam:"inline" union:"member"`
@@ -282,12 +292,48 @@ func CreateSystemEventSubscriptionCycled(subscriptionCycled SubscriptionCycledEv
 	}
 }
 
+func CreateSystemEventSubscriptionPastDue(subscriptionPastDue SubscriptionPastDueEvent) SystemEvent {
+	typ := SystemEventTypeSubscriptionPastDue
+
+	return SystemEvent{
+		SubscriptionPastDueEvent: &subscriptionPastDue,
+		Type:                     typ,
+	}
+}
+
+func CreateSystemEventSubscriptionPaused(subscriptionPaused SubscriptionPausedEvent) SystemEvent {
+	typ := SystemEventTypeSubscriptionPaused
+
+	return SystemEvent{
+		SubscriptionPausedEvent: &subscriptionPaused,
+		Type:                    typ,
+	}
+}
+
 func CreateSystemEventSubscriptionProductUpdated(subscriptionProductUpdated SubscriptionProductUpdatedEvent) SystemEvent {
 	typ := SystemEventTypeSubscriptionProductUpdated
 
 	return SystemEvent{
 		SubscriptionProductUpdatedEvent: &subscriptionProductUpdated,
 		Type:                            typ,
+	}
+}
+
+func CreateSystemEventSubscriptionReactivated(subscriptionReactivated SubscriptionReactivatedEvent) SystemEvent {
+	typ := SystemEventTypeSubscriptionReactivated
+
+	return SystemEvent{
+		SubscriptionReactivatedEvent: &subscriptionReactivated,
+		Type:                         typ,
+	}
+}
+
+func CreateSystemEventSubscriptionResumed(subscriptionResumed SubscriptionResumedEvent) SystemEvent {
+	typ := SystemEventTypeSubscriptionResumed
+
+	return SystemEvent{
+		SubscriptionResumedEvent: &subscriptionResumed,
+		Type:                     typ,
 	}
 }
 
@@ -315,6 +361,15 @@ func CreateSystemEventSubscriptionUncanceled(subscriptionUncanceled Subscription
 	return SystemEvent{
 		SubscriptionUncanceledEvent: &subscriptionUncanceled,
 		Type:                        typ,
+	}
+}
+
+func CreateSystemEventSubscriptionUpdateCleared(subscriptionUpdateCleared SubscriptionUpdateClearedEvent) SystemEvent {
+	typ := SystemEventTypeSubscriptionUpdateCleared
+
+	return SystemEvent{
+		SubscriptionUpdateClearedEvent: &subscriptionUpdateCleared,
+		Type:                           typ,
 	}
 }
 
@@ -546,6 +601,24 @@ func (u *SystemEvent) UnmarshalJSON(data []byte) error {
 		u.SubscriptionCycledEvent = subscriptionCycledEvent
 		u.Type = SystemEventTypeSubscriptionCycled
 		return nil
+	case "subscription.past_due":
+		subscriptionPastDueEvent := new(SubscriptionPastDueEvent)
+		if err := utils.UnmarshalJSON(data, &subscriptionPastDueEvent, "", true, nil); err != nil {
+			return fmt.Errorf("could not unmarshal `%s` into expected (Name == subscription.past_due) type SubscriptionPastDueEvent within SystemEvent: %w", string(data), err)
+		}
+
+		u.SubscriptionPastDueEvent = subscriptionPastDueEvent
+		u.Type = SystemEventTypeSubscriptionPastDue
+		return nil
+	case "subscription.paused":
+		subscriptionPausedEvent := new(SubscriptionPausedEvent)
+		if err := utils.UnmarshalJSON(data, &subscriptionPausedEvent, "", true, nil); err != nil {
+			return fmt.Errorf("could not unmarshal `%s` into expected (Name == subscription.paused) type SubscriptionPausedEvent within SystemEvent: %w", string(data), err)
+		}
+
+		u.SubscriptionPausedEvent = subscriptionPausedEvent
+		u.Type = SystemEventTypeSubscriptionPaused
+		return nil
 	case "subscription.product_updated":
 		subscriptionProductUpdatedEvent := new(SubscriptionProductUpdatedEvent)
 		if err := utils.UnmarshalJSON(data, &subscriptionProductUpdatedEvent, "", true, nil); err != nil {
@@ -554,6 +627,24 @@ func (u *SystemEvent) UnmarshalJSON(data []byte) error {
 
 		u.SubscriptionProductUpdatedEvent = subscriptionProductUpdatedEvent
 		u.Type = SystemEventTypeSubscriptionProductUpdated
+		return nil
+	case "subscription.reactivated":
+		subscriptionReactivatedEvent := new(SubscriptionReactivatedEvent)
+		if err := utils.UnmarshalJSON(data, &subscriptionReactivatedEvent, "", true, nil); err != nil {
+			return fmt.Errorf("could not unmarshal `%s` into expected (Name == subscription.reactivated) type SubscriptionReactivatedEvent within SystemEvent: %w", string(data), err)
+		}
+
+		u.SubscriptionReactivatedEvent = subscriptionReactivatedEvent
+		u.Type = SystemEventTypeSubscriptionReactivated
+		return nil
+	case "subscription.resumed":
+		subscriptionResumedEvent := new(SubscriptionResumedEvent)
+		if err := utils.UnmarshalJSON(data, &subscriptionResumedEvent, "", true, nil); err != nil {
+			return fmt.Errorf("could not unmarshal `%s` into expected (Name == subscription.resumed) type SubscriptionResumedEvent within SystemEvent: %w", string(data), err)
+		}
+
+		u.SubscriptionResumedEvent = subscriptionResumedEvent
+		u.Type = SystemEventTypeSubscriptionResumed
 		return nil
 	case "subscription.revoked":
 		subscriptionRevokedEvent := new(SubscriptionRevokedEvent)
@@ -581,6 +672,15 @@ func (u *SystemEvent) UnmarshalJSON(data []byte) error {
 
 		u.SubscriptionUncanceledEvent = subscriptionUncanceledEvent
 		u.Type = SystemEventTypeSubscriptionUncanceled
+		return nil
+	case "subscription.update_cleared":
+		subscriptionUpdateClearedEvent := new(SubscriptionUpdateClearedEvent)
+		if err := utils.UnmarshalJSON(data, &subscriptionUpdateClearedEvent, "", true, nil); err != nil {
+			return fmt.Errorf("could not unmarshal `%s` into expected (Name == subscription.update_cleared) type SubscriptionUpdateClearedEvent within SystemEvent: %w", string(data), err)
+		}
+
+		u.SubscriptionUpdateClearedEvent = subscriptionUpdateClearedEvent
+		u.Type = SystemEventTypeSubscriptionUpdateCleared
 		return nil
 	case "subscription.updated":
 		subscriptionUpdatedEvent := new(SubscriptionUpdatedEvent)
@@ -641,6 +741,22 @@ func (u SystemEvent) MarshalJSON() ([]byte, error) {
 		return utils.MarshalJSON(u.SubscriptionRevokedEvent, "", true)
 	}
 
+	if u.SubscriptionPastDueEvent != nil {
+		return utils.MarshalJSON(u.SubscriptionPastDueEvent, "", true)
+	}
+
+	if u.SubscriptionReactivatedEvent != nil {
+		return utils.MarshalJSON(u.SubscriptionReactivatedEvent, "", true)
+	}
+
+	if u.SubscriptionPausedEvent != nil {
+		return utils.MarshalJSON(u.SubscriptionPausedEvent, "", true)
+	}
+
+	if u.SubscriptionResumedEvent != nil {
+		return utils.MarshalJSON(u.SubscriptionResumedEvent, "", true)
+	}
+
 	if u.SubscriptionUncanceledEvent != nil {
 		return utils.MarshalJSON(u.SubscriptionUncanceledEvent, "", true)
 	}
@@ -655,6 +771,10 @@ func (u SystemEvent) MarshalJSON() ([]byte, error) {
 
 	if u.SubscriptionBillingPeriodUpdatedEvent != nil {
 		return utils.MarshalJSON(u.SubscriptionBillingPeriodUpdatedEvent, "", true)
+	}
+
+	if u.SubscriptionUpdateClearedEvent != nil {
+		return utils.MarshalJSON(u.SubscriptionUpdateClearedEvent, "", true)
 	}
 
 	if u.OrderPaidEvent != nil {

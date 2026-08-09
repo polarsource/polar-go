@@ -472,6 +472,8 @@ type Checkout struct {
 	NetAmount int64 `json:"net_amount"`
 	// Sales tax amount in cents. If `null`, it means there is no enough information yet to calculate it.
 	TaxAmount *int64 `json:"tax_amount"`
+	// Tax behavior of the checkout. `inclusive` means the price includes tax, `exclusive` means tax is added on top. If `null`, tax is not yet calculated.
+	TaxBehavior *TaxBehavior `json:"tax_behavior"`
 	// Amount in cents, after discounts and taxes.
 	TotalAmount int64 `json:"total_amount"`
 	// Currency code of the checkout session.
@@ -687,6 +689,13 @@ func (c *Checkout) GetTaxAmount() *int64 {
 		return nil
 	}
 	return c.TaxAmount
+}
+
+func (c *Checkout) GetTaxBehavior() *TaxBehavior {
+	if c == nil {
+		return nil
+	}
+	return c.TaxBehavior
 }
 
 func (c *Checkout) GetTotalAmount() int64 {

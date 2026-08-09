@@ -11,41 +11,131 @@ type PresentmentCurrency string
 
 const (
 	PresentmentCurrencyAed PresentmentCurrency = "aed"
+	PresentmentCurrencyAll PresentmentCurrency = "all"
+	PresentmentCurrencyAmd PresentmentCurrency = "amd"
+	PresentmentCurrencyAoa PresentmentCurrency = "aoa"
 	PresentmentCurrencyArs PresentmentCurrency = "ars"
 	PresentmentCurrencyAud PresentmentCurrency = "aud"
+	PresentmentCurrencyAwg PresentmentCurrency = "awg"
+	PresentmentCurrencyAzn PresentmentCurrency = "azn"
+	PresentmentCurrencyBam PresentmentCurrency = "bam"
+	PresentmentCurrencyBbd PresentmentCurrency = "bbd"
+	PresentmentCurrencyBdt PresentmentCurrency = "bdt"
+	PresentmentCurrencyBif PresentmentCurrency = "bif"
+	PresentmentCurrencyBmd PresentmentCurrency = "bmd"
+	PresentmentCurrencyBnd PresentmentCurrency = "bnd"
+	PresentmentCurrencyBob PresentmentCurrency = "bob"
 	PresentmentCurrencyBrl PresentmentCurrency = "brl"
+	PresentmentCurrencyBsd PresentmentCurrency = "bsd"
+	PresentmentCurrencyBwp PresentmentCurrency = "bwp"
+	PresentmentCurrencyBzd PresentmentCurrency = "bzd"
 	PresentmentCurrencyCad PresentmentCurrency = "cad"
+	PresentmentCurrencyCdf PresentmentCurrency = "cdf"
 	PresentmentCurrencyChf PresentmentCurrency = "chf"
 	PresentmentCurrencyClp PresentmentCurrency = "clp"
 	PresentmentCurrencyCny PresentmentCurrency = "cny"
 	PresentmentCurrencyCop PresentmentCurrency = "cop"
+	PresentmentCurrencyCrc PresentmentCurrency = "crc"
+	PresentmentCurrencyCve PresentmentCurrency = "cve"
 	PresentmentCurrencyCzk PresentmentCurrency = "czk"
+	PresentmentCurrencyDjf PresentmentCurrency = "djf"
 	PresentmentCurrencyDkk PresentmentCurrency = "dkk"
+	PresentmentCurrencyDop PresentmentCurrency = "dop"
+	PresentmentCurrencyDzd PresentmentCurrency = "dzd"
+	PresentmentCurrencyEgp PresentmentCurrency = "egp"
+	PresentmentCurrencyEtb PresentmentCurrency = "etb"
 	PresentmentCurrencyEur PresentmentCurrency = "eur"
+	PresentmentCurrencyFjd PresentmentCurrency = "fjd"
+	PresentmentCurrencyFkp PresentmentCurrency = "fkp"
 	PresentmentCurrencyGbp PresentmentCurrency = "gbp"
+	PresentmentCurrencyGel PresentmentCurrency = "gel"
+	PresentmentCurrencyGip PresentmentCurrency = "gip"
+	PresentmentCurrencyGmd PresentmentCurrency = "gmd"
+	PresentmentCurrencyGnf PresentmentCurrency = "gnf"
+	PresentmentCurrencyGtq PresentmentCurrency = "gtq"
+	PresentmentCurrencyGyd PresentmentCurrency = "gyd"
 	PresentmentCurrencyHkd PresentmentCurrency = "hkd"
+	PresentmentCurrencyHnl PresentmentCurrency = "hnl"
+	PresentmentCurrencyHtg PresentmentCurrency = "htg"
 	PresentmentCurrencyHuf PresentmentCurrency = "huf"
 	PresentmentCurrencyIdr PresentmentCurrency = "idr"
 	PresentmentCurrencyIls PresentmentCurrency = "ils"
 	PresentmentCurrencyInr PresentmentCurrency = "inr"
+	PresentmentCurrencyIsk PresentmentCurrency = "isk"
+	PresentmentCurrencyJmd PresentmentCurrency = "jmd"
 	PresentmentCurrencyJpy PresentmentCurrency = "jpy"
+	PresentmentCurrencyKes PresentmentCurrency = "kes"
+	PresentmentCurrencyKgs PresentmentCurrency = "kgs"
+	PresentmentCurrencyKhr PresentmentCurrency = "khr"
+	PresentmentCurrencyKmf PresentmentCurrency = "kmf"
 	PresentmentCurrencyKrw PresentmentCurrency = "krw"
+	PresentmentCurrencyKyd PresentmentCurrency = "kyd"
+	PresentmentCurrencyKzt PresentmentCurrency = "kzt"
+	PresentmentCurrencyLak PresentmentCurrency = "lak"
+	PresentmentCurrencyLkr PresentmentCurrency = "lkr"
+	PresentmentCurrencyLrd PresentmentCurrency = "lrd"
+	PresentmentCurrencyLsl PresentmentCurrency = "lsl"
+	PresentmentCurrencyMad PresentmentCurrency = "mad"
+	PresentmentCurrencyMdl PresentmentCurrency = "mdl"
+	PresentmentCurrencyMga PresentmentCurrency = "mga"
+	PresentmentCurrencyMkd PresentmentCurrency = "mkd"
+	PresentmentCurrencyMnt PresentmentCurrency = "mnt"
+	PresentmentCurrencyMop PresentmentCurrency = "mop"
+	PresentmentCurrencyMur PresentmentCurrency = "mur"
+	PresentmentCurrencyMvr PresentmentCurrency = "mvr"
+	PresentmentCurrencyMwk PresentmentCurrency = "mwk"
 	PresentmentCurrencyMxn PresentmentCurrency = "mxn"
 	PresentmentCurrencyMyr PresentmentCurrency = "myr"
+	PresentmentCurrencyMzn PresentmentCurrency = "mzn"
+	PresentmentCurrencyNad PresentmentCurrency = "nad"
+	PresentmentCurrencyNgn PresentmentCurrency = "ngn"
+	PresentmentCurrencyNio PresentmentCurrency = "nio"
 	PresentmentCurrencyNok PresentmentCurrency = "nok"
+	PresentmentCurrencyNpr PresentmentCurrency = "npr"
 	PresentmentCurrencyNzd PresentmentCurrency = "nzd"
+	PresentmentCurrencyPab PresentmentCurrency = "pab"
 	PresentmentCurrencyPen PresentmentCurrency = "pen"
+	PresentmentCurrencyPgk PresentmentCurrency = "pgk"
 	PresentmentCurrencyPhp PresentmentCurrency = "php"
+	PresentmentCurrencyPkr PresentmentCurrency = "pkr"
 	PresentmentCurrencyPln PresentmentCurrency = "pln"
+	PresentmentCurrencyPyg PresentmentCurrency = "pyg"
+	PresentmentCurrencyQar PresentmentCurrency = "qar"
 	PresentmentCurrencyRon PresentmentCurrency = "ron"
+	PresentmentCurrencyRsd PresentmentCurrency = "rsd"
+	PresentmentCurrencyRwf PresentmentCurrency = "rwf"
 	PresentmentCurrencySar PresentmentCurrency = "sar"
+	PresentmentCurrencySbd PresentmentCurrency = "sbd"
+	PresentmentCurrencyScr PresentmentCurrency = "scr"
 	PresentmentCurrencySek PresentmentCurrency = "sek"
 	PresentmentCurrencySgd PresentmentCurrency = "sgd"
+	PresentmentCurrencyShp PresentmentCurrency = "shp"
+	PresentmentCurrencySos PresentmentCurrency = "sos"
+	PresentmentCurrencySrd PresentmentCurrency = "srd"
+	PresentmentCurrencySzl PresentmentCurrency = "szl"
 	PresentmentCurrencyThb PresentmentCurrency = "thb"
+	PresentmentCurrencyTjs PresentmentCurrency = "tjs"
+	PresentmentCurrencyTop PresentmentCurrency = "top"
 	PresentmentCurrencyTry PresentmentCurrency = "try"
+	PresentmentCurrencyTtd PresentmentCurrency = "ttd"
 	PresentmentCurrencyTwd PresentmentCurrency = "twd"
+	PresentmentCurrencyTzs PresentmentCurrency = "tzs"
+	PresentmentCurrencyUah PresentmentCurrency = "uah"
+	PresentmentCurrencyUgx PresentmentCurrency = "ugx"
 	PresentmentCurrencyUsd PresentmentCurrency = "usd"
+	PresentmentCurrencyUyu PresentmentCurrency = "uyu"
+	PresentmentCurrencyUzs PresentmentCurrency = "uzs"
+	PresentmentCurrencyVnd PresentmentCurrency = "vnd"
+	PresentmentCurrencyVuv PresentmentCurrency = "vuv"
+	PresentmentCurrencyWst PresentmentCurrency = "wst"
+	PresentmentCurrencyXaf PresentmentCurrency = "xaf"
+	PresentmentCurrencyXcd PresentmentCurrency = "xcd"
+	PresentmentCurrencyXcg PresentmentCurrency = "xcg"
+	PresentmentCurrencyXof PresentmentCurrency = "xof"
+	PresentmentCurrencyXpf PresentmentCurrency = "xpf"
+	PresentmentCurrencyYer PresentmentCurrency = "yer"
 	PresentmentCurrencyZar PresentmentCurrency = "zar"
+	PresentmentCurrencyZmw PresentmentCurrency = "zmw"
 )
 
 func (e PresentmentCurrency) ToPointer() *PresentmentCurrency {
@@ -59,13 +149,45 @@ func (e *PresentmentCurrency) UnmarshalJSON(data []byte) error {
 	switch v {
 	case "aed":
 		fallthrough
+	case "all":
+		fallthrough
+	case "amd":
+		fallthrough
+	case "aoa":
+		fallthrough
 	case "ars":
 		fallthrough
 	case "aud":
 		fallthrough
+	case "awg":
+		fallthrough
+	case "azn":
+		fallthrough
+	case "bam":
+		fallthrough
+	case "bbd":
+		fallthrough
+	case "bdt":
+		fallthrough
+	case "bif":
+		fallthrough
+	case "bmd":
+		fallthrough
+	case "bnd":
+		fallthrough
+	case "bob":
+		fallthrough
 	case "brl":
 		fallthrough
+	case "bsd":
+		fallthrough
+	case "bwp":
+		fallthrough
+	case "bzd":
+		fallthrough
 	case "cad":
+		fallthrough
+	case "cdf":
 		fallthrough
 	case "chf":
 		fallthrough
@@ -75,15 +197,49 @@ func (e *PresentmentCurrency) UnmarshalJSON(data []byte) error {
 		fallthrough
 	case "cop":
 		fallthrough
+	case "crc":
+		fallthrough
+	case "cve":
+		fallthrough
 	case "czk":
+		fallthrough
+	case "djf":
 		fallthrough
 	case "dkk":
 		fallthrough
+	case "dop":
+		fallthrough
+	case "dzd":
+		fallthrough
+	case "egp":
+		fallthrough
+	case "etb":
+		fallthrough
 	case "eur":
+		fallthrough
+	case "fjd":
+		fallthrough
+	case "fkp":
 		fallthrough
 	case "gbp":
 		fallthrough
+	case "gel":
+		fallthrough
+	case "gip":
+		fallthrough
+	case "gmd":
+		fallthrough
+	case "gnf":
+		fallthrough
+	case "gtq":
+		fallthrough
+	case "gyd":
+		fallthrough
 	case "hkd":
+		fallthrough
+	case "hnl":
+		fallthrough
+	case "htg":
 		fallthrough
 	case "huf":
 		fallthrough
@@ -93,41 +249,155 @@ func (e *PresentmentCurrency) UnmarshalJSON(data []byte) error {
 		fallthrough
 	case "inr":
 		fallthrough
+	case "isk":
+		fallthrough
+	case "jmd":
+		fallthrough
 	case "jpy":
 		fallthrough
+	case "kes":
+		fallthrough
+	case "kgs":
+		fallthrough
+	case "khr":
+		fallthrough
+	case "kmf":
+		fallthrough
 	case "krw":
+		fallthrough
+	case "kyd":
+		fallthrough
+	case "kzt":
+		fallthrough
+	case "lak":
+		fallthrough
+	case "lkr":
+		fallthrough
+	case "lrd":
+		fallthrough
+	case "lsl":
+		fallthrough
+	case "mad":
+		fallthrough
+	case "mdl":
+		fallthrough
+	case "mga":
+		fallthrough
+	case "mkd":
+		fallthrough
+	case "mnt":
+		fallthrough
+	case "mop":
+		fallthrough
+	case "mur":
+		fallthrough
+	case "mvr":
+		fallthrough
+	case "mwk":
 		fallthrough
 	case "mxn":
 		fallthrough
 	case "myr":
 		fallthrough
+	case "mzn":
+		fallthrough
+	case "nad":
+		fallthrough
+	case "ngn":
+		fallthrough
+	case "nio":
+		fallthrough
 	case "nok":
+		fallthrough
+	case "npr":
 		fallthrough
 	case "nzd":
 		fallthrough
+	case "pab":
+		fallthrough
 	case "pen":
+		fallthrough
+	case "pgk":
 		fallthrough
 	case "php":
 		fallthrough
+	case "pkr":
+		fallthrough
 	case "pln":
+		fallthrough
+	case "pyg":
+		fallthrough
+	case "qar":
 		fallthrough
 	case "ron":
 		fallthrough
+	case "rsd":
+		fallthrough
+	case "rwf":
+		fallthrough
 	case "sar":
+		fallthrough
+	case "sbd":
+		fallthrough
+	case "scr":
 		fallthrough
 	case "sek":
 		fallthrough
 	case "sgd":
 		fallthrough
+	case "shp":
+		fallthrough
+	case "sos":
+		fallthrough
+	case "srd":
+		fallthrough
+	case "szl":
+		fallthrough
 	case "thb":
+		fallthrough
+	case "tjs":
+		fallthrough
+	case "top":
 		fallthrough
 	case "try":
 		fallthrough
+	case "ttd":
+		fallthrough
 	case "twd":
+		fallthrough
+	case "tzs":
+		fallthrough
+	case "uah":
+		fallthrough
+	case "ugx":
 		fallthrough
 	case "usd":
 		fallthrough
+	case "uyu":
+		fallthrough
+	case "uzs":
+		fallthrough
+	case "vnd":
+		fallthrough
+	case "vuv":
+		fallthrough
+	case "wst":
+		fallthrough
+	case "xaf":
+		fallthrough
+	case "xcd":
+		fallthrough
+	case "xcg":
+		fallthrough
+	case "xof":
+		fallthrough
+	case "xpf":
+		fallthrough
+	case "yer":
+		fallthrough
 	case "zar":
+		fallthrough
+	case "zmw":
 		*e = PresentmentCurrency(v)
 		return nil
 	default:

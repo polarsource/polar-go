@@ -134,6 +134,8 @@ type BenefitDiscordCreate struct {
 	Description string `json:"description"`
 	// The ID of the organization owning the benefit. **Required unless you use an organization token.**
 	OrganizationID *string `json:"organization_id,omitempty"`
+	// The visibility of the benefit in the customer portal.
+	Visibility *BenefitVisibility `json:"visibility,omitempty"`
 	// Properties to create a benefit of type `discord`.
 	Properties BenefitDiscordCreateProperties `json:"properties"`
 }
@@ -172,6 +174,13 @@ func (b *BenefitDiscordCreate) GetOrganizationID() *string {
 		return nil
 	}
 	return b.OrganizationID
+}
+
+func (b *BenefitDiscordCreate) GetVisibility() *BenefitVisibility {
+	if b == nil {
+		return nil
+	}
+	return b.Visibility
 }
 
 func (b *BenefitDiscordCreate) GetProperties() BenefitDiscordCreateProperties {

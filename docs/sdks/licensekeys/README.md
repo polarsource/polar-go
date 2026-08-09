@@ -39,9 +39,11 @@ func main() {
         polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )
 
-    res, err := s.LicenseKeys.List(ctx, polargo.Pointer(operations.CreateLicenseKeysListQueryParamOrganizationIDFilterStr(
-        "1dbfc517-0bbf-4301-9ba8-555ca42b9737",
-    )), nil, polargo.Pointer[int64](1), polargo.Pointer[int64](10))
+    res, err := s.LicenseKeys.List(ctx, operations.LicenseKeysListRequest{
+        OrganizationID: polargo.Pointer(operations.CreateLicenseKeysListQueryParamOrganizationIDFilterStr(
+            "1dbfc517-0bbf-4301-9ba8-555ca42b9737",
+        )),
+    })
     if err != nil {
         log.Fatal(err)
     }
@@ -65,14 +67,11 @@ func main() {
 
 ### Parameters
 
-| Parameter                                                                                                                             | Type                                                                                                                                  | Required                                                                                                                              | Description                                                                                                                           |
-| ------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
-| `ctx`                                                                                                                                 | [context.Context](https://pkg.go.dev/context#Context)                                                                                 | :heavy_check_mark:                                                                                                                    | The context to use for the request.                                                                                                   |
-| `organizationID`                                                                                                                      | [*operations.LicenseKeysListQueryParamOrganizationIDFilter](../../models/operations/licensekeyslistqueryparamorganizationidfilter.md) | :heavy_minus_sign:                                                                                                                    | Filter by organization ID.                                                                                                            |
-| `benefitID`                                                                                                                           | [*operations.QueryParamBenefitIDFilter](../../models/operations/queryparambenefitidfilter.md)                                         | :heavy_minus_sign:                                                                                                                    | Filter by benefit ID.                                                                                                                 |
-| `page`                                                                                                                                | `*int64`                                                                                                                              | :heavy_minus_sign:                                                                                                                    | Page number, defaults to 1.                                                                                                           |
-| `limit`                                                                                                                               | `*int64`                                                                                                                              | :heavy_minus_sign:                                                                                                                    | Size of a page, defaults to 10. Maximum is 100.                                                                                       |
-| `opts`                                                                                                                                | [][operations.Option](../../models/operations/option.md)                                                                              | :heavy_minus_sign:                                                                                                                    | The options for this request.                                                                                                         |
+| Parameter                                                                              | Type                                                                                   | Required                                                                               | Description                                                                            |
+| -------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
+| `ctx`                                                                                  | [context.Context](https://pkg.go.dev/context#Context)                                  | :heavy_check_mark:                                                                     | The context to use for the request.                                                    |
+| `request`                                                                              | [operations.LicenseKeysListRequest](../../models/operations/licensekeyslistrequest.md) | :heavy_check_mark:                                                                     | The request object to use for the request.                                             |
+| `opts`                                                                                 | [][operations.Option](../../models/operations/option.md)                               | :heavy_minus_sign:                                                                     | The options for this request.                                                          |
 
 ### Response
 

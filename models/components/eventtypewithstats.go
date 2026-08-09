@@ -8,12 +8,12 @@ import (
 )
 
 type EventTypeWithStats struct {
-	// Creation timestamp of the object.
-	CreatedAt time.Time `json:"created_at"`
-	// Last modification timestamp of the object.
-	ModifiedAt *time.Time `json:"modified_at"`
-	// The ID of the object.
-	ID string `json:"id"`
+	// The ID of the event type. Null for system event types.
+	ID *string `json:"id,omitempty"`
+	// Creation timestamp of the event type. Null for system event types.
+	CreatedAt *time.Time `json:"created_at,omitempty"`
+	// Last modification timestamp of the event type. Null for system event types.
+	ModifiedAt *time.Time `json:"modified_at,omitempty"`
 	// The name of the event type.
 	Name string `json:"name"`
 	// The label for the event type.
@@ -42,9 +42,16 @@ func (e *EventTypeWithStats) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (e *EventTypeWithStats) GetCreatedAt() time.Time {
+func (e *EventTypeWithStats) GetID() *string {
 	if e == nil {
-		return time.Time{}
+		return nil
+	}
+	return e.ID
+}
+
+func (e *EventTypeWithStats) GetCreatedAt() *time.Time {
+	if e == nil {
+		return nil
 	}
 	return e.CreatedAt
 }
@@ -54,13 +61,6 @@ func (e *EventTypeWithStats) GetModifiedAt() *time.Time {
 		return nil
 	}
 	return e.ModifiedAt
-}
-
-func (e *EventTypeWithStats) GetID() string {
-	if e == nil {
-		return ""
-	}
-	return e.ID
 }
 
 func (e *EventTypeWithStats) GetName() string {

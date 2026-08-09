@@ -167,7 +167,6 @@ import(
 	polargo "github.com/polarsource/polar-go"
 	"github.com/polarsource/polar-go/models/components"
 	"log"
-	"github.com/polarsource/polar-go/models/operations"
 )
 
 func main() {
@@ -201,14 +200,16 @@ func main() {
     if err != nil {
         log.Fatal(err)
     }
-    if res.ResponseFilesUploaded != nil {
-        switch res.ResponseFilesUploaded.Type {
-            case operations.FilesUploadedResponseFilesUploadedTypeDownloadable:
-                // res.ResponseFilesUploaded.DownloadableFileRead is populated
-            case operations.FilesUploadedResponseFilesUploadedTypeProductMedia:
-                // res.ResponseFilesUploaded.ProductMediaFileRead is populated
-            case operations.FilesUploadedResponseFilesUploadedTypeOrganizationAvatar:
-                // res.ResponseFilesUploaded.OrganizationAvatarFileRead is populated
+    if res.FileRead != nil {
+        switch res.FileRead.Type {
+            case components.FileReadTypeDownloadable:
+                // res.FileRead.DownloadableFileRead is populated
+            case components.FileReadTypeOrganizationAvatar:
+                // res.FileRead.OrganizationAvatarFileRead is populated
+            case components.FileReadTypeProductMedia:
+                // res.FileRead.ProductMediaFileRead is populated
+            case components.FileReadTypeSupportCaseAttachment:
+                // res.FileRead.SupportCaseAttachmentFileRead is populated
         }
 
     }
@@ -312,7 +313,6 @@ import(
 	polargo "github.com/polarsource/polar-go"
 	"github.com/polarsource/polar-go/models/components"
 	"log"
-	"github.com/polarsource/polar-go/models/operations"
 )
 
 func main() {
@@ -326,14 +326,16 @@ func main() {
     if err != nil {
         log.Fatal(err)
     }
-    if res.ResponseFilesUpdate != nil {
-        switch res.ResponseFilesUpdate.Type {
-            case operations.FilesUpdateResponseFilesUpdateTypeDownloadable:
-                // res.ResponseFilesUpdate.DownloadableFileRead is populated
-            case operations.FilesUpdateResponseFilesUpdateTypeProductMedia:
-                // res.ResponseFilesUpdate.ProductMediaFileRead is populated
-            case operations.FilesUpdateResponseFilesUpdateTypeOrganizationAvatar:
-                // res.ResponseFilesUpdate.OrganizationAvatarFileRead is populated
+    if res.FileRead != nil {
+        switch res.FileRead.Type {
+            case components.FileReadTypeDownloadable:
+                // res.FileRead.DownloadableFileRead is populated
+            case components.FileReadTypeOrganizationAvatar:
+                // res.FileRead.OrganizationAvatarFileRead is populated
+            case components.FileReadTypeProductMedia:
+                // res.FileRead.ProductMediaFileRead is populated
+            case components.FileReadTypeSupportCaseAttachment:
+                // res.FileRead.SupportCaseAttachmentFileRead is populated
         }
 
     }

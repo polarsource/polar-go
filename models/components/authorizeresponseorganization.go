@@ -9,11 +9,12 @@ import (
 type AuthorizeResponseOrganization struct {
 	Client OAuth2ClientPublic `json:"client"`
 	//lint:ignore U1000 accessed via reflection for JSON marshaling
-	subType           string                  `const:"organization" json:"sub_type"`
-	Sub               *AuthorizeOrganization  `json:"sub"`
-	Scopes            []Scope                 `json:"scopes"`
-	ScopeDisplayNames map[string]string       `json:"scope_display_names,omitempty"`
-	Organizations     []AuthorizeOrganization `json:"organizations"`
+	subType                    string                  `const:"organization" json:"sub_type"`
+	Sub                        *AuthorizeOrganization  `json:"sub"`
+	Scopes                     []Scope                 `json:"scopes"`
+	Organizations              []AuthorizeOrganization `json:"organizations"`
+	RequiresSingleOrganization *bool                   `default:"false" json:"requires_single_organization"`
+	ScopeDisplayNames          map[string]string       `json:"scope_display_names,omitempty"`
 }
 
 func (a AuthorizeResponseOrganization) MarshalJSON() ([]byte, error) {
@@ -52,16 +53,23 @@ func (a *AuthorizeResponseOrganization) GetScopes() []Scope {
 	return a.Scopes
 }
 
-func (a *AuthorizeResponseOrganization) GetScopeDisplayNames() map[string]string {
-	if a == nil {
-		return nil
-	}
-	return a.ScopeDisplayNames
-}
-
 func (a *AuthorizeResponseOrganization) GetOrganizations() []AuthorizeOrganization {
 	if a == nil {
 		return []AuthorizeOrganization{}
 	}
 	return a.Organizations
+}
+
+func (a *AuthorizeResponseOrganization) GetRequiresSingleOrganization() *bool {
+	if a == nil {
+		return nil
+	}
+	return a.RequiresSingleOrganization
+}
+
+func (a *AuthorizeResponseOrganization) GetScopeDisplayNames() map[string]string {
+	if a == nil {
+		return nil
+	}
+	return a.ScopeDisplayNames
 }

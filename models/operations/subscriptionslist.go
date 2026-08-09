@@ -330,6 +330,70 @@ func (u DiscountIDFilter) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type DiscountIDFilter: all fields are null")
 }
 
+type StatusFilterType string
+
+const (
+	StatusFilterTypeSubscriptionStatus        StatusFilterType = "SubscriptionStatus"
+	StatusFilterTypeArrayOfSubscriptionStatus StatusFilterType = "arrayOfSubscriptionStatus"
+)
+
+// StatusFilter - Filter by subscription status.
+type StatusFilter struct {
+	SubscriptionStatus        *components.SubscriptionStatus  `queryParam:"inline" union:"member"`
+	ArrayOfSubscriptionStatus []components.SubscriptionStatus `queryParam:"inline" union:"member"`
+
+	Type StatusFilterType
+}
+
+func CreateStatusFilterSubscriptionStatus(subscriptionStatus components.SubscriptionStatus) StatusFilter {
+	typ := StatusFilterTypeSubscriptionStatus
+
+	return StatusFilter{
+		SubscriptionStatus: &subscriptionStatus,
+		Type:               typ,
+	}
+}
+
+func CreateStatusFilterArrayOfSubscriptionStatus(arrayOfSubscriptionStatus []components.SubscriptionStatus) StatusFilter {
+	typ := StatusFilterTypeArrayOfSubscriptionStatus
+
+	return StatusFilter{
+		ArrayOfSubscriptionStatus: arrayOfSubscriptionStatus,
+		Type:                      typ,
+	}
+}
+
+func (u *StatusFilter) UnmarshalJSON(data []byte) error {
+
+	var subscriptionStatus components.SubscriptionStatus = components.SubscriptionStatus("")
+	if err := utils.UnmarshalJSON(data, &subscriptionStatus, "", true, nil); err == nil {
+		u.SubscriptionStatus = &subscriptionStatus
+		u.Type = StatusFilterTypeSubscriptionStatus
+		return nil
+	}
+
+	var arrayOfSubscriptionStatus []components.SubscriptionStatus = []components.SubscriptionStatus{}
+	if err := utils.UnmarshalJSON(data, &arrayOfSubscriptionStatus, "", true, nil); err == nil {
+		u.ArrayOfSubscriptionStatus = arrayOfSubscriptionStatus
+		u.Type = StatusFilterTypeArrayOfSubscriptionStatus
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for StatusFilter", string(data))
+}
+
+func (u StatusFilter) MarshalJSON() ([]byte, error) {
+	if u.SubscriptionStatus != nil {
+		return utils.MarshalJSON(u.SubscriptionStatus, "", true)
+	}
+
+	if u.ArrayOfSubscriptionStatus != nil {
+		return utils.MarshalJSON(u.ArrayOfSubscriptionStatus, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type StatusFilter: all fields are null")
+}
+
 type CustomerCancellationReasonFilterType string
 
 const (
@@ -406,7 +470,11 @@ type SubscriptionsListRequest struct {
 	// Filter by discount ID.
 	DiscountID *DiscountIDFilter `queryParam:"style=form,explode=true,name=discount_id"`
 	// Filter by active or inactive subscription.
+	//
+	// Deprecated: This will be removed in a future release, please migrate away from it as soon as possible.
 	Active *bool `queryParam:"style=form,explode=true,name=active"`
+	// Filter by subscription status.
+	Status *StatusFilter `queryParam:"style=form,explode=true,name=status"`
 	// Filter by subscriptions that are set to cancel at period end.
 	CancelAtPeriodEnd *bool `queryParam:"style=form,explode=true,name=cancel_at_period_end"`
 	// Filter by customer cancellation reason.
@@ -476,6 +544,13 @@ func (s *SubscriptionsListRequest) GetActive() *bool {
 		return nil
 	}
 	return s.Active
+}
+
+func (s *SubscriptionsListRequest) GetStatus() *StatusFilter {
+	if s == nil {
+		return nil
+	}
+	return s.Status
 }
 
 func (s *SubscriptionsListRequest) GetCancelAtPeriodEnd() *bool {

@@ -12,21 +12,23 @@ import (
 type CustomerStateBenefitGrantPropertiesType string
 
 const (
-	CustomerStateBenefitGrantPropertiesTypeBenefitGrantDiscordProperties          CustomerStateBenefitGrantPropertiesType = "BenefitGrantDiscordProperties"
-	CustomerStateBenefitGrantPropertiesTypeBenefitGrantGitHubRepositoryProperties CustomerStateBenefitGrantPropertiesType = "BenefitGrantGitHubRepositoryProperties"
-	CustomerStateBenefitGrantPropertiesTypeBenefitGrantDownloadablesProperties    CustomerStateBenefitGrantPropertiesType = "BenefitGrantDownloadablesProperties"
-	CustomerStateBenefitGrantPropertiesTypeBenefitGrantLicenseKeysProperties      CustomerStateBenefitGrantPropertiesType = "BenefitGrantLicenseKeysProperties"
-	CustomerStateBenefitGrantPropertiesTypeBenefitGrantCustomProperties           CustomerStateBenefitGrantPropertiesType = "BenefitGrantCustomProperties"
-	CustomerStateBenefitGrantPropertiesTypeBenefitGrantFeatureFlagProperties      CustomerStateBenefitGrantPropertiesType = "BenefitGrantFeatureFlagProperties"
+	CustomerStateBenefitGrantPropertiesTypeBenefitGrantDiscordProperties            CustomerStateBenefitGrantPropertiesType = "BenefitGrantDiscordProperties"
+	CustomerStateBenefitGrantPropertiesTypeBenefitGrantGitHubRepositoryProperties   CustomerStateBenefitGrantPropertiesType = "BenefitGrantGitHubRepositoryProperties"
+	CustomerStateBenefitGrantPropertiesTypeBenefitGrantDownloadablesProperties      CustomerStateBenefitGrantPropertiesType = "BenefitGrantDownloadablesProperties"
+	CustomerStateBenefitGrantPropertiesTypeBenefitGrantLicenseKeysProperties        CustomerStateBenefitGrantPropertiesType = "BenefitGrantLicenseKeysProperties"
+	CustomerStateBenefitGrantPropertiesTypeBenefitGrantCustomProperties             CustomerStateBenefitGrantPropertiesType = "BenefitGrantCustomProperties"
+	CustomerStateBenefitGrantPropertiesTypeBenefitGrantFeatureFlagProperties        CustomerStateBenefitGrantPropertiesType = "BenefitGrantFeatureFlagProperties"
+	CustomerStateBenefitGrantPropertiesTypeBenefitGrantSlackSharedChannelProperties CustomerStateBenefitGrantPropertiesType = "BenefitGrantSlackSharedChannelProperties"
 )
 
 type CustomerStateBenefitGrantProperties struct {
-	BenefitGrantDiscordProperties          *BenefitGrantDiscordProperties          `queryParam:"inline" union:"member"`
-	BenefitGrantGitHubRepositoryProperties *BenefitGrantGitHubRepositoryProperties `queryParam:"inline" union:"member"`
-	BenefitGrantDownloadablesProperties    *BenefitGrantDownloadablesProperties    `queryParam:"inline" union:"member"`
-	BenefitGrantLicenseKeysProperties      *BenefitGrantLicenseKeysProperties      `queryParam:"inline" union:"member"`
-	BenefitGrantCustomProperties           *BenefitGrantCustomProperties           `queryParam:"inline" union:"member"`
-	BenefitGrantFeatureFlagProperties      *BenefitGrantFeatureFlagProperties      `queryParam:"inline" union:"member"`
+	BenefitGrantDiscordProperties            *BenefitGrantDiscordProperties            `queryParam:"inline" union:"member"`
+	BenefitGrantGitHubRepositoryProperties   *BenefitGrantGitHubRepositoryProperties   `queryParam:"inline" union:"member"`
+	BenefitGrantDownloadablesProperties      *BenefitGrantDownloadablesProperties      `queryParam:"inline" union:"member"`
+	BenefitGrantLicenseKeysProperties        *BenefitGrantLicenseKeysProperties        `queryParam:"inline" union:"member"`
+	BenefitGrantCustomProperties             *BenefitGrantCustomProperties             `queryParam:"inline" union:"member"`
+	BenefitGrantFeatureFlagProperties        *BenefitGrantFeatureFlagProperties        `queryParam:"inline" union:"member"`
+	BenefitGrantSlackSharedChannelProperties *BenefitGrantSlackSharedChannelProperties `queryParam:"inline" union:"member"`
 
 	Type CustomerStateBenefitGrantPropertiesType
 }
@@ -85,6 +87,15 @@ func CreateCustomerStateBenefitGrantPropertiesBenefitGrantFeatureFlagProperties(
 	}
 }
 
+func CreateCustomerStateBenefitGrantPropertiesBenefitGrantSlackSharedChannelProperties(benefitGrantSlackSharedChannelProperties BenefitGrantSlackSharedChannelProperties) CustomerStateBenefitGrantProperties {
+	typ := CustomerStateBenefitGrantPropertiesTypeBenefitGrantSlackSharedChannelProperties
+
+	return CustomerStateBenefitGrantProperties{
+		BenefitGrantSlackSharedChannelProperties: &benefitGrantSlackSharedChannelProperties,
+		Type:                                     typ,
+	}
+}
+
 func (u *CustomerStateBenefitGrantProperties) UnmarshalJSON(data []byte) error {
 
 	var benefitGrantDiscordProperties BenefitGrantDiscordProperties = BenefitGrantDiscordProperties{}
@@ -129,6 +140,13 @@ func (u *CustomerStateBenefitGrantProperties) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
+	var benefitGrantSlackSharedChannelProperties BenefitGrantSlackSharedChannelProperties = BenefitGrantSlackSharedChannelProperties{}
+	if err := utils.UnmarshalJSON(data, &benefitGrantSlackSharedChannelProperties, "", true, nil); err == nil {
+		u.BenefitGrantSlackSharedChannelProperties = &benefitGrantSlackSharedChannelProperties
+		u.Type = CustomerStateBenefitGrantPropertiesTypeBenefitGrantSlackSharedChannelProperties
+		return nil
+	}
+
 	return fmt.Errorf("could not unmarshal `%s` into any supported union types for CustomerStateBenefitGrantProperties", string(data))
 }
 
@@ -155,6 +173,10 @@ func (u CustomerStateBenefitGrantProperties) MarshalJSON() ([]byte, error) {
 
 	if u.BenefitGrantFeatureFlagProperties != nil {
 		return utils.MarshalJSON(u.BenefitGrantFeatureFlagProperties, "", true)
+	}
+
+	if u.BenefitGrantSlackSharedChannelProperties != nil {
+		return utils.MarshalJSON(u.BenefitGrantSlackSharedChannelProperties, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type CustomerStateBenefitGrantProperties: all fields are null")

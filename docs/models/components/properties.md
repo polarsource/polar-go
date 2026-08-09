@@ -39,6 +39,12 @@ properties := components.CreatePropertiesBenefitGrantCustomProperties(components
 properties := components.CreatePropertiesBenefitGrantFeatureFlagProperties(components.BenefitGrantFeatureFlagProperties{/* values here */})
 ```
 
+### BenefitGrantSlackSharedChannelProperties
+
+```go
+properties := components.CreatePropertiesBenefitGrantSlackSharedChannelProperties(components.BenefitGrantSlackSharedChannelProperties{/* values here */})
+```
+
 ## Union Discrimination
 
 Use the `Type` field to determine which variant is active, then access the corresponding field:
@@ -57,5 +63,7 @@ switch properties.Type {
 		// properties.BenefitGrantCustomProperties is populated
 	case components.PropertiesTypeBenefitGrantFeatureFlagProperties:
 		// properties.BenefitGrantFeatureFlagProperties is populated
+	case components.PropertiesTypeBenefitGrantSlackSharedChannelProperties:
+		// properties.BenefitGrantSlackSharedChannelProperties is populated
 }
 ```

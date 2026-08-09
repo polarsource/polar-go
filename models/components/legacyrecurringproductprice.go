@@ -14,13 +14,11 @@ type LegacyRecurringProductPriceType string
 const (
 	LegacyRecurringProductPriceTypeCustom LegacyRecurringProductPriceType = "custom"
 	LegacyRecurringProductPriceTypeFixed  LegacyRecurringProductPriceType = "fixed"
-	LegacyRecurringProductPriceTypeFree   LegacyRecurringProductPriceType = "free"
 )
 
 type LegacyRecurringProductPrice struct {
 	LegacyRecurringProductPriceFixed  *LegacyRecurringProductPriceFixed  `queryParam:"inline" union:"member"`
 	LegacyRecurringProductPriceCustom *LegacyRecurringProductPriceCustom `queryParam:"inline" union:"member"`
-	LegacyRecurringProductPriceFree   *LegacyRecurringProductPriceFree   `queryParam:"inline" union:"member"`
 
 	Type LegacyRecurringProductPriceType
 }
@@ -40,15 +38,6 @@ func CreateLegacyRecurringProductPriceFixed(fixed LegacyRecurringProductPriceFix
 	return LegacyRecurringProductPrice{
 		LegacyRecurringProductPriceFixed: &fixed,
 		Type:                             typ,
-	}
-}
-
-func CreateLegacyRecurringProductPriceFree(free LegacyRecurringProductPriceFree) LegacyRecurringProductPrice {
-	typ := LegacyRecurringProductPriceTypeFree
-
-	return LegacyRecurringProductPrice{
-		LegacyRecurringProductPriceFree: &free,
-		Type:                            typ,
 	}
 }
 
@@ -82,15 +71,6 @@ func (u *LegacyRecurringProductPrice) UnmarshalJSON(data []byte) error {
 		u.LegacyRecurringProductPriceFixed = legacyRecurringProductPriceFixed
 		u.Type = LegacyRecurringProductPriceTypeFixed
 		return nil
-	case "free":
-		legacyRecurringProductPriceFree := new(LegacyRecurringProductPriceFree)
-		if err := utils.UnmarshalJSON(data, &legacyRecurringProductPriceFree, "", true, nil); err != nil {
-			return fmt.Errorf("could not unmarshal `%s` into expected (AmountType == free) type LegacyRecurringProductPriceFree within LegacyRecurringProductPrice: %w", string(data), err)
-		}
-
-		u.LegacyRecurringProductPriceFree = legacyRecurringProductPriceFree
-		u.Type = LegacyRecurringProductPriceTypeFree
-		return nil
 	}
 
 	return fmt.Errorf("could not unmarshal `%s` into any supported union types for LegacyRecurringProductPrice", string(data))
@@ -103,10 +83,6 @@ func (u LegacyRecurringProductPrice) MarshalJSON() ([]byte, error) {
 
 	if u.LegacyRecurringProductPriceCustom != nil {
 		return utils.MarshalJSON(u.LegacyRecurringProductPriceCustom, "", true)
-	}
-
-	if u.LegacyRecurringProductPriceFree != nil {
-		return utils.MarshalJSON(u.LegacyRecurringProductPriceFree, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type LegacyRecurringProductPrice: all fields are null")

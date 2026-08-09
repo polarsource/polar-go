@@ -1,20 +1,20 @@
 # StatusFilter
 
-Filter by dispute status.
+Filter by subscription status.
 
 
 ## Supported Types
 
-### DisputeStatus
+### SubscriptionStatus
 
 ```go
-statusFilter := operations.CreateStatusFilterDisputeStatus(components.DisputeStatus{/* values here */})
+statusFilter := operations.CreateStatusFilterSubscriptionStatus(components.SubscriptionStatus{/* values here */})
 ```
 
 ### 
 
 ```go
-statusFilter := operations.CreateStatusFilterArrayOfDisputeStatus([]components.DisputeStatus{/* values here */})
+statusFilter := operations.CreateStatusFilterArrayOfSubscriptionStatus([]components.SubscriptionStatus{/* values here */})
 ```
 
 ## Union Discrimination
@@ -23,9 +23,9 @@ Use the `Type` field to determine which variant is active, then access the corre
 
 ```go
 switch statusFilter.Type {
-	case operations.StatusFilterTypeDisputeStatus:
-		// statusFilter.DisputeStatus is populated
-	case operations.StatusFilterTypeArrayOfDisputeStatus:
-		// statusFilter.ArrayOfDisputeStatus is populated
+	case operations.StatusFilterTypeSubscriptionStatus:
+		// statusFilter.SubscriptionStatus is populated
+	case operations.StatusFilterTypeArrayOfSubscriptionStatus:
+		// statusFilter.ArrayOfSubscriptionStatus is populated
 }
 ```

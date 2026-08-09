@@ -11,23 +11,25 @@ import (
 type BenefitGrantWebhookType string
 
 const (
-	BenefitGrantWebhookTypeBenefitGrantDiscordWebhook          BenefitGrantWebhookType = "BenefitGrantDiscordWebhook"
-	BenefitGrantWebhookTypeBenefitGrantCustomWebhook           BenefitGrantWebhookType = "BenefitGrantCustomWebhook"
-	BenefitGrantWebhookTypeBenefitGrantGitHubRepositoryWebhook BenefitGrantWebhookType = "BenefitGrantGitHubRepositoryWebhook"
-	BenefitGrantWebhookTypeBenefitGrantDownloadablesWebhook    BenefitGrantWebhookType = "BenefitGrantDownloadablesWebhook"
-	BenefitGrantWebhookTypeBenefitGrantLicenseKeysWebhook      BenefitGrantWebhookType = "BenefitGrantLicenseKeysWebhook"
-	BenefitGrantWebhookTypeBenefitGrantMeterCreditWebhook      BenefitGrantWebhookType = "BenefitGrantMeterCreditWebhook"
-	BenefitGrantWebhookTypeBenefitGrantFeatureFlagWebhook      BenefitGrantWebhookType = "BenefitGrantFeatureFlagWebhook"
+	BenefitGrantWebhookTypeBenefitGrantDiscordWebhook            BenefitGrantWebhookType = "BenefitGrantDiscordWebhook"
+	BenefitGrantWebhookTypeBenefitGrantCustomWebhook             BenefitGrantWebhookType = "BenefitGrantCustomWebhook"
+	BenefitGrantWebhookTypeBenefitGrantGitHubRepositoryWebhook   BenefitGrantWebhookType = "BenefitGrantGitHubRepositoryWebhook"
+	BenefitGrantWebhookTypeBenefitGrantDownloadablesWebhook      BenefitGrantWebhookType = "BenefitGrantDownloadablesWebhook"
+	BenefitGrantWebhookTypeBenefitGrantLicenseKeysWebhook        BenefitGrantWebhookType = "BenefitGrantLicenseKeysWebhook"
+	BenefitGrantWebhookTypeBenefitGrantMeterCreditWebhook        BenefitGrantWebhookType = "BenefitGrantMeterCreditWebhook"
+	BenefitGrantWebhookTypeBenefitGrantFeatureFlagWebhook        BenefitGrantWebhookType = "BenefitGrantFeatureFlagWebhook"
+	BenefitGrantWebhookTypeBenefitGrantSlackSharedChannelWebhook BenefitGrantWebhookType = "BenefitGrantSlackSharedChannelWebhook"
 )
 
 type BenefitGrantWebhook struct {
-	BenefitGrantDiscordWebhook          *BenefitGrantDiscordWebhook          `queryParam:"inline" union:"member"`
-	BenefitGrantCustomWebhook           *BenefitGrantCustomWebhook           `queryParam:"inline" union:"member"`
-	BenefitGrantGitHubRepositoryWebhook *BenefitGrantGitHubRepositoryWebhook `queryParam:"inline" union:"member"`
-	BenefitGrantDownloadablesWebhook    *BenefitGrantDownloadablesWebhook    `queryParam:"inline" union:"member"`
-	BenefitGrantLicenseKeysWebhook      *BenefitGrantLicenseKeysWebhook      `queryParam:"inline" union:"member"`
-	BenefitGrantMeterCreditWebhook      *BenefitGrantMeterCreditWebhook      `queryParam:"inline" union:"member"`
-	BenefitGrantFeatureFlagWebhook      *BenefitGrantFeatureFlagWebhook      `queryParam:"inline" union:"member"`
+	BenefitGrantDiscordWebhook            *BenefitGrantDiscordWebhook            `queryParam:"inline" union:"member"`
+	BenefitGrantCustomWebhook             *BenefitGrantCustomWebhook             `queryParam:"inline" union:"member"`
+	BenefitGrantGitHubRepositoryWebhook   *BenefitGrantGitHubRepositoryWebhook   `queryParam:"inline" union:"member"`
+	BenefitGrantDownloadablesWebhook      *BenefitGrantDownloadablesWebhook      `queryParam:"inline" union:"member"`
+	BenefitGrantLicenseKeysWebhook        *BenefitGrantLicenseKeysWebhook        `queryParam:"inline" union:"member"`
+	BenefitGrantMeterCreditWebhook        *BenefitGrantMeterCreditWebhook        `queryParam:"inline" union:"member"`
+	BenefitGrantFeatureFlagWebhook        *BenefitGrantFeatureFlagWebhook        `queryParam:"inline" union:"member"`
+	BenefitGrantSlackSharedChannelWebhook *BenefitGrantSlackSharedChannelWebhook `queryParam:"inline" union:"member"`
 
 	Type BenefitGrantWebhookType
 }
@@ -95,6 +97,15 @@ func CreateBenefitGrantWebhookBenefitGrantFeatureFlagWebhook(benefitGrantFeature
 	}
 }
 
+func CreateBenefitGrantWebhookBenefitGrantSlackSharedChannelWebhook(benefitGrantSlackSharedChannelWebhook BenefitGrantSlackSharedChannelWebhook) BenefitGrantWebhook {
+	typ := BenefitGrantWebhookTypeBenefitGrantSlackSharedChannelWebhook
+
+	return BenefitGrantWebhook{
+		BenefitGrantSlackSharedChannelWebhook: &benefitGrantSlackSharedChannelWebhook,
+		Type:                                  typ,
+	}
+}
+
 func (u *BenefitGrantWebhook) UnmarshalJSON(data []byte) error {
 
 	var benefitGrantDiscordWebhook BenefitGrantDiscordWebhook = BenefitGrantDiscordWebhook{}
@@ -146,6 +157,13 @@ func (u *BenefitGrantWebhook) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
+	var benefitGrantSlackSharedChannelWebhook BenefitGrantSlackSharedChannelWebhook = BenefitGrantSlackSharedChannelWebhook{}
+	if err := utils.UnmarshalJSON(data, &benefitGrantSlackSharedChannelWebhook, "", true, nil); err == nil {
+		u.BenefitGrantSlackSharedChannelWebhook = &benefitGrantSlackSharedChannelWebhook
+		u.Type = BenefitGrantWebhookTypeBenefitGrantSlackSharedChannelWebhook
+		return nil
+	}
+
 	return fmt.Errorf("could not unmarshal `%s` into any supported union types for BenefitGrantWebhook", string(data))
 }
 
@@ -176,6 +194,10 @@ func (u BenefitGrantWebhook) MarshalJSON() ([]byte, error) {
 
 	if u.BenefitGrantFeatureFlagWebhook != nil {
 		return utils.MarshalJSON(u.BenefitGrantFeatureFlagWebhook, "", true)
+	}
+
+	if u.BenefitGrantSlackSharedChannelWebhook != nil {
+		return utils.MarshalJSON(u.BenefitGrantSlackSharedChannelWebhook, "", true)
 	}
 
 	return nil, errors.New("could not marshal union type BenefitGrantWebhook: all fields are null")

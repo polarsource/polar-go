@@ -88,15 +88,19 @@ type SubscriptionCustomer struct {
 	EmailVerified bool         `json:"email_verified"`
 	Type          CustomerType `json:"type"`
 	// The name of the customer.
-	Name           *string  `json:"name"`
+	Name *string `json:"name"`
+	// The name that should appear on the customer's invoices. Falls back to the customer name when not explicitly set.
+	BillingName    *string  `json:"billing_name"`
 	BillingAddress *Address `json:"billing_address"`
 	TaxID          []*TaxID `json:"tax_id"`
 	Locale         *string  `json:"locale,omitempty"`
 	// The ID of the organization owning the customer.
 	OrganizationID string `json:"organization_id"`
+	// The ID of the customer's default payment method, if any. Use the payment methods endpoint to retrieve its details.
+	DefaultPaymentMethodID *string `json:"default_payment_method_id,omitempty"`
 	// Timestamp for when the customer was soft deleted.
 	DeletedAt *time.Time `json:"deleted_at"`
-	AvatarURL string     `json:"avatar_url"`
+	AvatarURL *string    `json:"avatar_url"`
 }
 
 func (s SubscriptionCustomer) MarshalJSON() ([]byte, error) {
@@ -173,6 +177,13 @@ func (s *SubscriptionCustomer) GetName() *string {
 	return s.Name
 }
 
+func (s *SubscriptionCustomer) GetBillingName() *string {
+	if s == nil {
+		return nil
+	}
+	return s.BillingName
+}
+
 func (s *SubscriptionCustomer) GetBillingAddress() *Address {
 	if s == nil {
 		return nil
@@ -201,6 +212,13 @@ func (s *SubscriptionCustomer) GetOrganizationID() string {
 	return s.OrganizationID
 }
 
+func (s *SubscriptionCustomer) GetDefaultPaymentMethodID() *string {
+	if s == nil {
+		return nil
+	}
+	return s.DefaultPaymentMethodID
+}
+
 func (s *SubscriptionCustomer) GetDeletedAt() *time.Time {
 	if s == nil {
 		return nil
@@ -208,9 +226,9 @@ func (s *SubscriptionCustomer) GetDeletedAt() *time.Time {
 	return s.DeletedAt
 }
 
-func (s *SubscriptionCustomer) GetAvatarURL() string {
+func (s *SubscriptionCustomer) GetAvatarURL() *string {
 	if s == nil {
-		return ""
+		return nil
 	}
 	return s.AvatarURL
 }

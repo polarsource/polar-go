@@ -73,3 +73,7 @@ func (w *WebhookBenefitUpdatedPayload) GetDataLicenseKeys() *BenefitLicenseKeys 
 func (w *WebhookBenefitUpdatedPayload) GetDataMeterCredit() *BenefitMeterCredit {
 	return w.GetData().BenefitMeterCredit
 }
+
+func (w *WebhookBenefitUpdatedPayload) GetDataSlackSharedChannel() *BenefitSlackSharedChannel {
+	return w.GetData().BenefitSlackSharedChannel
+}

@@ -3,6 +3,7 @@
 package components
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
 	"github.com/polarsource/polar-go/internal/utils"
@@ -115,6 +116,45 @@ func (u RefundCreateMetadata) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type RefundCreateMetadata: all fields are null")
 }
 
+// Reason for the refund.
+type Reason string
+
+const (
+	ReasonDuplicate             Reason = "duplicate"
+	ReasonFraudulent            Reason = "fraudulent"
+	ReasonCustomerRequest       Reason = "customer_request"
+	ReasonServiceDisruption     Reason = "service_disruption"
+	ReasonSatisfactionGuarantee Reason = "satisfaction_guarantee"
+	ReasonOther                 Reason = "other"
+)
+
+func (e Reason) ToPointer() *Reason {
+	return &e
+}
+func (e *Reason) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "duplicate":
+		fallthrough
+	case "fraudulent":
+		fallthrough
+	case "customer_request":
+		fallthrough
+	case "service_disruption":
+		fallthrough
+	case "satisfaction_guarantee":
+		fallthrough
+	case "other":
+		*e = Reason(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for Reason: %v", v)
+	}
+}
+
 type RefundCreate struct {
 	// Key-value object allowing you to store additional information.
 	//
@@ -129,7 +169,8 @@ type RefundCreate struct {
 	// You can store up to **50 key-value pairs**.
 	Metadata map[string]RefundCreateMetadata `json:"metadata,omitempty"`
 	OrderID  string                          `json:"order_id"`
-	Reason   RefundReason                    `json:"reason"`
+	// Reason for the refund.
+	Reason Reason `json:"reason"`
 	// Amount to refund in cents. Minimum is 1.
 	Amount int64 `json:"amount"`
 	// An internal comment about the refund.
@@ -168,9 +209,9 @@ func (r *RefundCreate) GetOrderID() string {
 	return r.OrderID
 }
 
-func (r *RefundCreate) GetReason() RefundReason {
+func (r *RefundCreate) GetReason() Reason {
 	if r == nil {
-		return RefundReason("")
+		return Reason("")
 	}
 	return r.Reason
 }

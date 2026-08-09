@@ -197,6 +197,69 @@ func (u MetricsTotalsMonthlyRecurringRevenue) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type MetricsTotalsMonthlyRecurringRevenue: all fields are null")
 }
 
+type MetricsTotalsTrialMonthlyRecurringRevenueType string
+
+const (
+	MetricsTotalsTrialMonthlyRecurringRevenueTypeInteger MetricsTotalsTrialMonthlyRecurringRevenueType = "integer"
+	MetricsTotalsTrialMonthlyRecurringRevenueTypeNumber  MetricsTotalsTrialMonthlyRecurringRevenueType = "number"
+)
+
+type MetricsTotalsTrialMonthlyRecurringRevenue struct {
+	Integer *int64   `queryParam:"inline" union:"member"`
+	Number  *float64 `queryParam:"inline" union:"member"`
+
+	Type MetricsTotalsTrialMonthlyRecurringRevenueType
+}
+
+func CreateMetricsTotalsTrialMonthlyRecurringRevenueInteger(integer int64) MetricsTotalsTrialMonthlyRecurringRevenue {
+	typ := MetricsTotalsTrialMonthlyRecurringRevenueTypeInteger
+
+	return MetricsTotalsTrialMonthlyRecurringRevenue{
+		Integer: &integer,
+		Type:    typ,
+	}
+}
+
+func CreateMetricsTotalsTrialMonthlyRecurringRevenueNumber(number float64) MetricsTotalsTrialMonthlyRecurringRevenue {
+	typ := MetricsTotalsTrialMonthlyRecurringRevenueTypeNumber
+
+	return MetricsTotalsTrialMonthlyRecurringRevenue{
+		Number: &number,
+		Type:   typ,
+	}
+}
+
+func (u *MetricsTotalsTrialMonthlyRecurringRevenue) UnmarshalJSON(data []byte) error {
+
+	var integer int64 = int64(0)
+	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
+		u.Integer = &integer
+		u.Type = MetricsTotalsTrialMonthlyRecurringRevenueTypeInteger
+		return nil
+	}
+
+	var number float64 = float64(0)
+	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
+		u.Number = &number
+		u.Type = MetricsTotalsTrialMonthlyRecurringRevenueTypeNumber
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for MetricsTotalsTrialMonthlyRecurringRevenue", string(data))
+}
+
+func (u MetricsTotalsTrialMonthlyRecurringRevenue) MarshalJSON() ([]byte, error) {
+	if u.Integer != nil {
+		return utils.MarshalJSON(u.Integer, "", true)
+	}
+
+	if u.Number != nil {
+		return utils.MarshalJSON(u.Number, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type MetricsTotalsTrialMonthlyRecurringRevenue: all fields are null")
+}
+
 type MetricsTotalsCommittedMonthlyRecurringRevenueType string
 
 const (
@@ -258,6 +321,69 @@ func (u MetricsTotalsCommittedMonthlyRecurringRevenue) MarshalJSON() ([]byte, er
 	}
 
 	return nil, errors.New("could not marshal union type MetricsTotalsCommittedMonthlyRecurringRevenue: all fields are null")
+}
+
+type MetricsTotalsTrialCommittedMonthlyRecurringRevenueType string
+
+const (
+	MetricsTotalsTrialCommittedMonthlyRecurringRevenueTypeInteger MetricsTotalsTrialCommittedMonthlyRecurringRevenueType = "integer"
+	MetricsTotalsTrialCommittedMonthlyRecurringRevenueTypeNumber  MetricsTotalsTrialCommittedMonthlyRecurringRevenueType = "number"
+)
+
+type MetricsTotalsTrialCommittedMonthlyRecurringRevenue struct {
+	Integer *int64   `queryParam:"inline" union:"member"`
+	Number  *float64 `queryParam:"inline" union:"member"`
+
+	Type MetricsTotalsTrialCommittedMonthlyRecurringRevenueType
+}
+
+func CreateMetricsTotalsTrialCommittedMonthlyRecurringRevenueInteger(integer int64) MetricsTotalsTrialCommittedMonthlyRecurringRevenue {
+	typ := MetricsTotalsTrialCommittedMonthlyRecurringRevenueTypeInteger
+
+	return MetricsTotalsTrialCommittedMonthlyRecurringRevenue{
+		Integer: &integer,
+		Type:    typ,
+	}
+}
+
+func CreateMetricsTotalsTrialCommittedMonthlyRecurringRevenueNumber(number float64) MetricsTotalsTrialCommittedMonthlyRecurringRevenue {
+	typ := MetricsTotalsTrialCommittedMonthlyRecurringRevenueTypeNumber
+
+	return MetricsTotalsTrialCommittedMonthlyRecurringRevenue{
+		Number: &number,
+		Type:   typ,
+	}
+}
+
+func (u *MetricsTotalsTrialCommittedMonthlyRecurringRevenue) UnmarshalJSON(data []byte) error {
+
+	var integer int64 = int64(0)
+	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
+		u.Integer = &integer
+		u.Type = MetricsTotalsTrialCommittedMonthlyRecurringRevenueTypeInteger
+		return nil
+	}
+
+	var number float64 = float64(0)
+	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
+		u.Number = &number
+		u.Type = MetricsTotalsTrialCommittedMonthlyRecurringRevenueTypeNumber
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for MetricsTotalsTrialCommittedMonthlyRecurringRevenue", string(data))
+}
+
+func (u MetricsTotalsTrialCommittedMonthlyRecurringRevenue) MarshalJSON() ([]byte, error) {
+	if u.Integer != nil {
+		return utils.MarshalJSON(u.Integer, "", true)
+	}
+
+	if u.Number != nil {
+		return utils.MarshalJSON(u.Number, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type MetricsTotalsTrialCommittedMonthlyRecurringRevenue: all fields are null")
 }
 
 type MetricsTotalsAverageRevenuePerUserType string
@@ -573,6 +699,384 @@ func (u MetricsTotalsChurnRate) MarshalJSON() ([]byte, error) {
 	}
 
 	return nil, errors.New("could not marshal union type MetricsTotalsChurnRate: all fields are null")
+}
+
+type MetricsTotalsSeatsTotalType string
+
+const (
+	MetricsTotalsSeatsTotalTypeInteger MetricsTotalsSeatsTotalType = "integer"
+	MetricsTotalsSeatsTotalTypeNumber  MetricsTotalsSeatsTotalType = "number"
+)
+
+type MetricsTotalsSeatsTotal struct {
+	Integer *int64   `queryParam:"inline" union:"member"`
+	Number  *float64 `queryParam:"inline" union:"member"`
+
+	Type MetricsTotalsSeatsTotalType
+}
+
+func CreateMetricsTotalsSeatsTotalInteger(integer int64) MetricsTotalsSeatsTotal {
+	typ := MetricsTotalsSeatsTotalTypeInteger
+
+	return MetricsTotalsSeatsTotal{
+		Integer: &integer,
+		Type:    typ,
+	}
+}
+
+func CreateMetricsTotalsSeatsTotalNumber(number float64) MetricsTotalsSeatsTotal {
+	typ := MetricsTotalsSeatsTotalTypeNumber
+
+	return MetricsTotalsSeatsTotal{
+		Number: &number,
+		Type:   typ,
+	}
+}
+
+func (u *MetricsTotalsSeatsTotal) UnmarshalJSON(data []byte) error {
+
+	var integer int64 = int64(0)
+	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
+		u.Integer = &integer
+		u.Type = MetricsTotalsSeatsTotalTypeInteger
+		return nil
+	}
+
+	var number float64 = float64(0)
+	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
+		u.Number = &number
+		u.Type = MetricsTotalsSeatsTotalTypeNumber
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for MetricsTotalsSeatsTotal", string(data))
+}
+
+func (u MetricsTotalsSeatsTotal) MarshalJSON() ([]byte, error) {
+	if u.Integer != nil {
+		return utils.MarshalJSON(u.Integer, "", true)
+	}
+
+	if u.Number != nil {
+		return utils.MarshalJSON(u.Number, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type MetricsTotalsSeatsTotal: all fields are null")
+}
+
+type MetricsTotalsSeatsClaimedType string
+
+const (
+	MetricsTotalsSeatsClaimedTypeInteger MetricsTotalsSeatsClaimedType = "integer"
+	MetricsTotalsSeatsClaimedTypeNumber  MetricsTotalsSeatsClaimedType = "number"
+)
+
+type MetricsTotalsSeatsClaimed struct {
+	Integer *int64   `queryParam:"inline" union:"member"`
+	Number  *float64 `queryParam:"inline" union:"member"`
+
+	Type MetricsTotalsSeatsClaimedType
+}
+
+func CreateMetricsTotalsSeatsClaimedInteger(integer int64) MetricsTotalsSeatsClaimed {
+	typ := MetricsTotalsSeatsClaimedTypeInteger
+
+	return MetricsTotalsSeatsClaimed{
+		Integer: &integer,
+		Type:    typ,
+	}
+}
+
+func CreateMetricsTotalsSeatsClaimedNumber(number float64) MetricsTotalsSeatsClaimed {
+	typ := MetricsTotalsSeatsClaimedTypeNumber
+
+	return MetricsTotalsSeatsClaimed{
+		Number: &number,
+		Type:   typ,
+	}
+}
+
+func (u *MetricsTotalsSeatsClaimed) UnmarshalJSON(data []byte) error {
+
+	var integer int64 = int64(0)
+	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
+		u.Integer = &integer
+		u.Type = MetricsTotalsSeatsClaimedTypeInteger
+		return nil
+	}
+
+	var number float64 = float64(0)
+	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
+		u.Number = &number
+		u.Type = MetricsTotalsSeatsClaimedTypeNumber
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for MetricsTotalsSeatsClaimed", string(data))
+}
+
+func (u MetricsTotalsSeatsClaimed) MarshalJSON() ([]byte, error) {
+	if u.Integer != nil {
+		return utils.MarshalJSON(u.Integer, "", true)
+	}
+
+	if u.Number != nil {
+		return utils.MarshalJSON(u.Number, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type MetricsTotalsSeatsClaimed: all fields are null")
+}
+
+type MetricsTotalsSeatsPendingType string
+
+const (
+	MetricsTotalsSeatsPendingTypeInteger MetricsTotalsSeatsPendingType = "integer"
+	MetricsTotalsSeatsPendingTypeNumber  MetricsTotalsSeatsPendingType = "number"
+)
+
+type MetricsTotalsSeatsPending struct {
+	Integer *int64   `queryParam:"inline" union:"member"`
+	Number  *float64 `queryParam:"inline" union:"member"`
+
+	Type MetricsTotalsSeatsPendingType
+}
+
+func CreateMetricsTotalsSeatsPendingInteger(integer int64) MetricsTotalsSeatsPending {
+	typ := MetricsTotalsSeatsPendingTypeInteger
+
+	return MetricsTotalsSeatsPending{
+		Integer: &integer,
+		Type:    typ,
+	}
+}
+
+func CreateMetricsTotalsSeatsPendingNumber(number float64) MetricsTotalsSeatsPending {
+	typ := MetricsTotalsSeatsPendingTypeNumber
+
+	return MetricsTotalsSeatsPending{
+		Number: &number,
+		Type:   typ,
+	}
+}
+
+func (u *MetricsTotalsSeatsPending) UnmarshalJSON(data []byte) error {
+
+	var integer int64 = int64(0)
+	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
+		u.Integer = &integer
+		u.Type = MetricsTotalsSeatsPendingTypeInteger
+		return nil
+	}
+
+	var number float64 = float64(0)
+	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
+		u.Number = &number
+		u.Type = MetricsTotalsSeatsPendingTypeNumber
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for MetricsTotalsSeatsPending", string(data))
+}
+
+func (u MetricsTotalsSeatsPending) MarshalJSON() ([]byte, error) {
+	if u.Integer != nil {
+		return utils.MarshalJSON(u.Integer, "", true)
+	}
+
+	if u.Number != nil {
+		return utils.MarshalJSON(u.Number, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type MetricsTotalsSeatsPending: all fields are null")
+}
+
+type MetricsTotalsSeatCustomersType string
+
+const (
+	MetricsTotalsSeatCustomersTypeInteger MetricsTotalsSeatCustomersType = "integer"
+	MetricsTotalsSeatCustomersTypeNumber  MetricsTotalsSeatCustomersType = "number"
+)
+
+type MetricsTotalsSeatCustomers struct {
+	Integer *int64   `queryParam:"inline" union:"member"`
+	Number  *float64 `queryParam:"inline" union:"member"`
+
+	Type MetricsTotalsSeatCustomersType
+}
+
+func CreateMetricsTotalsSeatCustomersInteger(integer int64) MetricsTotalsSeatCustomers {
+	typ := MetricsTotalsSeatCustomersTypeInteger
+
+	return MetricsTotalsSeatCustomers{
+		Integer: &integer,
+		Type:    typ,
+	}
+}
+
+func CreateMetricsTotalsSeatCustomersNumber(number float64) MetricsTotalsSeatCustomers {
+	typ := MetricsTotalsSeatCustomersTypeNumber
+
+	return MetricsTotalsSeatCustomers{
+		Number: &number,
+		Type:   typ,
+	}
+}
+
+func (u *MetricsTotalsSeatCustomers) UnmarshalJSON(data []byte) error {
+
+	var integer int64 = int64(0)
+	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
+		u.Integer = &integer
+		u.Type = MetricsTotalsSeatCustomersTypeInteger
+		return nil
+	}
+
+	var number float64 = float64(0)
+	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
+		u.Number = &number
+		u.Type = MetricsTotalsSeatCustomersTypeNumber
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for MetricsTotalsSeatCustomers", string(data))
+}
+
+func (u MetricsTotalsSeatCustomers) MarshalJSON() ([]byte, error) {
+	if u.Integer != nil {
+		return utils.MarshalJSON(u.Integer, "", true)
+	}
+
+	if u.Number != nil {
+		return utils.MarshalJSON(u.Number, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type MetricsTotalsSeatCustomers: all fields are null")
+}
+
+type MetricsTotalsNewSeatCustomersType string
+
+const (
+	MetricsTotalsNewSeatCustomersTypeInteger MetricsTotalsNewSeatCustomersType = "integer"
+	MetricsTotalsNewSeatCustomersTypeNumber  MetricsTotalsNewSeatCustomersType = "number"
+)
+
+type MetricsTotalsNewSeatCustomers struct {
+	Integer *int64   `queryParam:"inline" union:"member"`
+	Number  *float64 `queryParam:"inline" union:"member"`
+
+	Type MetricsTotalsNewSeatCustomersType
+}
+
+func CreateMetricsTotalsNewSeatCustomersInteger(integer int64) MetricsTotalsNewSeatCustomers {
+	typ := MetricsTotalsNewSeatCustomersTypeInteger
+
+	return MetricsTotalsNewSeatCustomers{
+		Integer: &integer,
+		Type:    typ,
+	}
+}
+
+func CreateMetricsTotalsNewSeatCustomersNumber(number float64) MetricsTotalsNewSeatCustomers {
+	typ := MetricsTotalsNewSeatCustomersTypeNumber
+
+	return MetricsTotalsNewSeatCustomers{
+		Number: &number,
+		Type:   typ,
+	}
+}
+
+func (u *MetricsTotalsNewSeatCustomers) UnmarshalJSON(data []byte) error {
+
+	var integer int64 = int64(0)
+	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
+		u.Integer = &integer
+		u.Type = MetricsTotalsNewSeatCustomersTypeInteger
+		return nil
+	}
+
+	var number float64 = float64(0)
+	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
+		u.Number = &number
+		u.Type = MetricsTotalsNewSeatCustomersTypeNumber
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for MetricsTotalsNewSeatCustomers", string(data))
+}
+
+func (u MetricsTotalsNewSeatCustomers) MarshalJSON() ([]byte, error) {
+	if u.Integer != nil {
+		return utils.MarshalJSON(u.Integer, "", true)
+	}
+
+	if u.Number != nil {
+		return utils.MarshalJSON(u.Number, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type MetricsTotalsNewSeatCustomers: all fields are null")
+}
+
+type MetricsTotalsChurnedSeatCustomersType string
+
+const (
+	MetricsTotalsChurnedSeatCustomersTypeInteger MetricsTotalsChurnedSeatCustomersType = "integer"
+	MetricsTotalsChurnedSeatCustomersTypeNumber  MetricsTotalsChurnedSeatCustomersType = "number"
+)
+
+type MetricsTotalsChurnedSeatCustomers struct {
+	Integer *int64   `queryParam:"inline" union:"member"`
+	Number  *float64 `queryParam:"inline" union:"member"`
+
+	Type MetricsTotalsChurnedSeatCustomersType
+}
+
+func CreateMetricsTotalsChurnedSeatCustomersInteger(integer int64) MetricsTotalsChurnedSeatCustomers {
+	typ := MetricsTotalsChurnedSeatCustomersTypeInteger
+
+	return MetricsTotalsChurnedSeatCustomers{
+		Integer: &integer,
+		Type:    typ,
+	}
+}
+
+func CreateMetricsTotalsChurnedSeatCustomersNumber(number float64) MetricsTotalsChurnedSeatCustomers {
+	typ := MetricsTotalsChurnedSeatCustomersTypeNumber
+
+	return MetricsTotalsChurnedSeatCustomers{
+		Number: &number,
+		Type:   typ,
+	}
+}
+
+func (u *MetricsTotalsChurnedSeatCustomers) UnmarshalJSON(data []byte) error {
+
+	var integer int64 = int64(0)
+	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
+		u.Integer = &integer
+		u.Type = MetricsTotalsChurnedSeatCustomersTypeInteger
+		return nil
+	}
+
+	var number float64 = float64(0)
+	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
+		u.Number = &number
+		u.Type = MetricsTotalsChurnedSeatCustomersTypeNumber
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for MetricsTotalsChurnedSeatCustomers", string(data))
+}
+
+func (u MetricsTotalsChurnedSeatCustomers) MarshalJSON() ([]byte, error) {
+	if u.Integer != nil {
+		return utils.MarshalJSON(u.Integer, "", true)
+	}
+
+	if u.Number != nil {
+		return utils.MarshalJSON(u.Number, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type MetricsTotalsChurnedSeatCustomers: all fields are null")
 }
 
 type MetricsTotalsOrdersType string
@@ -2402,6 +2906,132 @@ func (u MetricsTotalsCanceledSubscriptionsOther) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type MetricsTotalsCanceledSubscriptionsOther: all fields are null")
 }
 
+type MetricsTotalsAnnualRecurringRevenueType string
+
+const (
+	MetricsTotalsAnnualRecurringRevenueTypeInteger MetricsTotalsAnnualRecurringRevenueType = "integer"
+	MetricsTotalsAnnualRecurringRevenueTypeNumber  MetricsTotalsAnnualRecurringRevenueType = "number"
+)
+
+type MetricsTotalsAnnualRecurringRevenue struct {
+	Integer *int64   `queryParam:"inline" union:"member"`
+	Number  *float64 `queryParam:"inline" union:"member"`
+
+	Type MetricsTotalsAnnualRecurringRevenueType
+}
+
+func CreateMetricsTotalsAnnualRecurringRevenueInteger(integer int64) MetricsTotalsAnnualRecurringRevenue {
+	typ := MetricsTotalsAnnualRecurringRevenueTypeInteger
+
+	return MetricsTotalsAnnualRecurringRevenue{
+		Integer: &integer,
+		Type:    typ,
+	}
+}
+
+func CreateMetricsTotalsAnnualRecurringRevenueNumber(number float64) MetricsTotalsAnnualRecurringRevenue {
+	typ := MetricsTotalsAnnualRecurringRevenueTypeNumber
+
+	return MetricsTotalsAnnualRecurringRevenue{
+		Number: &number,
+		Type:   typ,
+	}
+}
+
+func (u *MetricsTotalsAnnualRecurringRevenue) UnmarshalJSON(data []byte) error {
+
+	var integer int64 = int64(0)
+	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
+		u.Integer = &integer
+		u.Type = MetricsTotalsAnnualRecurringRevenueTypeInteger
+		return nil
+	}
+
+	var number float64 = float64(0)
+	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
+		u.Number = &number
+		u.Type = MetricsTotalsAnnualRecurringRevenueTypeNumber
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for MetricsTotalsAnnualRecurringRevenue", string(data))
+}
+
+func (u MetricsTotalsAnnualRecurringRevenue) MarshalJSON() ([]byte, error) {
+	if u.Integer != nil {
+		return utils.MarshalJSON(u.Integer, "", true)
+	}
+
+	if u.Number != nil {
+		return utils.MarshalJSON(u.Number, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type MetricsTotalsAnnualRecurringRevenue: all fields are null")
+}
+
+type MetricsTotalsCommittedAnnualRecurringRevenueType string
+
+const (
+	MetricsTotalsCommittedAnnualRecurringRevenueTypeInteger MetricsTotalsCommittedAnnualRecurringRevenueType = "integer"
+	MetricsTotalsCommittedAnnualRecurringRevenueTypeNumber  MetricsTotalsCommittedAnnualRecurringRevenueType = "number"
+)
+
+type MetricsTotalsCommittedAnnualRecurringRevenue struct {
+	Integer *int64   `queryParam:"inline" union:"member"`
+	Number  *float64 `queryParam:"inline" union:"member"`
+
+	Type MetricsTotalsCommittedAnnualRecurringRevenueType
+}
+
+func CreateMetricsTotalsCommittedAnnualRecurringRevenueInteger(integer int64) MetricsTotalsCommittedAnnualRecurringRevenue {
+	typ := MetricsTotalsCommittedAnnualRecurringRevenueTypeInteger
+
+	return MetricsTotalsCommittedAnnualRecurringRevenue{
+		Integer: &integer,
+		Type:    typ,
+	}
+}
+
+func CreateMetricsTotalsCommittedAnnualRecurringRevenueNumber(number float64) MetricsTotalsCommittedAnnualRecurringRevenue {
+	typ := MetricsTotalsCommittedAnnualRecurringRevenueTypeNumber
+
+	return MetricsTotalsCommittedAnnualRecurringRevenue{
+		Number: &number,
+		Type:   typ,
+	}
+}
+
+func (u *MetricsTotalsCommittedAnnualRecurringRevenue) UnmarshalJSON(data []byte) error {
+
+	var integer int64 = int64(0)
+	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
+		u.Integer = &integer
+		u.Type = MetricsTotalsCommittedAnnualRecurringRevenueTypeInteger
+		return nil
+	}
+
+	var number float64 = float64(0)
+	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
+		u.Number = &number
+		u.Type = MetricsTotalsCommittedAnnualRecurringRevenueTypeNumber
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for MetricsTotalsCommittedAnnualRecurringRevenue", string(data))
+}
+
+func (u MetricsTotalsCommittedAnnualRecurringRevenue) MarshalJSON() ([]byte, error) {
+	if u.Integer != nil {
+		return utils.MarshalJSON(u.Integer, "", true)
+	}
+
+	if u.Number != nil {
+		return utils.MarshalJSON(u.Number, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type MetricsTotalsCommittedAnnualRecurringRevenue: all fields are null")
+}
+
 type MetricsTotalsCheckoutsConversionType string
 
 const (
@@ -2717,50 +3347,188 @@ func (u MetricsTotalsCashflow) MarshalJSON() ([]byte, error) {
 	return nil, errors.New("could not marshal union type MetricsTotalsCashflow: all fields are null")
 }
 
+type MetricsTotalsAverageSeatsPerCustomerType string
+
+const (
+	MetricsTotalsAverageSeatsPerCustomerTypeInteger MetricsTotalsAverageSeatsPerCustomerType = "integer"
+	MetricsTotalsAverageSeatsPerCustomerTypeNumber  MetricsTotalsAverageSeatsPerCustomerType = "number"
+)
+
+type MetricsTotalsAverageSeatsPerCustomer struct {
+	Integer *int64   `queryParam:"inline" union:"member"`
+	Number  *float64 `queryParam:"inline" union:"member"`
+
+	Type MetricsTotalsAverageSeatsPerCustomerType
+}
+
+func CreateMetricsTotalsAverageSeatsPerCustomerInteger(integer int64) MetricsTotalsAverageSeatsPerCustomer {
+	typ := MetricsTotalsAverageSeatsPerCustomerTypeInteger
+
+	return MetricsTotalsAverageSeatsPerCustomer{
+		Integer: &integer,
+		Type:    typ,
+	}
+}
+
+func CreateMetricsTotalsAverageSeatsPerCustomerNumber(number float64) MetricsTotalsAverageSeatsPerCustomer {
+	typ := MetricsTotalsAverageSeatsPerCustomerTypeNumber
+
+	return MetricsTotalsAverageSeatsPerCustomer{
+		Number: &number,
+		Type:   typ,
+	}
+}
+
+func (u *MetricsTotalsAverageSeatsPerCustomer) UnmarshalJSON(data []byte) error {
+
+	var integer int64 = int64(0)
+	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
+		u.Integer = &integer
+		u.Type = MetricsTotalsAverageSeatsPerCustomerTypeInteger
+		return nil
+	}
+
+	var number float64 = float64(0)
+	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
+		u.Number = &number
+		u.Type = MetricsTotalsAverageSeatsPerCustomerTypeNumber
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for MetricsTotalsAverageSeatsPerCustomer", string(data))
+}
+
+func (u MetricsTotalsAverageSeatsPerCustomer) MarshalJSON() ([]byte, error) {
+	if u.Integer != nil {
+		return utils.MarshalJSON(u.Integer, "", true)
+	}
+
+	if u.Number != nil {
+		return utils.MarshalJSON(u.Number, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type MetricsTotalsAverageSeatsPerCustomer: all fields are null")
+}
+
+type MetricsTotalsSeatUtilizationRateType string
+
+const (
+	MetricsTotalsSeatUtilizationRateTypeInteger MetricsTotalsSeatUtilizationRateType = "integer"
+	MetricsTotalsSeatUtilizationRateTypeNumber  MetricsTotalsSeatUtilizationRateType = "number"
+)
+
+type MetricsTotalsSeatUtilizationRate struct {
+	Integer *int64   `queryParam:"inline" union:"member"`
+	Number  *float64 `queryParam:"inline" union:"member"`
+
+	Type MetricsTotalsSeatUtilizationRateType
+}
+
+func CreateMetricsTotalsSeatUtilizationRateInteger(integer int64) MetricsTotalsSeatUtilizationRate {
+	typ := MetricsTotalsSeatUtilizationRateTypeInteger
+
+	return MetricsTotalsSeatUtilizationRate{
+		Integer: &integer,
+		Type:    typ,
+	}
+}
+
+func CreateMetricsTotalsSeatUtilizationRateNumber(number float64) MetricsTotalsSeatUtilizationRate {
+	typ := MetricsTotalsSeatUtilizationRateTypeNumber
+
+	return MetricsTotalsSeatUtilizationRate{
+		Number: &number,
+		Type:   typ,
+	}
+}
+
+func (u *MetricsTotalsSeatUtilizationRate) UnmarshalJSON(data []byte) error {
+
+	var integer int64 = int64(0)
+	if err := utils.UnmarshalJSON(data, &integer, "", true, nil); err == nil {
+		u.Integer = &integer
+		u.Type = MetricsTotalsSeatUtilizationRateTypeInteger
+		return nil
+	}
+
+	var number float64 = float64(0)
+	if err := utils.UnmarshalJSON(data, &number, "", true, nil); err == nil {
+		u.Number = &number
+		u.Type = MetricsTotalsSeatUtilizationRateTypeNumber
+		return nil
+	}
+
+	return fmt.Errorf("could not unmarshal `%s` into any supported union types for MetricsTotalsSeatUtilizationRate", string(data))
+}
+
+func (u MetricsTotalsSeatUtilizationRate) MarshalJSON() ([]byte, error) {
+	if u.Integer != nil {
+		return utils.MarshalJSON(u.Integer, "", true)
+	}
+
+	if u.Number != nil {
+		return utils.MarshalJSON(u.Number, "", true)
+	}
+
+	return nil, errors.New("could not marshal union type MetricsTotalsSeatUtilizationRate: all fields are null")
+}
+
 type MetricsTotals struct {
-	ActiveSubscriptions                  *MetricsTotalsActiveSubscriptions                  `json:"active_subscriptions,omitempty"`
-	CommittedSubscriptions               *MetricsTotalsCommittedSubscriptions               `json:"committed_subscriptions,omitempty"`
-	MonthlyRecurringRevenue              *MetricsTotalsMonthlyRecurringRevenue              `json:"monthly_recurring_revenue,omitempty"`
-	CommittedMonthlyRecurringRevenue     *MetricsTotalsCommittedMonthlyRecurringRevenue     `json:"committed_monthly_recurring_revenue,omitempty"`
-	AverageRevenuePerUser                *MetricsTotalsAverageRevenuePerUser                `json:"average_revenue_per_user,omitempty"`
-	Checkouts                            *MetricsTotalsCheckouts                            `json:"checkouts,omitempty"`
-	SucceededCheckouts                   *MetricsTotalsSucceededCheckouts                   `json:"succeeded_checkouts,omitempty"`
-	ChurnedSubscriptions                 *MetricsTotalsChurnedSubscriptions                 `json:"churned_subscriptions,omitempty"`
-	ChurnRate                            *MetricsTotalsChurnRate                            `json:"churn_rate,omitempty"`
-	Orders                               *MetricsTotalsOrders                               `json:"orders,omitempty"`
-	Revenue                              *MetricsTotalsRevenue                              `json:"revenue,omitempty"`
-	NetRevenue                           *MetricsTotalsNetRevenue                           `json:"net_revenue,omitempty"`
-	CumulativeRevenue                    *MetricsTotalsCumulativeRevenue                    `json:"cumulative_revenue,omitempty"`
-	NetCumulativeRevenue                 *MetricsTotalsNetCumulativeRevenue                 `json:"net_cumulative_revenue,omitempty"`
-	Costs                                *MetricsTotalsCosts                                `json:"costs,omitempty"`
-	CumulativeCosts                      *MetricsTotalsCumulativeCosts                      `json:"cumulative_costs,omitempty"`
-	AverageOrderValue                    *MetricsTotalsAverageOrderValue                    `json:"average_order_value,omitempty"`
-	NetAverageOrderValue                 *MetricsTotalsNetAverageOrderValue                 `json:"net_average_order_value,omitempty"`
-	CostPerUser                          *MetricsTotalsCostPerUser                          `json:"cost_per_user,omitempty"`
-	ActiveUserByEvent                    *MetricsTotalsActiveUserByEvent                    `json:"active_user_by_event,omitempty"`
-	OneTimeProducts                      *MetricsTotalsOneTimeProducts                      `json:"one_time_products,omitempty"`
-	OneTimeProductsRevenue               *MetricsTotalsOneTimeProductsRevenue               `json:"one_time_products_revenue,omitempty"`
-	OneTimeProductsNetRevenue            *MetricsTotalsOneTimeProductsNetRevenue            `json:"one_time_products_net_revenue,omitempty"`
-	NewSubscriptions                     *MetricsTotalsNewSubscriptions                     `json:"new_subscriptions,omitempty"`
-	NewSubscriptionsRevenue              *MetricsTotalsNewSubscriptionsRevenue              `json:"new_subscriptions_revenue,omitempty"`
-	NewSubscriptionsNetRevenue           *MetricsTotalsNewSubscriptionsNetRevenue           `json:"new_subscriptions_net_revenue,omitempty"`
-	RenewedSubscriptions                 *MetricsTotalsRenewedSubscriptions                 `json:"renewed_subscriptions,omitempty"`
-	RenewedSubscriptionsRevenue          *MetricsTotalsRenewedSubscriptionsRevenue          `json:"renewed_subscriptions_revenue,omitempty"`
-	RenewedSubscriptionsNetRevenue       *MetricsTotalsRenewedSubscriptionsNetRevenue       `json:"renewed_subscriptions_net_revenue,omitempty"`
-	CanceledSubscriptions                *MetricsTotalsCanceledSubscriptions                `json:"canceled_subscriptions,omitempty"`
-	CanceledSubscriptionsCustomerService *MetricsTotalsCanceledSubscriptionsCustomerService `json:"canceled_subscriptions_customer_service,omitempty"`
-	CanceledSubscriptionsLowQuality      *MetricsTotalsCanceledSubscriptionsLowQuality      `json:"canceled_subscriptions_low_quality,omitempty"`
-	CanceledSubscriptionsMissingFeatures *MetricsTotalsCanceledSubscriptionsMissingFeatures `json:"canceled_subscriptions_missing_features,omitempty"`
-	CanceledSubscriptionsSwitchedService *MetricsTotalsCanceledSubscriptionsSwitchedService `json:"canceled_subscriptions_switched_service,omitempty"`
-	CanceledSubscriptionsTooComplex      *MetricsTotalsCanceledSubscriptionsTooComplex      `json:"canceled_subscriptions_too_complex,omitempty"`
-	CanceledSubscriptionsTooExpensive    *MetricsTotalsCanceledSubscriptionsTooExpensive    `json:"canceled_subscriptions_too_expensive,omitempty"`
-	CanceledSubscriptionsUnused          *MetricsTotalsCanceledSubscriptionsUnused          `json:"canceled_subscriptions_unused,omitempty"`
-	CanceledSubscriptionsOther           *MetricsTotalsCanceledSubscriptionsOther           `json:"canceled_subscriptions_other,omitempty"`
-	CheckoutsConversion                  *MetricsTotalsCheckoutsConversion                  `json:"checkouts_conversion,omitempty"`
-	Ltv                                  *MetricsTotalsLtv                                  `json:"ltv,omitempty"`
-	GrossMargin                          *MetricsTotalsGrossMargin                          `json:"gross_margin,omitempty"`
-	GrossMarginPercentage                *MetricsTotalsGrossMarginPercentage                `json:"gross_margin_percentage,omitempty"`
-	Cashflow                             *MetricsTotalsCashflow                             `json:"cashflow,omitempty"`
+	ActiveSubscriptions                   *MetricsTotalsActiveSubscriptions                   `json:"active_subscriptions,omitempty"`
+	CommittedSubscriptions                *MetricsTotalsCommittedSubscriptions                `json:"committed_subscriptions,omitempty"`
+	MonthlyRecurringRevenue               *MetricsTotalsMonthlyRecurringRevenue               `json:"monthly_recurring_revenue,omitempty"`
+	TrialMonthlyRecurringRevenue          *MetricsTotalsTrialMonthlyRecurringRevenue          `json:"trial_monthly_recurring_revenue,omitempty"`
+	CommittedMonthlyRecurringRevenue      *MetricsTotalsCommittedMonthlyRecurringRevenue      `json:"committed_monthly_recurring_revenue,omitempty"`
+	TrialCommittedMonthlyRecurringRevenue *MetricsTotalsTrialCommittedMonthlyRecurringRevenue `json:"trial_committed_monthly_recurring_revenue,omitempty"`
+	AverageRevenuePerUser                 *MetricsTotalsAverageRevenuePerUser                 `json:"average_revenue_per_user,omitempty"`
+	Checkouts                             *MetricsTotalsCheckouts                             `json:"checkouts,omitempty"`
+	SucceededCheckouts                    *MetricsTotalsSucceededCheckouts                    `json:"succeeded_checkouts,omitempty"`
+	ChurnedSubscriptions                  *MetricsTotalsChurnedSubscriptions                  `json:"churned_subscriptions,omitempty"`
+	ChurnRate                             *MetricsTotalsChurnRate                             `json:"churn_rate,omitempty"`
+	SeatsTotal                            *MetricsTotalsSeatsTotal                            `json:"seats_total,omitempty"`
+	SeatsClaimed                          *MetricsTotalsSeatsClaimed                          `json:"seats_claimed,omitempty"`
+	SeatsPending                          *MetricsTotalsSeatsPending                          `json:"seats_pending,omitempty"`
+	SeatCustomers                         *MetricsTotalsSeatCustomers                         `json:"seat_customers,omitempty"`
+	NewSeatCustomers                      *MetricsTotalsNewSeatCustomers                      `json:"new_seat_customers,omitempty"`
+	ChurnedSeatCustomers                  *MetricsTotalsChurnedSeatCustomers                  `json:"churned_seat_customers,omitempty"`
+	Orders                                *MetricsTotalsOrders                                `json:"orders,omitempty"`
+	Revenue                               *MetricsTotalsRevenue                               `json:"revenue,omitempty"`
+	NetRevenue                            *MetricsTotalsNetRevenue                            `json:"net_revenue,omitempty"`
+	CumulativeRevenue                     *MetricsTotalsCumulativeRevenue                     `json:"cumulative_revenue,omitempty"`
+	NetCumulativeRevenue                  *MetricsTotalsNetCumulativeRevenue                  `json:"net_cumulative_revenue,omitempty"`
+	Costs                                 *MetricsTotalsCosts                                 `json:"costs,omitempty"`
+	CumulativeCosts                       *MetricsTotalsCumulativeCosts                       `json:"cumulative_costs,omitempty"`
+	AverageOrderValue                     *MetricsTotalsAverageOrderValue                     `json:"average_order_value,omitempty"`
+	NetAverageOrderValue                  *MetricsTotalsNetAverageOrderValue                  `json:"net_average_order_value,omitempty"`
+	CostPerUser                           *MetricsTotalsCostPerUser                           `json:"cost_per_user,omitempty"`
+	ActiveUserByEvent                     *MetricsTotalsActiveUserByEvent                     `json:"active_user_by_event,omitempty"`
+	OneTimeProducts                       *MetricsTotalsOneTimeProducts                       `json:"one_time_products,omitempty"`
+	OneTimeProductsRevenue                *MetricsTotalsOneTimeProductsRevenue                `json:"one_time_products_revenue,omitempty"`
+	OneTimeProductsNetRevenue             *MetricsTotalsOneTimeProductsNetRevenue             `json:"one_time_products_net_revenue,omitempty"`
+	NewSubscriptions                      *MetricsTotalsNewSubscriptions                      `json:"new_subscriptions,omitempty"`
+	NewSubscriptionsRevenue               *MetricsTotalsNewSubscriptionsRevenue               `json:"new_subscriptions_revenue,omitempty"`
+	NewSubscriptionsNetRevenue            *MetricsTotalsNewSubscriptionsNetRevenue            `json:"new_subscriptions_net_revenue,omitempty"`
+	RenewedSubscriptions                  *MetricsTotalsRenewedSubscriptions                  `json:"renewed_subscriptions,omitempty"`
+	RenewedSubscriptionsRevenue           *MetricsTotalsRenewedSubscriptionsRevenue           `json:"renewed_subscriptions_revenue,omitempty"`
+	RenewedSubscriptionsNetRevenue        *MetricsTotalsRenewedSubscriptionsNetRevenue        `json:"renewed_subscriptions_net_revenue,omitempty"`
+	CanceledSubscriptions                 *MetricsTotalsCanceledSubscriptions                 `json:"canceled_subscriptions,omitempty"`
+	CanceledSubscriptionsCustomerService  *MetricsTotalsCanceledSubscriptionsCustomerService  `json:"canceled_subscriptions_customer_service,omitempty"`
+	CanceledSubscriptionsLowQuality       *MetricsTotalsCanceledSubscriptionsLowQuality       `json:"canceled_subscriptions_low_quality,omitempty"`
+	CanceledSubscriptionsMissingFeatures  *MetricsTotalsCanceledSubscriptionsMissingFeatures  `json:"canceled_subscriptions_missing_features,omitempty"`
+	CanceledSubscriptionsSwitchedService  *MetricsTotalsCanceledSubscriptionsSwitchedService  `json:"canceled_subscriptions_switched_service,omitempty"`
+	CanceledSubscriptionsTooComplex       *MetricsTotalsCanceledSubscriptionsTooComplex       `json:"canceled_subscriptions_too_complex,omitempty"`
+	CanceledSubscriptionsTooExpensive     *MetricsTotalsCanceledSubscriptionsTooExpensive     `json:"canceled_subscriptions_too_expensive,omitempty"`
+	CanceledSubscriptionsUnused           *MetricsTotalsCanceledSubscriptionsUnused           `json:"canceled_subscriptions_unused,omitempty"`
+	CanceledSubscriptionsOther            *MetricsTotalsCanceledSubscriptionsOther            `json:"canceled_subscriptions_other,omitempty"`
+	AnnualRecurringRevenue                *MetricsTotalsAnnualRecurringRevenue                `json:"annual_recurring_revenue,omitempty"`
+	CommittedAnnualRecurringRevenue       *MetricsTotalsCommittedAnnualRecurringRevenue       `json:"committed_annual_recurring_revenue,omitempty"`
+	CheckoutsConversion                   *MetricsTotalsCheckoutsConversion                   `json:"checkouts_conversion,omitempty"`
+	Ltv                                   *MetricsTotalsLtv                                   `json:"ltv,omitempty"`
+	GrossMargin                           *MetricsTotalsGrossMargin                           `json:"gross_margin,omitempty"`
+	GrossMarginPercentage                 *MetricsTotalsGrossMarginPercentage                 `json:"gross_margin_percentage,omitempty"`
+	Cashflow                              *MetricsTotalsCashflow                              `json:"cashflow,omitempty"`
+	AverageSeatsPerCustomer               *MetricsTotalsAverageSeatsPerCustomer               `json:"average_seats_per_customer,omitempty"`
+	SeatUtilizationRate                   *MetricsTotalsSeatUtilizationRate                   `json:"seat_utilization_rate,omitempty"`
 }
 
 func (m *MetricsTotals) GetActiveSubscriptions() *MetricsTotalsActiveSubscriptions {
@@ -2784,11 +3552,25 @@ func (m *MetricsTotals) GetMonthlyRecurringRevenue() *MetricsTotalsMonthlyRecurr
 	return m.MonthlyRecurringRevenue
 }
 
+func (m *MetricsTotals) GetTrialMonthlyRecurringRevenue() *MetricsTotalsTrialMonthlyRecurringRevenue {
+	if m == nil {
+		return nil
+	}
+	return m.TrialMonthlyRecurringRevenue
+}
+
 func (m *MetricsTotals) GetCommittedMonthlyRecurringRevenue() *MetricsTotalsCommittedMonthlyRecurringRevenue {
 	if m == nil {
 		return nil
 	}
 	return m.CommittedMonthlyRecurringRevenue
+}
+
+func (m *MetricsTotals) GetTrialCommittedMonthlyRecurringRevenue() *MetricsTotalsTrialCommittedMonthlyRecurringRevenue {
+	if m == nil {
+		return nil
+	}
+	return m.TrialCommittedMonthlyRecurringRevenue
 }
 
 func (m *MetricsTotals) GetAverageRevenuePerUser() *MetricsTotalsAverageRevenuePerUser {
@@ -2824,6 +3606,48 @@ func (m *MetricsTotals) GetChurnRate() *MetricsTotalsChurnRate {
 		return nil
 	}
 	return m.ChurnRate
+}
+
+func (m *MetricsTotals) GetSeatsTotal() *MetricsTotalsSeatsTotal {
+	if m == nil {
+		return nil
+	}
+	return m.SeatsTotal
+}
+
+func (m *MetricsTotals) GetSeatsClaimed() *MetricsTotalsSeatsClaimed {
+	if m == nil {
+		return nil
+	}
+	return m.SeatsClaimed
+}
+
+func (m *MetricsTotals) GetSeatsPending() *MetricsTotalsSeatsPending {
+	if m == nil {
+		return nil
+	}
+	return m.SeatsPending
+}
+
+func (m *MetricsTotals) GetSeatCustomers() *MetricsTotalsSeatCustomers {
+	if m == nil {
+		return nil
+	}
+	return m.SeatCustomers
+}
+
+func (m *MetricsTotals) GetNewSeatCustomers() *MetricsTotalsNewSeatCustomers {
+	if m == nil {
+		return nil
+	}
+	return m.NewSeatCustomers
+}
+
+func (m *MetricsTotals) GetChurnedSeatCustomers() *MetricsTotalsChurnedSeatCustomers {
+	if m == nil {
+		return nil
+	}
+	return m.ChurnedSeatCustomers
 }
 
 func (m *MetricsTotals) GetOrders() *MetricsTotalsOrders {
@@ -3029,6 +3853,20 @@ func (m *MetricsTotals) GetCanceledSubscriptionsOther() *MetricsTotalsCanceledSu
 	return m.CanceledSubscriptionsOther
 }
 
+func (m *MetricsTotals) GetAnnualRecurringRevenue() *MetricsTotalsAnnualRecurringRevenue {
+	if m == nil {
+		return nil
+	}
+	return m.AnnualRecurringRevenue
+}
+
+func (m *MetricsTotals) GetCommittedAnnualRecurringRevenue() *MetricsTotalsCommittedAnnualRecurringRevenue {
+	if m == nil {
+		return nil
+	}
+	return m.CommittedAnnualRecurringRevenue
+}
+
 func (m *MetricsTotals) GetCheckoutsConversion() *MetricsTotalsCheckoutsConversion {
 	if m == nil {
 		return nil
@@ -3062,4 +3900,18 @@ func (m *MetricsTotals) GetCashflow() *MetricsTotalsCashflow {
 		return nil
 	}
 	return m.Cashflow
+}
+
+func (m *MetricsTotals) GetAverageSeatsPerCustomer() *MetricsTotalsAverageSeatsPerCustomer {
+	if m == nil {
+		return nil
+	}
+	return m.AverageSeatsPerCustomer
+}
+
+func (m *MetricsTotals) GetSeatUtilizationRate() *MetricsTotalsSeatUtilizationRate {
+	if m == nil {
+		return nil
+	}
+	return m.SeatUtilizationRate
 }

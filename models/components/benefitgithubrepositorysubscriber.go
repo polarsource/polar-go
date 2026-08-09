@@ -22,9 +22,10 @@ type BenefitGitHubRepositorySubscriber struct {
 	Selectable bool `json:"selectable"`
 	// Whether the benefit is deletable.
 	Deletable bool `json:"deletable"`
+	// Whether the benefit is deleted.
+	IsDeleted bool `json:"is_deleted"`
 	// The ID of the organization owning the benefit.
 	OrganizationID string                        `json:"organization_id"`
-	Metadata       map[string]MetadataOutputType `json:"metadata"`
 	Organization   BenefitSubscriberOrganization `json:"organization"`
 	// Properties available to subscribers for a benefit of type `github_repository`.
 	Properties BenefitGitHubRepositorySubscriberProperties `json:"properties"`
@@ -35,7 +36,7 @@ func (b BenefitGitHubRepositorySubscriber) MarshalJSON() ([]byte, error) {
 }
 
 func (b *BenefitGitHubRepositorySubscriber) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &b, "", false, []string{"id", "created_at", "type", "description", "selectable", "deletable", "organization_id", "metadata", "organization", "properties"}); err != nil {
+	if err := utils.UnmarshalJSON(data, &b, "", false, []string{"id", "created_at", "type", "description", "selectable", "deletable", "is_deleted", "organization_id", "organization", "properties"}); err != nil {
 		return err
 	}
 	return nil
@@ -87,18 +88,18 @@ func (b *BenefitGitHubRepositorySubscriber) GetDeletable() bool {
 	return b.Deletable
 }
 
+func (b *BenefitGitHubRepositorySubscriber) GetIsDeleted() bool {
+	if b == nil {
+		return false
+	}
+	return b.IsDeleted
+}
+
 func (b *BenefitGitHubRepositorySubscriber) GetOrganizationID() string {
 	if b == nil {
 		return ""
 	}
 	return b.OrganizationID
-}
-
-func (b *BenefitGitHubRepositorySubscriber) GetMetadata() map[string]MetadataOutputType {
-	if b == nil {
-		return map[string]MetadataOutputType{}
-	}
-	return b.Metadata
 }
 
 func (b *BenefitGitHubRepositorySubscriber) GetOrganization() BenefitSubscriberOrganization {

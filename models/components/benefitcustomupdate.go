@@ -130,6 +130,8 @@ type BenefitCustomUpdate struct {
 	Metadata map[string]BenefitCustomUpdateMetadata `json:"metadata,omitempty"`
 	// The description of the benefit. Will be displayed on products having this benefit.
 	Description *string `json:"description,omitempty"`
+	// The visibility of the benefit in the customer portal.
+	Visibility *BenefitVisibility `json:"visibility,omitempty"`
 	//lint:ignore U1000 accessed via reflection for JSON marshaling
 	type_      string                   `const:"custom" json:"type"`
 	Properties *BenefitCustomProperties `json:"properties,omitempty"`
@@ -158,6 +160,13 @@ func (b *BenefitCustomUpdate) GetDescription() *string {
 		return nil
 	}
 	return b.Description
+}
+
+func (b *BenefitCustomUpdate) GetVisibility() *BenefitVisibility {
+	if b == nil {
+		return nil
+	}
+	return b.Visibility
 }
 
 func (b *BenefitCustomUpdate) GetType() string {

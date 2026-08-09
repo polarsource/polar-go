@@ -15,28 +15,28 @@ type CustomerSeat struct {
 	// The seat ID
 	ID string `json:"id"`
 	// The subscription ID (for recurring seats)
-	SubscriptionID *string `json:"subscription_id,omitempty"`
+	SubscriptionID *string `json:"subscription_id"`
 	// The order ID (for one-time purchase seats)
-	OrderID *string    `json:"order_id,omitempty"`
+	OrderID *string    `json:"order_id"`
 	Status  SeatStatus `json:"status"`
 	// The customer ID. When member_model_enabled is true, this is the billing customer (purchaser). When false, this is the seat member customer.
-	CustomerID *string `json:"customer_id,omitempty"`
+	CustomerID *string `json:"customer_id"`
 	// The member ID of the seat occupant
-	MemberID *string `json:"member_id,omitempty"`
+	MemberID *string `json:"member_id"`
 	// The member associated with this seat
-	Member *Member `json:"member,omitempty"`
+	Member *Member `json:"member"`
 	// Email of the seat member (set when member_model_enabled is true)
-	Email *string `json:"email,omitempty"`
+	Email *string `json:"email"`
 	// The assigned customer email
-	CustomerEmail *string `json:"customer_email,omitempty"`
+	CustomerEmail *string `json:"customer_email"`
 	// When the invitation token expires
-	InvitationTokenExpiresAt *time.Time `json:"invitation_token_expires_at,omitempty"`
+	InvitationTokenExpiresAt *time.Time `json:"invitation_token_expires_at"`
 	// When the seat was claimed
-	ClaimedAt *time.Time `json:"claimed_at,omitempty"`
+	ClaimedAt *time.Time `json:"claimed_at"`
 	// When the seat was revoked
-	RevokedAt *time.Time `json:"revoked_at,omitempty"`
+	RevokedAt *time.Time `json:"revoked_at"`
 	// Additional metadata for the seat
-	SeatMetadata map[string]any `json:"seat_metadata,omitempty"`
+	SeatMetadata map[string]any `json:"seat_metadata"`
 }
 
 func (c CustomerSeat) MarshalJSON() ([]byte, error) {

@@ -4,12 +4,12 @@
 
 ### Available Operations
 
-* [List](#list) - List Organizations
+* [ListOrganizations](#listorganizations) - List Organizations
 * [Create](#create) - Create Organization
 * [Get](#get) - Get Organization
 * [Update](#update) - Update Organization
 
-## List
+## ListOrganizations
 
 List organizations.
 
@@ -35,7 +35,7 @@ func main() {
         polargo.WithSecurity(os.Getenv("POLAR_ACCESS_TOKEN")),
     )
 
-    res, err := s.Organizations.List(ctx, nil, polargo.Pointer[int64](1), polargo.Pointer[int64](10), nil)
+    res, err := s.Organizations.ListOrganizations(ctx, nil, polargo.Pointer[int64](1), polargo.Pointer[int64](10), nil)
     if err != nil {
         log.Fatal(err)
     }
@@ -133,10 +133,11 @@ func main() {
 
 ### Errors
 
-| Error Type                    | Status Code                   | Content Type                  |
-| ----------------------------- | ----------------------------- | ----------------------------- |
-| apierrors.HTTPValidationError | 422                           | application/json              |
-| apierrors.APIError            | 4XX, 5XX                      | \*/\*                         |
+| Error Type                              | Status Code                             | Content Type                            |
+| --------------------------------------- | --------------------------------------- | --------------------------------------- |
+| apierrors.CannotCreateOrganizationError | 403                                     | application/json                        |
+| apierrors.HTTPValidationError           | 422                                     | application/json                        |
+| apierrors.APIError                      | 4XX, 5XX                                | \*/\*                                   |
 
 ## Get
 
@@ -246,9 +247,10 @@ func main() {
 
 ### Errors
 
-| Error Type                    | Status Code                   | Content Type                  |
-| ----------------------------- | ----------------------------- | ----------------------------- |
-| apierrors.NotPermitted        | 403                           | application/json              |
-| apierrors.ResourceNotFound    | 404                           | application/json              |
-| apierrors.HTTPValidationError | 422                           | application/json              |
-| apierrors.APIError            | 4XX, 5XX                      | \*/\*                         |
+| Error Type                                 | Status Code                                | Content Type                               |
+| ------------------------------------------ | ------------------------------------------ | ------------------------------------------ |
+| apierrors.NotPermitted                     | 403                                        | application/json                           |
+| apierrors.ResourceNotFound                 | 404                                        | application/json                           |
+| apierrors.SSOEnforcementRequiresConnection | 409                                        | application/json                           |
+| apierrors.HTTPValidationError              | 422                                        | application/json                           |
+| apierrors.APIError                         | 4XX, 5XX                                   | \*/\*                                      |

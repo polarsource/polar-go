@@ -15,12 +15,6 @@ checkoutCreatePrices := components.CreateCheckoutCreatePricesCustom(components.P
 checkoutCreatePrices := components.CreateCheckoutCreatePricesFixed(components.ProductPriceFixedCreate{/* values here */})
 ```
 
-### ProductPriceFreeCreate
-
-```go
-checkoutCreatePrices := components.CreateCheckoutCreatePricesFree(components.ProductPriceFreeCreate{/* values here */})
-```
-
 ### ProductPriceMeteredUnitCreate
 
 ```go
@@ -43,8 +37,6 @@ switch checkoutCreatePrices.Type {
 		// checkoutCreatePrices.ProductPriceCustomCreate is populated
 	case components.CheckoutCreatePricesTypeFixed:
 		// checkoutCreatePrices.ProductPriceFixedCreate is populated
-	case components.CheckoutCreatePricesTypeFree:
-		// checkoutCreatePrices.ProductPriceFreeCreate is populated
 	case components.CheckoutCreatePricesTypeMeteredUnit:
 		// checkoutCreatePrices.ProductPriceMeteredUnitCreate is populated
 	case components.CheckoutCreatePricesTypeSeatBased:

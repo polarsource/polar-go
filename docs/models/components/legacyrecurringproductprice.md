@@ -15,12 +15,6 @@ legacyRecurringProductPrice := components.CreateLegacyRecurringProductPriceCusto
 legacyRecurringProductPrice := components.CreateLegacyRecurringProductPriceFixed(components.LegacyRecurringProductPriceFixed{/* values here */})
 ```
 
-### LegacyRecurringProductPriceFree
-
-```go
-legacyRecurringProductPrice := components.CreateLegacyRecurringProductPriceFree(components.LegacyRecurringProductPriceFree{/* values here */})
-```
-
 ## Union Discrimination
 
 Use the `Type` field to determine which variant is active, then access the corresponding field:
@@ -31,7 +25,5 @@ switch legacyRecurringProductPrice.Type {
 		// legacyRecurringProductPrice.LegacyRecurringProductPriceCustom is populated
 	case components.LegacyRecurringProductPriceTypeFixed:
 		// legacyRecurringProductPrice.LegacyRecurringProductPriceFixed is populated
-	case components.LegacyRecurringProductPriceTypeFree:
-		// legacyRecurringProductPrice.LegacyRecurringProductPriceFree is populated
 }
 ```

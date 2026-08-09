@@ -336,7 +336,6 @@ type CheckoutCreatePricesType string
 const (
 	CheckoutCreatePricesTypeCustom      CheckoutCreatePricesType = "custom"
 	CheckoutCreatePricesTypeFixed       CheckoutCreatePricesType = "fixed"
-	CheckoutCreatePricesTypeFree        CheckoutCreatePricesType = "free"
 	CheckoutCreatePricesTypeMeteredUnit CheckoutCreatePricesType = "metered_unit"
 	CheckoutCreatePricesTypeSeatBased   CheckoutCreatePricesType = "seat_based"
 )
@@ -344,7 +343,6 @@ const (
 type CheckoutCreatePrices struct {
 	ProductPriceFixedCreate       *ProductPriceFixedCreate       `queryParam:"inline" union:"member"`
 	ProductPriceCustomCreate      *ProductPriceCustomCreate      `queryParam:"inline" union:"member"`
-	ProductPriceFreeCreate        *ProductPriceFreeCreate        `queryParam:"inline" union:"member"`
 	ProductPriceSeatBasedCreate   *ProductPriceSeatBasedCreate   `queryParam:"inline" union:"member"`
 	ProductPriceMeteredUnitCreate *ProductPriceMeteredUnitCreate `queryParam:"inline" union:"member"`
 
@@ -366,15 +364,6 @@ func CreateCheckoutCreatePricesFixed(fixed ProductPriceFixedCreate) CheckoutCrea
 	return CheckoutCreatePrices{
 		ProductPriceFixedCreate: &fixed,
 		Type:                    typ,
-	}
-}
-
-func CreateCheckoutCreatePricesFree(free ProductPriceFreeCreate) CheckoutCreatePrices {
-	typ := CheckoutCreatePricesTypeFree
-
-	return CheckoutCreatePrices{
-		ProductPriceFreeCreate: &free,
-		Type:                   typ,
 	}
 }
 
@@ -426,15 +415,6 @@ func (u *CheckoutCreatePrices) UnmarshalJSON(data []byte) error {
 		u.ProductPriceFixedCreate = productPriceFixedCreate
 		u.Type = CheckoutCreatePricesTypeFixed
 		return nil
-	case "free":
-		productPriceFreeCreate := new(ProductPriceFreeCreate)
-		if err := utils.UnmarshalJSON(data, &productPriceFreeCreate, "", true, nil); err != nil {
-			return fmt.Errorf("could not unmarshal `%s` into expected (AmountType == free) type ProductPriceFreeCreate within CheckoutCreatePrices: %w", string(data), err)
-		}
-
-		u.ProductPriceFreeCreate = productPriceFreeCreate
-		u.Type = CheckoutCreatePricesTypeFree
-		return nil
 	case "metered_unit":
 		productPriceMeteredUnitCreate := new(ProductPriceMeteredUnitCreate)
 		if err := utils.UnmarshalJSON(data, &productPriceMeteredUnitCreate, "", true, nil); err != nil {
@@ -465,10 +445,6 @@ func (u CheckoutCreatePrices) MarshalJSON() ([]byte, error) {
 
 	if u.ProductPriceCustomCreate != nil {
 		return utils.MarshalJSON(u.ProductPriceCustomCreate, "", true)
-	}
-
-	if u.ProductPriceFreeCreate != nil {
-		return utils.MarshalJSON(u.ProductPriceFreeCreate, "", true)
 	}
 
 	if u.ProductPriceSeatBasedCreate != nil {

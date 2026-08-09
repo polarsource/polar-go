@@ -13,12 +13,13 @@ value := components.BenefitTypeCustom
 
 ## Values
 
-| Name                          | Value                         |
-| ----------------------------- | ----------------------------- |
-| `BenefitTypeCustom`           | custom                        |
-| `BenefitTypeDiscord`          | discord                       |
-| `BenefitTypeGithubRepository` | github_repository             |
-| `BenefitTypeDownloadables`    | downloadables                 |
-| `BenefitTypeLicenseKeys`      | license_keys                  |
-| `BenefitTypeMeterCredit`      | meter_credit                  |
-| `BenefitTypeFeatureFlag`      | feature_flag                  |
+| Name                            | Value                           |
+| ------------------------------- | ------------------------------- |
+| `BenefitTypeCustom`             | custom                          |
+| `BenefitTypeDiscord`            | discord                         |
+| `BenefitTypeGithubRepository`   | github_repository               |
+| `BenefitTypeDownloadables`      | downloadables                   |
+| `BenefitTypeLicenseKeys`        | license_keys                    |
+| `BenefitTypeMeterCredit`        | meter_credit                    |
+| `BenefitTypeFeatureFlag`        | feature_flag                    |
+| `BenefitTypeSlackSharedChannel` | slack_shared_channel            |

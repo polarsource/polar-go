@@ -40,25 +40,31 @@ type CustomerOrder struct {
 	// The name of the customer that should appear on the invoice.
 	BillingName    *string  `json:"billing_name"`
 	BillingAddress *Address `json:"billing_address"`
-	// The invoice number associated with this order.
-	InvoiceNumber string `json:"invoice_number"`
+	// The invoice number associated with this order. `null` while the order is in `draft` status; assigned at finalize.
+	InvoiceNumber *string `json:"invoice_number"`
 	// Whether an invoice has been generated for this order.
 	IsInvoiceGenerated bool `json:"is_invoice_generated"`
+	// The receipt number for this order. Set once the order is paid for organizations with receipts enabled. When set, a downloadable receipt PDF can be obtained via the receipt endpoint.
+	ReceiptNumber *string `json:"receipt_number"`
 	// Number of seats purchased (for seat-based one-time orders).
-	Seats          *int64                     `json:"seats,omitempty"`
-	CustomerID     string                     `json:"customer_id"`
-	ProductID      *string                    `json:"product_id"`
-	DiscountID     *string                    `json:"discount_id"`
-	SubscriptionID *string                    `json:"subscription_id"`
-	CheckoutID     *string                    `json:"checkout_id"`
-	Product        *CustomerOrderProduct      `json:"product"`
-	Subscription   *CustomerOrderSubscription `json:"subscription"`
+	Seats          *int64  `json:"seats,omitempty"`
+	CustomerID     string  `json:"customer_id"`
+	ProductID      *string `json:"product_id"`
+	DiscountID     *string `json:"discount_id"`
+	SubscriptionID *string `json:"subscription_id"`
+	CheckoutID     *string `json:"checkout_id"`
+	// When the next automatic payment retry is scheduled. `null` if the order is not in dunning or all retries have been exhausted.
+	NextPaymentAttemptAt *time.Time                 `json:"next_payment_attempt_at,omitempty"`
+	Product              *CustomerOrderProduct      `json:"product"`
+	Subscription         *CustomerOrderSubscription `json:"subscription"`
 	// Line items composing the order.
 	Items []OrderItemSchema `json:"items"`
 	// A summary description of the order.
 	Description string `json:"description"`
-	// When the next payment retry is scheduled
-	NextPaymentAttemptAt *time.Time `json:"next_payment_attempt_at,omitempty"`
+	// Amount in cents that can still be refunded (net, before taxes). Accounts for any applied customer balance and previous refunds.
+	RefundableAmount int64 `json:"refundable_amount"`
+	// Sales tax in cents that would be refunded if the full refundable amount is refunded.
+	RefundableTaxAmount int64 `json:"refundable_tax_amount"`
 }
 
 func (c CustomerOrder) MarshalJSON() ([]byte, error) {
@@ -198,9 +204,9 @@ func (c *CustomerOrder) GetBillingAddress() *Address {
 	return c.BillingAddress
 }
 
-func (c *CustomerOrder) GetInvoiceNumber() string {
+func (c *CustomerOrder) GetInvoiceNumber() *string {
 	if c == nil {
-		return ""
+		return nil
 	}
 	return c.InvoiceNumber
 }
@@ -210,6 +216,13 @@ func (c *CustomerOrder) GetIsInvoiceGenerated() bool {
 		return false
 	}
 	return c.IsInvoiceGenerated
+}
+
+func (c *CustomerOrder) GetReceiptNumber() *string {
+	if c == nil {
+		return nil
+	}
+	return c.ReceiptNumber
 }
 
 func (c *CustomerOrder) GetSeats() *int64 {
@@ -254,6 +267,13 @@ func (c *CustomerOrder) GetCheckoutID() *string {
 	return c.CheckoutID
 }
 
+func (c *CustomerOrder) GetNextPaymentAttemptAt() *time.Time {
+	if c == nil {
+		return nil
+	}
+	return c.NextPaymentAttemptAt
+}
+
 func (c *CustomerOrder) GetProduct() *CustomerOrderProduct {
 	if c == nil {
 		return nil
@@ -282,9 +302,16 @@ func (c *CustomerOrder) GetDescription() string {
 	return c.Description
 }
 
-func (c *CustomerOrder) GetNextPaymentAttemptAt() *time.Time {
+func (c *CustomerOrder) GetRefundableAmount() int64 {
 	if c == nil {
-		return nil
+		return 0
 	}
-	return c.NextPaymentAttemptAt
+	return c.RefundableAmount
+}
+
+func (c *CustomerOrder) GetRefundableTaxAmount() int64 {
+	if c == nil {
+		return 0
+	}
+	return c.RefundableTaxAmount
 }

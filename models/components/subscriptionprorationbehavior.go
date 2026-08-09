@@ -13,6 +13,7 @@ const (
 	SubscriptionProrationBehaviorInvoice    SubscriptionProrationBehavior = "invoice"
 	SubscriptionProrationBehaviorProrate    SubscriptionProrationBehavior = "prorate"
 	SubscriptionProrationBehaviorNextPeriod SubscriptionProrationBehavior = "next_period"
+	SubscriptionProrationBehaviorReset      SubscriptionProrationBehavior = "reset"
 )
 
 func (e SubscriptionProrationBehavior) ToPointer() *SubscriptionProrationBehavior {
@@ -29,6 +30,8 @@ func (e *SubscriptionProrationBehavior) UnmarshalJSON(data []byte) error {
 	case "prorate":
 		fallthrough
 	case "next_period":
+		fallthrough
+	case "reset":
 		*e = SubscriptionProrationBehavior(v)
 		return nil
 	default:
